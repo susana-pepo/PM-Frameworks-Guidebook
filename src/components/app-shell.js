@@ -23,6 +23,11 @@ export function renderApp() {
     </div>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
+    <!-- Floating sidebar peek button (visible when sidebar is hidden) -->
+    <button class="sidebar-peek-btn" id="sidebar-peek" aria-label="Show navigation">
+      <span aria-hidden="true">☰</span>
+    </button>
+
     <!-- Sidebar -->
     <aside class="app-sidebar" id="sidebar" role="navigation" aria-label="Framework navigation">
       <div class="sidebar-brand">
@@ -129,15 +134,36 @@ function bindSidebar() {
     });
   });
 
-  // Close sidebar on link click (mobile)
+  // Close sidebar on link click (mobile + peek overlay)
   document.querySelectorAll('.sidebar-fw-link, .sidebar-compare-link').forEach(link => {
     link.addEventListener('click', () => {
+      const appEl = document.getElementById('app');
+      // Close peek overlay on desktop
+      if (appEl.classList.contains('sidebar-peeking')) {
+        appEl.classList.remove('sidebar-peeking');
+      }
+      // Close mobile sidebar
       if (window.innerWidth <= 768) {
         sidebarOpen = false;
         sidebar.classList.remove('open');
         overlay.classList.remove('open');
       }
     });
+  });
+
+  // Sidebar peek button — opens sidebar as overlay on framework pages
+  const peekBtn = document.getElementById('sidebar-peek');
+  peekBtn?.addEventListener('click', () => {
+    const appEl = document.getElementById('app');
+    appEl.classList.toggle('sidebar-peeking');
+  });
+
+  // Close peek overlay when clicking the overlay background
+  overlay?.addEventListener('click', () => {
+    const appEl = document.getElementById('app');
+    if (appEl.classList.contains('sidebar-peeking')) {
+      appEl.classList.remove('sidebar-peeking');
+    }
   });
 }
 
@@ -164,6 +190,13 @@ function bindSearch() {
 function handleRoute(route) {
   const content = document.getElementById('page-content');
   const breadcrumb = document.getElementById('breadcrumb');
+  const appEl = document.getElementById('app');
+
+  // Toggle sidebar visibility: hide on framework pages, show elsewhere
+  const isFrameworkPage = route.page === 'framework';
+  appEl.classList.toggle('sidebar-hidden', isFrameworkPage);
+  // Remove peeking state on navigation
+  appEl.classList.remove('sidebar-peeking');
 
   // Update active state in sidebar with category-specific colors
   document.querySelectorAll('.sidebar-fw-link').forEach(link => {

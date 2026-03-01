@@ -82,6 +82,72 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
   width: 100%;
 }
 
+/* ---- SIDEBAR HIDDEN MODE (Framework pages) ---- */
+.sidebar-hidden .app-sidebar {
+  display: none;
+}
+
+.sidebar-hidden .content-wrapper {
+  max-width: 960px;
+  transition: max-width var(--duration-slow) var(--ease-default);
+}
+
+.sidebar-hidden .app-content {
+  overflow-x: hidden; /* Prevent horizontal scroll from full-bleed hero */
+}
+
+/* Floating peek button — only visible when sidebar hidden */
+.sidebar-peek-btn {
+  display: none;
+  position: fixed;
+  top: calc(var(--header-height) + var(--space-3));
+  left: var(--space-3);
+  z-index: 35;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-default);
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-peek-btn:hover {
+  background: var(--bg-card-hover, var(--bg-muted));
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.sidebar-hidden .sidebar-peek-btn {
+  display: flex;
+}
+
+/* Sidebar peek overlay mode (desktop — sidebar slides in as overlay) */
+.sidebar-peeking .app-sidebar {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-xl);
+  animation: sidebarSlideIn var(--duration-slow) var(--ease-out);
+}
+
+.sidebar-peeking .sidebar-overlay {
+  display: block;
+}
+
+@keyframes sidebarSlideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
 /* ---- SKIP LINK (Accessibility) ---- */
 .skip-link {
   position: absolute;
@@ -164,5 +230,16 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
 
   .app-content {
     padding: var(--space-5) var(--space-4);
+  }
+
+  /* Peek button not needed on mobile — hamburger handles it */
+  .sidebar-peek-btn {
+    display: none !important;
+  }
+
+  /* Don't override sidebar display on mobile — mobile has its own system */
+  .sidebar-hidden .app-sidebar {
+    display: flex;
+    transform: translateX(-100%);
   }
 }

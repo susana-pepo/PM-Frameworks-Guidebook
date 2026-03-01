@@ -53,21 +53,6 @@
 
 /* ---- FRAMEWORK HERO / COVER ---- */
 
-/* Gradient glow behind hero — category colored */
-.fw-page::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: -40px;
-  left: -40px;
-  right: -40px;
-  height: 360px;
-  background: radial-gradient(ellipse at 30% 0%, var(--accent-color, transparent) 0%, transparent 70%);
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: 0;
-}
-
 .fw-page {
   position: relative;
 }
@@ -77,6 +62,70 @@
   z-index: 1;
 }
 
+/* ---- FULL-BLEED HERO SECTION ---- */
+/* Edge-to-edge category-colored banner containing badge + title + visualizer */
+.fw-hero-bleed {
+  --hero-rgb: 0, 0, 0;
+  --hero-glow: 0.10;
+  --hero-tint: 0.05;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: var(--space-12) var(--space-6) var(--space-8);
+  margin-bottom: var(--space-4);
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(var(--hero-rgb), var(--hero-glow)) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(var(--hero-rgb), var(--hero-tint)) 0%, transparent 100%);
+}
+
+/* Category hero colors — each category gets a distinct glow */
+.fw-hero-bleed[data-category="prioritization"] { --hero-rgb: 124, 92, 252; }
+.fw-hero-bleed[data-category="design"]         { --hero-rgb: 16, 185, 129; }
+.fw-hero-bleed[data-category="strategy"]       { --hero-rgb: 249, 112, 102; }
+.fw-hero-bleed[data-category="growth"]         { --hero-rgb: 59, 130, 246; }
+.fw-hero-bleed[data-category="execution"]      { --hero-rgb: 245, 158, 11; }
+.fw-hero-bleed[data-category="communication"]  { --hero-rgb: 249, 115, 22; }
+
+/* Category SVG texture patterns — applied via ::after pseudo-element */
+.fw-hero-bleed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
+.fw-hero-bleed[data-category="prioritization"]::after { background-image: var(--pattern-prioritization); }
+.fw-hero-bleed[data-category="design"]::after         { background-image: var(--pattern-design); }
+.fw-hero-bleed[data-category="strategy"]::after       { background-image: var(--pattern-strategy); }
+.fw-hero-bleed[data-category="growth"]::after         { background-image: var(--pattern-growth); }
+.fw-hero-bleed[data-category="execution"]::after      { background-image: var(--pattern-execution); }
+.fw-hero-bleed[data-category="communication"]::after  { background-image: var(--pattern-communication); }
+
+/* Dark mode: slightly higher pattern visibility */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fw-hero-bleed::after {
+    opacity: 0.7;
+    mix-blend-mode: screen;
+  }
+}
+[data-theme="dark"] .fw-hero-bleed::after {
+  opacity: 0.7;
+  mix-blend-mode: screen;
+}
+
+/* Inner container — constrains content to readable width, above pattern overlay */
+.fw-hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Badge inside hero */
 .fw-page-header {
   margin-bottom: var(--space-4);
   text-align: center;
@@ -111,9 +160,29 @@
 }
 
 /* ---- Hero visualizer framing ---- */
-.fw-page .header {
+.fw-hero-inner .header {
   text-align: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: 0;
+}
+
+/* Dark mode: stronger hero gradients */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fw-hero-bleed {
+    --hero-glow: 0.16;
+    --hero-tint: 0.08;
+  }
+}
+
+[data-theme="dark"] .fw-hero-bleed {
+  --hero-glow: 0.16;
+  --hero-tint: 0.08;
+}
+
+/* Mobile: match app-content padding for edge-to-edge */
+@media (max-width: 768px) {
+  .fw-hero-bleed {
+    padding: var(--space-6) var(--space-4) var(--space-5);
+  }
 }
 
 /* The hero visualizer/diagram area from original HTML */
@@ -194,6 +263,170 @@
   font-family: var(--font-mono);
   font-size: 10px;
   opacity: 0.6;
+}
+
+/* Interactive chips — click to jump to first section of that type */
+.fw-chip-interactive {
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.fw-chip-interactive:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
+}
+
+.fw-chip-interactive:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+/* ---- BENTO GRID LAYOUT ---- */
+/* 2-column cover layout: TLDR + Inside chips (left) | Sections TOC (right) */
+.fw-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.bento-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+/* TLDR card — left col, row 1 */
+.bento-tldr {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Reset TLDR inner card styles — bento cell provides the card treatment */
+.bento-tldr .one-liner,
+.bento-tldr .tldr-section,
+.bento-tldr .tldr {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  max-width: none;
+}
+
+/* Inside chips card — left col, row 2 */
+.bento-inside {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Reset chips styles inside bento card */
+.bento-inside .fw-whats-inside {
+  padding: 0;
+  margin: 0;
+  border-bottom: none;
+  justify-content: flex-start;
+}
+
+.bento-inside .fw-whats-inside-chips {
+  margin-top: var(--space-2);
+}
+
+/* Sections TOC — right col, spans both rows */
+.bento-toc {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-toc-header {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bento-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.bento-toc-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  transition: background var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default);
+}
+
+.bento-toc-item:hover {
+  background: var(--bg-muted);
+  transform: translateX(2px);
+}
+
+.bento-toc-item:active {
+  transform: scale(0.98);
+}
+
+.bento-toc-item-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.bento-toc-item-label {
+  flex: 1;
+  font-weight: var(--weight-medium);
+}
+
+.bento-toc-item .accordion-type-pill {
+  flex-shrink: 0;
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+/* Hide bento grid in reading mode — mini-nav handles navigation */
+.reading-mode .fw-bento-grid {
+  display: none;
+}
+
+/* Mobile: single column stack */
+@media (max-width: 768px) {
+  .fw-bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .bento-tldr,
+  .bento-inside,
+  .bento-toc {
+    grid-column: 1;
+    grid-row: auto;
+  }
 }
 
 /* ---- PROGRESS ---- */

@@ -57,6 +57,9 @@ export async function renderFrameworkPage(container, breadcrumb, slug, initialSt
 
     // Install accordion system — transforms tabs into collapsed step navigation
     installAccordionSystem(container, slug, initialStep);
+
+    // Install full-bleed hero — wraps header in edge-to-edge category-colored banner
+    installFullBleedHero(container);
   } catch (err) {
     container.innerHTML = `
       <div style="text-align:center;padding:var(--space-16) 0;">
@@ -144,6 +147,44 @@ function stripLeadingEmoji(container) {
     /^[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u,
     ''
   );
+}
+
+/**
+ * Full-bleed hero — wraps the page header (badge) and original
+ * .header (H1 + hero visualizer) in a full-viewport-width banner
+ * with a category-colored gradient background.
+ * Called AFTER installAccordionSystem so mini-nav stays outside the hero.
+ */
+function installFullBleedHero(container) {
+  const fwPage = container.querySelector('.fw-page');
+  if (!fwPage) return;
+
+  const catId = fwPage.dataset.category;
+  if (!catId) return;
+
+  const pageHeader = fwPage.querySelector('.fw-page-header');
+  const header = fwPage.querySelector('.header');
+  if (!pageHeader && !header) return;
+
+  // Create full-bleed wrapper
+  const heroBleed = document.createElement('div');
+  heroBleed.className = 'fw-hero-bleed';
+  heroBleed.setAttribute('data-category', catId);
+
+  // Inner container constrains content width
+  const heroInner = document.createElement('div');
+  heroInner.className = 'fw-hero-inner';
+
+  // Move badge into hero
+  if (pageHeader) heroInner.appendChild(pageHeader);
+
+  // Move the original .header (title + visualizer) into hero
+  if (header) heroInner.appendChild(header);
+
+  heroBleed.appendChild(heroInner);
+
+  // Insert at the start of fw-page — mini-nav and accordion stay below
+  fwPage.prepend(heroBleed);
 }
 
 /**
@@ -426,8 +467,11 @@ function installAccordionSystem(container, slug, initialStep) {
   // Insert accordion after the journey-nav (which is now hidden via CSS)
   journeyNav.after(accordionNav);
 
-  // Build "What's Inside" summary chips
-  buildWhatsInsideChips(steps, accordionNav);
+  // Build "What's Inside" summary chips — interactive: click to jump by type
+  buildWhatsInsideChips(steps, accordionNav, expandStep);
+
+  // Build bento grid — 2-column layout with TLDR, Inside chips, and Sections TOC
+  installBentoGrid(fwPage, steps, accordionNav, expandStep);
 
   // Override global goTo/go so any remaining onclick handlers use accordion
   window.goTo = (id) => {
@@ -518,18 +562,21 @@ function installAccordionSystem(container, slug, initialStep) {
 }
 
 /**
- * Build "What's Inside" summary chips — shows a compact summary
- * of the content types available in this framework (e.g., "3 Reading · 2 Interactive · 1 Quiz")
+ * Build "What's Inside" summary chips — interactive buttons that
+ * jump to the first accordion section matching the clicked content type.
+ * Turns dead informational UI into a "jump by type" tool.
  */
-function buildWhatsInsideChips(steps, accordionNav) {
-  // Count content types
+function buildWhatsInsideChips(steps, accordionNav, expandStep) {
+  // Count content types and track first occurrence index
   const typeCounts = {};
   const typeIcons = {};
-  steps.forEach(step => {
+  const typeFirstIndex = {};
+  steps.forEach((step, i) => {
     const meta = getStepMeta(step.label);
     if (!typeCounts[meta.type]) {
       typeCounts[meta.type] = 0;
       typeIcons[meta.type] = meta.icon;
+      typeFirstIndex[meta.type] = i;
     }
     typeCounts[meta.type]++;
   });
@@ -539,19 +586,103 @@ function buildWhatsInsideChips(steps, accordionNav) {
 
   const whatsInside = document.createElement('div');
   whatsInside.className = 'fw-whats-inside';
-  whatsInside.innerHTML = `
-    <span class="fw-whats-inside-label">Inside</span>
-    <div class="fw-whats-inside-chips">
-      ${sorted.map(([type, count]) => `
-        <span class="fw-chip">
-          <span class="fw-chip-icon" aria-hidden="true">${typeIcons[type]}</span>
-          ${count > 1 ? `<span class="fw-chip-count">${count}</span>` : ''}
-          ${type}
-        </span>
-      `).join('')}
-    </div>
-  `;
+
+  const label = document.createElement('span');
+  label.className = 'fw-whats-inside-label';
+  label.textContent = 'Inside';
+  whatsInside.appendChild(label);
+
+  const chipsContainer = document.createElement('div');
+  chipsContainer.className = 'fw-whats-inside-chips';
+
+  sorted.forEach(([type, count]) => {
+    const chip = document.createElement('button');
+    chip.className = 'fw-chip fw-chip-interactive';
+    chip.setAttribute('aria-label', `Jump to first ${type} section`);
+    chip.innerHTML = `
+      <span class="fw-chip-icon" aria-hidden="true">${typeIcons[type]}</span>
+      ${count > 1 ? `<span class="fw-chip-count">${count}</span>` : ''}
+      <span>${type}</span>
+    `;
+    chip.addEventListener('click', () => {
+      expandStep(typeFirstIndex[type]);
+    });
+    chipsContainer.appendChild(chip);
+  });
+
+  whatsInside.appendChild(chipsContainer);
 
   // Insert before the accordion nav
   accordionNav.before(whatsInside);
+}
+
+/**
+ * Bento Grid Layout — organizes the cover page into a 2-column grid:
+ *   Left col row 1: TLDR / Quick Summary card
+ *   Left col row 2: What's Inside chips card
+ *   Right col (spans both rows): Sections TOC with clickable navigation
+ *
+ * On mobile: single column stack (TLDR → Inside → TOC).
+ * Hidden in reading mode (when an accordion section is expanded).
+ */
+function installBentoGrid(fwPage, steps, accordionNav, expandStep) {
+  const tldr = fwPage.querySelector('.one-liner, .tldr-section, .tldr');
+  const chips = fwPage.querySelector('.fw-whats-inside');
+
+  // Need at least the TOC to justify a grid
+  if (steps.length === 0) return;
+
+  // Create bento grid container
+  const grid = document.createElement('div');
+  grid.className = 'fw-bento-grid';
+
+  // -- Left column, row 1: TLDR card --
+  if (tldr) {
+    const tldrCell = document.createElement('div');
+    tldrCell.className = 'bento-cell bento-tldr';
+    tldrCell.appendChild(tldr); // moves from original position
+    grid.appendChild(tldrCell);
+  }
+
+  // -- Left column, row 2: Inside chips card --
+  if (chips) {
+    const chipsCell = document.createElement('div');
+    chipsCell.className = 'bento-cell bento-inside';
+    chipsCell.appendChild(chips); // moves from original position
+    grid.appendChild(chipsCell);
+  }
+
+  // -- Right column: Sections TOC (spans both rows) --
+  const toc = document.createElement('div');
+  toc.className = 'bento-cell bento-toc';
+
+  const tocHeader = document.createElement('div');
+  tocHeader.className = 'bento-toc-header';
+  tocHeader.innerHTML = '<span class="bento-toc-icon" aria-hidden="true">📖</span> Sections';
+  toc.appendChild(tocHeader);
+
+  const tocList = document.createElement('div');
+  tocList.className = 'bento-toc-list';
+
+  steps.forEach((step, i) => {
+    const meta = getStepMeta(step.label);
+    const pillClass = getTypePillClass(meta.type);
+
+    const btn = document.createElement('button');
+    btn.className = 'bento-toc-item';
+    btn.setAttribute('aria-label', `Go to ${step.label} section`);
+    btn.innerHTML = `
+      <span class="bento-toc-item-icon" aria-hidden="true">${meta.icon}</span>
+      <span class="bento-toc-item-label">${step.label}</span>
+      <span class="accordion-type-pill ${pillClass}">${meta.type}</span>
+    `;
+    btn.addEventListener('click', () => expandStep(i));
+    tocList.appendChild(btn);
+  });
+
+  toc.appendChild(tocList);
+  grid.appendChild(toc);
+
+  // Insert grid before accordion nav
+  accordionNav.before(grid);
 }
