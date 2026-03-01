@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>OKRs — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#8b5cf6;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x2699;&#xFE0F; Execution</div>
+  <h1>&#x1F3AF; OKRs</h1>
+  <p class="sub">Objectives &amp; Key Results: set ambitious goals (Objectives) and measure progress with concrete outcomes (Key Results). Used by Google, Intel, Spotify.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> <strong>Objective</strong> = inspiring, qualitative direction ("Where do we want to go?"). <strong>Key Results</strong> = measurable outcomes that prove you got there ("How do we know we arrived?"). Set quarterly. 70% achievement = success (stretch goals).</p></div>
+</div>
+
+<!-- HERO Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="text-align:center;padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F3AF; Objective: Make Skoove the #1 app for piano beginners</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+    <div style="padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;">KR1: Increase WAL from 30K to 50K</div>
+    <div style="padding:12px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;">KR2: Improve D30 retention from 8% to 15%</div>
+    <div style="padding:12px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;">KR3: Reach 4.7&#x2B50; App Store rating</div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Objective = inspirational direction. Key Results = measurable proof of progress.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Anatomy</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Writing</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why OKRs?</h2><p>Alignment, focus, accountability</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem OKRs Solve</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Without OKRs, teams set vague goals ("improve the product"), work on whatever seems urgent, and can't tell at the end of the quarter whether they succeeded. OKRs create <strong>focus</strong> (max 3-5 objectives), <strong>alignment</strong> (everyone sees the same goals), and <strong>accountability</strong> (measurable results you grade at quarter end).</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Created by Andy Grove at Intel (1970s), popularized by John Doerr at Google (1999). Used by most top tech companies.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x274C; Without OKRs</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">"Our goal is to grow." &#x2192; Teams work on different things &#x2192; No way to measure success &#x2192; End of quarter: "Did we do well?" "&#x1F937; Maybe?"</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x2705; With OKRs</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">"Objective: Delight new users in first week. KR: D7 retention from 20% to 35%." &#x2192; Everyone aligned &#x2192; End of Q: "D7 hit 29%. 0.6 score. Good progress, here's what we learned."</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of a <strong>road trip</strong>. The Objective is the destination ("Drive to the beach!"). Key Results are the mile markers that prove you're getting there ("Pass the city limits by 10am, reach the highway by 11am, arrive by 1pm"). Without mile markers, you don't know if you're on track until you either arrive or run out of gas.</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Anatomy &#x2192;</button></div>
+</div>
+
+<!-- S1: ANATOMY -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F52C;</div><div class="sec-label"><h2>OKR Anatomy</h2><p>Rules for good objectives and key results</p></div></div>
+  <div class="c-card" style="border-left:6px solid var(--yellow);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px;">&#x1F3AF; Objectives — The "What"</h3>
+    <div style="display:grid;gap:6px;font-size:12px;">
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Qualitative:</strong> Inspiring, not a number. "Delight new users" not "Get 50K users."</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Ambitious:</strong> Stretch goals that push the team. If you always hit 100%, you're not aiming high enough.</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Time-bound:</strong> One quarter (sometimes annual). Creates urgency.</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>3-5 max:</strong> More than 5 objectives = no focus. Fewer is better.</div>
+    </div>
+  </div>
+  <div class="c-card" style="border-left:6px solid var(--sky);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px;">&#x1F4CA; Key Results — The "How We Know"</h3>
+    <div style="display:grid;gap:6px;font-size:12px;">
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Quantitative:</strong> Always a number. "From X to Y" format is gold. "Increase D7 retention from 20% to 35%."</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Outcomes, not outputs:</strong> "D7 retention hits 35%" (outcome) not "Ship 5 onboarding features" (output). Outputs are tasks, not results.</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>2-5 per objective:</strong> Enough to cover the objective, not so many you lose focus.</div>
+      <div style="padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2705; <strong>Gradeable:</strong> At quarter end, score 0.0 to 1.0. 0.7 = success for stretch goals.</div>
+    </div>
+  </div>
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F6A9; Common Mistakes</h3>
+    <div style="display:grid;gap:6px;font-size:12px;">
+      <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:6px;"><strong>KRs as tasks:</strong> "Launch redesigned onboarding" &#x274C; That's a task. "Onboarding completion rate hits 70%" &#x2705; That's a result.</div>
+      <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:6px;"><strong>Too many OKRs:</strong> 8 objectives with 5 KRs each = 40 things to track. Nobody will remember them.</div>
+      <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:6px;"><strong>Sandbagging:</strong> Setting easy goals to look good. If you always score 1.0, you're not stretching.</div>
+      <div style="padding:8px;background:rgba(255,255,255,0.5);border-radius:6px;"><strong>Using OKRs for performance reviews:</strong> This kills ambitious goal-setting. People set safe goals to protect their bonus.</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Writing &#x2192;</button></div>
+</div>
+
+<!-- S2: WRITING -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x270D;&#xFE0F;</div><div class="sec-label"><h2>Writing Great OKRs</h2><p>The formula and cascade</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Formula</h3>
+    <div style="padding:16px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;font-family:'JetBrains Mono',monospace;font-size:14px;margin-bottom:10px;">I will <strong>[Objective]</strong> as measured by <strong>[Key Results]</strong></div>
+    <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">This sentence forces you to connect the inspirational goal with measurable proof. If you can't fill in both blanks, your OKR needs work.</div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F3E2; The Cascade: Company &#x2192; Team &#x2192; Individual</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;">Company OKR</div>
+        <div style="font-size:12px;color:var(--ink-soft);">O: Become the market leader in music education apps</div>
+        <div style="font-size:11px;color:var(--ink-dim);">KR: Reach 1M MAU | KR: Hit &#x20AC;2M ARR | KR: Achieve #1 in App Store Education category</div>
+      </div>
+      <div style="text-align:center;font-size:14px;">&#x2B07;&#xFE0F; <span style="font-size:10px;font-weight:700;color:var(--ink-muted);">cascades to</span></div>
+      <div style="padding:14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;">Product Team OKR</div>
+        <div style="font-size:12px;color:var(--ink-soft);">O: Delight new users in their first week</div>
+        <div style="font-size:11px;color:var(--ink-dim);">KR: D7 retention from 20% to 35% | KR: First-lesson completion from 40% to 70% | KR: NPS for new users from 30 to 50</div>
+      </div>
+      <div style="text-align:center;font-size:14px;">&#x2B07;&#xFE0F; <span style="font-size:10px;font-weight:700;color:var(--ink-muted);">cascades to</span></div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;">Content Team OKR (your team)</div>
+        <div style="font-size:12px;color:var(--ink-soft);">O: Create an irresistible first-week learning journey</div>
+        <div style="font-size:11px;color:var(--ink-dim);">KR: Publish 5 beginner-optimized "quick win" lessons | KR: Lesson completion rate for Week 1 content reaches 80% | KR: "Song I know" available within first 3 lessons</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;text-align:center;">Each level's KRs feed the level above. Content team's work drives Product team's retention, which drives Company's MAU.</div>
+  </div>
+
+  <div class="insight"><h4>&#x1F4A1; Committed vs Aspirational</h4><p><strong>Committed OKRs</strong> (also called "rooftop" OKRs): Must hit 1.0. These are promises. "Ship GDPR compliance by March 31." <strong>Aspirational OKRs</strong> (also called "moonshot"): Expect 0.6-0.7. These push teams beyond comfort. "Achieve #1 App Store ranking." Label each OKR so everyone knows which type it is.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Anatomy</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Q2 OKRs for Skoove Content Team</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Susana's Team — Q2 2026 OKRs</h3>
+    <div style="display:grid;gap:14px;">
+      <div style="padding:16px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">Objective 1: Make every beginner feel like a musician in Week 1</div>
+        <div style="display:grid;gap:6px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR1:</strong> First-lesson completion rate: 40% &#x2192; 70%</span><span style="padding:3px 10px;background:var(--orange);border-radius:6px;font-size:10px;font-weight:800;">Aspirational</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR2:</strong> "Played a song I know" in first session: 0% &#x2192; 60%</span><span style="padding:3px 10px;background:var(--orange);border-radius:6px;font-size:10px;font-weight:800;">Aspirational</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR3:</strong> Publish 8 "quick win" beginner lessons</span><span style="padding:3px 10px;background:var(--mint);border-radius:6px;font-size:10px;font-weight:800;">Committed</span></div>
+        </div>
+      </div>
+      <div style="padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">Objective 2: Build a content engine that scales</div>
+        <div style="display:grid;gap:6px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.3);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR1:</strong> Content production time per lesson: 5 days &#x2192; 3 days</span><span style="padding:3px 10px;background:var(--orange);border-radius:6px;font-size:10px;font-weight:800;">Aspirational</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.3);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR2:</strong> Lesson quality score (internal review): avg 4.0 &#x2192; 4.5/5.0</span><span style="padding:3px 10px;background:var(--mint);border-radius:6px;font-size:10px;font-weight:800;">Committed</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.3);border-radius:8px;font-size:12px;align-items:center;"><span><strong>KR3:</strong> Establish reusable lesson template used for 80% of new content</span><span style="padding:3px 10px;background:var(--mint);border-radius:6px;font-size:10px;font-weight:800;">Committed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F517; How This Connects to Other Frameworks</h4><p><strong>North Star</strong> (Weekly Active Learners) = the shared output everyone contributes to. <strong>Input/Output</strong>: KR3 of Obj 1 is an input metric (lessons published). KR1 of Obj 1 is an output metric (completion rate). <strong>Sprints:</strong> Each KR breaks into sprint-level tasks — "This sprint we build the quick-win lesson template."</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Writing</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>OKR Builder</h2><p>Write and test your own OKR</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build an OKR</h3>
+    <div style="display:grid;gap:12px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">&#x1F3AF; Objective</span></label><input id="ok_obj" type="text" placeholder="Inspiring, qualitative goal (e.g., 'Delight new users in their first week')" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">KR 1</span></label><input class="ok_kr" type="text" placeholder="Measurable result (e.g., 'D7 retention from 20% to 35%')" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">KR 2</span></label><input class="ok_kr" type="text" placeholder="Measurable result" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">KR 3 (optional)</span></label><input class="ok_kr" type="text" placeholder="Measurable result" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeOKR()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F3AF; Test My OKR</button></div>
+    <div id="ok_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and pitfalls</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use OKRs When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Quarterly goal-setting and alignment</li>
+      <li>&#x2714;&#xFE0F; Multiple teams need to coordinate toward shared goals</li>
+      <li>&#x2714;&#xFE0F; PM interview asks about goal-setting or measuring success</li>
+      <li>&#x2714;&#xFE0F; Company needs focus — doing too many things at once</li>
+      <li>&#x2714;&#xFE0F; Translating strategy into measurable quarterly actions</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Be Careful When...</h3><ul>
+      <li>&#x274C; Pre-PMF startups (goals change too fast for quarterly cycles)</li>
+      <li>&#x274C; Tying OKRs to compensation (kills ambitious goal-setting)</li>
+      <li>&#x274C; Using KRs as task lists ("Ship feature X" is a task, not a result)</li>
+      <li>&#x274C; Setting 10+ objectives (defeats the purpose of focus)</li>
+      <li>&#x274C; Never reviewing mid-quarter (OKRs need check-ins)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--yellow);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">North Star</div><div style="font-size:12px;color:var(--ink-dim);">North Star = Objective. Input metrics = Key Results. Direct translation.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Input/Output</div><div style="font-size:12px;color:var(--ink-dim);">Outputs = Objectives. Inputs = Key Results. Counter-metrics = guardrails on KRs.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Scrum</div><div style="font-size:12px;color:var(--ink-dim);">OKRs set quarterly direction. Sprints execute toward those goals, 2 weeks at a time.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">RICE</div><div style="font-size:12px;color:var(--ink-dim);">RICE prioritizes the backlog. OKRs determine WHICH backlog items align with quarterly goals.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeOKR(){
+  const obj=document.getElementById('ok_obj').value.trim();
+  const krs=[...document.querySelectorAll('.ok_kr')].map(i=>i.value.trim()).filter(x=>x);
+  const r=document.getElementById('ok_result');
+  if(!obj){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Write your Objective first.</div>';return;}
+  let fb=[];
+  const hasNumber=/\d/.test(obj);
+  if(hasNumber) fb.push({t:'&#x26A0;&#xFE0F; Objective has numbers',m:'Objectives should be qualitative and inspirational. Move numbers to Key Results. "Delight users" not "Get 50K users."',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; Qualitative objective',m:'Good — it\'s inspirational, not a metric. The Key Results will make it measurable.',c:'var(--mint)'});
+  if(krs.length<2) fb.push({t:'&#x26A0;&#xFE0F; Need more Key Results',m:'2-4 KRs per objective. Each should measure a different dimension of success.',c:'var(--rose)'});
+  else fb.push({t:'&#x2705; '+krs.length+' Key Results',m:'Good coverage. Make sure each one is measurable (has a number).',c:'var(--mint)'});
+  const taskKrs=krs.filter(k=>k.toLowerCase().match(/ship|launch|build|create|design|implement|release/));
+  if(taskKrs.length>0) fb.push({t:'&#x1F6A9; Some KRs look like tasks',m:'"'+taskKrs[0]+'" — this describes an activity, not an outcome. Rewrite as the RESULT of that activity. "Ship redesign" &#x2192; "Onboarding completion rate reaches 70%."',c:'var(--rose)'});
+  const fromTo=krs.filter(k=>k.match(/from.*to|\d+%.*\d+%|\d+.*to.*\d+/i));
+  if(fromTo.length>0) fb.push({t:'&#x2705; "From X to Y" format detected',m:'Gold standard for KRs. Shows baseline and target. Easy to grade at quarter end.',c:'var(--mint)'});
+  else if(krs.length>=2) fb.push({t:'&#x1F4A1; Try "From X to Y" format',m:'Example: "D7 retention from 20% to 35%." This makes grading clear and shows how ambitious the target is.',c:'var(--sky)'});
+  r.innerHTML='<div style="padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;text-align:center;font-family:\'Lilita One\',sans-serif;font-size:15px;">I will '+obj+' as measured by...</div>'+fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"What is an Objective in OKRs?",o:["A measurable metric with a target number","A qualitative, inspiring goal that describes WHERE you want to go","A task list for the quarter","A performance review criteria"],a:1,e:"Objectives are qualitative and inspiring — 'Delight new users' not 'Get 50K users.' They describe direction, not numbers. Key Results add the numbers."},
+  {q:"What makes a good Key Result?",o:["It describes a task to complete ('Ship feature X')","It's a measurable outcome with a number ('D7 retention from 20% to 35%')","It's a list of activities the team will do","It describes the team's daily work"],a:1,e:"Key Results are OUTCOMES, not outputs. 'Ship redesigned onboarding' is a task. 'Onboarding completion rate reaches 70%' is an outcome. The 'from X to Y' format is gold standard."},
+  {q:"What score indicates success for aspirational OKRs?",o:["1.0 (100% completion)","0.0 (it's about the journey, not results)","0.6-0.7 (stretch goals should be hard to fully achieve)","0.5 (anything above is a bonus)"],a:2,e:"For aspirational/moonshot OKRs, 0.6-0.7 = success. If you always hit 1.0, you're not being ambitious enough. Committed OKRs should hit 1.0 though — they're promises."},
+  {q:"Why should OKRs NOT be tied to compensation?",o:["It's illegal in most countries","It makes people set safe, easy goals to protect their bonus instead of ambitious stretch goals","OKRs are too hard to measure accurately","Compensation should only be based on hours worked"],a:1,e:"Tying OKRs to bonuses kills the whole system. People sandbar: they set easy goals to guarantee their bonus. The point of OKRs is ambitious stretch goals. Keep them separate from performance reviews."},
+  {q:"How do OKRs cascade in an organization?",o:["CEO sets all OKRs for every team","Company OKRs → Team OKRs → Individual OKRs, each level supporting the one above","Each team sets independent OKRs with no connection","OKRs only exist at the company level"],a:1,e:"Company objective (become market leader) → Product team KR (D7 retention to 35%) → Content team KR (publish 8 quick-win lessons). Each level's work feeds the level above. This creates alignment without micromanagement."},
+  {q:"What's the connection between OKRs and North Star Metric?",o:["They're completely unrelated frameworks","North Star = your primary Objective, Input metrics = your Key Results","OKRs replace the North Star","North Star is for startups, OKRs are for enterprises"],a:1,e:"Direct mapping: North Star Metric becomes your Objective ('Increase Weekly Active Learners'). The input metrics that drive it become Key Results ('D7 retention from 20% to 35%', 'Publish 10 lessons/week'). They're the same system expressed differently."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F3AF; OKR master! You can set, cascade, and grade OKRs like a senior PM.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good foundation. Review outcomes vs outputs and the scoring system.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the Objective/KR distinction and common mistakes.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

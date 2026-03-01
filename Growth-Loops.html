@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Growth Loops — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e05555;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+.loop-arrow{display:flex;align-items:center;justify-content:center;width:40px;height:40px;font-size:22px;color:var(--ink-muted);}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4C8; Growth</div>
+  <h1>&#x1F504; Growth Loops</h1>
+  <p class="sub">Funnels are linear — loops compound. The output of one cycle becomes the input of the next. This is how products grow sustainably.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> A growth loop is a closed system where the <strong>output of one action feeds back as input</strong> for the next cycle. Unlike funnels (linear, leak), loops compound over time. Popularized by Reforge (Brian Balfour, Casey Winters).</p></div>
+</div>
+
+<!-- HERO: Loop Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="position:relative;width:280px;height:280px;margin:0 auto;">
+    <!-- Circular arrow implied by 3 nodes -->
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);padding:12px 18px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;z-index:2;">
+      <div style="font-size:18px;">&#x1F465;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;">New Users</div>
+    </div>
+    <!-- Arrow top-right to right -->
+    <div style="position:absolute;top:55px;right:22px;font-size:24px;transform:rotate(45deg);color:var(--ink-muted);">&#x27A1;&#xFE0F;</div>
+    <div style="position:absolute;top:50%;right:0;transform:translateY(-50%);padding:12px 18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;z-index:2;">
+      <div style="font-size:18px;">&#x2728;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;">Experience<br>Value</div>
+    </div>
+    <!-- Arrow right to bottom -->
+    <div style="position:absolute;bottom:55px;right:22px;font-size:24px;transform:rotate(135deg);color:var(--ink-muted);">&#x27A1;&#xFE0F;</div>
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:12px 18px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;z-index:2;">
+      <div style="font-size:18px;">&#x1F4E2;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;">Create Content<br>or Invite</div>
+    </div>
+    <!-- Arrow bottom to left -->
+    <div style="position:absolute;bottom:55px;left:22px;font-size:24px;transform:rotate(225deg);color:var(--ink-muted);">&#x27A1;&#xFE0F;</div>
+    <div style="position:absolute;top:50%;left:0;transform:translateY(-50%);padding:12px 18px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;z-index:2;">
+      <div style="font-size:18px;">&#x1F50D;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;">Others<br>Discover</div>
+    </div>
+    <!-- Arrow left to top -->
+    <div style="position:absolute;top:55px;left:22px;font-size:24px;transform:rotate(315deg);color:var(--ink-muted);">&#x27A1;&#xFE0F;</div>
+    <!-- Center label -->
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:8px 14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Lilita One',sans-serif;font-size:11px;z-index:3;">COMPOUNDS</div>
+  </div>
+  <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--ink-muted);font-weight:700;">Each cycle's output feeds the next cycle's input = compounding growth.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Loop Types</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Mechanics</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Loops vs Funnels</h2><p>Why compounding beats linear</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem with Funnels</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">AARRR is a funnel: users enter at the top, some leak out at each stage. To grow, you pour more in. It's <strong>linear</strong> — double the input, double the output (at best). Funnels don't explain how companies like Instagram, Slack, or Pinterest grew exponentially.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Growth Loops explain compounding. The <strong>output of one cycle becomes the input of the next</strong>. Each cycle is bigger than the last. 10 users create content that attracts 15, who create content that attracts 22, and so on.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;text-align:center;">
+      <div style="font-size:24px;margin-bottom:4px;">&#x1F4C9;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Funnel (Linear)</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">100 &#x2192; 50 &#x2192; 25 &#x2192; 12 &#x2192; 6</div>
+      <div style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Each stage loses users. Growth = pour more in.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;text-align:center;">
+      <div style="font-size:24px;margin-bottom:4px;">&#x1F504;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Loop (Compounding)</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">10 &#x2192; 15 &#x2192; 22 &#x2192; 33 &#x2192; 50</div>
+      <div style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Each cycle's output feeds the next. Growth = self-reinforcing.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Funnel = <strong>waterfall</strong> (water goes one direction, downhill). Loop = <strong>flywheel</strong> (each push makes the next push easier). Amazon's flywheel: lower prices &#x2192; more customers &#x2192; more sellers &#x2192; better selection &#x2192; lower prices...</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Loop Types &#x2192;</button></div>
+</div>
+
+<!-- S1: LOOP TYPES -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F3AF;</div><div class="sec-label"><h2>3 Types of Growth Loops</h2><p>Viral, Content, and Paid</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--purple);padding:20px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F4E2; 1. Viral Loop</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">Users invite or attract other users as a natural byproduct of using the product.</p>
+      <div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);margin-bottom:8px;">
+        <div style="font-size:12px;font-weight:700;text-align:center;">User signs up &#x2192; Invites friends &#x2192; Friends sign up &#x2192; They invite friends &#x2192; &#x1F504;</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;"><strong>Examples:</strong> WhatsApp (need contacts to use), Dropbox (share files = invite), Slack (invite team to collaborate). <strong>Key metric:</strong> Viral coefficient (K). K &gt; 1 = exponential growth.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--sky);padding:20px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F4DD; 2. Content Loop</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">Users create content that gets indexed/shared, attracting new users who create more content.</p>
+      <div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);margin-bottom:8px;">
+        <div style="font-size:12px;font-weight:700;text-align:center;">User creates content &#x2192; Content indexed by Google/social &#x2192; New user discovers it &#x2192; Signs up &#x2192; Creates content &#x2192; &#x1F504;</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;"><strong>Examples:</strong> Pinterest (pin images &#x2192; Google indexes &#x2192; new users find pins), Quora, Stack Overflow, YouTube. <strong>Key metric:</strong> Content created per user, SEO impressions.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--mint);padding:20px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F4B0; 3. Paid Loop</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">Revenue from users funds acquisition of more users, as long as LTV &gt; CAC.</p>
+      <div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);margin-bottom:8px;">
+        <div style="font-size:12px;font-weight:700;text-align:center;">Acquire user (paid) &#x2192; User pays subscription &#x2192; Revenue funds more ads &#x2192; Acquire more users &#x2192; &#x1F504;</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;"><strong>Examples:</strong> Netflix, most SaaS, Spotify. <strong>Key metric:</strong> LTV:CAC ratio &amp; payback period. <strong>Limitation:</strong> Only compounds if LTV grows faster than CAC (which gets harder at scale).</div>
+    </div>
+  </div>
+
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x26A0;&#xFE0F; Not All Loops Are Equal</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;"><strong>Viral loops</strong> are the most powerful (free, exponential). <strong>Content loops</strong> are durable but slow to build. <strong>Paid loops</strong> are the most common but the weakest — they stop when you stop spending. The best companies have <strong>multiple loops reinforcing each other</strong>.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Mechanics &#x2192;</button></div>
+</div>
+
+<!-- S2: MECHANICS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x2699;&#xFE0F;</div><div class="sec-label"><h2>Loop Mechanics</h2><p>What makes a loop actually work</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The 3 Parts of Every Loop</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:32px;height:32px;background:var(--orange);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;">1</div>
+        <div><div style="font-weight:800;font-size:14px;">Input</div><div style="font-size:12px;color:var(--ink-dim);">What enters the loop. New user, new content, new revenue. For the first cycle, this is "seeded" externally (marketing, PR, founder hustle).</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:32px;height:32px;background:var(--sky);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;">2</div>
+        <div><div style="font-weight:800;font-size:14px;">Action</div><div style="font-size:12px;color:var(--ink-dim);">What the user does inside the product that creates value for others. Shares, creates, invites, reviews, publishes.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:32px;height:32px;background:var(--mint);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;">3</div>
+        <div><div style="font-weight:800;font-size:14px;">Output &#x2192; New Input</div><div style="font-size:12px;color:var(--ink-dim);">The result of that action generates new input: new users discover, new content attracts, revenue funds more acquisition. This is the <strong>feedback mechanism</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F4CA; Measuring Loop Health</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F504; Cycle Time</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">How long does one full loop take? Instagram: minutes (post &#x2192; seen &#x2192; follow). Airbnb: weeks (stay &#x2192; review &#x2192; new booking). <strong>Shorter = faster compounding.</strong></div>
+      </div>
+      <div style="padding:14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F4C8; Conversion Rate</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">What % of output converts back to input? If 100 users create content that brings 30 new users, conversion = 30%. <strong>Higher = stronger compounding.</strong></div>
+      </div>
+      <div style="padding:14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F30A; Amplitude</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">How much output per input? If each user invites 3 people on average, amplitude = 3. But if only 20% accept, effective amplitude = 0.6.</div>
+      </div>
+      <div style="padding:14px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F6E1;&#xFE0F; Defensibility</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">Can competitors copy this loop? Content loops build SEO moats. Network effects build user moats. Paid loops have zero defensibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4A1; The Compounding Formula</h4>
+    <p><strong>Loop strength = Amplitude &#xD7; Conversion &#xF7; Cycle Time.</strong> To grow faster: increase how many people each user reaches (amplitude), improve % who convert (conversion), or shorten the time for one full cycle. Most teams only think about amplitude. The real leverage is often in <strong>reducing cycle time</strong>.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Loop Types</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Growth loops for Skoove / Trala</p></div></div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Skoove's Current &amp; Potential Loops</h3>
+    <div style="display:grid;gap:12px;">
+      <div style="padding:16px;background:rgba(196,181,253,.15);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x1F4B0; Active Loop: Paid Acquisition</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;margin-bottom:8px;">User subscribes ($9.99/mo) &#x2192; Revenue funds App Store ads &#x2192; New user installs &#x2192; Some subscribe &#x2192; &#x1F504;</div>
+        <div style="padding:6px 10px;background:var(--orange);border-radius:6px;font-size:10px;font-weight:700;display:inline-block;">Strength: Weak. Stops when you stop spending. CAC rising in music app category.</div>
+      </div>
+
+      <div style="padding:16px;background:rgba(141,216,248,.15);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x1F4E2; Potential Loop: Social Proof</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;margin-bottom:8px;">User hits milestone (first song!) &#x2192; App prompts "Share your progress" &#x2192; Posts video on Instagram/TikTok &#x2192; Friends see and think "I could do that" &#x2192; Download app &#x2192; &#x1F504;</div>
+        <div style="padding:6px 10px;background:var(--mint);border-radius:6px;font-size:10px;font-weight:700;display:inline-block;">Strength: Strong if activated. Free, authentic, emotional trigger. But requires investment in share UX.</div>
+      </div>
+
+      <div style="padding:16px;background:rgba(126,232,178,.15);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x1F4DD; Potential Loop: Content/SEO</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;margin-bottom:8px;">User learns "Für Elise" &#x2192; Skoove creates blog post "How to play Für Elise on piano" &#x2192; Ranks on Google &#x2192; Beginner finds it &#x2192; Downloads app &#x2192; Learns another song &#x2192; More content created &#x2192; &#x1F504;</div>
+        <div style="padding:6px 10px;background:var(--sky);border-radius:6px;font-size:10px;font-weight:700;display:inline-block;">Strength: Slow but durable. Builds SEO moat over time. Low marginal cost.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F50D; Strategic Insight</h4>
+    <p>Skoove is running the <strong>weakest loop</strong> (paid) as its primary growth engine. The social proof loop is the biggest untapped opportunity — music learning has a natural "look what I can do!" share trigger that most apps under-exploit. Investing in beautiful share UX + milestone moments could shift from paid to viral growth.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Mechanics</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Loop Builder</h2><p>Design your own growth loop</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Map Your Loop</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">Loop Type</span></label>
+        <select id="l_type" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;background:var(--white);">
+          <option value="">Select loop type...</option>
+          <option value="viral">Viral (users invite users)</option>
+          <option value="content">Content (users create discoverable content)</option>
+          <option value="paid">Paid (revenue funds acquisition)</option>
+        </select>
+      </div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">&#x1F465; Input</span></label><textarea id="l_input" rows="2" placeholder="What enters the loop? (e.g., 'New user signs up via App Store')" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">&#x2728; Action</span></label><textarea id="l_action" rows="2" placeholder="What does the user DO that creates value for others? (e.g., 'Records a progress video')" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;">&#x1F504; Output &#x2192; New Input</span></label><textarea id="l_output" rows="2" placeholder="How does the action's result become NEW input? (e.g., 'Video shared on TikTok → friends discover app → sign up')" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeLoop()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F504; Analyze My Loop</button></div>
+    <div id="loop_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="tip">&#x1F4A1; <strong>PM Interview version:</strong> "Instead of thinking linearly, I'd design a growth loop where [user action] naturally brings in new users. The loop is: [input] &#x2192; [action] &#x2192; [output feeds back]. I'd optimize for cycle time and conversion rate."</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Growth Loops When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Designing sustainable growth strategy</li>
+      <li>&#x2714;&#xFE0F; Current growth depends too heavily on paid ads</li>
+      <li>&#x2714;&#xFE0F; Product has natural share/invite triggers</li>
+      <li>&#x2714;&#xFE0F; PM interview asks "how would you grow this product?"</li>
+      <li>&#x2714;&#xFE0F; Building a growth model or financial projections</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip Growth Loops When...</h3><ul>
+      <li>&#x274C; Pre-product-market-fit (loops amplify what exists — good or bad)</li>
+      <li>&#x274C; Retention is broken (loops on leaky products = faster waste)</li>
+      <li>&#x274C; Need to diagnose WHERE growth is stuck (use AARRR first)</li>
+      <li>&#x274C; B2B enterprise with manual sales</li>
+      <li>&#x274C; Feature prioritization (use RICE/ICE)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:#ff6b6b;border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">AARRR</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Linear &#x2192; Circular:</strong> AARRR shows the funnel. Growth Loops show how the end (referral) feeds back to the start (acquisition).</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">North Star</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Loop &#x2192; Focus:</strong> Your North Star should be the key metric inside your strongest growth loop.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Input/Output</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Loop &#x2192; Levers:</strong> Input/Output metrics help you identify which step IN the loop to optimize.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeLoop(){
+  const type=document.getElementById('l_type').value;
+  const inp=document.getElementById('l_input').value.trim();
+  const act=document.getElementById('l_action').value.trim();
+  const out=document.getElementById('l_output').value.trim();
+  const r=document.getElementById('loop_result');
+  if(!type||!inp||!act||!out){r.innerHTML='<div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Fill in all 4 fields to get feedback.</div>';return;}
+  let fb=[];
+  // Check feedback connection
+  if(!out.toLowerCase().includes('sign'||'download'||'discover'||'find'||'join'||'new user'||'install')){
+    fb.push('&#x1F504; <strong>Check your feedback mechanism.</strong> Does the output clearly lead to NEW users entering the loop? The connection from output back to input is the critical link. Make it explicit: "...which causes [new users] to [enter the loop]."');
+  }
+  if(type==='paid'){
+    fb.push('&#x1F4B0; <strong>Paid loops have a ceiling.</strong> CAC typically rises as you scale (audience saturation). Consider: is there a viral or content loop you could layer on top? Even a small viral coefficient (K=0.2) reduces effective CAC by 20%.');
+  }
+  if(type==='viral'&&!act.toLowerCase().includes('invite')&&!act.toLowerCase().includes('share')&&!act.toLowerCase().includes('send')&&!act.toLowerCase().includes('post')){
+    fb.push('&#x1F4E2; <strong>Is the viral action natural?</strong> The strongest viral loops happen when sharing IS the product (Slack: invite to collaborate) not an add-on ("share with friends" button). Is the share action core to your product experience?');
+  }
+  if(type==='content'){
+    fb.push('&#x1F4DD; <strong>Content loops need indexing.</strong> The content users create must be discoverable — via Google, social algorithms, or platform search. Check: will your user-generated content rank or surface naturally?');
+  }
+  let html='<div style="padding:18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;margin-bottom:10px;">&#x1F504; <strong>Loop mapped!</strong> Type: <strong>'+type+'</strong>.</div>';
+  // Visual loop
+  html+='<div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);margin-bottom:10px;text-align:center;font-size:12px;font-weight:700;line-height:2;">'+inp+' &#x2192; '+act+' &#x2192; '+out+' &#x2192; &#x1F504; (new input)</div>';
+  fb.forEach(f=>{html+='<div style="padding:12px;background:var(--cream);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;">'+f+'</div>';});
+  html+='<div style="padding:10px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;margin-top:8px;">&#x1F4CA; <strong>Next step:</strong> Estimate cycle time (how long for one full loop?) and conversion rate (what % of output becomes new input?). Then test: can you shorten the cycle or improve conversion?</div>';
+  r.innerHTML=html;
+}
+
+const qs=[
+  {q:"What's the key difference between a funnel and a growth loop?",o:["Funnels are for B2C, loops are for B2B","Funnels are linear (leak), loops are circular (compound)","Funnels are old, loops are new","There is no difference, they're the same concept"],a:1,e:"Funnels are linear — users enter, some leak out. Loops are circular — the output feeds back as input, creating compounding growth. This is why loops scale better than funnels."},
+  {q:"What are the 3 types of growth loops?",o:["Viral, Content, Paid","Organic, Inorganic, Hybrid","Acquisition, Retention, Referral","Social, SEO, Email"],a:0,e:"Viral (users invite users), Content (users create discoverable content), Paid (revenue funds more acquisition). Viral is strongest, paid is weakest but most common."},
+  {q:"What makes a viral loop stronger than a paid loop?",o:["It's more expensive to set up","It's free and can compound exponentially — paid stops when spending stops","Viral loops have better branding","Paid loops only work for B2B"],a:1,e:"Viral loops are free and self-reinforcing. Paid loops have a hard dependency on budget — turn off ads, growth stops. Viral loops can achieve exponential growth with K > 1."},
+  {q:"What's the formula for loop strength?",o:["Users × Revenue ÷ Time","Amplitude × Conversion ÷ Cycle Time","Inputs + Outputs × Actions","K-factor × LTV ÷ CAC"],a:1,e:"Loop strength = Amplitude (how many people reached) × Conversion (% who convert) ÷ Cycle Time (how long per loop). Most teams focus on amplitude, but reducing cycle time is often the biggest lever."},
+  {q:"Why is running a growth loop on a product with bad retention a mistake?",o:["Because the loop will be too slow","Because loops amplify whatever exists — including churn. You'll burn users faster.","Because retention and loops are unrelated","Because investors prefer retention metrics"],a:1,e:"Loops amplify the current state. If your product retains 10% of users, a viral loop just churns through your addressable market faster. Fix retention FIRST, then amplify with loops."},
+  {q:"Pinterest's primary growth loop is best described as:",o:["Paid: revenue from ads funds user acquisition","Viral: users invite their friends to join","Content: users pin images → Google indexes them → new users find pins → sign up → pin more","Referral: existing users get rewards for inviting friends"],a:2,e:"Pinterest's flywheel is a content loop. Users pin images, Google indexes them (Pinterest is one of the highest-traffic sites from Google Image search), new users discover pins, sign up, and pin more content."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F504; Loop master! You can design and analyze compounding growth systems.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good foundation. Review loop types and the compounding formula.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on funnel vs loop difference and why retention comes first.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+',this)">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

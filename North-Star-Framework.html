@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>North Star Framework — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e05555;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4C8; Growth</div>
+  <h1>&#x2B50; North Star Framework</h1>
+  <p class="sub">One metric that captures your product's core value — the single number the whole team rallies around.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> The North Star Metric (NSM) is the <strong>single metric that best captures the core value your product delivers</strong>. It aligns every team toward the same goal. Surrounded by 3-5 input metrics that you can directly influence. Popularized by Sean Ellis / Amplitude.</p></div>
+</div>
+
+<!-- HERO: North Star Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="text-align:center;">
+    <!-- Star at top -->
+    <div style="display:inline-block;padding:14px 24px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);margin-bottom:6px;">
+      <div style="font-size:28px;">&#x2B50;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;">North Star Metric</div>
+      <div style="font-size:11px;color:var(--ink-dim);font-weight:600;">The ONE number everyone knows</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:3px;margin:6px 0;">
+      <div style="width:2px;height:20px;background:var(--border);"></div>
+      <div style="width:2px;height:20px;background:var(--border);"></div>
+      <div style="width:2px;height:20px;background:var(--border);"></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:6px;">DRIVEN BY</div>
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+      <div style="padding:10px 14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;">&#x1F4CA; Input 1</div>
+      <div style="padding:10px 14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;">&#x1F4CA; Input 2</div>
+      <div style="padding:10px 14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;">&#x1F4CA; Input 3</div>
+      <div style="padding:10px 14px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;">&#x1F4CA; Input 4</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Move the inputs &#x2192; the North Star moves &#x2192; the business grows.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Anatomy</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Find Yours</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>The Core Idea</h2><p>Why one metric rules them all</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem: Metric Overload</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Most teams track dozens of metrics. DAU, MAU, revenue, NPS, conversion rate, session time, churn, activation rate... When everything is important, <strong>nothing is important</strong>. Teams optimize in different directions. Engineering improves page speed. Marketing maximizes signups. Product chases engagement. Nobody is aligned.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The North Star Metric fixes this: <strong>one number that captures the value you deliver to customers</strong>. When this number goes up, your business is healthy. When it goes down, you have a problem. Everyone knows it, everyone moves it.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x274C; Bad: Revenue as North Star</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Revenue is an <em>output</em>. You can increase revenue short-term by raising prices or cutting costs — without delivering more value. Revenue doesn't tell you if customers are happy.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x2705; Good: "Lessons Completed" as North Star</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Captures value delivered: a completed lesson = learning happened. If this goes up, retention improves, users are happy, and revenue follows. It's a <em>leading indicator</em> of business health.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Like the actual North Star — sailors didn't need 50 stars to navigate. They needed <strong>one bright, fixed point</strong> to orient everything else. Your NSM is the one point the whole team navigates by.</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Anatomy &#x2192;</button></div>
+</div>
+
+<!-- S1: ANATOMY -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F52C;</div><div class="sec-label"><h2>Anatomy of a North Star</h2><p>The metric + its input constellation</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">A Good North Star Metric Must Be:</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:18px;min-width:28px;">&#x1F4B0;</div>
+        <div><div style="font-weight:800;font-size:13px;">1. Connected to Revenue</div><div style="font-size:12px;color:var(--ink-dim);">When NSM goes up, revenue eventually follows. If there's no connection to business outcomes, it's a vanity metric.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:18px;min-width:28px;">&#x2764;&#xFE0F;</div>
+        <div><div style="font-weight:800;font-size:13px;">2. Reflects Customer Value</div><div style="font-size:12px;color:var(--ink-dim);">Measures value <em>delivered to the user</em>, not extracted from them. "Lessons completed" (value delivered) not "subscription revenue" (value extracted).</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:18px;min-width:28px;">&#x1F4CF;</div>
+        <div><div style="font-weight:800;font-size:13px;">3. Measurable</div><div style="font-size:12px;color:var(--ink-dim);">You can track it weekly. "User happiness" isn't measurable. "Weekly active learners who complete 3+ lessons" is.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:18px;min-width:28px;">&#x1F3AF;</div>
+        <div><div style="font-weight:800;font-size:13px;">4. Actionable via Inputs</div><div style="font-size:12px;color:var(--ink-dim);">Teams can influence it through 3-5 input metrics they directly control. If you can't decompose it into levers, you can't move it.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x2B50; Famous North Star Examples</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:var(--ink);color:var(--white);"><th style="padding:10px 8px;text-align:left;">Company</th><th style="padding:10px 8px;text-align:left;">North Star Metric</th><th style="padding:10px 8px;text-align:left;">Why It Works</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:700;">Spotify</td><td style="padding:8px;">Time spent listening</td><td style="padding:8px;color:var(--ink-dim);">More listening = more value delivered = more retention = more revenue</td></tr>
+          <tr><td style="padding:8px;font-weight:700;">Airbnb</td><td style="padding:8px;">Nights booked</td><td style="padding:8px;color:var(--ink-dim);">Each booking = value for host AND guest = revenue</td></tr>
+          <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:700;">Slack</td><td style="padding:8px;">Messages sent in teams of 2+</td><td style="padding:8px;color:var(--ink-dim);">Team collaboration happening = product sticking = enterprise value</td></tr>
+          <tr><td style="padding:8px;font-weight:700;">Facebook</td><td style="padding:8px;">Daily Active Users (DAU)</td><td style="padding:8px;color:var(--ink-dim);">Daily engagement = ad inventory = revenue</td></tr>
+          <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:700;">Netflix</td><td style="padding:8px;">Hours watched per member/month</td><td style="padding:8px;color:var(--ink-dim);">Watching = getting value from subscription = lower churn</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F6A9; Common NSM Traps</h3>
+    <div style="display:grid;gap:6px;font-size:12px;color:var(--ink-soft);line-height:1.6;">
+      <div><strong>"Revenue" or "MRR":</strong> Output metric, not a value indicator. You can raise prices without delivering more value.</div>
+      <div><strong>"Total signups":</strong> Vanity metric. 1M signups with 5% retention means 950K people who left.</div>
+      <div><strong>"NPS":</strong> Lagging, survey-based, manipulable. Not measurable weekly.</div>
+      <div><strong>"DAU" (for most companies):</strong> Too vague unless engagement IS your product (social media). For a learning app, a user who opens and closes isn't getting value.</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Find Yours &#x2192;</button></div>
+</div>
+
+<!-- S2: FIND YOURS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F9ED;</div><div class="sec-label"><h2>Finding Your North Star</h2><p>The 3-step method</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Step-by-Step</h3>
+    <div style="display:grid;gap:12px;">
+      <div style="padding:16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Step 1: Define the Core Value</div>
+        <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Ask: <strong>"What moment makes a user say 'this is worth it'?"</strong> For Skoove: playing a recognizable song. For Uber: arriving at your destination. For Notion: organizing a project. This is the value event.</div>
+      </div>
+      <div style="padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Step 2: Make It Measurable</div>
+        <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Turn the value event into a countable metric with a <strong>time window</strong>. "Songs completed per week" not just "songs completed." The time window creates urgency and enables trend tracking.</div>
+      </div>
+      <div style="padding:16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Step 3: Identify 3-5 Input Metrics</div>
+        <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">What <strong>levers</strong> can teams pull to move the North Star? These become each team's focus areas. Engineering might own "app load time." Content might own "lessons available." Growth owns "new activated users."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F50D; The Litmus Test</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:12px;">Run your candidate NSM through these 4 checks:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;"><strong>&#x2705; Value test:</strong> If this metric doubles, are users genuinely getting more value?</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;"><strong>&#x2705; Revenue test:</strong> If this metric doubles, will revenue eventually follow?</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;"><strong>&#x2705; Game test:</strong> Is it hard to game? (Easy to game = "total pageviews." Hard to game = "lessons completed.")</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;"><strong>&#x2705; Lever test:</strong> Can you decompose it into 3-5 inputs that teams directly control?</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Pro Tip</h4><p>Your NSM will likely change as your product matures. Early-stage: focus on activation ("users who complete onboarding"). Growth-stage: focus on engagement ("weekly active learners"). Mature: focus on retention or monetization. Re-evaluate every 6-12 months.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Anatomy</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>North Star for Skoove / Trala</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Skoove's North Star</h3>
+    <div style="text-align:center;padding:20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
+      <div style="font-size:28px;">&#x2B50;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:20px;margin-bottom:4px;">Weekly Active Learners</div>
+      <div style="font-size:13px;color:var(--ink-soft);">Users who complete &#x2265;3 lessons per week</div>
+    </div>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:16px;"><strong>Why this works:</strong> Completing 3+ lessons/week means the user is learning (value delivered), building a habit (retention predictor), and progressing (engagement). It passes all 4 tests: value (yes, learning), revenue (retained learners convert), gameable (no, requires real engagement), decomposable (yes, see inputs below).</p>
+
+    <div style="font-weight:800;font-size:14px;margin-bottom:10px;">Input Metrics (the levers):</div>
+    <div style="display:grid;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="min-width:28px;font-size:16px;">&#x1F465;</div>
+        <div><div style="font-weight:700;font-size:12px;">New Activated Users / week</div><div style="font-size:11px;color:var(--ink-soft);">Users who complete their first lesson. <em>Owner: Growth team</em></div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="min-width:28px;font-size:16px;">&#x1F4DA;</div>
+        <div><div style="font-weight:700;font-size:12px;">Lessons Available (quality-reviewed)</div><div style="font-size:11px;color:var(--ink-soft);">More good content = more reasons to come back. <em>Owner: Content team</em></div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="min-width:28px;font-size:16px;">&#x1F504;</div>
+        <div><div style="font-weight:700;font-size:12px;">D7 Retention Rate</div><div style="font-size:11px;color:var(--ink-soft);">% of users who return 7 days after first use. <em>Owner: Product team</em></div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="min-width:28px;font-size:16px;">&#x23F1;&#xFE0F;</div>
+        <div><div style="font-weight:700;font-size:12px;">Avg. Lesson Completion Rate</div><div style="font-size:11px;color:var(--ink-soft);">% of started lessons that are finished. <em>Owner: UX/Product team</em></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F517; How the Inputs Connect</h4>
+    <p>More <strong>activated users</strong> (Input 1) who find <strong>quality content</strong> (Input 2) and <strong>come back after a week</strong> (Input 3) and <strong>finish what they start</strong> (Input 4) = more <strong>weekly active learners</strong> (North Star). Each team has a clear lever to pull. No confusion, no misalignment.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Find Yours</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>North Star Builder</h2><p>Define your own North Star + inputs</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build Your Constellation</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">&#x2B50; North Star Metric</span></label><input id="ns_metric" type="text" placeholder="e.g., 'Weekly Active Learners who complete 3+ lessons'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">Input 1</span></label><input id="ns_i1" type="text" placeholder="e.g., 'New activated users / week'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">Input 2</span></label><input id="ns_i2" type="text" placeholder="e.g., 'Content catalog size'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">Input 3</span></label><input id="ns_i3" type="text" placeholder="e.g., 'D7 retention rate'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;">Input 4 (optional)</span></label><input id="ns_i4" type="text" placeholder="e.g., 'Lesson completion rate'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeNS()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x2B50; Test My North Star</button></div>
+    <div id="ns_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use North Star When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Aligning cross-functional teams on one goal</li>
+      <li>&#x2714;&#xFE0F; Setting OKRs and quarterly goals</li>
+      <li>&#x2714;&#xFE0F; PM interview asks "how would you measure success?"</li>
+      <li>&#x2714;&#xFE0F; Building a product analytics dashboard</li>
+      <li>&#x2714;&#xFE0F; Annual planning — what's the one number we rally around?</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip North Star When...</h3><ul>
+      <li>&#x274C; Pre-product-market-fit (too early, the metric will change)</li>
+      <li>&#x274C; You need to diagnose WHERE growth is stuck (use AARRR)</li>
+      <li>&#x274C; Feature prioritization (use RICE/ICE instead)</li>
+      <li>&#x274C; Multiple products with different value props (need one NSM per product)</li>
+      <li>&#x274C; Short-term project decisions (NSM is long-term)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:#ff6b6b;border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">AARRR</div><div style="font-size:12px;color:var(--ink-dim);">AARRR shows all funnel stages. North Star picks which stage matters most RIGHT NOW.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Growth Loops</div><div style="font-size:12px;color:var(--ink-dim);">Your North Star should sit inside your strongest growth loop.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">OKRs</div><div style="font-size:12px;color:var(--ink-dim);">North Star = the Objective. Input metrics = Key Results. Direct translation.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Input/Output</div><div style="font-size:12px;color:var(--ink-dim);">Input/Output Metrics is how you decompose and operationalize your North Star.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeNS(){
+  const m=document.getElementById('ns_metric').value.trim();
+  const i1=document.getElementById('ns_i1').value.trim();
+  const i2=document.getElementById('ns_i2').value.trim();
+  const i3=document.getElementById('ns_i3').value.trim();
+  const i4=document.getElementById('ns_i4').value.trim();
+  const r=document.getElementById('ns_result');
+  if(!m){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Enter your North Star Metric first.</div>';return;}
+  let fb=[],inputs=[i1,i2,i3,i4].filter(x=>x);
+  const ml=m.toLowerCase();
+  // Trap detection
+  if(ml.includes('revenue')||ml.includes('mrr')||ml.includes('arr')||ml.includes('money')||ml.includes('sales')){
+    fb.push({t:'&#x26A0;&#xFE0F; Revenue-based NSM',m:'Revenue is an output metric. It measures value extracted, not value delivered. Ask: what user action LEADS to revenue? That\'s your real North Star.',c:'var(--rose)'});
+  }
+  if(ml.includes('signup')||ml.includes('download')||ml.includes('install')){
+    fb.push({t:'&#x26A0;&#xFE0F; Acquisition-based NSM',m:'Signups/downloads are vanity metrics. 1M signups with 5% retention = 950K lost users. Focus on what happens AFTER signup — the value moment.',c:'var(--rose)'});
+  }
+  if(ml.includes('nps')){
+    fb.push({t:'&#x26A0;&#xFE0F; Survey-based NSM',m:'NPS is lagging, survey-based, and not measurable weekly. It\'s a good supporting metric but not a North Star. Find a behavioral metric you can track daily.',c:'var(--orange)'});
+  }
+  if(ml.includes('week')||ml.includes('daily')||ml.includes('month')||ml.includes('per')){
+    fb.push({t:'&#x2705; Time-windowed — good!',m:'Including a time window (weekly/daily/monthly) makes it trackable and trend-able. Nice work.',c:'var(--mint)'});
+  } else {
+    fb.push({t:'&#x1F4A1; Add a time window',m:'Consider adding "per week" or "per month" to make it trackable over time. "Lessons completed per week" is better than just "lessons completed."',c:'var(--sky)'});
+  }
+  if(inputs.length<2){
+    fb.push({t:'&#x1F4A1; Need more inputs',m:'A strong North Star has 3-5 input metrics that teams can directly influence. Add more levers — what can each team do to move this number?',c:'var(--orange)'});
+  } else if(inputs.length>=3){
+    fb.push({t:'&#x2705; Good input coverage',m:inputs.length+' inputs defined. Make sure each has a clear team owner.',c:'var(--mint)'});
+  }
+  let html='<div style="padding:18px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;margin-bottom:10px;"><div style="font-size:24px;">&#x2B50;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:18px;">'+m+'</div>'+(inputs.length>0?'<div style="font-size:12px;color:var(--ink-dim);margin-top:6px;">Inputs: '+inputs.join(' · ')+'</div>':'')+'</div>';
+  fb.forEach(f=>{html+='<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>';});
+  html+='<div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;margin-top:8px;">&#x1F9EA; <strong>Run the 4 tests:</strong> Value (users get more value if this doubles?), Revenue (revenue follows?), Game (hard to fake?), Lever (decomposable into inputs?).</div>';
+  r.innerHTML=html;
+}
+
+const qs=[
+  {q:"What is the North Star Metric?",o:["The company's revenue target","The single metric that best captures core value delivered to users","The total number of users","Your most important KPI from last quarter"],a:1,e:"The NSM captures core VALUE DELIVERED — not revenue, not signups, not a random KPI. It's the one number that, when it goes up, means users are getting more value and the business is healthy."},
+  {q:"Why is 'revenue' a bad North Star Metric?",o:["Revenue is too hard to measure","Revenue measures value extracted, not value delivered — you can raise prices without making users happier","Revenue is only for finance teams","Revenue changes too slowly"],a:1,e:"Revenue is an output metric. You can increase it by raising prices, cutting costs, or dark patterns — none of which mean users are getting more value. The NSM should measure value delivered (leading indicator), not value extracted (lagging)."},
+  {q:"What are input metrics?",o:["The company's top-level KPIs","3-5 metrics that teams directly control that drive the North Star","Revenue and cost figures","The AARRR funnel stages"],a:1,e:"Input metrics are the LEVERS teams pull to move the North Star. Each team owns 1-2 inputs. When all inputs improve, the North Star moves. This is how alignment works — everyone has their piece."},
+  {q:"Spotify's North Star is 'time spent listening.' Why does this work?",o:["Because it measures how much ads they can show","Because more listening = more value delivered = better retention = sustainable revenue","Because Spotify's CEO said so","Because all streaming services use the same metric"],a:1,e:"Time spent listening captures the core exchange: users get value (music enjoyment) and Spotify gets a healthy business (retained subscribers, ad impressions). It passes the value test, revenue test, game test, and lever test."},
+  {q:"What 4 tests should a North Star Metric pass?",o:["Speed, accuracy, simplicity, relevance","Value (users benefit?), Revenue (business follows?), Game (hard to fake?), Lever (decomposable into inputs?)","Measurable, achievable, relevant, time-bound","Acquisition, activation, retention, revenue"],a:1,e:"The 4-test litmus: (1) Value — does doubling it mean users get more value? (2) Revenue — does revenue follow? (3) Game — is it hard to manipulate? (4) Lever — can you decompose into 3-5 input metrics teams control?"},
+  {q:"How does the North Star connect to OKRs?",o:["They're completely separate systems","North Star = the Objective, Input metrics = Key Results","OKRs replace the North Star","North Star is for startups, OKRs are for enterprises"],a:1,e:"Direct translation: the North Star IS your top-level Objective. The input metrics become your Key Results. 'Objective: Increase Weekly Active Learners to 50K. KR1: Improve D7 retention to 35%. KR2: Launch 20 new lessons. KR3: Grow activated users by 15%.'"}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x2B50; North Star navigator! You can define, test, and operationalize a North Star Metric.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Solid foundation. Review the 4 tests and input metrics.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on value vs revenue and the input metrics concept.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

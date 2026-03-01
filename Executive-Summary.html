@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Executive Summary — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(24px,5vw,38px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);}.j-btn.active{background:var(--ink);color:var(--white);}.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}.quiz-opt:hover{background:var(--cream-dark);}.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4AC; Communication</div>
+  <h1>&#x1F4CB; Executive Summary</h1>
+  <p class="sub">Distill complex information into a crisp one-pager for leaders. The document that gets read first and sometimes only.</p>
+</div>
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> An Executive Summary is a <strong>one-page document</strong> that gives leaders everything they need to make a decision: the recommendation, key data, risks, and ask. Written last but read first. It's the Pyramid Principle in document form.</p></div>
+</div>
+
+<!-- HERO: One-Pager Template -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:28px;">
+  <div style="max-width:400px;margin:0 auto;background:var(--white);border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;box-shadow:var(--shadow-sm);">
+    <div style="font-family:'Lilita One',sans-serif;font-size:12px;text-align:center;padding:6px;background:var(--yellow);border:2px solid var(--border);border-radius:6px;margin-bottom:8px;">RECOMMENDATION</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+      <div style="padding:6px;background:var(--sky);border:1px solid var(--border);border-radius:4px;font-size:8px;font-weight:800;text-align:center;">CONTEXT</div>
+      <div style="padding:6px;background:var(--orange);border:1px solid var(--border);border-radius:4px;font-size:8px;font-weight:800;text-align:center;">KEY DATA</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+      <div style="padding:6px;background:var(--mint);border:1px solid var(--border);border-radius:4px;font-size:8px;font-weight:800;text-align:center;">OPTIONS</div>
+      <div style="padding:6px;background:var(--rose);border:1px solid var(--border);border-radius:4px;font-size:8px;font-weight:800;text-align:center;">RISKS</div>
+    </div>
+    <div style="padding:6px;background:var(--purple);border:2px solid var(--border);border-radius:6px;font-size:8px;font-weight:800;text-align:center;">ASK / NEXT STEPS</div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">One page. Six sections. Everything a leader needs to decide.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>6 Sections</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Writing Tips</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why One-Pagers?</h2><p>How leaders actually read</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Reality of Executive Attention</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Executives have 50+ decisions per week. They don't read 10-page docs. They scan the first page. If it's clear and compelling, they approve or ask questions. If it's unclear, they skip it or ask you to redo it.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The Executive Summary is the <strong>most important page</strong> of any document. It's written last (after you've done all the analysis) but read first (and sometimes only). Your 50-page research becomes a 1-page decision tool.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;margin-bottom:4px;">&#x274C; The Info Dump</div>
+      <div style="font-size:11px;color:var(--ink-soft);">10-page doc. Conclusion on page 8. No clear recommendation. Leader has to read everything to understand the ask. Gets deprioritized.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;margin-bottom:4px;">&#x2705; The Executive Summary</div>
+      <div style="font-size:11px;color:var(--ink-soft);">1 page. Recommendation in first sentence. Key data. Options. Risks. Clear ask. Leader decides in 3 minutes. Full analysis is an appendix if they want depth.</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F9E0; The Amazon Approach</h4><p>Amazon famously uses 6-page memos read in silence at the start of meetings. Even those begin with the executive summary. Jeff Bezos: <em>"If the summary is good, the details will follow."</em> The discipline of compressing your thinking to one page forces clarity.</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">6 Sections &#x2192;</button></div>
+</div>
+
+<!-- S1: 6 SECTIONS -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F4CB;</div><div class="sec-label"><h2>The 6 Sections</h2><p>Anatomy of a one-pager</p></div></div>
+  <div style="display:grid;gap:10px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--yellow);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">1. Recommendation (2-3 sentences)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">What you're proposing and why. First paragraph, first sentence. "I recommend we invest in Practice Mode for Trala to improve D30 retention from 8% to 16%." If they read nothing else, they have the answer.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">2. Context (3-4 sentences)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Why this matters now. The problem or opportunity. Keep it brief &#x2014; just enough for someone who hasn't been following the project to understand. Use SCQA format from Pyramid Principle.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">3. Key Data (3-5 data points)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">The evidence that supports your recommendation. Not all data &#x2014; the DECISIVE data. "D30 retention: 8% (benchmark: 16%). 70% drop-off after lesson completion. Beta test: 3x practice frequency with Practice Mode."</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">4. Options Considered (2-3 options)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Show you evaluated alternatives. "Option A: Full practice suite (12 weeks, &#x20AC;180K). Option B: MVP practice mode (6 weeks, &#x20AC;80K) &#x2190; recommended. Option C: Do nothing (lose &#x20AC;84K/month in churn)." Leaders want to see you've thought broadly.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">5. Risks &amp; Mitigations (2-3 risks)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">What could go wrong and how you'd handle it. "Risk: Audio engine can't handle tempo changes. Mitigation: Prototype tested with existing engine; fallback is fixed-speed practice." Acknowledging risks builds trust.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--purple);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;">6. Ask / Next Steps (1-2 sentences)</div>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">What you need from the reader. Be specific. "Requesting: 1 designer + 2 engineers for 6-week cycle starting March 15. Decision needed by March 8." Never leave the ask ambiguous.</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Writing Tips &#x2192;</button></div>
+</div>
+
+<!-- S2: WRITING TIPS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x270D;&#xFE0F;</div><div class="sec-label"><h2>Writing Tips</h2><p>What separates good from great</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2705; Write it LAST, read it FIRST</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Do all your analysis first. Then compress into 1 page. The exec summary is the distillation, not the starting point. You can't summarize what you haven't fully thought through.</div>
+    </div>
+    <div class="c-card" style="background:var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2705; One page means ONE PAGE</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">If it spills to page 2, you haven't compressed enough. Cut context (they know more than you think). Cut redundant data. Remove qualifiers. Every sentence must earn its space.</div>
+    </div>
+    <div class="c-card" style="background:var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2705; Use the "So What?" test</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">For every sentence, ask: "So what? Why does the reader care?" If a data point doesn't drive toward your recommendation, cut it. "Our NPS is 42" &#x2192; so what? "Our NPS dropped from 58 to 42 after the redesign" &#x2192; that matters.</div>
+    </div>
+    <div class="c-card" style="background:var(--pink);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2705; Bold the scannable path</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">A reader scanning your one-pager should get the story from just the bold text. Bold: recommendation, key numbers, option names, the ask. Reading only the bold should take 30 seconds and convey the core message.</div>
+    </div>
+  </div>
+  <div class="c-card" style="background:var(--rose);">
+    <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; Common Mistakes</div>
+    <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;">
+      <strong>Burying the recommendation</strong> &#x2014; it goes FIRST, not after context.<br>
+      <strong>Including ALL data</strong> &#x2014; only the 3-5 points that drive the decision.<br>
+      <strong>No clear ask</strong> &#x2014; "thoughts?" is not an ask. "Approve &#x20AC;80K budget by March 8" is.<br>
+      <strong>Hedging language</strong> &#x2014; "We might want to consider..." &#x2192; "I recommend we..."
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; 6 Sections</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Trala Practice Mode one-pager</p></div></div>
+  <div class="c-card" style="background:var(--white);border:var(--bw) solid var(--border);">
+    <div style="text-align:center;font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border);">&#x1F4CB; EXECUTIVE SUMMARY: Trala Practice Mode</div>
+    <div style="display:grid;gap:10px;font-size:12px;">
+      <div style="padding:10px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Recommendation:</strong> Launch Practice Mode MVP (tempo control, section looping, mistake heatmaps) in a 6-week cycle to improve D30 retention from 8% to target 16%. Estimated impact: &#x20AC;84K/month recovered in reduced churn.</div>
+      <div style="padding:10px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Context:</strong> Trala's D30 retention (8%) is half the music ed benchmark (16%). 70% of users who complete a lesson never practice it. The current "Practice" button just replays the lesson. Without structured practice, users don't build muscle memory and churn at week 3.</div>
+      <div style="padding:10px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Key Data:</strong> D30 retention: <strong>8%</strong> (benchmark: 16%). Lesson replay rate for L3-5: <strong>4x higher</strong> than other lessons (users WANT to review). Beta test (n=50): practice frequency <strong>tripled</strong>, completion rate up <strong>25%</strong>. Engineering estimate: <strong>6 weeks</strong>, reuses existing audio engine.</div>
+      <div style="padding:10px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Options:</strong> A) Full practice suite (12 wks, &#x20AC;180K) &#x2014; too broad for first iteration. <strong>B) MVP practice mode (6 wks, &#x20AC;80K) &#x2190; recommended</strong> &#x2014; validates concept, fastest to impact. C) Do nothing &#x2014; &#x20AC;84K/month continues to churn.</div>
+      <div style="padding:10px;background:var(--rose);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Risks:</strong> 1) Tempo changes may cause audio sync issues &#x2192; prototype tested successfully with existing engine. 2) Practice adoption may be low &#x2192; progressive onboarding + in-app prompts planned. 3) Metric may not move enough &#x2192; built-in A/B test from day 1.</div>
+      <div style="padding:10px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Ask:</strong> Approve 1 designer + 2 engineers for 6-week cycle starting March 15. Decision needed by March 8. Full analysis available in appendix doc.</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Why This Works</h4><p>A CPO reads this in 3 minutes and has everything: the recommendation, the evidence, the options, the risks, and the specific ask. No need to read a 20-page doc. The appendix exists for anyone who wants to go deeper.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Writing Tips</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>One-Pager Builder</h2><p>Draft your executive summary</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build Your Executive Summary</h3>
+    <div style="display:grid;gap:10px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:12px;display:block;margin-bottom:4px;"><span style="padding:2px 8px;background:var(--yellow);border-radius:4px;">Recommendation</span></label><textarea id="ex_rec" rows="2" placeholder="What you recommend and why, in 2-3 sentences." style="width:100%;padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:12px;display:block;margin-bottom:4px;"><span style="padding:2px 8px;background:var(--sky);border-radius:4px;">Context</span></label><textarea id="ex_ctx" rows="2" placeholder="Why this matters now (3-4 sentences)." style="width:100%;padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:12px;display:block;margin-bottom:4px;"><span style="padding:2px 8px;background:var(--orange);border-radius:4px;">Key Data</span></label><textarea id="ex_dat" rows="2" placeholder="3-5 decisive data points." style="width:100%;padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:12px;display:block;margin-bottom:4px;"><span style="padding:2px 8px;background:var(--purple);border-radius:4px;">Ask / Next Steps</span></label><textarea id="ex_ask" rows="1" placeholder="Specific request + deadline." style="width:100%;padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeExec()" style="padding:12px 28px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F4CB; Review My Summary</button></div>
+    <div id="ex_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>The doc that opens every door</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Exec Summary When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Product proposals needing leadership approval</li>
+      <li>&#x2714;&#xFE0F; Quarterly business reviews</li>
+      <li>&#x2714;&#xFE0F; PRDs (as the first page)</li>
+      <li>&#x2714;&#xFE0F; Post-mortems and retrospective reports</li>
+      <li>&#x2714;&#xFE0F; Any doc that will be shared upward in the org</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip Exec Summary When...</h3><ul>
+      <li>&#x274C; Quick Slack updates (use Pyramid directly)</li>
+      <li>&#x274C; Interview answers (use STAR)</li>
+      <li>&#x274C; Presentations (use Narrative Arc)</li>
+      <li>&#x274C; Internal team docs that don't go to leadership</li>
+      <li>&#x274C; Brainstorming or exploration docs</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Pyramid</div><div style="font-size:12px;color:var(--ink-dim);">Exec Summary IS a Pyramid in document form. Recommendation = top. Sections = grouped reasons. Data = evidence.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">STAR</div><div style="font-size:12px;color:var(--ink-dim);">Your STAR stories can become exec summaries for portfolio case studies. S+T = Context, A = Options + Recommendation, R = Key Data.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Narrative Arc</div><div style="font-size:12px;color:var(--ink-dim);">Present the Narrative Arc in the meeting, then follow up with the Exec Summary doc. Spoken story + written one-pager = full coverage.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeExec(){
+  const rec=document.getElementById('ex_rec').value.trim(),ctx=document.getElementById('ex_ctx').value.trim(),dat=document.getElementById('ex_dat').value.trim(),ask=document.getElementById('ex_ask').value.trim();
+  const el=document.getElementById('ex_result');
+  if(!rec){el.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Add your recommendation first.</div>';return;}
+  let fb=[];
+  if(rec.toLowerCase().startsWith('i recommend')||rec.toLowerCase().startsWith('we should')) fb.push({t:'&#x2705; Direct recommendation',m:'Strong opener. The reader knows your position immediately.',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Lead with "I recommend..."',m:'Start the first sentence with a clear recommendation. No hedging.',c:'var(--sky)'});
+  if(dat&&/\d/.test(dat)) fb.push({t:'&#x2705; Data includes numbers',m:'Quantified evidence supports your recommendation.',c:'var(--mint)'});
+  else fb.push({t:'&#x26A0;&#xFE0F; Add numbers to Key Data',m:'Include 3-5 decisive data points with specific numbers.',c:'var(--orange)'});
+  if(!ask) fb.push({t:'&#x26A0;&#xFE0F; Missing the Ask',m:'Every exec summary needs a specific ask: what you need, from whom, by when.',c:'var(--rose)'});
+  else if(ask.toLowerCase().includes('by ')||ask.toLowerCase().includes('deadline')||ask.toLowerCase().includes('march')||ask.toLowerCase().includes('date')) fb.push({t:'&#x2705; Ask has a deadline',m:'Specific ask with timeline. Leaders can act on this.',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Add a deadline to your Ask',m:'"Approve by March 8" is better than "please review when convenient."',c:'var(--sky)'});
+  const totalWords=(rec+' '+ctx+' '+dat+' '+ask).split(/\s+/).length;
+  if(totalWords>400) fb.push({t:'&#x26A0;&#xFE0F; Too long (~'+totalWords+' words)',m:'Target 250-350 words for a one-pager. Cut context first &#x2014; leaders know more than you think.',c:'var(--orange)'});
+  el.innerHTML=fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> &#x2014; '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"When should you WRITE an executive summary?",o:["First, before doing any analysis","Last, after completing all your analysis &#x2014; it's the distillation, not the starting point","In the middle of the project","Only when asked by a manager"],a:1,e:"Write it LAST (after you've done all the thinking) but position it FIRST in the document. You can't summarize what you haven't fully analyzed. The exec summary is the compression of your complete work."},
+  {q:"What goes in the FIRST sentence of an exec summary?",o:["Background context about the project","A question to engage the reader","Your recommendation &#x2014; the most important point","A summary of the data"],a:2,e:"Recommendation first. Always. 'I recommend we launch Practice Mode to improve D30 retention.' If the reader only reads one sentence, they have your answer. This is Pyramid Principle applied to documents."},
+  {q:"How many data points should a Key Data section include?",o:["All available data for completeness","3-5 decisive data points that drive the recommendation","Exactly 10 data points","Just 1 key metric"],a:1,e:"3-5 decisive data points. Not all data &#x2014; the data that MATTERS for the decision. Each point should pass the 'So what?' test: does this data point help the reader decide?"},
+  {q:"What makes a good 'Ask' section?",o:["'Let me know your thoughts'","'Please review and approve when convenient'","'Approve 1 designer + 2 engineers for 6 weeks, starting March 15. Decision by March 8.'","'We need resources'"],a:2,e:"Specific: what resources, how much, when starting. Deadline: decision needed by when. This removes ambiguity and makes it easy for leaders to say yes or no. 'Thoughts?' is not an ask."},
+  {q:"Why include 'Options Considered' in an exec summary?",o:["To pad the document and make it look thorough","It's not necessary &#x2014; just present your recommendation","To show you evaluated alternatives, which builds credibility and helps leaders feel confident in the recommendation","To give leaders more choices so they can decide themselves"],a:2,e:"Showing alternatives demonstrates thoroughness and makes the recommended option stronger by contrast. 'We considered X (too expensive), Y (too risky), and Z (recommended, best balance).' This builds trust in your judgment."},
+  {q:"An exec summary is longer than one page. What do you cut first?",o:["The recommendation &#x2014; they can infer it","Context &#x2014; leaders usually know more background than you think","Key Data &#x2014; they don't need numbers","The Ask &#x2014; they know what you want"],a:1,e:"Cut Context first. Leaders often already know the background. Then trim data to only the most decisive points. Never cut the Recommendation or the Ask &#x2014; those are the two most important parts."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F4CB; Executive communication ready! Your one-pagers will get decisions fast.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Solid foundation. Practice cutting to one page and leading with the recommendation.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the 6 sections and the "So What?" test.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

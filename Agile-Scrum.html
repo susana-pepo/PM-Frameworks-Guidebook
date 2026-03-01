@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Agile / Scrum — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#8b5cf6;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x2699;&#xFE0F; Execution</div>
+  <h1>&#x1F504; Agile / Scrum</h1>
+  <p class="sub">Iterative delivery in short cycles. Ship small, learn fast, adapt continuously. The most common framework in product teams.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> Scrum is a framework for delivering work in <strong>short, fixed-length cycles called sprints</strong> (usually 2 weeks). Each sprint has clear roles, ceremonies, and outputs. The goal: ship something usable every sprint and learn from it.</p></div>
+</div>
+
+<!-- HERO: Sprint Cycle Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;">
+    <div style="padding:12px 16px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-size:14px;">&#x1F4CB;</div><div style="font-size:10px;font-weight:800;">Backlog</div></div>
+    <div style="font-size:18px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="padding:12px 16px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-size:14px;">&#x1F3AF;</div><div style="font-size:10px;font-weight:800;">Sprint<br>Planning</div></div>
+    <div style="font-size:18px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="padding:16px 20px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;box-shadow:var(--shadow-sm);"><div style="font-size:18px;">&#x1F6E0;&#xFE0F;</div><div style="font-family:'Lilita One',sans-serif;font-size:13px;">2-WEEK<br>SPRINT</div><div style="font-size:9px;color:var(--ink-dim);margin-top:2px;">Daily standups</div></div>
+    <div style="font-size:18px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="padding:12px 16px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-size:14px;">&#x1F680;</div><div style="font-size:10px;font-weight:800;">Sprint<br>Review</div></div>
+    <div style="font-size:18px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="padding:12px 16px;background:var(--pink);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-size:14px;">&#x1F50D;</div><div style="font-size:10px;font-weight:800;">Retro</div></div>
+    <div style="font-size:18px;color:var(--ink-muted);">&#x21A9;&#xFE0F;</div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Plan &#x2192; Build &#x2192; Review &#x2192; Reflect &#x2192; Repeat. Every 2 weeks.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Roles</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Sprint Cycle</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Agile vs Scrum</h2><p>The philosophy and the framework</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Agile = Mindset. Scrum = Method.</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;"><strong>Agile</strong> is a philosophy: build iteratively, respond to change, prioritize working software over documentation, collaborate with customers. It's captured in the Agile Manifesto (2001).</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;"><strong>Scrum</strong> is the most popular implementation of Agile. It gives you specific roles (PO, Scrum Master, Dev Team), ceremonies (standup, planning, review, retro), and artifacts (backlog, sprint backlog, increment). Think of Agile as "eating healthy" and Scrum as "a specific meal plan."</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x274C; Waterfall (Before Agile)</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Plan everything upfront &#x2192; Design &#x2192; Build all of it &#x2192; Test &#x2192; Launch. Takes months. If requirements change? Start over. Learning happens at the END.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x2705; Agile/Scrum</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Plan a little &#x2192; Build a little &#x2192; Ship it &#x2192; Get feedback &#x2192; Adapt. Every 2 weeks. Learning happens EVERY sprint. Requirements can change between sprints.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; The 4 Agile Values</h4>
+    <p><strong>Individuals &amp; interactions</strong> over processes &amp; tools. <strong>Working software</strong> over comprehensive documentation. <strong>Customer collaboration</strong> over contract negotiation. <strong>Responding to change</strong> over following a plan. The items on the right have value, but we value the items on the left more.</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Roles &#x2192;</button></div>
+</div>
+
+<!-- S1: ROLES & CEREMONIES -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F465;</div><div class="sec-label"><h2>Scrum Roles &amp; Ceremonies</h2><p>The people and the rituals</p></div></div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F465; The 3 Roles</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:24px;min-width:32px;">&#x1F451;</div>
+        <div><div style="font-weight:800;font-size:14px;">Product Owner (PO)</div><div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Owns the <strong>what</strong> and <strong>why</strong>. Maintains the product backlog, prioritizes work, writes user stories, represents the customer. Decides what to build and in what order. <strong>This is you (or your future role).</strong></div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:24px;min-width:32px;">&#x1F6E1;&#xFE0F;</div>
+        <div><div style="font-weight:800;font-size:14px;">Scrum Master</div><div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Owns the <strong>process</strong>. Removes blockers, facilitates ceremonies, coaches the team on Scrum practices, protects the team from interruptions. NOT a project manager — a servant-leader.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:24px;min-width:32px;">&#x1F4BB;</div>
+        <div><div style="font-weight:800;font-size:14px;">Development Team</div><div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Owns the <strong>how</strong>. Cross-functional (devs, designers, QA). Self-organizing — they decide HOW to deliver the sprint goals. Usually 3-9 people.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F4C5; The 5 Ceremonies</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);display:flex;gap:10px;">
+        <div style="min-width:80px;font-weight:800;font-size:11px;color:var(--ink);">&#x1F4CB; Backlog Refinement</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">PO + team review upcoming stories, clarify requirements, estimate effort. Ongoing, ~1h/week. Makes planning smoother.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);display:flex;gap:10px;">
+        <div style="min-width:80px;font-weight:800;font-size:11px;color:var(--ink);">&#x1F3AF; Sprint Planning</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">Start of sprint. PO presents priorities, team selects what they can deliver. Output: sprint goal + sprint backlog. ~2h for a 2-week sprint.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);display:flex;gap:10px;">
+        <div style="min-width:80px;font-weight:800;font-size:11px;color:var(--ink);">&#x2600;&#xFE0F; Daily Standup</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">15 min, every day. Each person: What I did yesterday, what I'll do today, any blockers. NOT a status report to the manager — it's team coordination.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);display:flex;gap:10px;">
+        <div style="min-width:80px;font-weight:800;font-size:11px;color:var(--ink);">&#x1F680; Sprint Review</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">End of sprint. Team demos working software to stakeholders. Get feedback. PO accepts/rejects work. ~1h.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);display:flex;gap:10px;">
+        <div style="min-width:80px;font-weight:800;font-size:11px;color:var(--ink);">&#x1F50D; Retrospective</div>
+        <div style="font-size:11px;color:var(--ink-dim);line-height:1.5;">After review. Team only. What went well? What didn't? What to improve? Commit to 1-2 action items. The continuous improvement engine. ~1h.</div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Sprint Cycle &#x2192;</button></div>
+</div>
+
+<!-- S2: SPRINT CYCLE -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F504;</div><div class="sec-label"><h2>The Sprint Cycle</h2><p>Artifacts and flow</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">The 3 Artifacts</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:14px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">&#x1F4CB; Product Backlog</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">The master list of everything to build, owned by PO. Ordered by priority. Items near the top are refined and ready; bottom items are vague and far out. It's a <strong>living document</strong> — always changing.</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">&#x1F3AF; Sprint Backlog</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Subset of the product backlog selected for THIS sprint + a plan. Owned by the dev team. Once sprint starts, no new items added (protect the sprint). If scope must change, renegotiate with PO.</div>
+      </div>
+      <div style="padding:14px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">&#x1F680; Increment</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">The working, shippable product at the end of the sprint. Must meet the "Definition of Done" (DoD). Each sprint adds to the previous increments. The increment is what you demo at sprint review.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F4DD; User Stories</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:12px;">The standard format for backlog items. Written from the user's perspective:</p>
+    <div style="padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:10px;">
+      As a [user type], I want to [action] so that [benefit].
+    </div>
+    <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;">
+      <strong>Example:</strong> "As a piano beginner, I want to see my progress after each lesson so that I feel motivated to continue practicing."<br><br>
+      <strong>Acceptance criteria:</strong> Clear, testable conditions that define "done" for this story. "Progress bar updates after lesson completion. Shows % complete for current course. Includes streak counter."
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F4CA; Estimation: Story Points</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">Teams estimate effort using relative sizing (story points on Fibonacci: 1, 2, 3, 5, 8, 13). A "5" is roughly twice as complex as a "3." Points measure <strong>complexity + uncertainty</strong>, not hours.</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <div style="padding:8px 14px;background:var(--mint);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:800;">1-2: Small, clear</div>
+      <div style="padding:8px 14px;background:var(--sky);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:800;">3-5: Medium, some unknowns</div>
+      <div style="padding:8px 14px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:800;">8: Large, risky</div>
+      <div style="padding:8px 14px;background:var(--rose);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:800;">13+: Too big, break it down</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Velocity</h4><p>Velocity = total story points completed per sprint. After 3-5 sprints, you have a reliable average. This helps predict how much the team can deliver in future sprints. <strong>Velocity is for planning, NOT for performance reviews.</strong> Using it as a productivity metric destroys trust.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Roles</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>A Trala sprint in action</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3BB; Sprint 14: "Improve First-Session Experience"</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F3AF; Sprint Goal</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Reduce time-to-first-note from 4 minutes to under 90 seconds for new Trala users.</div>
+      </div>
+      <div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:6px;">&#x1F4CB; Sprint Backlog (28 points)</div>
+        <div style="display:grid;gap:4px;font-size:11px;">
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>Skip instrument setup for first lesson</span><span style="padding:2px 8px;background:var(--mint);border-radius:4px;font-weight:800;">5 pts</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>Inline tuning check (no separate screen)</span><span style="padding:2px 8px;background:var(--orange);border-radius:4px;font-weight:800;">8 pts</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>Auto-play demo of first exercise</span><span style="padding:2px 8px;background:var(--sky);border-radius:4px;font-weight:800;">5 pts</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>"Your first note!" celebration animation</span><span style="padding:2px 8px;background:var(--sky);border-radius:4px;font-weight:800;">3 pts</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>Analytics: track time-to-first-note</span><span style="padding:2px 8px;background:var(--mint);border-radius:4px;font-weight:800;">3 pts</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--white);border-radius:6px;"><span>Bug: audio latency on Android 12+</span><span style="padding:2px 8px;background:var(--rose);border-radius:4px;font-weight:800;">4 pts</span></div>
+        </div>
+      </div>
+      <div style="padding:14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F680; Sprint Review Outcome</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Demoed to stakeholders. Time-to-first-note reduced from 4 min to 1:15. Android bug fixed. Celebration animation got great feedback from Head of Design. 26/28 points completed (inline tuning partially done, carries to Sprint 15).</div>
+      </div>
+      <div style="padding:14px;background:var(--pink);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F50D; Retro Highlights</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>Good:</strong> Clear sprint goal kept everyone focused. Pairing on the tuning feature unblocked progress. <strong>Improve:</strong> QA started too late — should start testing Day 3, not Day 8. <strong>Action:</strong> Add "QA handoff" milestone to mid-sprint.</div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Sprint Cycle</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Sprint Planner</h2><p>Plan your own sprint</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build a Sprint</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">&#x1F3AF; Sprint Goal</span></label><input id="sp_goal" type="text" placeholder="One sentence: what will be true at the end of this sprint?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">&#x1F4CB; Top 3 User Stories</span></label><textarea id="sp_stories" rows="4" placeholder="1. As a [user], I want [action] so that [benefit]&#10;2. As a [user], I want [action] so that [benefit]&#10;3. As a [user], I want [action] so that [benefit]" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">&#x1F4CA; Team Velocity</span></label><input id="sp_vel" type="number" placeholder="Average story points per sprint (e.g., 30)" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeSprint()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F504; Review My Sprint</button></div>
+    <div id="sp_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="tip">&#x1F4A1; <strong>PM Interview:</strong> "I'd structure work in 2-week sprints with a clear goal tied to our North Star input metric. Each sprint includes a demo to stakeholders and a retro so the team continuously improves."</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and alternatives</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Scrum When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Cross-functional team of 3-9 people</li>
+      <li>&#x2714;&#xFE0F; Requirements are evolving or uncertain</li>
+      <li>&#x2714;&#xFE0F; You need regular stakeholder feedback</li>
+      <li>&#x2714;&#xFE0F; Team needs structure but also flexibility</li>
+      <li>&#x2714;&#xFE0F; Most software product teams</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Consider Alternatives When...</h3><ul>
+      <li>&#x274C; Team &lt; 3 people (too much ceremony overhead)</li>
+      <li>&#x274C; Work is mostly support/maintenance (use Kanban)</li>
+      <li>&#x274C; Projects need 6+ weeks of focused work (see Shape Up)</li>
+      <li>&#x274C; You need parallel discovery + delivery (see Dual Track)</li>
+      <li>&#x274C; Hardware or regulated industries (Scrum alone may not fit)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Shape Up</div><div style="font-size:12px;color:var(--ink-dim);">Scrum = fixed sprint, flexible scope. Shape Up = fixed scope, flexible schedule (6 weeks). Different tradeoff.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Dual Track</div><div style="font-size:12px;color:var(--ink-dim);">Dual Track adds a discovery track alongside Scrum's delivery track. Research and build in parallel.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">OKRs</div><div style="font-size:12px;color:var(--ink-dim);">OKRs set quarterly goals. Sprints are how you execute toward those goals, 2 weeks at a time.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--yellow);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">RICE</div><div style="font-size:12px;color:var(--ink-dim);">Use RICE to prioritize the product backlog. Then pull top items into each sprint.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeSprint(){
+  const goal=document.getElementById('sp_goal').value.trim();
+  const stories=document.getElementById('sp_stories').value.trim();
+  const vel=document.getElementById('sp_vel').value;
+  const r=document.getElementById('sp_result');
+  if(!goal){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Add a sprint goal first.</div>';return;}
+  let fb=[];
+  if(goal.length>100) fb.push({t:'&#x1F4A1; Goal might be too broad',m:'Great sprint goals are one sentence. Can you focus on one outcome? "Users can X" is better than a laundry list.',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; Clear sprint goal',m:'Concise and focused. Make sure the team can demo this at sprint review.',c:'var(--mint)'});
+  const storyLines=stories.split('\n').filter(l=>l.trim());
+  if(storyLines.length===0) fb.push({t:'&#x26A0;&#xFE0F; No user stories',m:'Add 2-5 user stories in the "As a...I want...so that..." format.',c:'var(--rose)'});
+  else if(storyLines.some(s=>s.toLowerCase().includes('as a'))){fb.push({t:'&#x2705; User story format detected',m:storyLines.length+' stories. Good job using the standard format.',c:'var(--mint)'});}
+  else fb.push({t:'&#x1F4A1; Try user story format',m:'Rewrite as: "As a [user type], I want [action] so that [benefit]." This keeps the focus on user value.',c:'var(--sky)'});
+  if(vel&&parseInt(vel)>0){fb.push({t:'&#x1F4CA; Velocity: '+vel+' points',m:'Make sure total sprint backlog doesn\'t exceed this. Leave 10-20% buffer for unexpected work and bugs.',c:'var(--sky)'});}
+  r.innerHTML=fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"What's the difference between Agile and Scrum?",o:["They're the same thing","Agile is the philosophy/mindset, Scrum is a specific framework that implements it","Scrum is newer and replaces Agile","Agile is for small teams, Scrum is for large teams"],a:1,e:"Agile is the mindset (iterate, collaborate, respond to change). Scrum is one specific implementation with defined roles, ceremonies, and artifacts. Like 'eating healthy' (Agile) vs 'a specific meal plan' (Scrum)."},
+  {q:"Who owns the product backlog?",o:["The Scrum Master","The development team","The Product Owner","The CEO"],a:2,e:"The Product Owner owns the WHAT and WHY — they maintain the backlog, set priorities, and represent the customer. The dev team owns the HOW. The Scrum Master owns the process."},
+  {q:"What happens during a Sprint Retrospective?",o:["Stakeholders review the product demo","The PO writes new user stories","The team reflects on what went well, what didn't, and commits to improvements","The Scrum Master assigns tasks for next sprint"],a:2,e:"The retro is the continuous improvement engine. Team only (no stakeholders). Discuss what worked, what didn't, and pick 1-2 concrete actions to improve. This is how teams get better sprint over sprint."},
+  {q:"What does 'velocity' measure and what should it NOT be used for?",o:["Revenue per sprint — use it for performance reviews","Story points completed per sprint — never use it as a performance metric","Hours worked — use it to set deadlines","Bugs fixed — use it to compare teams"],a:1,e:"Velocity = story points completed per sprint. It's for PLANNING (predicting future capacity), NOT for evaluating performance. Using it as a productivity metric incentivizes inflating estimates and destroys psychological safety."},
+  {q:"During a sprint, the CEO asks you to add an urgent feature. What do you do?",o:["Immediately add it to the current sprint","Tell the CEO to wait until next sprint planning","Discuss the impact with the team: something must come OUT if something goes IN","Ignore the request"],a:2,e:"Sprint scope is protected, but reality happens. The PO's job: 'Yes, we can add this — but something of equal size must come out. Which of these existing items should we deprioritize?' This maintains the sprint's integrity while being responsive."},
+  {q:"What format should product backlog items follow?",o:["Technical specification documents","As a [user type], I want [action] so that [benefit]","Bug report format","Project brief with timeline"],a:1,e:"User stories keep the focus on USER VALUE, not technical tasks. 'As a piano beginner, I want to see my progress so that I feel motivated.' This ensures everything built connects to a real user need."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F504; Sprint master! You understand Scrum roles, ceremonies, and artifacts.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good foundation. Review the ceremonies and artifact ownership.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the 3 roles, 5 ceremonies, and sprint protection.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

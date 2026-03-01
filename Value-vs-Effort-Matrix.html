@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Value vs Effort Matrix — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#3da66a;--green-bg:#3da66a;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--yellow-dark:#ffd600;
+  --white:#fff;--card:#fef9ed;
+  --pink:#ffb8d4;--pink-deep:#ff7eb3;
+  --purple:#c4b5fd;--purple-deep:#9d8ae8;
+  --sky:#8dd8f8;--sky-deep:#5bc0eb;
+  --orange:#ffb067;--orange-deep:#ff8a2b;
+  --mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;--rose-deep:#ff5252;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--green-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;box-shadow:0 1px 4px rgba(0,0,0,0.15);}
+
+/* HEADER */
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--cream);max-width:520px;margin:0 auto;font-weight:500;}
+
+/* MATRIX VISUAL — hero diagram */
+.matrix-hero{
+  margin:20px auto 28px;max-width:480px;
+  background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);padding:24px 24px 24px 36px;position:relative;
+}
+.matrix-mini{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;aspect-ratio:1.4/1;}
+.matrix-mini .mq{border-radius:var(--radius-sm);border:var(--bw) solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px 8px;font-family:'Lilita One',sans-serif;transition:all .15s;}
+.matrix-mini .mq:hover{transform:scale(1.03);}
+.mq-qw{background:var(--mint);}.mq-bb{background:var(--sky);}
+.mq-fi{background:var(--yellow);}.mq-av{background:var(--rose);}
+.mq .mq-emoji{font-size:28px;margin-bottom:2px;}
+.mq .mq-label{font-size:15px;line-height:1.2;}
+.mq .mq-sub{font-size:10px;font-weight:400;font-family:'Outfit',sans-serif;color:var(--ink-dim);margin-top:2px;}
+.matrix-hero .axis-label{position:absolute;font-family:'Lilita One',sans-serif;font-size:12px;color:var(--ink-muted);letter-spacing:1px;}
+.matrix-hero .axis-x{bottom:6px;left:50%;transform:translateX(-50%);}
+.matrix-hero .axis-y{top:50%;left:-8px;transform:translateY(-50%) rotate(-90deg);}
+.matrix-hero .axis-arr-x{position:absolute;bottom:3px;left:24px;right:24px;height:2px;background:var(--ink-muted);}
+.matrix-hero .axis-arr-y{position:absolute;left:14px;top:24px;bottom:24px;width:2px;background:var(--ink-muted);}
+
+/* TLDR */
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+/* NAV */
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 6px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:5px;font-size:9px;color:var(--mint-deep);font-weight:900;}
+.j-btn.active.completed::after{color:var(--mint);}
+
+/* PANELS */
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* SHARED */
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;transition:all .12s;}
+.c-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(255,255,255,0.25);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);color:var(--ink);}
+
+/* QUADRANT CARDS */
+.quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.quad-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:all .12s;}
+.quad-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.quad-card .qc-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.quad-card .qc-icon{width:46px;height:46px;min-width:46px;border-radius:14px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.quad-card h3{font-family:'Lilita One',sans-serif;font-size:18px;}
+.quad-card .qc-tag{display:inline-block;padding:2px 10px;border-radius:100px;border:2px solid var(--border);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.quad-card p{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.quad-card .qc-action{margin-top:10px;padding:8px 12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:700;}
+
+/* SCORING */
+.score-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:14px;}
+.score-card h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.score-card .sc-letter{width:34px;height:34px;min-width:34px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:16px;box-shadow:2px 2px 0 var(--border);}
+.score-bar{display:flex;margin-top:12px;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+.score-seg{flex:1;padding:12px 8px;text-align:center;border-right:2px solid var(--border);transition:all .12s;}
+.score-seg:last-child{border-right:none;}
+.score-seg:hover{filter:brightness(0.95);}
+.score-seg .ss-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;display:block;}
+.score-seg .ss-label{font-size:10px;font-weight:800;text-transform:uppercase;display:block;margin-top:1px;}
+.score-seg .ss-ex{font-size:10px;color:var(--ink-dim);margin-top:3px;line-height:1.3;}
+
+/* EXAMPLE PLOT */
+.example-plot{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;position:relative;}
+.plot-grid{position:relative;width:100%;aspect-ratio:1.3/1;border-left:var(--bw) solid var(--ink);border-bottom:var(--bw) solid var(--ink);margin:20px 0 10px;}
+.plot-grid .plot-bg{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;}
+.plot-bg .pb{opacity:0.2;}.pb-qw{background:var(--mint);}.pb-bb{background:var(--sky);}.pb-fi{background:var(--yellow);}.pb-av{background:var(--rose);}
+.plot-dot{position:absolute;width:36px;height:36px;border-radius:50%;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;box-shadow:var(--shadow-sm);cursor:default;transition:transform .15s;z-index:2;}
+.plot-dot:hover{transform:scale(1.2);z-index:3;}
+.plot-label-x{text-align:center;font-family:'Lilita One',sans-serif;font-size:13px;color:var(--ink-dim);margin-top:6px;}
+.plot-label-y{position:absolute;left:-40px;top:50%;transform:translateY(-50%) rotate(-90deg);font-family:'Lilita One',sans-serif;font-size:13px;color:var(--ink-dim);white-space:nowrap;}
+.plot-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.plot-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;}
+.plot-legend-item .pld{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);}
+
+/* INTERACTIVE GRID */
+.grid-app{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.grid-app h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:4px;}
+.grid-app .ga-sub{font-size:13px;color:var(--ink-dim);margin-bottom:14px;}
+.grid-input{display:flex;gap:8px;margin-bottom:14px;}
+.grid-input input{flex:1;padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;}
+.grid-input input:focus{box-shadow:var(--shadow-sm);transform:translate(-1px,-1px);}
+.grid-add-btn{padding:10px 18px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.grid-add-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.grid-add-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.grid-canvas{position:relative;width:100%;aspect-ratio:1.2/1;border-left:var(--bw) solid var(--ink);border-bottom:var(--bw) solid var(--ink);margin-bottom:10px;touch-action:none;}
+.grid-canvas .plot-bg{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;}
+.grid-canvas .g-dot{position:absolute;width:auto;min-width:32px;height:32px;padding:0 10px;border-radius:100px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;box-shadow:var(--shadow-sm);cursor:grab;z-index:2;user-select:none;transition:box-shadow .1s;}
+.grid-canvas .g-dot:active{cursor:grabbing;box-shadow:var(--shadow-lg);z-index:10;}
+.grid-canvas .g-dot .g-remove{display:none;position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;background:var(--rose);border:2px solid var(--border);font-size:10px;cursor:pointer;align-items:center;justify-content:center;line-height:1;}
+.grid-canvas .g-dot:hover .g-remove{display:flex;}
+.grid-result{margin-top:8px;}
+.grid-result h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;}
+.grid-result-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.gr-item{padding:8px 12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.gr-item .gr-emoji{font-size:14px;}
+
+/* WHEN */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+
+/* PITFALLS */
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}
+.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+
+/* SESSION */
+.roster{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0;}
+.roster-item{padding:12px;border:2px solid var(--border);border-radius:var(--radius-xs);}
+.roster-item strong{font-size:12px;display:block;margin-bottom:2px;}
+.roster-item p{font-size:12px;color:var(--ink-dim);margin:0;}
+.agenda{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.ag-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.ag-item:last-child{border-bottom:none;}
+.ag-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.ag-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.ag-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.ag-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+/* QUIZ */
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.quiz-box h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo:active{transform:translate(2px,2px);box-shadow:none;}
+.qo.correct{background:var(--mint);animation:popIn .3s;}
+.qo.wrong{background:var(--rose);animation:shake .4s;}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+@keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(255,255,255,0.5);font-weight:600;}
+
+@media(max-width:680px){
+  .factor-grid,.quad-grid,.when-grid,.roster,.grid-result-list{grid-template-columns:1fr;}
+  .j-btn{padding:8px 3px;font-size:9px;}.j-btn .j-step{font-size:7px;}
+  .matrix-hero{max-width:100%;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .ag-item{grid-template-columns:64px 1fr;}.ag-time{font-size:10px;}
+  .tldr{flex-direction:column;}
+  .qopts{flex-direction:column;}
+  .grid-input{flex-direction:column;}
+  .plot-label-y{left:-30px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<!-- HEADER -->
+<section class="header">
+  <div class="header-badge">📊 Prioritization Framework</div>
+  <h1>Value vs Effort Matrix</h1>
+  <p class="sub">Plot features on a 2×2 grid. Build what's high-value and low-effort first.</p>
+</section>
+
+<!-- MATRIX HERO -->
+<div class="matrix-hero">
+  <div class="matrix-mini">
+    <div class="mq mq-qw"><span class="mq-emoji">🏆</span><span class="mq-label">Quick Wins</span><span class="mq-sub">High Value · Low Effort</span></div>
+    <div class="mq mq-bb"><span class="mq-emoji">🎯</span><span class="mq-label">Big Bets</span><span class="mq-sub">High Value · High Effort</span></div>
+    <div class="mq mq-fi"><span class="mq-emoji">🤷</span><span class="mq-label">Fill-Ins</span><span class="mq-sub">Low Value · Low Effort</span></div>
+    <div class="mq mq-av"><span class="mq-emoji">🗑️</span><span class="mq-label">Avoid</span><span class="mq-sub">Low Value · High Effort</span></div>
+  </div>
+  <span class="axis-label axis-x">EFFORT →</span>
+  <span class="axis-label axis-y">VALUE →</span>
+</div>
+
+<!-- TLDR -->
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 10 seconds:</strong> Rate each feature on two axes — <strong>Value</strong> (how much it matters) and <strong>Effort</strong> (how hard it is to build). Plot them on a 2×2 grid. <strong>Quick Wins</strong> go first, <strong>Avoid</strong> items get cut.</p>
+</div>
+
+<!-- NAV -->
+<div class="journey-nav" id="journeyNav">
+  <button class="j-btn active" onclick="goTo('understand')"><span class="j-step">01</span>Quadrants</button>
+  <button class="j-btn" onclick="goTo('score')"><span class="j-step">02</span>Score</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="goTo('try')"><span class="j-step">04</span>Plot It</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('session')"><span class="j-step">07</span>Session</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">08</span>Quiz</button>
+</div>
+
+<!-- 1. UNDERSTAND -->
+<div id="p-understand" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">🧩</div>
+    <div class="sec-label"><h2>The 4 Quadrants</h2><p>Each one tells you exactly what to do</p></div>
+  </div>
+  <div class="quad-grid">
+    <div class="quad-card">
+      <div class="qc-head"><div class="qc-icon" style="background:var(--mint)">🏆</div><h3>Quick Wins</h3></div>
+      <div class="qc-tag" style="background:var(--mint)">High Value · Low Effort</div>
+      <p>The gold. These features deliver big impact for little work. Do these first — they build momentum and show fast results to stakeholders.</p>
+      <div class="qc-action" style="background:rgba(126,232,178,0.25)">→ Action: Build immediately. These are your sprint priorities.</div>
+    </div>
+    <div class="quad-card">
+      <div class="qc-head"><div class="qc-icon" style="background:var(--sky)">🎯</div><h3>Big Bets</h3></div>
+      <div class="qc-tag" style="background:var(--sky)">High Value · High Effort</div>
+      <p>Worth doing but expensive. These need careful planning — break them into phases, validate assumptions first, and staff them well.</p>
+      <div class="qc-action" style="background:rgba(141,216,248,0.25)">→ Action: Plan & phase. Put on the roadmap but don't rush.</div>
+    </div>
+    <div class="quad-card">
+      <div class="qc-head"><div class="qc-icon" style="background:var(--yellow)">🤷</div><h3>Fill-Ins</h3></div>
+      <div class="qc-tag" style="background:var(--yellow)">Low Value · Low Effort</div>
+      <p>Nice-to-haves. Easy to build but won't move the needle. Good for filling gaps between big projects or for hackathons.</p>
+      <div class="qc-action" style="background:rgba(255,225,77,0.25)">→ Action: Do only if you have spare capacity. Never prioritize these.</div>
+    </div>
+    <div class="quad-card">
+      <div class="qc-head"><div class="qc-icon" style="background:var(--rose)">🗑️</div><h3>Avoid</h3></div>
+      <div class="qc-tag" style="background:var(--rose)">Low Value · High Effort</div>
+      <p>The trap. These look important because they're complex, but they eat resources and deliver little. Kill them early.</p>
+      <div class="qc-action" style="background:rgba(255,138,138,0.25)">→ Action: Say no. Remove from backlog or revisit assumptions.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🧠 Memory trick</h4>
+    <p>Read the grid like a priority list: <strong>🏆 Quick Wins → 🎯 Big Bets → 🤷 Fill-Ins → 🗑️ Avoid</strong>. Top-left is best, bottom-right is worst. Always start top-left.</p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('score')">Next: How to Score →</button></div>
+</div>
+
+<!-- 2. SCORE -->
+<div id="p-score" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">📐</div>
+    <div class="sec-label"><h2>How to Score</h2><p>Rate Value and Effort on simple scales</p></div>
+  </div>
+
+  <div class="score-card">
+    <h3><div class="sc-letter" style="background:var(--mint)">V</div> Value — "How much does this matter?"</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-top:6px;font-style:italic">Combine user impact, business impact, and strategic alignment into one gut-check score.</p>
+    <div class="score-bar">
+      <div class="score-seg" style="background:rgba(255,138,138,0.3)"><span class="ss-val">1</span><span class="ss-label">Minimal</span><span class="ss-ex">Nice but nobody asked</span></div>
+      <div class="score-seg" style="background:rgba(255,225,77,0.3)"><span class="ss-val">2</span><span class="ss-label">Low</span><span class="ss-ex">Some users care</span></div>
+      <div class="score-seg" style="background:rgba(255,225,77,0.5)"><span class="ss-val">3</span><span class="ss-label">Medium</span><span class="ss-ex">Clear improvement</span></div>
+      <div class="score-seg" style="background:rgba(126,232,178,0.3)"><span class="ss-val">4</span><span class="ss-label">High</span><span class="ss-ex">Moves a key metric</span></div>
+      <div class="score-seg" style="background:rgba(126,232,178,0.5)"><span class="ss-val">5</span><span class="ss-label">Critical</span><span class="ss-ex">Game-changer or blocker</span></div>
+    </div>
+    <div class="tip">Ask: "If we DON'T build this, what happens?" If the answer is "nothing much" → it's a 1-2.</div>
+  </div>
+
+  <div class="score-card">
+    <h3><div class="sc-letter" style="background:var(--pink)">E</div> Effort — "How hard is this to build?"</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-top:6px;font-style:italic">Include design, engineering, QA, and any cross-team dependencies.</p>
+    <div class="score-bar">
+      <div class="score-seg" style="background:rgba(126,232,178,0.3)"><span class="ss-val">1</span><span class="ss-label">Tiny</span><span class="ss-ex">A few hours</span></div>
+      <div class="score-seg" style="background:rgba(126,232,178,0.2)"><span class="ss-val">2</span><span class="ss-label">Small</span><span class="ss-ex">1–2 days</span></div>
+      <div class="score-seg" style="background:rgba(255,225,77,0.3)"><span class="ss-val">3</span><span class="ss-label">Medium</span><span class="ss-ex">1–2 weeks</span></div>
+      <div class="score-seg" style="background:rgba(255,176,103,0.3)"><span class="ss-val">4</span><span class="ss-label">Large</span><span class="ss-ex">Weeks to a month</span></div>
+      <div class="score-seg" style="background:rgba(255,138,138,0.3)"><span class="ss-val">5</span><span class="ss-label">Massive</span><span class="ss-ex">Months, multi-team</span></div>
+    </div>
+    <div class="tip">Low effort is GOOD here (unlike Value where high is good). That's why Quick Wins sit in the top-left.</div>
+  </div>
+
+  <div class="insight">
+    <h4>⚖️ Key difference from RICE</h4>
+    <p>RICE uses precise numbers (Reach = 10,000 users). Value vs Effort uses <strong>relative 1–5 scores</strong>. It's faster but less rigorous — perfect for quick alignment, not for detailed quarterly planning.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('understand')">← Quadrants</button><button class="pn-btn primary" onclick="goTo('example')">Next: Real Example →</button></div>
+</div>
+
+<!-- 3. EXAMPLE -->
+<div id="p-example" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🛒</div>
+    <div class="sec-label"><h2>Real Example</h2><p>E-commerce app — 6 features plotted</p></div>
+  </div>
+  <div class="example-plot">
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:8px">You're a PM at an e-commerce startup. Your team has 6 ideas. Let's plot them.</p>
+    <div class="plot-grid" style="margin-left:40px;">
+      <div class="plot-bg"><div class="pb pb-qw"></div><div class="pb pb-bb"></div><div class="pb pb-fi"></div><div class="pb pb-av"></div></div>
+      <span class="plot-label-y">VALUE →</span>
+      <!-- Dots positioned as % from bottom-left -->
+      <div class="plot-dot" style="background:var(--mint);left:18%;bottom:78%" title="One-click checkout: V5, E2">A</div>
+      <div class="plot-dot" style="background:var(--mint);left:28%;bottom:68%" title="Smart search: V4, E2">B</div>
+      <div class="plot-dot" style="background:var(--sky);left:72%;bottom:82%" title="AI recommendations: V5, E5">C</div>
+      <div class="plot-dot" style="background:var(--yellow);left:15%;bottom:25%" title="Dark mode: V2, E1">D</div>
+      <div class="plot-dot" style="background:var(--rose);left:78%;bottom:18%" title="Blockchain loyalty: V1, E5">E</div>
+      <div class="plot-dot" style="background:var(--sky);left:62%;bottom:72%" title="Mobile app rebuild: V4, E4">F</div>
+    </div>
+    <div class="plot-label-x">EFFORT →</div>
+    <div class="plot-legend">
+      <div class="plot-legend-item"><div class="pld" style="background:var(--mint)"></div>A — One-click checkout (V5 E2)</div>
+      <div class="plot-legend-item"><div class="pld" style="background:var(--mint)"></div>B — Smart search (V4 E2)</div>
+      <div class="plot-legend-item"><div class="pld" style="background:var(--sky)"></div>C — AI recommendations (V5 E5)</div>
+      <div class="plot-legend-item"><div class="pld" style="background:var(--yellow)"></div>D — Dark mode (V2 E1)</div>
+      <div class="plot-legend-item"><div class="pld" style="background:var(--rose)"></div>E — Blockchain loyalty (V1 E5)</div>
+      <div class="plot-legend-item"><div class="pld" style="background:var(--sky)"></div>F — Mobile rebuild (V4 E4)</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔍 What the plot tells us</h4>
+    <p><strong>A & B are Quick Wins</strong> — high value, low effort. Build these first in the next sprint.</p>
+    <p style="margin-top:6px"><strong>C & F are Big Bets</strong> — worth doing but need planning. AI recs (C) is the biggest bet — Value 5 but Effort 5 too. Phase it.</p>
+    <p style="margin-top:6px"><strong>D is a Fill-In</strong> — dark mode is easy but won't move metrics. Do it in a hackathon.</p>
+    <p style="margin-top:6px"><strong>E is Avoid</strong> — blockchain loyalty is a buzzword trap. Massive effort, almost no value. Kill it.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('score')">← Scoring</button><button class="pn-btn primary" onclick="goTo('try')">Next: Plot Your Own →</button></div>
+</div>
+
+<!-- 4. PLOT IT (Interactive) -->
+<div id="p-try" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">🖱️</div>
+    <div class="sec-label"><h2>Plot Your Own</h2><p>Add features and drag them on the grid</p></div>
+  </div>
+  <div class="grid-app">
+    <p class="ga-sub">Type a feature name, click Add, then drag the dot to where it belongs. Hover to delete.</p>
+    <div class="grid-input">
+      <input type="text" id="featureName" placeholder="e.g. Add dark mode" maxlength="30" onkeydown="if(event.key==='Enter')addFeature()">
+      <button class="grid-add-btn" onclick="addFeature()">+ Add</button>
+    </div>
+    <div class="grid-canvas" id="gridCanvas">
+      <div class="plot-bg"><div class="pb pb-qw"></div><div class="pb pb-bb"></div><div class="pb pb-fi"></div><div class="pb pb-av"></div></div>
+      <span class="plot-label-y">VALUE →</span>
+    </div>
+    <div class="plot-label-x">EFFORT →</div>
+    <div class="grid-result" id="gridResult"></div>
+  </div>
+  <div class="insight">
+    <h4>💡 How to use this</h4>
+    <p><strong>Step 1:</strong> Add all your candidate features using the input above.</p>
+    <p style="margin-top:4px"><strong>Step 2:</strong> Drag each dot — left = low effort, right = high effort. Top = high value, bottom = low value.</p>
+    <p style="margin-top:4px"><strong>Step 3:</strong> Read the quadrant summary below the grid. Quick Wins go first.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">← Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 5. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">⚖️</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Fast and visual, but not always the right tool</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use this when...</h3>
+      <ul>
+        <li>You need to align a team in 30 minutes or less</li>
+        <li>Backlog grooming — quick sort of 5–20 items</li>
+        <li>Stakeholders want a visual they can understand instantly</li>
+        <li>Early-stage product with limited data</li>
+        <li>You need a "first pass" before deeper analysis (like RICE)</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip this when...</h3>
+      <ul>
+        <li>You need precise, data-backed rankings → use RICE</li>
+        <li>Comparing more than 20 features (grid gets crowded)</li>
+        <li>Decisions need to hold up to exec scrutiny</li>
+        <li>Effort estimates vary wildly across team members</li>
+        <li>You're comparing fundamentally different types of work</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔗 How it connects to RICE</h4>
+    <p>Use Value vs Effort as a <strong>fast filter</strong> to narrow 30 ideas down to 10 strong candidates. Then use <strong>RICE</strong> to rigorously rank those 10. The two frameworks are partners, not competitors.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('try')">← Plot It</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 6. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>5 Common Pitfalls</h2><p>Simple framework, subtle traps</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose)">1</div><div><h4>Everything lands in Quick Wins</h4><p class="mb">If 80% of features are "high value, low effort," your scoring isn't honest. You're either inflating value or underestimating effort.</p><div class="fix">Force distribution: aim for roughly equal items per quadrant. If a quadrant is empty, re-calibrate.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange)">2</div><div><h4>Confusing "Value" with "Cool"</h4><p class="mb">A feature can be exciting and innovative but deliver zero business or user value. "Cool" ≠ "valuable."</p><div class="fix">Define Value before scoring: user impact + revenue impact + strategic alignment. Score against those, not excitement.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--yellow)">3</div><div><h4>Only counting engineering effort</h4><p class="mb">Design, QA, docs, data migration, training, support — all of these are effort. Ignoring them makes everything look cheaper than it is.</p><div class="fix">Ask: "Who needs to do work for this to ship?" Count ALL of those people's time.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple)">4</div><div><h4>HiPPO anchoring</h4><p class="mb">The Highest-Paid Person's Opinion goes first and everyone agrees. Classic anchoring bias.</p><div class="fix">Silent scoring first. Everyone writes their V and E on a sticky note, then reveal simultaneously.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky)">5</div><div><h4>Using it for detailed planning</h4><p class="mb">Value vs Effort is a sorting tool, not a planning tool. It tells you what to focus on, not how to build it or exactly when.</p><div class="fix">Use it to decide WHAT, then switch to RICE or roadmapping to decide WHEN and HOW.</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('session')">Next: Run a Session →</button></div>
+</div>
+
+<!-- 7. SESSION -->
+<div id="p-session" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🏃</div>
+    <div class="sec-label"><h2>Run a Session</h2><p>45-minute ready-to-use agenda</p></div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px">👥 Who's in the room?</h3>
+    <div class="roster">
+      <div class="roster-item" style="background:var(--mint)"><strong>Must have</strong><p>PM (facilitator), Engineering lead, Design lead</p></div>
+      <div class="roster-item" style="background:var(--yellow)"><strong>Nice to have</strong><p>Stakeholder, Data analyst, anyone who'll build the work</p></div>
+    </div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px">🧰 What to prepare</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-top:6px">A whiteboard or Miro/FigJam with a 2×2 grid drawn. Sticky notes (physical or digital). Pre-written list of 8–15 candidate features — one per sticky. Don't bring more than 20 or the session drags.</p>
+  </div>
+  <div class="agenda">
+    <div class="ag-item"><div class="ag-time" style="background:var(--sky)">0–5</div><div class="ag-content"><h4>Set context</h4><p>Explain the matrix. Define what "Value" means for THIS session (user impact? revenue? retention?). Agree on effort scope.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--orange)">5–15</div><div class="ag-content"><h4>Silent scoring</h4><p>Everyone independently scores each feature: V (1–5) and E (1–5) on their own sticky notes. No discussion yet.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--purple)">15–25</div><div class="ag-content"><h4>Reveal & plot</h4><p>Go feature by feature. Everyone reveals scores. Average or discuss outliers. Place the sticky on the grid.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--yellow)">25–35</div><div class="ag-content"><h4>Debate the edges</h4><p>Focus on features near quadrant borders — these are the ones where placement matters. Timebox: 2 min per feature.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--mint)">35–45</div><div class="ag-content"><h4>Decide & commit</h4><p>Quick Wins → next sprint. Big Bets → roadmap slot. Fill-Ins → backlog. Avoid → archive or kill. Take a photo of the board.</p></div></div>
+  </div>
+  <div class="insight">
+    <h4>💡 Facilitation tips</h4>
+    <p><strong>Define "Value" upfront</strong> — if you don't, everyone scores against different criteria and the grid is meaningless.</p>
+    <p style="margin-top:4px"><strong>Focus debates on the edges</strong> — items clearly in a quadrant don't need discussion. Items ON the border do.</p>
+    <p style="margin-top:4px"><strong>Photo the result</strong> — snap the whiteboard/Miro. You'll reference this for weeks.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Test Yourself →</button></div>
+</div>
+
+<!-- 8. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>5 questions to lock it in</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. A feature with High Value and Low Effort goes in which quadrant?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,true)">🏆 Quick Wins</button>
+        <button class="qo" onclick="ans(1,this,false)">🎯 Big Bets</button>
+        <button class="qo" onclick="ans(1,this,false)">🗑️ Avoid</button>
+      </div>
+      <div class="qexp" id="q1e">Quick Wins = high value, low effort. Build these first — they're your best ROI.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. Your team scored 12 out of 15 features as "Quick Wins." What's the problem?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,false)">Nothing — you have a great backlog</button>
+        <button class="qo" onclick="ans(2,this,true)">Scoring isn't honest — recalibrate</button>
+        <button class="qo" onclick="ans(2,this,false)">Use RICE instead</button>
+      </div>
+      <div class="qexp" id="q2e">If everything is a Quick Win, you're inflating Value or underestimating Effort. Force a more honest distribution.</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. What should you do with "Big Bet" items?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,false)">Build them right after Quick Wins</button>
+        <button class="qo" onclick="ans(3,this,true)">Plan carefully — phase and validate first</button>
+        <button class="qo" onclick="ans(3,this,false)">Avoid them — too risky</button>
+      </div>
+      <div class="qexp" id="q3e">Big Bets are worth doing but need planning. Break into phases, validate assumptions, staff well.</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. What's the best way to prevent HiPPO bias in a scoring session?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,false)">Let the most senior person go first</button>
+        <button class="qo" onclick="ans(4,this,true)">Silent scoring — everyone writes scores before revealing</button>
+        <button class="qo" onclick="ans(4,this,false)">Skip the meeting and score by email</button>
+      </div>
+      <div class="qexp" id="q4e">Silent scoring prevents anchoring. Everyone commits to their V and E independently, then reveals together.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. Value vs Effort is best used as...</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,false)">A replacement for RICE</button>
+        <button class="qo" onclick="ans(5,this,false)">A detailed quarterly planning tool</button>
+        <button class="qo" onclick="ans(5,this,true)">A fast filter before deeper analysis</button>
+      </div>
+      <div class="qexp" id="q5e">Use it to quickly sort 30 ideas down to 10, then RICE to rank those 10 rigorously. They're partners.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('session')">← Session</button><button class="pn-btn primary" onclick="goTo('understand')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">Value vs Effort Matrix — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+const panels=['understand','score','example','try','judge','pitfalls','session','quiz'];
+const visited=new Set(['understand']);
+const dotColors=['var(--mint)','var(--sky)','var(--orange)','var(--pink)','var(--purple)','var(--yellow)','var(--rose)','#a0d8ef','#ffcba4','#c8e6c9'];
+let features=[];
+let colorIdx=0;
+
+function goTo(id){
+  visited.add(id);
+  panels.forEach(p=>document.getElementById('p-'+p).classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function addFeature(){
+  var input=document.getElementById('featureName');
+  var name=input.value.trim();
+  if(!name)return;
+  input.value='';
+  var canvas=document.getElementById('gridCanvas');
+  var rect=canvas.getBoundingClientRect();
+  var color=dotColors[colorIdx%dotColors.length];
+  colorIdx++;
+
+  var dot=document.createElement('div');
+  dot.className='g-dot';
+  dot.style.background=color;
+  dot.textContent=name;
+  dot.style.left='40%';
+  dot.style.top='40%';
+  dot.dataset.name=name;
+
+  var removeBtn=document.createElement('div');
+  removeBtn.className='g-remove';
+  removeBtn.textContent='✕';
+  removeBtn.onclick=function(e){
+    e.stopPropagation();
+    dot.remove();
+    features=features.filter(function(f){return f.el!==dot;});
+    updateResult();
+  };
+  dot.appendChild(removeBtn);
+
+  // Drag logic
+  var dragging=false, offX=0, offY=0;
+  function startDrag(ex,ey){
+    dragging=true;
+    var dr=dot.getBoundingClientRect();
+    offX=ex-dr.left;offY=ey-dr.top;
+    dot.style.zIndex=10;
+  }
+  function moveDrag(ex,ey){
+    if(!dragging)return;
+    var cr=canvas.getBoundingClientRect();
+    var x=ex-cr.left-offX;
+    var y=ey-cr.top-offY;
+    x=Math.max(0,Math.min(cr.width-dot.offsetWidth,x));
+    y=Math.max(0,Math.min(cr.height-dot.offsetHeight,y));
+    dot.style.left=x+'px';
+    dot.style.top=y+'px';
+  }
+  function endDrag(){
+    if(!dragging)return;
+    dragging=false;
+    dot.style.zIndex=2;
+    updateResult();
+  }
+  dot.addEventListener('mousedown',function(e){e.preventDefault();startDrag(e.clientX,e.clientY);});
+  document.addEventListener('mousemove',function(e){moveDrag(e.clientX,e.clientY);});
+  document.addEventListener('mouseup',endDrag);
+  dot.addEventListener('touchstart',function(e){var t=e.touches[0];startDrag(t.clientX,t.clientY);},{passive:true});
+  document.addEventListener('touchmove',function(e){if(dragging){e.preventDefault();var t=e.touches[0];moveDrag(t.clientX,t.clientY);}},{passive:false});
+  document.addEventListener('touchend',endDrag);
+
+  canvas.appendChild(dot);
+  features.push({el:dot,name:name,color:color});
+  updateResult();
+  input.focus();
+}
+
+function updateResult(){
+  var container=document.getElementById('gridResult');
+  if(features.length===0){container.innerHTML='';return;}
+  var canvas=document.getElementById('gridCanvas');
+  var cw=canvas.offsetWidth, ch=canvas.offsetHeight;
+  var qw=[],bb=[],fi=[],av=[];
+  features.forEach(function(f){
+    var el=f.el;
+    var cx=parseInt(el.style.left)+el.offsetWidth/2;
+    var cy=parseInt(el.style.top)+el.offsetHeight/2;
+    var effortPct=cx/cw;
+    var valuePct=1-(cy/ch);
+    if(valuePct>=0.5&&effortPct<0.5)qw.push(f.name);
+    else if(valuePct>=0.5&&effortPct>=0.5)bb.push(f.name);
+    else if(valuePct<0.5&&effortPct<0.5)fi.push(f.name);
+    else av.push(f.name);
+  });
+  var html='<h4>Quadrant Summary</h4><div class="grid-result-list">';
+  html+='<div class="gr-item" style="background:rgba(126,232,178,0.25)"><span class="gr-emoji">🏆</span> Quick Wins: '+(qw.length?qw.join(', '):'<em>none yet</em>')+'</div>';
+  html+='<div class="gr-item" style="background:rgba(141,216,248,0.25)"><span class="gr-emoji">🎯</span> Big Bets: '+(bb.length?bb.join(', '):'<em>none yet</em>')+'</div>';
+  html+='<div class="gr-item" style="background:rgba(255,225,77,0.25)"><span class="gr-emoji">🤷</span> Fill-Ins: '+(fi.length?fi.join(', '):'<em>none yet</em>')+'</div>';
+  html+='<div class="gr-item" style="background:rgba(255,138,138,0.25)"><span class="gr-emoji">🗑️</span> Avoid: '+(av.length?av.join(', '):'<em>none yet</em>')+'</div>';
+  html+='</div>';
+  container.innerHTML=html;
+}
+
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+</script>
+</body>
+</html>

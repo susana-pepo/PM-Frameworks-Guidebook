@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AARRR Pirate Metrics — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e05555;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4C8; Growth</div>
+  <h1>&#x1F3F4;&#x200D;&#x2620;&#xFE0F; AARRR Pirate Metrics</h1>
+  <p class="sub">The 5-stage funnel that tells you exactly where users are dropping off — and where to focus your growth efforts.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> AARRR = <strong>Acquisition, Activation, Retention, Revenue, Referral</strong>. Five stages of the user lifecycle. Find the leakiest bucket and fix it first. By Dave McClure (500 Startups).</p></div>
+</div>
+
+<!-- HERO: Funnel Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="max-width:200px;margin:0 auto 8px;padding:14px;background:#ff6b6b;border:var(--bw) solid var(--border);border-radius:var(--radius-sm) var(--radius-sm) 0 0;text-align:center;">
+    <div style="font-family:'Lilita One',sans-serif;font-size:15px;color:var(--white);">&#x1F4E3; Acquisition</div>
+    <div style="font-size:10px;color:rgba(255,255,255,.8);font-weight:600;">How do users find you?</div>
+  </div>
+  <div style="max-width:180px;margin:0 auto;padding:12px;background:var(--orange);border:var(--bw) solid var(--border);border-top:none;text-align:center;">
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">&#x2728; Activation</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Do they have a great first experience?</div>
+  </div>
+  <div style="max-width:155px;margin:0 auto;padding:12px;background:var(--sky);border:var(--bw) solid var(--border);border-top:none;text-align:center;">
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">&#x1F504; Retention</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Do they come back?</div>
+  </div>
+  <div style="max-width:130px;margin:0 auto;padding:12px;background:var(--mint);border:var(--bw) solid var(--border);border-top:none;text-align:center;">
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">&#x1F4B0; Revenue</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Do they pay?</div>
+  </div>
+  <div style="max-width:105px;margin:0 auto;padding:12px;background:var(--purple);border:var(--bw) solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);text-align:center;">
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">&#x1F4E2; Referral</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Do they tell others?</div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Each stage narrows. Find the biggest drop-off = your #1 priority.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Funnel</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Metrics</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>The Core Idea</h2><p>Your product is a leaky bucket</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Why AARRR Matters</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Most teams look at vanity metrics: total signups, page views, downloads. AARRR forces you to look at the <strong>full user lifecycle</strong> and find where people drop off. It's not about getting more users in — it's about fixing the leaks so more users make it through.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The name "Pirate Metrics" comes from the sound: A-A-R-R-R. Dave McClure created it to give startups a simple mental model for growth that isn't just "get more traffic."</p>
+  </div>
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:8px;">&#x1F6A9; The Biggest Mistake</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Spending money on acquisition (ads, marketing) when your activation or retention is broken. It's like pouring water into a bucket with a hole in the bottom. <strong>Fix the hole first, then pour more water.</strong></p>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of it as a <strong>pirate ship voyage</strong>. Acquisition = recruiting crew. Activation = first successful voyage. Retention = crew stays aboard. Revenue = finding treasure. Referral = crew recruits more pirates. AARRR! &#x1F3F4;&#x200D;&#x2620;&#xFE0F;</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">The Funnel &#x2192;</button></div>
+</div>
+
+<!-- S1: FUNNEL DEEP DIVE -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:#ff6b6b;">&#x1F3F4;&#x200D;&#x2620;&#xFE0F;</div><div class="sec-label"><h2>The 5 Stages</h2><p>What happens at each level</p></div></div>
+
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid #ff6b6b;padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">&#x1F4E3; 1. Acquisition</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;"><strong>Question:</strong> How do users find your product?</p>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6;">Channels: SEO, paid ads, social media, app store, partnerships, word of mouth, content marketing. The goal isn't max volume — it's finding channels that bring <em>quality</em> users who actually convert.</p>
+      <div style="margin-top:8px;padding:6px 10px;background:rgba(255,107,107,.15);border-radius:6px;font-size:11px;font-weight:700;">Key insight: Measure cost per acquired user BY CHANNEL, not just total.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">&#x2728; 2. Activation</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;"><strong>Question:</strong> Do users have a great first experience?</p>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6;">This is the "aha moment" — when a user first experiences real value. For Trala: playing their first song with real-time feedback. For Slack: sending their first message and getting a reply. If users don't hit the aha moment, nothing else matters.</p>
+      <div style="margin-top:8px;padding:6px 10px;background:rgba(255,176,103,.2);border-radius:6px;font-size:11px;font-weight:700;">Key insight: Define YOUR aha moment. Remove every friction between signup and that moment.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">&#x1F504; 3. Retention</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;"><strong>Question:</strong> Do users come back?</p>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6;">The most important stage. Retention is the foundation everything else is built on. If users don't come back, acquisition is waste and revenue is impossible. Measure D1, D7, D30 retention (Day 1, 7, 30 after first use).</p>
+      <div style="margin-top:8px;padding:6px 10px;background:rgba(141,216,248,.3);border-radius:6px;font-size:11px;font-weight:700;">Key insight: Retention is the KING metric. Fix this before anything else.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">&#x1F4B0; 4. Revenue</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;"><strong>Question:</strong> Do users pay (and how much)?</p>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6;">Monetization: subscriptions, in-app purchases, ads, upsells. Key metrics: conversion rate (free to paid), ARPU (average revenue per user), LTV (lifetime value), and critically — LTV > CAC (you make more from a user than it costs to acquire them).</p>
+      <div style="margin-top:8px;padding:6px 10px;background:rgba(126,232,178,.25);border-radius:6px;font-size:11px;font-weight:700;">Key insight: Revenue only works if retention is solid. Retained users = compounding revenue.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--purple);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">&#x1F4E2; 5. Referral</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;"><strong>Question:</strong> Do users tell others?</p>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6;">Organic growth: NPS (Net Promoter Score), viral coefficient (each user brings K new users), referral programs, social sharing. A viral coefficient > 1 means exponential growth. Most products are 0.1-0.5 (every 10 users bring 1-5 new ones).</p>
+      <div style="margin-top:8px;padding:6px 10px;background:rgba(196,181,253,.3);border-radius:6px;font-size:11px;font-weight:700;">Key insight: Referral is free acquisition. But users only refer products they love (= retained users).</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4A1; The Priority Order</h4>
+    <p>Most people think AARRR is top-down (fix acquisition first). It's actually <strong>middle-out</strong>. Fix <strong>Retention</strong> first, then Activation, then Revenue, then Acquisition, then Referral. Why? There's no point acquiring users who won't stick around.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Metrics &#x2192;</button></div>
+</div>
+
+<!-- S2: METRICS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F4CA;</div><div class="sec-label"><h2>Key Metrics per Stage</h2><p>What to measure and benchmark</p></div></div>
+  <div class="c-card" style="padding:16px;overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead><tr style="background:var(--ink);color:var(--white);"><th style="padding:10px 8px;text-align:left;">Stage</th><th style="padding:10px 6px;text-align:center;">Primary Metric</th><th style="padding:10px 6px;text-align:center;">Secondary Metrics</th><th style="padding:10px 6px;text-align:center;">Benchmark (B2C app)</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,107,107,.1);"><td style="padding:8px;font-weight:800;">&#x1F4E3; Acquisition</td><td style="padding:8px;text-align:center;">CAC (Cost per Acquisition)</td><td style="padding:8px;text-align:center;">Traffic sources, signup rate, install rate</td><td style="padding:8px;text-align:center;">Varies by channel ($1-$5 mobile)</td></tr>
+        <tr style="background:rgba(255,176,103,.1);"><td style="padding:8px;font-weight:800;">&#x2728; Activation</td><td style="padding:8px;text-align:center;">% reaching aha moment</td><td style="padding:8px;text-align:center;">Onboarding completion, time-to-value</td><td style="padding:8px;text-align:center;">30-60% complete onboarding</td></tr>
+        <tr style="background:rgba(141,216,248,.1);"><td style="padding:8px;font-weight:800;">&#x1F504; Retention</td><td style="padding:8px;text-align:center;">D30 retention rate</td><td style="padding:8px;text-align:center;">D1, D7, DAU/MAU ratio, churn</td><td style="padding:8px;text-align:center;">D1: 25-40%, D30: 8-15%</td></tr>
+        <tr style="background:rgba(126,232,178,.1);"><td style="padding:8px;font-weight:800;">&#x1F4B0; Revenue</td><td style="padding:8px;text-align:center;">LTV / ARPU</td><td style="padding:8px;text-align:center;">Conversion rate, MRR, LTV:CAC ratio</td><td style="padding:8px;text-align:center;">LTV:CAC > 3:1</td></tr>
+        <tr style="background:rgba(196,181,253,.1);"><td style="padding:8px;font-weight:800;">&#x1F4E2; Referral</td><td style="padding:8px;text-align:center;">Viral coefficient (K-factor)</td><td style="padding:8px;text-align:center;">NPS, shares per user, invite rate</td><td style="padding:8px;text-align:center;">K > 0.5 good, > 1.0 viral</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F50D; The LTV:CAC Ratio</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-bottom:10px;">The single most important business health metric. <strong>LTV</strong> (Lifetime Value) = total revenue from a user over their lifetime. <strong>CAC</strong> (Customer Acquisition Cost) = what you spend to get them.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="padding:12px;background:var(--rose);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-weight:800;font-size:14px;">LTV:CAC &lt; 1</div><div style="font-size:10px;">Losing money on every user. Stop spending.</div></div>
+      <div style="padding:12px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-weight:800;font-size:14px;">LTV:CAC 1-3</div><div style="font-size:10px;">Sustainable but thin margins. Optimize.</div></div>
+      <div style="padding:12px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;"><div style="font-weight:800;font-size:14px;">LTV:CAC &gt; 3</div><div style="font-size:10px;">Healthy. Can invest more in acquisition.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Funnel</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>AARRR for Skoove / Trala</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Skoove's Pirate Funnel</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:14px;background:rgba(255,107,107,.12);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;">&#x1F4E3; Acquisition</div>
+        <div style="font-size:12px;color:var(--ink-dim);margin-top:4px;line-height:1.5;"><strong>Channels:</strong> App Store search ("learn piano"), YouTube ads, Instagram, partnerships with keyboard brands. <strong>Metric:</strong> ~$3-5 CPI (Cost Per Install). <strong>Best channel:</strong> App Store organic (free, high intent).</div>
+      </div>
+      <div style="padding:14px;background:rgba(255,176,103,.12);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;">&#x2728; Activation</div>
+        <div style="font-size:12px;color:var(--ink-dim);margin-top:4px;line-height:1.5;"><strong>Aha moment:</strong> Playing a recognizable song with real-time feedback for the first time. <strong>Metric:</strong> % who complete first song lesson within 24h. <strong>Blocker:</strong> Users who download but never connect their instrument.</div>
+      </div>
+      <div style="padding:14px;background:rgba(141,216,248,.12);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;">&#x1F504; Retention</div>
+        <div style="font-size:12px;color:var(--ink-dim);margin-top:4px;line-height:1.5;"><strong>Reality:</strong> Music learning apps have ~70% churn in first month. <strong>Levers:</strong> Practice reminders, streak mechanics, progressive difficulty, "songs you know." <strong>Key metric:</strong> D7 and D30 lesson completion rate.</div>
+      </div>
+      <div style="padding:14px;background:rgba(126,232,178,.12);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;">&#x1F4B0; Revenue</div>
+        <div style="font-size:12px;color:var(--ink-dim);margin-top:4px;line-height:1.5;"><strong>Model:</strong> Freemium to subscription ($9.99/mo or $59.99/yr). <strong>Conversion:</strong> Free trial to paid ~3-5%. <strong>Key lever:</strong> Hitting the paywall after aha moment, not before.</div>
+      </div>
+      <div style="padding:14px;background:rgba(196,181,253,.12);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;">&#x1F4E2; Referral</div>
+        <div style="font-size:12px;color:var(--ink-dim);margin-top:4px;line-height:1.5;"><strong>Organic:</strong> Users recording themselves playing and sharing on social. <strong>Built-in:</strong> "Invite a friend, get 1 month free" referral program. <strong>NPS:</strong> Likely strongest among users who hit 30-day milestone.</div>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F50D; Where's the Leak?</h4>
+    <p>For most music learning apps, the <strong>biggest leak is Retention</strong>. Users install (acquisition OK), try a lesson (activation OK), but don't come back after week 1. The fix isn't more marketing — it's better habit formation, progress visibility, and making practice feel rewarding, not like homework.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Metrics</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Funnel Builder</h2><p>Map your own AARRR funnel</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Your AARRR Funnel</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:#ff6b6b;border-radius:6px;color:var(--white);">&#x1F4E3; Acquisition</span></label><textarea id="f_acq" rows="2" placeholder="Main channels? Cost per acquisition? Best-performing source?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">&#x2728; Activation</span></label><textarea id="f_act" rows="2" placeholder="What's the aha moment? What % of signups reach it? Biggest friction?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">&#x1F504; Retention</span></label><textarea id="f_ret" rows="2" placeholder="D1/D7/D30 rates? What brings users back? Where do they drop off?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">&#x1F4B0; Revenue</span></label><textarea id="f_rev" rows="2" placeholder="Business model? Conversion rate? LTV:CAC ratio?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;">&#x1F4E2; Referral</span></label><textarea id="f_ref" rows="2" placeholder="How do users share? Referral program? Viral coefficient?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeFunnel()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F3F4;&#x200D;&#x2620;&#xFE0F; Find My Leaks</button></div>
+    <div id="funnel_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="tip">&#x1F4A1; <strong>PM Interview version:</strong> "I'd analyze the AARRR funnel to find the leakiest stage. For this product, I suspect the biggest drop-off is at [stage] because [reason]. I'd focus on improving [metric] by [action]."</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use AARRR When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Diagnosing where growth is stuck</li>
+      <li>&#x2714;&#xFE0F; Prioritizing what to work on next</li>
+      <li>&#x2714;&#xFE0F; PM interview asks about growth strategy</li>
+      <li>&#x2714;&#xFE0F; Reporting metrics to leadership</li>
+      <li>&#x2714;&#xFE0F; Building a growth team's dashboard</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip AARRR When...</h3><ul>
+      <li>&#x274C; Pre-product-market-fit (too early for funnel optimization)</li>
+      <li>&#x274C; B2B enterprise with long sales cycles (use sales funnel instead)</li>
+      <li>&#x274C; You need feature-level prioritization (use RICE/ICE)</li>
+      <li>&#x274C; You need strategic direction (use Playing to Win)</li>
+      <li>&#x274C; You need user insights (use JTBD)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">North Star</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Funnel &#x2192; Focus:</strong> AARRR shows all stages. North Star picks the ONE metric that matters most right now.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Growth Loops</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Linear &#x2192; Circular:</strong> AARRR is a funnel (linear). Growth Loops show how output feeds back as input (compounding).</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--rose);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">RICE</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Find &#x2192; Fix:</strong> AARRR finds the leaky stage. RICE prioritizes which features to build to fix it.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">OKRs</div><div style="font-size:12px;color:var(--ink-dim);"><strong>Funnel &#x2192; Goals:</strong> AARRR metrics become Key Results in your OKRs. "Improve D30 retention from 8% to 15%."</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeFunnel(){
+  const ids=['f_acq','f_act','f_ret','f_rev','f_ref'];
+  const names=['Acquisition','Activation','Retention','Revenue','Referral'];
+  const vals=ids.map((id,i)=>({name:names[i],val:document.getElementById(id).value.trim()}));
+  const filled=vals.filter(v=>v.val.length>0);
+  const empty=vals.filter(v=>v.val.length===0);
+  const r=document.getElementById('funnel_result');
+  if(filled.length<2){r.innerHTML='<div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Fill in at least 2 stages to get feedback.</div>';return;}
+  let fb=[];
+  const ret=vals.find(v=>v.name==='Retention');
+  if(ret.val&&(ret.val.includes('low')||ret.val.includes('churn')||ret.val.includes('drop'))){
+    fb.push('&#x1F504; <strong>Retention flagged as weak.</strong> This should be your #1 priority. No amount of acquisition fixes a retention problem. Focus on: habit triggers, progress visibility, re-engagement flows.');
+  }
+  const act=vals.find(v=>v.name==='Activation');
+  if(act.val&&!act.val.toLowerCase().includes('aha')&&!act.val.toLowerCase().includes('moment')&&!act.val.toLowerCase().includes('first')){
+    fb.push('&#x2728; <strong>No clear aha moment defined.</strong> Can you name the EXACT action where a user first feels value? "Completed first lesson" or "sent first message" — this needs to be crystal clear.');
+  }
+  const acq=vals.find(v=>v.name==='Acquisition');
+  if(acq.val&&(!ret.val||ret.val.length===0)){
+    fb.push('&#x26A0;&#xFE0F; <strong>You defined Acquisition but not Retention.</strong> Classic mistake: spending on acquisition before knowing if users stick around. Define retention metrics FIRST.');
+  }
+  let html='<div style="padding:18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;margin-bottom:10px;">&#x1F3F4;&#x200D;&#x2620;&#xFE0F; <strong>Funnel mapped!</strong> '+filled.length+'/5 stages defined.'+(empty.length>0?' Missing: '+empty.map(e=>e.name).join(', ')+'.<br>':'')+'</div>';
+  if(fb.length>0){fb.forEach(f=>{html+='<div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;">'+f+'</div>';});}
+  else{html+='<div style="padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;">Good structure! Next step: add actual numbers to each stage. What % converts from one stage to the next? The stage with the biggest drop-off is your #1 priority.</div>';}
+  r.innerHTML=html;
+}
+
+const qs=[
+  {q:"What does AARRR stand for?",o:["Awareness, Adoption, Revenue, Retention, Referral","Acquisition, Activation, Retention, Revenue, Referral","Acquisition, Analysis, Retention, Revenue, Reach","Attention, Activation, Revenue, Retention, Referral"],a:1,e:"Acquisition, Activation, Retention, Revenue, Referral — in that order. But the priority order for fixing them is different (retention first)."},
+  {q:"Which AARRR stage should you typically fix FIRST?",o:["Acquisition (get more users)","Activation (improve onboarding)","Retention (make users come back)","Revenue (monetize better)"],a:2,e:"Retention is king. If users don't come back, acquisition is waste and revenue is impossible. Fix the bucket before pouring more water."},
+  {q:"What is the 'aha moment' in Activation?",o:["When the user pays for the first time","When the user refers a friend","When the user first experiences the core value of the product","When the user completes their profile"],a:2,e:"The aha moment = first time the user gets real value. For Slack: sending a message and getting a reply. For Trala: playing a song with real-time feedback. Everything in onboarding should drive toward this moment."},
+  {q:"What does a healthy LTV:CAC ratio look like?",o:["LTV:CAC > 1:1","LTV:CAC > 3:1","LTV:CAC > 10:1","LTV:CAC = 1:1 exactly"],a:1,e:"LTV:CAC > 3:1 is the standard benchmark. Below 1:1 means you're losing money. 1-3 is survivable but tight. Above 3 gives room to invest in growth."},
+  {q:"Why is pouring money into acquisition with bad retention a mistake?",o:["Because ads are expensive","Because you're paying to acquire users who will leave — the leaky bucket problem","Because retention always comes before acquisition alphabetically","Because investors don't like acquisition spending"],a:1,e:"The leaky bucket: if 90% of acquired users churn in week 1, you're paying for 10% of them. Fix retention first, then every dollar spent on acquisition goes 10x further."},
+  {q:"How does AARRR connect to North Star Metric?",o:["They're the same thing","AARRR replaces North Star","AARRR maps the full funnel, North Star picks the ONE metric that matters most right now","North Star is for B2B, AARRR is for B2C"],a:2,e:"AARRR = the full picture. North Star = the single metric your whole team rallies around, usually from the leakiest or most strategic AARRR stage."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F3F4;&#x200D;&#x2620;&#xFE0F; Growth pirate! You can diagnose funnel problems and prioritize fixes.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good grasp. Review retention priority and LTV:CAC.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the priority order and why retention comes first.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+',this)">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick,btn){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

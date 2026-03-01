@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Narrative Arc — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,5vw,40px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);}.j-btn.active{background:var(--ink);color:var(--white);}.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}.quiz-opt:hover{background:var(--cream-dark);}.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4AC; Communication</div>
+  <h1>&#x1F4D6; Narrative Arc</h1>
+  <p class="sub">Structure presentations as compelling stories. Build tension, create buy-in, and make your audience care before you ask them to act.</p>
+</div>
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> A Narrative Arc structures communication like a story: <strong>Status Quo &#x2192; Disruption &#x2192; Struggle &#x2192; Resolution &#x2192; New Reality</strong>. Unlike Pyramid (answer first), it builds emotional investment before the payoff. Use for presentations, pitches, and all-hands talks.</p></div>
+</div>
+
+<!-- HERO -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:4px;flex-wrap:wrap;min-height:100px;">
+    <div style="text-align:center;align-self:flex-end;"><div style="padding:8px 10px;background:var(--purple);border:2px solid var(--border);border-radius:8px;font-size:9px;font-weight:800;">Status Quo</div></div>
+    <div style="text-align:center;align-self:center;"><div style="padding:8px 10px;background:var(--sky);border:2px solid var(--border);border-radius:8px;font-size:9px;font-weight:800;">Disruption</div></div>
+    <div style="text-align:center;align-self:flex-start;"><div style="padding:8px 10px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:8px;font-size:9px;font-weight:800;box-shadow:var(--shadow-sm);">Struggle<br>&#x1F525; Peak Tension</div></div>
+    <div style="text-align:center;align-self:center;"><div style="padding:8px 10px;background:var(--yellow);border:2px solid var(--border);border-radius:8px;font-size:9px;font-weight:800;">Resolution</div></div>
+    <div style="text-align:center;align-self:flex-end;"><div style="padding:8px 10px;background:var(--mint);border:2px solid var(--border);border-radius:8px;font-size:9px;font-weight:800;">New Reality</div></div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Tension rises &#x2192; peaks at the struggle &#x2192; resolves with your solution &#x2192; ends with transformation.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>5 Beats</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>PM Formats</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why Stories?</h2><p>Data tells, stories sell</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Pyramid vs Narrative Arc</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;"><strong>Pyramid Principle:</strong> "Here's the answer. Here's why." Efficient. Great for emails and exec updates where the audience wants the bottom line.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;"><strong>Narrative Arc:</strong> "Here's the world today. Here's what went wrong. Here's how hard it is. Here's the solution. Here's the better future." Engaging. Great for presentations and pitches where you need the audience to <em>care</em> before they act.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;margin-bottom:4px;">&#x1F53A; Pyramid = Efficient</div>
+      <div style="font-size:11px;color:var(--ink-soft);">Audience already agrees or just needs info. Answer first, details if needed. Email, Slack, exec update.</div>
+    </div>
+    <div class="c-card" style="background:var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:13px;margin-bottom:4px;">&#x1F4D6; Narrative = Persuasive</div>
+      <div style="font-size:11px;color:var(--ink-soft);">Audience needs convincing. Build tension, create need, then deliver. Presentations, pitches, all-hands.</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F9E0; When to Use Which</h4><p>If they already agree &#x2192; Pyramid. If you need buy-in &#x2192; Narrative Arc. If unsure &#x2192; use the <strong>"So what?"</strong> test. If your recommendation alone makes them act, use Pyramid. If they need to feel the problem first, use Narrative Arc.</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">5 Beats &#x2192;</button></div>
+</div>
+
+<!-- S1: 5 BEATS -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F3AC;</div><div class="sec-label"><h2>The 5 Beats</h2><p>Structure of a compelling story</p></div></div>
+  <div style="display:grid;gap:10px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--purple);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;">1. Status Quo (~10%)</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">The world as it is today. Establish shared reality. Make the audience nod. "Skoove has 5M users. Our content library has grown 3x in 2 years. We're the #2 piano learning app."</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;">2. Disruption (~15%)</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Something changed or something's wrong. Create a gap. "But despite 3x content, D7 retention hasn't improved. Users still drop off at the same point." This is the "but" that creates tension.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;">3. Struggle / Tension Peak (~25%) &#x1F525;</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Make the problem urgent. Show consequences of inaction. "If we don't fix this, we burn &#x20AC;500K/month acquiring users who leave in a week. At current trajectory, CAC exceeds LTV by Q4." The audience now NEEDS a solution.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--yellow);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;">4. Resolution (~30%)</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Your solution. The relief. "We propose bridge lessons&#8202;&#8212;&#8202;short review exercises between difficulty jumps. Low effort: reuses existing content, 2-sprint build. Pilot data shows 25% completion improvement." Deliver with confidence and evidence.</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;">5. New Reality (~20%)</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Paint the future. "By Q4, retention reaches 20%. CAC payback drops from 14 months to 8. And we've built a scalable framework for difficulty transitions across all instruments." End with the call to action.</div>
+    </div>
+  </div>
+  <div class="tip">&#x1F4A1; The percentages are for a 15-minute presentation. For a 5-minute pitch, compress Status Quo + Disruption into 1 minute and spend 3 minutes on Resolution.</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">PM Formats &#x2192;</button></div>
+</div>
+
+<!-- S2: PM FORMATS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F4CB;</div><div class="sec-label"><h2>PM Use Cases</h2><p>Narrative Arc applied to PM work</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--sky);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F3AF; Product Strategy Pitch</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>SQ:</strong> Market position + current metrics. <strong>Disruption:</strong> Competitor move or market shift. <strong>Struggle:</strong> What happens if we don't respond. <strong>Resolution:</strong> Your strategy with evidence. <strong>New Reality:</strong> Market position after execution.</div>
+    </div>
+    <div class="c-card" style="background:var(--orange);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F4CA; Quarterly Business Review</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>SQ:</strong> Where we were at start of quarter. <strong>Disruption:</strong> What surprised us (wins or setbacks). <strong>Struggle:</strong> Biggest challenge we faced. <strong>Resolution:</strong> How we responded + outcomes. <strong>New Reality:</strong> Where we are now + next quarter priorities.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F680; Feature Launch Announcement</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>SQ:</strong> "Users love Skoove but..." <strong>Disruption:</strong> The pain point they've been experiencing. <strong>Struggle:</strong> How hard this was to solve + user quotes. <strong>Resolution:</strong> The new feature + how it works. <strong>New Reality:</strong> The better experience users now have.</div>
+    </div>
+    <div class="c-card" style="background:var(--pink);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F91D; PM Interview Case Presentation</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>SQ:</strong> "The company has X users and Y revenue." <strong>Disruption:</strong> "But growth has stalled because..." <strong>Struggle:</strong> "If unaddressed, they'll lose market share to..." <strong>Resolution:</strong> "I'd recommend 3 initiatives..." <strong>New Reality:</strong> "This positions them for..."</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; 5 Beats</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Trala product pitch to leadership</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F3BB; "Why Trala Needs a Practice Mode" &#x2014; All-hands pitch</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:12px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;"><strong>&#x1F3AC; Status Quo:</strong> "Trala has grown to 200K violin learners. Our lesson library is comprehensive. Reviews praise the AI feedback system. We're the top-rated violin app on iOS."</div>
+      <div style="padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;"><strong>&#x26A1; Disruption:</strong> "But 70% of users who complete a lesson never come back to practice it. The 'Practice' button just replays the lesson. There's no real practice experience."</div>
+      <div style="padding:12px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;"><strong>&#x1F525; Struggle:</strong> "Without practice, users don't build muscle memory. They hit a wall at week 3. D30 retention is 8%&#8202;&#8212;&#8202;half the industry benchmark. Every month, 14K users who PAID for a subscription quietly stop opening the app. That's &#x20AC;84K/month in silent churn."</div>
+      <div style="padding:12px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;"><strong>&#x1F4A1; Resolution:</strong> "I'm proposing a dedicated Practice Mode: tempo control, section looping, and mistake heatmaps. It reuses our existing audio engine. Engineering estimate: one 6-week cycle. I've prototyped it with 50 beta users&#8202;&#8212;&#8202;practice session frequency tripled and lesson replay rate increased 4x."</div>
+      <div style="padding:12px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.6;"><strong>&#x2728; New Reality:</strong> "By Q4, Trala becomes the only violin app with a real practice experience. D30 retention targets 16%. And we've built the foundation for adaptive practice that adjusts difficulty based on each user's weak spots&#8202;&#8212;&#8202;a competitive moat that's very hard to copy."</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Why This Works</h4><p>The audience goes on an emotional journey: pride (status quo) &#x2192; concern (disruption) &#x2192; urgency (struggle with &#x20AC;84K/month number) &#x2192; relief (solution with beta data) &#x2192; excitement (future vision). By the time you ask for resources, they're already bought in.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; PM Formats</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Arc Builder</h2><p>Draft your narrative</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build Your Narrative Arc</h3>
+    <div style="display:grid;gap:12px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;display:block;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;color:var(--white);">1. Status Quo</span></label><textarea id="na_sq" rows="2" placeholder="The world as it is. What's going well? Set the stage." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:block;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">2. Disruption</span></label><textarea id="na_dis" rows="2" placeholder='The "but..." — what changed or what&#39;s wrong?' style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:block;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--rose);border-radius:6px;">3. Struggle</span></label><textarea id="na_str" rows="2" placeholder="Why this is urgent. What happens if we do nothing? (Include numbers)" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:block;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">4. Resolution</span></label><textarea id="na_res" rows="2" placeholder="Your solution. Evidence it works." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;display:block;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">5. New Reality</span></label><textarea id="na_new" rows="2" placeholder="The better future. Call to action." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeArc()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F4D6; Review My Arc</button></div>
+    <div id="na_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Narrative Arc vs other frameworks</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Narrative Arc When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Product strategy presentations</li>
+      <li>&#x2714;&#xFE0F; All-hands or town hall talks</li>
+      <li>&#x2714;&#xFE0F; Investor or board pitches</li>
+      <li>&#x2714;&#xFE0F; Feature launch announcements</li>
+      <li>&#x2714;&#xFE0F; You need buy-in, not just information delivery</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip Narrative Arc When...</h3><ul>
+      <li>&#x274C; Quick stakeholder updates (use Pyramid)</li>
+      <li>&#x274C; Behavioral interviews (use STAR)</li>
+      <li>&#x274C; Executive one-pagers (use Executive Summary)</li>
+      <li>&#x274C; Audience already agrees &#x2014; just needs details</li>
+      <li>&#x274C; Time-pressed Slack/email (use Pyramid)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Pyramid</div><div style="font-size:12px;color:var(--ink-dim);">Pyramid = answer first (efficient). Narrative = tension first (persuasive). Use Pyramid within the Resolution section of a Narrative Arc for the evidence.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">STAR</div><div style="font-size:12px;color:var(--ink-dim);">STAR is a mini Narrative Arc for interviews. Situation = Status Quo, Task = Disruption, Action = Resolution, Result = New Reality.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Exec Summary</div><div style="font-size:12px;color:var(--ink-dim);">Exec Summary is a written Pyramid. Narrative Arc is an oral Pyramid with tension. Different channels, different structures.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeArc(){
+  const sq=document.getElementById('na_sq').value.trim(),dis=document.getElementById('na_dis').value.trim(),str=document.getElementById('na_str').value.trim(),res=document.getElementById('na_res').value.trim(),nw=document.getElementById('na_new').value.trim();
+  const el=document.getElementById('na_result');
+  if(!sq||!dis||!res){el.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Fill in at least Status Quo, Disruption, and Resolution.</div>';return;}
+  let fb=[];
+  if(dis.toLowerCase().includes('but')||dis.toLowerCase().includes('however')||dis.toLowerCase().includes('despite')) fb.push({t:'&#x2705; Strong disruption',m:'You\'re creating a clear contrast with the status quo. This is what builds tension.',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Add contrast',m:'Start your Disruption with "But..." or "However..." or "Despite..." to create a clear pivot from the status quo.',c:'var(--sky)'});
+  if(!str) fb.push({t:'&#x26A0;&#xFE0F; Missing Struggle',m:'The Struggle is where urgency lives. What happens if you do nothing? Add consequences with numbers.',c:'var(--rose)'});
+  else if(/\d/.test(str)||str.includes('&#x20AC;')||str.includes('$')) fb.push({t:'&#x2705; Struggle has numbers',m:'Quantified urgency is powerful. "&#x20AC;84K/month in silent churn" hits harder than "we\'re losing users."',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Add numbers to Struggle',m:'Quantify the cost of inaction: money lost, users churned, time wasted. Numbers make the struggle feel real.',c:'var(--orange)'});
+  if(res.length>20) fb.push({t:'&#x2705; Resolution present',m:'Make sure you include evidence: data, prototypes, benchmarks. The resolution needs to feel credible, not just hopeful.',c:'var(--mint)'});
+  if(!nw) fb.push({t:'&#x26A0;&#xFE0F; Missing New Reality',m:'Paint the future! End with what the world looks like after your solution. Include a call to action.',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; New Reality included',m:'Strong endings create momentum. Make sure there\'s a clear call to action: "I\'m asking for X to make this happen."',c:'var(--mint)'});
+  el.innerHTML=fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> &#x2014; '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"What's the key difference between Pyramid Principle and Narrative Arc?",o:["Pyramid uses data, Narrative doesn't","Pyramid leads with the answer; Narrative builds tension before the answer","Narrative is longer than Pyramid","They're the same thing with different names"],a:1,e:"Pyramid = answer first (efficient, for informed audiences). Narrative Arc = tension first (persuasive, for audiences that need to be convinced). The content can be the same; the ORDER is different."},
+  {q:"Which beat of the Narrative Arc should take the most time?",o:["Status Quo &#x2014; context is everything","Disruption &#x2014; the problem needs the most detail","Resolution &#x2014; your solution and evidence (~30% of the presentation)","New Reality &#x2014; the future vision"],a:2,e:"Resolution should be ~30% of your presentation. It's where your solution lives with evidence. But Struggle (~25%) is close because urgency drives buy-in. Together, Struggle + Resolution = 55% of your talk."},
+  {q:"What makes the 'Struggle' beat effective?",o:["Listing all possible problems","Quantifying consequences of inaction &#x2014; making urgency feel real with numbers","Blaming someone for the problem","Showing you tried everything and failed"],a:1,e:"The Struggle creates urgency through quantified consequences: '&#x20AC;500K/month in wasted acquisition' or '14K users silently churning.' The audience should feel the COST of doing nothing before you present the solution."},
+  {q:"When should you NOT use Narrative Arc?",o:["Product pitches","Quick Slack messages or exec updates where the audience wants the answer immediately","All-hands presentations","Investor pitches"],a:1,e:"Narrative Arc needs time and attention. For quick updates, Slack messages, or emails, use Pyramid Principle (answer first). The audience doesn't want a 5-beat story when they just need a yes/no."},
+  {q:"How does STAR relate to Narrative Arc?",o:["They're completely unrelated","STAR is a mini Narrative Arc: Situation=Status Quo, Task=Disruption, Action=Resolution, Result=New Reality","STAR replaces Narrative Arc","Narrative Arc is for interviews, STAR is for presentations"],a:1,e:"STAR IS a simplified Narrative Arc optimized for 90-second interview answers. Same structure: establish context, identify the challenge, describe your action, show the outcome. STAR just compresses the journey."},
+  {q:"You're presenting a feature proposal. The CPO is skeptical. Which structure?",o:["Pyramid &#x2014; lead with the recommendation","STAR &#x2014; tell a personal story","Narrative Arc &#x2014; build the case with tension before the solution","Executive Summary &#x2014; write a one-pager"],a:2,e:"Skeptical audience = you need to build buy-in. Narrative Arc creates urgency (Struggle) before presenting the solution (Resolution). If you lead with the answer (Pyramid), a skeptical CPO might dismiss it before hearing the evidence."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F4D6; Storytelling pro! You can structure persuasive presentations with tension and payoff.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good foundation. Practice the Struggle beat &#x2014; that\'s where buy-in happens.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on when to use Narrative Arc vs Pyramid.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>
