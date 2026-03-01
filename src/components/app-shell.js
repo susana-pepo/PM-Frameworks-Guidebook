@@ -12,9 +12,11 @@ export function renderApp() {
   const app = document.getElementById('app');
 
   app.innerHTML = `
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Mobile header -->
     <div class="mobile-header">
-      <button class="hamburger" id="sidebar-toggle" aria-label="Open navigation">
+      <button class="hamburger" id="sidebar-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
         <span></span><span></span><span></span>
       </button>
       <span style="font-weight:700;font-size:var(--text-sm);">PM Frameworks</span>
@@ -24,7 +26,7 @@ export function renderApp() {
     <!-- Sidebar -->
     <aside class="app-sidebar" id="sidebar" role="navigation" aria-label="Framework navigation">
       <div class="sidebar-brand">
-        <h1><a href="#/" style="color:inherit;text-decoration:none;">PM Frameworks</a></h1>
+        <div class="sidebar-brand-title" role="banner"><a href="#/" style="color:inherit;text-decoration:none;">PM Frameworks</a></div>
         <div class="brand-badge">📘 24 frameworks</div>
       </div>
 
@@ -68,12 +70,12 @@ function renderSidebarNav() {
 
     return `
       <div class="sidebar-category" data-category="${cat.id}">
-        <div class="sidebar-cat-header" data-cat-toggle="${cat.id}">
+        <div class="sidebar-cat-header" data-cat-toggle="${cat.id}" role="button" tabindex="0" aria-expanded="true" aria-controls="cat-items-${cat.id}">
           <span class="cat-dot" style="background:${cat.color};"></span>
           <span>${cat.name}</span>
-          <span class="cat-chevron">▾</span>
+          <span class="cat-chevron" aria-hidden="true">▾</span>
         </div>
-        <div class="sidebar-cat-items" data-cat-items="${cat.id}">
+        <div class="sidebar-cat-items" id="cat-items-${cat.id}" data-cat-items="${cat.id}">
           ${catFrameworks.map(fw => `
             <a class="sidebar-fw-link" data-fw-slug="${fw.slug}" href="#/framework/${fw.slug}">
               <span class="fw-emoji">${fw.emoji}</span>
@@ -96,25 +98,34 @@ function bindSidebar() {
   const overlay = document.getElementById('sidebar-overlay');
   const sidebar = document.getElementById('sidebar');
 
-  toggle?.addEventListener('click', () => {
-    sidebarOpen = !sidebarOpen;
+  const toggleSidebar = (open) => {
+    sidebarOpen = open ?? !sidebarOpen;
     sidebar.classList.toggle('open', sidebarOpen);
     overlay.classList.toggle('open', sidebarOpen);
-  });
+    toggle.setAttribute('aria-expanded', String(sidebarOpen));
+    toggle.setAttribute('aria-label', sidebarOpen ? 'Close navigation' : 'Open navigation');
+  };
 
-  overlay?.addEventListener('click', () => {
-    sidebarOpen = false;
-    sidebar.classList.remove('open');
-    overlay.classList.remove('open');
-  });
+  toggle?.addEventListener('click', () => toggleSidebar());
 
-  // Category collapse/expand
+  overlay?.addEventListener('click', () => toggleSidebar(false));
+
+  // Category collapse/expand — with keyboard support
   document.querySelectorAll('[data-cat-toggle]').forEach(header => {
-    header.addEventListener('click', () => {
+    const toggleCategory = () => {
       const catId = header.dataset.catToggle;
       const items = document.querySelector(`[data-cat-items="${catId}"]`);
-      header.classList.toggle('collapsed');
-      items.classList.toggle('collapsed');
+      const isCollapsed = header.classList.toggle('collapsed');
+      items.classList.toggle('collapsed', isCollapsed);
+      header.setAttribute('aria-expanded', String(!isCollapsed));
+    };
+
+    header.addEventListener('click', toggleCategory);
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCategory();
+      }
     });
   });
 
@@ -154,9 +165,34 @@ function handleRoute(route) {
   const content = document.getElementById('page-content');
   const breadcrumb = document.getElementById('breadcrumb');
 
-  // Update active state in sidebar
+  // Update active state in sidebar with category-specific colors
   document.querySelectorAll('.sidebar-fw-link').forEach(link => {
-    link.classList.toggle('active', link.dataset.fwSlug === route.params.slug);
+    const isActive = link.dataset.fwSlug === route.params.slug;
+    link.classList.toggle('active', isActive);
+    if (isActive) {
+      // Find the parent category and set its color on the active link
+      const catEl = link.closest('.sidebar-category');
+      const catId = catEl?.dataset.category;
+      if (catId) {
+        link.style.setProperty('--cat-active-color', `var(--cat-${catId})`);
+        link.style.setProperty('--cat-active-soft', `var(--cat-${catId}-soft)`);
+      }
+      // Auto-expand parent category if collapsed
+      const catItems = link.closest('.sidebar-cat-items');
+      const catHeader = catItems?.previousElementSibling;
+      if (catItems?.classList.contains('collapsed')) {
+        catItems.classList.remove('collapsed');
+        catHeader?.classList.remove('collapsed');
+        catHeader?.setAttribute('aria-expanded', 'true');
+      }
+      // Auto-scroll sidebar to show active link
+      requestAnimationFrame(() => {
+        link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      });
+    } else {
+      link.style.removeProperty('--cat-active-color');
+      link.style.removeProperty('--cat-active-soft');
+    }
   });
 
   // Scroll content to top
@@ -176,7 +212,7 @@ function handleRoute(route) {
 
     case 'framework':
       // injectStyles() is called inside renderFrameworkPage
-      renderFrameworkPage(content, breadcrumb, route.params.slug);
+      renderFrameworkPage(content, breadcrumb, route.params.slug, route.params.step);
       break;
 
     case 'compare':

@@ -11,7 +11,7 @@ import { extractAndCleanCSS, injectStyles } from '../utils/style-injector.js';
 // Cache loaded framework content — stores { html, css }
 const contentCache = new Map();
 
-export async function renderFrameworkPage(container, breadcrumb, slug) {
+export async function renderFrameworkPage(container, breadcrumb, slug, initialStep) {
   const fw = getFramework(slug);
   if (!fw) {
     container.innerHTML = '<p>Framework not found.</p>';
@@ -56,7 +56,7 @@ export async function renderFrameworkPage(container, breadcrumb, slug) {
     executeScripts(container);
 
     // Install accordion system — transforms tabs into collapsed step navigation
-    installAccordionSystem(container);
+    installAccordionSystem(container, slug, initialStep);
   } catch (err) {
     container.innerHTML = `
       <div style="text-align:center;padding:var(--space-16) 0;">
@@ -147,11 +147,80 @@ function stripLeadingEmoji(container) {
 }
 
 /**
- * Accordion System — transforms the tab-based navigation into a
- * "book cover" layout where the hero visualizer is the landing view
- * and step content is collapsed by default in an accordion.
+ * Content-type metadata for accordion sections.
+ * Maps common step labels to icons, types, and descriptions.
  */
-function installAccordionSystem(container) {
+const STEP_META = {
+  'Understand': { icon: '📖', type: 'Reading', desc: 'Core concept explained' },
+  'Concept': { icon: '📖', type: 'Reading', desc: 'What it is and why it matters' },
+  'Score': { icon: '🔢', type: 'Interactive', desc: 'Rate and calculate scores' },
+  'Funnel': { icon: '📊', type: 'Reading', desc: 'Visualize the stages' },
+  'Factors': { icon: '📖', type: 'Reading', desc: 'The key components' },
+  'Components': { icon: '📖', type: 'Reading', desc: 'Building blocks explained' },
+  'Forces': { icon: '📖', type: 'Reading', desc: 'The forces at play' },
+  'Steps': { icon: '📖', type: 'Reading', desc: 'Step-by-step process' },
+  'Stages': { icon: '📖', type: 'Reading', desc: 'The stages of the process' },
+  'Quadrants': { icon: '📊', type: 'Reading', desc: 'Map the four quadrants' },
+  'Canvas': { icon: '🧩', type: 'Interactive', desc: 'Fill in the canvas' },
+  'Metrics': { icon: '📊', type: 'Reading', desc: 'Key metrics to track' },
+  'Loops': { icon: '📖', type: 'Reading', desc: 'How growth loops work' },
+  'Example': { icon: '📋', type: 'Case Study', desc: 'Real-world application' },
+  'Examples': { icon: '📋', type: 'Case Study', desc: 'Real-world examples' },
+  'Try It': { icon: '🔧', type: 'Interactive', desc: 'Hands-on practice tool' },
+  'Builder': { icon: '🔧', type: 'Builder', desc: 'Build your own analysis' },
+  'Analyzer': { icon: '🔧', type: 'Builder', desc: 'Analyze your situation' },
+  'Calculator': { icon: '🔧', type: 'Builder', desc: 'Calculate your scores' },
+  'Plotter': { icon: '🔧', type: 'Builder', desc: 'Plot on the matrix' },
+  'Plot It': { icon: '🔧', type: 'Interactive', desc: 'Map it visually' },
+  'Map It': { icon: '🔧', type: 'Interactive', desc: 'Build your map' },
+  'When': { icon: '⏰', type: 'Reference', desc: 'When to use — and when not to' },
+  'Template': { icon: '🧩', type: 'Template', desc: 'Ready-to-use template' },
+  'Pitfalls': { icon: '⚠️', type: 'Tips', desc: 'Common mistakes to avoid' },
+  'After': { icon: '🔗', type: 'Reference', desc: 'Next steps and related frameworks' },
+  'Session': { icon: '📋', type: 'Guide', desc: 'Run a team session' },
+  'Quiz': { icon: '❓', type: 'Quiz', desc: 'Test your understanding' },
+  'Toolkit': { icon: '🧰', type: 'Reference', desc: 'Tools and resources' },
+  'Deep Dive': { icon: '🔬', type: 'Reading', desc: 'In-depth exploration' },
+  'Strategy': { icon: '♟️', type: 'Reading', desc: 'Strategic considerations' },
+  'Explore': { icon: '🔍', type: 'Reading', desc: 'Explore the details' },
+  'Decide': { icon: '🎯', type: 'Interactive', desc: 'Make your choice' },
+};
+
+/** Get step metadata by matching label to known patterns */
+function getStepMeta(label) {
+  // Exact match first
+  if (STEP_META[label]) return STEP_META[label];
+
+  // Partial match (label contains a known key)
+  for (const [key, meta] of Object.entries(STEP_META)) {
+    if (label.toLowerCase().includes(key.toLowerCase())) return meta;
+  }
+
+  // Default fallback
+  return { icon: '📄', type: 'Reading', desc: '' };
+}
+
+/** Get CSS class for content-type pill */
+function getTypePillClass(type) {
+  switch (type) {
+    case 'Interactive':
+    case 'Builder': return 'pill-interactive';
+    case 'Quiz': return 'pill-quiz';
+    case 'Template': return 'pill-template';
+    case 'Case Study': return 'pill-example';
+    case 'Reference':
+    case 'Tips':
+    case 'Guide': return 'pill-reference';
+    default: return 'pill-reading';
+  }
+}
+
+/**
+ * Accordion System — transforms the tab-based navigation into a
+ * reference-tool layout where the hero visualizer is the landing view
+ * and content sections are collapsed by default with type indicators.
+ */
+function installAccordionSystem(container, slug, initialStep) {
   const fwPage = container.querySelector('.fw-page');
   if (!fwPage) return;
 
@@ -217,18 +286,22 @@ function installAccordionSystem(container) {
   // Build the mini-nav (sticky bar for reading mode)
   const miniNav = document.createElement('div');
   miniNav.className = 'accordion-mini-nav';
+  miniNav.setAttribute('role', 'navigation');
+  miniNav.setAttribute('aria-label', 'Step navigation');
 
   const homeBtn = document.createElement('button');
   homeBtn.className = 'accordion-home-btn';
-  homeBtn.innerHTML = '<span>&#8962;</span> Cover';
+  homeBtn.innerHTML = '<span aria-hidden="true">&#8962;</span> Cover';
+  homeBtn.setAttribute('aria-label', 'Return to cover view');
   homeBtn.addEventListener('click', () => collapseAll());
   miniNav.appendChild(homeBtn);
 
   steps.forEach((step, i) => {
+    const meta = getStepMeta(step.label);
     const pill = document.createElement('button');
     pill.className = 'accordion-pill';
-    pill.textContent = step.num;
-    pill.title = step.label;
+    pill.innerHTML = `<span class="pill-icon" aria-hidden="true">${meta.icon}</span><span class="pill-label">${step.label}</span>`;
+    pill.setAttribute('aria-label', `Step ${step.num}: ${step.label}`);
     pill.addEventListener('click', () => expandStep(i));
     miniNav.appendChild(pill);
   });
@@ -244,23 +317,44 @@ function installAccordionSystem(container) {
   // Build accordion structure
   const accordionNav = document.createElement('div');
   accordionNav.className = 'accordion-nav';
+  accordionNav.setAttribute('role', 'region');
+  accordionNav.setAttribute('aria-label', 'Framework steps');
 
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
 
+    const panelId = `accordion-panel-${slug}-${i}`;
+    const headerId = `accordion-header-${slug}-${i}`;
+
+    // Get content-type metadata for this step
+    const meta = getStepMeta(step.label);
+    const pillClass = getTypePillClass(meta.type);
+
     // Create accordion step header
     const stepHeader = document.createElement('button');
     stepHeader.className = 'accordion-step';
+    stepHeader.id = headerId;
+    stepHeader.setAttribute('aria-expanded', 'false');
+    stepHeader.setAttribute('aria-controls', panelId);
     stepHeader.innerHTML = `
-      <span class="accordion-step-num">${step.num}</span>
-      <span class="accordion-step-label">${step.label}</span>
-      <span class="accordion-chevron">&#9656;</span>
+      <span class="accordion-step-icon" aria-hidden="true">${meta.icon}</span>
+      <span class="accordion-step-content">
+        <span class="accordion-step-top">
+          <span class="accordion-step-label">${step.label}</span>
+          <span class="accordion-type-pill ${pillClass}">${meta.type}</span>
+        </span>
+        ${meta.desc ? `<span class="accordion-step-desc">${meta.desc}</span>` : ''}
+      </span>
+      <span class="accordion-chevron" aria-hidden="true">&#9656;</span>
     `;
 
     // Create wrapper for the panel content
     const wrapper = document.createElement('div');
     wrapper.className = 'accordion-panel-wrapper';
+    wrapper.id = panelId;
+    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('aria-labelledby', headerId);
     wrapper.setAttribute('data-step', String(i));
 
     // Move the panel into the wrapper
@@ -272,10 +366,24 @@ function installAccordionSystem(container) {
     const continueBtn = document.createElement('button');
     continueBtn.className = 'accordion-continue';
     if (i < steps.length - 1) {
-      continueBtn.innerHTML = `Continue to ${steps[i + 1].label} <span class="arrow">&#8594;</span>`;
+      const nextMeta = getStepMeta(steps[i + 1].label);
+      continueBtn.innerHTML = `
+        <span class="continue-label">Continue to</span>
+        <span class="continue-next">
+          <span class="continue-icon" aria-hidden="true">${nextMeta.icon}</span>
+          <span>${steps[i + 1].label}</span>
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+      `;
       continueBtn.addEventListener('click', () => expandStep(i + 1));
     } else {
-      continueBtn.innerHTML = `<span class="arrow">&#8962;</span> Back to Cover`;
+      continueBtn.innerHTML = `
+        <span class="continue-label">You've explored everything!</span>
+        <span class="continue-next">
+          <span class="continue-icon" aria-hidden="true">⌂</span>
+          <span>Back to Cover</span>
+        </span>
+      `;
       continueBtn.addEventListener('click', () => collapseAll());
     }
     wrapper.appendChild(continueBtn);
@@ -289,12 +397,37 @@ function installAccordionSystem(container) {
       }
     });
 
+    // Keyboard navigation: arrow keys move between step headers
+    stepHeader.addEventListener('keydown', (e) => {
+      const allHeaders = Array.from(accordionNav.querySelectorAll('.accordion-step'));
+      const currentIdx = allHeaders.indexOf(stepHeader);
+
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        const next = allHeaders[currentIdx + 1] || allHeaders[0];
+        next.focus();
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prev = allHeaders[currentIdx - 1] || allHeaders[allHeaders.length - 1];
+        prev.focus();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        allHeaders[0].focus();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        allHeaders[allHeaders.length - 1].focus();
+      }
+    });
+
     accordionNav.appendChild(stepHeader);
     accordionNav.appendChild(wrapper);
   });
 
   // Insert accordion after the journey-nav (which is now hidden via CSS)
   journeyNav.after(accordionNav);
+
+  // Build "What's Inside" summary chips
+  buildWhatsInsideChips(steps, accordionNav);
 
   // Override global goTo/go so any remaining onclick handlers use accordion
   window.goTo = (id) => {
@@ -307,31 +440,45 @@ function installAccordionSystem(container) {
 
   // --- Accordion interaction functions ---
 
-  function expandStep(index) {
+  function expandStep(index, skipScroll) {
     const stepHeaders = accordionNav.querySelectorAll('.accordion-step');
     const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
     const pills = miniNav.querySelectorAll('.accordion-pill');
 
     // Collapse all first
-    stepHeaders.forEach(h => h.classList.remove('expanded'));
+    stepHeaders.forEach(h => {
+      h.classList.remove('expanded');
+      h.setAttribute('aria-expanded', 'false');
+    });
     wrappers.forEach(w => w.classList.remove('open'));
     pills.forEach(p => p.classList.remove('active'));
 
     // Expand the target
-    if (stepHeaders[index]) stepHeaders[index].classList.add('expanded');
+    if (stepHeaders[index]) {
+      stepHeaders[index].classList.add('expanded');
+      stepHeaders[index].setAttribute('aria-expanded', 'true');
+    }
     if (wrappers[index]) wrappers[index].classList.add('open');
     if (pills[index]) pills[index].classList.add('active');
 
     // Enter reading mode
     fwPage.classList.add('reading-mode');
 
+    // Update URL hash for deep linking (use replaceState to avoid polluting history)
+    const newHash = `#/framework/${slug}/step/${index}`;
+    if (window.location.hash !== newHash) {
+      history.replaceState(null, '', newHash);
+    }
+
     // Scroll the expanded step into view
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (stepHeaders[index]) {
-      stepHeaders[index].scrollIntoView({
-        behavior: prefersReducedMotion ? 'instant' : 'smooth',
-        block: 'start'
-      });
+    if (!skipScroll) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (stepHeaders[index]) {
+        stepHeaders[index].scrollIntoView({
+          behavior: prefersReducedMotion ? 'instant' : 'smooth',
+          block: 'start'
+        });
+      }
     }
   }
 
@@ -340,12 +487,21 @@ function installAccordionSystem(container) {
     const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
     const pills = miniNav.querySelectorAll('.accordion-pill');
 
-    stepHeaders.forEach(h => h.classList.remove('expanded'));
+    stepHeaders.forEach(h => {
+      h.classList.remove('expanded');
+      h.setAttribute('aria-expanded', 'false');
+    });
     wrappers.forEach(w => w.classList.remove('open'));
     pills.forEach(p => p.classList.remove('active'));
 
     // Exit reading mode
     fwPage.classList.remove('reading-mode');
+
+    // Update URL hash — remove step
+    const baseHash = `#/framework/${slug}`;
+    if (window.location.hash !== baseHash) {
+      history.replaceState(null, '', baseHash);
+    }
 
     // Scroll to top of framework page
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -354,4 +510,48 @@ function installAccordionSystem(container) {
       block: 'start'
     });
   }
+
+  // Auto-expand if deep-linked to a specific step
+  if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
+    expandStep(initialStep, true);
+  }
+}
+
+/**
+ * Build "What's Inside" summary chips — shows a compact summary
+ * of the content types available in this framework (e.g., "3 Reading · 2 Interactive · 1 Quiz")
+ */
+function buildWhatsInsideChips(steps, accordionNav) {
+  // Count content types
+  const typeCounts = {};
+  const typeIcons = {};
+  steps.forEach(step => {
+    const meta = getStepMeta(step.label);
+    if (!typeCounts[meta.type]) {
+      typeCounts[meta.type] = 0;
+      typeIcons[meta.type] = meta.icon;
+    }
+    typeCounts[meta.type]++;
+  });
+
+  // Sort by count (descending), then alphabetically
+  const sorted = Object.entries(typeCounts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+  const whatsInside = document.createElement('div');
+  whatsInside.className = 'fw-whats-inside';
+  whatsInside.innerHTML = `
+    <span class="fw-whats-inside-label">Inside</span>
+    <div class="fw-whats-inside-chips">
+      ${sorted.map(([type, count]) => `
+        <span class="fw-chip">
+          <span class="fw-chip-icon" aria-hidden="true">${typeIcons[type]}</span>
+          ${count > 1 ? `<span class="fw-chip-count">${count}</span>` : ''}
+          ${type}
+        </span>
+      `).join('')}
+    </div>
+  `;
+
+  // Insert before the accordion nav
+  accordionNav.before(whatsInside);
 }

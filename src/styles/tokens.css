@@ -1,10 +1,11 @@
 /* ============================================
    PM Frameworks Guidebook — Design Tokens
-   Warm Learning aesthetic (Brilliant/Codecademy)
+   Design Revamp: Bold colors, friendly shapes,
+   Stripe/Brilliant/Notion-inspired reference tool
    ============================================ */
 
 :root {
-  /* ---- SCALE ---- */
+  /* ---- SCALE (8px grid, Notion standard) ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -16,11 +17,12 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* ---- RADII ---- */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* ---- RADII (Duolingo-friendly, generous) ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
   /* ---- TYPOGRAPHY ---- */
@@ -49,36 +51,48 @@
   --weight-bold: 700;
   --weight-extrabold: 800;
 
-  /* ---- CATEGORY COLORS ---- */
-  --cat-prioritization: #4ead6b;
-  --cat-prioritization-light: #e8f5ee;
-  --cat-prioritization-soft: rgba(78, 173, 107, 0.10);
-  --cat-prioritization-gradient: linear-gradient(135deg, #4ead6b, #3d9a5c);
+  /* ---- CATEGORY COLORS (Bold & Vibrant) ---- */
+  --cat-prioritization: #7C5CFC;
+  --cat-prioritization-light: #EDE8FF;
+  --cat-prioritization-soft: rgba(124, 92, 252, 0.10);
+  --cat-prioritization-muted: rgba(124, 92, 252, 0.15);
+  --cat-prioritization-gradient: linear-gradient(135deg, #7C5CFC, #9B82FC);
+  --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.08), rgba(155, 130, 252, 0.04));
 
-  --cat-design: #e0a820;
-  --cat-design-light: #fdf4d8;
-  --cat-design-soft: rgba(224, 168, 32, 0.10);
-  --cat-design-gradient: linear-gradient(135deg, #e0a820, #c89418);
+  --cat-design: #10B981;
+  --cat-design-light: #D1FAE5;
+  --cat-design-soft: rgba(16, 185, 129, 0.10);
+  --cat-design-muted: rgba(16, 185, 129, 0.15);
+  --cat-design-gradient: linear-gradient(135deg, #10B981, #34D399);
+  --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(52, 211, 153, 0.04));
 
-  --cat-strategy: #5889d0;
-  --cat-strategy-light: #e0eaf8;
-  --cat-strategy-soft: rgba(88, 137, 208, 0.10);
-  --cat-strategy-gradient: linear-gradient(135deg, #5889d0, #4878c0);
+  --cat-strategy: #F97066;
+  --cat-strategy-light: #FEE2E2;
+  --cat-strategy-soft: rgba(249, 112, 102, 0.10);
+  --cat-strategy-muted: rgba(249, 112, 102, 0.15);
+  --cat-strategy-gradient: linear-gradient(135deg, #F97066, #FCA5A1);
+  --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.08), rgba(252, 165, 161, 0.04));
 
-  --cat-growth: #dc6050;
-  --cat-growth-light: #fce4e0;
-  --cat-growth-soft: rgba(220, 96, 80, 0.10);
-  --cat-growth-gradient: linear-gradient(135deg, #dc6050, #c85040);
+  --cat-growth: #3B82F6;
+  --cat-growth-light: #DBEAFE;
+  --cat-growth-soft: rgba(59, 130, 246, 0.10);
+  --cat-growth-muted: rgba(59, 130, 246, 0.15);
+  --cat-growth-gradient: linear-gradient(135deg, #3B82F6, #60A5FA);
+  --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
 
-  --cat-execution: #9868c0;
-  --cat-execution-light: #ede4f5;
-  --cat-execution-soft: rgba(152, 104, 192, 0.10);
-  --cat-execution-gradient: linear-gradient(135deg, #9868c0, #8858b0);
+  --cat-execution: #F59E0B;
+  --cat-execution-light: #FEF3C7;
+  --cat-execution-soft: rgba(245, 158, 11, 0.10);
+  --cat-execution-muted: rgba(245, 158, 11, 0.15);
+  --cat-execution-gradient: linear-gradient(135deg, #F59E0B, #FBBF24);
+  --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(251, 191, 36, 0.04));
 
-  --cat-communication: #e08030;
-  --cat-communication-light: #fde8d4;
-  --cat-communication-soft: rgba(224, 128, 48, 0.10);
-  --cat-communication-gradient: linear-gradient(135deg, #e08030, #c87020);
+  --cat-communication: #F97316;
+  --cat-communication-light: #FFEDD5;
+  --cat-communication-soft: rgba(249, 115, 22, 0.10);
+  --cat-communication-muted: rgba(249, 115, 22, 0.15);
+  --cat-communication-gradient: linear-gradient(135deg, #F97316, #FB923C);
+  --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(251, 146, 60, 0.04));
 
   /* ---- SEMANTIC COLORS (Light mode) ---- */
   --bg-app: #f8f6f1;
@@ -99,7 +113,7 @@
   --text-primary: #1c1917;
   --text-secondary: #44403c;
   --text-tertiary: #78716c;
-  --text-muted: #a8a29e;
+  --text-muted: #918b86;
   --text-inverse: #ffffff;
   --text-link: #5889d0;
 
@@ -118,20 +132,21 @@
   --color-action-hover: #4878c0;
   --color-action-light: #e0eaf8;
 
-  /* ---- SHADOWS (warm, soft) ---- */
-  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.04);
-  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.04);
-  --shadow-md: 0 4px 6px rgba(28, 25, 23, 0.05), 0 2px 4px rgba(28, 25, 23, 0.04);
-  --shadow-lg: 0 10px 15px rgba(28, 25, 23, 0.06), 0 4px 6px rgba(28, 25, 23, 0.04);
-  --shadow-xl: 0 20px 25px rgba(28, 25, 23, 0.08), 0 8px 10px rgba(28, 25, 23, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(88, 137, 208, 0.3);
+  /* ---- SHADOWS (warm, lifted, Brilliant-inspired) ---- */
+  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.04);
+  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.08), 0 2px 4px rgba(28, 25, 23, 0.04);
+  --shadow-lg: 0 8px 24px rgba(28, 25, 23, 0.10), 0 4px 8px rgba(28, 25, 23, 0.05);
+  --shadow-xl: 0 16px 40px rgba(28, 25, 23, 0.12), 0 8px 16px rgba(28, 25, 23, 0.06);
+  --shadow-hover: 0 12px 32px rgba(28, 25, 23, 0.14), 0 4px 12px rgba(28, 25, 23, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(124, 92, 252, 0.3);
 
-  /* ---- TRANSITIONS ---- */
+  /* ---- TRANSITIONS (Brilliant's snappy timing) ---- */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 120ms;
+  --duration-fast: 150ms;
   --duration-normal: 200ms;
   --duration-slow: 300ms;
 
@@ -181,8 +196,8 @@
   --s6: #9b82e8;
   --s7: #e870a0;
 
-  /* Comparison table radius */
-  --radius-sm: 8px;
+  /* Comparison table radius (legacy override) */
+  /* --radius-sm already defined above as 8px */
 }
 
 /* ---- DARK MODE ---- */
@@ -201,19 +216,65 @@
     --border-default: #3d3a34;
     --border-subtle: #33312c;
     --border-strong: #4a4740;
-    --border-focus: #6899e0;
+    --border-focus: #9B82FC;
 
     --text-primary: #f5f0e8;
     --text-secondary: #c8c0b4;
     --text-tertiary: #9a9488;
-    --text-muted: #6e685e;
-    --text-link: #6899e0;
+    --text-muted: #827c73;
+    --text-link: #9B82FC;
+
+    /* Category colors — keep vibrant on dark (NOT muted) */
+    --cat-prioritization-light: #2a2340;
+    --cat-prioritization-soft: rgba(124, 92, 252, 0.15);
+    --cat-prioritization-muted: rgba(124, 92, 252, 0.20);
+    --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.12), rgba(155, 130, 252, 0.06));
+
+    --cat-design-light: #1a2e24;
+    --cat-design-soft: rgba(16, 185, 129, 0.15);
+    --cat-design-muted: rgba(16, 185, 129, 0.20);
+    --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.06));
+
+    --cat-strategy-light: #2e2024;
+    --cat-strategy-soft: rgba(249, 112, 102, 0.15);
+    --cat-strategy-muted: rgba(249, 112, 102, 0.20);
+    --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.12), rgba(252, 165, 161, 0.06));
+
+    --cat-growth-light: #1e2a3a;
+    --cat-growth-soft: rgba(59, 130, 246, 0.15);
+    --cat-growth-muted: rgba(59, 130, 246, 0.20);
+    --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06));
+
+    --cat-execution-light: #302a1a;
+    --cat-execution-soft: rgba(245, 158, 11, 0.15);
+    --cat-execution-muted: rgba(245, 158, 11, 0.20);
+    --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
+
+    --cat-communication-light: #33271a;
+    --cat-communication-soft: rgba(249, 115, 22, 0.15);
+    --cat-communication-muted: rgba(249, 115, 22, 0.20);
+    --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(251, 146, 60, 0.06));
 
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --shadow-focus: 0 0 0 3px rgba(155, 130, 252, 0.4);
+
+    /* Status colors — keep vibrant */
+    --color-success: #34D399;
+    --color-success-light: #1a2e24;
+    --color-warning: #FBBF24;
+    --color-warning-light: #302a1a;
+    --color-error: #FCA5A1;
+    --color-error-light: #2e2024;
+    --color-info: #60A5FA;
+    --color-info-light: #1e2a3a;
+    --color-action: #9B82FC;
+    --color-action-hover: #B09EFD;
+    --color-action-light: #2a2340;
 
     /* Legacy palette — inverted for dark mode */
     --ink: #f5f0e8;
@@ -242,13 +303,6 @@
     --p3: #302a1a;
     --p4: #33271a;
     --p5: #2e1f28;
-
-    /* Status light colors — dark muted versions */
-    --color-success-light: #1a2e24;
-    --color-warning-light: #302a1a;
-    --color-error-light: #2e2024;
-    --color-info-light: #1e2a3a;
-    --color-action-light: #1e2a3a;
   }
 }
 
@@ -266,19 +320,65 @@
   --border-default: #3d3a34;
   --border-subtle: #33312c;
   --border-strong: #4a4740;
-  --border-focus: #6899e0;
+  --border-focus: #9B82FC;
 
   --text-primary: #f5f0e8;
   --text-secondary: #c8c0b4;
   --text-tertiary: #9a9488;
-  --text-muted: #6e685e;
-  --text-link: #6899e0;
+  --text-muted: #827c73;
+  --text-link: #9B82FC;
+
+  /* Category colors — keep vibrant on dark (NOT muted) */
+  --cat-prioritization-light: #2a2340;
+  --cat-prioritization-soft: rgba(124, 92, 252, 0.15);
+  --cat-prioritization-muted: rgba(124, 92, 252, 0.20);
+  --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.12), rgba(155, 130, 252, 0.06));
+
+  --cat-design-light: #1a2e24;
+  --cat-design-soft: rgba(16, 185, 129, 0.15);
+  --cat-design-muted: rgba(16, 185, 129, 0.20);
+  --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.06));
+
+  --cat-strategy-light: #2e2024;
+  --cat-strategy-soft: rgba(249, 112, 102, 0.15);
+  --cat-strategy-muted: rgba(249, 112, 102, 0.20);
+  --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.12), rgba(252, 165, 161, 0.06));
+
+  --cat-growth-light: #1e2a3a;
+  --cat-growth-soft: rgba(59, 130, 246, 0.15);
+  --cat-growth-muted: rgba(59, 130, 246, 0.20);
+  --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06));
+
+  --cat-execution-light: #302a1a;
+  --cat-execution-soft: rgba(245, 158, 11, 0.15);
+  --cat-execution-muted: rgba(245, 158, 11, 0.20);
+  --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
+
+  --cat-communication-light: #33271a;
+  --cat-communication-soft: rgba(249, 115, 22, 0.15);
+  --cat-communication-muted: rgba(249, 115, 22, 0.20);
+  --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(251, 146, 60, 0.06));
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shadow-focus: 0 0 0 3px rgba(155, 130, 252, 0.4);
+
+  /* Status colors — keep vibrant */
+  --color-success: #34D399;
+  --color-success-light: #1a2e24;
+  --color-warning: #FBBF24;
+  --color-warning-light: #302a1a;
+  --color-error: #FCA5A1;
+  --color-error-light: #2e2024;
+  --color-info: #60A5FA;
+  --color-info-light: #1e2a3a;
+  --color-action: #9B82FC;
+  --color-action-hover: #B09EFD;
+  --color-action-light: #2a2340;
 
   /* Legacy palette — inverted for dark mode */
   --ink: #f5f0e8;
@@ -307,13 +407,6 @@
   --p3: #302a1a;
   --p4: #33271a;
   --p5: #2e1f28;
-
-  /* Status light colors — dark muted versions */
-  --color-success-light: #1a2e24;
-  --color-warning-light: #302a1a;
-  --color-error-light: #2e2024;
-  --color-info-light: #1e2a3a;
-  --color-action-light: #1e2a3a;
 }
 
 /* ---- REDUCED MOTION ---- */

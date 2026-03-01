@@ -30,7 +30,12 @@ export function getRoute() {
   }
 
   if (parts[0] === 'framework' && parts[1]) {
-    return { page: 'framework', params: { slug: parts[1] } };
+    const params = { slug: parts[1] };
+    // Optional: #/framework/rice/step/3
+    if (parts[2] === 'step' && parts[3] != null) {
+      params.step = parseInt(parts[3], 10);
+    }
+    return { page: 'framework', params };
   }
 
   if (parts[0] === 'compare' && parts[1]) {
