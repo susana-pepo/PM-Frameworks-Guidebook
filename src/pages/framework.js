@@ -363,10 +363,9 @@ function getTypePillClass(type) {
  * The entire right column is ONE window frame:
  *   - macOS-style title bar (dots + framework name)
  *   - "Bookmarks bar" with section pills (like browser bookmarks)
- *   - Content area: blank/welcome when nothing selected,
- *     section content with internal scroll when a section is clicked
+ *   - Content area: auto-opens on section 01, scrolls internally
  *
- * A "Home" bookmark returns to the blank/welcome view.
+ * No Home tab — always has a section active.
  */
 function installAccordionSystem(container, slug, initialStep) {
   const fwPage = container.querySelector('.fw-page');
@@ -458,19 +457,7 @@ function installAccordionSystem(container, slug, initialStep) {
   bookmarksBar.className = 'window-bookmarks-bar';
   bookmarksBar.setAttribute('role', 'tablist');
 
-  // Home bookmark (first — returns to blank view)
-  const homeTab = document.createElement('button');
-  homeTab.className = 'window-bookmark window-bookmark-home active';
-  homeTab.setAttribute('role', 'tab');
-  homeTab.setAttribute('aria-selected', 'true');
-  homeTab.innerHTML = `
-    <span class="bookmark-icon" aria-hidden="true">⌂</span>
-    <span class="bookmark-label">Home</span>
-  `;
-  homeTab.addEventListener('click', () => collapseAll());
-  bookmarksBar.appendChild(homeTab);
-
-  // Section bookmarks
+  // Section bookmarks (no Home — auto-opens on 01)
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
@@ -486,9 +473,7 @@ function installAccordionSystem(container, slug, initialStep) {
     `;
 
     bookmark.addEventListener('click', () => {
-      if (bookmark.classList.contains('active')) {
-        collapseAll();
-      } else {
+      if (!bookmark.classList.contains('active')) {
         expandStep(i);
       }
     });
@@ -524,16 +509,6 @@ function installAccordionSystem(container, slug, initialStep) {
   const windowContent = document.createElement('div');
   windowContent.className = 'window-content-area';
 
-  // Welcome message (blank state — shown when no section selected)
-  const welcomePane = document.createElement('div');
-  welcomePane.className = 'window-welcome';
-  welcomePane.innerHTML = `
-    <div class="welcome-icon">📂</div>
-    <p class="welcome-text">Select a section from the bookmarks above</p>
-    <p class="welcome-hint">${steps.length} sections to explore</p>
-  `;
-  windowContent.appendChild(welcomePane);
-
   // Section panels — each is a scrollable content pane inside the window
   steps.forEach((step, i) => {
     const panel = panels[i];
@@ -551,32 +526,6 @@ function installAccordionSystem(container, slug, initialStep) {
     panel.style.display = '';
     panel.classList.add('active');
     paneWrapper.appendChild(panel);
-
-    // Add "Continue to next" button inside the pane
-    const continueBtn = document.createElement('button');
-    continueBtn.className = 'accordion-continue';
-    if (i < steps.length - 1) {
-      const nextMeta = getStepMeta(steps[i + 1].label);
-      continueBtn.innerHTML = `
-        <span class="continue-label">Continue to</span>
-        <span class="continue-next">
-          <span class="continue-icon" aria-hidden="true">${nextMeta.icon}</span>
-          <span>${steps[i + 1].label}</span>
-        </span>
-        <span class="arrow" aria-hidden="true">→</span>
-      `;
-      continueBtn.addEventListener('click', () => expandStep(i + 1));
-    } else {
-      continueBtn.innerHTML = `
-        <span class="continue-label">You've explored everything!</span>
-        <span class="continue-next">
-          <span class="continue-icon" aria-hidden="true">⌂</span>
-          <span>Back to Home</span>
-        </span>
-      `;
-      continueBtn.addEventListener('click', () => collapseAll());
-    }
-    paneWrapper.appendChild(continueBtn);
 
     windowContent.appendChild(paneWrapper);
   });
@@ -618,14 +567,10 @@ function installAccordionSystem(container, slug, initialStep) {
     });
     panes.forEach(p => p.classList.remove('open'));
 
-    // Hide the welcome pane
-    welcomePane.style.display = 'none';
-
-    // Activate the target bookmark (+1 for Home offset)
-    const tabIndex = index + 1;
-    if (bookmarks[tabIndex]) {
-      bookmarks[tabIndex].classList.add('active');
-      bookmarks[tabIndex].setAttribute('aria-selected', 'true');
+    // Activate the target bookmark (direct index — no Home offset)
+    if (bookmarks[index]) {
+      bookmarks[index].classList.add('active');
+      bookmarks[index].setAttribute('aria-selected', 'true');
     }
     if (panes[index]) panes[index].classList.add('open');
 
@@ -644,38 +589,15 @@ function installAccordionSystem(container, slug, initialStep) {
   }
 
   function collapseAll() {
-    const bookmarks = accordionNav.querySelectorAll('.window-bookmark');
-    const panes = accordionNav.querySelectorAll('.window-pane');
-
-    bookmarks.forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    panes.forEach(p => p.classList.remove('open'));
-
-    // Show the welcome pane
-    welcomePane.style.display = '';
-
-    // Activate Home bookmark
-    const homeBtn = accordionNav.querySelector('.window-bookmark-home');
-    if (homeBtn) {
-      homeBtn.classList.add('active');
-      homeBtn.setAttribute('aria-selected', 'true');
-    }
-
-    // Exit reading mode
-    fwPage.classList.remove('reading-mode');
-
-    // Update URL hash — remove step
-    const baseHash = `#/framework/${slug}`;
-    if (window.location.hash !== baseHash) {
-      history.replaceState(null, '', baseHash);
-    }
+    // With no Home bookmark, "collapse" means return to first section
+    expandStep(0);
   }
 
-  // Auto-expand if deep-linked to a specific step
+  // Auto-expand: deep-link target OR first section
   if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
     expandStep(initialStep);
+  } else {
+    expandStep(0);
   }
 }
 
