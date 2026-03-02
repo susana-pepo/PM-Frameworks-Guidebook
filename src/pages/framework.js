@@ -152,17 +152,14 @@ function stripLeadingEmoji(container) {
 }
 
 /**
- * Split-screen layout — TWO-COLUMN design:
+ * Two-column layout:
  *
- * LEFT column (sticky):  Badge + emoji + title + hero visualizer + TLDR
- * RIGHT column:          Persistent window frame containing:
- *                        - Window title bar (macOS dots)
- *                        - Section nav pills inside window
- *                        - Content area (blank until section clicked, then scrollable)
+ * LEFT (narrow, centered): Badge + emoji + title + subtitle — identity card
+ * RIGHT (wide):            Window frame with "At a Glance" as first section
+ *                          containing hero visualizer + TLDR, then regular sections
  *
- * The right-side window has a fixed height aligned with the left column
- * and internal scrolling — page does NOT extend. On mobile (<900px)
- * falls back to single-column stacked layout.
+ * The window opens to "At a Glance" by default. Bookmarks bar inside the
+ * window lets users navigate between sections.
  */
 function installFullBleedHero(container) {
   const fwPage = container.querySelector('.fw-page');
@@ -175,7 +172,6 @@ function installFullBleedHero(container) {
   const header = fwPage.querySelector('.header');
   if (!pageHeader && !header) return;
 
-  // Look up the framework emoji from data
   const slug = fwPage.closest('[data-fw-slug]')?.dataset.fwSlug
     || window.location.hash.match(/framework\/([^/]+)/)?.[1];
   const fw = slug ? getFramework(slug) : null;
@@ -185,97 +181,100 @@ function installFullBleedHero(container) {
   heroBleed.className = 'fw-hero-bleed';
   heroBleed.setAttribute('data-category', catId);
 
-  // ---- SPLIT LAYOUT CONTAINER (two-column grid) ----
+  // ---- SPLIT LAYOUT (two-column grid) ----
   const splitLayout = document.createElement('div');
   splitLayout.className = 'fw-split-layout';
 
-  // ---- LEFT COLUMN: Hero content (sticky) ----
+  // ---- LEFT COLUMN: identity card (narrow, centered) ----
   const leftCol = document.createElement('div');
   leftCol.className = 'fw-split-left';
 
-  // Badge
   if (pageHeader) leftCol.appendChild(pageHeader);
-
-  // Hero content area — emoji + title + visualizer + TLDR
-  const heroContent = document.createElement('div');
-  heroContent.className = 'fw-hero-content';
 
   if (fw?.emoji) {
     const emojiEl = document.createElement('div');
     emojiEl.className = 'fw-hero-emoji';
     emojiEl.setAttribute('aria-hidden', 'true');
     emojiEl.textContent = fw.emoji;
-    heroContent.appendChild(emojiEl);
+    leftCol.appendChild(emojiEl);
   }
 
-  if (header) heroContent.appendChild(header);
-
-  // ---- HERO VISUALIZER ----
-  // Find visualizer elements in .container that sit between .header and .journey-nav.
-  // These are the framework diagrams, formulas, matrices, etc.
-  // Known class names + fallback to any remaining styled divs.
-  const fwContainer = fwPage.querySelector('.container, .wrapper');
-  if (fwContainer) {
-    const vizSelectors = [
-      '.formula-bar',      // RICE, ICE
-      '.matrix-hero',      // Value-vs-Effort
-      '.map-hero',         // User-Story-Mapping
-      '.kano-hero',        // Kano Model
-      '.curve-box',        // Kano Model
-      '.circles-hero',     // CIRCLES
-      '.phase-hero',       // Design Thinking
-      '.anatomy-diagram',  // User-Story-Mapping
-    ];
-
-    // Try known selectors first
-    let foundViz = false;
-    for (const sel of vizSelectors) {
-      const viz = fwContainer.querySelector(sel);
-      if (viz) {
-        heroContent.appendChild(viz);
-        foundViz = true;
-      }
-    }
-
-    // Fallback: grab any remaining direct children of .container that
-    // come BEFORE .journey-nav and are NOT: journey-nav, accordion-nav,
-    // footer, progress-bar, one-liner/tldr (already handled), or panels/sections.
-    if (!foundViz) {
-      const journeyNav = fwContainer.querySelector('.journey-nav');
-      const skipClasses = ['journey-nav', 'accordion-nav', 'footer', 'nav-btns',
-                           'one-liner', 'tldr-section', 'tldr', 'fw-tldr-card',
-                           'progress-bar', 'back-link'];
-
-      const children = Array.from(fwContainer.children);
-      const journeyIdx = journeyNav ? children.indexOf(journeyNav) : children.length;
-
-      for (let i = 0; i < journeyIdx; i++) {
-        const child = children[i];
-        // Skip known non-visualizer elements
-        if (skipClasses.some(cls => child.classList.contains(cls))) continue;
-        // Skip if it's the header (already moved)
-        if (child === header || child.classList.contains('header')) continue;
-        // Skip script tags
-        if (child.tagName === 'SCRIPT') continue;
-        // This is likely a visualizer element — move it
-        heroContent.appendChild(child);
-        foundViz = true;
-      }
-    }
+  // Move h1 + subtitle from .header into left column
+  if (header) {
+    const h1 = header.querySelector('h1');
+    const subtitle = header.querySelector('p, .subtitle, .sub');
+    if (h1) leftCol.appendChild(h1);
+    if (subtitle) leftCol.appendChild(subtitle);
   }
 
-  const tldrCard = fwPage.querySelector('.fw-tldr-card');
-  if (tldrCard) heroContent.appendChild(tldrCard);
-
-  leftCol.appendChild(heroContent);
-
-  // ---- RIGHT COLUMN: persistent window frame ----
+  // ---- RIGHT COLUMN: window frame ----
   const rightCol = document.createElement('div');
   rightCol.className = 'fw-split-right';
 
-  // Move the accordion nav (which is now the whole window) into right column
+  // Move the accordion nav (window frame) into right column
   const accordionNav = fwPage.querySelector('.accordion-nav');
   if (accordionNav) {
+    // ---- BUILD "AT A GLANCE" PANE (hero visualizer + TLDR) ----
+    const glancePane = document.createElement('div');
+    glancePane.className = 'window-pane at-a-glance-pane';
+    glancePane.id = `accordion-panel-${slug}-glance`;
+    glancePane.setAttribute('role', 'tabpanel');
+    glancePane.setAttribute('data-step', 'glance');
+
+    // Move hero visualizer into the glance pane
+    const fwContainer = fwPage.querySelector('.container, .wrapper');
+    if (fwContainer) {
+      const vizSelectors = [
+        '.formula-bar', '.matrix-hero', '.map-hero', '.kano-hero',
+        '.curve-box', '.circles-hero', '.phase-hero', '.anatomy-diagram',
+      ];
+
+      let foundViz = false;
+      for (const sel of vizSelectors) {
+        const viz = fwContainer.querySelector(sel);
+        if (viz) {
+          glancePane.appendChild(viz);
+          foundViz = true;
+        }
+      }
+
+      // Fallback: grab remaining children before .journey-nav
+      if (!foundViz) {
+        const journeyNav = fwContainer.querySelector('.journey-nav');
+        const skipClasses = ['journey-nav', 'accordion-nav', 'footer', 'nav-btns',
+                             'one-liner', 'tldr-section', 'tldr', 'fw-tldr-card',
+                             'progress-bar', 'back-link'];
+        const children = Array.from(fwContainer.children);
+        const journeyIdx = journeyNav ? children.indexOf(journeyNav) : children.length;
+
+        for (let i = 0; i < journeyIdx; i++) {
+          const child = children[i];
+          if (skipClasses.some(cls => child.classList.contains(cls))) continue;
+          if (child === header || child.classList.contains('header')) continue;
+          if (child.tagName === 'SCRIPT') continue;
+          glancePane.appendChild(child);
+          foundViz = true;
+        }
+      }
+    }
+
+    // Move TLDR card into glance pane
+    const tldrCard = fwPage.querySelector('.fw-tldr-card');
+    if (tldrCard) glancePane.appendChild(tldrCard);
+
+    // Insert glance pane as FIRST section in the window content area
+    const windowContentArea = accordionNav.querySelector('.window-content-area');
+    if (windowContentArea) {
+      windowContentArea.prepend(glancePane);
+    }
+
+    // If "At a Glance" bookmark is already active (set by installAccordionSystem),
+    // activate the pane too (it didn't exist when expandStep('glance') first ran)
+    const glanceBookmark = accordionNav.querySelector('.glance-bookmark.active');
+    if (glanceBookmark) {
+      glancePane.classList.add('open');
+    }
+
     rightCol.appendChild(accordionNav);
   }
 
@@ -283,7 +282,6 @@ function installFullBleedHero(container) {
   splitLayout.appendChild(rightCol);
   heroBleed.appendChild(splitLayout);
 
-  // Insert at the start of fw-page
   fwPage.prepend(heroBleed);
 }
 
@@ -357,15 +355,11 @@ function getTypePillClass(type) {
 }
 
 /**
- * Accordion System — transforms the tab-based navigation into a
- * PERSISTENT WINDOW frame layout.
+ * Window Frame System — persistent window with bookmarks bar.
  *
- * The entire right column is ONE window frame:
- *   - macOS-style title bar (dots + framework name)
- *   - "Bookmarks bar" with section pills (like browser bookmarks)
- *   - Content area: auto-opens on section 01, scrolls internally
- *
- * No Home tab — always has a section active.
+ * The window has "At a Glance" (⭐) as the FIRST bookmark, containing the
+ * hero visualizer + TLDR. Remaining bookmarks are the regular content sections.
+ * Opens to "At a Glance" by default.
  */
 function installAccordionSystem(container, slug, initialStep) {
   const fwPage = container.querySelector('.fw-page');
@@ -377,7 +371,6 @@ function installAccordionSystem(container, slug, initialStep) {
   const jBtns = Array.from(journeyNav.querySelectorAll('.j-btn'));
   if (jBtns.length === 0) return;
 
-  // Look up the framework for window title
   const fw = getFramework(slug);
   const fwName = fw ? fw.name : 'Framework';
 
@@ -386,13 +379,11 @@ function installAccordionSystem(container, slug, initialStep) {
     const onclickAttr = btn.getAttribute('onclick') || '';
     let panel = null;
 
-    // Try goTo('panelId') pattern
     const goToMatch = onclickAttr.match(/goTo\(['"]([^'"]+)['"]\)/);
     if (goToMatch) {
       panel = fwPage.querySelector(`#${goToMatch[1]}`);
     }
 
-    // Try go(index) pattern
     if (!panel) {
       const goMatch = onclickAttr.match(/go\((\d+)\)/);
       if (goMatch) {
@@ -402,7 +393,6 @@ function installAccordionSystem(container, slug, initialStep) {
       }
     }
 
-    // Fallback: match by index with .panel or .section
     if (!panel) {
       const allPanels = fwPage.querySelectorAll('.panel, .section');
       panel = allPanels[i] || null;
@@ -411,7 +401,7 @@ function installAccordionSystem(container, slug, initialStep) {
     return panel;
   });
 
-  // Extract step labels from the original buttons
+  // Extract step labels
   const steps = jBtns.map((btn, i) => {
     const stepEl = btn.querySelector('.j-step');
     const stepNum = stepEl ? stepEl.textContent.trim() : String(i + 1).padStart(2, '0');
@@ -429,16 +419,15 @@ function installAccordionSystem(container, slug, initialStep) {
     p.style.display = 'none';
   });
 
-  // Mark the fw-page as accordion mode
   fwPage.classList.add('accordion-mode');
 
-  // ====== BUILD THE PERSISTENT WINDOW FRAME ======
+  // ====== BUILD THE WINDOW FRAME ======
   const accordionNav = document.createElement('div');
   accordionNav.className = 'accordion-nav';
   accordionNav.setAttribute('role', 'region');
   accordionNav.setAttribute('aria-label', 'Framework sections');
 
-  // ---- WINDOW TITLE BAR (macOS style) ----
+  // ---- TITLE BAR ----
   const windowBar = document.createElement('div');
   windowBar.className = 'window-title-bar';
   windowBar.innerHTML = `
@@ -452,12 +441,25 @@ function installAccordionSystem(container, slug, initialStep) {
   `;
   accordionNav.appendChild(windowBar);
 
-  // ---- BOOKMARKS BAR (section nav pills styled like browser bookmarks) ----
+  // ---- BOOKMARKS BAR ----
   const bookmarksBar = document.createElement('div');
   bookmarksBar.className = 'window-bookmarks-bar';
   bookmarksBar.setAttribute('role', 'tablist');
 
-  // Section bookmarks (no Home — auto-opens on 01)
+  // "At a Glance" bookmark (index -1 internally, displayed first)
+  const glanceBookmark = document.createElement('button');
+  glanceBookmark.className = 'window-bookmark glance-bookmark';
+  glanceBookmark.setAttribute('role', 'tab');
+  glanceBookmark.setAttribute('aria-selected', 'false');
+  glanceBookmark.setAttribute('data-step-index', 'glance');
+  glanceBookmark.innerHTML = `
+    <span class="bookmark-icon" aria-hidden="true">&#9733;</span>
+    <span class="bookmark-label">At a Glance</span>
+  `;
+  glanceBookmark.addEventListener('click', () => expandStep('glance'));
+  bookmarksBar.appendChild(glanceBookmark);
+
+  // Section bookmarks
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
@@ -485,12 +487,10 @@ function installAccordionSystem(container, slug, initialStep) {
 
       if (e.key === 'ArrowRight') {
         e.preventDefault();
-        const next = allBookmarks[currentIdx + 1] || allBookmarks[0];
-        next.focus();
+        (allBookmarks[currentIdx + 1] || allBookmarks[0]).focus();
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        const prev = allBookmarks[currentIdx - 1] || allBookmarks[allBookmarks.length - 1];
-        prev.focus();
+        (allBookmarks[currentIdx - 1] || allBookmarks[allBookmarks.length - 1]).focus();
       } else if (e.key === 'Home') {
         e.preventDefault();
         allBookmarks[0].focus();
@@ -509,20 +509,17 @@ function installAccordionSystem(container, slug, initialStep) {
   const windowContent = document.createElement('div');
   windowContent.className = 'window-content-area';
 
-  // Section panels — each is a scrollable content pane inside the window
+  // Section panes (At a Glance pane will be prepended by installFullBleedHero)
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
 
-    const panelId = `accordion-panel-${slug}-${i}`;
-
     const paneWrapper = document.createElement('div');
     paneWrapper.className = 'window-pane';
-    paneWrapper.id = panelId;
+    paneWrapper.id = `accordion-panel-${slug}-${i}`;
     paneWrapper.setAttribute('role', 'tabpanel');
     paneWrapper.setAttribute('data-step', String(i));
 
-    // Move the panel into the pane
     panel.style.display = '';
     panel.classList.add('active');
     paneWrapper.appendChild(panel);
@@ -532,13 +529,13 @@ function installAccordionSystem(container, slug, initialStep) {
 
   accordionNav.appendChild(windowContent);
 
-  // Insert accordion after the journey-nav (which is hidden via CSS)
+  // Insert after journey-nav
   journeyNav.after(accordionNav);
 
-  // Place TLDR card above accordion (will be moved into hero by installFullBleedHero)
+  // Place TLDR card (will be moved into At a Glance pane by installFullBleedHero)
   installTldrCard(fwPage, accordionNav);
 
-  // Override global goTo/go so any remaining onclick handlers use accordion
+  // Override global goTo/go
   window.goTo = (id) => {
     const idx = panels.findIndex(p => p && p.id === id);
     if (idx >= 0) expandStep(idx);
@@ -547,57 +544,59 @@ function installAccordionSystem(container, slug, initialStep) {
     if (idx >= 0 && idx < steps.length) expandStep(idx);
   };
 
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && fwPage.classList.contains('reading-mode')) {
-      collapseAll();
-    }
-  });
-
-  // --- Accordion interaction functions ---
+  // --- Interaction functions ---
 
   function expandStep(index) {
     const bookmarks = accordionNav.querySelectorAll('.window-bookmark');
     const panes = accordionNav.querySelectorAll('.window-pane');
 
-    // Deactivate all bookmarks
+    // Deactivate all
     bookmarks.forEach(b => {
       b.classList.remove('active');
       b.setAttribute('aria-selected', 'false');
     });
     panes.forEach(p => p.classList.remove('open'));
 
-    // Activate the target bookmark (direct index — no Home offset)
-    if (bookmarks[index]) {
-      bookmarks[index].classList.add('active');
-      bookmarks[index].setAttribute('aria-selected', 'true');
-    }
-    if (panes[index]) panes[index].classList.add('open');
+    if (index === 'glance') {
+      // Activate the glance bookmark + glance pane
+      glanceBookmark.classList.add('active');
+      glanceBookmark.setAttribute('aria-selected', 'true');
+      const glancePane = accordionNav.querySelector('.at-a-glance-pane');
+      if (glancePane) glancePane.classList.add('open');
 
-    // Enter reading mode
+      history.replaceState(null, '', `#/framework/${slug}`);
+    } else {
+      // Activate a regular section bookmark + pane
+      // +1 offset because glance bookmark is index 0 in the NodeList
+      const bookmarkIdx = index + 1;
+      if (bookmarks[bookmarkIdx]) {
+        bookmarks[bookmarkIdx].classList.add('active');
+        bookmarks[bookmarkIdx].setAttribute('aria-selected', 'true');
+      }
+      // Dynamic pane offset: +1 only if the glance pane has been prepended
+      // (installFullBleedHero runs AFTER this function, so glance pane may not exist yet)
+      const hasGlancePane = accordionNav.querySelector('.at-a-glance-pane') != null;
+      const paneIdx = index + (hasGlancePane ? 1 : 0);
+      if (panes[paneIdx]) panes[paneIdx].classList.add('open');
+
+      const newHash = `#/framework/${slug}/step/${index}`;
+      if (window.location.hash !== newHash) {
+        history.replaceState(null, '', newHash);
+      }
+    }
+
     fwPage.classList.add('reading-mode');
 
-    // Update URL hash for deep linking
-    const newHash = `#/framework/${slug}/step/${index}`;
-    if (window.location.hash !== newHash) {
-      history.replaceState(null, '', newHash);
-    }
-
-    // Scroll pane to top
-    const openPane = panes[index];
+    // Scroll the opened pane to top
+    const openPane = accordionNav.querySelector('.window-pane.open');
     if (openPane) openPane.scrollTop = 0;
   }
 
-  function collapseAll() {
-    // With no Home bookmark, "collapse" means return to first section
-    expandStep(0);
-  }
-
-  // Auto-expand: deep-link target OR first section
+  // Auto-expand: deep-link target or "At a Glance" by default
   if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
     expandStep(initialStep);
   } else {
-    expandStep(0);
+    expandStep('glance');
   }
 }
 

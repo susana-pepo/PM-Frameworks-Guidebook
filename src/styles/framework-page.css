@@ -46,6 +46,15 @@
   display: none !important;
 }
 
+/* Hide ghost footer from original HTML source files
+   (e.g. "RICE Scoring Framework — PM Frameworks Guidebook") */
+.fw-page .footer,
+.fw-page footer,
+.compare-page .footer,
+.compare-page footer {
+  display: none !important;
+}
+
 /* Hide original .header-badge from source HTML files —
    replaced by SPA-rendered .fw-category-badge for consistency */
 .fw-page .header-badge,
@@ -103,77 +112,92 @@
 }
 
 /* ---- SPLIT LAYOUT (two-column) ---- */
-/* Left: hero content (sticky). Right: section nav + window content. */
+/* Left: narrow identity card (centered). Right: window frame with content. */
 .fw-split-layout {
   display: grid;
-  grid-template-columns: 2fr 3fr;       /* narrower left, wider right for content breathing room */
+  grid-template-columns: 1fr 7fr;
   gap: var(--space-6);
-  align-items: start;
+  align-items: center;              /* vertically center left column against window */
   min-height: 0;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  box-sizing: border-box;
 }
 
-/* Left column — hero with visualizer + TLDR
-   No height clamp — content sizes naturally. The right column is sticky,
-   so it stays pinned as users scroll past the hero. */
+/* Left column — identity card: badge, emoji, title, subtitle */
 .fw-split-left {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  min-width: 160px;
 }
 
-/* Right column — persistent window frame (sticky) */
+.fw-split-left h1 {
+  font-size: clamp(18px, 2vw, var(--text-xl));
+  line-height: var(--leading-tight);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.fw-split-left p,
+.fw-split-left .subtitle,
+.fw-split-left .sub {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  line-height: var(--leading-normal);
+  margin: 0;
+  text-align: center;
+}
+
+/* Right column — persistent window frame */
 .fw-split-right {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  position: sticky;
-  top: var(--space-4);
+  min-width: 0;              /* prevent grid blowout from content */
+  overflow: hidden;
 }
 
-/* ---- Visualizer fit: scale hero content down to avoid left-column overflow ---- */
-.fw-split-left .fw-hero-content {
+/* ---- "At a Glance" pane content ---- */
+.at-a-glance-pane {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  min-height: 0;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
 }
 
-/* Visualizer elements: fit the column width, let height be natural */
-.fw-split-left .formula-bar,
-.fw-split-left .matrix-hero,
-.fw-split-left .map-hero,
-.fw-split-left .kano-hero,
-.fw-split-left .curve-box,
-.fw-split-left .circles-hero,
-.fw-split-left .phase-hero,
-.fw-split-left .anatomy-diagram {
-  width: 100%;
-  box-sizing: border-box;
+/* Center content vertically when short, scroll naturally when tall.
+   ::before/::after flex spacers push content to center without
+   the clipping issue that justify-content:center causes on overflow. */
+.at-a-glance-pane::before,
+.at-a-glance-pane::after {
+  content: '';
+  flex: 1;
 }
 
-/* Hero content children: take full column width, prevent overflow */
-.fw-split-left .fw-hero-content > * {
-  width: 100%;
+.at-a-glance-pane > * {
   max-width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;              /* prevent flex compression of children */
 }
 
-/* Emoji stays intrinsic size */
-.fw-split-left .fw-hero-emoji {
-  width: auto;
-}
-
-/* Scale down SVGs to fit column width */
-.fw-split-left svg {
+.at-a-glance-pane svg {
   max-width: 100%;
   height: auto;
 }
 
-/* The TLDR card inside left column — compact */
-.fw-split-left .fw-tldr-card {
-  font-size: var(--text-sm);
+.at-a-glance-pane .fw-tldr-card {
+  text-align: left;
+  width: 100%;
+  max-width: 600px;
 }
 
 /* Mobile: single-column stacked */
@@ -185,11 +209,6 @@
 
   .fw-split-left {
     width: 100%;
-  }
-
-  .fw-split-right {
-    position: relative;
-    top: auto;
   }
 }
 
@@ -343,10 +362,10 @@
 /* ---- HERO EMOJI ---- */
 /* Large framework emoji displayed above the title */
 .fw-hero-emoji {
-  font-size: 48px;
+  font-size: 56px;
   line-height: 1;
   text-align: center;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 /* ---- TLDR CARD (standalone) ---- */
@@ -517,103 +536,95 @@
   display: none;
 }
 
-/* ---- ACCORDION CONTAINER (persistent window frame) ---- */
-/* The entire right column IS the window. Contains:
-   title bar + bookmarks bar + content area */
+/* ---- WINDOW FRAME (persistent accordion container) ---- */
+/* macOS-style window: title bar → bookmarks bar → scrollable content panes */
 .accordion-nav {
   display: flex;
   flex-direction: column;
   border: var(--bw) solid var(--border-strong);
-  background: #F8F6F1;                       /* warm cream — distinct from white content cards */
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  /* Fixed height — content scrolls internally, page doesn't extend */
+  border-radius: var(--radius-md);
+  background: #FDF8EC;
+  box-shadow: var(--shadow-lg);
   height: calc(100vh - 120px);
-  min-height: 500px;
-  max-height: 900px;
+  min-height: 400px;
+  max-height: 800px;
+  overflow: hidden;                /* clip children to border-radius */
 }
 
-/* ---- BOOKMARKS BAR (section nav — styled like browser bookmarks) ---- */
+/* ---- BOOKMARKS BAR ---- */
+/* Horizontal row of section bookmarks inside the window, below title bar */
 .window-bookmarks-bar {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 2px;
   padding: 6px var(--space-3);
-  background: #F0EDE6;                      /* slightly darker than window body for visual layering */
-  border-bottom: 1px solid var(--border-default);
+  background: #EDEAE4;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
   flex-shrink: 0;
+  scrollbar-width: none;
 }
 
-/* Individual bookmark pill — styled like a Chrome bookmark */
+.window-bookmarks-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual bookmark button */
 .window-bookmark {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
   background: transparent;
-  border: none;
+  border: 1.5px solid transparent;
   border-radius: 4px;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: var(--weight-medium);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
   color: var(--text-tertiary);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
-  position: relative;
+  transition: all var(--duration-fast) var(--ease-default);
+  flex-shrink: 0;
 }
 
 .window-bookmark:hover {
-  background: var(--bg-subtle);
+  background: rgba(0, 0, 0, 0.06);
   color: var(--text-secondary);
 }
 
-/* Active bookmark — accent-colored underline + bold text */
 .window-bookmark.active {
   background: var(--bg-card);
+  border-color: var(--border-default);
   color: var(--text-primary);
-  font-weight: var(--weight-semibold);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  border-bottom: 2px solid var(--accent-color, var(--color-action));
+  box-shadow: var(--shadow-xs);
 }
 
-.window-bookmark:active {
-  transform: scale(0.97);
+/* Glance bookmark — star accent */
+.window-bookmark.glance-bookmark.active {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
 }
 
-.window-bookmark:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 1px;
-  z-index: 1;
-}
-
-/* Bookmark icon (step number or ⌂) */
 .bookmark-icon {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: var(--weight-bold);
-  opacity: 0.5;
-  letter-spacing: 0.5px;
+  font-size: 10px;
+  opacity: 0.7;
 }
 
 .window-bookmark.active .bookmark-icon {
-  opacity: 0.8;
+  opacity: 1;
 }
 
-/* (Home bookmark removed — always has an active section) */
-
-/* Bookmark label */
 .bookmark-label {
-  font-size: 11px;
-  color: inherit;
-  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Hide old accordion elements that are no longer used */
+/* Hide old accordion step elements that are no longer used */
 .accordion-step-content,
 .accordion-step-top,
 .accordion-step-desc,
-.accordion-type-pill,
 .accordion-chevron {
   display: none;
 }
@@ -686,13 +697,15 @@
 }
 
 /* ---- WINDOW CONTENT AREA ---- */
-/* The scrollable area below the bookmarks bar.
+/* The scrollable area below the title bar inside toggle window.
    Takes up remaining height in the window. */
 .window-content-area {
   flex: 1;
   min-height: 0;
   overflow: hidden;
   position: relative;
+  background: #FDF8EC;                         /* warm cream — matches window frame */
+  border-radius: 0 0 11px 11px;                /* match parent 14px minus 3px border */
 }
 
 /* ---- SECTION PANE (scrollable content) ---- */
@@ -710,6 +723,11 @@
 .window-pane.open {
   display: block;
   animation: paneSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* At a Glance pane uses flex for centering — needs display:flex when open */
+.at-a-glance-pane.open {
+  display: flex;
 }
 
 .window-pane::-webkit-scrollbar {
@@ -741,10 +759,12 @@
   align-items: center;
   gap: var(--space-3);
   padding: 10px var(--space-4);
-  background: #EBE8E0;                      /* darkest bar — clear title bar hierarchy */
+  background: #1a1a1a;                         /* dark title bar */
+  color: #ffffff;
   border-bottom: 1px solid var(--border-default);
   user-select: none;
   flex-shrink: 0;
+  border-radius: 11px 11px 0 0;                /* match parent 14px minus 3px border */
 }
 
 .window-title-dots {
@@ -770,15 +790,17 @@
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: var(--weight-semibold);
-  color: var(--text-tertiary);
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Title bar actions area (right side) */
+/* Title bar actions area (right side) — legacy, kept for compat */
 .window-title-actions {
   width: 24px; /* Spacing balance for centered title */
 }
+
+/* Close button always visible in window title bar */
 
 /* Close button (×) on the right of title bar — used when in reading mode */
 .window-close-btn {
@@ -835,35 +857,80 @@
   background: #FFFFFF;
 }
 
-/* Section title headers inside pane — quieter, less heavy */
+/* Section title headers inside pane — clean, no box, just text */
 .window-pane .sec-title {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
 }
 
 .window-pane .sec-title h2,
 .window-pane .sec-title h3 {
   font-size: var(--text-lg);
   letter-spacing: 0;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
-/* Continue buttons removed — bookmarks bar handles navigation */
+/* Flatten the sec-label box inside panes — match window bg, no card look */
+.window-pane .sec-title .sec-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* Soften the icon box inside panes */
+.window-pane .sec-title .sec-icon {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  font-size: 26px;
+}
+
+/* Override any source-HTML section title boxes inside panes */
+.window-pane .section > h2:first-child,
+.window-pane .panel > h2:first-child,
+.window-pane .section > .sec-header,
+.window-pane .panel > .sec-header {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: var(--space-2) 0 !important;
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--border-subtle) !important;
+}
+
+/* Content card polish inside panes */
+.window-pane .c-card,
+.window-pane .c-card-static {
+  background: #FFFFFF;
+  border-color: var(--border-subtle);
+  box-shadow: 1px 1px 0 var(--border-subtle);
+}
+
+.window-pane .c-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--border-subtle);
+}
+
+/* Continue buttons removed — nav bar handles navigation */
 
 /* ---- MOBILE STYLES ---- */
 @media (max-width: 900px) {
   .accordion-nav {
     height: auto;
-    min-height: 400px;
-    max-height: 70vh;
-  }
-
-  .window-bookmarks-bar {
-    padding: 4px var(--space-2);
-    gap: 1px;
-  }
-
-  .window-bookmark {
-    padding: 3px 6px;
-    font-size: 10px;
+    max-height: 60vh;
+    min-height: 300px;
   }
 
   .window-pane {
@@ -882,16 +949,14 @@
   .window-title-text {
     font-size: 10px;
   }
-}
 
-@media (max-width: 480px) {
-  .window-bookmark {
-    padding: 2px 5px;
-    font-size: 9px;
+  .window-bookmarks-bar {
+    padding: 4px var(--space-2);
   }
 
-  .bookmark-icon {
-    font-size: 8px;
+  .window-bookmark {
+    padding: 3px 8px;
+    font-size: 9px;
   }
 }
 
