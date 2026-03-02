@@ -84,7 +84,6 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
   display: flex;
   align-items: center;
   gap: 2px;
-  flex: 1;
   min-width: 0;
 }
 
@@ -129,7 +128,7 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
 /* ---- TOP NAV SEARCH ---- */
 .top-nav-search {
   position: relative;
-  margin-left: auto;
+  margin-left: var(--space-4);
   flex-shrink: 0;
 }
 

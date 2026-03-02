@@ -1188,8 +1188,12 @@
   color: var(--text-muted);
 }
 
-/* ---- INPUT FIELDS ---- */
-.fw-input, input[type="text"], input[type="number"], textarea, select {
+/* ---- INPUT FIELDS (scoped to framework content) ---- */
+.fw-input,
+.fw-page input[type="text"],
+.fw-page input[type="number"],
+.fw-page textarea,
+.fw-page select {
   width: 100%;
   padding: var(--space-3) var(--space-4);
   background: var(--bg-input);
@@ -1201,7 +1205,10 @@
   line-height: var(--leading-normal);
 }
 
-.fw-input:focus, input:focus, textarea:focus, select:focus {
+.fw-input:focus,
+.fw-page input:focus,
+.fw-page textarea:focus,
+.fw-page select:focus {
   border-color: var(--border-focus);
   box-shadow: var(--shadow-focus);
   outline: none;
