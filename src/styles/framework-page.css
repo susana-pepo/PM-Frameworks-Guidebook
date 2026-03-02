@@ -113,15 +113,13 @@
 }
 
 /* Left column — hero with visualizer + TLDR
-   Height is clamped to match the window frame on the right.
-   Visualizers scale to fit; overflow is hidden to prevent vertical spill. */
+   No height clamp — content sizes naturally. The right column is sticky,
+   so it stays pinned as users scroll past the hero. */
 .fw-split-left {
   text-align: center;
-  max-height: calc(100vh - 120px);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 /* Right column — persistent window frame (sticky) */
@@ -142,7 +140,7 @@
   min-height: 0;
 }
 
-/* Constrain the hero visualizer elements so they don't overflow the left column */
+/* Visualizer elements: fit the column width, let height be natural */
 .fw-split-left .formula-bar,
 .fw-split-left .matrix-hero,
 .fw-split-left .map-hero,
@@ -151,16 +149,26 @@
 .fw-split-left .circles-hero,
 .fw-split-left .phase-hero,
 .fw-split-left .anatomy-diagram {
-  max-height: 280px;
-  overflow: hidden;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* Scale down SVGs and large visuals inside hero */
-.fw-split-left .curve-box svg,
-.fw-split-left .map-hero svg {
-  max-height: 260px;
+/* Hero content children: take full column width, prevent overflow */
+.fw-split-left .fw-hero-content > * {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Emoji stays intrinsic size */
+.fw-split-left .fw-hero-emoji {
   width: auto;
+}
+
+/* Scale down SVGs to fit column width */
+.fw-split-left svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* The TLDR card inside left column — compact */
@@ -176,8 +184,7 @@
   }
 
   .fw-split-left {
-    max-height: none;
-    overflow: visible;
+    width: 100%;
   }
 
   .fw-split-right {
