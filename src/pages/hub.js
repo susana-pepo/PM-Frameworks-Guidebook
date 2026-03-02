@@ -142,6 +142,5 @@ function installHubInteractions() {
     const fws = getFrameworksByCategory(filter);
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(fws);
-    setHeroCompact(true);
   }
 }
