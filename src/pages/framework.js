@@ -75,7 +75,7 @@ async function loadFrameworkContent(sourceFile) {
   }
 
   // Fetch the original HTML file
-  const response = await fetch(`/${sourceFile}`);
+  const response = await fetch(`${import.meta.env.BASE_URL}${sourceFile}`);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
   const fullHtml = await response.text();

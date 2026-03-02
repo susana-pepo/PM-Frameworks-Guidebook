@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Playing to Win — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b8dd9;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:520px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+
+<div class="header">
+  <div class="header-badge">&#x1F4CA; Strategy</div>
+  <h1>&#x1F3AE; Playing to Win</h1>
+  <p class="sub">Strategy is an integrated set of choices that positions you to win. Five questions. No fluff.</p>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> Strategy = 5 integrated choices that cascade from top to bottom. <strong>What's your winning aspiration? Where will you play? How will you win? What capabilities do you need? What management systems support it?</strong> By A.G. Lafley &amp; Roger Martin (P&amp;G).</p></div>
+</div>
+
+<!-- HERO: 5 Choices Cascade Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <!-- Choice 1 - narrowest -->
+  <div style="max-width:260px;margin:0 auto 6px;padding:14px 16px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+    <div style="font-size:18px;">&#x1F3C6;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">Winning Aspiration</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">What does winning look like?</div>
+  </div>
+  <!-- Arrow -->
+  <div style="text-align:center;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid var(--border);margin:0 auto;"></div></div>
+  <!-- Choice 2 -->
+  <div style="max-width:340px;margin:6px auto;padding:14px 16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+    <div style="font-size:18px;">&#x1F4CD;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">Where to Play</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Which customers, geographies, channels, segments?</div>
+  </div>
+  <div style="text-align:center;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid var(--border);margin:0 auto;"></div></div>
+  <!-- Choice 3 -->
+  <div style="max-width:420px;margin:6px auto;padding:14px 16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+    <div style="font-size:18px;">&#x2694;&#xFE0F;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">How to Win</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">Cost leadership or differentiation? What's the unique value?</div>
+  </div>
+  <div style="text-align:center;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid var(--border);margin:0 auto;"></div></div>
+  <!-- Choice 4 -->
+  <div style="max-width:520px;margin:6px auto;padding:14px 16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+    <div style="font-size:18px;">&#x1F4AA;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">Capabilities</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">What must you be great at to win this way?</div>
+  </div>
+  <div style="text-align:center;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid var(--border);margin:0 auto;"></div></div>
+  <!-- Choice 5 - widest -->
+  <div style="max-width:620px;margin:6px auto;padding:14px 16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+    <div style="font-size:18px;">&#x2699;&#xFE0F;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:14px;">Management Systems</div>
+    <div style="font-size:10px;color:var(--ink-dim);font-weight:600;">What processes, structures, and measures reinforce the choices?</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>5 Choices</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Cascade</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Deep Dive</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- ============ SECTION 0: 5 CHOICES ============ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple);">&#x1F3C6;</div>
+    <div class="sec-label"><h2>The 5 Strategic Choices</h2><p>Strategy is a set of choices, not a plan</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Core Idea</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Most "strategies" are really just goals ("grow 20%") or activities ("launch mobile app"). A.G. Lafley and Roger Martin argue that <strong>real strategy is a set of integrated choices</strong> about where and how to compete — choices that reinforce each other.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The key word is <strong>choice</strong>. Strategy means choosing what you <em>won't</em> do as much as what you will. If you're trying to serve everyone, you have no strategy.</p>
+  </div>
+
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div style="display:flex;gap:14px;padding:16px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);align-items:flex-start;">
+      <div style="font-size:24px;min-width:32px;">&#x1F3C6;</div>
+      <div><div style="font-family:'Lilita One',sans-serif;font-size:15px;">1. Winning Aspiration</div><p style="font-size:12px;color:var(--ink-soft);margin-top:2px;">What does "winning" mean for us? Not revenue targets — a purpose. "Help every adult learn an instrument" is an aspiration. "Grow 15%" is not.</p></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);align-items:flex-start;">
+      <div style="font-size:24px;min-width:32px;">&#x1F4CD;</div>
+      <div><div style="font-family:'Lilita One',sans-serif;font-size:15px;">2. Where to Play</div><p style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Which specific playing field? Geography, customer segment, product category, channel, vertical stage. The more specific, the better.</p></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);align-items:flex-start;">
+      <div style="font-size:24px;min-width:32px;">&#x2694;&#xFE0F;</div>
+      <div><div style="font-family:'Lilita One',sans-serif;font-size:15px;">3. How to Win</div><p style="font-size:12px;color:var(--ink-soft);margin-top:2px;">What's your competitive advantage in your chosen space? Only two real options: cost leadership (cheapest) or differentiation (unique value).</p></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);align-items:flex-start;">
+      <div style="font-size:24px;min-width:32px;">&#x1F4AA;</div>
+      <div><div style="font-family:'Lilita One',sans-serif;font-size:15px;">4. Capabilities</div><p style="font-size:12px;color:var(--ink-soft);margin-top:2px;">What must you be world-class at to win this way? These are the 3-5 things you must invest in heavily. Everything else is secondary.</p></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);align-items:flex-start;">
+      <div style="font-size:24px;min-width:32px;">&#x2699;&#xFE0F;</div>
+      <div><div style="font-family:'Lilita One',sans-serif;font-size:15px;">5. Management Systems</div><p style="font-size:12px;color:var(--ink-soft);margin-top:2px;">What processes, metrics, and structures make sure choices stick? OKRs, hiring profiles, team structure, review cadences — the "operating system."</p></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of it as a <strong>funnel</strong>: the aspiration is the wide opening (purpose), it narrows to where you'll play, then how you'll win there, then what you need to be great at, then the systems that lock it in. Each choice constrains the next. <strong>They cascade.</strong></p>
+  </div>
+
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">The Cascade &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 1: CASCADE ============ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange);">&#x1F4A7;</div>
+    <div class="sec-label"><h2>The Strategic Cascade</h2><p>Why these choices must be integrated</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Integration is the Whole Point</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">The most common mistake: treating each choice independently. "Our aspiration is X, we play everywhere, we win by being better at everything." That's not strategy — it's a wishlist.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Real strategy <strong>constrains</strong>. If your aspiration is to help adults learn piano, you shouldn't play in the kids market. If you win through depth of learning, you shouldn't invest in broad instrument coverage.</p>
+  </div>
+
+  <!-- Cascade Logic -->
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;">&#x1F50D; How Choices Constrain Each Other</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F3C6; Aspiration &#x2192; &#x1F4CD; Where</div>
+        <div style="font-size:12px;color:var(--ink-dim);">"Help every adult learn an instrument" &#x2192; rules out kids market, academic settings, and professional musicians.</div>
+      </div>
+      <div style="padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F4CD; Where &#x2192; &#x2694;&#xFE0F; How</div>
+        <div style="font-size:12px;color:var(--ink-dim);">"Adult beginners via mobile apps" &#x2192; can't win on price (too many free options). Must differentiate on learning quality.</div>
+      </div>
+      <div style="padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x2694;&#xFE0F; How &#x2192; &#x1F4AA; Capabilities</div>
+        <div style="font-size:12px;color:var(--ink-dim);">"Win through learning quality" &#x2192; must be world-class at audio recognition, adaptive pedagogy, and habit design.</div>
+      </div>
+      <div style="padding:14px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F4AA; Capabilities &#x2192; &#x2699;&#xFE0F; Systems</div>
+        <div style="font-size:12px;color:var(--ink-dim);">"World-class audio recognition" &#x2192; need ML engineers, real-time processing infra, and learning outcome metrics (not just DAU).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Red flag patterns -->
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F6A9; Signs Your Cascade Is Broken</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.1);">&#x274C; <strong>"We play everywhere"</strong> — If you haven't said no to any market, you haven't made a Where choice.</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.1);">&#x274C; <strong>"We win by being the best"</strong> — Best at what, specifically? "Best" isn't a strategy.</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.1);">&#x274C; <strong>"We need to be great at everything"</strong> — If you have 10 capabilities, you have zero priorities.</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;padding:8px 0;">&#x274C; <strong>"Our strategy is to grow 20%"</strong> — That's a goal, not a strategy. How will you grow?</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4A1; The Lafley Test</h4>
+    <p>Read your strategy out loud. If a competitor could copy-paste it and it would still make sense for them, <strong>you don't have a strategy</strong>. Real strategy is specific enough that it only works for you.</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; 5 Choices</button><button class="pn-btn primary" onclick="go(2)">Deep Dive &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 2: DEEP DIVE ============ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky);">&#x1F50E;</div>
+    <div class="sec-label"><h2>Deep Dive: Where &amp; How</h2><p>The two choices that matter most</p></div>
+  </div>
+
+  <div class="c-card">
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Lafley and Martin call <strong>Where to Play</strong> and <strong>How to Win</strong> the "heart of strategy." The other three choices support these two. Let's break them down.</p>
+  </div>
+
+  <!-- WHERE TO PLAY dimensions -->
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F4CD; Where to Play — 5 Dimensions</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F30D; Geography</div>
+        <div style="font-size:11px;color:var(--ink-dim);">Which markets, countries, regions?</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F465; Customer Segment</div>
+        <div style="font-size:11px;color:var(--ink-dim);">Which users? Demographics, behaviors, needs?</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F4E6; Product Category</div>
+        <div style="font-size:11px;color:var(--ink-dim);">Which products or services? Which NOT?</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F6D2; Channel</div>
+        <div style="font-size:11px;color:var(--ink-dim);">How do you reach them? Direct, retail, platform?</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F517; Value Chain Stage</div>
+        <div style="font-size:11px;color:var(--ink-dim);">Which part do you own? Create, distribute, service?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO WIN -->
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x2694;&#xFE0F; How to Win — Only 2 Real Options</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="padding:18px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+        <div style="font-size:28px;margin-bottom:6px;">&#x1F4B0;</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Cost Leadership</div>
+        <p style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Deliver acceptable value at the lowest cost. Win through efficiency, scale, and simplicity. Examples: IKEA, Ryanair, Walmart.</p>
+        <div style="margin-top:8px;padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Danger: race to bottom</div>
+      </div>
+      <div style="padding:18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+        <div style="font-size:28px;margin-bottom:6px;">&#x2728;</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Differentiation</div>
+        <p style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Deliver unique value that justifies premium pricing. Win through innovation, brand, or experience. Examples: Apple, Dyson, Peloton.</p>
+        <div style="margin-top:8px;padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Danger: niche too small</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x26A0;&#xFE0F; The "Stuck in the Middle" Trap</h4>
+    <p>Trying to be both cheap AND differentiated usually means you're <strong>neither</strong>. You end up with mediocre quality at mediocre prices. Pick one. (Blue Ocean's "value innovation" is the rare exception where you break this trade-off.)</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Cascade</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 3: EXAMPLE ============ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div>
+    <div class="sec-label"><h2>Real Example</h2><p>Playing to Win for Trala / Skoove</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3BB; Trala's Strategic Cascade</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:16px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:4px;">&#x1F3C6; Winning Aspiration</div>
+        <p style="font-size:13px;color:var(--ink-soft);">"Make learning violin accessible to every adult who's ever wanted to try, by providing a teacher-quality experience in an app."</p>
+      </div>
+      <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto;"></div></div>
+      <div style="padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:4px;">&#x1F4CD; Where to Play</div>
+        <p style="font-size:13px;color:var(--ink-soft);"><strong>Segment:</strong> Adult beginners (25-55) in English-speaking markets. <strong>Channel:</strong> Mobile (iOS first). <strong>Category:</strong> Violin only. <strong>NOT:</strong> kids, professionals, schools, multi-instrument.</p>
+      </div>
+      <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto;"></div></div>
+      <div style="padding:16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:4px;">&#x2694;&#xFE0F; How to Win</div>
+        <p style="font-size:13px;color:var(--ink-soft);"><strong>Differentiation:</strong> Real-time audio feedback that's as good as a human teacher. Not competing on library size (YouTube wins), not on price (free apps exist). Win through <em>learning quality and outcomes</em>.</p>
+      </div>
+      <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto;"></div></div>
+      <div style="padding:16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:4px;">&#x1F4AA; Capabilities</div>
+        <p style="font-size:13px;color:var(--ink-soft);"><strong>1.</strong> Audio recognition ML (pitch, rhythm, intonation). <strong>2.</strong> Pedagogical content design (not just songs — structured learning). <strong>3.</strong> Habit formation UX (streaks, progress, motivation). <strong>4.</strong> Instrument-specific expertise (violin is different from piano).</p>
+      </div>
+      <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto;"></div></div>
+      <div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:4px;">&#x2699;&#xFE0F; Management Systems</div>
+        <p style="font-size:13px;color:var(--ink-soft);"><strong>Metrics:</strong> Lessons completed (not just DAU), 30-day retention, learning milestones hit. <strong>Process:</strong> Content reviewed by real violin teachers. <strong>Hiring:</strong> Prioritize ML engineers + music educators over growth hackers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F50D; Notice the Integration</h4>
+    <p>Every choice reinforces the others. "Violin only" (Where) enables "best audio recognition" (Capability). "Learning quality" (How to Win) drives "lessons completed" as the metric (Systems). If you changed one choice, the others would need to change too. That's the cascade working.</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Deep Dive</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 4: BUILDER ============ -->
+<div class="section" id="s4">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div>
+    <div class="sec-label"><h2>Strategy Builder</h2><p>Fill in your own strategic cascade</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Your 5 Choices</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;">&#x1F3C6; Winning Aspiration</span></label>
+        <textarea id="p_aspire" rows="2" placeholder="What does winning look like? (Not a revenue target — a purpose)" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">&#x1F4CD; Where to Play</span></label>
+        <textarea id="p_where" rows="2" placeholder="Which customers, geographies, channels? And which ones NOT?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">&#x2694;&#xFE0F; How to Win</span></label>
+        <textarea id="p_how" rows="2" placeholder="Cost leadership or differentiation? What's the specific advantage?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">&#x1F4AA; Capabilities (3-5)</span></label>
+        <textarea id="p_caps" rows="2" placeholder="What must you be world-class at to win this way?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:3px 10px;background:var(--rose);border-radius:6px;">&#x2699;&#xFE0F; Management Systems</span></label>
+        <textarea id="p_sys" rows="2" placeholder="What metrics, processes, and structures reinforce these choices?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button onclick="analyzePTW()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F3AF; Check My Strategy</button>
+    </div>
+    <div id="ptw_result" style="margin-top:16px;"></div>
+  </div>
+
+  <div class="tip">&#x1F4A1; <strong>PM Interview version:</strong> "For this product, I'd define the strategic cascade: our aspiration is [X], we'd play in [segment] via [channel], win through [differentiation], which requires capabilities in [Y and Z]."</div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 5: WHEN ============ -->
+<div class="section" id="s5">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card">
+      <h3>&#x2705; Use Playing to Win When...</h3>
+      <ul>
+        <li>&#x2714;&#xFE0F; Defining or refining product strategy</li>
+        <li>&#x2714;&#xFE0F; Team can't agree on priorities (cascade forces alignment)</li>
+        <li>&#x2714;&#xFE0F; Annual/quarterly planning sessions</li>
+        <li>&#x2714;&#xFE0F; PM interview asks "how would you approach strategy for X?"</li>
+        <li>&#x2714;&#xFE0F; New product launch — need to define the playing field</li>
+      </ul>
+    </div>
+    <div class="when-card">
+      <h3>&#x26D4; Skip Playing to Win When...</h3>
+      <ul>
+        <li>&#x274C; You need feature-level prioritization (use RICE/ICE)</li>
+        <li>&#x274C; You need user insights (use JTBD or user research)</li>
+        <li>&#x274C; You need competitive diagnosis (use Porter's first)</li>
+        <li>&#x274C; You need design solutions (use Design Thinking)</li>
+        <li>&#x274C; You're in early discovery — strategy needs data first</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--rose);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Porter's</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Input:</strong> Porter diagnoses the competitive landscape. Playing to Win uses that to choose Where to Play and How to Win.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:#4ea8de;border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">Blue Ocean</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Inspiration &#x2192; Execution:</strong> Blue Ocean shows the opportunity. Playing to Win turns it into specific, actionable choices.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--green);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">OKRs</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Strategy &#x2192; Execution:</strong> OKRs operationalize the Management Systems choice into quarterly objectives.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--purple);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Wardley</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Static &#x2192; Dynamic:</strong> Playing to Win defines choices now. Wardley Mapping shows how they'll need to evolve.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4CB; Typical Strategic Flow</h4>
+    <p style="font-size:13px;"><strong>Porter's</strong> (diagnose) &#x2192; <strong>Blue Ocean</strong> (find space) &#x2192; <strong>Playing to Win</strong> (make choices) &#x2192; <strong>Wardley</strong> (plan evolution) &#x2192; <strong>OKRs</strong> (execute quarterly)</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 6: QUIZ ============ -->
+<div class="section" id="s6">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div>
+    <div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div>
+  </div>
+
+  <div id="quiz_area"></div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+i).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});
+  visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});
+  cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function analyzePTW(){
+  const fields=[
+    {id:'p_aspire',name:'Aspiration'},
+    {id:'p_where',name:'Where to Play'},
+    {id:'p_how',name:'How to Win'},
+    {id:'p_caps',name:'Capabilities'},
+    {id:'p_sys',name:'Systems'}
+  ];
+  const vals=fields.map(f=>({name:f.name,val:document.getElementById(f.id).value.trim()}));
+  const filled=vals.filter(v=>v.val.length>0);
+  const empty=vals.filter(v=>v.val.length===0);
+  const r=document.getElementById('ptw_result');
+
+  if(filled.length<2){r.innerHTML='<div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">&#x26A0;&#xFE0F; Fill in at least 2 choices to get feedback.</div>';return;}
+
+  let feedback=[];
+  // Check for "where" specificity
+  const where=vals.find(v=>v.name==='Where to Play');
+  if(where.val&&!where.val.toLowerCase().includes('not')&&!where.val.toLowerCase().includes("won't")&&!where.val.toLowerCase().includes('exclude')&&!where.val.toLowerCase().includes('only')){
+    feedback.push('&#x1F4CD; Your "Where to Play" doesn\'t mention what you\'re NOT doing. Real strategy requires explicit exclusions — what markets, segments, or channels are you saying NO to?');
+  }
+  // Check how to win
+  const how=vals.find(v=>v.name==='How to Win');
+  if(how.val&&(how.val.toLowerCase().includes('best')&&!how.val.toLowerCase().includes('best at'))){
+    feedback.push('&#x2694;&#xFE0F; "Being the best" isn\'t specific enough. Best at WHAT? For WHOM? Try: "Win through [specific advantage] that [specific competitor] can\'t match because [reason]."');
+  }
+  // Check aspiration
+  const asp=vals.find(v=>v.name==='Aspiration');
+  if(asp.val&&(/\d+%/.test(asp.val)||asp.val.toLowerCase().includes('revenue')||asp.val.toLowerCase().includes('grow'))){
+    feedback.push('&#x1F3C6; Your aspiration looks like a financial target. Aspiration should be a purpose — what winning looks like for customers, not the P&L.');
+  }
+
+  let verdict='',color='';
+  if(filled.length===5&&feedback.length===0){
+    verdict='&#x1F3C6; <strong>Strong cascade!</strong> All 5 choices filled with good specificity. The final test: read it to a colleague. Would they be able to make daily decisions based on this? If yes, you have a real strategy.';
+    color='var(--mint)';
+  } else if(filled.length===5){
+    verdict='&#x1F44D; All 5 choices filled — good structure. A few things to sharpen:';
+    color='var(--sky)';
+  } else {
+    verdict='&#x1F44D; Good start with '+filled.length+'/5 choices. Missing: '+empty.map(e=>e.name).join(', ')+'. The cascade only works when all 5 connect.';
+    color='var(--sky)';
+  }
+
+  let html='<div style="padding:18px;background:'+color+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;">'+verdict+'</div>';
+  if(feedback.length>0){
+    html+='<div style="margin-top:10px;padding:16px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-sm);">';
+    feedback.forEach(f=>{html+='<div style="font-size:13px;color:var(--ink-dim);line-height:1.6;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,0.08);">'+f+'</div>';});
+    html+='</div>';
+  }
+  r.innerHTML=html;
+}
+
+const qs=[
+  {q:"What is strategy according to Playing to Win?",o:["A plan to grow revenue","A set of integrated choices about where and how to compete","A list of things we need to build","A competitive analysis document"],a:1,e:"Strategy = integrated choices. Not a plan, not a goal, not a to-do list. The word 'integrated' is key — choices must reinforce each other."},
+  {q:"What are the 5 choices in the cascade?",o:["Vision, Mission, Values, Goals, KPIs","Aspiration, Where to Play, How to Win, Capabilities, Management Systems","Market, Product, Price, Place, Promotion","Problem, Solution, Metrics, Advantage, Channels"],a:1,e:"The 5: Winning Aspiration, Where to Play, How to Win, Capabilities, Management Systems. They cascade from top (purpose) to bottom (operations)."},
+  {q:"Which two choices are the 'heart of strategy'?",o:["Aspiration and Systems","Capabilities and Systems","Where to Play and How to Win","Aspiration and How to Win"],a:2,e:"Where to Play and How to Win are the core. The other three support these two decisions. Without clarity here, nothing else matters."},
+  {q:"What's wrong with 'our strategy is to grow 20% this year'?",o:["The number is too low","It's a goal, not a strategy — it says nothing about how","It should be quarterly, not annual","Nothing, that's a valid strategy"],a:1,e:"Growth targets are goals. Strategy answers HOW you'll achieve them — through what choices about where to compete and how to win."},
+  {q:"What does 'stuck in the middle' mean?",o:["Your company is mid-sized","You're trying both cost leadership AND differentiation and achieving neither","You only filled 3 of 5 cascade choices","Your product is average quality"],a:1,e:"Stuck in the middle = trying to be cheapest AND most differentiated. You end up mediocre at both. Pick one How to Win and commit."},
+  {q:"How do you test if your strategy is real?",o:["It has numbers in it","A competitor could NOT copy-paste it and use it for themselves","It fits on one page","Leadership approved it"],a:1,e:"The Lafley Test: if a competitor could use the same strategy statement, it's too generic. Real strategy is specific enough that it only works for YOU."}
+];
+let qi=0,sc=0;
+function renderQ(){
+  const area=document.getElementById('quiz_area');
+  if(qi>=qs.length){
+    let msg='',col='';
+    if(sc>=5){msg='&#x1F3C6; Strategic thinker! You can articulate and pressure-test a real strategy.';col='var(--mint)';}
+    else if(sc>=3){msg='&#x1F44D; Good foundation. Review the cascade and the Where/How deep dive.';col='var(--sky)';}
+    else{msg='&#x1F4DA; Worth revisiting. Focus on why choices must integrate and constrain each other.';col='var(--orange)';}
+    area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';
+    return;
+  }
+  const q=qs[qi];
+  let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';
+  q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+',this)">'+o+'</button>';});
+  h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';
+  area.innerHTML=h;
+}
+function checkA(qIdx,pick,btn){
+  const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;
+  document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});
+  document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';
+}
+renderQ();
+</script>
+</body>
+</html>

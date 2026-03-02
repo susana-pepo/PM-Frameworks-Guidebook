@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs-to-be-Done — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#d4a017;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--white:#fff;
+  --pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;
+  --orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;--green:#3da66a;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--white);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;}
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--ink-soft);max-width:520px;margin:0 auto;font-weight:500;}
+
+/* HERO QUOTE */
+.hero-quote{margin:20px auto 28px;max-width:600px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;text-align:center;}
+.hero-quote blockquote{font-family:'Lilita One',sans-serif;font-size:clamp(18px,3vw,24px);line-height:1.35;margin-bottom:6px;}
+.hero-quote blockquote span{color:var(--green);}
+.hero-quote cite{font-size:12px;color:var(--ink-muted);font-style:normal;font-weight:700;}
+
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;transition:all .12s;}
+.c-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);}
+
+/* SHIFT VISUAL */
+.shift-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-bottom:16px;align-items:center;}
+.shift-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);}
+.shift-box h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;}
+.shift-box p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+.shift-arrow{text-align:center;font-size:28px;color:var(--ink-muted);}
+
+/* JOB STATEMENT ANATOMY */
+.js-anatomy{background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:16px;text-align:center;}
+.js-line{font-size:clamp(14px,2.5vw,20px);font-weight:700;line-height:2;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;}
+.js-part{padding:6px 14px;border-radius:10px;border:2px solid var(--border);font-weight:800;display:inline-block;}
+
+/* EXAMPLE CARDS */
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.ex-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;transition:all .12s;}
+.ex-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.ex-card .ex-industry{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:100px;border:2px solid var(--border);display:inline-block;margin-bottom:8px;}
+.ex-card h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;}
+.ex-card .ex-wrong{font-size:12px;color:#c03030;font-weight:600;padding:4px 0;text-decoration:line-through;opacity:.7;}
+.ex-card .ex-right{font-size:13px;color:#1a8a50;font-weight:700;padding:4px 0;margin-top:2px;}
+.ex-card .ex-right::before{content:'✅ ';}
+.ex-card .ex-wrong::before{content:'❌ ';}
+.ex-card .ex-comp{margin-top:6px;font-size:11px;color:var(--ink-muted);font-weight:600;}
+
+/* BUILDER */
+.builder{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.bl-row{margin-bottom:12px;}
+.bl-row label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink-dim);margin-bottom:4px;}
+.bl-row input,.bl-row select{width:100%;padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;}
+.bl-row input:focus{box-shadow:var(--shadow-sm);transform:translate(-1px,-1px);}
+.bl-output{padding:18px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);background:var(--yellow);font-size:16px;font-weight:700;text-align:center;line-height:1.6;min-height:60px;margin-top:14px;}
+
+/* WHEN / PITFALLS / SESSION / QUIZ reused */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+.interview-timeline{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.it-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.it-item:last-child{border-bottom:none;}
+.it-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.it-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.it-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.it-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo.correct{background:var(--mint)}.qo.wrong{background:var(--rose)}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(0,0,0,0.3);font-weight:600;}
+@media(max-width:680px){
+  .when-grid,.ex-grid,.shift-grid{grid-template-columns:1fr;}
+  .shift-arrow{transform:rotate(90deg);}
+  .j-btn{padding:8px 2px;font-size:8px;}.j-btn .j-step{font-size:7px;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .it-item{grid-template-columns:64px 1fr;}.it-time{font-size:10px;}
+  .tldr{flex-direction:column;}.qopts{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<section class="header">
+  <div class="header-badge">✏️ Design Framework</div>
+  <h1>Jobs-to-be-Done</h1>
+  <p class="sub">People don't buy products. They hire them to get a job done.</p>
+</section>
+
+<div style="margin:20px auto 24px;max-width:700px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;">
+  <div style="background:var(--ink);padding:10px 20px;text-align:center"><span style="font-family:'Lilita One',sans-serif;font-size:13px;color:var(--yellow);letter-spacing:2px;text-transform:uppercase">The Job Story Format</span></div>
+  <div style="padding:20px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
+    <div style="padding:10px 18px;background:rgba(255,107,107,0.15);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm)"><span style="font-family:'Lilita One',sans-serif;font-size:clamp(16px,3vw,22px);color:var(--rose)">When I...</span><div style="font-size:10px;font-weight:800;color:var(--ink-muted);text-align:center;margin-top:2px">SITUATION</div></div>
+    <span style="font-size:20px;color:var(--ink-muted);font-weight:900">→</span>
+    <div style="padding:10px 18px;background:rgba(255,169,77,0.15);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm)"><span style="font-family:'Lilita One',sans-serif;font-size:clamp(16px,3vw,22px);color:#e07020">I want to...</span><div style="font-size:10px;font-weight:800;color:var(--ink-muted);text-align:center;margin-top:2px">MOTIVATION</div></div>
+    <span style="font-size:20px;color:var(--ink-muted);font-weight:900">→</span>
+    <div style="padding:10px 18px;background:rgba(126,232,178,0.15);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm)"><span style="font-family:'Lilita One',sans-serif;font-size:clamp(16px,3vw,22px);color:var(--green)">So I can...</span><div style="font-size:10px;font-weight:800;color:var(--ink-muted);text-align:center;margin-top:2px">OUTCOME</div></div>
+  </div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 15 seconds:</strong> JTBD reframes product thinking. Instead of "what features should we add?" ask <strong>"what job is the user hiring this product to do?"</strong> A milkshake competes with a banana, a bagel, and boredom — not just other milkshakes. Understanding the job reveals your real competitors and real opportunities.</p>
+</div>
+
+
+<div class="journey-nav">
+  <button class="j-btn active" onclick="goTo('theory')"><span class="j-step">01</span>Theory</button>
+  <button class="j-btn" onclick="goTo('anatomy')"><span class="j-step">02</span>Job Statement</button>
+  <button class="j-btn" onclick="goTo('examples')"><span class="j-step">03</span>Examples</button>
+  <button class="j-btn" onclick="goTo('builder')"><span class="j-step">04</span>Builder</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('interviews')"><span class="j-step">07</span>Interviews</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">08</span>Quiz</button>
+</div>
+
+<!-- 1. THEORY -->
+<div id="p-theory" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">💡</div>
+    <div class="sec-label"><h2>The Core Idea</h2><p>It's not about the product. It's about the progress.</p></div>
+  </div>
+  <div class="shift-grid">
+    <div class="shift-box" style="border-top:6px solid var(--rose)">
+      <h3>❌ Product Thinking</h3>
+      <p>"What features does our product have?"<br>"What do users do in our app?"<br>"How can we improve our product?"</p>
+    </div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-box" style="border-top:6px solid var(--green)">
+      <h3>✅ JTBD Thinking</h3>
+      <p>"What progress is the user trying to make?"<br>"What did they fire to hire us?"<br>"Why would they switch away?"</p>
+    </div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:10px">🥤 The Milkshake Story</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7">Clayton Christensen studied why people buy milkshakes in the morning. Demographics were useless — the buyers had nothing in common. But the <strong>job</strong> was identical: they needed something to make a boring commute less boring, that lasted 20 minutes, that they could consume with one hand, and that kept them full until lunch.</p>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-top:8px">The competitors weren't other milkshakes. They were <strong>bananas, bagels, boredom, and Snickers bars</strong>. Once you see the job, you see the real competition — and it's never who you think.</p>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:10px">🧠 Three Dimensions of Every Job</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;">
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(141,216,248,0.15);text-align:center;"><strong style="display:block;font-size:14px;margin-bottom:4px">⚙️ Functional</strong><span style="font-size:12px;color:var(--ink-dim)">The practical task. "Get from A to B." "Learn a song."</span></div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(196,181,253,0.15);text-align:center;"><strong style="display:block;font-size:14px;margin-bottom:4px">💜 Emotional</strong><span style="font-size:12px;color:var(--ink-dim)">How they want to feel. "Feel confident." "Reduce anxiety."</span></div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(255,184,212,0.15);text-align:center;"><strong style="display:block;font-size:14px;margin-bottom:4px">👥 Social</strong><span style="font-size:12px;color:var(--ink-dim)">How they want to be seen. "Look like a good parent." "Seem professional."</span></div>
+    </div>
+    <div class="tip">Most PMs only think about functional jobs. Emotional and social jobs often drive the purchase decision more than the functional one.</div>
+  </div>
+  <div class="insight">
+    <h4>🔑 The key mindset shift</h4>
+    <p><strong>Users don't want your product.</strong> They want the progress it enables. Your product is just the current best candidate for the job. If something better shows up, they'll fire you and hire that instead.</p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('anatomy')">Next: Job Statement →</button></div>
+</div>
+
+<!-- 2. JOB STATEMENT ANATOMY -->
+<div id="p-anatomy" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">📝</div>
+    <div class="sec-label"><h2>The Job Statement</h2><p>A precise formula for writing jobs</p></div>
+  </div>
+  <div class="c-card-static" style="padding:0;overflow:hidden;">
+    <div style="background:var(--ink);padding:14px 20px;text-align:center"><h3 style="font-family:'Lilita One',sans-serif;font-size:18px;color:var(--white);letter-spacing:1px">The Job Story Formula</h3></div>
+    <div style="padding:24px;display:flex;gap:0;align-items:stretch;flex-wrap:wrap;justify-content:center;">
+      <div style="flex:1;min-width:160px;padding:18px 16px;background:rgba(255,107,107,0.12);border:var(--bw) solid var(--border);border-radius:var(--radius-sm) 0 0 var(--radius-sm);text-align:center;">
+        <div style="width:52px;height:52px;margin:0 auto 8px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:24px">🎯</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:20px;color:var(--rose);margin-bottom:4px">When I...</div>
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);margin-bottom:4px">Situation / Trigger</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5">The specific moment that creates the need. Context matters.</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:22px;font-weight:900;padding:0 4px;color:var(--ink-muted)">→</div>
+      <div style="flex:1;min-width:160px;padding:18px 16px;background:rgba(255,169,77,0.12);border:var(--bw) solid var(--border);border-top-radius:0;border-bottom-radius:0;text-align:center;">
+        <div style="width:52px;height:52px;margin:0 auto 8px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:24px">⚡</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:20px;color:#e07020;margin-bottom:4px">I want to...</div>
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);margin-bottom:4px">Motivation / Action</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5">What progress they're trying to make. Solution-free.</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:22px;font-weight:900;padding:0 4px;color:var(--ink-muted)">→</div>
+      <div style="flex:1;min-width:160px;padding:18px 16px;background:rgba(126,232,178,0.12);border:var(--bw) solid var(--border);border-radius:0 var(--radius-sm) var(--radius-sm) 0;text-align:center;">
+        <div style="width:52px;height:52px;margin:0 auto 8px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:24px">✨</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:20px;color:var(--green);margin-bottom:4px">So I can...</div>
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);margin-bottom:4px">Desired Outcome</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5">The end state — functional, emotional, or social.</div>
+      </div>
+    </div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">✍️ Examples</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="padding:12px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,225,77,0.08);font-size:13px;line-height:1.6"><strong style="color:var(--rose)">When I</strong> have a long boring commute, <strong style="color:var(--orange)">I want to</strong> consume something satisfying with one hand, <strong style="color:var(--green)">so I can</strong> make the drive less tedious and stay full until lunch.</div>
+      <div style="padding:12px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,225,77,0.08);font-size:13px;line-height:1.6"><strong style="color:var(--rose)">When I</strong> want to learn an instrument as an adult, <strong style="color:var(--orange)">I want to</strong> play recognizable songs quickly, <strong style="color:var(--green)">so I can</strong> feel a sense of accomplishment and impress my family.</div>
+      <div style="padding:12px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,225,77,0.08);font-size:13px;line-height:1.6"><strong style="color:var(--rose)">When I</strong> arrive in a new city for work, <strong style="color:var(--orange)">I want to</strong> get to my hotel without confusion, <strong style="color:var(--green)">so I can</strong> feel in control and arrive relaxed before my meeting.</div>
+    </div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px">📐 Rules for good job statements</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:2">
+      <strong>1. Solution-free.</strong> No product names, no features, no UI elements.<br>
+      <strong>2. Stable over time.</strong> The job exists before and after your product.<br>
+      <strong>3. Specific situation.</strong> "When I..." grounds the job in a real moment.<br>
+      <strong>4. Includes emotional/social outcome.</strong> "So I can feel confident" is as valid as "so I can save 10 minutes."
+    </p>
+  </div>
+  <div class="insight">
+    <h4>⚠️ The #1 mistake</h4>
+    <p>Writing "When I open the app, I want to see a dashboard, so I can track my progress." That's a feature description disguised as a job. The real job: <strong>"When I'm trying to build a new habit, I want to see evidence that I'm improving, so I can stay motivated."</strong></p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('theory')">← Theory</button><button class="pn-btn primary" onclick="goTo('examples')">Next: Real Examples →</button></div>
+</div>
+
+<!-- 3. EXAMPLES -->
+<div id="p-examples" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🏢</div>
+    <div class="sec-label"><h2>Real Examples</h2><p>Product thinking vs JTBD thinking across industries</p></div>
+  </div>
+  <div class="ex-grid">
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(141,216,248,0.2)">🎵 Music Learning</div>
+      <h4>Skoove / Trala</h4>
+      <div class="ex-wrong">Users want more lessons and better content</div>
+      <div class="ex-right">When I have 15 free minutes, I want to feel like I made progress on an instrument, so I can feel accomplished and creative</div>
+      <div class="ex-comp">Competition: YouTube, books, Netflix (for the free time)</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(255,184,212,0.2)">🚗 Ride-sharing</div>
+      <h4>Uber</h4>
+      <div class="ex-wrong">Users want cheaper rides and more drivers</div>
+      <div class="ex-right">When I need to get somewhere and don't want to deal with parking, I want reliable transport, so I can arrive stress-free and on time</div>
+      <div class="ex-comp">Competition: own car, subway, walking, canceling the trip</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(196,181,253,0.2)">💼 Job Search</div>
+      <h4>LinkedIn</h4>
+      <div class="ex-wrong">Users want more connections and a better profile</div>
+      <div class="ex-right">When I'm considering a career change, I want to understand what's out there, so I can make a confident move at the right time</div>
+      <div class="ex-comp">Competition: recruiters, word-of-mouth, staying put</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(255,176,103,0.2)">📦 E-commerce</div>
+      <h4>Amazon</h4>
+      <div class="ex-wrong">Users want more products and faster shipping</div>
+      <div class="ex-right">When I realize I need something, I want to solve it immediately without leaving the house, so I can get back to what I was doing</div>
+      <div class="ex-comp">Competition: local store, borrowing, doing without</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(126,232,178,0.2)">📱 Social</div>
+      <h4>Instagram</h4>
+      <div class="ex-wrong">Users want filters and more followers</div>
+      <div class="ex-right">When something interesting happens, I want to share a curated version of it, so I can feel seen and connected</div>
+      <div class="ex-comp">Competition: texting, calling, doing nothing</div>
+    </div>
+    <div class="ex-card">
+      <div class="ex-industry" style="background:rgba(255,225,77,0.2)">☕ Coffee</div>
+      <h4>Starbucks</h4>
+      <div class="ex-wrong">Users want better coffee and more variety</div>
+      <div class="ex-right">When I need a mental break between tasks, I want a ritual that feels like a reward, so I can reset and face the next thing</div>
+      <div class="ex-comp">Competition: water, a walk, scrolling phone, napping</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔍 Notice the pattern</h4>
+    <p>In every example, the <strong>real competition</strong> isn't what you'd expect. Starbucks doesn't just compete with other coffee shops — it competes with anything that gives you a mental reset.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('anatomy')">← Job Statement</button><button class="pn-btn primary" onclick="goTo('builder')">Next: Build Your Own →</button></div>
+</div>
+<div id="p-builder" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">🛠️</div>
+    <div class="sec-label"><h2>Job Statement Builder</h2><p>Fill in the blanks → get a formatted job statement</p></div>
+  </div>
+  <div class="builder">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px">Build a Job Statement</h3>
+    <div class="bl-row">
+      <label><span style="color:var(--rose)">⬤</span> When I... <span style="font-weight:500;color:var(--ink-muted)">(situation / trigger)</span></label>
+      <input type="text" id="bl-when" placeholder="e.g. have 15 free minutes after work" oninput="buildJob()">
+    </div>
+    <div class="bl-row">
+      <label><span style="color:var(--orange)">⬤</span> I want to... <span style="font-weight:500;color:var(--ink-muted)">(motivation / action)</span></label>
+      <input type="text" id="bl-want" placeholder="e.g. practice an instrument without thinking too hard" oninput="buildJob()">
+    </div>
+    <div class="bl-row">
+      <label><span style="color:var(--green)">⬤</span> So I can... <span style="font-weight:500;color:var(--ink-muted)">(desired outcome)</span></label>
+      <input type="text" id="bl-so" placeholder="e.g. feel like I'm building a skill and unwind" oninput="buildJob()">
+    </div>
+    <div class="bl-output" id="blOutput">Your job statement will appear here...</div>
+
+    <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="padding:10px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:11px;text-align:center;background:rgba(141,216,248,0.1)"><strong style="display:block;margin-bottom:2px;">⚙️ Functional job?</strong><span id="blFunc" style="color:var(--ink-muted)">—</span></div>
+      <div style="padding:10px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:11px;text-align:center;background:rgba(196,181,253,0.1)"><strong style="display:block;margin-bottom:2px;">💜 Emotional job?</strong><span id="blEmo" style="color:var(--ink-muted)">—</span></div>
+      <div style="padding:10px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:11px;text-align:center;background:rgba(255,184,212,0.1)"><strong style="display:block;margin-bottom:2px;">👥 Social job?</strong><span id="blSoc" style="color:var(--ink-muted)">—</span></div>
+    </div>
+
+    <div style="margin-top:16px;padding-top:16px;border-top:2px dashed rgba(0,0,0,0.08)">
+      <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px">✅ Quality Checklist</h3>
+      <div id="blChecks" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--ink-dim);"></div>
+    </div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">💾 Saved Jobs</h3>
+    <p style="font-size:12px;color:var(--ink-muted);margin-bottom:10px;">Build multiple job statements and collect them here.</p>
+    <button onclick="saveJob()" style="padding:10px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);margin-bottom:10px;">+ Save Current Job</button>
+    <div id="savedJobs" style="display:flex;flex-direction:column;gap:6px;"></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('examples')">← Examples</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 5. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">⚖️</div>
+    <div class="sec-label"><h2>When to Use JTBD</h2><p>Strategy tool, not sprint tool</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use JTBD when...</h3>
+      <ul>
+        <li>Defining product strategy — "What business are we really in?"</li>
+        <li>Users are churning and you don't know why</li>
+        <li>Entering a new market — who are the real competitors?</li>
+        <li>Building messaging/positioning — what progress do users care about?</li>
+        <li>Evaluating an acquisition or partnership</li>
+        <li>PM interview asks "How would you improve X?" — frame with the job first</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip JTBD when...</h3>
+      <ul>
+        <li>You need to prioritize a known backlog → use RICE/ICE</li>
+        <li>You need specific UI decisions → use user testing</li>
+        <li>Time pressure — sprint planning isn't the time for JTBD research</li>
+        <li>The job is obvious and well-understood by the whole team</li>
+        <li>You're optimizing, not discovering (A/B test instead)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">🔗 How JTBD connects to other frameworks</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(126,232,178,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">JTBD → CIRCLES</strong>JTBD tells you the job. CIRCLES helps you design the solution. Start with "what job?" then use CIRCLES to answer "how to solve it?"</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(141,216,248,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">JTBD → Kano</strong>JTBD reveals the job. Kano shows which features are Must-Haves vs Delighters for that job. Kano operates within a JTBD context.</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,176,103,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">JTBD → RICE</strong>JTBD identifies the most important jobs. RICE scores which features best serve those jobs. JTBD scopes what RICE ranks.</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(196,181,253,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">JTBD → Value vs Effort</strong>JTBD redefines "Value" — value isn't feature quality, it's how well you serve the job. This makes the Value axis meaningful.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('builder')">← Builder</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 6. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>6 Common Pitfalls</h2><p>How most people get JTBD wrong</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose)">1</div><div><h4>Writing solutions, not jobs</h4><p class="mb">"When I open the app, I want to see my dashboard." That's a feature request wearing a JTBD costume. The job exists independent of your product.</p><div class="fix">Remove all product/feature language. Test: would this job statement make sense 50 years ago? If yes, it's a real job.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange)">2</div><div><h4>Too abstract</h4><p class="mb">"I want to live a better life." True, but useless for product decisions. Job statements need a specific situation trigger.</p><div class="fix">Always include "When I..." — the situation makes it actionable. "When I get home exhausted" is 10x more useful than "I want to relax."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--yellow)">3</div><div><h4>Ignoring emotional and social jobs</h4><p class="mb">Only focusing on the functional task. "Get from A to B" misses why someone chooses a BMW over a Toyota.</p><div class="fix">For every functional job, ask: "How does the user want to FEEL?" and "How does the user want to be SEEN?" Those often drive the decision.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--mint)">4</div><div><h4>Confusing the job with the job executor</h4><p class="mb">Defining jobs by demographics: "Millennials want..." or "Enterprise users need..." The same person hires different products for different jobs in different contexts.</p><div class="fix">Jobs are defined by situations, not personas. A CEO and a student can have the same job: "When I'm stuck on a problem, I want a quick second opinion."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky)">5</div><div><h4>Not identifying competing "hires"</h4><p class="mb">Only looking at direct competitors. If you're a music learning app, your competitor isn't just other music apps — it's Netflix, YouTube, going for a walk.</p><div class="fix">Ask: "What was the user doing BEFORE they hired our product? What else could they hire instead?" Map the full competitive landscape.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple)">6</div><div><h4>Using JTBD as a one-time exercise</h4><p class="mb">Running one JTBD session, creating a poster, and forgetting about it. Jobs evolve. Context changes. New competitors emerge.</p><div class="fix">Revisit JTBD quarterly. Use it as a lens in every product review: "Are we still solving the right job? Has the job changed?"</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('interviews')">Next: JTBD Interviews →</button></div>
+</div>
+
+<!-- 7. JTBD INTERVIEWS -->
+<div id="p-interviews" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🎙️</div>
+    <div class="sec-label"><h2>Running JTBD Interviews</h2><p>The Switch Interview — how to uncover the real job</p></div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:8px">🔄 The Switch Interview</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7">The most powerful JTBD technique. You interview people who <strong>recently switched</strong> — either TO your product or AWAY from it. You reconstruct the full decision timeline: what pushed them away from the old solution, what pulled them toward the new one, and what anxieties almost stopped them.</p>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">⚡ The Four Forces of Progress</h3>
+    <p style="font-size:12px;color:var(--ink-dim);margin-bottom:12px">Every switch decision is driven by 4 forces — 2 pushing toward change, 2 resisting it:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(126,232,178,0.12)">
+        <strong style="font-size:13px;display:block;margin-bottom:6px;color:#1a8a50">→ Forces FOR change</strong>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:6px"><strong>Push:</strong> Frustration with current solution. "I'm so tired of how slow this is."</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6"><strong>Pull:</strong> Attraction of new solution. "That looks so much easier."</div>
+      </div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(255,138,138,0.12)">
+        <strong style="font-size:13px;display:block;margin-bottom:6px;color:#c03030">← Forces AGAINST change</strong>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:6px"><strong>Anxiety:</strong> Fear of the unknown. "What if it's worse? What if I lose my data?"</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6"><strong>Habit:</strong> Comfort of the current. "I know how this works. It's fine."</div>
+      </div>
+    </div>
+    <div class="tip">To win, Push + Pull must overcome Anxiety + Habit. Your product can increase Pull and reduce Anxiety — but you can't force Push or eliminate Habit. Understanding all four is critical.</div>
+  </div>
+
+  <div class="interview-timeline">
+    <div class="it-item"><div class="it-time" style="background:rgba(255,225,77,0.2)">Phase 1<br>5 min</div><div class="it-content"><h4>Set the scene</h4><p>"I'd love to understand your experience choosing [product]. There are no right or wrong answers — I'm interested in the full story."</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,107,107,0.15)">Phase 2<br>10 min</div><div class="it-content"><h4>First thought — the push</h4><p>"Tell me about the first time you thought about switching. What was happening? What were you frustrated with?" Dig into the specific moment. Where were they? What triggered it?</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(126,232,178,0.15)">Phase 3<br>10 min</div><div class="it-content"><h4>Looking around — the pull</h4><p>"What did you look at? Who did you talk to? What was appealing about the alternatives?" Map every option they considered, including doing nothing.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,138,138,0.15)">Phase 4<br>10 min</div><div class="it-content"><h4>Anxiety & habit</h4><p>"What almost stopped you? What worried you about switching? Was there anything you'd miss from the old way?" This reveals the barriers you need to reduce.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(141,216,248,0.15)">Phase 5<br>10 min</div><div class="it-content"><h4>The decision & aftermath</h4><p>"What was the final tipping point? Has it met your expectations? Would you go back?" Capture the moment of commitment and whether the job is being done well.</p></div></div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px">🎯 Key Interview Questions</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;line-height:1.7;background:rgba(255,225,77,0.06)">
+        <strong style="display:block;margin-bottom:4px">🔍 To find the Push:</strong>
+        "What was the hardest part about how you were doing it before?"<br>
+        "When did you first feel frustrated enough to look for something else?"<br>
+        "Can you walk me through that specific moment?"
+      </div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;line-height:1.7;background:rgba(255,225,77,0.06)">
+        <strong style="display:block;margin-bottom:4px">🧲 To find the Pull:</strong>
+        "What caught your attention about the alternative?"<br>
+        "What did you imagine your life would be like after switching?"<br>
+        "What was the 'aha' that made you say 'this is the one'?"
+      </div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;line-height:1.7;background:rgba(255,225,77,0.06)">
+        <strong style="display:block;margin-bottom:4px">😰 To find Anxiety:</strong>
+        "What almost stopped you from switching?"<br>
+        "Were you worried about losing anything?"<br>
+        "Did anyone try to talk you out of it?"
+      </div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;line-height:1.7;background:rgba(255,225,77,0.06)">
+        <strong style="display:block;margin-bottom:4px">🛋️ To find Habit:</strong>
+        "What did you like about the old way?"<br>
+        "Was there anything comforting about how you used to do it?"<br>
+        "Did you ever think 'this is good enough, why bother'?"
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>📊 How many interviews?</h4>
+    <p><strong>8–12 switch interviews</strong> is usually enough to see patterns. You'll hear the same forces repeat by interview 7–8. Focus on <strong>recent switchers</strong> (last 3 months) — memory fades fast and you want specific moments, not rationalized summaries.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Quiz →</button></div>
+</div>
+
+<!-- 8. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>7 questions to lock it in</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. "People don't want a quarter-inch drill. They want a..."</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,false)">Better drill</button>
+        <button class="qo" onclick="ans(1,this,true)">Quarter-inch hole</button>
+        <button class="qo" onclick="ans(1,this,false)">Cheaper drill</button>
+      </div>
+      <div class="qexp" id="q1e">The product (drill) is hired to do a job (make a hole). If someone invented a laser pointer that made perfect holes, the drill is fired.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. Which is a proper JTBD job statement?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,false)">Users need a better search feature</button>
+        <button class="qo" onclick="ans(2,this,true)">When I'm looking for a specific recipe, I want to find it quickly, so I can start cooking before I lose motivation</button>
+        <button class="qo" onclick="ans(2,this,false)">Millennials want intuitive design</button>
+      </div>
+      <div class="qexp" id="q2e">Good job statements are solution-free, situation-specific, and include a desired outcome. No product names, no demographics.</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. What are the three dimensions of a job?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,true)">Functional, Emotional, Social</button>
+        <button class="qo" onclick="ans(3,this,false)">Speed, Quality, Cost</button>
+        <button class="qo" onclick="ans(3,this,false)">User, Business, Technical</button>
+      </div>
+      <div class="qexp" id="q3e">Every job has a functional task (get from A to B), an emotional need (feel safe), and a social dimension (look like I have my life together).</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. In the milkshake story, what was the real competition?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,false)">Other milkshake brands</button>
+        <button class="qo" onclick="ans(4,this,true)">Bananas, bagels, boredom, Snickers</button>
+        <button class="qo" onclick="ans(4,this,false)">Smoothie shops nearby</button>
+      </div>
+      <div class="qexp" id="q4e">The job was "make a boring commute less boring and stay full." Anything that serves that job is competition — regardless of product category.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. What are the 4 forces in a Switch Interview?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,true)">Push, Pull, Anxiety, Habit</button>
+        <button class="qo" onclick="ans(5,this,false)">Awareness, Interest, Decision, Action</button>
+        <button class="qo" onclick="ans(5,this,false)">Need, Search, Compare, Buy</button>
+      </div>
+      <div class="qexp" id="q5e">Push and Pull drive change. Anxiety and Habit resist it. For someone to switch, Push + Pull must overcome Anxiety + Habit.</div>
+    </div>
+    <div class="qq" id="q6">
+      <p>6. How many switch interviews do you typically need to see patterns?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(6,this,false)">2–3</button>
+        <button class="qo" onclick="ans(6,this,true)">8–12</button>
+        <button class="qo" onclick="ans(6,this,false)">50+</button>
+      </div>
+      <div class="qexp" id="q6e">8–12 is the sweet spot. Patterns usually emerge by interview 7–8. Focus on people who switched recently (last 3 months).</div>
+    </div>
+    <div class="qq" id="q7">
+      <p>7. JTBD generates insights about the JOB. What framework then RANKS the features that serve it?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(7,this,false)">More JTBD interviews</button>
+        <button class="qo" onclick="ans(7,this,true)">RICE or ICE</button>
+        <button class="qo" onclick="ans(7,this,false)">CIRCLES</button>
+      </div>
+      <div class="qexp" id="q7e">JTBD discovers the job. CIRCLES designs solutions for it. RICE/ICE ranks those solutions. Each framework has its lane.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('interviews')">← Interviews</button><button class="pn-btn primary" onclick="goTo('theory')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">Jobs-to-be-Done — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+var panels=['theory','anatomy','examples','builder','judge','pitfalls','interviews','quiz'];
+var visited=new Set(['theory']);
+function goTo(id){
+  visited.add(id);
+  panels.forEach(function(p){document.getElementById('p-'+p).classList.remove('active');});
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// BUILDER
+function buildJob(){
+  var w=document.getElementById('bl-when').value.trim();
+  var wa=document.getElementById('bl-want').value.trim();
+  var s=document.getElementById('bl-so').value.trim();
+  var out=document.getElementById('blOutput');
+  if(!w&&!wa&&!s){out.textContent='Your job statement will appear here...';out.style.background='var(--yellow)';updateChecks('','','');return;}
+  var parts=[];
+  if(w)parts.push('<span style="color:var(--rose);font-weight:800">When I</span> '+w);
+  if(wa)parts.push('<span style="color:var(--orange);font-weight:800">I want to</span> '+wa);
+  if(s)parts.push('<span style="color:var(--green);font-weight:800">so I can</span> '+s);
+  out.innerHTML=parts.join(', ');
+  out.style.background=w&&wa&&s?'var(--mint)':'var(--yellow)';
+  updateChecks(w,wa,s);
+  detectDimensions(w+' '+wa+' '+s);
+}
+
+function updateChecks(w,wa,s){
+  var checks=[];
+  var full=w+' '+wa+' '+s;
+  checks.push({ok:!!w,text:'Has a situation trigger (When I...)'});
+  checks.push({ok:!!wa,text:'Has a motivation (I want to...)'});
+  checks.push({ok:!!s,text:'Has a desired outcome (So I can...)'});
+  var prodWords=['app','button','feature','dashboard','page','screen','click','tap','notification','ui','ux','api'];
+  var hasProd=prodWords.some(function(p){return full.toLowerCase().indexOf(p)>-1;});
+  checks.push({ok:!hasProd,text:'Solution-free (no product/feature language)'});
+  var el=document.getElementById('blChecks');
+  el.innerHTML=checks.map(function(c){return '<div style="padding:4px 0">'+(c.ok?'<span style="color:#1a8a50">✅</span>':'<span style="color:#c03030">❌</span>')+' '+c.text+'</div>';}).join('');
+}
+
+function detectDimensions(text){
+  var t=text.toLowerCase();
+  var funcWords=['save','find','get','complete','finish','organize','track','manage','reduce','increase','deliver','build','create'];
+  var emoWords=['feel','confident','relaxed','happy','stress','anxiety','proud','calm','motivated','satisfied','accomplished','safe','comfortable','enjoy','peace'];
+  var socWords=['look','seen','impress','reputation','professional','credible','status','respect','admire','show','prove','peers','colleagues','family'];
+  var f=funcWords.some(function(w){return t.indexOf(w)>-1;});
+  var e=emoWords.some(function(w){return t.indexOf(w)>-1;});
+  var s=socWords.some(function(w){return t.indexOf(w)>-1;});
+  document.getElementById('blFunc').innerHTML=f?'<span style="color:#1a8a50;font-weight:700">✅ Detected</span>':'<span style="color:var(--ink-muted)">Not detected</span>';
+  document.getElementById('blEmo').innerHTML=e?'<span style="color:#1a8a50;font-weight:700">✅ Detected</span>':'<span style="color:var(--ink-muted)">Not detected</span>';
+  document.getElementById('blSoc').innerHTML=s?'<span style="color:#1a8a50;font-weight:700">✅ Detected</span>':'<span style="color:var(--ink-muted)">Not detected</span>';
+}
+
+var savedList=[];
+function saveJob(){
+  var w=document.getElementById('bl-when').value.trim();
+  var wa=document.getElementById('bl-want').value.trim();
+  var s=document.getElementById('bl-so').value.trim();
+  if(!w||!wa||!s)return;
+  var job='When I '+w+', I want to '+wa+', so I can '+s+'.';
+  savedList.push(job);
+  renderSaved();
+  document.getElementById('bl-when').value='';
+  document.getElementById('bl-want').value='';
+  document.getElementById('bl-so').value='';
+  buildJob();
+}
+function renderSaved(){
+  var el=document.getElementById('savedJobs');
+  el.innerHTML=savedList.map(function(j,i){
+    return '<div style="padding:10px 14px;border-radius:10px;border:2px solid var(--border);background:var(--white);font-size:12px;line-height:1.5;display:flex;justify-content:space-between;align-items:start;gap:8px"><span>'+j+'</span><button onclick="savedList.splice('+i+',1);renderSaved()" style="background:var(--rose);border:2px solid var(--border);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;cursor:pointer;flex-shrink:0">✕</button></div>';
+  }).join('');
+}
+
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Strategy Comparison Guide — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b8dd9;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:860px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:24px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,5vw,38px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.section{display:none;}.section.active{display:block;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.pill{display:inline-block;padding:4px 12px;border:2px solid var(--border);border-radius:100px;font-size:11px;font-weight:800;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.j-btn{font-size:9px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4CA; Strategy</div>
+  <h1>&#x2696;&#xFE0F; Which Strategy Framework?</h1>
+  <p class="sub">Porter's vs Blue Ocean vs Playing to Win vs Wardley — when to use each and how they connect.</p>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)">Overview</button>
+  <button class="j-btn" onclick="go(1)">Compare</button>
+  <button class="j-btn" onclick="go(2)">Decide</button>
+  <button class="j-btn" onclick="go(3)">Scenarios</button>
+  <button class="j-btn" onclick="go(4)">Combine</button>
+  <button class="j-btn" onclick="go(5)">Picker</button>
+</nav>
+
+<!-- TAB 0: OVERVIEW -->
+<div class="section active" id="s0">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">The Key Difference</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">These four frameworks form a <strong>strategic pipeline</strong>. They answer different questions at different stages. Porter's diagnoses. Blue Ocean discovers. Playing to Win decides. Wardley plans evolution.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x2694;&#xFE0F;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Porter's 5 Forces</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Diagnose: How attractive is this market?</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">TIME: 2-4 hours</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F30A;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Blue Ocean Strategy</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Discover: Where is uncontested space?</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">TIME: 1-2 weeks</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F3AE;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Playing to Win</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Decide: What integrated choices will we make?</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">TIME: 1-4 weeks</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F5FA;&#xFE0F;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Wardley Mapping</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Plan: What's evolving and where to invest?</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">TIME: 2-8 hours per map</div></div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; One Sentence Each</h4><p><strong>Porter's:</strong> "Here's why this market is tough." <strong>Blue Ocean:</strong> "Here's where nobody's competing." <strong>Playing to Win:</strong> "Here are our specific choices." <strong>Wardley:</strong> "Here's what's changing and how to position."</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Compare &#x2192;</button></div>
+</div>
+
+<!-- TAB 1: COMPARE -->
+<div class="section" id="s1">
+  <div class="c-card" style="padding:16px;overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead><tr style="background:var(--ink);color:var(--white);"><th style="padding:10px 8px;text-align:left;font-size:10px;">Dimension</th><th style="padding:10px 6px;text-align:center;font-size:10px;">&#x2694;&#xFE0F; Porter's</th><th style="padding:10px 6px;text-align:center;font-size:10px;">&#x1F30A; Blue Ocean</th><th style="padding:10px 6px;text-align:center;font-size:10px;">&#x1F3AE; Playing to Win</th><th style="padding:10px 6px;text-align:center;font-size:10px;">&#x1F5FA;&#xFE0F; Wardley</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Core question</td><td style="padding:8px;text-align:center;">How competitive?</td><td style="padding:8px;text-align:center;">Where's uncontested space?</td><td style="padding:8px;text-align:center;">What choices?</td><td style="padding:8px;text-align:center;">What's evolving?</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Output</td><td style="padding:8px;text-align:center;">5 force ratings</td><td style="padding:8px;text-align:center;">Canvas + ERRC grid</td><td style="padding:8px;text-align:center;">5-choice cascade</td><td style="padding:8px;text-align:center;">Visual value chain map</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Time scope</td><td style="padding:8px;text-align:center;">Now (snapshot)</td><td style="padding:8px;text-align:center;">Future (opportunity)</td><td style="padding:8px;text-align:center;">Now to 1-3 years</td><td style="padding:8px;text-align:center;">Now to future (evolution)</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Level</td><td style="padding:8px;text-align:center;">Industry / market</td><td style="padding:8px;text-align:center;">Market / product</td><td style="padding:8px;text-align:center;">Company / product</td><td style="padding:8px;text-align:center;">Product / tech stack</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Best for</td><td style="padding:8px;text-align:center;">Market entry analysis</td><td style="padding:8px;text-align:center;">Finding new growth</td><td style="padding:8px;text-align:center;">Aligning team</td><td style="padding:8px;text-align:center;">Build vs buy</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Weakness</td><td style="padding:8px;text-align:center;">Static, no evolution</td><td style="padding:8px;text-align:center;">Hard to execute</td><td style="padding:8px;text-align:center;">Assumes stable landscape</td><td style="padding:8px;text-align:center;">Complex, steep curve</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Interview use</td><td style="padding:8px;text-align:center;">Great (quick)</td><td style="padding:8px;text-align:center;">Good (creative)</td><td style="padding:8px;text-align:center;">Excellent (rigorous)</td><td style="padding:8px;text-align:center;">Mention only</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Analogy</td><td style="padding:8px;text-align:center;">Weather report</td><td style="padding:8px;text-align:center;">Treasure map</td><td style="padding:8px;text-align:center;">Battle plan</td><td style="padding:8px;text-align:center;">Terrain with movement</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Overview</button><button class="pn-btn primary" onclick="go(2)">Decide &#x2192;</button></div>
+</div>
+
+<!-- TAB 2: DECIDE -->
+<div class="section" id="s2">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F9ED; Decision Flowchart</h3>
+    <div style="display:grid;gap:10px;max-width:500px;margin:0 auto;">
+      <div style="text-align:center;padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-weight:800;font-size:14px;">What strategic question are you facing?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">"Is this market worth entering?"</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">&#x2694;&#xFE0F; Porter's</div></div>
+        <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">"Market is crowded, where's the opportunity?"</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">&#x1F30A; Blue Ocean</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="text-align:center;"><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">"What specific choices define our strategy?"</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">&#x1F3AE; Playing to Win</div></div>
+        <div style="text-align:center;"><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">"What to build vs buy vs outsource?"</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">&#x1F5FA;&#xFE0F; Wardley</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x26A1; Quick Rules</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="font-size:13px;padding:10px;background:var(--rose);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Interview: market/competition question?</strong> &#x2192; Porter's</div>
+      <div style="font-size:13px;padding:10px;background:var(--sky);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Interview: "strategy for this product?"</strong> &#x2192; Playing to Win</div>
+      <div style="font-size:13px;padding:10px;background:var(--orange);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Real work: annual planning?</strong> &#x2192; Porter's + Blue Ocean + PTW (full pipeline)</div>
+      <div style="font-size:13px;padding:10px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Real work: tech roadmap?</strong> &#x2192; Wardley Mapping</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Compare</button><button class="pn-btn primary" onclick="go(3)">Scenarios &#x2192;</button></div>
+</div>
+
+<!-- TAB 3: SCENARIOS -->
+<div class="section" id="s3">
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F3E2;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">CEO says "Let's enter the kids education market"</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Need to evaluate if the market is attractive and what forces you'd face.</div><div class="pill" style="background:var(--rose);">&#x2694;&#xFE0F; Porter's 5 Forces</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Analyze supplier power, buyer power, substitutes, entrant threat, rivalry intensity.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F4C9;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">Every music app looks the same, churn is 70%</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Red ocean. Need to find what to eliminate/reduce/raise/create to break out.</div><div class="pill" style="background:var(--sky);">&#x1F30A; Blue Ocean + ERRC Grid</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Draw strategy canvas vs competitors, then build ERRC to find white space.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F914;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">PM interview: "What's your strategy for this product?"</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Interviewers want structured thinking with specific choices, not vague ambitions.</div><div class="pill" style="background:var(--orange);">&#x1F3AE; Playing to Win Cascade</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Define aspiration, where, how, capabilities, systems in 2-3 minutes.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F6E0;&#xFE0F;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">CTO wants to build a custom CMS instead of using Contentful</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Need to show CMS is a commodity — engineering should focus on differentiating components.</div><div class="pill" style="background:var(--mint);">&#x1F5FA;&#xFE0F; Wardley Map</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Plot CMS on the evolution axis (commodity). Show where custom-building creates real advantage.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F680;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">Annual product strategy offsite</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Need the full picture: competitive landscape, opportunity, choices, and execution plan.</div><div class="pill" style="background:var(--purple);">All Four in Sequence</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Porter's (Day 1 AM) &#x2192; Blue Ocean (Day 1 PM) &#x2192; Playing to Win (Day 2) &#x2192; Wardley (follow-up)</div></div></div></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Decide</button><button class="pn-btn primary" onclick="go(4)">Combine &#x2192;</button></div>
+</div>
+
+<!-- TAB 4: COMBINE -->
+<div class="section" id="s4">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">&#x1F517; The Strategic Pipeline</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:16px;">The real power is using them together. Each framework's output feeds the next one's input.</p>
+    <div style="display:grid;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:center;padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:20px;">&#x2694;&#xFE0F;</div>
+        <div><div style="font-weight:800;font-size:13px;">Step 1: Porter's 5 Forces</div><div style="font-size:11px;color:var(--ink-soft);">Diagnose: "The music learning market has low barriers, high rivalry, and YouTube is a massive substitute threat."</div></div>
+      </div>
+      <div style="text-align:center;font-size:18px;">&#x2B07;&#xFE0F;</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:14px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:20px;">&#x1F30A;</div>
+        <div><div style="font-weight:800;font-size:13px;">Step 2: Blue Ocean (ERRC)</div><div style="font-size:11px;color:var(--ink-soft);">Discover: "Eliminate song library arms race. Create AI teacher. Raise learning outcomes. Reduce gamification."</div></div>
+      </div>
+      <div style="text-align:center;font-size:18px;">&#x2B07;&#xFE0F;</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:14px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:20px;">&#x1F3AE;</div>
+        <div><div style="font-weight:800;font-size:13px;">Step 3: Playing to Win</div><div style="font-size:11px;color:var(--ink-soft);">Decide: "Play in adult beginners via mobile. Win through learning quality. Build capabilities in audio ML and pedagogy."</div></div>
+      </div>
+      <div style="text-align:center;font-size:18px;">&#x2B07;&#xFE0F;</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:14px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-size:20px;">&#x1F5FA;&#xFE0F;</div>
+        <div><div style="font-weight:800;font-size:13px;">Step 4: Wardley Map</div><div style="font-size:11px;color:var(--ink-soft);">Plan: "AI audio = genesis (build). Gamification = product (adopt). Payments = commodity (outsource). AI will commoditize in 2-3 years — invest in next frontier now."</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F3AF; For PM Interviews</h4>
+    <p>You rarely use all four in an interview. But <strong>naming the pipeline</strong> shows strategic maturity: "I'd start with a Porter's analysis of the competitive landscape, identify blue ocean opportunities using ERRC, then define specific strategic choices using a Playing to Win cascade. For execution, I'd map the value chain to determine build vs buy decisions." That sentence alone puts you ahead of 90% of PM candidates.</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F504; Cross-Framework Connections</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="font-size:12px;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);line-height:1.6;"><strong>Porter's "Substitute Threat"</strong> &#x2192; Blue Ocean's <strong>"Non-Customers"</strong>. The substitutes users choose instead of your product reveal the jobs they're actually trying to do.</div>
+      <div style="font-size:12px;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);line-height:1.6;"><strong>Blue Ocean "Create"</strong> &#x2192; Wardley's <strong>"Genesis"</strong>. What you Create in ERRC maps to Genesis components in Wardley — these are where your competitive advantage lives.</div>
+      <div style="font-size:12px;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);line-height:1.6;"><strong>PTW "Capabilities"</strong> &#x2192; Wardley's <strong>"Custom-Built"</strong>. The capabilities you choose to build should be the custom/genesis components on your map. If a "capability" is a commodity, rethink.</div>
+      <div style="font-size:12px;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);line-height:1.6;"><strong>Blue Ocean "Eliminate"</strong> &#x2192; Wardley's <strong>"Commodity"</strong>. Things you eliminate in ERRC are often components that have already commoditized — the map validates the cut.</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Scenarios</button><button class="pn-btn primary" onclick="go(5)">Picker &#x2192;</button></div>
+</div>
+
+<!-- TAB 5: PICKER -->
+<div class="section" id="s5">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">&#x1F3AF; Strategy Framework Picker</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:16px;">Answer 3 questions to get a recommendation.</p>
+    <div style="display:grid;gap:16px;" id="picker_qs">
+      <div>
+        <div style="font-weight:800;font-size:13px;margin-bottom:8px;">1. What's your primary goal?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q1" value="assess"> Assess a market or competitive landscape</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q1" value="find"> Find new growth or uncontested space</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q1" value="align"> Align the team on strategic choices</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q1" value="invest"> Decide where to invest engineering effort</label>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:13px;margin-bottom:8px;">2. What's the context?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q2" value="interview"> PM interview</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q2" value="planning"> Strategic planning session</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q2" value="roadmap"> Roadmap / tech decisions</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q2" value="pitch"> Pitching to leadership</label>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:13px;margin-bottom:8px;">3. How much time do you have?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q3" value="minutes"> Minutes (interview, quick analysis)</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q3" value="hours"> Hours (workshop, deep dive)</label>
+          <label style="display:flex;gap:8px;padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;align-items:center;"><input type="radio" name="q3" value="days"> Days/weeks (comprehensive strategy)</label>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:16px;">
+      <button onclick="pickFramework()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F3AF; Get Recommendation</button>
+    </div>
+    <div id="pick_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Combine</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+
+<script>
+const total=6;let cur=0;
+function go(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+i).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});
+  cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pickFramework(){
+  const q1=document.querySelector('input[name="q1"]:checked');
+  const q2=document.querySelector('input[name="q2"]:checked');
+  const q3=document.querySelector('input[name="q3"]:checked');
+  const r=document.getElementById('pick_result');
+  if(!q1||!q2||!q3){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Answer all 3 questions first.</div>';return;}
+  const g=q1.value,c=q2.value,t=q3.value;
+  let rec='',col='',icon='',detail='';
+
+  if(g==='assess'){
+    rec="Porter's 5 Forces";col='var(--rose)';icon='&#x2694;&#xFE0F;';
+    detail='Diagnose the competitive landscape quickly. Rate each of the 5 forces, identify the biggest threats, and present a clear picture of market attractiveness.';
+    if(t==='days') detail+=' With more time, follow up with Blue Ocean to find opportunities within the diagnosed landscape.';
+  } else if(g==='find'){
+    rec='Blue Ocean Strategy';col='var(--sky)';icon='&#x1F30A;';
+    detail='Use the strategy canvas to map competitors, then apply ERRC (Eliminate, Reduce, Raise, Create) to find uncontested space.';
+    if(c==='interview') detail+=' In interviews, focus on ERRC — it shows creative strategic thinking in 2-3 minutes.';
+  } else if(g==='align'){
+    rec='Playing to Win';col='var(--orange)';icon='&#x1F3AE;';
+    detail='Walk the team through the 5-choice cascade. The cascade forces specificity: aspiration, where, how, capabilities, systems.';
+    if(c==='interview') detail+=' For interviews, this is your go-to. It shows you think in integrated choices, not isolated features.';
+  } else if(g==='invest'){
+    rec='Wardley Mapping';col='var(--mint)';icon='&#x1F5FA;&#xFE0F;';
+    detail='Map your value chain components by evolution stage. Genesis/custom = build in-house. Product = buy. Commodity = outsource.';
+    if(c==='interview') detail+=' In interviews, mention the concept but don\'t try to draw a full map. Say: "I\'d map components by evolution to determine build vs buy."';
+  }
+
+  r.innerHTML='<div style="padding:20px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">'+
+    '<div style="font-size:28px;margin-bottom:6px;">'+icon+'</div>'+
+    '<div style="font-family:\'Lilita One\',sans-serif;font-size:20px;margin-bottom:8px;">'+rec+'</div>'+
+    '<div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">'+detail+'</div></div>';
+}
+</script>
+</body>
+</html>

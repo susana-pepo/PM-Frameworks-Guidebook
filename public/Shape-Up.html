@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Shape Up — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#8b5cf6;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x2699;&#xFE0F; Execution</div>
+  <h1>&#x1F528; Shape Up</h1>
+  <p class="sub">Basecamp's alternative to Scrum: 6-week cycles with appetite-based scoping. Shape before you build, bet instead of plan, ship or kill.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> Shape Up is a product development framework where senior people <strong>shape</strong> problems into bounded pitches, leadership <strong>bets</strong> on the best ones, and small teams <strong>build</strong> in fixed 6-week cycles. No backlogs. No estimation. Created at Basecamp by Ryan Singer.</p></div>
+</div>
+
+<!-- HERO: 3-Phase Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;align-items:stretch;justify-content:center;gap:8px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+      <div style="font-size:22px;">&#x1F4D0;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;">1. SHAPE</div>
+      <div style="font-size:10px;color:var(--ink-soft);margin-top:4px;">Senior PM/designer defines the problem + solution boundaries</div>
+    </div>
+    <div style="display:flex;align-items:center;font-size:20px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+      <div style="font-size:22px;">&#x1F3B2;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;">2. BET</div>
+      <div style="font-size:10px;color:var(--ink-soft);margin-top:4px;">Leadership chooses which pitches to fund for the next cycle</div>
+    </div>
+    <div style="display:flex;align-items:center;font-size:20px;color:var(--ink-muted);">&#x2192;</div>
+    <div style="flex:1;min-width:140px;padding:16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+      <div style="font-size:22px;">&#x1F6E0;&#xFE0F;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;">3. BUILD</div>
+      <div style="font-size:10px;color:var(--ink-soft);margin-top:4px;">Small team has 6 weeks. Ship or kill. No extensions.</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Then: 2-week cooldown &#x2192; Shape next cycle &#x2192; Bet &#x2192; Build &#x2192; Repeat.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>3 Phases</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Key Ideas</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why Shape Up?</h2><p>The problems it solves</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Scrum's Pain Points That Shape Up Addresses</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>&#x1F4CB; Endless backlog:</strong> In Scrum, the backlog grows forever and creates guilt. Shape Up has <strong>no backlog</strong>. If an idea isn't pitched and bet on, it dies. Good ideas come back.</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>&#x23F1;&#xFE0F; 2-week sprints too short:</strong> Meaningful features rarely fit in 2 weeks. Teams either cut scope too much or carry work across multiple sprints. Shape Up gives <strong>6 weeks</strong> — enough to build something substantial.</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>&#x1F4CA; Estimation theater:</strong> Story points are debated endlessly but rarely accurate. Shape Up replaces estimation with <strong>appetite</strong>: "We're willing to spend 6 weeks on this, no more." The team figures out how to fit it.</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>&#x1F504; Cycle of grooming:</strong> Scrum teams spend hours refining backlog items that may never get built. Shape Up front-loads the thinking in the <strong>shaping</strong> phase, done by senior people before betting.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; The Core Tradeoff</h4>
+    <p><strong>Scrum:</strong> Fixed time (2 weeks), flexible scope (adjust what fits). <strong>Shape Up:</strong> Fixed time (6 weeks) AND fixed scope (shaped pitch defines boundaries). The variable is <strong>quality of execution</strong> — teams cut corners on nice-to-haves, not on the core solution.</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">3 Phases &#x2192;</button></div>
+</div>
+
+<!-- S1: 3 PHASES -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F3AF;</div><div class="sec-label"><h2>The 3 Phases</h2><p>Shape, Bet, Build</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--orange);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F4D0; Phase 1: Shape (2-4 weeks, senior people)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">A senior PM or designer takes a raw idea and shapes it into a <strong>pitch</strong>. Not a spec — a pitch is the right level of abstraction: specific enough to be buildable, rough enough to leave room for the team.</p>
+      <div style="display:grid;gap:6px;font-size:12px;">
+        <div style="padding:8px 12px;background:var(--cream-dark);border-radius:6px;"><strong>Problem:</strong> What's the user pain? Why now?</div>
+        <div style="padding:8px 12px;background:var(--cream-dark);border-radius:6px;"><strong>Appetite:</strong> How much time is this worth? (Small batch: 2 weeks. Big batch: 6 weeks.)</div>
+        <div style="padding:8px 12px;background:var(--cream-dark);border-radius:6px;"><strong>Solution:</strong> Rough sketches (fat-marker sketches, not wireframes). Show the main flow, not every detail.</div>
+        <div style="padding:8px 12px;background:var(--cream-dark);border-radius:6px;"><strong>Rabbit holes:</strong> Known risks and how to avoid them. "Don't build a custom audio engine — use existing library."</div>
+        <div style="padding:8px 12px;background:var(--cream-dark);border-radius:6px;"><strong>No-gos:</strong> Explicitly what's OUT of scope. "No social features. No custom themes."</div>
+      </div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--sky);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F3B2; Phase 2: Bet (1 meeting, leadership)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">At the <strong>betting table</strong>, leadership reviews all pitches and decides which ones to fund for the next 6-week cycle. It's a bet: "We believe this pitch is worth 6 weeks of a team's time." Not all pitches get picked. Unpicked pitches don't go into a backlog — they're gone. If the idea is still good next cycle, someone will re-pitch it.</p>
+      <div style="padding:10px;background:var(--rose);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;">Key rule: If it doesn't ship in 6 weeks, it doesn't get extended. Kill it or re-shape for a future cycle.</div>
+    </div>
+
+    <div class="c-card" style="border-left:6px solid var(--mint);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px;">&#x1F6E0;&#xFE0F; Phase 3: Build (6 weeks, small team)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:10px;">A small team (1-3 people: designer + developer) gets the pitch and 6 weeks. They have <strong>full autonomy</strong> on how to execute. No daily standups with managers. No task assignment from above. The team discovers the detailed design and implementation as they go.</p>
+      <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Progress is tracked via <strong>hill charts</strong>: each scope starts on the "figuring it out" uphill side and moves to the "making it happen" downhill side. This shows real progress, not fake % complete.</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Key Ideas &#x2192;</button></div>
+</div>
+
+<!-- S2: KEY IDEAS -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F4A1;</div><div class="sec-label"><h2>Key Concepts</h2><p>What makes Shape Up unique</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="padding:18px;background:var(--orange);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x1F372; Appetite vs Estimate</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">Scrum: "How long will this take?" (estimate). Shape Up: "How much time is this <em>worth</em>?" (appetite). Appetite is a business decision, not an engineering guess. Start from budget, not from scope.</div>
+    </div>
+    <div class="c-card" style="padding:18px;background:var(--sky);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x1F58D;&#xFE0F; Fat Marker Sketches</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">Pitches use rough sketches, not wireframes. A fat marker forces you to show the concept without specifying pixels. Details are the building team's job.</div>
+    </div>
+    <div class="c-card" style="padding:18px;background:var(--mint);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x26F0;&#xFE0F; Hill Charts</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">Instead of % complete, each scope is on a hill. Left side = "figuring out" (unknowns). Right side = "making it happen" (execution). Stuck on the uphill? That's the real risk.</div>
+    </div>
+    <div class="c-card" style="padding:18px;background:var(--pink);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2744;&#xFE0F; Cooldown (2 weeks)</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">After each 6-week cycle: 2 weeks of unstructured time. Fix bugs, explore ideas, recharge. No deliverables. This prevents burnout and feeds the next shaping cycle.</div>
+    </div>
+  </div>
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F6AB; The Circuit Breaker</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">If a project doesn't ship in 6 weeks, it's <strong>killed by default</strong>. No extensions. No "just one more week." This forces shaping to be realistic and building teams to make hard tradeoffs. If the idea is still valuable, it can be re-shaped and re-pitched for a future cycle — but it starts fresh.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; 3 Phases</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Shape Up for Skoove</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Pitch: "Practice Mode Redesign"</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F62B; Problem</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">70% of users who finish a lesson never revisit it to practice. The current "Practice" button just replays the lesson. Users need a dedicated practice experience with tempo control, loop sections, and mistake tracking.</div>
+      </div>
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F372; Appetite: 6-week big batch</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">This is core to retention. Worth a full cycle. But NOT a full practice suite — we're shaping a focused MVP: tempo slider, section looping, basic mistake highlighting. No social features, no recording.</div>
+      </div>
+      <div style="padding:14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F58D;&#xFE0F; Solution (fat marker)</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;">New "Practice" screen accessible from any completed lesson. Three elements: (1) Tempo slider (50%-150%), (2) Tap-to-loop section markers, (3) Mistake heatmap overlay showing where user struggled. Simple, one-screen experience.</div>
+      </div>
+      <div style="padding:14px;background:var(--rose);border:2px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="font-weight:800;font-size:13px;margin-bottom:4px;">&#x1F573;&#xFE0F; Rabbit Holes &amp; No-gos</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;"><strong>Rabbit hole:</strong> Don't build real-time audio analysis for mistakes — use the existing lesson data to show where errors occurred. <strong>No-gos:</strong> No recording feature. No sharing. No custom practice playlists. These are future pitches if this works.</div>
+      </div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Why This Pitch Works</h4><p>It's <strong>bounded</strong> (clear scope, explicit no-gos), <strong>appetited</strong> (worth 6 weeks, no more), and <strong>rough enough</strong> (the team decides exact UI). The rabbit hole is called out so the team doesn't waste 3 weeks on audio processing. This is what good shaping looks like.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Key Ideas</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Pitch Builder</h2><p>Shape your own pitch</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Write a Pitch</h3>
+    <div style="display:grid;gap:12px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">&#x1F62B; Problem</span></label><textarea id="su_prob" rows="2" placeholder="What pain are users experiencing? Why does this matter now?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">&#x1F372; Appetite</span></label><select id="su_app" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;background:var(--white);"><option value="">Select...</option><option value="small">Small batch (2 weeks)</option><option value="big">Big batch (6 weeks)</option></select></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">&#x1F58D;&#xFE0F; Solution (rough)</span></label><textarea id="su_sol" rows="2" placeholder="Fat marker sketch: what's the core experience? (Don't spec every detail)" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--rose);border-radius:6px;">&#x1F573;&#xFE0F; Rabbit Holes &amp; No-gos</span></label><textarea id="su_risk" rows="2" placeholder="What could eat all the time? What's explicitly OUT of scope?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzePitch()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F528; Review My Pitch</button></div>
+    <div id="su_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right fit and wrong fit</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Shape Up When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Small, senior teams (2-6 people)</li>
+      <li>&#x2714;&#xFE0F; Projects need more than 2 weeks but less than a quarter</li>
+      <li>&#x2714;&#xFE0F; Backlog is overwhelming and full of stale items</li>
+      <li>&#x2714;&#xFE0F; Teams are capable of autonomous execution</li>
+      <li>&#x2714;&#xFE0F; Leadership wants to make fewer, bigger bets</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip Shape Up When...</h3><ul>
+      <li>&#x274C; Large teams that need coordination (10+ people)</li>
+      <li>&#x274C; Continuous delivery / live ops (use Kanban)</li>
+      <li>&#x274C; Highly regulated environments needing documentation</li>
+      <li>&#x274C; Team needs more structure and frequent check-ins</li>
+      <li>&#x274C; External clients expecting weekly demos (use Scrum)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Scrum</div><div style="font-size:12px;color:var(--ink-dim);">Scrum = 2-week sprints, flexible scope. Shape Up = 6-week cycles, shaped scope. Different team sizes and maturity.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Dual Track</div><div style="font-size:12px;color:var(--ink-dim);">Shape Up's "shaping" phase IS a form of discovery — but done by senior individuals, not a discovery squad.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">RICE</div><div style="font-size:12px;color:var(--ink-dim);">RICE can inform which pitches to bet on at the betting table — but Shape Up prefers qualitative judgment over scoring.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzePitch(){
+  const prob=document.getElementById('su_prob').value.trim();
+  const app=document.getElementById('su_app').value;
+  const sol=document.getElementById('su_sol').value.trim();
+  const risk=document.getElementById('su_risk').value.trim();
+  const r=document.getElementById('su_result');
+  if(!prob||!app||!sol){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Fill in at least Problem, Appetite, and Solution.</div>';return;}
+  let fb=[];
+  fb.push({t:'&#x2705; Problem defined',m:'Make sure you can explain why this matters NOW, not just someday.',c:'var(--mint)'});
+  fb.push({t:'&#x2705; Appetite set: '+(app==='small'?'2 weeks':'6 weeks'),m:app==='small'?'Small batch — keep it focused. Can 1-2 people ship this in 2 weeks?':'Big batch — worth a full cycle. Make sure the solution is bounded enough to fit.',c:'var(--sky)'});
+  if(sol.length<30) fb.push({t:'&#x1F4A1; Solution might be too vague',m:'Add a bit more: what\'s the core experience? What does the user see and do? But keep it rough — no wireframes.',c:'var(--orange)'});
+  if(!risk) fb.push({t:'&#x26A0;&#xFE0F; Missing rabbit holes & no-gos',m:'This is critical! What could eat all the time? What\'s explicitly OUT? Without boundaries, the team will scope creep.',c:'var(--rose)'});
+  else fb.push({t:'&#x2705; Risks identified',m:'Good discipline. The team now knows what to avoid.',c:'var(--mint)'});
+  r.innerHTML=fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>').join('')+'<div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;margin-top:8px;">&#x1F3B2; <strong>Next step:</strong> Present this pitch at the betting table. Be ready to defend the appetite and explain why the no-gos keep this focused.</div>';
+}
+
+const qs=[
+  {q:"What are the 3 phases of Shape Up?",o:["Plan, Build, Test","Shape, Bet, Build","Design, Develop, Deploy","Research, Prototype, Launch"],a:1,e:"Shape (define the problem + solution boundaries), Bet (leadership picks which pitches to fund), Build (small team executes in 6 weeks). Then 2-week cooldown."},
+  {q:"What is 'appetite' in Shape Up?",o:["How hungry the team is for the project","An estimate of how long the project will take","A business decision about how much time the project is WORTH — the budget, not the estimate","The team's velocity average"],a:2,e:"Appetite flips estimation: instead of 'how long?' you ask 'how much time is this WORTH?' Start from budget, not scope. 'This problem deserves 6 weeks, no more.' The team figures out how to fit within that."},
+  {q:"What happens if a project doesn't ship in 6 weeks?",o:["The team gets an extension","It's killed by default — the circuit breaker activates","The Scrum Master escalates","It moves to the next sprint"],a:1,e:"The circuit breaker: no extensions, no 'just one more week.' If it didn't ship, it's killed. If the idea is still valuable, it can be re-shaped and re-pitched for a future cycle. This prevents runaway projects."},
+  {q:"What is a 'hill chart' used for?",o:["Measuring team velocity","Showing project progress: 'figuring out' (uphill) vs 'making it happen' (downhill)","Planning sprint capacity","Tracking bug counts"],a:1,e:"Hill charts show each scope on a hill. Left/uphill = still figuring out unknowns. Right/downhill = execution, just making it happen. If something is stuck on the uphill side, that's where the risk is. Much more honest than % complete."},
+  {q:"Why does Shape Up have NO backlog?",o:["They forgot to include one","Backlogs grow forever, create guilt, and contain stale items — if an idea is good it'll come back as a new pitch","Backlogs are only for Scrum","They use a different name for it"],a:1,e:"Shape Up's insight: backlogs become graveyards of ideas that create false obligation. Instead, every cycle starts fresh. Good ideas that aren't picked will naturally resurface. Bad ideas fade away. This keeps the focus on what matters NOW."},
+  {q:"What's the key difference between Scrum sprints and Shape Up cycles?",o:["Scrum is 2 weeks with flexible scope; Shape Up is 6 weeks with shaped/fixed scope","There's no difference, just different names","Scrum has ceremonies, Shape Up doesn't","Shape Up is faster than Scrum"],a:0,e:"Scrum: fixed time (2w), flexible scope (whatever fits). Shape Up: fixed time (6w) AND shaped scope (defined by the pitch). The variable in Shape Up is execution quality — teams cut nice-to-haves, not the core solution."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F528; Shape Up expert! You understand shaping, betting, and the circuit breaker.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good grasp. Review appetite vs estimates and the circuit breaker.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the 3 phases and why there\'s no backlog.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

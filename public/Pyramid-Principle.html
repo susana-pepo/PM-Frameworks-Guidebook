@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pyramid Principle — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,5vw,40px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);}.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}.quiz-opt:hover{background:var(--cream-dark);}.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4AC; Communication</div>
+  <h1>&#x1F53A; Pyramid Principle</h1>
+  <p class="sub">Answer first, then support. Structure any message so the most important point comes first, with grouped evidence underneath. Created by Barbara Minto at McKinsey.</p>
+</div>
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> Start with your <strong>conclusion/recommendation</strong>, then group your supporting arguments into 2-4 buckets, each with its own evidence. The audience gets the answer immediately and can dig into details if they want.</p></div>
+</div>
+
+<!-- HERO: Pyramid Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div style="padding:14px 28px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;box-shadow:var(--shadow-sm);"><div style="font-family:'Lilita One',sans-serif;font-size:15px;">&#x1F3AF; Main Answer / Recommendation</div><div style="font-size:10px;color:var(--ink-dim);">"We should invest in mobile onboarding"</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <div style="padding:10px 14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;min-width:120px;">&#x1F4CA; Reason 1<br><span style="font-weight:400;font-size:10px;">60% users are mobile-only</span></div>
+      <div style="padding:10px 14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;min-width:120px;">&#x1F4B0; Reason 2<br><span style="font-weight:400;font-size:10px;">Mobile converts 2x higher</span></div>
+      <div style="padding:10px 14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;font-size:11px;font-weight:700;min-width:120px;">&#x23F1;&#xFE0F; Reason 3<br><span style="font-weight:400;font-size:10px;">Competitors already have it</span></div>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;">
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+      <div style="padding:4px 8px;background:var(--cream-dark);border:1px solid var(--border);border-radius:4px;font-size:8px;">Data point</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Answer first &#x2192; Grouped reasons &#x2192; Supporting evidence. Top-down, not bottom-up.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>The Rules</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>SCQA Intro</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why Top-Down?</h2><p>How executives process information</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem: Bottom-Up Communication</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Most people communicate the way they think: "I researched X, then analyzed Y, then compared Z, and my conclusion is..." This is <strong>bottom-up</strong>. The audience has to wait until the end to know what you're recommending.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Executives don't have time for that. They want: <strong>"Here's what I recommend. Here's why. Here's the evidence."</strong> If they're convinced after the recommendation, they stop. If they want detail, they go deeper. This is <strong>top-down</strong> communication.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x274C; Bottom-Up (Bad)</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">"We looked at user data. Then we ran surveys. Then we benchmarked competitors. Then we analyzed costs. So we think we should maybe consider investing in mobile onboarding."</div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:6px;font-style:italic;">Executive tuned out at sentence 2.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;">&#x2705; Top-Down (Pyramid)</div>
+      <div style="font-size:11px;color:var(--ink-soft);line-height:1.5;">"We should invest in mobile onboarding. Three reasons: 60% of our users are mobile-only, mobile converts 2x higher than web, and all three competitors launched it this quarter. Here's the data..."</div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:6px;font-style:italic;">Executive has the answer + reasons in 10 seconds.</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F9E0; Memory Trick</h4><p>Think of a <strong>newspaper article</strong>. The headline is the conclusion. The first paragraph summarizes why. The rest gives detail. You can stop reading at any point and still have the key message. That's pyramid structure.</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">The Rules &#x2192;</button></div>
+</div>
+
+<!-- S1: THE RULES -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F4CF;</div><div class="sec-label"><h2>Minto's 3 Rules</h2><p>How to build a pyramid</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--yellow);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">Rule 1: Start with the Answer</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Your recommendation or conclusion goes first. Not at the end. Not buried in a paragraph. <strong>First sentence.</strong> If the reader only reads one sentence, they get the key message.</p>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--sky);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">Rule 2: Group &amp; Summarize</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Support your answer with 2-4 grouped arguments. Each group should be <strong>MECE</strong> (Mutually Exclusive, Collectively Exhaustive) — no overlaps, no gaps. Each group gets its own summary sentence.</p>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+        <div style="padding:6px 12px;background:var(--sky);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">Group by time: Past → Present → Future</div>
+        <div style="padding:6px 12px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">Group by structure: Problem → Solution → Impact</div>
+        <div style="padding:6px 12px;background:var(--mint);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">Group by priority: Most → Least important</div>
+      </div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--mint);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">Rule 3: Logically Order Within Groups</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;">Within each group, arrange evidence in logical order: deductive (general → specific), inductive (specific observations → conclusion), or chronological. Each sub-point must directly support its group's summary.</p>
+    </div>
+  </div>
+  <div class="c-card" style="background:var(--purple);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F4A1; MECE Explained</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;"><strong>Mutually Exclusive:</strong> No argument overlaps with another. If "User data" and "Survey results" cover the same insight, merge them. <strong>Collectively Exhaustive:</strong> Together, your arguments fully support the conclusion. If someone asks "but what about X?" and X is a major consideration you missed, your groups aren't exhaustive.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">SCQA Intro &#x2192;</button></div>
+</div>
+
+<!-- S2: SCQA -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F4D6;</div><div class="sec-label"><h2>SCQA Introduction</h2><p>How to open your pyramid</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Setup Before the Answer</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Before your main answer, use SCQA to set up WHY this matters. It creates a question in the reader's mind that your answer resolves.</p>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:12px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong style="font-size:14px;">S</strong>ituation — <span style="font-size:12px;">Shared context everyone agrees on. "Skoove has 5M users and 70% churn in week 1."</span></div>
+      <div style="padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong style="font-size:14px;">C</strong>omplication — <span style="font-size:12px;">What changed or what's wrong. "Despite increasing ad spend 40%, acquisition hasn't improved retention."</span></div>
+      <div style="padding:12px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong style="font-size:14px;">Q</strong>uestion — <span style="font-size:12px;">The question this raises. "How do we improve retention without increasing acquisition cost?"</span></div>
+      <div style="padding:12px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);"><strong style="font-size:14px;">A</strong>nswer — <span style="font-size:12px;">Your recommendation. "Invest in mobile onboarding redesign." ← This is the top of your pyramid.</span></div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F517; SCQA + Pyramid = Complete Structure</h4><p><strong>SCQA</strong> opens the communication (creates the need). <strong>Pyramid</strong> delivers the answer (top-down with grouped evidence). Together: Situation → Complication → Question → Answer → Reason 1 → Reason 2 → Reason 3 → Evidence.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; The Rules</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Pyramid for a Skoove stakeholder update</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F3B9; Slack Message to CPO: "Q3 Content Strategy Proposal"</h3>
+    <div style="display:grid;gap:6px;font-size:12px;">
+      <div style="padding:10px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>S:</strong> Our D7 retention is 12%, well below the 20% benchmark for music ed apps.</div>
+      <div style="padding:10px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>C:</strong> Analysis shows 80% of drop-offs happen during lessons 3-5, where difficulty jumps sharply.</div>
+      <div style="padding:10px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Q:</strong> How do we smooth the difficulty curve without dumbing down the product?</div>
+      <div style="padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-weight:800;font-size:13px;">&#x1F3AF; A: I recommend we launch "bridge lessons" — short review exercises between difficulty jumps — targeting a 10pp retention improvement by end of Q3.</div>
+    </div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:10px;">Supporting Pyramid:</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:10px 14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Reason 1 — User data supports it:</strong> Lesson replay rate is 4x higher for lessons 3-5 vs others. Users WANT to review but there's no structured way to do it.</div>
+      <div style="padding:10px 14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Reason 2 — Low effort, high impact:</strong> Bridge lessons reuse existing content (exercises from prior lessons). Engineering estimate: 2 sprints. Content creation: 1 week per bridge set.</div>
+      <div style="padding:10px 14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Reason 3 — Competitor validation:</strong> Simply Piano launched "review sessions" in Q1 and reported 15% retention improvement in their earnings call.</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; Why This Works</h4><p>The CPO gets the recommendation in 10 seconds. If convinced, they approve immediately. If skeptical, they read the 3 reasons. If they want detail, they ask. You've respected their time while being thorough. Compare this to a 2-page analysis that buries the recommendation at the end.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; SCQA</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Pyramid Builder</h2><p>Structure your own message</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build Your Pyramid</h3>
+    <div style="display:grid;gap:12px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">&#x1F3AF; Main Answer / Recommendation</span></label><textarea id="py_ans" rows="2" placeholder="Start with your conclusion. What should happen?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">Reason 1</span></label><input id="py_r1" type="text" placeholder="First supporting argument" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--orange);border-radius:6px;">Reason 2</span></label><input id="py_r2" type="text" placeholder="Second supporting argument" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">Reason 3 (optional)</span></label><input id="py_r3" type="text" placeholder="Third supporting argument" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzePyramid()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F53A; Review My Pyramid</button></div>
+    <div id="py_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Pyramid fits almost everywhere</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Pyramid When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Stakeholder updates and executive emails</li>
+      <li>&#x2714;&#xFE0F; PRDs and product briefs</li>
+      <li>&#x2714;&#xFE0F; Slack messages that need a decision</li>
+      <li>&#x2714;&#xFE0F; Case interview answers (structure your analysis)</li>
+      <li>&#x2714;&#xFE0F; Meeting agendas and kick-off docs</li>
+      <li>&#x2714;&#xFE0F; Any time you're asking someone for a decision</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip Pyramid When...</h3><ul>
+      <li>&#x274C; Behavioral interviews (use STAR instead)</li>
+      <li>&#x274C; Brainstorming — you want divergent thinking, not conclusions</li>
+      <li>&#x274C; Emotional/sensitive messages — leading with conclusion can feel cold</li>
+      <li>&#x274C; When the audience needs to discover the answer themselves</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">STAR</div><div style="font-size:12px;color:var(--ink-dim);">STAR = tell a story (interviews). Pyramid = deliver a conclusion (stakeholder comms). Different goals, both structured.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Exec Summary</div><div style="font-size:12px;color:var(--ink-dim);">Executive Summary IS a pyramid in document form. The summary = answer. Sections = grouped reasons.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Narrative Arc</div><div style="font-size:12px;color:var(--ink-dim);">Narrative Arc builds tension before the answer. Pyramid skips tension and leads with the answer. Choose based on audience.</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzePyramid(){
+  const ans=document.getElementById('py_ans').value.trim(),r1=document.getElementById('py_r1').value.trim(),r2=document.getElementById('py_r2').value.trim(),r3=document.getElementById('py_r3').value.trim();
+  const el=document.getElementById('py_result');
+  if(!ans){el.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Add your main answer first.</div>';return;}
+  let fb=[];
+  if(ans.toLowerCase().startsWith('i think')||ans.toLowerCase().startsWith('maybe')||ans.toLowerCase().startsWith('we could')) fb.push({t:'&#x26A0;&#xFE0F; Hedging language',m:'Remove "I think/maybe/we could." State the recommendation directly: "We should..." or "I recommend..." Confidence matters.',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; Direct answer',m:'Good — you\'re leading with a clear recommendation.',c:'var(--mint)'});
+  const reasons=[r1,r2,r3].filter(x=>x);
+  if(reasons.length<2) fb.push({t:'&#x26A0;&#xFE0F; Need more reasons',m:'2-4 grouped arguments. One reason isn\'t enough to support a recommendation.',c:'var(--rose)'});
+  else fb.push({t:'&#x2705; '+reasons.length+' supporting reasons',m:'Good structure. Check: are they MECE? (No overlaps, no gaps in the argument.)',c:'var(--mint)'});
+  if(reasons.some(r=>/\d/.test(r))) fb.push({t:'&#x2705; Data in arguments',m:'Numbers strengthen your pyramid. Keep including quantified evidence.',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Add data',m:'Each reason is stronger with a number: "60% of users..." "2x higher than..." "€50K savings."',c:'var(--sky)'});
+  el.innerHTML='<div style="padding:16px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;margin-bottom:10px;font-family:\'Lilita One\',sans-serif;font-size:15px;">&#x1F53A; '+ans+'</div>'+fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"What's the #1 rule of the Pyramid Principle?",o:["Always use bullet points","Start with the conclusion/recommendation, not the analysis","Include as much detail as possible","Use chronological order"],a:1,e:"Lead with the answer. If the reader only reads one sentence, they get the key message. Everything else supports it. This is the fundamental difference from bottom-up communication."},
+  {q:"What does MECE stand for and why does it matter?",o:["Most Effective Communication Ever — it makes writing better","Mutually Exclusive, Collectively Exhaustive — ensures arguments don't overlap and cover the full picture","Maximum Evidence, Clear Explanation — a formatting standard","Multiple Examples, Concrete Evidence — a proof technique"],a:1,e:"MECE ensures your supporting arguments (1) don't say the same thing in different ways (Mutually Exclusive) and (2) together cover the full case for your recommendation (Collectively Exhaustive). No redundancy, no gaps."},
+  {q:"What does SCQA stand for in the Pyramid intro?",o:["Situation, Complication, Question, Answer","Strategy, Context, Qualification, Action","Summary, Conclusion, Qualification, Argument","Structure, Content, Quality, Assessment"],a:0,e:"SCQA sets up the need before delivering the answer: Situation (shared context) → Complication (what changed) → Question (what should we do?) → Answer (your recommendation = top of pyramid)."},
+  {q:"When should you NOT use the Pyramid Principle?",o:["Stakeholder updates","Behavioral interviews — use STAR instead, which tells a story rather than delivering a conclusion","Executive emails","Product briefs"],a:1,e:"Pyramid delivers conclusions top-down. Behavioral interviews need stories (STAR). Also skip Pyramid for brainstorming (want divergence, not conclusions) and sensitive messages (leading with conclusion can feel cold)."},
+  {q:"Bottom-up: 'I analyzed X, then Y, then Z, so my conclusion is...' Why is this bad for executives?",o:["It's not bad, executives love detail","Executives have to wait until the end to know what you're recommending — they might tune out before that","It's too short","The analysis is wrong"],a:1,e:"Executives process information differently. They want: answer first, then supporting reasons if needed. Making them sit through your entire analysis before the recommendation wastes their time and risks losing their attention."},
+  {q:"How many supporting arguments should you have?",o:["Exactly 3, always","As many as possible to be thorough","2-4 grouped arguments — enough to be convincing, few enough to be memorable","Just 1 strong one"],a:2,e:"2-4 is the sweet spot. Fewer than 2 feels unsupported. More than 4 and the audience can't hold them all. Each argument should be a distinct group (MECE) with its own evidence underneath."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F53A; Pyramid expert! You can structure any message for maximum clarity.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Solid foundation. Practice SCQA intros and MECE grouping.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on top-down structure and MECE.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

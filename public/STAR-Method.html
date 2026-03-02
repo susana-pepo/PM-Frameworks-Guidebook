@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>STAR Method — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}.quiz-opt:hover{background:var(--cream-dark);}.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4AC; Communication</div>
+  <h1>&#x2B50; STAR Method</h1>
+  <p class="sub">Situation → Task → Action → Result. The gold standard for behavioral interview answers that are clear, compelling, and memorable.</p>
+</div>
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> STAR structures your interview stories into 4 parts: set the <strong>Situation</strong>, define your <strong>Task</strong>, describe your <strong>Actions</strong> (the bulk), and quantify the <strong>Result</strong>. Keeps answers focused, under 2 minutes, and shows YOUR impact.</p></div>
+</div>
+
+<!-- HERO -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;align-items:stretch;justify-content:center;gap:6px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:100px;padding:14px 10px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;"><div style="font-family:'Lilita One',sans-serif;font-size:20px;">S</div><div style="font-size:10px;font-weight:700;">Situation</div><div style="font-size:9px;color:var(--ink-dim);margin-top:2px;">~15%</div></div>
+    <div style="display:flex;align-items:center;font-size:16px;">&#x2192;</div>
+    <div style="flex:1;min-width:100px;padding:14px 10px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;"><div style="font-family:'Lilita One',sans-serif;font-size:20px;">T</div><div style="font-size:10px;font-weight:700;">Task</div><div style="font-size:9px;color:var(--ink-dim);margin-top:2px;">~10%</div></div>
+    <div style="display:flex;align-items:center;font-size:16px;">&#x2192;</div>
+    <div style="flex:1.5;min-width:140px;padding:14px 10px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;box-shadow:var(--shadow-sm);"><div style="font-family:'Lilita One',sans-serif;font-size:20px;">A</div><div style="font-size:10px;font-weight:700;">Action</div><div style="font-size:9px;color:var(--ink-dim);margin-top:2px;">~50% &#x2190; the meat</div></div>
+    <div style="display:flex;align-items:center;font-size:16px;">&#x2192;</div>
+    <div style="flex:1;min-width:100px;padding:14px 10px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;"><div style="font-family:'Lilita One',sans-serif;font-size:20px;">R</div><div style="font-size:10px;font-weight:700;">Result</div><div style="font-size:9px;color:var(--ink-dim);margin-top:2px;">~25%</div></div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">Total answer: 90-120 seconds. Action is where you shine.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Each Letter</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Common Mistakes</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Examples</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>Why STAR?</h2><p>What interviewers actually evaluate</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem Without STAR</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Interviewer asks: "Tell me about a time you dealt with a difficult stakeholder." Without structure, people ramble for 5 minutes, skip the most important parts, forget to mention what THEY did vs. the team, and miss the outcome. The interviewer tunes out by minute 2.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">STAR gives you a <strong>narrative spine</strong>. Every answer tells a complete, compelling story in under 2 minutes. The interviewer can follow your logic, see your decision-making, and evaluate your impact.</p>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F50D; What Interviewers Score</h3>
+    <div style="display:grid;gap:6px;font-size:12px;">
+      <div style="padding:10px 14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Clarity:</strong> Can I follow the story? Is there a clear beginning, middle, end?</div>
+      <div style="padding:10px 14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>YOUR role:</strong> What did YOU specifically do? Not "we" — "I."</div>
+      <div style="padding:10px 14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Decision-making:</strong> WHY did you take those actions? What was your reasoning?</div>
+      <div style="padding:10px 14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Impact:</strong> What changed because of your actions? Numbers are gold.</div>
+      <div style="padding:10px 14px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);"><strong>Self-awareness:</strong> What did you learn? What would you do differently?</div>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F9E0; Memory Trick</h4><p>Think of STAR like a <strong>movie trailer</strong>. Situation = the setting. Task = what's at stake. Action = the hero (you) making decisions. Result = the payoff. Nobody watches a 10-minute trailer. Keep it tight.</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Each Letter &#x2192;</button></div>
+</div>
+
+<!-- S1: EACH LETTER -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F4DD;</div><div class="sec-label"><h2>S-T-A-R Deep Dive</h2><p>What to include in each part</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="border-left:6px solid var(--purple);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">S — Situation (~15% of answer)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Set the scene in 2-3 sentences. Give enough context so the interviewer understands the stakes, but don't over-explain.</p>
+      <div style="padding:10px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;">
+        <strong>Include:</strong> Company/product, your role, the business context, what made this challenging.<br>
+        <strong>Skip:</strong> Team org chart, project history, technical architecture.
+      </div>
+      <div style="margin-top:8px;padding:8px 12px;background:var(--cream-dark);border-radius:6px;font-size:11px;font-style:italic;">"At Skoove, I was Education Content Manager for the piano app. We were seeing 70% drop-off in the first week, and retention was our biggest bottleneck to growth."</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--sky);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">T — Task (~10% of answer)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Your specific responsibility. What were YOU asked to do or what did you decide needed to happen? This separates your role from the team's.</p>
+      <div style="padding:10px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;">
+        <strong>Include:</strong> Your specific goal/responsibility, the constraint or deadline.<br>
+        <strong>Skip:</strong> Other people's tasks, detailed project plan.
+      </div>
+      <div style="margin-top:8px;padding:8px 12px;background:var(--cream-dark);border-radius:6px;font-size:11px;font-style:italic;">"My task was to identify why beginners were dropping off and propose a content strategy to improve D7 retention by at least 10 percentage points within Q3."</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--yellow);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">A — Action (~50% of answer) &#x2B50;</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">The bulk of your answer. Describe 2-3 specific actions YOU took. Use "I" not "we." Explain your reasoning — WHY you chose that approach.</p>
+      <div style="padding:10px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;">
+        <strong>Include:</strong> Specific steps YOU took, WHY you chose them, how you dealt with obstacles.<br>
+        <strong>Skip:</strong> Every meeting you attended, what other people did, obvious steps.
+      </div>
+      <div style="margin-top:8px;padding:8px 12px;background:var(--cream-dark);border-radius:6px;font-size:11px;font-style:italic;">"First, I analyzed user session data and found that 80% of drop-offs happened during lessons 3-5 — the difficulty jump was too steep. Second, I designed a 'bridge content' system: shorter review lessons between difficulty jumps to build confidence. Third, I worked with the dev team to implement an adaptive difficulty engine that would suggest bridge lessons when a user struggled. I chose this approach over simply making all content easier because our power users needed the challenge — the problem was the transition, not the ceiling."</div>
+    </div>
+    <div class="c-card" style="border-left:6px solid var(--mint);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">R — Result (~25% of answer)</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Quantify the outcome. Numbers beat adjectives. Then add a learning or what you'd do differently.</p>
+      <div style="padding:10px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;">
+        <strong>Include:</strong> Metrics (%, $, time saved), business impact, what you learned.<br>
+        <strong>Skip:</strong> Vague language ("it went well"), taking credit for others' work.
+      </div>
+      <div style="margin-top:8px;padding:8px 12px;background:var(--cream-dark);border-radius:6px;font-size:11px;font-style:italic;">"D7 retention improved from 12% to 21% — a 75% relative increase. The bridge content also reduced support tickets about 'lessons being too hard' by 40%. What I learned: difficulty isn't the enemy — unmanaged difficulty transitions are. I'd now add this as a standard content design principle from day one."</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Common Mistakes &#x2192;</button></div>
+</div>
+
+<!-- S2: COMMON MISTAKES -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--rose);">&#x26A0;&#xFE0F;</div><div class="sec-label"><h2>Common Mistakes</h2><p>What kills STAR answers</p></div></div>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; The "We" Trap</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;"><strong>Bad:</strong> "We decided to redesign the onboarding." <strong>Good:</strong> "I proposed redesigning the onboarding after analyzing drop-off data. I built the business case and presented it to the Head of Product." Interviewers want YOUR actions, not the team's.</p>
+    </div>
+    <div class="c-card" style="background:var(--rose);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; The 5-Minute Situation</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Spending 3 minutes on context and 30 seconds on actions. The situation is a setup — keep it to 2-3 sentences. If the interviewer needs more context, they'll ask.</p>
+    </div>
+    <div class="c-card" style="background:var(--rose);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; No Numbers in Result</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;"><strong>Bad:</strong> "It went really well and everyone was happy." <strong>Good:</strong> "Conversion increased from 3% to 5.2%, adding ~€200K ARR." If you don't have exact numbers, estimate: "roughly 30% improvement" is better than nothing.</p>
+    </div>
+    <div class="c-card" style="background:var(--rose);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; No "Why" Behind Actions</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Listing actions without explaining your reasoning. Interviewers assess your JUDGMENT, not just your actions. "I chose A over B because..." shows product thinking.</p>
+    </div>
+    <div class="c-card" style="background:var(--rose);">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x274C; Only Success Stories</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Having only "everything went great" stories. Interviewers LOVE hearing about failures if you show self-awareness and learning. "It didn't work because X. I learned Y. Next time I'd do Z."</p>
+    </div>
+  </div>
+  <div class="insight"><h4>&#x1F4A1; The Time Rule</h4><p>If your answer is under 60 seconds, you probably skipped the Action detail. If it's over 2.5 minutes, you're over-explaining the Situation. Practice with a timer. Target: <strong>90-120 seconds</strong>.</p></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Each Letter</button><button class="pn-btn primary" onclick="go(3)">Examples &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLES -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Examples</h2><p>From YOUR experience at Learnfield</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F3AF; "Tell me about a time you used data to make a product decision"</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:10px 14px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>S:</strong> At Skoove, I was responsible for the education content strategy for our piano learning app with 5M+ users. We had no data-driven framework for deciding what content to produce next.</div>
+      <div style="padding:10px 14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>T:</strong> I needed to create a content prioritization system that connected what we published to measurable user engagement and retention outcomes.</div>
+      <div style="padding:10px 14px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>A:</strong> I pulled lesson-level analytics — completion rates, replay rates, and drop-off points — for every piece of content. I found that song-based lessons had 3x higher completion than technique-only lessons, but we were publishing 70% technique content. I proposed rebalancing to 50/50 and designed a "learn technique through songs" hybrid format. I built the business case using retention correlation data and presented it to the Head of Product and CPO.</div>
+      <div style="padding:10px 14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>R:</strong> After shifting the content mix, lesson completion rates improved by 25% and D14 retention increased by 8 percentage points. The hybrid format became our default content template. I learned that user behavior data is a stronger signal than expert opinion when it comes to content strategy.</div>
+    </div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F91D; "Tell me about a time you managed a difficult stakeholder"</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:10px 14px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>S:</strong> As License Manager at Learnfield, I managed relationships with music publishers and rights holders for both Skoove and Trala. One major publisher was threatening to pull their catalog because they felt our licensing terms undervalued their content.</div>
+      <div style="padding:10px 14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>T:</strong> I had to renegotiate the licensing agreement to retain their catalog — which included 30% of our most popular songs — while staying within our budget constraints.</div>
+      <div style="padding:10px 14px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>A:</strong> Instead of negotiating on price alone, I prepared a data package showing how their songs performed in our app: play counts, user engagement, and how their catalog drove user retention. I reframed the conversation from "what we pay" to "what value we create together." I proposed a tiered model where high-performing songs earned higher royalties, aligning their incentives with our engagement goals. I also offered co-marketing visibility — featuring their artists prominently in the app.</div>
+      <div style="padding:10px 14px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>R:</strong> The publisher renewed for 2 years at only a 12% cost increase — well below their initial 40% ask. Both sides felt the deal was fair. I learned that showing stakeholders data about their own value changes the negotiation dynamic from adversarial to collaborative.</div>
+    </div>
+  </div>
+  <div class="tip">&#x1F4A1; <strong>Build a STAR bank:</strong> Prepare 6-8 stories covering: data-driven decision, stakeholder conflict, failure/learning, cross-functional leadership, ambiguity, prioritization tradeoff, user advocacy, shipping under pressure. Most questions map to one of these.</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Common Mistakes</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>STAR Builder</h2><p>Draft your own answer</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build a STAR Answer</h3>
+    <div style="display:grid;gap:12px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--cream-dark);border-radius:6px;">&#x2753; Interview Question</span></label><input id="st_q" type="text" placeholder='e.g., "Tell me about a time you had to prioritize competing demands"' style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--purple);border-radius:6px;color:var(--white);">S — Situation</span></label><textarea id="st_s" rows="2" placeholder="2-3 sentences. Company, role, context, stakes." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--sky);border-radius:6px;">T — Task</span></label><textarea id="st_t" rows="1" placeholder="Your specific responsibility or goal." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">A — Action (the bulk!)</span></label><textarea id="st_a" rows="4" placeholder="2-3 specific actions YOU took. Use 'I' not 'we'. Include WHY you chose this approach." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--mint);border-radius:6px;">R — Result</span></label><textarea id="st_r" rows="2" placeholder="Quantified outcome + what you learned." style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea></div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeStar()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x2B50; Review My STAR</button></div>
+    <div id="st_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Examples</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Beyond interviews</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use STAR When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Behavioral interview questions ("Tell me about a time...")</li>
+      <li>&#x2714;&#xFE0F; Performance reviews — documenting your impact</li>
+      <li>&#x2714;&#xFE0F; Portfolio case studies</li>
+      <li>&#x2714;&#xFE0F; Cover letter paragraphs</li>
+      <li>&#x2714;&#xFE0F; LinkedIn posts about your work</li>
+      <li>&#x2714;&#xFE0F; Asking for a promotion — showing evidence of impact</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip STAR When...</h3><ul>
+      <li>&#x274C; Case interviews (use structured problem-solving instead)</li>
+      <li>&#x274C; Technical questions ("How would you design X?")</li>
+      <li>&#x274C; Stakeholder presentations (use Pyramid Principle)</li>
+      <li>&#x274C; Strategy documents (use frameworks like Playing to Win)</li>
+      <li>&#x274C; Written reports for executives (use Executive Summary)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Pyramid</div><div style="font-size:12px;color:var(--ink-dim);">STAR tells stories. Pyramid presents conclusions. Use STAR in interviews, Pyramid in stakeholder meetings.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Narrative Arc</div><div style="font-size:12px;color:var(--ink-dim);">STAR is a simplified narrative arc. For presentations, Narrative Arc adds tension and resolution structure.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--mint);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">All Frameworks</div><div style="font-size:12px;color:var(--ink-dim);">Every framework in this guidebook can become a STAR story. "I used RICE to prioritize..." "I applied AARRR to diagnose..."</div></div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeStar(){
+  const q=document.getElementById('st_q').value.trim(),s=document.getElementById('st_s').value.trim(),t=document.getElementById('st_t').value.trim(),a=document.getElementById('st_a').value.trim(),r=document.getElementById('st_r').value.trim();
+  const el=document.getElementById('st_result');
+  if(!s||!a||!r){el.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Fill in at least Situation, Action, and Result.</div>';return;}
+  let fb=[];
+  const words=s.split(/\s+/).length+t.split(/\s+/).length+a.split(/\s+/).length+r.split(/\s+/).length;
+  if(words>300) fb.push({t:'&#x26A0;&#xFE0F; Too long (~'+words+' words)',m:'Aim for 150-250 words total (~90-120 seconds spoken). Trim the Situation first.',c:'var(--orange)'});
+  else if(words<60) fb.push({t:'&#x26A0;&#xFE0F; Too brief (~'+words+' words)',m:'Action section likely needs more detail. What specifically did YOU do and why?',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; Good length (~'+words+' words)',m:'Should fit in 90-120 seconds. Practice with a timer to confirm.',c:'var(--mint)'});
+  const sWords=s.split(/\s+/).length,aWords=a.split(/\s+/).length;
+  if(sWords>aWords) fb.push({t:'&#x26A0;&#xFE0F; Situation is longer than Action',m:'Action should be ~50% of your answer. Trim the Situation to 2-3 sentences.',c:'var(--rose)'});
+  if(a.includes(' we ')&&!a.includes(' I ')) fb.push({t:'&#x26A0;&#xFE0F; "We" trap detected',m:'Your Action uses "we" but not "I." Rewrite to show YOUR specific contributions.',c:'var(--rose)'});
+  else if(a.includes(' I ')) fb.push({t:'&#x2705; Uses "I" — good ownership',m:'You\'re clearly showing your individual contribution.',c:'var(--mint)'});
+  if(/\d/.test(r)) fb.push({t:'&#x2705; Numbers in Result',m:'Quantified impact is exactly what interviewers want. Well done.',c:'var(--mint)'});
+  else fb.push({t:'&#x26A0;&#xFE0F; No numbers in Result',m:'Add metrics: %, $, time saved, users impacted. Even estimates ("roughly 30%") are better than nothing.',c:'var(--orange)'});
+  if(a.toLowerCase().includes('because')||a.toLowerCase().includes('chose')||a.toLowerCase().includes('decided')||a.toLowerCase().includes('reason')) fb.push({t:'&#x2705; Reasoning included',m:'You\'re explaining WHY you took actions — this shows product judgment.',c:'var(--mint)'});
+  else fb.push({t:'&#x1F4A1; Add your "why"',m:'Explain WHY you chose that approach: "I chose X over Y because..." This shows decision-making.',c:'var(--sky)'});
+  el.innerHTML=fb.map(f=>'<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>').join('');
+}
+
+const qs=[
+  {q:"Which part of STAR should take up the most time?",o:["Situation — context is everything","Task — the interviewer needs to understand the challenge","Action — this is where you show YOUR specific contributions and reasoning","Result — the outcome is what matters most"],a:2,e:"Action should be ~50% of your answer. This is where you show what YOU did and WHY. Situation + Task are setup (~25%). Result is the payoff (~25%)."},
+  {q:"What's wrong with: 'We redesigned the onboarding and it improved conversion'?",o:["Nothing, it's fine","It uses 'we' instead of 'I' and has no specific numbers","The word 'redesigned' is too vague","It's too short"],a:1,e:"Two problems: (1) 'We' hides YOUR contribution — use 'I proposed/led/analyzed.' (2) 'Improved conversion' has no numbers — say 'from 3% to 5.2%.' Specificity = credibility."},
+  {q:"How long should a STAR answer be?",o:["30 seconds — keep it quick","90-120 seconds — complete but concise","5 minutes — be thorough","As long as needed"],a:1,e:"90-120 seconds. Under 60s = you skipped Action detail. Over 2.5 min = you're over-explaining Situation. Practice with a timer."},
+  {q:"Should you only prepare success stories?",o:["Yes, never show weakness","No — failure stories with learning show self-awareness and are highly valued","Only failures to show humility","Only successes with small caveats"],a:1,e:"Interviewers LOVE well-told failure stories. They show self-awareness, growth, and honesty. Key: always end with what you learned and what you'd do differently."},
+  {q:"How many STAR stories should you prepare for PM interviews?",o:["2-3 is enough","6-8 covering different themes (data, conflict, failure, leadership, etc.)","15+ to cover every possible question","Just wing it"],a:1,e:"6-8 well-practiced stories covering key themes: data-driven decision, stakeholder conflict, failure/learning, cross-functional leadership, ambiguity, prioritization, user advocacy, shipping under pressure. Most questions map to one of these."},
+  {q:"When should you NOT use STAR?",o:["Never — STAR works for everything","Case interviews, technical design questions, and executive presentations","Behavioral interviews","Performance reviews"],a:1,e:"STAR is for behavioral questions ('tell me about a time...'). For case interviews, use structured problem-solving. For exec presentations, use Pyramid Principle. For strategy docs, use frameworks like Playing to Win."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x2B50; Interview-ready! Your STAR answers will be structured and compelling.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Good foundation. Practice the Action section and adding numbers.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on the time allocation and "I" vs "we."';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

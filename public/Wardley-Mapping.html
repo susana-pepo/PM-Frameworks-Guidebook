@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Wardley Mapping — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b8dd9;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+
+<div class="header">
+  <div class="header-badge">&#x1F4CA; Strategy</div>
+  <h1>&#x1F5FA;&#xFE0F; Wardley Mapping</h1>
+  <p class="sub">Map your value chain, see how components evolve, and make strategic moves based on where things are heading — not where they are now.</p>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> A Wardley Map plots your value chain on two axes: <strong>visibility to user</strong> (Y-axis, top = visible) and <strong>evolution</strong> (X-axis, left = novel, right = commodity). It reveals what to build, what to buy, and what's about to change. By Simon Wardley.</p></div>
+</div>
+
+<!-- HERO: Mini Wardley Map Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:28px;">
+  <div style="position:relative;height:260px;border-left:2px solid var(--border);border-bottom:2px solid var(--border);margin:0 10px 10px 40px;">
+    <!-- Y axis label -->
+    <div style="position:absolute;left:-42px;top:50%;transform:rotate(-90deg) translateX(50%);font-size:10px;font-weight:800;color:var(--ink-muted);white-space:nowrap;">VISIBILITY (to user)</div>
+    <div style="position:absolute;left:-18px;top:2px;font-size:8px;color:var(--ink-muted);font-weight:700;">High</div>
+    <div style="position:absolute;left:-16px;bottom:2px;font-size:8px;color:var(--ink-muted);font-weight:700;">Low</div>
+    <!-- X axis labels -->
+    <div style="position:absolute;bottom:-22px;left:0;right:0;display:flex;justify-content:space-between;">
+      <span style="font-size:8px;font-weight:800;color:var(--purple);text-align:center;flex:1;">Genesis<br><span style="font-weight:600;color:var(--ink-muted);">Novel</span></span>
+      <span style="font-size:8px;font-weight:800;color:var(--sky);text-align:center;flex:1;">Custom<br><span style="font-weight:600;color:var(--ink-muted);">Emerging</span></span>
+      <span style="font-size:8px;font-weight:800;color:var(--orange);text-align:center;flex:1;">Product<br><span style="font-weight:600;color:var(--ink-muted);">Good enough</span></span>
+      <span style="font-size:8px;font-weight:800;color:var(--mint);text-align:center;flex:1;">Commodity<br><span style="font-weight:600;color:var(--ink-muted);">Utility</span></span>
+    </div>
+    <!-- Evolution gradient bar -->
+    <div style="position:absolute;bottom:-4px;left:0;right:0;height:4px;background:linear-gradient(to right,var(--purple),var(--sky),var(--orange),var(--mint));border-radius:2px;"></div>
+    <!-- Grid lines -->
+    <div style="position:absolute;top:0;bottom:0;left:25%;border-left:1px dashed rgba(0,0,0,0.08);"></div>
+    <div style="position:absolute;top:0;bottom:0;left:50%;border-left:1px dashed rgba(0,0,0,0.08);"></div>
+    <div style="position:absolute;top:0;bottom:0;left:75%;border-left:1px dashed rgba(0,0,0,0.08);"></div>
+    <div style="position:absolute;left:0;right:0;top:33%;border-top:1px dashed rgba(0,0,0,0.08);"></div>
+    <div style="position:absolute;left:0;right:0;top:66%;border-top:1px dashed rgba(0,0,0,0.08);"></div>
+    <!-- Sample components -->
+    <div style="position:absolute;top:8%;left:62%;padding:4px 10px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">&#x1F3B5; Learning App</div>
+    <div style="position:absolute;top:28%;left:15%;padding:4px 10px;background:var(--purple);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">&#x1F916; AI Teacher</div>
+    <div style="position:absolute;top:28%;left:55%;padding:4px 10px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">&#x1F3B6; Audio Detection</div>
+    <div style="position:absolute;top:50%;left:40%;padding:4px 10px;background:var(--sky);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:800;">&#x1F4DA; Content Library</div>
+    <div style="position:absolute;top:50%;left:72%;padding:4px 10px;background:var(--mint);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:700;">&#x1F4B3; Payments</div>
+    <div style="position:absolute;top:72%;left:80%;padding:4px 10px;background:var(--mint);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:700;">&#x2601;&#xFE0F; Cloud Hosting</div>
+    <div style="position:absolute;top:72%;left:48%;padding:4px 10px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:10px;font-weight:700;">&#x1F4F1; Mobile SDK</div>
+    <!-- Movement arrow -->
+    <div style="position:absolute;top:30%;left:30%;font-size:14px;color:var(--ink-muted);">&#x2192;</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>The Map</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Evolution</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- ============ SECTION 0: CONCEPT ============ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky);">&#x1F4A1;</div>
+    <div class="sec-label"><h2>The Core Idea</h2><p>Why strategy needs a map</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem with Strategy Without Maps</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Imagine a general planning a battle without a map. They know the troops (capabilities) and the goal (win), but they can't see the terrain, where the enemy is, or how things are changing. That's how most companies do strategy — <strong>they plan without situational awareness</strong>.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Simon Wardley created Wardley Mapping to give strategy the equivalent of a geographical map. It shows: what you need, how visible it is to users, how evolved it is, and crucially — <strong>where things are heading</strong>.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F9ED;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Situational Awareness</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">See the full landscape — your value chain, dependencies, and how evolved each component is.</p>
+    </div>
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F4C8;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Everything Evolves</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Every component moves from novel &#x2192; custom &#x2192; product &#x2192; commodity over time. This movement is predictable.</p>
+    </div>
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x2699;&#xFE0F;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Build, Buy, or Outsource</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Position on the map tells you: build novel things, buy products, outsource commodities.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of it as <strong>Google Maps for your product strategy</strong>. Y-axis = how close to the user (like zoom level). X-axis = how mature (like road quality — dirt path on the left, highway on the right). Components that are still on dirt paths need different treatment than ones on highways.</p>
+  </div>
+
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">The Map &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 1: THE MAP ============ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange);">&#x1F5FA;&#xFE0F;</div>
+    <div class="sec-label"><h2>Anatomy of a Wardley Map</h2><p>Two axes, components, and dependencies</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Two Axes</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+      <div style="padding:14px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">&#x2195;&#xFE0F; Y-Axis: Value Chain (Visibility)</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;"><strong>Top:</strong> What the user directly sees and cares about (the app, the UI).<br><strong>Bottom:</strong> Invisible infrastructure (cloud, databases, SDKs).</div>
+      </div>
+      <div style="padding:14px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">&#x2194;&#xFE0F; X-Axis: Evolution</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.5;"><strong>Left:</strong> Novel, uncertain, needs exploration.<br><strong>Right:</strong> Commodity, well-understood, just buy/rent it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to build a map -->
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;">&#x1F527; 5 Steps to Build a Map</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:28px;height:28px;background:var(--purple);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;">1</div>
+        <div><div style="font-weight:800;font-size:13px;">Start with the user need</div><div style="font-size:11px;color:var(--ink-dim);">What does the user ultimately want? This goes at the top of the map.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:28px;height:28px;background:var(--sky);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;">2</div>
+        <div><div style="font-weight:800;font-size:13px;">List components needed to serve that need</div><div style="font-size:11px;color:var(--ink-dim);">What do you need to deliver? App, content, technology, infrastructure, data, people...</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:28px;height:28px;background:var(--orange);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;">3</div>
+        <div><div style="font-weight:800;font-size:13px;">Draw dependencies</div><div style="font-size:11px;color:var(--ink-dim);">What depends on what? Draw lines connecting components. User need depends on app, app depends on content + tech, etc.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:28px;height:28px;background:var(--mint);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;">4</div>
+        <div><div style="font-weight:800;font-size:13px;">Place each component on the evolution axis</div><div style="font-size:11px;color:var(--ink-dim);">Is it novel (genesis), emerging (custom), mature (product), or a utility (commodity)?</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="min-width:28px;height:28px;background:var(--rose);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;">5</div>
+        <div><div style="font-weight:800;font-size:13px;">Add movement arrows</div><div style="font-size:11px;color:var(--ink-dim);">Everything moves right over time. Mark which components are actively evolving. This is where strategic decisions live.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">&#x1F4A1; <strong>First map tip:</strong> Don't try to be perfect. A rough map that reveals one insight is infinitely better than no map. You can refine later.</div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Evolution &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 2: EVOLUTION ============ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple);">&#x1F4C8;</div>
+    <div class="sec-label"><h2>The Evolution Axis</h2><p>Everything moves from genesis to commodity</p></div>
+  </div>
+
+  <div class="c-card">
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The most powerful idea in Wardley Mapping: <strong>every component evolves in the same direction</strong>, from novel and uncertain to commodity and standard. This is predictable. And it tells you how to treat each component.</p>
+  </div>
+
+  <!-- 4 Stages -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--purple);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">I. Genesis</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px;">
+        &#x2022; Brand new, never done before<br>
+        &#x2022; Uncertain, experimental<br>
+        &#x2022; High failure rate<br>
+        &#x2022; Needs agile, exploration mindset
+      </div>
+      <div style="padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Action: EXPLORE. Build in-house. Tolerate failure.</div>
+    </div>
+    <div class="c-card" style="background:var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">II. Custom-Built</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px;">
+        &#x2022; Proven concept, bespoke implementation<br>
+        &#x2022; Few providers, expensive<br>
+        &#x2022; Competitive advantage if done well<br>
+        &#x2022; Needs skilled engineers
+      </div>
+      <div style="padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Action: BUILD carefully. This is your differentiator.</div>
+    </div>
+    <div class="c-card" style="background:var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">III. Product (+Rental)</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px;">
+        &#x2022; Multiple providers, features converging<br>
+        &#x2022; "Good enough" solutions exist<br>
+        &#x2022; Decreasing competitive advantage<br>
+        &#x2022; Buy vs. build decision point
+      </div>
+      <div style="padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Action: BUY or adopt existing solutions. Stop custom-building.</div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;">IV. Commodity / Utility</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px;">
+        &#x2022; Standardized, interchangeable<br>
+        &#x2022; Price is the only differentiator<br>
+        &#x2022; Zero competitive advantage<br>
+        &#x2022; "Just works" expectation
+      </div>
+      <div style="padding:6px 10px;background:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:700;">Action: OUTSOURCE. Use utility/SaaS. Don't invest here.</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x26A0;&#xFE0F; The #1 Mistake: Building Commodities</h4>
+    <p>The most common strategic error is <strong>custom-building things that are already commodities</strong>. Building your own auth system, payment processor, or hosting infrastructure wastes engineering time on solved problems. The map makes this obvious — if it's on the right side, stop building it.</p>
+  </div>
+
+  <!-- Movement implications -->
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F52E; What Movement Means for You</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x27A1;&#xFE0F; <strong>When a component moves right:</strong> Switch from building to buying. What was your advantage becomes table stakes. Competitors will commoditize it.</div>
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;padding:10px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">&#x2B06;&#xFE0F; <strong>When a commodity enables new genesis:</strong> This is how innovation works. Cloud (commodity) enabled SaaS (product) which enabled AI apps (genesis). Each layer enables the next.</div>
+    </div>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; The Map</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 3: EXAMPLE ============ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div>
+    <div class="sec-label"><h2>Real Example</h2><p>Wardley Map for Trala</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3BB; Trala's Value Chain Mapped</h3>
+
+    <!-- Component table with evolution -->
+    <div style="display:grid;gap:8px;">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;font-weight:800;padding:6px 10px;background:var(--ink);color:var(--white);border-radius:var(--radius-xs) var(--radius-xs) 0 0;">
+        <div>Component</div><div>Visibility</div><div>Evolution</div><div>Strategic Implication</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream-dark);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x1F3B5; Learning Experience</div><div>High</div><div style="color:var(--orange);font-weight:700;">Product</div><div style="color:var(--ink-dim);">Core product — differentiate heavily here</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x1F916; AI Audio Feedback</div><div>High</div><div style="color:var(--purple);font-weight:700;">Genesis &#x2192; Custom</div><div style="color:var(--ink-dim);">Key differentiator — build in-house, invest heavily</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream-dark);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x1F4DA; Content Library</div><div>Medium</div><div style="color:var(--sky);font-weight:700;">Custom &#x2192; Product</div><div style="color:var(--ink-dim);">Moving toward standard — curate, don't over-invest in volume</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x1F3AE; Gamification</div><div>Medium</div><div style="color:var(--orange);font-weight:700;">Product</div><div style="color:var(--ink-dim);">Commoditizing fast — use existing patterns, don't innovate here</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream-dark);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x1F4B3; Payments (Stripe)</div><div>Low</div><div style="color:var(--mint);font-weight:700;">Commodity</div><div style="color:var(--ink-dim);">Outsource. Zero differentiation opportunity.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;">&#x2601;&#xFE0F; Cloud Hosting (AWS)</div><div>Low</div><div style="color:var(--mint);font-weight:700;">Commodity</div><div style="color:var(--ink-dim);">Outsource. Don't build infrastructure.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:0;font-size:11px;padding:8px 10px;background:var(--cream-dark);border-radius:0 0 var(--radius-xs) var(--radius-xs);">
+        <div style="font-weight:700;">&#x1F4F1; Mobile Framework</div><div>Low</div><div style="color:var(--orange);font-weight:700;">Product</div><div style="color:var(--ink-dim);">Use React Native or Flutter. Adopt, don't build.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F50D; What the Map Reveals</h4>
+    <p><strong>AI audio feedback is the only genesis/custom component visible to users.</strong> That's where the competitive advantage lives. Everything else is product or commodity. The strategic implication: pour engineering resources into the AI, and outsource or adopt everything else. If Trala is custom-building gamification or payment flows, that's wasted effort.</p>
+  </div>
+
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">&#x1F52E; Movement to Watch</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;"><strong>AI audio feedback is evolving fast.</strong> Today it's custom-built (competitive advantage). In 2-3 years, off-the-shelf AI music APIs will exist (product stage). When that happens, Trala's advantage erodes unless they've moved to the next genesis component — maybe AI-powered personalized curriculum or emotional practice coaching.</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Evolution</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 4: BUILDER ============ -->
+<div class="section" id="s4">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div>
+    <div class="sec-label"><h2>Map Builder</h2><p>Plot your own components</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Quick Component Mapper</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:16px;">List 5-8 components of your product, classify each by evolution stage, and see where to invest vs. outsource.</p>
+
+    <div id="comp_list">
+      <div class="comp-row" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px;align-items:center;">
+        <input type="text" placeholder="Component name" style="padding:8px 10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;">
+        <select style="padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;background:var(--white);">
+          <option value="">Evolution?</option>
+          <option value="genesis">Genesis</option>
+          <option value="custom">Custom</option>
+          <option value="product">Product</option>
+          <option value="commodity">Commodity</option>
+        </select>
+        <select style="padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;background:var(--white);">
+          <option value="">Visibility?</option>
+          <option value="high">High (user sees)</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low (infra)</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <button onclick="addCompRow()" style="padding:8px 16px;background:var(--cream-dark);border:2px solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">+ Add Component</button>
+    </div>
+
+    <div style="text-align:center;">
+      <button onclick="analyzeMap()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F5FA;&#xFE0F; Analyze My Map</button>
+    </div>
+    <div id="map_result" style="margin-top:16px;"></div>
+  </div>
+
+  <div class="tip">&#x1F4A1; <strong>PM Interview version:</strong> "I'd map the value chain to identify which components are commodities (outsource) vs. genesis (invest). Our competitive advantage should come from the custom/genesis components that are visible to users."</div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 5: WHEN ============ -->
+<div class="section" id="s5">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card">
+      <h3>&#x2705; Use Wardley Mapping When...</h3>
+      <ul>
+        <li>&#x2714;&#xFE0F; Build vs. buy decisions — should you build this or use a service?</li>
+        <li>&#x2714;&#xFE0F; Tech stack planning — where to invest engineering effort</li>
+        <li>&#x2714;&#xFE0F; Competitive strategy — understanding where advantage lives</li>
+        <li>&#x2714;&#xFE0F; Anticipating disruption — what will commoditize next?</li>
+        <li>&#x2714;&#xFE0F; Communicating strategy visually to leadership</li>
+      </ul>
+    </div>
+    <div class="when-card">
+      <h3>&#x26D4; Skip Wardley Mapping When...</h3>
+      <ul>
+        <li>&#x274C; You need feature-level prioritization (use RICE/ICE)</li>
+        <li>&#x274C; You need user insights (use JTBD or user research)</li>
+        <li>&#x274C; You're doing a PM interview (too complex for 30 min — mention it but don't draw one)</li>
+        <li>&#x274C; Your product is very simple with few components</li>
+        <li>&#x274C; You haven't done basic competitive analysis yet (use Porter's first)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--rose);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Porter's</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Static &#x2192; Dynamic:</strong> Porter shows forces now. Wardley shows how the landscape will change over time.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:#4ea8de;border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">Blue Ocean</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>What &#x2192; Where:</strong> Blue Ocean finds new space. Wardley shows which components enable that space.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--purple);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Playing to Win</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Choices &#x2192; Landscape:</strong> PTW makes choices. Wardley validates them against evolving reality.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--green);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">JTBD</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>User need = anchor:</strong> The user need at the top of a Wardley Map IS the job-to-be-done.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4CB; Complete Strategic Flow</h4>
+    <p style="font-size:13px;"><strong>Porter's</strong> (diagnose forces) &#x2192; <strong>Blue Ocean</strong> (find space) &#x2192; <strong>Playing to Win</strong> (make choices) &#x2192; <strong>Wardley</strong> (map landscape + plan evolution) &#x2192; <strong>OKRs</strong> (execute)</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 6: QUIZ ============ -->
+<div class="section" id="s6">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div>
+    <div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div>
+  </div>
+
+  <div id="quiz_area"></div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+i).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});
+  visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});
+  cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Builder
+function addCompRow(){
+  const list=document.getElementById('comp_list');
+  const row=document.createElement('div');
+  row.className='comp-row';
+  row.style.cssText='display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px;align-items:center;';
+  row.innerHTML='<input type="text" placeholder="Component name" style="padding:8px 10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:\'Outfit\',sans-serif;font-size:13px;"><select style="padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:\'Outfit\',sans-serif;font-size:12px;background:var(--white);"><option value="">Evolution?</option><option value="genesis">Genesis</option><option value="custom">Custom</option><option value="product">Product</option><option value="commodity">Commodity</option></select><select style="padding:8px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:\'Outfit\',sans-serif;font-size:12px;background:var(--white);"><option value="">Visibility?</option><option value="high">High (user sees)</option><option value="medium">Medium</option><option value="low">Low (infra)</option></select>';
+  list.appendChild(row);
+}
+// Add 4 more rows by default
+for(let i=0;i<4;i++) addCompRow();
+
+function analyzeMap(){
+  const rows=document.querySelectorAll('.comp-row');
+  const comps=[];
+  rows.forEach(r=>{
+    const name=r.querySelector('input').value.trim();
+    const evo=r.querySelectorAll('select')[0].value;
+    const vis=r.querySelectorAll('select')[1].value;
+    if(name&&evo&&vis) comps.push({name,evo,vis});
+  });
+  const res=document.getElementById('map_result');
+  if(comps.length<3){res.innerHTML='<div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">&#x26A0;&#xFE0F; Map at least 3 components with evolution and visibility to get feedback.</div>';return;}
+
+  const genesis=comps.filter(c=>c.evo==='genesis');
+  const custom=comps.filter(c=>c.evo==='custom');
+  const product=comps.filter(c=>c.evo==='product');
+  const commodity=comps.filter(c=>c.evo==='commodity');
+  const highVis=comps.filter(c=>c.vis==='high');
+  const highVisGenesis=comps.filter(c=>c.vis==='high'&&(c.evo==='genesis'||c.evo==='custom'));
+
+  let insights=[];
+  if(highVisGenesis.length>0){
+    insights.push('&#x1F3AF; <strong>Competitive advantage spotted:</strong> '+highVisGenesis.map(c=>c.name).join(', ')+' — high visibility + early evolution. This is where you differentiate. Invest heavily here.');
+  }
+  if(commodity.length===0){
+    insights.push('&#x26A0;&#xFE0F; <strong>No commodities identified.</strong> Are you sure nothing is a commodity? Cloud hosting, auth, payments, email sending — if you\'re building any of these, you\'re wasting effort.');
+  }
+  if(genesis.length===0&&custom.length===0){
+    insights.push('&#x26A0;&#xFE0F; <strong>No genesis or custom components.</strong> If everything is product or commodity, where\'s your competitive advantage? You need at least one novel component visible to users.');
+  }
+  const lowGenesis=comps.filter(c=>c.vis==='low'&&c.evo==='genesis');
+  if(lowGenesis.length>0){
+    insights.push('&#x1F914; <strong>Hidden innovation:</strong> '+lowGenesis.map(c=>c.name).join(', ')+' is genesis but low visibility. Consider: can you make this more visible to users? Hidden innovation doesn\'t create competitive advantage users can feel.');
+  }
+  if(product.length>comps.length/2){
+    insights.push('&#x1F4CA; <strong>Most components are "Product" stage.</strong> This means lots of "good enough" solutions exist. Your differentiation must come from how you combine them or from the few non-product components.');
+  }
+
+  let html='<div style="padding:18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;margin-bottom:10px;">&#x1F5FA;&#xFE0F; <strong>Map analyzed!</strong> '+comps.length+' components plotted. Here\'s what stands out:</div>';
+  insights.forEach(ins=>{
+    html+='<div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;">'+ins+'</div>';
+  });
+
+  // Summary table
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:12px;">';
+  html+='<div style="text-align:center;padding:10px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);"><div style="font-weight:800;font-size:16px;">'+genesis.length+'</div><div style="font-size:10px;font-weight:700;">Genesis</div><div style="font-size:9px;color:var(--ink-dim);">Explore</div></div>';
+  html+='<div style="text-align:center;padding:10px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);"><div style="font-weight:800;font-size:16px;">'+custom.length+'</div><div style="font-size:10px;font-weight:700;">Custom</div><div style="font-size:9px;color:var(--ink-dim);">Build</div></div>';
+  html+='<div style="text-align:center;padding:10px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);"><div style="font-weight:800;font-size:16px;">'+product.length+'</div><div style="font-size:10px;font-weight:700;">Product</div><div style="font-size:9px;color:var(--ink-dim);">Buy</div></div>';
+  html+='<div style="text-align:center;padding:10px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);"><div style="font-weight:800;font-size:16px;">'+commodity.length+'</div><div style="font-size:10px;font-weight:700;">Commodity</div><div style="font-size:9px;color:var(--ink-dim);">Outsource</div></div>';
+  html+='</div>';
+  res.innerHTML=html;
+}
+
+// Quiz
+const qs=[
+  {q:"What does the X-axis of a Wardley Map represent?",o:["Time to build","Cost to the company","Evolution — from genesis to commodity","User satisfaction level"],a:2,e:"X-axis = evolution. Left is novel/genesis, right is commodity/utility. Everything moves left to right over time. This movement is the key strategic insight."},
+  {q:"What does the Y-axis represent?",o:["Revenue potential","Value chain visibility — how visible to the user","Team size needed","Technical complexity"],a:1,e:"Y-axis = value chain position (visibility). Top = what the user directly sees. Bottom = invisible infrastructure. This shows dependencies."},
+  {q:"What should you do with a component in the 'commodity' stage?",o:["Build it in-house for control","Outsource or use a utility service","Invest heavily to differentiate","Ignore it completely"],a:1,e:"Commodities = outsource. Use Stripe for payments, AWS for hosting, Auth0 for authentication. Zero differentiation possible here — don't waste engineering time."},
+  {q:"Where does competitive advantage live on a Wardley Map?",o:["Bottom-right (low visibility commodities)","Top-left (high visibility + early evolution)","Exactly in the center","Bottom-left (invisible novel things)"],a:1,e:"Advantage = top-left quadrant. Components that are visible to users AND still in genesis/custom stages. That's what competitors can't easily copy yet."},
+  {q:"What's the #1 mistake Wardley Mapping reveals?",o:["Not having enough components","Having too many team members","Custom-building things that are already commodities","Charging too little for the product"],a:2,e:"The most common waste: building commodities in-house. Auth systems, CI/CD pipelines, payment processing — if it's on the right side of the map, stop building it."},
+  {q:"What happens when a key component evolves from custom to product?",o:["Nothing changes strategically","Your competitive advantage erodes — competitors can now buy it too","The component becomes more valuable","Users stop caring about it"],a:1,e:"When your differentiator commoditizes, competitors can match it by buying off-the-shelf. You need to be already investing in the NEXT genesis component. This is why Wardley Maps are dynamic, not static."}
+];
+let qi=0,sc=0;
+function renderQ(){
+  const area=document.getElementById('quiz_area');
+  if(qi>=qs.length){
+    let msg='',col='';
+    if(sc>=5){msg='&#x1F5FA;&#xFE0F; Strategic cartographer! You can map landscapes and anticipate evolution.';col='var(--mint)';}
+    else if(sc>=3){msg='&#x1F44D; Good grasp. Review the evolution stages — they\'re the most actionable part.';col='var(--sky)';}
+    else{msg='&#x1F4DA; Worth revisiting. Focus on the two axes and what each evolution stage means for build/buy decisions.';col='var(--orange)';}
+    area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';
+    return;
+  }
+  const q=qs[qi];
+  let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';
+  q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+',this)">'+o+'</button>';});
+  h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';
+  area.innerHTML=h;
+}
+function checkA(qIdx,pick,btn){
+  const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;
+  document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});
+  document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';
+}
+renderQ();
+</script>
+</body>
+</html>

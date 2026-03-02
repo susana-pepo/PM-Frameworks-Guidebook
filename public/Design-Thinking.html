@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Thinking — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#d4a017;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;--p1:#ff6b6b;--p2:#ffa94d;--p3:#ffe14d;--p4:#69db7c;--p5:#74c0fc;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--white);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--ink-soft);max-width:520px;margin:0 auto;font-weight:500;}
+
+/* 5 PHASE HERO */
+.phase-hero{margin:20px auto 24px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;}
+.ph-pill{padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);text-align:center;min-width:clamp(70px,14vw,110px);transition:all .15s;cursor:default;}
+.ph-pill:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow);}
+.ph-pill .ph-icon{font-size:clamp(22px,4vw,30px);display:block;margin-bottom:2px;}
+.ph-pill .ph-name{font-family:'Lilita One',sans-serif;font-size:clamp(11px,1.8vw,14px);}
+
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);}
+
+/* PHASE CARDS */
+.ph-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .12s;}
+.ph-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.ph-card .ph-bar{position:absolute;top:0;left:0;right:0;height:6px;}
+.ph-card h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:2px;display:flex;align-items:center;gap:10px;}
+.ph-card .ph-num{width:38px;height:38px;min-width:38px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:18px;box-shadow:2px 2px 0 var(--border);}
+.ph-card .ph-time{position:absolute;top:14px;right:14px;padding:3px 10px;border-radius:100px;border:2px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
+.ph-card .ph-q{font-size:14px;font-weight:600;color:var(--ink-dim);font-style:italic;margin:4px 0 8px;padding-left:4px;border-left:3px solid var(--mint);}
+.ph-card p{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.ph-card .ph-tools{margin-top:10px;padding:10px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.6;}
+.ph-card .ph-tools strong{display:block;margin-bottom:2px;}
+.ph-card .ph-output{margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.15);border-radius:var(--radius-xs);border:2px dashed var(--border);font-size:12px;font-weight:600;}.ph-card .ph-output::before{content:'📦 Output: ';font-weight:800;}
+
+/* WALKTHROUGH */
+.wt-step{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:12px;position:relative;overflow:hidden;}
+.wt-step .wt-bar{position:absolute;top:0;left:0;right:0;height:5px;}
+.wt-step h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.wt-step .wt-num{width:30px;height:30px;min-width:30px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:15px;box-shadow:2px 2px 0 var(--border);}
+.wt-step .wt-content{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.wt-step .wt-result{margin-top:8px;padding:10px 14px;border-radius:var(--radius-xs);border:2px dashed var(--border);font-size:12px;line-height:1.6;background:rgba(255,225,77,0.1);}
+.wt-step .wt-result::before{content:'💡 Insight: ';font-weight:800;color:var(--ink);}
+
+/* PRACTICE */
+.practice{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.pr-prompt{padding:16px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);background:var(--yellow);font-size:15px;font-weight:700;text-align:center;margin-bottom:16px;}
+.pr-step{margin-bottom:14px;padding-bottom:14px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.pr-step:last-of-type{border-bottom:none;}
+.pr-step label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.pr-step label .pr-badge{width:24px;height:24px;border-radius:6px;border:2px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+.pr-step textarea{width:100%;padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;min-height:60px;outline:none;transition:all .12s;}
+.pr-step textarea:focus{box-shadow:var(--shadow-sm);transform:translate(-1px,-1px);}
+.pr-step .pr-hint{font-size:11px;color:var(--ink-muted);margin-top:4px;font-style:italic;}
+
+/* REUSABLE */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+.it-timeline{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.it-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.it-item:last-child{border-bottom:none;}
+.it-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.it-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.it-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.it-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo.correct{background:var(--mint)}.qo.wrong{background:var(--rose)}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(0,0,0,0.3);font-weight:600;}
+@media(max-width:680px){
+  .when-grid{grid-template-columns:1fr;}.j-btn{padding:8px 2px;font-size:8px;}.j-btn .j-step{font-size:7px;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .it-item{grid-template-columns:64px 1fr;}.it-time{font-size:10px;}
+  .tldr{flex-direction:column;}.qopts{flex-direction:column;}
+  .ph-card .ph-time{position:static;display:inline-block;margin-bottom:8px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+<section class="header">
+  <div class="header-badge">✏️ Design Framework</div>
+  <h1>Design Thinking</h1>
+  <p class="sub">A human-centered process for solving problems people actually have.</p>
+</section>
+<div class="phase-hero">
+  <div class="ph-pill" style="border-top:4px solid var(--p1)"><span class="ph-icon">💜</span><span class="ph-name">Empathize</span></div>
+  <div class="ph-pill" style="border-top:4px solid var(--p2)"><span class="ph-icon">🎯</span><span class="ph-name">Define</span></div>
+  <div class="ph-pill" style="border-top:4px solid var(--p3)"><span class="ph-icon">💡</span><span class="ph-name">Ideate</span></div>
+  <div class="ph-pill" style="border-top:4px solid var(--p4)"><span class="ph-icon">🔨</span><span class="ph-name">Prototype</span></div>
+  <div class="ph-pill" style="border-top:4px solid var(--p5)"><span class="ph-icon">🧪</span><span class="ph-name">Test</span></div>
+</div>
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 15 seconds:</strong> Design Thinking is a 5-phase process from Stanford's d.school. Start with <strong>understanding the human</strong> (Empathize), <strong>frame the real problem</strong> (Define), <strong>generate many ideas</strong> (Ideate), <strong>make it tangible</strong> (Prototype), and <strong>learn from reality</strong> (Test). It's iterative — you loop back constantly.</p>
+</div>
+<div class="journey-nav">
+  <button class="j-btn active" onclick="goTo('phases')"><span class="j-step">01</span>5 Phases</button>
+  <button class="j-btn" onclick="goTo('deep')"><span class="j-step">02</span>Deep Dive</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="goTo('practice')"><span class="j-step">04</span>Practice</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('workshop')"><span class="j-step">07</span>Workshop</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">08</span>Quiz</button>
+</div>
+
+<!-- 1. 5 PHASES OVERVIEW -->
+<div id="p-phases" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">🔄</div>
+    <div class="sec-label"><h2>The 5 Phases</h2><p>Not linear — you loop back constantly</p></div>
+  </div>
+  <div class="c-card" style="overflow:hidden;padding:0;">
+    <div style="background:var(--ink);padding:12px 20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:18px">🧠</span>
+      <span style="font-family:'Lilita One',sans-serif;color:var(--yellow);font-size:14px;letter-spacing:1px">UNDERSTAND THE PROBLEM</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:var(--bw) solid var(--border);">
+      <div style="padding:20px;border-right:var(--bw) solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:32px;height:32px;border-radius:8px;background:var(--p1);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:2px 2px 0 var(--border)">💜</div><strong style="font-family:'Lilita One',sans-serif;font-size:16px">Empathize</strong></div>
+        <p style="font-size:12px;color:var(--ink-dim);line-height:1.6">Observe and talk to real users. Understand their world, feelings, and frustrations. No assumptions — just listen.</p>
+      </div>
+      <div style="padding:20px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:32px;height:32px;border-radius:8px;background:var(--p2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:2px 2px 0 var(--border)">🎯</div><strong style="font-family:'Lilita One',sans-serif;font-size:16px">Define</strong></div>
+        <p style="font-size:12px;color:var(--ink-dim);line-height:1.6">Synthesize what you learned into a clear problem statement. Frame: "[User] needs [need] because [insight]."</p>
+      </div>
+    </div>
+    <div style="background:var(--ink);padding:12px 20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:18px">✨</span>
+      <span style="font-family:'Lilita One',sans-serif;color:var(--yellow);font-size:14px;letter-spacing:1px">EXPLORE SOLUTIONS</span>
+    </div>
+    <div style="padding:20px;border-bottom:var(--bw) solid var(--border);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:32px;height:32px;border-radius:8px;background:var(--p3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:2px 2px 0 var(--border)">💡</div><strong style="font-family:'Lilita One',sans-serif;font-size:16px">Ideate</strong></div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.6">Generate as many ideas as possible. Quantity over quality. Build on others' ideas. No judgment yet — wild ideas welcome.</p>
+    </div>
+    <div style="background:var(--ink);padding:12px 20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:18px">🚀</span>
+      <span style="font-family:'Lilita One',sans-serif;color:var(--yellow);font-size:14px;letter-spacing:1px">MATERIALIZE & LEARN</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;">
+      <div style="padding:20px;border-right:var(--bw) solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:32px;height:32px;border-radius:8px;background:var(--p4);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:2px 2px 0 var(--border)">🔨</div><strong style="font-family:'Lilita One',sans-serif;font-size:16px">Prototype</strong></div>
+        <p style="font-size:12px;color:var(--ink-dim);line-height:1.6">Make the idea tangible. Doesn't need to be perfect — paper, wireframes, mockups. Fast and cheap.</p>
+      </div>
+      <div style="padding:20px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:32px;height:32px;border-radius:8px;background:var(--p5);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:2px 2px 0 var(--border)">🧪</div><strong style="font-family:'Lilita One',sans-serif;font-size:16px">Test</strong></div>
+        <p style="font-size:12px;color:var(--ink-dim);line-height:1.6">Put the prototype in front of users. Watch what happens. Listen. Learn. Then loop back to refine.</p>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔄 It's not a waterfall</h4>
+    <p>The arrows go both ways. Testing might send you back to Empathize. Defining the problem might show you need more research. That's not failure — <strong>that's the process working</strong>. Each loop makes the solution better.</p>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">🧠 Memory trick: the Double Diamond</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7">Design Thinking follows a <strong>diverge → converge</strong> pattern twice. First diamond: go wide exploring the problem (Empathize), then narrow to one problem (Define). Second diamond: go wide with solutions (Ideate), then narrow to one prototype (Prototype → Test).</p>
+    <div style="display:flex;justify-content:center;gap:4px;margin-top:14px;flex-wrap:wrap;">
+      <div style="padding:8px 12px;border-radius:8px;border:2px solid var(--border);font-size:11px;font-weight:700;background:rgba(255,107,107,0.12)">↗ Diverge (Empathize)</div>
+      <div style="padding:8px 12px;border-radius:8px;border:2px solid var(--border);font-size:11px;font-weight:700;background:rgba(255,169,77,0.12)">↘ Converge (Define)</div>
+      <div style="padding:8px 12px;border-radius:8px;border:2px solid var(--border);font-size:11px;font-weight:700;background:rgba(255,225,77,0.12)">↗ Diverge (Ideate)</div>
+      <div style="padding:8px 12px;border-radius:8px;border:2px solid var(--border);font-size:11px;font-weight:700;background:rgba(105,219,124,0.12)">↘ Converge (Proto+Test)</div>
+    </div>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('deep')">Next: Deep Dive →</button></div>
+</div>
+
+<!-- 2. DEEP DIVE -->
+<div id="p-deep" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🔍</div>
+    <div class="sec-label"><h2>Each Phase in Detail</h2><p>What to do, how long, what comes out</p></div>
+  </div>
+  <div class="ph-card"><div class="ph-bar" style="background:var(--p1)"></div>
+    <div class="ph-time" style="background:rgba(255,107,107,0.15)">⏱ 1–2 weeks</div>
+    <h3><div class="ph-num" style="background:var(--p1)">1</div> Empathize</h3>
+    <div class="ph-q">"What is the user's actual lived experience?"</div>
+    <p>Immerse yourself in the user's world. Don't ask what they want — watch what they do. The gap between what people say and what they actually do is where insights live.</p>
+    <div class="ph-tools" style="background:rgba(255,107,107,0.08)"><strong>🛠 Methods:</strong> User interviews (5–8 people) · Contextual observation (watch them in their environment) · Journey mapping · Empathy mapping (says, thinks, does, feels) · Shadowing</div>
+    <div class="ph-output">Empathy maps, interview transcripts, observation notes, quotes, photos/videos</div>
+  </div>
+  <div class="ph-card"><div class="ph-bar" style="background:var(--p2)"></div>
+    <div class="ph-time" style="background:rgba(255,169,77,0.15)">⏱ 2–4 hours</div>
+    <h3><div class="ph-num" style="background:var(--p2)">2</div> Define</h3>
+    <div class="ph-q">"What is the REAL problem we're solving?"</div>
+    <p>Synthesize research into one clear problem statement. The format: <strong>"[User] needs [need] because [surprising insight]."</strong> This is called a Point of View (POV) statement. Getting this right is the hardest and most important step.</p>
+    <div class="ph-tools" style="background:rgba(255,169,77,0.08)"><strong>🛠 Methods:</strong> Affinity mapping (cluster sticky notes into themes) · "How Might We" questions · POV statement writing · Insight synthesis</div>
+    <div class="ph-output">1 clear POV statement + 3–5 "How Might We" questions to guide ideation</div>
+  </div>
+  <div class="ph-card"><div class="ph-bar" style="background:var(--p3)"></div>
+    <div class="ph-time" style="background:rgba(255,225,77,0.15)">⏱ 1–2 hours</div>
+    <h3><div class="ph-num" style="background:var(--p3)">3</div> Ideate</h3>
+    <div class="ph-q">"How many ways could we solve this?"</div>
+    <p>Generate as many ideas as possible. Rules: no criticism, wild ideas welcome, build on others' ideas, go for quantity. The goal is 50–100 ideas, not 5 "good" ones. The best ideas often come from combining unexpected concepts.</p>
+    <div class="ph-tools" style="background:rgba(255,225,77,0.08)"><strong>🛠 Methods:</strong> Brainstorming (timed, silent-first) · Crazy 8s (8 sketches in 8 minutes) · SCAMPER · Mind mapping · Worst possible idea (then flip it)</div>
+    <div class="ph-output">50–100 raw ideas → dot-voted down to 3–5 top concepts</div>
+  </div>
+  <div class="ph-card"><div class="ph-bar" style="background:var(--p4)"></div>
+    <div class="ph-time" style="background:rgba(105,219,124,0.15)">⏱ 1–3 days</div>
+    <h3><div class="ph-num" style="background:var(--p4)">4</div> Prototype</h3>
+    <div class="ph-q">"How do we make it real enough to learn from?"</div>
+    <p>Build the cheapest, fastest version that lets you test the core assumption. A prototype is a question made tangible. It should take hours, not weeks. If it's not embarrassingly rough, you spent too long on it.</p>
+    <div class="ph-tools" style="background:rgba(105,219,124,0.08)"><strong>🛠 Methods:</strong> Paper prototypes · Figma clickable mockups · Wizard of Oz (fake the backend) · Storyboards · Landing page test · Role-playing</div>
+    <div class="ph-output">A testable artifact that embodies 1–2 key assumptions</div>
+  </div>
+  <div class="ph-card"><div class="ph-bar" style="background:var(--p5)"></div>
+    <div class="ph-time" style="background:rgba(116,192,252,0.15)">⏱ 1–2 weeks</div>
+    <h3><div class="ph-num" style="background:var(--p5)">5</div> Test</h3>
+    <div class="ph-q">"Does this actually solve the problem for real users?"</div>
+    <p>Put the prototype in front of 5–8 users. Don't explain how it works — watch if they can figure it out. Listen more than talk. Your job is to learn, not to sell. Every test generates insights that feed the next loop.</p>
+    <div class="ph-tools" style="background:rgba(116,192,252,0.08)"><strong>🛠 Methods:</strong> Usability testing (5 users finds 85% of issues) · A/B testing · Feedback interviews · Task completion tracking · Think-aloud protocol</div>
+    <div class="ph-output">Validated/invalidated assumptions → refined problem statement or improved prototype → loop back</div>
+  </div>
+  <div class="tip">The phases aren't equal in time. Empathize and Test are the longest. Define is the shortest but hardest. Ideate should be fast and energetic. Prototype should be scrappy.</div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('phases')">← Overview</button><button class="pn-btn primary" onclick="goTo('example')">Next: Full Example →</button></div>
+</div>
+
+<!-- 3. EXAMPLE -->
+<div id="p-example" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🎵</div>
+    <div class="sec-label"><h2>Full Walkthrough</h2><p>"Redesign the onboarding for a music learning app"</p></div>
+  </div>
+  <div class="c-card"><div class="pr-prompt" style="margin:0">🎤 Challenge: New users of a music learning app drop off within the first week. Redesign the onboarding experience.</div></div>
+
+  <div class="wt-step"><div class="wt-bar" style="background:var(--p1)"></div>
+    <h4><div class="wt-num" style="background:var(--p1)">1</div> Empathize</h4>
+    <div class="wt-content">Interviewed 8 users who signed up but stopped within 7 days. Watched 5 screen recordings of first sessions. Ran an empathy mapping workshop with the team.</div>
+    <div class="wt-result">Users aren't lazy — they're overwhelmed. The app dumps 200+ lessons on them with no guidance. They don't know where to start, feel like they're "doing it wrong," and give up. The emotional job is "feel like I'm making progress" — and the app fails at this on day 1.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--p2)"></div>
+    <h4><div class="wt-num" style="background:var(--p2)">2</div> Define</h4>
+    <div class="wt-content"><strong>POV Statement:</strong> "Adult beginner musicians need to feel a sense of progress in their first 10 minutes because the initial overwhelm makes them believe they can't learn, and they quit before they've actually tried."</div>
+    <div class="wt-result"><strong>HMW questions:</strong> How might we make the first session feel like a win? How might we reduce choice paralysis? How might we create a "hook moment" in under 5 minutes?</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--p3)"></div>
+    <h4><div class="wt-num" style="background:var(--p3)">3</div> Ideate</h4>
+    <div class="wt-content">Crazy 8s session with the team. 67 ideas generated. Dot-voted to top 3: (A) "Play your first song in 5 minutes" guided flow, (B) Personalized path quiz — 3 questions → tailored curriculum, (C) Social proof onboarding — show other beginners' day-1 recordings.</div>
+    <div class="wt-result">Concept A won the vote. The fastest path to the "I did it!" moment. Combined with a light version of B (one question: "What song do you want to play?").</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--p4)"></div>
+    <h4><div class="wt-num" style="background:var(--p4)">4</div> Prototype</h4>
+    <div class="wt-content">Built a Figma clickable prototype in 2 days. 6 screens: Welcome → "Pick a song" (3 beginner-friendly options) → Simplified lesson with only 4 notes → Play along with real backing track → 🎉 Celebration screen with recording playback → "Keep going?" prompt.</div>
+    <div class="wt-result">Prototype took 6 hours to build. The celebration screen shows "You just played your first song in 4 minutes!" with confetti animation.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--p5)"></div>
+    <h4><div class="wt-num" style="background:var(--p5)">5</div> Test</h4>
+    <div class="wt-content">Tested with 6 new users in moderated sessions. 5/6 completed the first song. All 6 smiled at the celebration screen. 4/6 immediately tapped "Keep going." Main feedback: "I didn't know it could be this easy."</div>
+    <div class="wt-result"><strong>What we learned:</strong> The "pick a song" step needs more options. One user couldn't find a song they knew. The 4-note simplification worked perfectly — it removed the fear of failure. Loop back: add more song options and test again with 5 more users.</div>
+  </div>
+  <div class="insight">
+    <h4>🔍 Why this example works</h4>
+    <p>Notice how each phase builds on the last. Empathy revealed the real problem (overwhelm, not content quality). Define turned it into a clear target. Ideate explored broadly. Prototype made it testable in days, not months. Test proved the concept and revealed what to refine next.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('deep')">← Deep Dive</button><button class="pn-btn primary" onclick="goTo('practice')">Next: Practice →</button></div>
+</div>
+
+<!-- 4. PRACTICE -->
+<div id="p-practice" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">✍️</div>
+    <div class="sec-label"><h2>Apply to Your Problem</h2><p>Work through all 5 phases on something real</p></div>
+  </div>
+  <div class="practice">
+    <div class="pr-prompt" id="practicePrompt">🎯 Pick a real problem you're facing at work — or use: "Users aren't completing their first lesson"</div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--p1)">💜</span> Empathize — What do you know about the user?</label><textarea placeholder="What have you observed? What have users told you? What surprised you? What's the gap between what they say and what they do?"></textarea><div class="pr-hint">Think about real users you've talked to. Direct quotes are gold.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--p2)">🎯</span> Define — Write a POV statement</label><textarea placeholder="[User] needs [need] because [surprising insight]..."></textarea><div class="pr-hint">The insight should be something non-obvious. If everyone already knows it, dig deeper.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--p3)">💡</span> Ideate — Brainstorm 5+ solutions</label><textarea placeholder="Quick win ideas, ambitious ideas, wild ideas — no filter yet..."></textarea><div class="pr-hint">Set a 5-minute timer and write without stopping. Quantity over quality.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--p4)">🔨</span> Prototype — What would you build first?</label><textarea placeholder="What's the simplest version you could test? Paper sketch? Figma mockup? Fake landing page?"></textarea><div class="pr-hint">The question your prototype answers: "Will users [expected behavior]?"</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--p5)">🧪</span> Test — How would you validate it?</label><textarea placeholder="Who would you test with? How many? What would you watch for? What would make you loop back?"></textarea><div class="pr-hint">Define your success criteria BEFORE testing. "If 4/5 users do X, we proceed."</div></div>
+  </div>
+  <div class="tip">Using a real problem from your work makes this 10x more valuable than a hypothetical. If you're at Trala/Skoove, try it with an onboarding, retention, or engagement challenge.</div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">← Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 5. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">⚖️</div>
+    <div class="sec-label"><h2>When to Use Design Thinking</h2><p>Not for every problem — for the right problems</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use Design Thinking when...</h3>
+      <ul>
+        <li>You're not sure what the real problem is yet</li>
+        <li>Building something new for an audience you don't fully understand</li>
+        <li>Existing solutions aren't working and you don't know why</li>
+        <li>Stakeholders disagree about what to build — you need shared understanding</li>
+        <li>PM interview asks "How would you approach improving X?"</li>
+        <li>You want to build team empathy for users</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip Design Thinking when...</h3>
+      <ul>
+        <li>The problem is well-understood and you need execution speed</li>
+        <li>It's a bug fix or technical debt — just fix it</li>
+        <li>You need to prioritize known features → use RICE/ICE</li>
+        <li>Stakeholder already mandated the solution (politics, not process)</li>
+        <li>You're optimizing a working flow — A/B test instead</li>
+        <li>You don't have access to real users</li>
+      </ul>
+    </div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">🔗 How Design Thinking connects to other frameworks</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(126,232,178,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">DT → JTBD</strong>Empathize phase IS JTBD research. Use "When I... I want to... So I can..." to synthesize what you learn from user interviews.</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(141,216,248,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">DT → CIRCLES</strong>Design Thinking is the full process. CIRCLES is a compressed interview-friendly version. In real work, use DT. In interviews, use CIRCLES.</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,176,103,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">DT → RICE/ICE</strong>Design Thinking generates validated ideas. RICE/ICE ranks them for the roadmap. DT is discovery, RICE is delivery planning.</div>
+      <div style="padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(196,181,253,0.1);font-size:12px;line-height:1.6"><strong style="display:block;margin-bottom:3px">DT → Kano</strong>DT reveals what matters. Kano categorizes those needs (Must-Have vs Delighter). Use them in sequence for product strategy.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('practice')">← Practice</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 6. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>6 Common Pitfalls</h2><p>Where most teams fail</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--p1)">1</div><div><h4>Skipping Empathize ("We already know our users")</h4><p class="mb">The most dangerous assumption. Teams skip straight to Ideate based on internal opinions. The result: beautifully designed solutions to problems nobody has.</p><div class="fix">Talk to 5 real users before ANY ideation. Even 30-minute calls change everything. "We already know" is usually "we assume."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--p2)">2</div><div><h4>Vague problem statement</h4><p class="mb">"Users need a better experience" is not a problem statement. If Define is fuzzy, everything downstream is a guess.</p><div class="fix">Use the template: "[Specific user] needs [specific need] because [surprising insight from research]." If you can't fill in the "because," you haven't done enough empathy work.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--p3)">3</div><div><h4>Judging ideas too early in Ideate</h4><p class="mb">"That won't work because..." kills creativity instantly. When people fear judgment, they only suggest safe, boring ideas.</p><div class="fix">Enforce "Yes, and..." for the first 20 minutes. Write ideas silently on sticky notes before discussing. Separate idea generation from idea evaluation.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--p4)">4</div><div><h4>Over-investing in the prototype</h4><p class="mb">Spending 3 weeks building a pixel-perfect Figma prototype. Now nobody wants to throw it away when testing reveals problems.</p><div class="fix">Set a time limit: prototype in 1–2 days max. Paper sketches are fine. The rougher it looks, the more honest feedback you'll get.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--p5)">5</div><div><h4>Testing to confirm, not to learn</h4><p class="mb">"See? They loved it!" Confirmation bias in testing. You ask leading questions, ignore negative signals, and declare success prematurely.</p><div class="fix">Write your test questions before the session. Ask "show me how you would..." not "do you like this?" Watch behavior, not just words.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple)">6</div><div><h4>Treating it as linear (never looping back)</h4><p class="mb">Going through all 5 steps once, delivering the output, done. Real Design Thinking is messy and iterative.</p><div class="fix">Budget for at least 2 loops. After Test, always ask: "What did we learn that changes our Define statement?" If it changed, loop back.</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('workshop')">Next: Workshop Guide →</button></div>
+</div>
+
+<!-- 7. WORKSHOP -->
+<div id="p-workshop" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🏫</div>
+    <div class="sec-label"><h2>Running a Design Thinking Workshop</h2><p>Full-day or half-day format</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px">📋 Before the Workshop</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7"><strong>Pre-work (1–2 weeks before):</strong> Empathize phase happens BEFORE the workshop. Do user interviews, collect data, prepare empathy maps. The workshop starts at Define, not Empathize. If you try to do all 5 phases in one day, you'll rush the most important parts.</p>
+    <div class="tip">Invite 4–8 people. Mix PMs, designers, engineers, and one customer-facing person. More than 8 = chaos. Fewer than 4 = echo chamber.</div>
+  </div>
+
+  <div class="it-timeline">
+    <div class="it-item"><div class="it-time" style="background:rgba(255,107,107,0.15)">0–20<br>min</div><div class="it-content"><h4>💜 Share Empathy Research</h4><p>Present user quotes, empathy maps, key observations. Everyone reads silently for 5 min, then discuss. Goal: shared understanding of the user's world.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,169,77,0.15)">20–50<br>min</div><div class="it-content"><h4>🎯 Define: Affinity Mapping</h4><p>Everyone writes observations on sticky notes (1 per note). Cluster into themes silently. Name the clusters. Write 3–5 "How Might We" questions. Vote on the most impactful HMW.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,169,77,0.15)">50–60<br>min</div><div class="it-content"><h4>🎯 Define: POV Statement</h4><p>Write the POV together: "[User] needs [need] because [insight]." Debate until you have ONE statement everyone agrees on. This is your North Star for the rest of the workshop.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(200,200,200,0.15)">60–70<br>min</div><div class="it-content"><h4>☕ Break</h4><p>Let it marinate. People often have their best ideas during breaks.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,225,77,0.15)">70–85<br>min</div><div class="it-content"><h4>💡 Ideate: Silent Brainstorm</h4><p>Everyone writes ideas on sticky notes silently (1 idea per note). Set a timer: 10 minutes. Aim for 8–10 ideas per person. Sticky notes go on the wall.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,225,77,0.15)">85–100<br>min</div><div class="it-content"><h4>💡 Ideate: Share & Build</h4><p>Quick round: each person presents their top 3 ideas (30 sec each). Others add "Yes, and..." builds. Cluster similar ideas.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,225,77,0.15)">100–110<br>min</div><div class="it-content"><h4>💡 Ideate: Dot Vote</h4><p>Everyone gets 3 dots. Vote on ideas (can stack). Top 2–3 ideas move to prototyping. Tie-break: PM decides.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(105,219,124,0.15)">110–170<br>min</div><div class="it-content"><h4>🔨 Prototype: Build in Pairs</h4><p>Split into pairs. Each pair builds a rough prototype of one winning idea. Paper, whiteboard, Figma — whatever is fastest. 60 min max. Must be testable (someone can interact with it).</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(116,192,252,0.15)">170–190<br>min</div><div class="it-content"><h4>🧪 Test: Internal Demo</h4><p>Each pair presents their prototype. Others role-play as the target user. Give feedback using "I like / I wish / What if" format. Identify next steps for real user testing.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(200,200,200,0.15)">190–200<br>min</div><div class="it-content"><h4>📋 Wrap-Up & Next Steps</h4><p>Capture: What's our POV? Which prototype moves forward? Who tests with real users? When? Assign owners and deadlines.</p></div></div>
+  </div>
+  <div class="insight">
+    <h4>⏱ Total: ~3.5 hours</h4>
+    <p>This is the compressed version. A full-day workshop (6–7 hours) gives more time for Ideate and Prototype. The real user testing happens AFTER the workshop — schedule it within 1 week while momentum is high.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Quiz →</button></div>
+</div>
+
+<!-- 8. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>7 questions to lock it in</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. What are the 5 phases of Design Thinking in order?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,false)">Research, Plan, Build, Launch, Measure</button>
+        <button class="qo" onclick="ans(1,this,true)">Empathize, Define, Ideate, Prototype, Test</button>
+        <button class="qo" onclick="ans(1,this,false)">Discover, Design, Develop, Deliver, Deploy</button>
+      </div>
+      <div class="qexp" id="q1e">Empathize → Define → Ideate → Prototype → Test. And it's iterative — you loop back constantly.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. What's the output of the Define phase?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,false)">A list of features to build</button>
+        <button class="qo" onclick="ans(2,this,true)">A POV statement: "[User] needs [need] because [insight]"</button>
+        <button class="qo" onclick="ans(2,this,false)">A prototype to test</button>
+      </div>
+      <div class="qexp" id="q2e">The Point of View statement frames the exact problem you're solving. It's the single most important output of the process.</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. In the Ideate phase, should you aim for...</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,false)">5 well-thought-out solutions</button>
+        <button class="qo" onclick="ans(3,this,true)">50–100 raw ideas, then narrow down</button>
+        <button class="qo" onclick="ans(3,this,false)">1 perfect solution, debated thoroughly</button>
+      </div>
+      <div class="qexp" id="q3e">Quantity over quality in Ideate. Wild ideas welcome. The best solutions often come from combining unexpected concepts. Narrow down AFTER generating.</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. How long should a prototype take to build?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,true)">Hours to 1–2 days</button>
+        <button class="qo" onclick="ans(4,this,false)">2–3 weeks for proper fidelity</button>
+        <button class="qo" onclick="ans(4,this,false)">As long as it takes to get it right</button>
+      </div>
+      <div class="qexp" id="q4e">If it's not embarrassingly rough, you spent too long. Prototypes are questions made tangible — they exist to learn, not to impress.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. What's the Double Diamond?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,true)">Diverge → converge twice: first on the problem, then on the solution</button>
+        <button class="qo" onclick="ans(5,this,false)">Two rounds of user testing</button>
+        <button class="qo" onclick="ans(5,this,false)">A prioritization matrix</button>
+      </div>
+      <div class="qexp" id="q5e">First diamond: go wide (Empathize), then narrow (Define). Second diamond: go wide (Ideate), then narrow (Prototype + Test). The shape helps you remember the rhythm.</div>
+    </div>
+    <div class="qq" id="q6">
+      <p>6. The most common and dangerous pitfall is...</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(6,this,true)">Skipping Empathize ("We already know our users")</button>
+        <button class="qo" onclick="ans(6,this,false)">Not having enough post-its</button>
+        <button class="qo" onclick="ans(6,this,false)">Using Figma instead of paper</button>
+      </div>
+      <div class="qexp" id="q6e">Skipping empathy work means you're solving assumed problems, not real ones. "We already know" is the most expensive assumption in product development.</div>
+    </div>
+    <div class="qq" id="q7">
+      <p>7. How does Design Thinking relate to CIRCLES?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(7,this,false)">They're the same thing</button>
+        <button class="qo" onclick="ans(7,this,true)">CIRCLES is a compressed, interview-friendly version of Design Thinking</button>
+        <button class="qo" onclick="ans(7,this,false)">They're unrelated frameworks</button>
+      </div>
+      <div class="qexp" id="q7e">CIRCLES maps roughly: Comprehend ≈ Empathize, Identify/Report ≈ Define, List ≈ Ideate, Evaluate ≈ Prototype/Test, Summarize ≈ present your recommendation. In real work use DT, in interviews use CIRCLES.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('workshop')">← Workshop</button><button class="pn-btn primary" onclick="goTo('phases')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">Design Thinking — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+var panels=['phases','deep','example','practice','judge','pitfalls','workshop','quiz'];
+var visited=new Set(['phases']);
+function goTo(id){
+  visited.add(id);
+  panels.forEach(function(p){document.getElementById('p-'+p).classList.remove('active');});
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+</script>
+</body>
+</html>

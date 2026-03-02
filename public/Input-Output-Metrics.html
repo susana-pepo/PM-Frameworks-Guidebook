@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Input/Output Metrics — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e05555;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,5vw,40px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+<div class="header">
+  <div class="header-badge">&#x1F4C8; Growth</div>
+  <h1>&#x1F4E5; Input / Output Metrics</h1>
+  <p class="sub">Separate what you can control (inputs) from what you're trying to achieve (outputs). Then focus your team on the levers that actually move.</p>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> <strong>Output metrics</strong> = business results you want (revenue, retention, growth). <strong>Input metrics</strong> = actions your team directly controls that drive those outputs. Focus teams on inputs, track progress on outputs.</p></div>
+</div>
+
+<!-- HERO: Input → Output Visual -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:28px;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+    <div style="display:grid;gap:6px;">
+      <div style="padding:10px 16px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;font-weight:700;text-align:center;">&#x1F3AF; Input: Lessons published/wk</div>
+      <div style="padding:10px 16px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;font-weight:700;text-align:center;">&#x1F3AF; Input: Onboarding redesign</div>
+      <div style="padding:10px 16px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;font-weight:700;text-align:center;">&#x1F3AF; Input: Push notification timing</div>
+    </div>
+    <div style="font-size:28px;font-weight:900;color:var(--ink-muted);">&#x2192;</div>
+    <div style="padding:20px 24px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);text-align:center;">
+      <div style="font-size:22px;">&#x1F4CA;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;">Output:</div>
+      <div style="font-size:12px;font-weight:700;">Weekly Active Learners</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--ink-muted);font-weight:700;">You control the inputs. The outputs are what you're trying to move. Focus effort on inputs, measure success by outputs.</div>
+</div>
+
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>The Model</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Deep Dive</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- S0: CONCEPT -->
+<div class="section active" id="s0">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--orange);">&#x1F4A1;</div><div class="sec-label"><h2>The Core Idea</h2><p>Control what you can, measure what matters</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem: Teams Chasing Outputs</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">A team's OKR says "Increase D30 retention from 8% to 15%." Great goal. But what do they <em>do</em> on Monday morning? Retention is an <strong>output</strong> — you can't directly change it. You can only change things that <em>influence</em> it.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">The Input/Output model separates <strong>what you control</strong> (inputs: ship features, send emails, improve onboarding) from <strong>what you're trying to achieve</strong> (outputs: retention, revenue, growth). The magic: when you connect the two clearly, teams know exactly what to do every day.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">&#x1F3AF; Input Metrics</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Things you <strong>directly control</strong>. Actions, features, experiments. "We shipped 5 new lessons." "We sent re-engagement emails on Day 3." "We reduced onboarding to 3 steps." These are <strong>leading indicators</strong>.</div>
+    </div>
+    <div class="c-card" style="background:var(--yellow);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">&#x1F4CA; Output Metrics</div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Business results you <strong>want to achieve</strong>. Retention, revenue, NPS, growth rate. You can't directly change these — they're the <strong>result</strong> of your inputs. These are <strong>lagging indicators</strong>.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of a <strong>vending machine</strong>. The buttons you press = inputs (you control them). What comes out = outputs (result of your choices). You can't reach in and grab the snack directly — you have to press the right buttons. Same with metrics: you can't "do retention." You can only do things that <em>cause</em> retention.</p>
+  </div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">The Model &#x2192;</button></div>
+</div>
+
+<!-- S1: THE MODEL -->
+<div class="section" id="s1">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--purple);">&#x1F52C;</div><div class="sec-label"><h2>The Model</h2><p>How inputs connect to outputs</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">The 3-Layer Metric Stack</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:16px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+        <div style="font-family:'Lilita One',sans-serif;font-size:16px;">&#x1F3E2; Layer 1: Business Outcomes</div>
+        <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Revenue, profit, market share. <strong>CEO cares about this.</strong></div>
+      </div>
+      <div style="text-align:center;font-size:16px;">&#x2B06;&#xFE0F; drives</div>
+      <div style="padding:16px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+        <div style="font-family:'Lilita One',sans-serif;font-size:16px;">&#x2B50; Layer 2: Product Outputs (North Star)</div>
+        <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Weekly active learners, nights booked, messages sent. <strong>PM team owns this.</strong></div>
+      </div>
+      <div style="text-align:center;font-size:16px;">&#x2B06;&#xFE0F; drives</div>
+      <div style="padding:16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+        <div style="font-family:'Lilita One',sans-serif;font-size:16px;">&#x1F3AF; Layer 3: Team Inputs</div>
+        <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Features shipped, experiments run, content published. <strong>Each team has their own.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:10px;">&#x1F50D; Input Metric Qualities</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:16px;min-width:24px;">&#x2705;</div>
+        <div><div style="font-weight:800;font-size:13px;">Controllable</div><div style="font-size:12px;color:var(--ink-dim);">Your team can directly move it through their work. "Lessons published per week" — yes. "App Store ranking" — no (too many external factors).</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:16px;min-width:24px;">&#x2705;</div>
+        <div><div style="font-weight:800;font-size:13px;">Predictive</div><div style="font-size:12px;color:var(--ink-dim);">When this input goes up, the output follows (with some lag). You need to validate this connection with data. "More push notifications" doesn't always mean "more retention."</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-size:16px;min-width:24px;">&#x2705;</div>
+        <div><div style="font-weight:800;font-size:13px;">Timely</div><div style="font-size:12px;color:var(--ink-dim);">Moves faster than the output. Inputs should give you weekly (ideally daily) signal. If you have to wait 6 months to know if an input worked, it's too slow.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F6A9; The Correlation Trap</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Not every input actually drives the output. "We sent more emails" (input) doesn't always mean "retention improved" (output). You must <strong>validate the connection</strong> with data or experiments. A/B test: does this input actually move the output? If not, find a better lever.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">Deep Dive &#x2192;</button></div>
+</div>
+
+<!-- S2: DEEP DIVE -->
+<div class="section" id="s2">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--sky);">&#x1F4CA;</div><div class="sec-label"><h2>Deep Dive</h2><p>Counter-metrics and metric trees</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Counter-Metrics: The Safety Net</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Every input can be gamed or over-optimized. If your input is "push notifications sent," a team might blast users 10x a day — great for the input metric, terrible for user experience. <strong>Counter-metrics</strong> catch this.</p>
+    <div style="display:grid;gap:8px;">
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;">
+        <strong>Input:</strong> Push notifications sent &#x2192; <strong>Counter:</strong> Unsubscribe rate<br>
+        <em>If notifications go up but unsubscribes spike, you're hurting users.</em>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;">
+        <strong>Input:</strong> New features shipped &#x2192; <strong>Counter:</strong> Bug count, support tickets<br>
+        <em>If features go up but quality drops, you're creating tech debt.</em>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;">
+        <strong>Input:</strong> Free trial signups &#x2192; <strong>Counter:</strong> Trial-to-paid conversion rate<br>
+        <em>If signups go up but conversion drops, you're attracting low-quality users.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F333; The Metric Tree</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">A metric tree decomposes your output into a hierarchy of inputs. Each branch represents a different lever. This makes it visual and actionable.</p>
+    <div style="padding:16px;background:var(--cream-dark);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);">
+      <div style="text-align:center;padding:8px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:8px;display:inline-block;font-weight:800;font-size:13px;">&#x1F4B0; MRR (Monthly Revenue)</div>
+      <div style="display:flex;justify-content:center;gap:4px;margin:6px 0;"><div style="width:1px;height:16px;background:var(--border);"></div></div>
+      <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="padding:6px 12px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:700;">Paying Users</div>
+          <div style="display:flex;justify-content:center;gap:4px;margin:4px 0;"><div style="width:1px;height:12px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:6px;">
+            <div style="padding:4px 8px;background:var(--sky);border:1px solid var(--border);border-radius:6px;font-size:9px;font-weight:700;">New Subs</div>
+            <div style="padding:4px 8px;background:var(--sky);border:1px solid var(--border);border-radius:6px;font-size:9px;font-weight:700;">Retained Subs</div>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <div style="padding:6px 12px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:700;">&#xD7;</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="padding:6px 12px;background:var(--orange);border:2px solid var(--border);border-radius:8px;font-size:11px;font-weight:700;">ARPU</div>
+          <div style="display:flex;justify-content:center;gap:4px;margin:4px 0;"><div style="width:1px;height:12px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:6px;">
+            <div style="padding:4px 8px;background:var(--sky);border:1px solid var(--border);border-radius:6px;font-size:9px;font-weight:700;">Plan Mix</div>
+            <div style="padding:4px 8px;background:var(--sky);border:1px solid var(--border);border-radius:6px;font-size:9px;font-weight:700;">Upsells</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--ink-muted);font-weight:700;">MRR = Paying Users &#xD7; ARPU. Each branch becomes a team's focus.</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4A1; The Decomposition Rule</h4>
+    <p>Any output can be decomposed into inputs using math: <strong>Revenue = Users &#xD7; Conversion &#xD7; ARPU</strong>. Each factor becomes a team's input metric. This is how you go from "increase revenue" (vague) to "improve trial-to-paid conversion from 3% to 5%" (actionable).</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; The Model</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- S3: EXAMPLE -->
+<div class="section" id="s3">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div><div class="sec-label"><h2>Real Example</h2><p>Input/Output for Skoove</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">&#x1F3B9; Skoove's Metric Stack</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <thead><tr style="background:var(--ink);color:var(--white);"><th style="padding:10px 8px;text-align:left;">Layer</th><th style="padding:10px 8px;text-align:left;">Metric</th><th style="padding:10px 8px;text-align:left;">Type</th><th style="padding:10px 8px;text-align:left;">Owner</th><th style="padding:10px 8px;text-align:left;">Counter-Metric</th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(255,225,77,.2);"><td style="padding:8px;font-weight:800;">Business</td><td style="padding:8px;">MRR</td><td style="padding:8px;">Output</td><td style="padding:8px;">CEO</td><td style="padding:8px;color:var(--ink-dim);">—</td></tr>
+          <tr style="background:rgba(255,176,103,.15);"><td style="padding:8px;font-weight:800;">Product</td><td style="padding:8px;">Weekly Active Learners</td><td style="padding:8px;">Output (North Star)</td><td style="padding:8px;">Head of Product</td><td style="padding:8px;color:var(--ink-dim);">Churn rate</td></tr>
+          <tr style="background:rgba(141,216,248,.15);"><td style="padding:8px;font-weight:800;">Growth</td><td style="padding:8px;">New activated users/wk</td><td style="padding:8px;">Input</td><td style="padding:8px;">Growth team</td><td style="padding:8px;color:var(--ink-dim);">CAC</td></tr>
+          <tr style="background:rgba(141,216,248,.15);"><td style="padding:8px;font-weight:800;">Content</td><td style="padding:8px;">Quality lessons published/wk</td><td style="padding:8px;">Input</td><td style="padding:8px;">Content team</td><td style="padding:8px;color:var(--ink-dim);">Lesson completion rate</td></tr>
+          <tr style="background:rgba(141,216,248,.15);"><td style="padding:8px;font-weight:800;">Product</td><td style="padding:8px;">Onboarding completion rate</td><td style="padding:8px;">Input</td><td style="padding:8px;">UX team</td><td style="padding:8px;color:var(--ink-dim);">Time-to-first-lesson</td></tr>
+          <tr style="background:rgba(141,216,248,.15);"><td style="padding:8px;font-weight:800;">Engagement</td><td style="padding:8px;">D3 re-engagement email open rate</td><td style="padding:8px;">Input</td><td style="padding:8px;">CRM team</td><td style="padding:8px;color:var(--ink-dim);">Unsubscribe rate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F517; How It All Connects</h4>
+    <p>Growth team acquires users (input) &#x2192; UX team ensures they complete onboarding (input) &#x2192; Content team has great lessons waiting (input) &#x2192; CRM team re-engages Day 3 lapsed users (input) &#x2192; More Weekly Active Learners (output) &#x2192; More MRR (business output). <strong>Every team has a clear lever.</strong> Monday morning? Each team knows exactly what to work on.</p>
+  </div>
+
+  <div class="c-card" style="background:var(--rose);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">&#x1F6A9; Real-World Tension</h3>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">The Content team publishes 5 new lessons (input up!), but lesson completion rate drops (counter-metric down). What happened? New lessons are too hard. The counter-metric caught the problem. <strong>Without counter-metrics, you'd celebrate the input and miss that you're hurting the output.</strong></p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Deep Dive</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- S4: BUILDER -->
+<div class="section" id="s4">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div><div class="sec-label"><h2>Metric Builder</h2><p>Map your own input/output stack</p></div></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Build Your Metric Stack</h3>
+    <div style="display:grid;gap:14px;margin-bottom:16px;">
+      <div><label style="font-weight:800;font-size:13px;margin-bottom:6px;display:block;"><span style="padding:3px 10px;background:var(--yellow);border-radius:6px;">&#x1F4CA; Primary Output (North Star)</span></label><input id="m_out" type="text" placeholder="e.g., 'Weekly Active Learners'" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;"></div>
+      <div id="input_rows">
+        <div style="margin-bottom:8px;">
+          <label style="font-weight:800;font-size:12px;margin-bottom:4px;display:block;"><span style="padding:2px 8px;background:var(--sky);border-radius:6px;">Input 1</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <input class="m_inp" type="text" placeholder="Metric (e.g., New activated users/wk)" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+            <input class="m_counter" type="text" placeholder="Counter-metric (e.g., CAC)" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+          </div>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label style="font-weight:800;font-size:12px;margin-bottom:4px;display:block;"><span style="padding:2px 8px;background:var(--orange);border-radius:6px;">Input 2</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <input class="m_inp" type="text" placeholder="Metric" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+            <input class="m_counter" type="text" placeholder="Counter-metric" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+          </div>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label style="font-weight:800;font-size:12px;margin-bottom:4px;display:block;"><span style="padding:2px 8px;background:var(--mint);border-radius:6px;">Input 3</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <input class="m_inp" type="text" placeholder="Metric" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+            <input class="m_counter" type="text" placeholder="Counter-metric" style="padding:8px;border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:12px;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button onclick="analyzeMetrics()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);">&#x1F4CA; Analyze My Stack</button></div>
+    <div id="m_result" style="margin-top:16px;"></div>
+  </div>
+  <div class="tip">&#x1F4A1; <strong>Interview version:</strong> "I'd structure my metrics as a stack: the output we're optimizing for is [X], and the team inputs that drive it are [A], [B], and [C]. I'd track counter-metrics like [Y] to make sure we're not over-optimizing one lever at the expense of user experience."</div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- S5: WHEN -->
+<div class="section" id="s5">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div><div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card"><h3>&#x2705; Use Input/Output When...</h3><ul>
+      <li>&#x2714;&#xFE0F; Setting team-level OKRs and goals</li>
+      <li>&#x2714;&#xFE0F; Operationalizing your North Star</li>
+      <li>&#x2714;&#xFE0F; PM interview asks "how would you measure success?"</li>
+      <li>&#x2714;&#xFE0F; Building a product analytics dashboard</li>
+      <li>&#x2714;&#xFE0F; Cross-functional alignment — who owns what metric</li>
+      <li>&#x2714;&#xFE0F; Sprint planning — what inputs are we moving this sprint?</li>
+    </ul></div>
+    <div class="when-card"><h3>&#x26D4; Skip When...</h3><ul>
+      <li>&#x274C; You haven't defined your North Star yet (do that first)</li>
+      <li>&#x274C; Pre-product-market-fit (too early to optimize)</li>
+      <li>&#x274C; Diagnosing funnel problems (use AARRR)</li>
+      <li>&#x274C; High-level strategic direction (use Playing to Win)</li>
+      <li>&#x274C; Feature-level prioritization (use RICE)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--yellow);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">North Star</div><div style="font-size:12px;color:var(--ink-dim);">North Star = your primary output. Input/Output decomposes it into team-level levers.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:#ff6b6b;border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;color:var(--white);">AARRR</div><div style="font-size:12px;color:var(--ink-dim);">AARRR stages give you output categories. Input/Output gives each stage specific levers.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">OKRs</div><div style="font-size:12px;color:var(--ink-dim);">Direct mapping: Output = Objective. Inputs = Key Results. Counter-metrics = guardrails.</div></div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);"><div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Growth Loops</div><div style="font-size:12px;color:var(--ink-dim);">Each step in a growth loop has its own input/output pair. Optimize each step.</div></div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>&#x1F3AF; The Complete Growth Stack</h4>
+    <p><strong>AARRR</strong> (diagnose funnel) &#x2192; <strong>North Star</strong> (pick THE metric) &#x2192; <strong>Input/Output</strong> (decompose into team levers) &#x2192; <strong>Growth Loops</strong> (design compounding systems) &#x2192; <strong>OKRs</strong> (quarterly execution). This is the full Growth &#x2192; Execution pipeline.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- S6: QUIZ -->
+<div class="section" id="s6">
+  <div class="sec-title"><div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div><div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div></div>
+  <div id="quiz_area"></div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+
+function analyzeMetrics(){
+  const out=document.getElementById('m_out').value.trim();
+  const inps=[...document.querySelectorAll('.m_inp')].map(i=>i.value.trim()).filter(x=>x);
+  const counters=[...document.querySelectorAll('.m_counter')].map(i=>i.value.trim()).filter(x=>x);
+  const r=document.getElementById('m_result');
+  if(!out){r.innerHTML='<div style="padding:14px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">Enter your primary output metric first.</div>';return;}
+  let fb=[];
+  if(inps.length<2) fb.push({t:'&#x26A0;&#xFE0F; Need more inputs',m:'At least 2-3 input metrics to give teams clear levers. What can each team do to move "'+out+'"?',c:'var(--orange)'});
+  else fb.push({t:'&#x2705; '+inps.length+' inputs defined',m:'Good coverage. Make sure each has a clear team owner.',c:'var(--mint)'});
+  if(counters.length===0) fb.push({t:'&#x26A0;&#xFE0F; No counter-metrics',m:'Every input needs a counter-metric to prevent over-optimization. What could go wrong if you push each input too hard?',c:'var(--rose)'});
+  else if(counters.length<inps.length) fb.push({t:'&#x1F4A1; Partial counter-metrics',m:counters.length+'/'+inps.length+' inputs have counters. Add counters for the rest.',c:'var(--sky)'});
+  else fb.push({t:'&#x2705; Counter-metrics in place',m:'Great discipline! Counter-metrics are what separate junior PMs from senior ones.',c:'var(--mint)'});
+  let html='<div style="padding:16px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;margin-bottom:10px;"><div style="font-family:\'Lilita One\',sans-serif;font-size:16px;">&#x1F4CA; '+out+'</div><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Driven by: '+inps.join(' + ')+'</div></div>';
+  fb.forEach(f=>{html+='<div style="padding:12px;background:'+f.c+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.6;margin-bottom:8px;"><strong>'+f.t+'</strong> — '+f.m+'</div>';});
+  html+='<div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;margin-top:8px;">&#x1F9EA; <strong>Validation step:</strong> For each input, ask: "If we double this input, does the output actually move?" If you can\'t answer yes with data, run an experiment.</div>';
+  r.innerHTML=html;
+}
+
+const qs=[
+  {q:"What's the difference between input and output metrics?",o:["Inputs are for executives, outputs are for teams","Inputs are what you directly control, outputs are business results you're trying to achieve","Inputs are quantitative, outputs are qualitative","There's no meaningful difference"],a:1,e:"Inputs = actions your team controls (features shipped, content published). Outputs = results you want (retention, revenue). You can't directly 'do retention' — you do things that CAUSE retention."},
+  {q:"Why shouldn't you just focus on output metrics?",o:["They're too hard to measure","They don't tell teams WHAT TO DO on Monday morning — they're results, not actions","Output metrics are always wrong","They're only useful for executives"],a:1,e:"Outputs are lagging indicators. Telling a team 'improve retention' is like telling a chef 'make the food taste better.' They need specific levers: which ingredients, techniques, timing. Inputs are the levers."},
+  {q:"What is a counter-metric?",o:["The opposite of your North Star","A metric that detects when you're over-optimizing an input at the expense of quality or user experience","A metric you track once a quarter","A competitor's key metric"],a:1,e:"Counter-metrics are guardrails. Input: 'push notifications sent' without counter-metric 'unsubscribe rate' = you might spam users into leaving. Counter-metrics catch the damage of over-optimization."},
+  {q:"Which is the best input metric?",o:["The one that's easiest to measure","The one that's controllable, predictive of the output, and gives timely signal","The one with the biggest number","The one the CEO likes most"],a:1,e:"Good inputs are: (1) Controllable — your team can move it. (2) Predictive — when it goes up, the output follows. (3) Timely — gives signal weekly or daily, not quarterly. All three matter."},
+  {q:"How does Input/Output connect to OKRs?",o:["They replace OKRs entirely","Output = Objective, Inputs = Key Results, Counter-metrics = guardrails","Inputs become Objectives, Outputs become Key Results","OKRs and Input/Output are unrelated systems"],a:1,e:"Direct translation: 'Objective: Increase Weekly Active Learners to 50K' (output). 'KR1: Publish 10 new lessons/week' (input). 'KR2: Improve onboarding completion to 60%' (input). Counter: 'Lesson quality score stays above 4.0' (guardrail)."},
+  {q:"Content team publishes 5 new lessons (input up) but lesson completion drops (counter down). What happened?",o:["The data is wrong","New lessons are too hard, too long, or low quality — the counter-metric caught a quality problem","More lessons always means lower completion, this is expected","The counter-metric is irrelevant"],a:1,e:"This is exactly why counter-metrics exist. The input looks great (more content!) but the counter reveals the truth: new content is hurting user experience. Without the counter, you'd celebrate while harming users."}
+];
+let qi=0,sc=0;
+function renderQ(){const area=document.getElementById('quiz_area');if(qi>=qs.length){let msg='',col='';if(sc>=5){msg='&#x1F4CA; Metric master! You can build and operationalize a full input/output stack.';col='var(--mint)';}else if(sc>=3){msg='&#x1F44D; Solid foundation. Review counter-metrics and the validation step.';col='var(--sky)';}else{msg='&#x1F4DA; Worth revisiting. Focus on input vs output distinction and counter-metrics.';col='var(--orange)';}area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';return;}const q=qs[qi];let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+')">'+o+'</button>';});h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';area.innerHTML=h;}
+function checkA(qIdx,pick){const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';}
+renderQ();
+</script>
+</body>
+</html>

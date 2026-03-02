@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RICE Scoring — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#3da66a;--green-bg:#3da66a;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--yellow-dark:#ffd600;
+  --white:#fff;--card:#fef9ed;
+  --pink:#ffb8d4;--pink-deep:#ff7eb3;
+  --purple:#c4b5fd;--purple-deep:#9d8ae8;
+  --sky:#8dd8f8;--sky-deep:#5bc0eb;
+  --orange:#ffb067;--orange-deep:#ff8a2b;
+  --mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;--rose-deep:#ff5252;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--green-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+
+/* PROGRESS */
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;box-shadow:0 1px 4px rgba(0,0,0,0.15);}
+
+/* HEADER */
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(32px,5vw,44px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--cream);max-width:480px;margin:0 auto;font-weight:500;}
+
+/* FORMULA — BIG AND PROMINENT */
+.formula-bar{
+  margin:20px auto 28px;
+  padding:24px 36px;
+  background:var(--white);
+  border:var(--bw) solid var(--border);
+  border-radius:100px;
+  box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  flex-wrap:wrap;
+  max-width:620px;
+}
+.formula-bar .fl{font-family:'Lilita One',sans-serif;font-size:clamp(36px,6vw,54px);line-height:1;}
+.formula-bar .fl.r{color:#2b8ec4;}.formula-bar .fl.i{color:#d48520;}
+.formula-bar .fl.c{color:#7c5cc4;}.formula-bar .fl.e{color:#d45070;}
+.formula-bar .fl.eq{color:var(--mint-deep);}
+.formula-bar .fop{font-family:'Lilita One',sans-serif;font-size:clamp(24px,4vw,36px);color:var(--ink-muted);}
+
+/* TLDR */
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+/* NAV */
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 6px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:5px;font-size:9px;color:var(--mint-deep);font-weight:900;}
+.j-btn.active.completed::after{color:var(--mint);}
+
+/* PANELS */
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION TITLE (yellow highlight bar style) */
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;letter-spacing:.5px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+
+/* CREAM CARD */
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;transition:all .12s;}
+.c-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+
+/* INSIGHT */
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.tip::before{content:'💡 ';}
+
+/* NAV BUTTONS */
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(255,255,255,0.25);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);color:var(--ink);}
+
+/* FACTOR CARDS */
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.factor-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:all .12s;position:relative;}
+.factor-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.factor-card .fc-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.factor-card .fc-letter{width:50px;height:50px;min-width:50px;border-radius:14px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:28px;box-shadow:var(--shadow-sm);}
+.factor-card h3{font-family:'Lilita One',sans-serif;font-size:20px;}
+.factor-card .fc-q{font-size:14px;font-weight:600;color:var(--ink-dim);font-style:italic;margin-bottom:8px;padding-left:4px;border-left:3px solid var(--mint);}
+.factor-card p{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.factor-card .fc-unit{margin-top:12px;padding:8px 12px;border-radius:var(--radius-xs);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--ink-soft);border:2px solid var(--border);}
+.factor-card .fc-role{margin-top:8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);}
+.factor-card.reach .fc-letter{background:var(--sky);}.factor-card.reach .fc-unit{background:rgba(141,216,248,0.25);}
+.factor-card.impact .fc-letter{background:var(--orange);}.factor-card.impact .fc-unit{background:rgba(255,176,103,0.25);}
+.factor-card.confidence .fc-letter{background:var(--purple);}.factor-card.confidence .fc-unit{background:rgba(196,181,253,0.25);}
+.factor-card.effort .fc-letter{background:var(--pink);}.factor-card.effort .fc-unit{background:rgba(255,184,212,0.25);}
+
+/* SCALES */
+.scale-block{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:14px;}
+.scale-block .sb-head{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
+.scale-block .sb-letter{width:34px;height:34px;min-width:34px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:18px;box-shadow:2px 2px 0 var(--border);}
+.scale-block h3{font-family:'Lilita One',sans-serif;font-size:18px;}
+.scale-block .sb-hint{font-size:13px;color:var(--ink-dim);margin-bottom:14px;font-style:italic;padding-left:44px;}
+.scale-row{display:flex;gap:8px;flex-wrap:wrap;}
+.scale-item{flex:1;min-width:80px;padding:14px 10px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);text-align:center;transition:all .12s;box-shadow:var(--shadow-sm);}
+.scale-item:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.scale-item .sv{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;display:block;margin-bottom:2px;}
+.scale-item .sl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px;}
+.scale-item .se{font-size:10px;color:var(--ink-dim);line-height:1.3;}
+.sr-reach .scale-item{background:rgba(141,216,248,0.35);}.sr-reach .scale-item .sv{color:#1a7cb5;}
+.sr-impact .scale-item:nth-child(1){background:#f0f0f0;}.sr-impact .scale-item:nth-child(1) .sv{color:var(--ink-muted);}
+.sr-impact .scale-item:nth-child(2){background:rgba(141,216,248,0.2);}.sr-impact .scale-item:nth-child(2) .sv{color:#3ba0d0;}
+.sr-impact .scale-item:nth-child(3){background:rgba(255,225,77,0.3);}.sr-impact .scale-item:nth-child(3) .sv{color:#b08800;}
+.sr-impact .scale-item:nth-child(4){background:rgba(255,176,103,0.3);}.sr-impact .scale-item:nth-child(4) .sv{color:#c06e10;}
+.sr-impact .scale-item:nth-child(5){background:rgba(126,232,178,0.35);}.sr-impact .scale-item:nth-child(5) .sv{color:#1a8a50;}
+.sr-conf .scale-item:nth-child(1){background:rgba(255,138,138,0.25);}.sr-conf .scale-item:nth-child(1) .sv{color:#c03030;}
+.sr-conf .scale-item:nth-child(2){background:rgba(255,225,77,0.3);}.sr-conf .scale-item:nth-child(2) .sv{color:#b08800;}
+.sr-conf .scale-item:nth-child(3){background:rgba(126,232,178,0.35);}.sr-conf .scale-item:nth-child(3) .sv{color:#1a8a50;}
+.sr-effort .scale-item{background:rgba(196,181,253,0.3);}.sr-effort .scale-item .sv{color:#6a4ec4;}
+
+/* EXAMPLE TABLE */
+.ex-table{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;}
+.ex-hdr{display:grid;grid-template-columns:2fr 1fr .8fr .8fr .8fr 1.2fr;background:var(--ink);color:var(--white);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.ex-hdr>div{padding:12px 10px;text-align:center;}.ex-hdr>div:first-child{text-align:left;padding-left:16px;}
+.ex-row{display:grid;grid-template-columns:2fr 1fr .8fr .8fr .8fr 1.2fr;border-bottom:2px solid rgba(0,0,0,0.08);transition:background .12s;}
+.ex-row:hover{background:rgba(255,225,77,0.15);}.ex-row:last-child{border-bottom:none;}
+.ex-row>div{padding:14px 10px;text-align:center;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.ex-row>div:first-child{text-align:left;justify-content:flex-start;font-weight:700;padding-left:16px;}
+.ex-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;}
+.rank-pill{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;border:2px solid var(--border);font-size:12px;font-weight:900;margin-right:6px;flex-shrink:0;}
+
+/* CALCULATOR */
+.calc-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:16px;}
+.calc-box h2{font-family:'Lilita One',sans-serif;font-size:22px;margin-bottom:4px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;}
+.calc-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;color:var(--ink-dim);}
+.calc-field input,.calc-field select{width:100%;padding:12px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:var(--ink);outline:none;transition:all .12s;}
+.calc-field input:focus,.calc-field select:focus{box-shadow:var(--shadow-sm);transform:translate(-1px,-1px);}
+.calc-output{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);gap:16px;flex-wrap:wrap;}
+.calc-eq{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink-soft);}.calc-eq b{color:var(--ink);}
+.calc-result-num{font-family:'Lilita One',sans-serif;font-size:44px;color:var(--ink);line-height:1;transition:all .3s;}
+.calc-result-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--ink-dim);}
+
+/* WHEN */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+
+/* TEMPLATE */
+.tpl-table{width:100%;border-collapse:separate;border-spacing:0;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:14px;}
+.tpl-table th{background:var(--ink);color:var(--white);padding:10px 12px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;text-align:center;}
+.tpl-table th:first-child{text-align:left;}
+.tpl-table td{padding:12px;border-bottom:2px solid rgba(0,0,0,0.06);text-align:center;font-size:13px;color:var(--ink-dim);}
+.tpl-table td:first-child{text-align:left;font-weight:600;color:var(--ink);}
+.tpl-table tr:last-child td{border-bottom:none;}
+.tpl-table td.e{background:rgba(255,225,77,0.15);color:var(--ink-muted);font-style:italic;font-size:11px;}
+.dl-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.dl-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}.dl-btn:active{transform:translate(2px,2px);box-shadow:none;}
+
+/* PITFALLS */
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}
+.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column;gap:0;margin-bottom:16px;}
+.fstep{background:var(--cream);border:var(--bw) solid var(--border);padding:20px 20px 20px 72px;position:relative;transition:all .12s;}
+.fstep:first-child{border-radius:var(--radius) var(--radius) 0 0;}
+.fstep:last-child{border-radius:0 0 var(--radius) var(--radius);box-shadow:var(--shadow);}
+.fstep:not(:last-child){border-bottom:none;}
+.fstep:hover{background:var(--cream-dark);}
+.fstep .fn{position:absolute;left:16px;top:18px;width:40px;height:40px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:18px;box-shadow:2px 2px 0 var(--border);}
+.fstep h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.fstep p{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.fstep .fd{margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.2);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+/* SESSION */
+.roster{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0;}
+.roster-item{padding:12px;border:2px solid var(--border);border-radius:var(--radius-xs);}
+.roster-item strong{font-size:12px;display:block;margin-bottom:2px;}
+.roster-item p{font-size:12px;color:var(--ink-dim);margin:0;}
+.agenda{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.ag-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.ag-item:last-child{border-bottom:none;}
+.ag-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.ag-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.ag-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.ag-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+/* QUIZ */
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.quiz-box h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo:active{transform:translate(2px,2px);box-shadow:none;}
+.qo.correct{background:var(--mint);animation:popIn .3s;}
+.qo.wrong{background:var(--rose);animation:shake .4s;}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+@keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(255,255,255,0.5);font-weight:600;}
+
+@media(max-width:680px){
+  .factor-grid,.when-grid,.calc-grid,.roster{grid-template-columns:1fr;}
+  .scale-row{flex-direction:column;}
+  .ex-hdr,.ex-row{grid-template-columns:1.4fr .7fr .7fr .7fr .7fr 1fr;font-size:10px;}
+  .ex-row>div{padding:10px 5px;font-size:11px;}
+  .j-btn{padding:8px 3px;font-size:9px;}.j-btn .j-step{font-size:7px;}
+  .formula-bar{padding:16px 20px;border-radius:20px;}.formula-bar .fl{font-size:clamp(28px,5vw,40px);}
+  .formula-bar .fop{font-size:clamp(18px,3vw,28px);}
+  .fstep{padding-left:62px;}.fstep .fn{width:34px;height:34px;font-size:15px;left:14px;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .ag-item{grid-template-columns:64px 1fr;}.ag-time{font-size:10px;}
+  .tldr{flex-direction:column;}
+  .qopts{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<!-- HEADER (smaller) -->
+<section class="header">
+  <div class="header-badge">📊 Prioritization Framework</div>
+  <h1>RICE Scoring</h1>
+  <p class="sub">Score every product idea with four factors. Build the highest-impact features first.</p>
+</section>
+
+<!-- FORMULA — BIG -->
+<div class="formula-bar">
+  <span class="fl r">R</span><span class="fop">×</span>
+  <span class="fl i">I</span><span class="fop">×</span>
+  <span class="fl c">C</span><span class="fop">÷</span>
+  <span class="fl e">E</span><span class="fop">=</span>
+  <span class="fl eq">Score</span>
+</div>
+
+<!-- TLDR -->
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 15 seconds:</strong> RICE scores features by multiplying how many users are affected (<strong>Reach</strong>) by how much each benefits (<strong>Impact</strong>) by how sure you are (<strong>Confidence</strong>), then dividing by total work (<strong>Effort</strong>). Higher score = build first.</p>
+</div>
+
+<!-- NAV -->
+<div class="journey-nav" id="journeyNav">
+  <button class="j-btn active" onclick="goTo('understand')"><span class="j-step">01</span>Understand</button>
+  <button class="j-btn" onclick="goTo('score')"><span class="j-step">02</span>Score</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="goTo('try')"><span class="j-step">04</span>Try It</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('template')"><span class="j-step">06</span>Template</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">07</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('after')"><span class="j-step">08</span>After</button>
+  <button class="j-btn" onclick="goTo('session')"><span class="j-step">09</span>Session</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">10</span>Quiz</button>
+</div>
+
+<!-- 1. UNDERSTAND -->
+<div id="p-understand" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">🧩</div>
+    <div class="sec-label"><h2>The 4 Factors</h2><p>Three multiply up, one divides down</p></div>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card reach">
+      <div class="fc-head"><div class="fc-letter">R</div><h3>Reach</h3></div>
+      <div class="fc-q">"How many people will this touch?"</div>
+      <p>Users who'll encounter this feature per quarter. Pull from analytics — don't guess. Same time window for every feature.</p>
+      <div class="fc-unit">📏 users per quarter</div>
+      <div class="fc-role">Numerator — more reach = higher score</div>
+    </div>
+    <div class="factor-card impact">
+      <div class="fc-head"><div class="fc-letter">I</div><h3>Impact</h3></div>
+      <div class="fc-q">"How much will each person benefit?"</div>
+      <p>How significantly each user is affected. Use the fixed scale (0.25× to 3×) so everyone scores consistently. Most subjective factor.</p>
+      <div class="fc-unit">📏 multiplier: 0.25, 0.5, 1, 2, or 3</div>
+      <div class="fc-role">Numerator — more impact = higher score</div>
+    </div>
+    <div class="factor-card confidence">
+      <div class="fc-head"><div class="fc-letter">C</div><h3>Confidence</h3></div>
+      <div class="fc-q">"How sure are we about these numbers?"</div>
+      <p>Your honesty check. Got A/B test data? 100%. Just a hunch? 50%. Prevents half-baked ideas from outranking researched ones.</p>
+      <div class="fc-unit">📏 percentage: 50%, 80%, or 100%</div>
+      <div class="fc-role">Numerator — more certainty = higher score</div>
+    </div>
+    <div class="factor-card effort">
+      <div class="fc-head"><div class="fc-letter">E</div><h3>Effort</h3></div>
+      <div class="fc-q">"How much total work will this take?"</div>
+      <p>Person-months across design, eng, QA, docs. The <strong>denominator</strong> — higher effort pushes the score down. Include everyone.</p>
+      <div class="fc-unit">📏 person-months (design + eng + QA)</div>
+      <div class="fc-role">Denominator — more effort = lower score</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🧠 Memory trick</h4>
+    <p><strong>R × I × C</strong> = total value (how many × how much × how sure). Divide by <strong>E</strong> = cost. It's ROI dressed as an acronym.</p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('score')">Next: Scoring Scales →</button></div>
+</div>
+
+<!-- 2. SCORE -->
+<div id="p-score" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">📐</div>
+    <div class="sec-label"><h2>Scoring Scales</h2><p>Use these exact values — no freestyling</p></div>
+  </div>
+  <div class="scale-block">
+    <div class="sb-head"><div class="sb-letter" style="background:var(--sky)">R</div><h3>Reach</h3></div>
+    <div class="sb-hint">Same time window (usually quarterly) for every feature</div>
+    <div class="scale-row sr-reach">
+      <div class="scale-item"><span class="sv">100</span><span class="sl">Niche</span><span class="se">Power users only</span></div>
+      <div class="scale-item"><span class="sv">1K</span><span class="sl">Segment</span><span class="se">One user group</span></div>
+      <div class="scale-item"><span class="sv">10K</span><span class="sl">Broad</span><span class="se">Most active users</span></div>
+      <div class="scale-item"><span class="sv">50K+</span><span class="sl">Everyone</span><span class="se">All users see this</span></div>
+    </div>
+    <div class="tip">Pull from real analytics. Guessing? Lower your Confidence to compensate.</div>
+  </div>
+  <div class="scale-block">
+    <div class="sb-head"><div class="sb-letter" style="background:var(--orange)">I</div><h3>Impact</h3></div>
+    <div class="sb-hint">Fixed multiplier — everyone uses the same scale</div>
+    <div class="scale-row sr-impact">
+      <div class="scale-item"><span class="sv">0.25×</span><span class="sl">Minimal</span><span class="se">Barely noticed</span></div>
+      <div class="scale-item"><span class="sv">0.5×</span><span class="sl">Low</span><span class="se">Slight help</span></div>
+      <div class="scale-item"><span class="sv">1×</span><span class="sl">Medium</span><span class="se">Clear improvement</span></div>
+      <div class="scale-item"><span class="sv">2×</span><span class="sl">High</span><span class="se">Major upgrade</span></div>
+      <div class="scale-item"><span class="sv">3×</span><span class="sl">Massive</span><span class="se">Game-changer</span></div>
+    </div>
+    <div class="tip">Most features are 1×. If 20%+ are 2–3×, you're inflating.</div>
+  </div>
+  <div class="scale-block">
+    <div class="sb-head"><div class="sb-letter" style="background:var(--purple)">C</div><h3>Confidence</h3></div>
+    <div class="sb-hint">Be brutally honest — this is the built-in BS detector</div>
+    <div class="scale-row sr-conf">
+      <div class="scale-item"><span class="sv">50%</span><span class="sl">Low</span><span class="se">Gut feel. "I think users want this"</span></div>
+      <div class="scale-item"><span class="sv">80%</span><span class="sl">Medium</span><span class="se">Some signals — surveys, feedback</span></div>
+      <div class="scale-item"><span class="sv">100%</span><span class="sl">High</span><span class="se">Strong data — A/B tests, research</span></div>
+    </div>
+    <div class="tip">When in doubt, round DOWN. Overconfidence is the #1 RICE mistake.</div>
+  </div>
+  <div class="scale-block">
+    <div class="sb-head"><div class="sb-letter" style="background:var(--pink)">E</div><h3>Effort</h3></div>
+    <div class="sb-hint">Include ALL work: design + eng + QA + docs</div>
+    <div class="scale-row sr-effort">
+      <div class="scale-item"><span class="sv">0.5</span><span class="sl">Tiny</span><span class="se">1 dev, 2 weeks</span></div>
+      <div class="scale-item"><span class="sv">1</span><span class="sl">Small</span><span class="se">1 dev, 1 month</span></div>
+      <div class="scale-item"><span class="sv">3</span><span class="sl">Medium</span><span class="se">Small team, ~6 wks</span></div>
+      <div class="scale-item"><span class="sv">6+</span><span class="sl">Large</span><span class="se">Full squad, 2+ mo</span></div>
+    </div>
+    <div class="tip">When in doubt, round UP. Underestimating effort is the #2 RICE mistake.</div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('understand')">← Factors</button><button class="pn-btn primary" onclick="goTo('example')">Next: Real Example →</button></div>
+</div>
+
+<!-- 3. EXAMPLE -->
+<div id="p-example" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🎧</div>
+    <div class="sec-label"><h2>Real Example</h2><p>Music streaming app — 3 features, pick 1–2</p></div>
+  </div>
+  <div class="ex-table">
+    <div class="ex-hdr"><div>Feature</div><div>Reach</div><div>Impact</div><div>Conf.</div><div>Effort</div><div>RICE Score</div></div>
+    <div class="ex-row"><div><span class="rank-pill" style="background:var(--mint)">1</span>Smart Shuffle</div><div>40,000</div><div>2×</div><div>80%</div><div>2 mo</div><div class="ex-score" style="color:#0a8a50">32,000</div></div>
+    <div class="ex-row"><div><span class="rank-pill" style="background:var(--yellow)">2</span>Social Playlists</div><div>15,000</div><div>3×</div><div>50%</div><div>3 mo</div><div class="ex-score" style="color:#b08800">7,500</div></div>
+    <div class="ex-row"><div><span class="rank-pill" style="background:var(--orange)">3</span>Lyrics Display</div><div>50,000</div><div>0.5×</div><div>100%</div><div>6 mo</div><div class="ex-score" style="color:#c03030">4,167</div></div>
+  </div>
+  <div class="insight">
+    <h4>🔍 What the scores tell us</h4>
+    <p><strong>Smart Shuffle wins</strong> — great reach, high impact, decent confidence, moderate effort. Best ROI.</p>
+    <p style="margin-top:6px"><strong>Social Playlists has "massive" impact (3×) but ranks #2.</strong> Only 50% confidence — a gut feel. That penalty halves the score. A survey bumping to 80% → score jumps to 12,000.</p>
+    <p style="margin-top:6px"><strong>Lyrics Display reaches everyone but ranks last.</strong> High reach + low impact + huge effort = poor return.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('score')">← Scales</button><button class="pn-btn primary" onclick="goTo('try')">Next: Try It →</button></div>
+</div>
+
+<!-- 4. TRY IT -->
+<div id="p-try" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">🧮</div>
+    <div class="sec-label"><h2>Try It Yourself</h2><p>Change values, watch the score react</p></div>
+  </div>
+  <div class="calc-box">
+    <div class="calc-grid">
+      <div class="calc-field"><label>R — Reach (users/quarter)</label><input type="number" id="cr" value="5000" min="0" step="100" oninput="calc()"></div>
+      <div class="calc-field"><label>I — Impact</label><select id="ci" onchange="calc()"><option value="0.25">0.25× Minimal</option><option value="0.5">0.5× Low</option><option value="1" selected>1× Medium</option><option value="2">2× High</option><option value="3">3× Massive</option></select></div>
+      <div class="calc-field"><label>C — Confidence</label><select id="cc" onchange="calc()"><option value="0.5">50% Low</option><option value="0.8" selected>80% Medium</option><option value="1">100% High</option></select></div>
+      <div class="calc-field"><label>E — Effort (person-months)</label><input type="number" id="ce" value="2" min="0.1" step="0.5" oninput="calc()"></div>
+    </div>
+    <div class="calc-output">
+      <div class="calc-eq" id="ceq"><b>5,000</b> × <b>1</b> × <b>0.8</b> ÷ <b>2</b></div>
+      <div><div class="calc-result-num" id="cres">2,000</div><div class="calc-result-label">RICE Score</div></div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🧪 Try these experiments</h4>
+    <p>1. Set Confidence to 50% — score halves. That's the honesty penalty.</p>
+    <p style="margin-top:4px">2. Double Effort from 2→4 — score halves again. Effort is expensive.</p>
+    <p style="margin-top:4px">3. Set Impact to 3× — it triples the base. That's why people inflate it.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">← Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 5. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">⚖️</div>
+    <div class="sec-label"><h2>When to Use</h2><p>RICE is powerful but not universal</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use RICE when...</h3>
+      <ul>
+        <li>You have 10+ competing ideas that need ranking</li>
+        <li>Stakeholders disagree and you need objectivity</li>
+        <li>You have analytics data to estimate Reach</li>
+        <li>Planning a quarterly roadmap across teams</li>
+        <li>You want to reduce gut-feeling bias</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip RICE when...</h3>
+      <ul>
+        <li>Brand-new product with zero usage data</li>
+        <li>Urgent — use Value vs Effort matrix instead</li>
+        <li>Comparing apples to oranges (infra vs feature)</li>
+        <li>Team is small enough to decide in 10 minutes</li>
+        <li>People are gaming scores instead of debating</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('try')">← Calculator</button><button class="pn-btn primary" onclick="goTo('template')">Next: Template →</button></div>
+</div>
+
+<!-- 6. TEMPLATE -->
+<div id="p-template" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">📋</div>
+    <div class="sec-label"><h2>Template</h2><p>Download, fill in, sort descending</p></div>
+  </div>
+  <div class="c-card-static">
+    <table class="tpl-table">
+      <thead><tr><th style="text-align:left">Feature</th><th>Reach</th><th>Impact</th><th>Confidence</th><th>Effort</th><th>RICE Score</th></tr></thead>
+      <tbody>
+        <tr><td class="e">Feature name...</td><td class="e">users/qtr</td><td class="e">0.25–3</td><td class="e">50–100%</td><td class="e">person-mo</td><td class="e">=R×I×C÷E</td></tr>
+        <tr><td class="e">Feature name...</td><td class="e">users/qtr</td><td class="e">0.25–3</td><td class="e">50–100%</td><td class="e">person-mo</td><td class="e">=R×I×C÷E</td></tr>
+        <tr><td class="e">Feature name...</td><td class="e">users/qtr</td><td class="e">0.25–3</td><td class="e">50–100%</td><td class="e">person-mo</td><td class="e">=R×I×C÷E</td></tr>
+        <tr><td class="e">Feature name...</td><td class="e">users/qtr</td><td class="e">0.25–3</td><td class="e">50–100%</td><td class="e">person-mo</td><td class="e">=R×I×C÷E</td></tr>
+        <tr><td class="e">Feature name...</td><td class="e">users/qtr</td><td class="e">0.25–3</td><td class="e">50–100%</td><td class="e">person-mo</td><td class="e">=R×I×C÷E</td></tr>
+      </tbody>
+    </table>
+    <button class="dl-btn" onclick="downloadCSV()">⬇ Download CSV Template</button>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:12px">📐 Step by step</h3>
+    <ol style="padding-left:20px;font-size:13px;color:var(--ink-dim);line-height:2">
+      <li><strong>List all candidate features</strong> in the first column</li>
+      <li><strong>Score Reach</strong> — pull from analytics (same time window)</li>
+      <li><strong>Score Impact</strong> — use ONLY: 0.25, 0.5, 1, 2, 3</li>
+      <li><strong>Score Confidence</strong> — use ONLY: 0.5, 0.8, or 1.0</li>
+      <li><strong>Estimate Effort</strong> — person-months (ALL disciplines)</li>
+      <li><strong>Calculate</strong> — R × I × C ÷ E for each row</li>
+      <li><strong>Sort descending</strong> — highest = build first</li>
+      <li><strong>Discuss</strong> — scores start the conversation, not end it</li>
+    </ol>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 7. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>6 Common Pitfalls</h2><p>Knowing the formula is easy — avoiding these isn't</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose)">1</div><div><h4>Inflating Impact scores</h4><p class="mb">Everyone thinks their feature is "3× Massive." If 20%+ are 2–3×, you're inflating.</p><div class="fix">Force a distribution: max 1–2 at 3×, most at 0.5–1×.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange)">2</div><div><h4>Guessing Reach</h4><p class="mb">RICE's advantage is Reach uses real data. Guessing defeats the whole point.</p><div class="fix">Pull from analytics. Can't? Lower Confidence to 50%.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--yellow)">3</div><div><h4>Inconsistent time windows</h4><p class="mb">Feature A per month, Feature B per year = meaningless comparison.</p><div class="fix">Pick one window (quarterly) for every feature in the batch.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple)">4</div><div><h4>Underestimating Effort</h4><p class="mb">PMs often only count engineering. Design, QA, docs, migration take months too.</p><div class="fix">Ask each discipline separately, then sum. Round UP.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky)">5</div><div><h4>Scoring alone</h4><p class="mb">One person's scores = one person's biases. RICE works when the group calibrates.</p><div class="fix">Score together. Divergent votes = the most valuable conversation.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--mint)">6</div><div><h4>Treating scores as final</h4><p class="mb">RICE can't capture strategy, dependencies, or morale. A lower score might be right.</p><div class="fix">Scores rank the conversation order, not auto-approve the roadmap.</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('template')">← Template</button><button class="pn-btn primary" onclick="goTo('after')">Next: After Scoring →</button></div>
+</div>
+
+<!-- 8. AFTER -->
+<div id="p-after" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">📋</div>
+    <div class="sec-label"><h2>After Scoring</h2><p>Scores start the conversation, not end it</p></div>
+  </div>
+  <div class="flow">
+    <div class="fstep"><div class="fn" style="background:var(--sky)">1</div><h4>Sort & review</h4><p>Sort descending. Don't react — just look. Does the order feel roughly right?</p><div class="fd"><strong>Key question:</strong> "If I showed the top 5 to our CEO, would anything look wrong?"</div></div>
+    <div class="fstep"><div class="fn" style="background:var(--orange)">2</div><h4>Apply strategic filters</h4><p>Check the top 10 against goals, dependencies, and retention risks.</p></div>
+    <div class="fstep"><div class="fn" style="background:var(--purple)">3</div><h4>Flag overrides & document why</h4><p>Lower-scored items can jump the queue — but write down why.</p><div class="fd"><strong>Rule:</strong> Overriding 20%+ of the ranking? Your inputs need recalibrating.</div></div>
+    <div class="fstep"><div class="fn" style="background:var(--yellow)">4</div><h4>Capacity-check</h4><p>Map Effort against actual available person-months. Draw the cut line.</p></div>
+    <div class="fstep"><div class="fn" style="background:var(--mint)">5</div><h4>Commit & communicate</h4><p>Lock 2–4 items. Share the full list — including what you said no to and why.</p><div class="fd"><strong>Pro move:</strong> Save the spreadsheet. Compare estimates to reality next quarter.</div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('session')">Next: Run a Session →</button></div>
+</div>
+
+<!-- 9. SESSION -->
+<div id="p-session" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🏃</div>
+    <div class="sec-label"><h2>Run a Session</h2><p>90-minute ready-to-use agenda</p></div>
+  </div>
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px">👥 Who's in the room?</h3>
+    <div class="roster">
+      <div class="roster-item" style="background:var(--mint)"><strong>Must have</strong><p>PM (facilitator), Engineering lead, Design lead</p></div>
+      <div class="roster-item" style="background:var(--yellow)"><strong>Nice to have</strong><p>Data analyst, QA lead, stakeholder (observe only)</p></div>
+    </div>
+  </div>
+  <div class="agenda">
+    <div class="ag-item"><div class="ag-time" style="background:var(--sky)">0–10</div><div class="ag-content"><h4>Set the stage</h4><p>Explain RICE. Share spreadsheet. Agree on time window and goal.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--orange)">10–20</div><div class="ag-content"><h4>Score Reach</h4><p>Data analyst leads. Feature by feature: "How many users/quarter?"</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--purple)">20–40</div><div class="ag-content"><h4>Score Impact & Confidence</h4><p>Silent vote first (fingers 1–5), reveal, discuss divergences > 1 point.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--yellow)">40–55</div><div class="ag-content"><h4>Score Effort</h4><p>Eng lead drives. PM should NOT influence — let builders estimate.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--mint)">55–70</div><div class="ag-content"><h4>Calculate & react</h4><p>Sort live. 2 min silent reading. "What surprises you?"</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--pink)">70–90</div><div class="ag-content"><h4>Debate & decide</h4><p>Discuss top 5. Strategic filters. Document overrides. Commit.</p></div></div>
+  </div>
+  <div class="insight">
+    <h4>💡 Facilitation tips</h4>
+    <p><strong>Silent voting first</strong> — prevents anchoring by the loudest voice.</p>
+    <p style="margin-top:4px"><strong>Timebox debates</strong> — 3 min max per feature. Park if stuck.</p>
+    <p style="margin-top:4px"><strong>Capture the "why"</strong> — add a notes column. Future-you will thank you.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('after')">← After</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Test Yourself →</button></div>
+</div>
+
+<!-- 10. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>5 questions to lock in the learning</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. In the RICE formula, Effort is the...</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,false)">Numerator (multiplied)</button>
+        <button class="qo" onclick="ans(1,this,true)">Denominator (divided by)</button>
+        <button class="qo" onclick="ans(1,this,false)">Not part of the formula</button>
+      </div>
+      <div class="qexp" id="q1e">Correct — Effort is what you divide by. Higher effort = lower score.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. Reach 10,000 × Impact 2× × Confidence 50% ÷ Effort 2 = ?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,true)">5,000</button>
+        <button class="qo" onclick="ans(2,this,false)">10,000</button>
+        <button class="qo" onclick="ans(2,this,false)">20,000</button>
+      </div>
+      <div class="qexp" id="q2e">10,000 × 2 × 0.5 ÷ 2 = 5,000. The 50% confidence halved the score!</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. The most common mistake with Impact scores?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,false)">Scoring too low</button>
+        <button class="qo" onclick="ans(3,this,true)">Inflating — everything becomes 2–3×</button>
+        <button class="qo" onclick="ans(3,this,false)">Forgetting to score it</button>
+      </div>
+      <div class="qexp" id="q3e">Everyone thinks their feature is a game-changer. Force a distribution.</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. After sorting by RICE score, what's next?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,false)">Build the top feature immediately</button>
+        <button class="qo" onclick="ans(4,this,true)">Apply strategic filters & check capacity</button>
+        <button class="qo" onclick="ans(4,this,false)">Send list to CEO for approval</button>
+      </div>
+      <div class="qexp" id="q4e">Scores start the conversation. Check alignment, dependencies, and capacity.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. When should you NOT use RICE?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,false)">When comparing 15 features for Q3</button>
+        <button class="qo" onclick="ans(5,this,true)">When you have zero usage data</button>
+        <button class="qo" onclick="ans(5,this,false)">When stakeholders disagree</button>
+      </div>
+      <div class="qexp" id="q5e">No data = no reliable Reach = no advantage over simpler methods.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('session')">← Session</button><button class="pn-btn primary" onclick="goTo('understand')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">RICE Scoring Framework — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+const panels=['understand','score','example','try','judge','template','pitfalls','after','session','quiz'];
+const visited=new Set(['understand']);
+function goTo(id){
+  visited.add(id);
+  panels.forEach(p=>document.getElementById('p-'+p).classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,i)=>{
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function calc(){
+  const r=parseFloat(document.getElementById('cr').value)||0;
+  const i=parseFloat(document.getElementById('ci').value);
+  const c=parseFloat(document.getElementById('cc').value);
+  const e=parseFloat(document.getElementById('ce').value)||0.1;
+  const s=(r*i*c)/e;
+  document.getElementById('ceq').innerHTML='<b>'+r.toLocaleString()+'</b> × <b>'+i+'</b> × <b>'+c+'</b> ÷ <b>'+e+'</b>';
+  const el=document.getElementById('cres');
+  el.textContent=s>=100?Math.round(s).toLocaleString():s.toFixed(1);
+  el.style.transform='scale(1.08)';setTimeout(function(){el.style.transform='scale(1)'},200);
+}
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+function downloadCSV(){
+  var csv='Feature,Reach (users/qtr),Impact (0.25-3),Confidence (0.5-1.0),Effort (person-months),RICE Score,Notes\n"",,,,,=B2*C2*D2/E2,""\n"",,,,,=B3*C3*D3/E3,""\n"",,,,,=B4*C4*D4/E4,""\n"",,,,,=B5*C5*D5/E5,""\n"",,,,,=B6*C6*D6/E6,""';
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='RICE-Scoring-Template.csv';a.click();
+}
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Frameworks — Comparison Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#d4a017;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--white);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(24px,4.5vw,38px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--ink-soft);max-width:540px;margin:0 auto;font-weight:500;}
+.journey-nav{display:flex;gap:0;margin:24px 0;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 6px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:5px;font-size:9px;color:var(--mint-deep);font-weight:900;}
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+
+/* COMPARISON TABLE */
+.ctable{width:100%;border-collapse:separate;border-spacing:0;border:var(--bw) solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;background:var(--cream);}
+.ctable th{background:var(--ink);color:var(--yellow);font-family:'Lilita One',sans-serif;font-size:12px;letter-spacing:1px;padding:12px 10px;text-align:left;border-right:2px solid rgba(255,255,255,0.1);position:sticky;top:0;}
+.ctable th:last-child{border-right:none;}
+.ctable td{padding:10px;font-size:12px;color:var(--ink-dim);border-bottom:2px solid rgba(0,0,0,0.06);border-right:2px solid rgba(0,0,0,0.04);line-height:1.5;vertical-align:top;}
+.ctable td:last-child{border-right:none;}
+.ctable tr:last-child td{border-bottom:none;}
+.ctable td:first-child{font-weight:700;color:var(--ink);background:rgba(255,225,77,0.08);}
+
+/* FLOW CHART */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:16px;}
+.flow-q{background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 24px;text-align:center;font-size:14px;font-weight:700;max-width:500px;width:100%;}
+.flow-arrow{font-size:24px;color:var(--ink-muted);line-height:1;padding:4px 0;}
+.flow-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:600px;}
+.flow-ans{padding:14px;border-radius:var(--radius);border:var(--bw) solid var(--border);box-shadow:var(--shadow-sm);text-align:center;font-size:13px;font-weight:700;}
+.flow-ans .fa-label{font-size:11px;font-weight:600;color:var(--ink-dim);margin-top:4px;}
+
+/* SCENARIO CARDS */
+.sc-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;display:grid;grid-template-columns:50px 1fr;gap:14px;}
+.sc-num{width:50px;height:50px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sc-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:4px;}
+.sc-card .sc-ctx{font-size:13px;color:var(--ink-dim);line-height:1.5;margin-bottom:8px;}
+.sc-pick{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:100px;border:2px solid var(--border);font-size:12px;font-weight:800;box-shadow:var(--shadow-sm);}
+
+/* PICKER */
+.pk-q{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;}
+.pk-q p{font-size:14px;font-weight:600;margin-bottom:10px;}
+.pk-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.pk-o{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pk-o:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pk-o.selected{background:var(--yellow);}
+.pk-result{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-top:16px;display:none;}
+.pk-result.show{display:block;animation:panelIn .3s;}
+.pk-result h3{font-family:'Lilita One',sans-serif;font-size:20px;margin-bottom:6px;}
+.pk-result p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(0,0,0,0.3);font-weight:600;}
+@media(max-width:680px){
+  .j-btn{padding:8px 3px;font-size:9px;}.j-btn .j-step{font-size:7px;}
+  .flow-split{grid-template-columns:1fr;}.ctable{font-size:11px;}
+  .ctable th,.ctable td{padding:8px 6px;}
+  .sc-card{grid-template-columns:40px 1fr;gap:10px;}.sc-num{width:40px;height:40px;font-size:20px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+<section class="header">
+  <div class="header-badge">✏️ Design Comparison</div>
+  <h1>Which Design Framework?</h1>
+  <p class="sub">CIRCLES vs JTBD vs Design Thinking vs Story Mapping — when to use which, and how to combine them.</p>
+</section>
+
+<div class="journey-nav">
+  <button class="j-btn active" onclick="goTo('overview')"><span class="j-step">01</span>Overview</button>
+  <button class="j-btn" onclick="goTo('compare')"><span class="j-step">02</span>Compare</button>
+  <button class="j-btn" onclick="goTo('decide')"><span class="j-step">03</span>Decide</button>
+  <button class="j-btn" onclick="goTo('scenarios')"><span class="j-step">04</span>Scenarios</button>
+  <button class="j-btn" onclick="goTo('combo')"><span class="j-step">05</span>Combine</button>
+  <button class="j-btn" onclick="goTo('picker')"><span class="j-step">06</span>Picker</button>
+</div>
+
+<!-- ============ PANEL 1: OVERVIEW ============ -->
+<div class="panel active" id="p-overview">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">👁️</div>
+    <div class="sec-label"><h2>The 4 Design Frameworks at a Glance</h2><p>Different tools for different stages of product thinking</p></div>
+  </div>
+
+  <div class="c-card" style="padding:0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+      <!-- CIRCLES -->
+      <div style="padding:20px;border-right:var(--bw) solid var(--border);border-bottom:var(--bw) solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;background:var(--rose);border:2px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow-sm);">🎯</div>
+          <strong style="font-size:15px;">CIRCLES</strong>
+        </div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">7-step method for answering <strong>"Design a product for X"</strong> interview questions. Structured thinking from problem to solution in 15-20 minutes.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <span style="padding:4px 8px;background:rgba(255,138,138,0.15);border-radius:6px;font-size:10px;font-weight:700;">Interview</span>
+          <span style="padding:4px 8px;background:rgba(255,138,138,0.15);border-radius:6px;font-size:10px;font-weight:700;">Feature ideation</span>
+          <span style="padding:4px 8px;background:rgba(255,138,138,0.15);border-radius:6px;font-size:10px;font-weight:700;">15-20 min</span>
+        </div>
+      </div>
+      <!-- JTBD -->
+      <div style="padding:20px;border-bottom:var(--bw) solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;background:var(--orange);border:2px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow-sm);">💼</div>
+          <strong style="font-size:15px;">JTBD</strong>
+        </div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Uncover <strong>why</strong> users "hire" your product. Shift from demographics to motivations. Reveals the real competition and unmet needs.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <span style="padding:4px 8px;background:rgba(255,176,103,0.15);border-radius:6px;font-size:10px;font-weight:700;">Strategy</span>
+          <span style="padding:4px 8px;background:rgba(255,176,103,0.15);border-radius:6px;font-size:10px;font-weight:700;">Research</span>
+          <span style="padding:4px 8px;background:rgba(255,176,103,0.15);border-radius:6px;font-size:10px;font-weight:700;">Ongoing</span>
+        </div>
+      </div>
+      <!-- Design Thinking -->
+      <div style="padding:20px;border-right:var(--bw) solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;background:var(--purple);border:2px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow-sm);">💎</div>
+          <strong style="font-size:15px;">Design Thinking</strong>
+        </div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">5-phase process: <strong>Empathize → Define → Ideate → Prototype → Test</strong>. Full discovery-to-validation cycle for complex, unclear problems.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <span style="padding:4px 8px;background:rgba(196,181,253,0.2);border-radius:6px;font-size:10px;font-weight:700;">Discovery</span>
+          <span style="padding:4px 8px;background:rgba(196,181,253,0.2);border-radius:6px;font-size:10px;font-weight:700;">Innovation</span>
+          <span style="padding:4px 8px;background:rgba(196,181,253,0.2);border-radius:6px;font-size:10px;font-weight:700;">2-6 weeks</span>
+        </div>
+      </div>
+      <!-- Story Mapping -->
+      <div style="padding:20px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:36px;height:36px;background:var(--sky);border:2px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow-sm);">🗺️</div>
+          <strong style="font-size:15px;">Story Mapping</strong>
+        </div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Visualize the full user journey, then <strong>slice it into releases</strong>. Turns a flat backlog into a 2D map that the whole team understands.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <span style="padding:4px 8px;background:rgba(141,216,248,0.2);border-radius:6px;font-size:10px;font-weight:700;">Planning</span>
+          <span style="padding:4px 8px;background:rgba(141,216,248,0.2);border-radius:6px;font-size:10px;font-weight:700;">Delivery</span>
+          <span style="padding:4px 8px;background:rgba(141,216,248,0.2);border-radius:6px;font-size:10px;font-weight:700;">90 min session</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🧠 The Key Difference</h4>
+    <p>These aren't competing tools — they operate at <strong>different stages</strong>. JTBD asks "what job?", Design Thinking asks "what solution?", CIRCLES is DT compressed for interviews, and Story Mapping asks "what ships when?" Think of them as a pipeline, not a menu.</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:12px;">⏱️ Time Investment</h3>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:120px;font-size:12px;font-weight:700;">CIRCLES</div>
+        <div style="flex:1;height:24px;background:var(--cream-dark);border-radius:6px;border:2px solid var(--border);overflow:hidden;">
+          <div style="width:12%;height:100%;background:var(--rose);display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;">15-20 min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:120px;font-size:12px;font-weight:700;">Story Mapping</div>
+        <div style="flex:1;height:24px;background:var(--cream-dark);border-radius:6px;border:2px solid var(--border);overflow:hidden;">
+          <div style="width:25%;height:100%;background:var(--sky);display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;">90 min session</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:120px;font-size:12px;font-weight:700;">JTBD Research</div>
+        <div style="flex:1;height:24px;background:var(--cream-dark);border-radius:6px;border:2px solid var(--border);overflow:hidden;">
+          <div style="width:55%;height:100%;background:var(--orange);display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;">1-3 weeks (8-12 interviews)</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:120px;font-size:12px;font-weight:700;">Design Thinking</div>
+        <div style="flex:1;height:24px;background:var(--cream-dark);border-radius:6px;border:2px solid var(--border);overflow:hidden;">
+          <div style="width:90%;height:100%;background:var(--purple);display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;">2-6 weeks (full cycle)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-nav">
+    <span></span>
+    <button class="pn-btn primary" onclick="goTo('compare')">Next: Side-by-Side →</button>
+  </div>
+</div>
+
+<!-- ============ PANEL 2: COMPARE ============ -->
+<div class="panel" id="p-compare">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">📊</div>
+    <div class="sec-label"><h2>Side-by-Side Comparison</h2><p>Every dimension compared</p></div>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:16px;">
+    <table class="ctable">
+      <thead>
+        <tr>
+          <th style="min-width:110px;">Dimension</th>
+          <th style="min-width:140px;">🎯 CIRCLES</th>
+          <th style="min-width:140px;">💼 JTBD</th>
+          <th style="min-width:140px;">💎 Design Thinking</th>
+          <th style="min-width:140px;">🗺️ Story Mapping</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core Question</td>
+          <td>"How would you design X?"</td>
+          <td>"Why do users hire this product?"</td>
+          <td>"What solution best serves users?"</td>
+          <td>"What ships first, second, third?"</td>
+        </tr>
+        <tr>
+          <td>Primary Use</td>
+          <td>PM interviews, quick feature ideation</td>
+          <td>Strategy, positioning, churn analysis</td>
+          <td>Discovery, innovation, redesign</td>
+          <td>Release planning, backlog organization</td>
+        </tr>
+        <tr>
+          <td>Time</td>
+          <td>15-20 minutes</td>
+          <td>1-3 weeks</td>
+          <td>2-6 weeks</td>
+          <td>90-minute session</td>
+        </tr>
+        <tr>
+          <td>Team Size</td>
+          <td>1 person (interviewee)</td>
+          <td>1-2 researchers</td>
+          <td>3-8 cross-functional</td>
+          <td>4-7 cross-functional</td>
+        </tr>
+        <tr>
+          <td>Input Needed</td>
+          <td>A problem prompt</td>
+          <td>Access to users/customers</td>
+          <td>User research + problem space</td>
+          <td>Defined user journey + features</td>
+        </tr>
+        <tr>
+          <td>Output</td>
+          <td>Structured product design answer</td>
+          <td>Job statements, 4 forces map</td>
+          <td>Validated prototype, POV + HMWs</td>
+          <td>Visual map with release slices</td>
+        </tr>
+        <tr>
+          <td>Strengths</td>
+          <td>Fast, structured, shows PM thinking</td>
+          <td>Deep insight, reveals real competition</td>
+          <td>User-centered, iterative, validates</td>
+          <td>Shared understanding, coherent releases</td>
+        </tr>
+        <tr>
+          <td>Weaknesses</td>
+          <td>Surface-level, no real users</td>
+          <td>Slow, requires interview skill</td>
+          <td>Time-intensive, can feel academic</td>
+          <td>Doesn't generate ideas — organizes them</td>
+        </tr>
+        <tr>
+          <td>Inventor</td>
+          <td>Lewis C. Lin</td>
+          <td>Clayton Christensen / Tony Ulwick</td>
+          <td>Stanford d.school</td>
+          <td>Jeff Patton</td>
+        </tr>
+        <tr>
+          <td>Best Analogy</td>
+          <td>📝 Exam answer</td>
+          <td>🔬 Microscope</td>
+          <td>🧪 Science experiment</td>
+          <td>📐 Blueprint</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <h4>📐 The Pipeline View</h4>
+    <p>In the real world, these chain together: <strong>JTBD</strong> (discover the job) → <strong>Design Thinking</strong> (empathize, ideate, prototype) → <strong>Story Mapping</strong> (plan what ships when) → <strong>CIRCLES</strong> (explain your thinking in interviews). Each one's output feeds the next one's input.</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">🏷️ One-Line Summary Each</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="padding:10px 14px;background:rgba(255,138,138,0.1);border-radius:var(--radius-xs);border:2px solid rgba(255,138,138,0.2);font-size:13px;"><strong>CIRCLES:</strong> "Walk me through your thinking" — structured interview answer in 7 steps.</div>
+      <div style="padding:10px 14px;background:rgba(255,176,103,0.1);border-radius:var(--radius-xs);border:2px solid rgba(255,176,103,0.2);font-size:13px;"><strong>JTBD:</strong> "Don't sell drills, sell holes" — understand the job, not the user demographics.</div>
+      <div style="padding:10px 14px;background:rgba(196,181,253,0.1);border-radius:var(--radius-xs);border:2px solid rgba(196,181,253,0.2);font-size:13px;"><strong>Design Thinking:</strong> "Fall in love with the problem" — empathize, explore, test, iterate.</div>
+      <div style="padding:10px 14px;background:rgba(141,216,248,0.1);border-radius:var(--radius-xs);border:2px solid rgba(141,216,248,0.2);font-size:13px;"><strong>Story Mapping:</strong> "See the whole journey, then slice it" — from flat backlog to release plan.</div>
+    </div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="goTo('overview')">← Overview</button>
+    <button class="pn-btn primary" onclick="goTo('decide')">Next: Decision Flow →</button>
+  </div>
+</div>
+
+<!-- ============ PANEL 3: DECIDE ============ -->
+<div class="panel" id="p-decide">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">🧭</div>
+    <div class="sec-label"><h2>Decision Flowchart</h2><p>Follow the questions → land on the right framework</p></div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-q">❓ What's the situation?</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-split">
+      <div class="flow-ans" style="background:rgba(255,138,138,0.12);">
+        <div>🎤 <strong>PM Interview</strong></div>
+        <div class="fa-label">"Design a product for X"</div>
+      </div>
+      <div class="flow-ans" style="background:rgba(255,225,77,0.15);">
+        <div>💼 <strong>Real Work</strong></div>
+        <div class="fa-label">Actual product decisions</div>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-split">
+      <div class="flow-ans" style="background:var(--rose);">
+        <div>🎯 <strong>→ CIRCLES</strong></div>
+        <div class="fa-label">7-step structured answer</div>
+      </div>
+      <div class="flow-q" style="max-width:100%;font-size:13px;">❓ What do you need to figure out?</div>
+    </div>
+    <div class="flow-arrow" style="margin-left:160px;">↓</div>
+  </div>
+
+  <!-- Second level -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div style="background:rgba(255,176,103,0.12);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:16px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">🤔 "Why are users churning?"</div>
+      <div style="font-size:12px;color:var(--ink-dim);margin-bottom:10px;">Need to understand user motivations</div>
+      <div style="padding:8px 14px;background:var(--orange);border-radius:100px;border:2px solid var(--border);font-size:12px;font-weight:800;display:inline-block;box-shadow:var(--shadow-sm);">💼 → JTBD</div>
+    </div>
+    <div style="background:rgba(196,181,253,0.12);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:16px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">🤔 "What should we build?"</div>
+      <div style="font-size:12px;color:var(--ink-dim);margin-bottom:10px;">Problem is unclear, need to explore</div>
+      <div style="padding:8px 14px;background:var(--purple);border-radius:100px;border:2px solid var(--border);font-size:12px;font-weight:800;display:inline-block;box-shadow:var(--shadow-sm);">💎 → Design Thinking</div>
+    </div>
+    <div style="background:rgba(141,216,248,0.12);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:16px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">🤔 "What ships first?"</div>
+      <div style="font-size:12px;color:var(--ink-dim);margin-bottom:10px;">Know what to build, need to sequence</div>
+      <div style="padding:8px 14px;background:var(--sky);border-radius:100px;border:2px solid var(--border);font-size:12px;font-weight:800;display:inline-block;box-shadow:var(--shadow-sm);">🗺️ → Story Mapping</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">🚦 Quick Decision Rules</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 14px;background:var(--white);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <span style="font-size:13px;font-weight:700;">If you're in an interview →</span>
+        <div style="height:2px;background:var(--border);flex:1;"></div>
+        <span style="padding:6px 12px;background:var(--rose);border-radius:100px;font-size:11px;font-weight:800;border:2px solid var(--border);">CIRCLES</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 14px;background:var(--white);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <span style="font-size:13px;font-weight:700;">If you don't know WHY users behave this way →</span>
+        <div style="height:2px;background:var(--border);flex:1;"></div>
+        <span style="padding:6px 12px;background:var(--orange);border-radius:100px;font-size:11px;font-weight:800;border:2px solid var(--border);">JTBD</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 14px;background:var(--white);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <span style="font-size:13px;font-weight:700;">If the problem is fuzzy and needs exploring →</span>
+        <div style="height:2px;background:var(--border);flex:1;"></div>
+        <span style="padding:6px 12px;background:var(--purple);border-radius:100px;font-size:11px;font-weight:800;border:2px solid var(--border);">Design Thinking</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 14px;background:var(--white);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <span style="font-size:13px;font-weight:700;">If you know WHAT to build but need to plan releases →</span>
+        <div style="height:2px;background:var(--border);flex:1;"></div>
+        <span style="padding:6px 12px;background:var(--sky);border-radius:100px;font-size:11px;font-weight:800;border:2px solid var(--border);">Story Mapping</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">In practice, you'll often use <strong>2-3 together</strong>. The flowchart picks the <em>starting point</em>. Once you discover the job (JTBD), you might jump to Design Thinking to explore solutions, then Story Map to plan delivery.</div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="goTo('compare')">← Compare</button>
+    <button class="pn-btn primary" onclick="goTo('scenarios')">Next: Scenarios →</button>
+  </div>
+</div>
+
+<!-- ============ PANEL 4: SCENARIOS ============ -->
+<div class="panel" id="p-scenarios">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🎬</div>
+    <div class="sec-label"><h2>Real-World Scenarios</h2><p>8 situations → which framework wins</p></div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--rose);">1</div>
+    <div>
+      <h4>PM Interview: "Design a fitness app for seniors"</h4>
+      <div class="sc-ctx">You have 35 minutes. The interviewer wants structured thinking, not a shipped product.</div>
+      <div class="sc-pick" style="background:rgba(255,138,138,0.15);">🎯 CIRCLES — walk through all 7 steps, show your PM thinking process</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--orange);">2</div>
+    <div>
+      <h4>Trala users cancel after 2 weeks — why?</h4>
+      <div class="sc-ctx">You have data showing churn but don't know the root cause. Need to understand user motivation.</div>
+      <div class="sc-pick" style="background:rgba(255,176,103,0.15);">💼 JTBD — run Switch Interviews to discover what job they hired Trala for and why they "fired" it</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--purple);">3</div>
+    <div>
+      <h4>Leadership says "we need a social feature" but nobody knows what</h4>
+      <div class="sc-ctx">Vague directive, unclear problem, no research yet. Stakeholders have different ideas of what "social" means.</div>
+      <div class="sc-pick" style="background:rgba(196,181,253,0.15);">💎 Design Thinking — Empathize with users first, Define the real need, then Ideate and Prototype options</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--sky);">4</div>
+    <div>
+      <h4>You have 40 features in the backlog for the new practice mode</h4>
+      <div class="sc-ctx">Engineering asks "what do we build first?" You know the features but need to organize them into coherent releases.</div>
+      <div class="sc-pick" style="background:rgba(141,216,248,0.15);">🗺️ Story Mapping — lay out the user journey, place features under each step, draw release lines</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--mint);">5</div>
+    <div>
+      <h4>Skoove wants to enter the kids' market</h4>
+      <div class="sc-ctx">New audience, different needs, no existing data. Need to understand if this is viable and what it looks like.</div>
+      <div class="sc-pick" style="background:rgba(255,176,103,0.15);">💼 JTBD first (what job would parents/kids hire a piano app for?) → then 💎 Design Thinking (explore solutions)</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--pink);">6</div>
+    <div>
+      <h4>Interview: "How would you improve Spotify's discover weekly?"</h4>
+      <div class="sc-ctx">Product improvement question, 30-minute interview format. Interviewer expects structure.</div>
+      <div class="sc-pick" style="background:rgba(255,138,138,0.15);">🎯 CIRCLES — Comprehend the feature, Identify users, define needs, then List + Evaluate solutions with metrics</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--yellow);">7</div>
+    <div>
+      <h4>Onboarding redesign — new team members don't understand the full product</h4>
+      <div class="sc-ctx">The product has grown organically. No single view of the user experience exists.</div>
+      <div class="sc-pick" style="background:rgba(141,216,248,0.15);">🗺️ Story Mapping — create the map together as a team exercise; the act of mapping IS the onboarding</div>
+    </div>
+  </div>
+
+  <div class="sc-card">
+    <div class="sc-num" style="background:var(--cream);">8</div>
+    <div>
+      <h4>Users request "offline mode" — should you build it?</h4>
+      <div class="sc-ctx">The feature request is specific but you're unsure about the real need behind it.</div>
+      <div class="sc-pick" style="background:rgba(255,176,103,0.15);">💼 JTBD — investigate the job: is it "practice on the subway" or "avoid data usage"? The solution might not be offline mode at all</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🔑 Pattern to Notice</h4>
+    <p><strong>Unclear WHY</strong> → JTBD. <strong>Unclear WHAT</strong> → Design Thinking. <strong>Unclear WHEN</strong> → Story Mapping. <strong>Interview</strong> → CIRCLES. Most real problems combine 2-3.</p>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="goTo('decide')">← Decision Flow</button>
+    <button class="pn-btn primary" onclick="goTo('combo')">Next: Combining Them →</button>
+  </div>
+</div>
+
+<!-- ============ PANEL 5: COMBINE ============ -->
+<div class="panel" id="p-combo">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">🔗</div>
+    <div class="sec-label"><h2>Combining Frameworks</h2><p>The real power is in the pipeline</p></div>
+  </div>
+
+  <div class="c-card" style="padding:0;overflow:hidden;">
+    <div style="background:var(--ink);padding:12px 16px;">
+      <span style="font-family:'Lilita One',sans-serif;font-size:14px;color:var(--yellow);letter-spacing:1px;">🏭 THE FULL PRODUCT PIPELINE</span>
+    </div>
+    <div style="padding:20px;">
+      <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;">
+        <div style="padding:12px 18px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);text-align:center;">
+          <div style="font-size:18px;">💼</div>
+          <div style="font-size:11px;font-weight:800;">JTBD</div>
+          <div style="font-size:9px;color:var(--ink-dim);">Discover the job</div>
+        </div>
+        <div style="font-size:24px;padding:0 6px;">→</div>
+        <div style="padding:12px 18px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);text-align:center;">
+          <div style="font-size:18px;">💎</div>
+          <div style="font-size:11px;font-weight:800;">Design Thinking</div>
+          <div style="font-size:9px;color:var(--ink-dim);">Explore solutions</div>
+        </div>
+        <div style="font-size:24px;padding:0 6px;">→</div>
+        <div style="padding:12px 18px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);text-align:center;">
+          <div style="font-size:18px;">🗺️</div>
+          <div style="font-size:11px;font-weight:800;">Story Mapping</div>
+          <div style="font-size:9px;color:var(--ink-dim);">Plan delivery</div>
+        </div>
+        <div style="font-size:24px;padding:0 6px;">→</div>
+        <div style="padding:12px 18px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);text-align:center;">
+          <div style="font-size:18px;">🚀</div>
+          <div style="font-size:11px;font-weight:800;">Execute</div>
+          <div style="font-size:9px;color:var(--ink-dim);">Agile sprints</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--ink-muted);">CIRCLES = compressed version of this pipeline for interview settings</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">🔄 3 Power Combos</h3>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+
+      <div style="padding:18px;background:rgba(255,176,103,0.08);border-radius:var(--radius);border:var(--bw) solid var(--border);box-shadow:var(--shadow-sm);">
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <span style="padding:4px 10px;background:var(--orange);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">JTBD</span>
+          <span style="font-size:16px;">+</span>
+          <span style="padding:4px 10px;background:var(--sky);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">Story Mapping</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Best for: Feature-rich product that's losing focus</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;">JTBD reveals the core job → Story Map organizes features around that job → Release slices ensure every version delivers on the job. <strong>Example:</strong> Skoove has 200 features. JTBD reveals the job is "feel progress fast." Story Map reprioritizes everything around that job.</div>
+      </div>
+
+      <div style="padding:18px;background:rgba(196,181,253,0.08);border-radius:var(--radius);border:var(--bw) solid var(--border);box-shadow:var(--shadow-sm);">
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <span style="padding:4px 10px;background:var(--purple);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">Design Thinking</span>
+          <span style="font-size:16px;">+</span>
+          <span style="padding:4px 10px;background:var(--sky);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">Story Mapping</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Best for: New product or major redesign</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;">Design Thinking generates and validates solutions → Story Map turns the validated ideas into a release plan. <strong>Example:</strong> Trala onboarding redesign — DT discovers "play a song in 5 min" wins → Story Map plans MVP, v2, v3 of the new onboarding.</div>
+      </div>
+
+      <div style="padding:18px;background:rgba(255,176,103,0.05);border-radius:var(--radius);border:var(--bw) solid var(--border);box-shadow:var(--shadow-sm);">
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <span style="padding:4px 10px;background:var(--orange);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">JTBD</span>
+          <span style="font-size:16px;">+</span>
+          <span style="padding:4px 10px;background:var(--purple);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">Design Thinking</span>
+          <span style="font-size:16px;">+</span>
+          <span style="padding:4px 10px;background:var(--sky);border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;">Story Mapping</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Best for: Entering a new market</div>
+        <div style="font-size:12px;color:var(--ink-dim);line-height:1.6;">All three in sequence. JTBD interviews reveal the job in the new market → DT explores what the product looks like for that job → Story Map plans the first release. <strong>Example:</strong> Skoove entering kids' market — JTBD with parents, DT workshops with kids, Story Map for kids' MVP.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:12px;">⚡ Where Each Framework's Output Goes</h3>
+    <div style="overflow-x:auto;">
+      <table class="ctable" style="margin:0;">
+        <thead><tr><th>Framework Output</th><th>Feeds Into...</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td>JTBD → Job Statements</td><td>Story Map Goal row</td><td>The job becomes the map's top-level goal</td></tr>
+          <tr><td>JTBD → 4 Forces</td><td>Design Thinking Empathize</td><td>Forces reveal anxieties and habits to design around</td></tr>
+          <tr><td>DT → POV + HMWs</td><td>Story Map Backbone</td><td>HMWs become activity columns</td></tr>
+          <tr><td>DT → Validated Prototype</td><td>Story Map Tasks</td><td>Prototype features become task stickies</td></tr>
+          <tr><td>Story Map → MVP Slice</td><td>Sprint Backlog</td><td>Top slice feeds directly into Agile sprints</td></tr>
+          <tr><td>Story Map → Full Map</td><td>Stakeholder Communication</td><td>One visual explains the entire roadmap</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tip"><strong>CIRCLES</strong> is the odd one out — it doesn't combine with the others in daily work. It's a compressed version of the full pipeline, designed for interview speed. Think of it as the "presentation layer" of your product thinking.</div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="goTo('scenarios')">← Scenarios</button>
+    <button class="pn-btn primary" onclick="goTo('picker')">Next: Interactive Picker →</button>
+  </div>
+</div>
+
+<!-- ============ PANEL 6: PICKER ============ -->
+<div class="panel" id="p-picker">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🎰</div>
+    <div class="sec-label"><h2>Interactive Picker</h2><p>Answer 3 questions → get a recommendation</p></div>
+  </div>
+
+  <div class="pk-q" id="pkQ1">
+    <p>1. What's the context?</p>
+    <div class="pk-opts">
+      <div class="pk-o" onclick="pkSelect(1,this,'interview')">🎤 PM Interview</div>
+      <div class="pk-o" onclick="pkSelect(1,this,'work')">💼 Real product work</div>
+    </div>
+  </div>
+
+  <div class="pk-q" id="pkQ2" style="display:none;">
+    <p>2. What's unclear right now?</p>
+    <div class="pk-opts">
+      <div class="pk-o" onclick="pkSelect(2,this,'why')">🤔 WHY users behave this way</div>
+      <div class="pk-o" onclick="pkSelect(2,this,'what')">💡 WHAT solution to build</div>
+      <div class="pk-o" onclick="pkSelect(2,this,'when')">📅 WHAT to ship first (sequence)</div>
+      <div class="pk-o" onclick="pkSelect(2,this,'all')">🌊 Everything is unclear</div>
+    </div>
+  </div>
+
+  <div class="pk-q" id="pkQ3" style="display:none;">
+    <p>3. How much time do you have?</p>
+    <div class="pk-opts">
+      <div class="pk-o" onclick="pkSelect(3,this,'quick')">⚡ Hours (need something fast)</div>
+      <div class="pk-o" onclick="pkSelect(3,this,'medium')">📅 1-2 weeks</div>
+      <div class="pk-o" onclick="pkSelect(3,this,'deep')">🔬 Weeks to months</div>
+    </div>
+  </div>
+
+  <div class="pk-result" id="pkResult">
+    <h3 id="pkTitle"></h3>
+    <p id="pkBody"></p>
+    <div id="pkLinks" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;"></div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <button class="pn-btn" onclick="pkReset()" style="background:var(--rose);">🔄 Start Over</button>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="goTo('combo')">← Combine</button>
+    <button class="pn-btn primary" onclick="window.location.href='index.html'">🏠 Back to Hub</button>
+  </div>
+</div>
+
+<div class="footer">Design Frameworks Comparison Guide — PM Frameworks Guidebook — Susana's Learning Kit ✏️</div>
+</div><!-- end container -->
+
+<script>
+// === NAV ===
+const panels=['overview','compare','decide','scenarios','combo','picker'];
+const btns=document.querySelectorAll('.j-btn');
+const visited=new Set([0]);
+function goTo(id){
+  const idx=panels.indexOf(id);
+  panels.forEach(p=>document.getElementById('p-'+p).classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btns.forEach((b,i)=>{b.classList.remove('active');if(visited.has(i))b.classList.add('completed');});
+  btns[idx].classList.add('active');btns[idx].classList.remove('completed');
+  visited.add(idx);
+  document.getElementById('progressBar').style.width=((idx+1)/panels.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// === PICKER ===
+let pkAnswers={};
+function pkSelect(q,el,val){
+  const parent=el.closest('.pk-q');
+  parent.querySelectorAll('.pk-o').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  pkAnswers[q]=val;
+  // Show next question or result
+  if(q===1){
+    if(val==='interview'){
+      // Immediately recommend CIRCLES
+      document.getElementById('pkQ2').style.display='none';
+      document.getElementById('pkQ3').style.display='none';
+      showResult('circles_interview');
+    }else{
+      document.getElementById('pkQ2').style.display='block';
+      document.getElementById('pkResult').classList.remove('show');
+    }
+  }else if(q===2){
+    document.getElementById('pkQ3').style.display='block';
+    document.getElementById('pkResult').classList.remove('show');
+  }else if(q===3){
+    computeResult();
+  }
+}
+function computeResult(){
+  const unclear=pkAnswers[2];
+  const time=pkAnswers[3];
+  let key='';
+  if(unclear==='why'){
+    key=time==='quick'?'jtbd_light':'jtbd_full';
+  }else if(unclear==='what'){
+    key=time==='quick'?'dt_sprint':time==='medium'?'dt_full':'dt_deep';
+  }else if(unclear==='when'){
+    key='story_map';
+  }else if(unclear==='all'){
+    key=time==='quick'?'combo_fast':time==='medium'?'combo_medium':'combo_full';
+  }
+  showResult(key);
+}
+const results={
+  circles_interview:{
+    title:'🎯 Use CIRCLES',
+    body:'You\'re in an interview. Use the 7-step CIRCLES method to structure your answer: Comprehend → Identify → Report → Cut → List → Evaluate → Summarize. Show your thinking process clearly.',
+    links:[{text:'→ CIRCLES Guide',href:'CIRCLES-Method.html'}]
+  },
+  jtbd_light:{
+    title:'💼 JTBD — Quick Version',
+    body:'You need to understand WHY fast. Run 3-5 informal conversations using the Job Statement format: "When I [situation], I want to [motivation], so I can [outcome]." Look for patterns in the job dimensions (functional, emotional, social).',
+    links:[{text:'→ JTBD Guide',href:'JTBD-Framework.html'}]
+  },
+  jtbd_full:{
+    title:'💼 JTBD — Full Research',
+    body:'You have time to do this properly. Run 8-12 Switch Interviews to understand the 4 Forces of Progress (Push, Pull, Anxiety, Habit). Map the full job landscape before making product decisions.',
+    links:[{text:'→ JTBD Guide',href:'JTBD-Framework.html'}]
+  },
+  dt_sprint:{
+    title:'💎 Design Thinking — Sprint Mode',
+    body:'Problem is unclear and you need speed. Run a condensed 3.5-hour DT workshop: empathy research beforehand, then Define → Ideate → Paper Prototype in one session. Test with 3-5 users the next day.',
+    links:[{text:'→ Design Thinking Guide',href:'Design-Thinking.html'}]
+  },
+  dt_full:{
+    title:'💎 Design Thinking — Full Cycle',
+    body:'Good timing for a proper DT cycle. Spend week 1 on Empathize (interviews + observation), workshop for Define + Ideate, then Prototype and Test in week 2. Iterate based on findings.',
+    links:[{text:'→ Design Thinking Guide',href:'Design-Thinking.html'}]
+  },
+  dt_deep:{
+    title:'💎 Design Thinking + 💼 JTBD',
+    body:'With this much time, start with JTBD research (weeks 1-2) to understand the job deeply, then run a full Design Thinking cycle (weeks 3-5) informed by those insights. Richer results, better solutions.',
+    links:[{text:'→ JTBD Guide',href:'JTBD-Framework.html'},{text:'→ Design Thinking Guide',href:'Design-Thinking.html'}]
+  },
+  story_map:{
+    title:'🗺️ Story Mapping',
+    body:'You know what to build — you need to plan delivery. Run a 90-minute Story Mapping session with your cross-functional team. Lay out the user journey, fill in tasks, draw release lines. Walk out with a shared plan.',
+    links:[{text:'→ Story Mapping Guide',href:'User-Story-Mapping.html'}]
+  },
+  combo_fast:{
+    title:'🗺️ Story Mapping (start here)',
+    body:'Everything\'s unclear but you need to ship soon. Start with a quick Story Mapping session to see the full picture and identify the biggest unknowns. Then do targeted JTBD conversations on the riskiest assumptions.',
+    links:[{text:'→ Story Mapping Guide',href:'User-Story-Mapping.html'},{text:'→ JTBD Guide',href:'JTBD-Framework.html'}]
+  },
+  combo_medium:{
+    title:'💼 JTBD → 🗺️ Story Mapping',
+    body:'Two weeks: Spend week 1 on quick JTBD conversations (5-6 interviews) to understand the core job. Week 2: run a Story Mapping session with the team, informed by JTBD insights, to plan releases.',
+    links:[{text:'→ JTBD Guide',href:'JTBD-Framework.html'},{text:'→ Story Mapping Guide',href:'User-Story-Mapping.html'}]
+  },
+  combo_full:{
+    title:'💼 JTBD → 💎 Design Thinking → 🗺️ Story Mapping',
+    body:'The full pipeline. JTBD (weeks 1-2) to discover the job → Design Thinking (weeks 3-5) to explore and validate solutions → Story Mapping (week 6) to plan delivery. This is how world-class product teams work.',
+    links:[{text:'→ JTBD Guide',href:'JTBD-Framework.html'},{text:'→ Design Thinking Guide',href:'Design-Thinking.html'},{text:'→ Story Mapping Guide',href:'User-Story-Mapping.html'}]
+  }
+};
+function showResult(key){
+  const r=results[key];if(!r)return;
+  const el=document.getElementById('pkResult');
+  document.getElementById('pkTitle').textContent=r.title;
+  document.getElementById('pkBody').textContent=r.body;
+  document.getElementById('pkLinks').innerHTML=r.links.map(l=>`<a href="${l.href}" style="padding:8px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:100px;font-size:12px;font-weight:800;color:var(--ink);text-decoration:none;box-shadow:var(--shadow-sm);">${l.text}</a>`).join('');
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function pkReset(){
+  pkAnswers={};
+  document.querySelectorAll('.pk-o').forEach(o=>o.classList.remove('selected'));
+  document.getElementById('pkQ2').style.display='none';
+  document.getElementById('pkQ3').style.display='none';
+  document.getElementById('pkResult').classList.remove('show');
+}
+</script>
+</body>
+</html>

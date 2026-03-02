@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porter's 5 Forces — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b8dd9;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header .sub{font-size:16px;color:rgba(255,255,255,0.8);max-width:540px;margin:0 auto;font-weight:500;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.tip::before{content:'\1F4A1 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'\2713';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'\2717';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}
+.m-card .fix::before{content:'\2705 Fix: ';font-weight:800;}
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo.correct{background:var(--mint)}.qo.wrong{background:var(--rose)}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(255,255,255,0.3);font-weight:600;}
+.force-row{display:grid;grid-template-columns:50px 1fr;gap:12px;align-items:center;padding:12px;border-radius:var(--radius-xs);border:2px solid rgba(0,0,0,0.1);margin-bottom:8px;}
+.force-icon{width:50px;height:50px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.hilo{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-top:10px;}
+.hilo div{padding:10px;border-radius:var(--radius-xs);border:2px solid var(--border);}
+@media(max-width:680px){.when-grid{grid-template-columns:1fr;}.j-btn{padding:8px 2px;font-size:8px;}.j-btn .j-step{font-size:7px;}.m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}.tldr{flex-direction:column;}.qopts{flex-direction:column;}.hilo{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+<section class="header">
+  <div class="header-badge">&#x1F9ED; Strategy Framework</div>
+  <h1>Porter's 5 Forces</h1>
+  <p class="sub">Understand the competitive dynamics shaping your market &#x2014; and where the profit goes.</p>
+</section>
+
+<!-- HERO: Battlefield Diagram -->
+<div style="background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 20px;margin-bottom:20px;overflow:hidden;">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto 16px auto 16px auto;gap:0;max-width:540px;margin:0 auto;text-align:center;align-items:center;justify-items:center;">
+    <!-- Row 1: New Entrants top -->
+    <div></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="padding:10px 22px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);font-size:14px;font-weight:800;">&#x1F6AA; New Entrants</div>
+      <div style="font-size:10px;color:var(--ink-muted);font-weight:600;">Can newcomers enter easily?</div>
+    </div>
+    <div></div>
+    <!-- Row 2: Arrow down (CSS triangle) -->
+    <div></div>
+    <div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:14px solid var(--border);"></div>
+    <div></div>
+    <!-- Row 3: Suppliers → Rivalry ← Buyers -->
+    <div style="display:flex;align-items:center;gap:10px;justify-self:end;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="padding:10px 16px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);font-size:13px;font-weight:800;">&#x1F3ED; Suppliers</div>
+        <div style="font-size:9px;color:var(--ink-muted);font-weight:600;">Control your costs?</div>
+      </div>
+      <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:14px solid var(--border);margin-bottom:18px;"></div>
+    </div>
+    <div style="padding:20px 24px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font-size:16px;font-weight:800;">&#x2694;&#xFE0F; RIVALRY<br><span style="font-size:10px;font-weight:600;color:var(--ink-soft);">How fierce is the fight?</span></div>
+    <div style="display:flex;align-items:center;gap:10px;justify-self:start;">
+      <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:14px solid var(--border);margin-bottom:18px;"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="padding:10px 16px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);font-size:13px;font-weight:800;">&#x1F6D2; Buyers</div>
+        <div style="font-size:9px;color:var(--ink-muted);font-weight:600;">Dictate terms?</div>
+      </div>
+    </div>
+    <!-- Row 4: Arrow up (CSS triangle) -->
+    <div></div>
+    <div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:14px solid var(--border);"></div>
+    <div></div>
+    <!-- Row 5: Substitutes bottom -->
+    <div></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:10px;color:var(--ink-muted);font-weight:600;">Solve it another way?</div>
+      <div style="padding:10px 22px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);font-size:14px;font-weight:800;">&#x1F504; Substitutes</div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<div class="tldr"><div class="tldr-icon">&#x26A1;</div>
+  <p><strong>In 15 seconds:</strong> Five forces determine how profitable and competitive a market is. Analyze all 5 to understand <strong>why</strong> your market works the way it does and where you have power (or don't). Created by Michael Porter (Harvard, 1979).</p>
+</div>
+
+<div class="journey-nav">
+  <button class="j-btn active" onclick="goTo('concept')"><span class="j-step">01</span>5 Forces</button>
+  <button class="j-btn" onclick="goTo('deep')"><span class="j-step">02</span>Deep Dive</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="goTo('builder')"><span class="j-step">04</span>Analyzer</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">07</span>Quiz</button>
+</div>
+
+<!-- ============ PANEL 1: CONCEPT ============ -->
+<div class="panel active" id="concept">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">&#x1F3ED;</div>
+    <div class="sec-label"><h2>The 5 Forces</h2><p>What shapes competition in any market</p></div>
+  </div>
+
+  <div class="c-card" style="padding:0;overflow:hidden;">
+    <div style="background:var(--ink);padding:12px 16px;"><span style="font-family:'Lilita One',sans-serif;font-size:13px;color:var(--yellow);letter-spacing:1px;">THE 5 COMPETITIVE FORCES</span></div>
+    <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
+      <div class="force-row" style="background:rgba(255,138,138,0.08);">
+        <div class="force-icon" style="background:var(--rose);">&#x2694;&#xFE0F;</div>
+        <div><strong style="font-size:14px;">1. Competitive Rivalry</strong><br><span style="font-size:12px;color:var(--ink-dim);">How intense is competition among existing players? More rivals + similar products = lower profits for everyone.</span></div>
+      </div>
+      <div class="force-row" style="background:rgba(255,176,103,0.08);">
+        <div class="force-icon" style="background:var(--orange);">&#x1F6AA;</div>
+        <div><strong style="font-size:14px;">2. Threat of New Entrants</strong><br><span style="font-size:12px;color:var(--ink-dim);">How easy is it for new competitors to enter? Low barriers = constant new threats eating your share.</span></div>
+      </div>
+      <div class="force-row" style="background:rgba(196,181,253,0.08);">
+        <div class="force-icon" style="background:var(--purple);">&#x1F504;</div>
+        <div><strong style="font-size:14px;">3. Threat of Substitutes</strong><br><span style="font-size:12px;color:var(--ink-dim);">Can users solve the same problem a completely different way? Substitutes cap what you can charge.</span></div>
+      </div>
+      <div class="force-row" style="background:rgba(141,216,248,0.08);">
+        <div class="force-icon" style="background:var(--sky);">&#x1F6D2;</div>
+        <div><strong style="font-size:14px;">4. Buyer Power</strong><br><span style="font-size:12px;color:var(--ink-dim);">How much leverage do customers have? Many alternatives + zero switching cost = buyers dictate terms.</span></div>
+      </div>
+      <div class="force-row" style="background:rgba(126,232,178,0.08);">
+        <div class="force-icon" style="background:var(--mint);">&#x1F3ED;</div>
+        <div><strong style="font-size:14px;">5. Supplier Power</strong><br><span style="font-size:12px;color:var(--ink-dim);">How much leverage do suppliers/partners have? Few suppliers or unique inputs = they control your costs.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4AC; Michael Porter's Key Idea</h4>
+    <p>Strategy is NOT about being the best. It's about being <strong>different</strong> in a way that lets you earn sustainable profits. The 5 Forces show you where the profit goes in your industry &#x2014; and whether you can keep any of it.</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px;">&#x1F9E0; Memory Trick: The Battlefield</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Think of your company in the <strong>center of a battlefield</strong>. Threats come from 4 directions &#x2014; new entrants from the north, substitutes from the south, buyers from the east, suppliers from the west &#x2014; and you're already fighting rivals on the field itself.</p>
+  </div>
+
+  <div class="tip">Rate each force as <strong>Low / Medium / High</strong>. High forces = profit pressure. The goal isn't to "win" all 5 &#x2014; it's to understand which ones shape your strategic choices.</div>
+
+  <div class="panel-nav"><span></span><button class="pn-btn primary" onclick="goTo('deep')">Next: Deep Dive &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 2: DEEP DIVE ============ -->
+<div class="panel" id="deep">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">&#x1F50D;</div>
+    <div class="sec-label"><h2>Analyzing Each Force</h2><p>What to look for and how to rate each one</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x2694;&#xFE0F; Force 1: Competitive Rivalry</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:10px;"><strong>Key question:</strong> How intense is competition among existing players?</p>
+    <div class="hilo">
+      <div style="background:rgba(255,138,138,0.1);"><strong>HIGH when:</strong><br>&#x2022; Many competitors of similar size<br>&#x2022; Slow industry growth<br>&#x2022; Low differentiation (commodity)<br>&#x2022; High exit barriers</div>
+      <div style="background:rgba(126,232,178,0.1);"><strong>LOW when:</strong><br>&#x2022; Clear market leader<br>&#x2022; Fast-growing market<br>&#x2022; Strong differentiation<br>&#x2022; High switching costs</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F6AA; Force 2: Threat of New Entrants</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:10px;"><strong>Key question:</strong> How easy is it for newcomers to enter?</p>
+    <div class="hilo">
+      <div style="background:rgba(255,138,138,0.1);"><strong>HIGH threat when:</strong><br>&#x2022; Low capital requirements<br>&#x2022; Easy to copy (no patents/IP)<br>&#x2022; No network effects<br>&#x2022; Weak brand loyalty</div>
+      <div style="background:rgba(126,232,178,0.1);"><strong>LOW threat when:</strong><br>&#x2022; High upfront investment<br>&#x2022; Strong IP/patents<br>&#x2022; Network effects / data moats<br>&#x2022; Regulatory barriers</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F504; Force 3: Threat of Substitutes</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:10px;"><strong>Key question:</strong> Can users solve their problem a completely different way?</p>
+    <div class="hilo">
+      <div style="background:rgba(255,138,138,0.1);"><strong>HIGH threat when:</strong><br>&#x2022; Many alternatives exist<br>&#x2022; Low switching costs<br>&#x2022; Substitute is cheaper/easier<br>&#x2022; Users are price-sensitive</div>
+      <div style="background:rgba(126,232,178,0.1);"><strong>LOW threat when:</strong><br>&#x2022; No close alternatives<br>&#x2022; High switching costs<br>&#x2022; Product deeply integrated<br>&#x2022; Emotional attachment/habit</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F6D2; Force 4: Buyer Power</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:10px;"><strong>Key question:</strong> How much leverage do your customers have?</p>
+    <div class="hilo">
+      <div style="background:rgba(255,138,138,0.1);"><strong>HIGH buyer power when:</strong><br>&#x2022; Few, large buyers<br>&#x2022; Product is undifferentiated<br>&#x2022; Low switching costs<br>&#x2022; Buyers are well-informed</div>
+      <div style="background:rgba(126,232,178,0.1);"><strong>LOW buyer power when:</strong><br>&#x2022; Many small buyers<br>&#x2022; Unique/differentiated product<br>&#x2022; High switching costs<br>&#x2022; Strong brand loyalty</div>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:14px;">&#x1F3ED; Force 5: Supplier Power</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:10px;"><strong>Key question:</strong> How much leverage do your suppliers/partners have?</p>
+    <div class="hilo">
+      <div style="background:rgba(255,138,138,0.1);"><strong>HIGH supplier power when:</strong><br>&#x2022; Few suppliers<br>&#x2022; Unique/specialized inputs<br>&#x2022; High switching costs<br>&#x2022; Supplier can forward-integrate</div>
+      <div style="background:rgba(126,232,178,0.1);"><strong>LOW supplier power when:</strong><br>&#x2022; Many suppliers available<br>&#x2022; Commodity inputs<br>&#x2022; Easy to switch<br>&#x2022; You're a large customer</div>
+    </div>
+  </div>
+
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('concept')">&#x2190; 5 Forces</button><button class="pn-btn primary" onclick="goTo('example')">Next: Example &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 3: EXAMPLE ============ -->
+<div class="panel" id="example">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">&#x1F3B5;</div>
+    <div class="sec-label"><h2>Example: Music Learning Apps</h2><p>Porter's 5 Forces for Skoove/Trala's market</p></div>
+  </div>
+
+  <div class="c-card" style="padding:16px;">
+    <p style="font-size:14px;color:var(--ink-soft);line-height:1.6;">Online music learning apps (Skoove, Trala, Simply Piano, Yousician, Flowkey) compete in the digital music education market. Let's analyze the 5 forces.</p>
+  </div>
+
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose);">&#x2694;</div><div>
+      <h4>Competitive Rivalry: HIGH</h4>
+      <div class="mb">Many apps with similar features (interactive lessons, sheet music, feedback). Yousician, Simply Piano, Flowkey, Skoove, Trala all target the same beginner segment. Low differentiation makes this a crowded fight.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange);">&#x1F6AA;</div><div>
+      <h4>New Entrants: MEDIUM-HIGH</h4>
+      <div class="mb">Building a music learning app is increasingly accessible (AI tools, content libraries). Low capital barrier. BUT: content library depth and music licensing create some moat. Network effects are weak.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple);">&#x1F504;</div><div>
+      <h4>Substitutes: HIGH</h4>
+      <div class="mb">Substitutes are everywhere: YouTube tutorials (free), private teachers ($40-80/hr), books, masterclasses, TikTok. Users can "hire" many alternatives for the same job. The most dangerous substitute: free YouTube.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky);">&#x1F6D2;</div><div>
+      <h4>Buyer Power: HIGH</h4>
+      <div class="mb">Users have many choices and zero switching costs (cancel monthly, download competitor). Price sensitivity is high in a consumer market. One-click churn. App Store reviews create full transparency.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--mint);">&#x1F3ED;</div><div>
+      <h4>Supplier Power: MEDIUM</h4>
+      <div class="mb">Music publishers and rights holders have power over licensed content. Platform stores (Apple/Google) take 30%. BUT: growing royalty-free content library, and original content can be created in-house.</div>
+    </div></div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F3AF; Strategic Implication</h4>
+    <p>This is a <strong>tough market</strong> (4 of 5 forces are medium-high+). The strategic response: <strong>differentiate hard</strong> (instrument-specific depth like Trala = violin only), <strong>reduce substitution threat</strong> (offer what YouTube can't &#x2014; real-time feedback), and <strong>increase switching costs</strong> (saved progress, personalized paths).</p>
+  </div>
+
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('deep')">&#x2190; Deep Dive</button><button class="pn-btn primary" onclick="goTo('builder')">Next: Analyzer &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 4: ANALYZER ============ -->
+<div class="panel" id="builder">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">&#x1F527;</div>
+    <div class="sec-label"><h2>5 Forces Analyzer</h2><p>Rate each force for your market</p></div>
+  </div>
+
+  <div class="c-card" id="forceAnalyzer">
+    <div style="display:flex;flex-direction:column;gap:14px;" id="forceSliders"></div>
+    <div style="margin-top:16px;text-align:center;">
+      <button class="pn-btn primary" onclick="analyzeForces()" style="font-size:16px;padding:14px 32px;">&#x1F50D; Analyze My Market</button>
+    </div>
+  </div>
+  <div id="forceResult" style="display:none;" class="insight">
+    <h4>&#x1F4CA; Your Market Analysis</h4>
+    <p id="forceResultText"></p>
+  </div>
+  <div class="tip">Be honest in your ratings. The value is in seeing the full picture, not in making your market look attractive.</div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">&#x2190; Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 5: WHEN ============ -->
+<div class="panel" id="judge">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--cream)">&#x2696;&#xFE0F;</div>
+    <div class="sec-label"><h2>When to Use / Skip</h2><p>Right tool, right moment</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do"><h3>&#x2705; Use Porter's When...</h3><ul>
+      <li><strong>Entering a new market</strong> &#x2014; understand competitive dynamics before committing resources</li>
+      <li><strong>Strategic planning</strong> &#x2014; annual or quarterly strategy reviews</li>
+      <li><strong>Pricing decisions</strong> &#x2014; understand what the market will bear and why</li>
+      <li><strong>Investor pitch</strong> &#x2014; show you understand the competitive landscape</li>
+      <li><strong>Partnership evaluation</strong> &#x2014; assess supplier/buyer power dynamics</li>
+    </ul></div>
+    <div class="when-card dont"><h3>&#x1F6AB; Skip It When...</h3><ul>
+      <li><strong>Feature-level decisions</strong> &#x2014; too high-level for "should we add dark mode?"</li>
+      <li><strong>Very early-stage markets</strong> &#x2014; forces shift weekly, analysis expires fast</li>
+      <li><strong>Internal product issues</strong> &#x2014; won't help with tech debt or team dynamics</li>
+      <li><strong>You need user insights</strong> &#x2014; Porter looks at market structure, not user needs (use JTBD)</li>
+    </ul></div>
+  </div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="padding:10px 14px;background:rgba(141,216,248,0.1);border-radius:var(--radius-xs);border:2px solid rgba(141,216,248,0.2);font-size:13px;line-height:1.6;"><strong>Porter &#x2192; Blue Ocean:</strong> Porter diagnoses the Red Ocean. Blue Ocean shows you how to escape it.</div>
+      <div style="padding:10px 14px;background:rgba(126,232,178,0.1);border-radius:var(--radius-xs);border:2px solid rgba(126,232,178,0.2);font-size:13px;line-height:1.6;"><strong>Porter &#x2192; Playing to Win:</strong> "Where to Play" is informed by which markets have attractive force dynamics.</div>
+      <div style="padding:10px 14px;background:rgba(255,176,103,0.1);border-radius:var(--radius-xs);border:2px solid rgba(255,176,103,0.2);font-size:13px;line-height:1.6;"><strong>Porter &#x2192; JTBD:</strong> Porter identifies substitutes at market level. JTBD reveals them at user motivation level.</div>
+      <div style="padding:10px 14px;background:rgba(196,181,253,0.1);border-radius:var(--radius-xs);border:2px solid rgba(196,181,253,0.2);font-size:13px;line-height:1.6;"><strong>Porter &#x2192; Wardley:</strong> Both analyze competitive landscape, but Wardley adds evolution (how forces change over time).</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('builder')">&#x2190; Analyzer</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 6: PITFALLS ============ -->
+<div class="panel" id="pitfalls">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">&#x26A0;&#xFE0F;</div>
+    <div class="sec-label"><h2>Common Pitfalls</h2><p>5 mistakes that weaken your analysis</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose);">1</div><div>
+      <h4>Confusing Competitors with Substitutes</h4>
+      <div class="mb">Listing Spotify as a "competitor" to a music learning app. Spotify is a <em>substitute</em> (different product, same job). Competitors offer the same type of product (Yousician vs Skoove).</div>
+      <div class="fix">Competitors = same product category. Substitutes = different product, same user job.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange);">2</div><div>
+      <h4>Static Analysis</h4>
+      <div class="mb">Analyzing forces once and treating them as permanent. Markets shift. AI is lowering entry barriers in music ed RIGHT NOW. Your 2024 analysis may be wrong by 2026.</div>
+      <div class="fix">Re-run the analysis every 6-12 months, or when a major market event happens.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--yellow);">3</div><div>
+      <h4>Ignoring Supplier Power</h4>
+      <div class="mb">PMs often skip this force because "we build software, we don't have suppliers." But you do: app stores (30% cut), cloud providers, content licensors, payment processors.</div>
+      <div class="fix">List every external dependency. Each one has leverage over you.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--mint);">4</div><div>
+      <h4>Market Definition Too Broad</h4>
+      <div class="mb">Analyzing "the education market" instead of "online instrument learning apps for adults." Too broad = meaningless averages. Too narrow = missing threats.</div>
+      <div class="fix">Define your market at the level where competitors actually compete for the same customers.</div>
+    </div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky);">5</div><div>
+      <h4>Using It for Feature Decisions</h4>
+      <div class="mb">Trying to use Porter's to decide whether to build a metronome feature. This framework is about market structure, not product features.</div>
+      <div class="fix">Use Porter's for WHERE to compete. Use RICE/Kano for WHAT to build.</div>
+    </div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">&#x2190; When</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Quiz &#x2192;</button></div>
+</div>
+
+<!-- ============ PANEL 7: QUIZ ============ -->
+<div class="panel" id="quiz">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">&#x1F9E0;</div>
+    <div class="sec-label"><h2>Quiz</h2><p>6 questions &#x2014; test your knowledge</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq"><p>1. What do Porter's 5 Forces analyze?</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">User needs and motivations</div>
+      <div class="qo" onclick="pick(this,true)">Competitive dynamics that shape market profitability</div>
+      <div class="qo" onclick="pick(this,false)">Feature prioritization</div>
+      <div class="qo" onclick="pick(this,false)">Team velocity</div>
+    </div><div class="qexp">Porter's 5 Forces analyze the competitive structure of an industry to understand where profit goes and how sustainable it is.</div></div>
+
+    <div class="qq"><p>2. For a music learning app, YouTube tutorials are best classified as:</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">A competitor</div>
+      <div class="qo" onclick="pick(this,true)">A substitute</div>
+      <div class="qo" onclick="pick(this,false)">A supplier</div>
+      <div class="qo" onclick="pick(this,false)">A buyer</div>
+    </div><div class="qexp">YouTube is a substitute &#x2014; a different product that solves the same job. Competitors are other music learning apps like Yousician.</div></div>
+
+    <div class="qq"><p>3. Which force do PMs most commonly overlook?</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">Competitive rivalry</div>
+      <div class="qo" onclick="pick(this,true)">Supplier power</div>
+      <div class="qo" onclick="pick(this,false)">Buyer power</div>
+      <div class="qo" onclick="pick(this,false)">New entrants</div>
+    </div><div class="qexp">PMs often think "we don't have suppliers" but app stores, cloud providers, content licensors, and payment processors all have leverage.</div></div>
+
+    <div class="qq"><p>4. High buyer power means:</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">You can charge premium prices</div>
+      <div class="qo" onclick="pick(this,true)">Customers have many alternatives and low switching costs</div>
+      <div class="qo" onclick="pick(this,false)">Your suppliers are expensive</div>
+      <div class="qo" onclick="pick(this,false)">There are few competitors</div>
+    </div><div class="qexp">High buyer power means customers can easily switch, compare options, and pressure prices down.</div></div>
+
+    <div class="qq"><p>5. How often should you re-run a 5 Forces analysis?</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">Once, when entering a market</div>
+      <div class="qo" onclick="pick(this,false)">Every sprint</div>
+      <div class="qo" onclick="pick(this,true)">Every 6-12 months or after major market shifts</div>
+      <div class="qo" onclick="pick(this,false)">Only when investors ask</div>
+    </div><div class="qexp">Markets evolve. Forces shift as technology changes, competitors enter/exit, and regulations change.</div></div>
+
+    <div class="qq"><p>6. Porter's 5 Forces feeds into which other framework?</p><div class="qopts">
+      <div class="qo" onclick="pick(this,false)">RICE Score</div>
+      <div class="qo" onclick="pick(this,true)">Blue Ocean Strategy (understanding what to escape)</div>
+      <div class="qo" onclick="pick(this,false)">User Story Mapping</div>
+      <div class="qo" onclick="pick(this,false)">Design Thinking</div>
+    </div><div class="qexp">Porter's shows you the "red ocean" of competitive forces. Blue Ocean Strategy shows you how to create uncontested market space to escape those forces.</div></div>
+  </div>
+  <div id="quizResult" style="display:none;" class="insight"><h4>&#x1F3C6; Your Score</h4><p id="quizScore"></p></div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">&#x2190; Pitfalls</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+<div class="footer">Porter's 5 Forces &#x2014; PM Frameworks Guidebook &#x2014; Susana's Learning Kit &#x1F3ED;</div>
+</div>
+
+<script>
+const panels=['concept','deep','example','builder','judge','pitfalls','quiz'];
+const btns=document.querySelectorAll('.j-btn');
+const visited=new Set([0]);
+function goTo(id){
+  const idx=panels.indexOf(id);
+  panels.forEach(p=>document.getElementById(p).classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btns.forEach((b,i)=>{b.classList.remove('active');if(visited.has(i))b.classList.add('completed');});
+  btns[idx].classList.add('active');btns[idx].classList.remove('completed');
+  visited.add(idx);
+  document.getElementById('progressBar').style.width=((idx+1)/panels.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Force Analyzer
+const fN=['Competitive Rivalry','Threat of New Entrants','Threat of Substitutes','Buyer Power','Supplier Power'];
+const fE=['\u2694\uFE0F','\uD83D\uDEAA','\uD83D\uDD04','\uD83D\uDED2','\uD83C\uDFED'];
+const fC=['var(--rose)','var(--orange)','var(--purple)','var(--sky)','var(--mint)'];
+(function(){
+  const c=document.getElementById('forceSliders');
+  let h='';
+  fN.forEach((name,i)=>{
+    h+=`<div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;background:var(--white);border-radius:var(--radius-xs);border:2px solid var(--border);">
+      <div><strong style="font-size:13px;">${fE[i]} ${name}</strong><br>
+      <select id="f${i}" style="margin-top:4px;padding:6px 10px;border:2px solid var(--border);border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;">
+        <option value="1">Low</option><option value="2" selected>Medium</option><option value="3">High</option>
+      </select></div>
+      <div id="fb${i}" style="width:60px;height:30px;border-radius:6px;border:2px solid var(--border);background:var(--yellow);"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+})();
+function analyzeForces(){
+  let total=0,ratings=[],highest=0,highIdx=0;
+  for(let i=0;i<5;i++){
+    const v=parseInt(document.getElementById('f'+i).value);
+    ratings.push(v);total+=v;
+    document.getElementById('fb'+i).style.background=['var(--mint)','var(--yellow)','var(--rose)'][v-1];
+    if(v>highest){highest=v;highIdx=i;}
+  }
+  const avg=total/5;
+  let v='';
+  if(avg<=1.5)v='\uD83D\uDFE2 <strong>Attractive market.</strong> Most forces are low &#x2014; good profit potential if you differentiate.';
+  else if(avg<=2.2)v='\uD83D\uDFE1 <strong>Moderately competitive.</strong> Some forces are high. Focus strategy on weakening the strongest forces.';
+  else v='\uD83D\uDD34 <strong>Tough market.</strong> Multiple high forces squeeze profits. You need strong differentiation or a Blue Ocean move.';
+  v+='<br><br>Strongest force: <strong>'+fE[highIdx]+' '+fN[highIdx]+'</strong>. Address this one first.';
+  document.getElementById('forceResult').style.display='block';
+  document.getElementById('forceResultText').innerHTML=v;
+  document.getElementById('forceResult').scrollIntoView({behavior:'smooth'});
+}
+
+// Quiz
+let answered=0,correct=0;
+function pick(el,isCorrect){
+  const qq=el.closest('.qq');
+  qq.querySelectorAll('.qo').forEach(o=>{o.classList.add('disabled');});
+  el.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect)qq.querySelectorAll('.qo').forEach(o=>{if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+  if(isCorrect)correct++;
+  qq.querySelector('.qexp').classList.add('show');
+  answered++;
+  if(answered>=6){
+    document.getElementById('quizResult').style.display='block';
+    const pct=Math.round(correct/6*100);
+    let msg=pct>=85?'Excellent! You\'ve mastered Porter\'s 5 Forces!':pct>=57?'Good grasp! Review the Deep Dive to solidify.':'Keep studying! Re-read the panels, then retry.';
+    document.getElementById('quizScore').innerHTML='<strong>'+correct+'/6 ('+pct+'%)</strong> \u2014 '+msg;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kano Model — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#3da66a;--green-bg:#3da66a;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--yellow-dark:#ffd600;
+  --white:#fff;--card:#fef9ed;
+  --pink:#ffb8d4;--pink-deep:#ff7eb3;
+  --purple:#c4b5fd;--purple-deep:#9d8ae8;
+  --sky:#8dd8f8;--sky-deep:#5bc0eb;
+  --orange:#ffb067;--orange-deep:#ff8a2b;
+  --mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;--rose-deep:#ff5252;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--green-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;}
+
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--cream);max-width:540px;margin:0 auto;font-weight:500;}
+
+/* KANO HERO — 5 category pills */
+.kano-hero{margin:20px auto 28px;max-width:600px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.kano-pill{padding:12px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:8px;font-family:'Lilita One',sans-serif;font-size:15px;transition:all .12s;}
+.kano-pill:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.kano-pill .kp-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);}
+
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.j-btn.active.completed::after{color:var(--mint);}
+
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;transition:all .12s;}
+.c-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(255,255,255,0.25);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);color:var(--ink);}
+
+/* CATEGORY CARDS */
+.cat-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:14px;display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;transition:all .12s;}
+.cat-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.cat-icon{width:56px;height:56px;border-radius:14px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--shadow-sm);}
+.cat-card h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:2px;}
+.cat-card .cat-tag{display:inline-block;padding:2px 10px;border-radius:100px;border:2px solid var(--border);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.cat-card p{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.cat-card .cat-example{margin-top:8px;padding:8px 12px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;}
+.cat-card .cat-example::before{content:'Example: ';font-weight:800;}
+
+/* CURVE DIAGRAM */
+.curve-box{background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.curve-canvas{position:relative;width:100%;max-width:500px;margin:0 auto;aspect-ratio:1.2/1;}
+.curve-canvas svg{width:100%;height:100%;}
+.curve-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px;}
+.curve-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;}
+.curve-legend-item .cld{width:20px;height:4px;border-radius:2px;}
+
+/* SURVEY METHOD */
+.survey-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.survey-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+.survey-q{padding:16px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);text-align:center;}
+.survey-q .sq-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;}
+.survey-q p{font-size:14px;font-weight:600;font-style:italic;}
+.survey-q .sq-opts{margin-top:10px;display:flex;flex-direction:column;gap:4px;}
+.survey-q .sq-opt{padding:6px 10px;border-radius:6px;border:1.5px solid var(--border);font-size:11px;font-weight:600;text-align:left;}
+.eval-table{width:100%;border-collapse:separate;border-spacing:0;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:16px;font-size:11px;}
+.eval-table th{background:var(--ink);color:var(--white);padding:8px 6px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;}
+.eval-table th:first-child{text-align:left;padding-left:10px;background:var(--ink);}
+.eval-table td{padding:6px;text-align:center;border-bottom:1px solid rgba(0,0,0,0.06);font-weight:600;}
+.eval-table td:first-child{text-align:left;padding-left:10px;font-weight:700;background:var(--cream-dark);}
+.eval-table tr:last-child td{border-bottom:none;}
+.eval-table .cell-m{background:rgba(255,138,138,0.2);color:#b03030;}
+.eval-table .cell-p{background:rgba(141,216,248,0.2);color:#1a7cb5;}
+.eval-table .cell-d{background:rgba(196,181,253,0.2);color:#6a4ec4;}
+.eval-table .cell-i{background:rgba(200,200,200,0.2);color:#888;}
+.eval-table .cell-r{background:rgba(255,176,103,0.2);color:#c06e10;}
+.eval-table .cell-q{background:rgba(255,225,77,0.2);color:#997a00;}
+
+/* INTERACTIVE CLASSIFIER */
+.classifier{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.clf-feature{margin-bottom:14px;padding-bottom:14px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.clf-feature:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.clf-feature h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;}
+.clf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
+.clf-row label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim);display:block;margin-bottom:3px;}
+.clf-row select{width:100%;padding:8px 10px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;outline:none;}
+.clf-result{padding:8px 14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);font-size:13px;font-weight:700;text-align:center;display:none;}
+.clf-result.show{display:block;animation:panelIn .3s;}
+
+/* EXAMPLE TABLE */
+.ex-table{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;}
+.ex-hdr{display:grid;grid-template-columns:2fr 1.2fr 2fr;background:var(--ink);color:var(--white);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.ex-hdr>div{padding:12px 12px;text-align:center;}.ex-hdr>div:first-child{text-align:left;padding-left:16px;}
+.ex-row{display:grid;grid-template-columns:2fr 1.2fr 2fr;border-bottom:2px solid rgba(0,0,0,0.06);transition:background .12s;}
+.ex-row:hover{background:rgba(255,225,77,0.1);}.ex-row:last-child{border-bottom:none;}
+.ex-row>div{padding:14px 12px;font-size:13px;display:flex;align-items:center;}
+.ex-row>div:first-child{font-weight:700;padding-left:16px;}
+.ex-row>div:nth-child(2){justify-content:center;}
+.ex-cat{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;border:2px solid var(--border);font-size:11px;font-weight:800;}
+
+/* WHEN */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}
+.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+
+.roster{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0;}
+.roster-item{padding:12px;border:2px solid var(--border);border-radius:var(--radius-xs);}
+.roster-item strong{font-size:12px;display:block;margin-bottom:2px;}
+.roster-item p{font-size:12px;color:var(--ink-dim);margin:0;}
+.agenda{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.ag-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.ag-item:last-child{border-bottom:none;}
+.ag-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.ag-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.ag-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.ag-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.quiz-box h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo.correct{background:var(--mint)}.qo.wrong{background:var(--rose)}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+@keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(255,255,255,0.5);font-weight:600;}
+
+@media(max-width:680px){
+  .quad-grid,.when-grid,.survey-pair,.roster,.clf-row{grid-template-columns:1fr;}
+  .j-btn{padding:8px 2px;font-size:8px;}.j-btn .j-step{font-size:7px;}
+  .cat-card{grid-template-columns:44px 1fr;gap:10px;}
+  .cat-icon{width:44px;height:44px;font-size:22px;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .ag-item{grid-template-columns:64px 1fr;}.ag-time{font-size:10px;}
+  .tldr{flex-direction:column;}.qopts{flex-direction:column;}
+  .kano-pill{padding:8px 14px;font-size:12px;}
+  .ex-hdr,.ex-row{grid-template-columns:1.5fr 1fr 2fr;font-size:10px;}
+  .eval-table{font-size:9px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<!-- HEADER -->
+<section class="header">
+  <div class="header-badge">📊 Prioritization Framework</div>
+  <h1>Kano Model</h1>
+  <p class="sub">Categorize features by how they affect customer satisfaction. Not all features are created equal.</p>
+</section>
+
+<!-- KANO HERO PILLS -->
+<div class="kano-hero">
+  <div class="kano-pill"><div class="kp-dot" style="background:var(--rose)"></div>Must-Have</div>
+  <div class="kano-pill"><div class="kp-dot" style="background:var(--sky)"></div>Performance</div>
+  <div class="kano-pill"><div class="kp-dot" style="background:var(--purple)"></div>Delighter</div>
+  <div class="kano-pill"><div class="kp-dot" style="background:#ccc"></div>Indifferent</div>
+  <div class="kano-pill"><div class="kp-dot" style="background:var(--orange)"></div>Reverse</div>
+</div>
+
+<!-- TLDR -->
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 15 seconds:</strong> Kano sorts features into 5 types based on how users <em>feel</em> about them. <strong>Must-Haves</strong> cause anger if missing. <strong>Performance</strong> features scale linearly — more is better. <strong>Delighters</strong> surprise and wow. Knowing the type tells you what to build, what to invest in, and what to skip.</p>
+</div>
+
+<!-- NAV -->
+<div class="journey-nav" id="journeyNav">
+  <button class="j-btn active" onclick="goTo('categories')"><span class="j-step">01</span>Categories</button>
+  <button class="j-btn" onclick="goTo('curve')"><span class="j-step">02</span>Curve</button>
+  <button class="j-btn" onclick="goTo('survey')"><span class="j-step">03</span>Survey</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="goTo('classify')"><span class="j-step">05</span>Classify</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">07</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('session')"><span class="j-step">08</span>Session</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">09</span>Quiz</button>
+</div>
+
+<!-- 1. CATEGORIES -->
+<div id="p-categories" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">🧩</div>
+    <div class="sec-label"><h2>The 5 Categories</h2><p>Each type affects satisfaction differently</p></div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-icon" style="background:var(--rose)">🔴</div>
+    <div>
+      <h3>Must-Haves (Basics)</h3>
+      <div class="cat-tag" style="background:var(--rose)">Expected · Anger if missing</div>
+      <p>Features users take for granted. They don't increase satisfaction when present — but cause <strong>fury</strong> when missing. You get zero credit for having them, but you get punished for lacking them.</p>
+      <div class="cat-example" style="background:rgba(255,138,138,0.15)">Hotel: clean towels, working wifi. App: login works, pages load fast.</div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-icon" style="background:var(--sky)">📈</div>
+    <div>
+      <h3>Performance (Linear)</h3>
+      <div class="cat-tag" style="background:var(--sky)">More = better · Satisfaction scales</div>
+      <p>The "more is better" features. Battery life, storage space, delivery speed. Satisfaction goes up proportionally with investment. These are what users consciously compare.</p>
+      <div class="cat-example" style="background:rgba(141,216,248,0.15)">Hotel: room size, breakfast quality. App: speed, storage, search accuracy.</div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-icon" style="background:var(--purple)">✨</div>
+    <div>
+      <h3>Delighters (Attractive)</h3>
+      <div class="cat-tag" style="background:var(--purple)">Unexpected · Wow if present</div>
+      <p>Surprises users didn't know they wanted. They don't cause dissatisfaction when absent (users never expected them), but create <strong>disproportionate joy</strong> when present. The "wow factor."</p>
+      <div class="cat-example" style="background:rgba(196,181,253,0.15)">Hotel: handwritten welcome note. App: smart autocomplete, playful animations.</div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-icon" style="background:#ddd">😐</div>
+    <div>
+      <h3>Indifferent</h3>
+      <div class="cat-tag" style="background:#e8e8e8">Nobody cares · No impact either way</div>
+      <p>Features that don't affect satisfaction whether present or absent. Building these is pure waste — they consume resources but move no needle.</p>
+      <div class="cat-example" style="background:rgba(200,200,200,0.15)">Hotel: brand of soap dispenser. App: internal code refactor users never see.</div>
+    </div>
+  </div>
+
+  <div class="cat-card">
+    <div class="cat-icon" style="background:var(--orange)">🔄</div>
+    <div>
+      <h3>Reverse</h3>
+      <div class="cat-tag" style="background:var(--orange)">Polarizing · Some users actively dislike</div>
+      <p>Features that a segment of users actively doesn't want. Adding them <strong>reduces</strong> satisfaction for that group. Often appears in "simplicity vs power" tradeoffs.</p>
+      <div class="cat-example" style="background:rgba(255,176,103,0.15)">Hotel: loud background music. App: forced social features, gamification.</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🧠 Memory trick</h4>
+    <p>Think of a hotel stay: <strong>Must-Have</strong> = clean room (rage if dirty). <strong>Performance</strong> = room size (bigger is better). <strong>Delighter</strong> = surprise champagne (wow!). <strong>Indifferent</strong> = brand of hangers. <strong>Reverse</strong> = loud music in lobby.</p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('curve')">Next: The Curve →</button></div>
+</div>
+
+<!-- 2. CURVE -->
+<div id="p-curve" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">📊</div>
+    <div class="sec-label"><h2>The Satisfaction Curve</h2><p>How each category behaves as you invest more</p></div>
+  </div>
+
+  <div class="curve-box">
+    <div class="curve-canvas">
+      <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Axes -->
+        <line x1="80" y1="200" x2="480" y2="200" stroke="#ccc" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <line x1="250" y1="30" x2="250" y2="380" stroke="#ccc" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <!-- Axis arrows -->
+        <line x1="80" y1="360" x2="480" y2="360" stroke="#1a1a2e" stroke-width="2.5" marker-end="url(#arr)"/>
+        <line x1="80" y1="360" x2="80" y2="40" stroke="#1a1a2e" stroke-width="2.5" marker-end="url(#arr)"/>
+        <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#1a1a2e"/></marker></defs>
+        <!-- Labels -->
+        <text x="280" y="390" font-family="Lilita One" font-size="13" fill="#888">Feature Investment →</text>
+        <text x="30" y="200" font-family="Lilita One" font-size="13" fill="#888" transform="rotate(-90,30,200)">Satisfaction →</text>
+        <text x="460" y="195" font-size="11" fill="#aaa" font-family="Outfit" font-weight="600">Neutral</text>
+        <!-- Must-Have curve: starts very negative, rises steeply then flattens at neutral -->
+        <path d="M100,340 C160,330 200,280 260,210 C320,195 400,195 460,192" stroke="#ff8a8a" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- Performance curve: linear diagonal -->
+        <path d="M100,320 C200,270 350,130 460,60" stroke="#8dd8f8" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- Delighter curve: flat near bottom then rockets up -->
+        <path d="M100,210 C180,208 240,205 300,190 C360,150 420,80 460,45" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- Labels on curves -->
+        <text x="390" y="185" font-family="Lilita One" font-size="12" fill="#ff5252">Must-Have</text>
+        <text x="370" y="68" font-family="Lilita One" font-size="12" fill="#5bc0eb">Performance</text>
+        <text x="390" y="42" font-family="Lilita One" font-size="12" fill="#9d8ae8">Delighter</text>
+      </svg>
+    </div>
+    <div class="curve-legend">
+      <div class="curve-legend-item"><div class="cld" style="background:var(--rose)"></div>Must-Have</div>
+      <div class="curve-legend-item"><div class="cld" style="background:var(--sky)"></div>Performance</div>
+      <div class="curve-legend-item"><div class="cld" style="background:var(--purple)"></div>Delighter</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🔍 Reading the curves</h4>
+    <p><strong style="color:#ff5252">Must-Haves (red)</strong> — starts deep negative (anger), rises to neutral, but never above. You can't delight with basics — you can only stop disappointing.</p>
+    <p style="margin-top:6px"><strong style="color:#5bc0eb">Performance (blue)</strong> — straight diagonal. More investment = proportionally more satisfaction. This is where competitive features live.</p>
+    <p style="margin-top:6px"><strong style="color:#9d8ae8">Delighters (purple)</strong> — flat at first (no one expects them), then rockets upward. Small investments here can create outsized emotional responses.</p>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px">⏳ Categories drift over time</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6">What's a Delighter today becomes a Performance feature tomorrow and a Must-Have next year. Example: smartphone GPS was a Delighter in 2008, Performance by 2012, Must-Have by 2015. <strong>Re-evaluate your Kano categories at least annually.</strong></p>
+  </div>
+
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('categories')">← Categories</button><button class="pn-btn primary" onclick="goTo('survey')">Next: Survey Method →</button></div>
+</div>
+
+<!-- 3. SURVEY METHOD -->
+<div id="p-survey" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">📝</div>
+    <div class="sec-label"><h2>The Survey Method</h2><p>Two questions per feature — that's the whole trick</p></div>
+  </div>
+
+  <div class="survey-box">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:4px">The Kano Questionnaire</h3>
+    <p style="font-size:13px;color:var(--ink-dim)">For each feature, ask users TWO questions:</p>
+    <div class="survey-pair">
+      <div class="survey-q" style="background:var(--mint)">
+        <span class="sq-label">Functional (positive)</span>
+        <p>"If this feature <strong>IS</strong> present, how do you feel?"</p>
+        <div class="sq-opts">
+          <div class="sq-opt">😍 I like it</div>
+          <div class="sq-opt">✅ I expect it</div>
+          <div class="sq-opt">😐 I'm neutral</div>
+          <div class="sq-opt">🤷 I can tolerate it</div>
+          <div class="sq-opt">😤 I dislike it</div>
+        </div>
+      </div>
+      <div class="survey-q" style="background:var(--rose)">
+        <span class="sq-label">Dysfunctional (negative)</span>
+        <p>"If this feature is <strong>NOT</strong> present, how do you feel?"</p>
+        <div class="sq-opts">
+          <div class="sq-opt">😍 I like it</div>
+          <div class="sq-opt">✅ I expect it</div>
+          <div class="sq-opt">😐 I'm neutral</div>
+          <div class="sq-opt">🤷 I can tolerate it</div>
+          <div class="sq-opt">😤 I dislike it</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:8px">📋 The Evaluation Table</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:6px">Cross-reference the two answers to classify the feature:</p>
+    <table class="eval-table">
+      <thead><tr><th>If present ↓ \ If absent →</th><th>Like it</th><th>Expect it</th><th>Neutral</th><th>Tolerate</th><th>Dislike it</th></tr></thead>
+      <tbody>
+        <tr><td>Like it</td><td class="cell-q">Q</td><td class="cell-d">D</td><td class="cell-d">D</td><td class="cell-d">D</td><td class="cell-p">P</td></tr>
+        <tr><td>Expect it</td><td class="cell-r">R</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-m">M</td></tr>
+        <tr><td>Neutral</td><td class="cell-r">R</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-m">M</td></tr>
+        <tr><td>Tolerate it</td><td class="cell-r">R</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-i">I</td><td class="cell-m">M</td></tr>
+        <tr><td>Dislike it</td><td class="cell-r">R</td><td class="cell-r">R</td><td class="cell-r">R</td><td class="cell-r">R</td><td class="cell-q">Q</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--ink-muted);margin-top:8px"><strong>M</strong> = Must-Have · <strong>P</strong> = Performance · <strong>D</strong> = Delighter · <strong>I</strong> = Indifferent · <strong>R</strong> = Reverse · <strong>Q</strong> = Questionable (contradictory answer)</p>
+  </div>
+
+  <div class="insight">
+    <h4>🔑 The key pattern</h4>
+    <p><strong>Must-Have:</strong> user dislikes absence but only expects presence (not excited by it).</p>
+    <p style="margin-top:4px"><strong>Performance:</strong> user likes presence AND dislikes absence (classic trade-off).</p>
+    <p style="margin-top:4px"><strong>Delighter:</strong> user likes presence but is neutral about absence (nice surprise).</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('curve')">← Curve</button><button class="pn-btn primary" onclick="goTo('example')">Next: Real Example →</button></div>
+</div>
+
+<!-- 4. EXAMPLE -->
+<div id="p-example" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🏨</div>
+    <div class="sec-label"><h2>Real Example</h2><p>Hotel booking app — 8 features categorized</p></div>
+  </div>
+
+  <div class="ex-table">
+    <div class="ex-hdr"><div>Feature</div><div>Category</div><div>Why</div></div>
+    <div class="ex-row"><div>Secure payment</div><div><span class="ex-cat" style="background:rgba(255,138,138,0.25)">🔴 Must-Have</span></div><div style="font-size:12px;color:var(--ink-dim)">Users rage if payment fails. Nobody praises "my card worked!"</div></div>
+    <div class="ex-row"><div>Fast page load</div><div><span class="ex-cat" style="background:rgba(255,138,138,0.25)">🔴 Must-Have</span></div><div style="font-size:12px;color:var(--ink-dim)">3+ second load = users leave. Under 1 second = no praise, just expected.</div></div>
+    <div class="ex-row"><div>More hotel photos</div><div><span class="ex-cat" style="background:rgba(141,216,248,0.25)">📈 Performance</span></div><div style="font-size:12px;color:var(--ink-dim)">5 photos good, 20 better, 50 with video best. Satisfaction scales.</div></div>
+    <div class="ex-row"><div>Price comparison</div><div><span class="ex-cat" style="background:rgba(141,216,248,0.25)">📈 Performance</span></div><div style="font-size:12px;color:var(--ink-dim)">More sources compared = more trust = higher satisfaction.</div></div>
+    <div class="ex-row"><div>AR room preview</div><div><span class="ex-cat" style="background:rgba(196,181,253,0.25)">✨ Delighter</span></div><div style="font-size:12px;color:var(--ink-dim)">Nobody expects this. Seeing the room in AR → instant wow.</div></div>
+    <div class="ex-row"><div>AI trip planner</div><div><span class="ex-cat" style="background:rgba(196,181,253,0.25)">✨ Delighter</span></div><div style="font-size:12px;color:var(--ink-dim)">"Plan my weekend in Paris" → surprise delight. Not missed if absent.</div></div>
+    <div class="ex-row"><div>Change app icon</div><div><span class="ex-cat" style="background:rgba(200,200,200,0.25)">😐 Indifferent</span></div><div style="font-size:12px;color:var(--ink-dim)">Most users don't care about icon customization. Waste of dev time.</div></div>
+    <div class="ex-row"><div>Mandatory reviews</div><div><span class="ex-cat" style="background:rgba(255,176,103,0.25)">🔄 Reverse</span></div><div style="font-size:12px;color:var(--ink-dim)">Forcing users to write a review after every stay → annoyance.</div></div>
+  </div>
+
+  <div class="insight">
+    <h4>📋 The prioritization takeaway</h4>
+    <p><strong>Build order:</strong> 1) Fix any broken Must-Haves first (non-negotiable). 2) Invest in Performance features (competitive advantage). 3) Sprinkle in 1–2 Delighters (differentiation). 4) Cut Indifferent and Reverse features.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('survey')">← Survey</button><button class="pn-btn primary" onclick="goTo('classify')">Next: Classify Your Own →</button></div>
+</div>
+
+<!-- 5. INTERACTIVE CLASSIFIER -->
+<div id="p-classify" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">🏷️</div>
+    <div class="sec-label"><h2>Classify Your Features</h2><p>Answer the two Kano questions and get the category</p></div>
+  </div>
+
+  <div class="classifier" id="classifierApp">
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:14px">For each feature, select how users feel if it IS present and if it's NOT present. The tool cross-references the evaluation table.</p>
+    <div id="clfList"></div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <input type="text" id="clfInput" placeholder="Type a feature name..." style="flex:1;padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;" onkeydown="if(event.key==='Enter')addClfFeature()">
+      <button onclick="addClfFeature()" style="padding:10px 18px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);">+ Add</button>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🧪 Try it</h4>
+    <p>Add 3–5 features your team is debating. Answer the questions from your users' perspective. The category tells you where to invest.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">← Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 6. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">⚖️</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Powerful for product strategy, overkill for sprint planning</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use Kano when...</h3>
+      <ul>
+        <li>Deciding product strategy — what TYPE of features to invest in</li>
+        <li>You can survey 30+ real users (need data for reliability)</li>
+        <li>Comparing "table stakes" vs "differentiators"</li>
+        <li>Building a new product and mapping the feature landscape</li>
+        <li>Competitive analysis — understanding where rivals invest</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip Kano when...</h3>
+      <ul>
+        <li>You need to rank 15 features for next sprint → use RICE</li>
+        <li>No access to real users for the survey</li>
+        <li>Time-sensitive decision (Kano surveys take 1–2 weeks)</li>
+        <li>Internal tooling where you ARE the user</li>
+        <li>Very early MVP — just ship and learn from real usage</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔗 How Kano connects to other frameworks</h4>
+    <p><strong>Kano → tells you WHAT TYPE to build</strong> (Must-Haves first, then Performance, then Delighters). <strong>RICE → tells you WHICH ONES within a type.</strong> <strong>Value vs Effort → quick first-pass sort.</strong> Use all three together for a complete picture.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('classify')">← Classify</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 7. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>6 Common Pitfalls</h2><p>Kano is subtle — these mistakes ruin the results</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--rose)">1</div><div><h4>Skipping the survey and guessing</h4><p class="mb">PMs often classify features based on gut feel. But YOU are not the user. Your "Delighter" might be users' "Indifferent."</p><div class="fix">Run the actual paired survey with 30+ users. The whole point of Kano is user data, not PM intuition.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--orange)">2</div><div><h4>Treating categories as permanent</h4><p class="mb">Features drift: today's Delighter → tomorrow's Must-Have. GPS, touchscreens, dark mode all followed this path.</p><div class="fix">Re-run Kano analysis annually. What delighted users last year may be expected now.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--yellow)">3</div><div><h4>Ignoring Must-Haves because they're "boring"</h4><p class="mb">Teams love building Delighters. But if your Must-Haves are broken, Delighters won't save you — users will leave anyway.</p><div class="fix">Always audit Must-Haves first. Only invest in Delighters once basics are solid.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--purple)">4</div><div><h4>Confusing the survey questions</h4><p class="mb">Users find the dysfunctional question ("how do you feel if NOT present?") confusing. Bad survey → bad data → wrong categories.</p><div class="fix">Use plain language. Test the survey with 3 people first. Consider rephrasing to "imagine this feature didn't exist."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--sky)">5</div><div><h4>Too few respondents</h4><p class="mb">With 5 responses, one outlier changes the category. You need enough data for the results to be reliable.</p><div class="fix">Minimum 30 responses for directional results, 100+ for confidence. Segment by user type if possible.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--mint)">6</div><div><h4>Trying to use Kano for ranking</h4><p class="mb">Kano tells you the TYPE, not the ORDER. "Both are Must-Haves" doesn't tell you which to build first.</p><div class="fix">Use Kano for categorization, then RICE or Value vs Effort to rank within each category.</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('session')">Next: Run a Session →</button></div>
+</div>
+
+<!-- 8. SESSION -->
+<div id="p-session" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🏃</div>
+    <div class="sec-label"><h2>Run a Session</h2><p>2-phase process: Survey (async) + Workshop (60 min)</p></div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px">📧 Phase 1: Survey (Async, 1–2 weeks)</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-top:6px">Write the Kano questionnaire (2 questions per feature × 8–12 features). Send to 30–100 users via Typeform, Google Forms, or similar. Analyze results using the evaluation table to get majority categories.</p>
+    <div class="tip">Keep to 8–12 features max. More than that and survey fatigue kills your completion rate.</div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px">👥 Phase 2: Workshop</h3>
+    <div class="roster">
+      <div class="roster-item" style="background:var(--mint)"><strong>Must have</strong><p>PM, Design lead, Eng lead, whoever ran the survey</p></div>
+      <div class="roster-item" style="background:var(--yellow)"><strong>Nice to have</strong><p>UX researcher, product marketing, customer support lead</p></div>
+    </div>
+  </div>
+
+  <div class="agenda">
+    <div class="ag-item"><div class="ag-time" style="background:var(--sky)">0–10</div><div class="ag-content"><h4>Present the results</h4><p>Show the Kano categories for each feature. Share the raw numbers — "72% said Must-Have, 18% Performance."</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--orange)">10–25</div><div class="ag-content"><h4>Discuss surprises</h4><p>Focus on features where the team assumed one category but users said another. These are the gold — your blind spots revealed.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--purple)">25–40</div><div class="ag-content"><h4>Audit Must-Haves</h4><p>Are any broken or missing? These are non-negotiable — fix them before touching anything else. Create action items.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--yellow)">40–50</div><div class="ag-content"><h4>Plan Performance investments</h4><p>Which Performance features will differentiate you? How much should you invest? These are your competitive levers.</p></div></div>
+    <div class="ag-item"><div class="ag-time" style="background:var(--mint)">50–60</div><div class="ag-content"><h4>Pick Delighter bets</h4><p>Choose 1–2 Delighters to prototype. These are high-risk, high-reward — validate cheaply before committing.</p></div></div>
+  </div>
+
+  <div class="insight">
+    <h4>💡 Facilitation tips</h4>
+    <p><strong>Show raw percentages</strong> — "72% Must-Have" is more convincing than "we classified this as Must-Have." Data shuts down opinion debates.</p>
+    <p style="margin-top:4px"><strong>Focus on disagreements</strong> — when survey says Delighter but the PM assumed Must-Have, that's where the best learning happens.</p>
+    <p style="margin-top:4px"><strong>Don't rank in this session</strong> — Kano categorizes. Use a separate RICE session to rank within categories.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Test Yourself →</button></div>
+</div>
+
+<!-- 9. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>6 questions to lock it in</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. A feature users expect but never praise — they only notice when it's MISSING. What is it?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,true)">🔴 Must-Have</button>
+        <button class="qo" onclick="ans(1,this,false)">📈 Performance</button>
+        <button class="qo" onclick="ans(1,this,false)">✨ Delighter</button>
+      </div>
+      <div class="qexp" id="q1e">Must-Haves = expected, invisible when present, infuriating when absent. Like a hotel having hot water.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. User answers: "I like it" if present, "I'm neutral" if absent. What category?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,false)">🔴 Must-Have</button>
+        <button class="qo" onclick="ans(2,this,true)">✨ Delighter</button>
+        <button class="qo" onclick="ans(2,this,false)">📈 Performance</button>
+      </div>
+      <div class="qexp" id="q2e">Like if present + neutral if absent = Delighter. They enjoy it but don't miss it — classic unexpected delight.</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. Your team wants to build a flashy new feature, but login is broken 10% of the time. What first?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,true)">Fix login (Must-Have)</button>
+        <button class="qo" onclick="ans(3,this,false)">Build the flashy feature (Delighter)</button>
+        <button class="qo" onclick="ans(3,this,false)">Do both in parallel</button>
+      </div>
+      <div class="qexp" id="q3e">Always fix broken Must-Haves first. Delighters can't overcome broken basics — users will leave before experiencing the wow.</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. What happens to Kano categories over time?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,false)">They stay the same</button>
+        <button class="qo" onclick="ans(4,this,true)">Delighters drift to Must-Haves</button>
+        <button class="qo" onclick="ans(4,this,false)">Must-Haves become Delighters</button>
+      </div>
+      <div class="qexp" id="q4e">Categories drift downward: Delighter → Performance → Must-Have. Today's wow is tomorrow's expectation. Re-evaluate annually.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. How many survey responses do you need for reliable Kano results?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,false)">5–10</button>
+        <button class="qo" onclick="ans(5,this,true)">30+ minimum</button>
+        <button class="qo" onclick="ans(5,this,false)">You don't need surveys</button>
+      </div>
+      <div class="qexp" id="q5e">Minimum 30 for directional results. With fewer, one outlier can change the entire category.</div>
+    </div>
+    <div class="qq" id="q6">
+      <p>6. Kano tells you the category, but not the order. What do you use to RANK features within a category?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(6,this,false)">Run Kano again</button>
+        <button class="qo" onclick="ans(6,this,true)">RICE or Value vs Effort</button>
+        <button class="qo" onclick="ans(6,this,false)">Ask the CEO</button>
+      </div>
+      <div class="qexp" id="q6e">Kano categorizes. RICE ranks. They're complementary — use Kano to decide what TYPE, then RICE to decide which ones within that type.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('session')">← Session</button><button class="pn-btn primary" onclick="goTo('categories')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">Kano Model — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+var panels=['categories','curve','survey','example','classify','judge','pitfalls','session','quiz'];
+var visited=new Set(['categories']);
+
+function goTo(id){
+  visited.add(id);
+  panels.forEach(function(p){document.getElementById('p-'+p).classList.remove('active');});
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Kano evaluation table
+var kanoTable={
+  'like_like':'Q','like_expect':'D','like_neutral':'D','like_tolerate':'D','like_dislike':'P',
+  'expect_like':'R','expect_expect':'I','expect_neutral':'I','expect_tolerate':'I','expect_dislike':'M',
+  'neutral_like':'R','neutral_expect':'I','neutral_neutral':'I','neutral_tolerate':'I','neutral_dislike':'M',
+  'tolerate_like':'R','tolerate_expect':'I','tolerate_neutral':'I','tolerate_tolerate':'I','tolerate_dislike':'M',
+  'dislike_like':'R','dislike_expect':'R','dislike_neutral':'R','dislike_tolerate':'R','dislike_dislike':'Q'
+};
+var catNames={M:'🔴 Must-Have',P:'📈 Performance',D:'✨ Delighter',I:'😐 Indifferent',R:'🔄 Reverse',Q:'❓ Questionable'};
+var catColors={M:'rgba(255,138,138,0.3)',P:'rgba(141,216,248,0.3)',D:'rgba(196,181,253,0.3)',I:'rgba(200,200,200,0.3)',R:'rgba(255,176,103,0.3)',Q:'rgba(255,225,77,0.3)'};
+var clfCount=0;
+
+function addClfFeature(){
+  var input=document.getElementById('clfInput');
+  var name=input.value.trim();
+  if(!name)return;
+  input.value='';
+  clfCount++;
+  var id=clfCount;
+  var html='<div class="clf-feature" id="clf'+id+'">';
+  html+='<h4>'+name+'</h4>';
+  html+='<div class="clf-row">';
+  html+='<div><label>If present, user feels:</label><select onchange="classifyFeature('+id+')" id="clf'+id+'f">';
+  html+='<option value="">— Select —</option><option value="like">😍 I like it</option><option value="expect">✅ I expect it</option><option value="neutral">😐 Neutral</option><option value="tolerate">🤷 Tolerate</option><option value="dislike">😤 Dislike</option></select></div>';
+  html+='<div><label>If absent, user feels:</label><select onchange="classifyFeature('+id+')" id="clf'+id+'d">';
+  html+='<option value="">— Select —</option><option value="like">😍 I like it</option><option value="expect">✅ I expect it</option><option value="neutral">😐 Neutral</option><option value="tolerate">🤷 Tolerate</option><option value="dislike">😤 Dislike</option></select></div>';
+  html+='</div>';
+  html+='<div class="clf-result" id="clf'+id+'r"></div>';
+  html+='</div>';
+  document.getElementById('clfList').insertAdjacentHTML('beforeend',html);
+  input.focus();
+}
+
+function classifyFeature(id){
+  var f=document.getElementById('clf'+id+'f').value;
+  var d=document.getElementById('clf'+id+'d').value;
+  var res=document.getElementById('clf'+id+'r');
+  if(!f||!d){res.classList.remove('show');return;}
+  var key=f+'_'+d;
+  var cat=kanoTable[key]||'Q';
+  res.textContent=catNames[cat];
+  res.style.background=catColors[cat];
+  res.classList.add('show');
+}
+
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+</script>
+</body>
+</html>

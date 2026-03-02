@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIRCLES Method — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#d4a017;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--white:#fff;
+  --pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;
+  --orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;--green:#3da66a;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+  /* Step colors */
+  --s1:#ff6b6b;--s2:#ffa94d;--s3:#ffd43b;--s4:#69db7c;--s5:#74c0fc;--s6:#b197fc;--s7:#f783ac;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--white);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;}
+
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--ink-soft);max-width:520px;margin:0 auto;font-weight:500;}
+
+/* CIRCLES HERO — the 7 letters */
+.circles-hero{margin:20px auto 28px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;}
+.ch-letter{width:clamp(46px,8vw,62px);height:clamp(46px,8vw,62px);background:var(--white);border:var(--bw) solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .15s;}
+.ch-letter:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow);}
+.ch-letter .ch-l{font-family:'Lilita One',sans-serif;font-size:clamp(22px,4vw,32px);line-height:1;}
+.ch-letter .ch-w{font-size:clamp(7px,1.2vw,9px);font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim);margin-top:1px;}
+
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);color:var(--ink);}
+
+/* STEP CARDS — overview */
+.step-flow{display:flex;flex-direction:column;gap:0;margin-bottom:16px;}
+.step-card{background:var(--cream);border:var(--bw) solid var(--border);padding:18px 18px 18px 72px;position:relative;transition:all .12s;}
+.step-card:first-child{border-radius:var(--radius) var(--radius) 0 0;}
+.step-card:last-child{border-radius:0 0 var(--radius) var(--radius);box-shadow:var(--shadow);}
+.step-card:not(:last-child){border-bottom:none;}
+.step-card:hover{background:var(--cream-dark);}
+.step-card .sn{position:absolute;left:14px;top:14px;width:44px;height:44px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:2px 2px 0 var(--border);}
+.step-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:2px;}
+.step-card .step-sub{font-size:12px;color:var(--ink-dim);font-weight:600;font-style:italic;}
+.step-card p{font-size:13px;color:var(--ink-dim);line-height:1.55;margin-top:4px;}
+
+/* DEEP DIVE STEP */
+.dd-step{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:14px;position:relative;overflow:hidden;}
+.dd-step .dd-bar{position:absolute;top:0;left:0;right:0;height:6px;}
+.dd-step h3{font-family:'Lilita One',sans-serif;font-size:20px;margin-bottom:2px;display:flex;align-items:center;gap:10px;}
+.dd-step .dd-letter{width:38px;height:38px;min-width:38px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:20px;box-shadow:2px 2px 0 var(--border);}
+.dd-step .dd-q{font-size:14px;font-weight:600;color:var(--ink-dim);font-style:italic;margin:4px 0 8px;padding-left:4px;border-left:3px solid var(--mint);}
+.dd-step p{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.dd-step .dd-do{margin-top:10px;padding:10px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.6;}
+.dd-step .dd-do strong{display:block;margin-bottom:2px;}
+.dd-step .dd-time{position:absolute;top:14px;right:14px;padding:3px 10px;border-radius:100px;border:2px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
+
+/* WALKTHROUGH */
+.wt-step{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:12px;position:relative;overflow:hidden;}
+.wt-step .wt-bar{position:absolute;top:0;left:0;right:0;height:5px;}
+.wt-step h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.wt-step .wt-letter{width:30px;height:30px;min-width:30px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:15px;box-shadow:2px 2px 0 var(--border);}
+.wt-step .wt-content{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.wt-step .wt-output{margin-top:8px;padding:10px 14px;border-radius:var(--radius-xs);border:2px dashed var(--border);font-size:12px;line-height:1.6;background:rgba(255,225,77,0.1);}
+.wt-step .wt-output::before{content:'💬 You say: ';font-weight:800;color:var(--ink);}
+
+/* PRACTICE TOOL */
+.practice{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.pr-prompt{padding:16px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);background:var(--yellow);font-size:15px;font-weight:700;text-align:center;margin-bottom:16px;}
+.pr-step{margin-bottom:14px;padding-bottom:14px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.pr-step:last-of-type{border-bottom:none;}
+.pr-step label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.pr-step label .pr-badge{width:24px;height:24px;border-radius:6px;border:2px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:13px;}
+.pr-step textarea{width:100%;padding:10px 14px;background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;min-height:60px;outline:none;transition:all .12s;}
+.pr-step textarea:focus{box-shadow:var(--shadow-sm);transform:translate(-1px,-1px);}
+.pr-step .pr-hint{font-size:11px;color:var(--ink-muted);margin-top:4px;font-style:italic;}
+
+/* WHEN / PITFALLS / SESSION / QUIZ — reused from prior */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card.do h3{color:#1a8a50;}.when-card.dont h3{color:#c03030;}
+.when-card ul{list-style:none;}
+.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.when-card.do li::before{content:'✓';position:absolute;left:2px;font-weight:900;color:#1a8a50;font-size:14px;}
+.when-card.dont li::before{content:'✗';position:absolute;left:2px;font-weight:900;color:#c03030;font-size:14px;}
+.m-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.m-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;transition:all .12s;}
+.m-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.m-num{width:46px;height:46px;border-radius:12px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:var(--shadow-sm);}
+.m-card h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:3px;}
+.m-card .mb{font-size:13px;color:var(--ink-dim);line-height:1.55;}
+.m-card .fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.4;}.m-card .fix::before{content:'✅ Fix: ';font-weight:800;}
+
+.interview-timeline{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;}
+.it-item{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bw) solid var(--border);}
+.it-item:last-child{border-bottom:none;}
+.it-time{padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;}
+.it-content{padding:14px 16px;border-left:var(--bw) solid var(--border);}
+.it-content h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.it-content p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+.quiz-box{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.quiz-box h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;}
+.qq{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.qq:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.qq p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;}
+.qo{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.qo:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.qo.correct{background:var(--mint)}.qo.wrong{background:var(--rose)}
+.qo.disabled{pointer-events:none;opacity:.45;}
+.qexp{display:none;margin-top:8px;padding:8px 12px;background:rgba(255,225,77,0.25);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.qexp.show{display:block;animation:panelIn .3s;}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(0,0,0,0.3);font-weight:600;}
+@media(max-width:680px){
+  .when-grid{grid-template-columns:1fr;}
+  .j-btn{padding:8px 2px;font-size:8px;}.j-btn .j-step{font-size:7px;}
+  .m-card{grid-template-columns:36px 1fr;gap:10px;}.m-num{width:36px;height:36px;font-size:18px;}
+  .it-item{grid-template-columns:64px 1fr;}.it-time{font-size:10px;}
+  .tldr{flex-direction:column;}.qopts{flex-direction:column;}
+  .step-card{padding-left:62px;}.step-card .sn{width:36px;height:36px;font-size:18px;left:12px;}
+  .dd-step .dd-time{position:static;display:inline-block;margin-bottom:8px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<section class="header">
+  <div class="header-badge">✏️ Design Framework</div>
+  <h1>CIRCLES Method</h1>
+  <p class="sub">A 7-step framework for answering any product design question. The PM interview gold standard.</p>
+</section>
+
+<div class="circles-hero">
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s1)">C</span><span class="ch-w">Comprehend</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s2)">I</span><span class="ch-w">Identify</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s3)">R</span><span class="ch-w">Report</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s4)">C</span><span class="ch-w">Cut</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s5)">L</span><span class="ch-w">List</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s6)">E</span><span class="ch-w">Evaluate</span></div>
+  <div class="ch-letter"><span class="ch-l" style="color:var(--s7)">S</span><span class="ch-w">Summarize</span></div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <p><strong>In 15 seconds:</strong> CIRCLES gives you a repeatable 7-step structure to answer "Design a product for X" questions. <strong>Comprehend</strong> the situation, <strong>Identify</strong> users, <strong>Report</strong> their needs, <strong>Cut</strong> to one priority, <strong>List</strong> solutions, <strong>Evaluate</strong> tradeoffs, <strong>Summarize</strong> your recommendation. Works in interviews and real product work.</p>
+</div>
+
+<div class="journey-nav">
+  <button class="j-btn active" onclick="goTo('overview')"><span class="j-step">01</span>7 Steps</button>
+  <button class="j-btn" onclick="goTo('deep')"><span class="j-step">02</span>Deep Dive</button>
+  <button class="j-btn" onclick="goTo('example')"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="goTo('practice')"><span class="j-step">04</span>Practice</button>
+  <button class="j-btn" onclick="goTo('judge')"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="goTo('pitfalls')"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="goTo('interview')"><span class="j-step">07</span>Interview</button>
+  <button class="j-btn" onclick="goTo('quiz')"><span class="j-step">08</span>Quiz</button>
+</div>
+
+<!-- 1. OVERVIEW -->
+<div id="p-overview" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">🧩</div>
+    <div class="sec-label"><h2>The 7 Steps</h2><p>Follow this order every time — build the habit</p></div>
+  </div>
+  <div class="step-flow">
+    <div class="step-card"><div class="sn" style="background:var(--s1)">C</div><h3>Comprehend the Situation</h3><span class="step-sub">"What exactly are we solving?"</span><p>Clarify the prompt. Ask questions. Understand constraints, goals, and the company context before touching any solutions.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s2)">I</div><h3>Identify the Users</h3><span class="step-sub">"Who are we building for?"</span><p>List user segments. Pick one primary persona to focus on. You can't design for everyone — choose.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s3)">R</div><h3>Report Their Needs</h3><span class="step-sub">"What are their pain points?"</span><p>List the top 3–5 needs or pain points of your chosen user. Prioritize by severity and frequency.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s4)">C</div><h3>Cut Through Prioritization</h3><span class="step-sub">"Which need do we solve first?"</span><p>Pick ONE pain point to focus on. Justify why this one wins. Use impact, reach, or urgency as criteria.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s5)">L</div><h3>List Solutions</h3><span class="step-sub">"How could we solve this?"</span><p>Brainstorm 3–5 solution ideas. Range from simple to ambitious. Don't judge yet — just generate.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s6)">E</div><h3>Evaluate Tradeoffs</h3><span class="step-sub">"Which solution wins and why?"</span><p>Compare solutions on impact, effort, risk, and alignment. Pick one and explain the tradeoffs clearly.</p></div>
+    <div class="step-card"><div class="sn" style="background:var(--s7)">S</div><h3>Summarize</h3><span class="step-sub">"Here's what I recommend."</span><p>Recap: user → problem → solution → why. Mention metrics to track and next steps. Crisp 30-second pitch.</p></div>
+  </div>
+  <div class="insight">
+    <h4>🧠 Memory trick</h4>
+    <p>The flow mirrors how a detective works: <strong>understand the scene → identify the person → discover the problem → narrow the lead → explore options → weigh evidence → present the case.</strong></p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('deep')">Next: Deep Dive →</button></div>
+</div>
+
+<!-- 2. DEEP DIVE -->
+<div id="p-deep" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🔍</div>
+    <div class="sec-label"><h2>Each Step in Detail</h2><p>What to do, what to say, how long to spend</p></div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s1)"></div>
+    <div class="dd-time" style="background:rgba(255,107,107,0.2)">⏱ 2–3 min</div>
+    <h3><div class="dd-letter" style="background:var(--s1)">C</div> Comprehend</h3>
+    <div class="dd-q">"Before I jump in, let me make sure I understand the problem..."</div>
+    <p>Ask clarifying questions to nail down: What's the goal? Who's the company? What are the constraints (time, budget, platform)? What does success look like?</p>
+    <div class="dd-do" style="background:rgba(255,107,107,0.1)"><strong>Questions to ask:</strong> "What metric are we optimizing for?" · "Is this mobile, web, or both?" · "Who's the target audience?" · "What's the timeline?" · "Are there competitors doing this?"</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s2)"></div>
+    <div class="dd-time" style="background:rgba(255,169,77,0.2)">⏱ 2–3 min</div>
+    <h3><div class="dd-letter" style="background:var(--s2)">I</div> Identify Users</h3>
+    <div class="dd-q">"Let me think about who uses this..."</div>
+    <p>List 2–4 user segments. For each, note their context, goals, and tech comfort. Then explicitly pick ONE to focus on and explain why.</p>
+    <div class="dd-do" style="background:rgba(255,169,77,0.1)"><strong>Template:</strong> "I see three types of users: [A], [B], and [C]. I'll focus on [A] because they have the highest pain + largest segment."</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s3)"></div>
+    <div class="dd-time" style="background:rgba(255,212,59,0.2)">⏱ 2–3 min</div>
+    <h3><div class="dd-letter" style="background:var(--s3)">R</div> Report Needs</h3>
+    <div class="dd-q">"For this user, the biggest pain points are..."</div>
+    <p>List 3–5 needs or pain points. Use: "They need to [verb] because [reason]" format. Ground them in real behavior, not assumptions.</p>
+    <div class="dd-do" style="background:rgba(255,212,59,0.1)"><strong>Pro tip:</strong> Frame needs as problems, not solutions. "They need to find friends easily" not "They need a search bar."</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s4)"></div>
+    <div class="dd-time" style="background:rgba(105,219,124,0.2)">⏱ 1–2 min</div>
+    <h3><div class="dd-letter" style="background:var(--s4)">C</div> Cut / Prioritize</h3>
+    <div class="dd-q">"If I had to pick one, I'd focus on..."</div>
+    <p>Pick the #1 pain point. Justify with a clear reason: highest impact, affects most users, aligns with company goals, or biggest gap vs. competitors.</p>
+    <div class="dd-do" style="background:rgba(105,219,124,0.1)"><strong>Template:</strong> "I'll focus on [need] because it affects the most users and directly impacts [metric]."</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s5)"></div>
+    <div class="dd-time" style="background:rgba(116,192,252,0.2)">⏱ 3–5 min</div>
+    <h3><div class="dd-letter" style="background:var(--s5)">L</div> List Solutions</h3>
+    <div class="dd-q">"Here are a few ways we could solve this..."</div>
+    <p>Generate 3 solutions: one simple/fast, one medium, one ambitious. Describe each briefly — what the user sees and does. This is your creative moment.</p>
+    <div class="dd-do" style="background:rgba(116,192,252,0.1)"><strong>Range them:</strong> "Quick win: [simple]. Better: [medium]. Best: [ambitious]." This shows product thinking, not just design thinking.</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s6)"></div>
+    <div class="dd-time" style="background:rgba(177,151,252,0.2)">⏱ 2–3 min</div>
+    <h3><div class="dd-letter" style="background:var(--s6)">E</div> Evaluate Tradeoffs</h3>
+    <div class="dd-q">"Comparing these options..."</div>
+    <p>Compare on: user impact, implementation effort, risk, alignment with goals. Pick a winner and explain what you're sacrificing. Tradeoff awareness is the signal interviewers want.</p>
+    <div class="dd-do" style="background:rgba(177,151,252,0.1)"><strong>Template:</strong> "I'd go with [B] because it has [X impact] for [Y effort]. [A] is faster but doesn't solve the core problem. [C] is ideal long-term but too risky for now."</div>
+  </div>
+
+  <div class="dd-step"><div class="dd-bar" style="background:var(--s7)"></div>
+    <div class="dd-time" style="background:rgba(247,131,172,0.2)">⏱ 1–2 min</div>
+    <h3><div class="dd-letter" style="background:var(--s7)">S</div> Summarize</h3>
+    <div class="dd-q">"To wrap up..."</div>
+    <p>Recap in 30 seconds: who the user is, what problem you're solving, your recommended solution, why it wins, and how you'd measure success.</p>
+    <div class="dd-do" style="background:rgba(247,131,172,0.1)"><strong>Template:</strong> "We're solving [problem] for [user] by building [solution]. I'd measure success with [metric] and test it by [MVP approach]."</div>
+  </div>
+
+  <div class="insight">
+    <h4>⏱ Total time: ~15–20 minutes</h4>
+    <p>In a 35-minute PM interview, CIRCLES takes about 18 minutes. This leaves ~5 min for questions at the start and ~10 min for follow-up discussion. Don't rush — but don't linger on any single step either.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('overview')">← Overview</button><button class="pn-btn primary" onclick="goTo('example')">Next: Full Example →</button></div>
+</div>
+
+<!-- 3. EXAMPLE -->
+<div id="p-example" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">📱</div>
+    <div class="sec-label"><h2>Full Walkthrough</h2><p>"Design a feature for elderly users to use ride-sharing"</p></div>
+  </div>
+
+  <div class="c-card-static">
+    <div class="pr-prompt" style="margin-bottom:0">🎤 "Design a feature for elderly users to use ride-sharing apps more easily."</div>
+  </div>
+
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s1)"></div>
+    <h4><div class="wt-letter" style="background:var(--s1)">C</div> Comprehend</h4>
+    <div class="wt-content">Clarify: Is this for an existing app like Uber/Lyft or a new product? What defines "elderly"? Are we focused on booking, navigation, or the full journey?</div>
+    <div class="wt-output">I'll assume we're designing for Uber, targeting users 70+, and focusing on the booking experience since that's the highest friction point for this demographic.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s2)"></div>
+    <h4><div class="wt-letter" style="background:var(--s2)">I</div> Identify Users</h4>
+    <div class="wt-content">Three segments: (A) Tech-comfortable seniors who use smartphones daily, (B) Reluctant tech users who only use basic apps, (C) Non-tech users who depend on family for help.</div>
+    <div class="wt-output">I'll focus on Group B — reluctant tech users. They HAVE a smartphone but find complex UIs overwhelming. This is the largest group with the most room for improvement.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s3)"></div>
+    <h4><div class="wt-letter" style="background:var(--s3)">R</div> Report Needs</h4>
+    <div class="wt-content">Top pain points: (1) Too many steps to book a ride. (2) Small text and confusing map interface. (3) Anxiety about getting into a stranger's car. (4) Difficulty communicating with drivers. (5) No easy way for family to monitor trips.</div>
+    <div class="wt-output">These users need a simpler flow, larger UI elements, safety reassurance, and a connection to their support network.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s4)"></div>
+    <h4><div class="wt-letter" style="background:var(--s4)">C</div> Cut</h4>
+    <div class="wt-content">Pain #1 (too many steps) is the gateway problem — if they can't even book the ride, nothing else matters.</div>
+    <div class="wt-output">I'll focus on reducing booking friction because it's the top-of-funnel blocker. If we fix this, more elderly users complete their first ride, which unlocks retention.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s5)"></div>
+    <h4><div class="wt-letter" style="background:var(--s5)">L</div> List Solutions</h4>
+    <div class="wt-content"><strong>A) One-tap favorites:</strong> Save frequent destinations (doctor, grocery, home). One giant button per destination. <strong>B) Voice booking:</strong> "Take me to Dr. Smith" via voice command. <strong>C) Family booking:</strong> A loved one pre-schedules rides remotely from their own app.</div>
+    <div class="wt-output">Three solutions ranging from simple UI change (A) to voice AI (B) to multi-user coordination (C).</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s6)"></div>
+    <h4><div class="wt-letter" style="background:var(--s6)">E</div> Evaluate</h4>
+    <div class="wt-content"><strong>A</strong> is easiest to build and test — low effort, clear impact. <strong>B</strong> is exciting but voice UX is hard and error-prone for elderly users. <strong>C</strong> is powerful but requires a second user to adopt the feature.</div>
+    <div class="wt-output">I'd recommend A (one-tap favorites) as the MVP. It solves the core friction with minimal complexity. We can layer B and C later as the user base grows.</div>
+  </div>
+  <div class="wt-step"><div class="wt-bar" style="background:var(--s7)"></div>
+    <h4><div class="wt-letter" style="background:var(--s7)">S</div> Summarize</h4>
+    <div class="wt-output">We're solving ride-booking friction for reluctant-tech elderly users (70+) by adding one-tap favorite destinations — giant buttons for "Home," "Doctor," "Grocery" that book a ride in one tap. I'd measure success with first-ride completion rate for 70+ users and weekly active bookings. MVP: add 3 preset buttons to the home screen, test with 500 users in one city over 4 weeks.</div>
+  </div>
+
+  <div class="insight">
+    <h4>🔍 Why this answer works</h4>
+    <p>Notice the funnel: started broad (all elderly), narrowed to one segment, narrowed to one problem, explored multiple solutions, picked the simplest effective one, and ended with measurable success criteria. That's CIRCLES in action.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('deep')">← Deep Dive</button><button class="pn-btn primary" onclick="goTo('practice')">Next: Practice →</button></div>
+</div>
+
+<!-- 4. PRACTICE -->
+<div id="p-practice" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">✍️</div>
+    <div class="sec-label"><h2>Practice It</h2><p>Work through a prompt step by step</p></div>
+  </div>
+  <div class="practice">
+    <div class="pr-prompt" id="practicePrompt">🎤 "Design a feature for a fitness app that helps users stay motivated"</div>
+    <button onclick="newPrompt()" style="display:block;margin:0 auto 18px;padding:8px 18px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);">🔀 New prompt</button>
+
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s1)">C</span> Comprehend — Clarifying questions</label><textarea placeholder="What questions would you ask? (goal, platform, constraints...)"></textarea><div class="pr-hint">Aim for 3–5 specific questions. Avoid generic ones.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s2)">I</span> Identify Users — Who are they?</label><textarea placeholder="List 2–3 user segments, then pick one to focus on..."></textarea><div class="pr-hint">Name the segment and explain WHY you chose it.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s3)">R</span> Report Needs — Pain points</label><textarea placeholder="Top 3–5 needs or pain points of your chosen user..."></textarea><div class="pr-hint">Frame as problems, not solutions. "They struggle to..." not "They need a button."</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s4)">C</span> Cut — Pick one priority</label><textarea placeholder="Which pain point do you focus on and why?"></textarea><div class="pr-hint">Justify with impact, reach, or alignment.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s5)">L</span> List Solutions — 3 ideas</label><textarea placeholder="Quick win, medium, ambitious — describe each briefly..."></textarea><div class="pr-hint">Range from simple to creative. Don't self-censor yet.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s6)">E</span> Evaluate — Compare and pick</label><textarea placeholder="Which solution wins? What are the tradeoffs?"></textarea><div class="pr-hint">Name what you're sacrificing. Tradeoff awareness = PM signal.</div></div>
+    <div class="pr-step"><label><span class="pr-badge" style="background:var(--s7)">S</span> Summarize — 30-second pitch</label><textarea placeholder="User → Problem → Solution → Why → Metric → MVP"></textarea><div class="pr-hint">Practice saying this out loud. Under 30 seconds.</div></div>
+  </div>
+  <div class="tip">The best practice is timed. Set a 20-minute timer and work through the whole thing without stopping. Repeat with 3–5 different prompts.</div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('example')">← Example</button><button class="pn-btn primary" onclick="goTo('judge')">Next: When to Use →</button></div>
+</div>
+
+<!-- 5. WHEN -->
+<div id="p-judge" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">⚖️</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Built for interviews, useful beyond them</p></div>
+  </div>
+  <div class="when-grid">
+    <div class="when-card do">
+      <h3>✅ Use CIRCLES when...</h3>
+      <ul>
+        <li>PM interview — "Design a product/feature for X"</li>
+        <li>New feature ideation when you need structure</li>
+        <li>Stakeholder says "We should build X" — CIRCLES helps you think before committing</li>
+        <li>Exploring a problem space you're unfamiliar with</li>
+        <li>Teaching junior PMs how to think about product design</li>
+      </ul>
+    </div>
+    <div class="when-card dont">
+      <h3>🚫 Skip CIRCLES when...</h3>
+      <ul>
+        <li>You already understand the problem deeply — just design</li>
+        <li>Urgent bug fix or fire — not the time for a structured exercise</li>
+        <li>Prioritizing between known features → use RICE/ICE instead</li>
+        <li>Technical design (architecture, APIs) → different toolset</li>
+        <li>The problem is well-defined and you just need solutions</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🔗 How CIRCLES connects to other frameworks</h4>
+    <p><strong>CIRCLES</strong> generates the feature ideas. Then <strong>RICE/ICE</strong> ranks them. And <strong>Kano</strong> tells you what type they are. CIRCLES is the <em>beginning</em> of the product pipeline — discovery, not delivery.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('practice')">← Practice</button><button class="pn-btn primary" onclick="goTo('pitfalls')">Next: Pitfalls →</button></div>
+</div>
+
+<!-- 6. PITFALLS -->
+<div id="p-pitfalls" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose)">⚠️</div>
+    <div class="sec-label"><h2>6 Common Pitfalls</h2><p>Most people fail at steps 1–2, not 5–7</p></div>
+  </div>
+  <div class="m-list">
+    <div class="m-card"><div class="m-num" style="background:var(--s1)">1</div><div><h4>Skipping Comprehend</h4><p class="mb">Jumping to solutions immediately. The interviewer gave you a vague prompt ON PURPOSE — they want to see you clarify.</p><div class="fix">Force yourself to ask 3–5 questions before touching anything else. "Let me make sure I understand..." buys you clarity AND time.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--s2)">2</div><div><h4>Designing for "everyone"</h4><p class="mb">Not picking a specific user. "All users" means you design for no one.</p><div class="fix">Name 2–3 segments, explicitly pick ONE, and say why. "I'll focus on segment B because..."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--s3)">3</div><div><h4>Listing solutions as needs</h4><p class="mb">"They need a search bar" is a solution, not a need. "They can't find what they're looking for" is the need.</p><div class="fix">Use "They struggle to..." or "They need to [verb]" format. Never name UI elements in the Needs step.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--s5)">4</div><div><h4>Only one solution</h4><p class="mb">Going straight to your best idea. This looks like you can't think broadly. Interviewers want to see creative range.</p><div class="fix">Always generate 3: quick win, medium, ambitious. Even if you know which one wins, show the range first.</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--s6)">5</div><div><h4>No tradeoffs in Evaluate</h4><p class="mb">"Solution B is the best" with no comparison. Tradeoff awareness is THE signal interviewers screen for.</p><div class="fix">For each option, state what you gain AND what you lose. "B has higher impact but takes longer. A is faster but doesn't fully solve the problem."</div></div></div>
+    <div class="m-card"><div class="m-num" style="background:var(--s7)">6</div><div><h4>No metrics in Summary</h4><p class="mb">Great recommendation but no way to measure success. How would you know if it worked?</p><div class="fix">End with: "I'd measure success with [metric] and test with [MVP approach]." This shows product rigor.</div></div></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('judge')">← When</button><button class="pn-btn primary" onclick="goTo('interview')">Next: Interview Guide →</button></div>
+</div>
+
+<!-- 7. INTERVIEW -->
+<div id="p-interview" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">🎤</div>
+    <div class="sec-label"><h2>Using CIRCLES in an Interview</h2><p>35-minute product design question — here's the timeline</p></div>
+  </div>
+
+  <div class="interview-timeline">
+    <div class="it-item"><div class="it-time" style="background:rgba(255,107,107,0.2)">0–3</div><div class="it-content"><h4>C — Comprehend</h4><p>Listen to the prompt. Ask 3–5 clarifying questions. Restate your understanding: "So I'm designing [X] for [Y] to achieve [Z]."</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,169,77,0.2)">3–6</div><div class="it-content"><h4>I — Identify Users</h4><p>Name 2–3 user segments. Pick one. Say: "I'll focus on [segment] because [reason]." Pause for interviewer nod.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(255,212,59,0.2)">6–9</div><div class="it-content"><h4>R — Report Needs</h4><p>List 3–5 pain points for your chosen user. Use real scenarios: "When they try to [action], they struggle because..."</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(105,219,124,0.2)">9–11</div><div class="it-content"><h4>C — Cut</h4><p>Pick one pain point. "I'll focus on [need] because it has the highest impact on [metric]." Brief justification.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(116,192,252,0.2)">11–18</div><div class="it-content"><h4>L — List Solutions</h4><p>This is your creative showcase. Spend the most time here. Describe 3 solutions with enough detail that the interviewer can visualize them.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(177,151,252,0.2)">18–22</div><div class="it-content"><h4>E — Evaluate</h4><p>Compare solutions on impact vs effort. State tradeoffs clearly. "I recommend [B] because [reasoning]. The tradeoff is [sacrifice]."</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(247,131,172,0.2)">22–24</div><div class="it-content"><h4>S — Summarize</h4><p>30-second recap: user → problem → solution → metric → MVP. Crisp and confident.</p></div></div>
+    <div class="it-item"><div class="it-time" style="background:rgba(200,200,200,0.2)">24–35</div><div class="it-content"><h4>Follow-up Discussion</h4><p>Interviewer digs into your choices. Be ready to defend or pivot. "That's a great point — if we consider [X], we might shift to..."</p></div></div>
+  </div>
+
+  <div class="insight">
+    <h4>💡 Interview tips</h4>
+    <p><strong>Signal each step verbally:</strong> "Now let me identify the users..." This shows structure and lets the interviewer follow your thinking.</p>
+    <p style="margin-top:6px"><strong>Check in after step 2:</strong> "Does this user focus make sense, or would you like me to explore a different segment?" This shows collaboration.</p>
+    <p style="margin-top:6px"><strong>Don't memorize — internalize.</strong> Interviewers can spot rehearsed answers. Practice the framework enough that it's natural, not robotic.</p>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">🎯 What interviewers are actually scoring</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:10px 12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(126,232,178,0.12);font-size:12px;line-height:1.5"><strong style="display:block;margin-bottom:2px;color:#1a8a50">✅ Signals strength</strong>Asking clarifying questions · Choosing a specific user · Explaining tradeoffs · Mentioning metrics · Structured thinking</div>
+      <div style="padding:10px 12px;border-radius:var(--radius-xs);border:2px solid var(--border);background:rgba(255,138,138,0.12);font-size:12px;line-height:1.5"><strong style="display:block;margin-bottom:2px;color:#c03030">🚩 Signals weakness</strong>Jumping to solutions · Designing for "everyone" · Only one idea · No tradeoffs · No success metrics · Robotic/memorized delivery</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('pitfalls')">← Pitfalls</button><button class="pn-btn primary" onclick="goTo('quiz')">Next: Test Yourself →</button></div>
+</div>
+
+<!-- 8. QUIZ -->
+<div id="p-quiz" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🧠</div>
+    <div class="sec-label"><h2>Quick Quiz</h2><p>6 questions to lock it in</p></div>
+  </div>
+  <div class="quiz-box">
+    <div class="qq" id="q1">
+      <p>1. What's the FIRST thing you should do when you hear a product design prompt?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(1,this,false)">List user segments</button>
+        <button class="qo" onclick="ans(1,this,true)">Ask clarifying questions (Comprehend)</button>
+        <button class="qo" onclick="ans(1,this,false)">Start brainstorming solutions</button>
+      </div>
+      <div class="qexp" id="q1e">Always Comprehend first. The prompt is vague on purpose. Clarifying shows you think before you build.</div>
+    </div>
+    <div class="qq" id="q2">
+      <p>2. "They need a search bar" — is this a need or a solution?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(2,this,false)">Need</button>
+        <button class="qo" onclick="ans(2,this,true)">Solution (the need is "they can't find what they're looking for")</button>
+      </div>
+      <div class="qexp" id="q2e">A search bar is a solution. The need is: "Users struggle to find specific items." Always frame needs as problems, not UI elements.</div>
+    </div>
+    <div class="qq" id="q3">
+      <p>3. How many solutions should you list in the L step?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(3,this,false)">1 (your best idea)</button>
+        <button class="qo" onclick="ans(3,this,true)">3 (quick win, medium, ambitious)</button>
+        <button class="qo" onclick="ans(3,this,false)">As many as possible</button>
+      </div>
+      <div class="qexp" id="q3e">Always 3 — ranging from simple to ambitious. This shows creative range and product thinking. One idea looks narrow; too many wastes time.</div>
+    </div>
+    <div class="qq" id="q4">
+      <p>4. What's the most important signal in the Evaluate step?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(4,this,false)">Picking the most ambitious solution</button>
+        <button class="qo" onclick="ans(4,this,true)">Explaining tradeoffs — what you gain AND lose</button>
+        <button class="qo" onclick="ans(4,this,false)">Comparing development timelines</button>
+      </div>
+      <div class="qexp" id="q4e">Tradeoff awareness is THE PM signal. "B has higher impact but costs more. A is faster but doesn't fully solve it." This shows you think in tradeoffs, not absolutes.</div>
+    </div>
+    <div class="qq" id="q5">
+      <p>5. Your Summary should end with...</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(5,this,false)">A thank you to the interviewer</button>
+        <button class="qo" onclick="ans(5,this,true)">Success metrics and MVP approach</button>
+        <button class="qo" onclick="ans(5,this,false)">A disclaimer that it could change</button>
+      </div>
+      <div class="qexp" id="q5e">End with: "I'd measure success with [metric] and test with [MVP]." This shows you think in terms of outcomes, not just outputs.</div>
+    </div>
+    <div class="qq" id="q6">
+      <p>6. After CIRCLES generates feature ideas, what framework helps you rank them?</p>
+      <div class="qopts">
+        <button class="qo" onclick="ans(6,this,false)">CIRCLES again</button>
+        <button class="qo" onclick="ans(6,this,true)">RICE or ICE</button>
+        <button class="qo" onclick="ans(6,this,false)">Kano Model</button>
+      </div>
+      <div class="qexp" id="q6e">CIRCLES generates ideas. RICE/ICE ranks them. Kano categorizes them. They're complementary — CIRCLES is discovery, the others are prioritization.</div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('interview')">← Interview</button><button class="pn-btn primary" onclick="goTo('overview')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">CIRCLES Method — PM Frameworks Guidebook</div>
+</div>
+
+<script>
+var panels=['overview','deep','example','practice','judge','pitfalls','interview','quiz'];
+var visited=new Set(['overview']);
+function goTo(id){
+  visited.add(id);
+  panels.forEach(function(p){document.getElementById('p-'+p).classList.remove('active');});
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+var prompts=[
+  '"Design a feature for a fitness app that helps users stay motivated"',
+  '"Design a grocery delivery experience for busy parents"',
+  '"Improve the airport check-in experience"',
+  '"Design a feature to help remote teams build culture"',
+  '"Design a tool to help college students manage their finances"',
+  '"Improve how people discover new restaurants in their neighborhood"',
+  '"Design a feature for a music app to help users discover new artists"',
+  '"Design an experience to help first-time home buyers"',
+  '"Improve the experience of returning online purchases"',
+  '"Design a feature to reduce food waste in households"'
+];
+var currentPrompt=0;
+function newPrompt(){
+  currentPrompt=(currentPrompt+1)%prompts.length;
+  document.getElementById('practicePrompt').innerHTML='🎤 '+prompts[currentPrompt];
+}
+function ans(n,btn,correct){
+  var q=document.getElementById('q'+n);
+  q.querySelectorAll('.qo').forEach(function(b){b.classList.add('disabled');});
+  btn.classList.add(correct?'correct':'wrong');
+  setTimeout(function(){document.getElementById('q'+n+'e').classList.add('show');},correct?0:500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Story Mapping — Learn It, Use It</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#d4a017;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;
+--l1:#ff6b6b;--l2:#ffa94d;--l3:#ffe14d;--l4:#69db7c;--l5:#74c0fc;--l6:#c4b5fd;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--white);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--ink-soft);max-width:520px;margin:0 auto;font-weight:500;}
+
+/* MAP HERO — visual backbone + body */
+.map-hero{margin:20px auto 24px;max-width:640px;}
+.map-row{display:flex;gap:6px;justify-content:center;margin-bottom:4px;}
+.map-cell{padding:8px 10px;border:var(--bw) solid var(--border);border-radius:10px;text-align:center;min-width:clamp(56px,12vw,100px);box-shadow:var(--shadow-sm);transition:all .15s;cursor:default;}
+.map-cell:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.map-cell .mc-icon{font-size:clamp(16px,3vw,22px);display:block;}
+.map-cell .mc-label{font-family:'Lilita One',sans-serif;font-size:clamp(8px,1.5vw,11px);}
+.map-backbone .map-cell{background:var(--white);}
+.map-body1 .map-cell{background:var(--mint);}
+.map-body2 .map-cell{background:var(--sky);}
+.map-body3 .map-cell{background:var(--purple);}
+.map-divider{height:2px;background:var(--border);margin:6px 0;position:relative;display:flex;align-items:center;justify-content:flex-start;padding-left:4px;}
+.map-divider .md-label{background:var(--yellow);padding:0 10px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;border-radius:4px;border:2px solid var(--border);position:relative;z-index:1;}
+
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(0,0,0,0.12);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);}
+
+/* LAYER CARDS */
+.layer-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .12s;}
+.layer-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.layer-card .lc-bar{position:absolute;top:0;left:0;right:0;height:6px;}
+.layer-card h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:2px;display:flex;align-items:center;gap:10px;}
+.layer-card .lc-num{width:38px;height:38px;min-width:38px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:18px;box-shadow:2px 2px 0 var(--border);}
+.layer-card .lc-tag{position:absolute;top:14px;right:14px;padding:3px 10px;border-radius:100px;border:2px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
+.layer-card p{font-size:13px;color:var(--ink-dim);line-height:1.6;margin-top:6px;}
+.layer-card .lc-example{margin-top:10px;padding:10px 14px;border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.6;background:rgba(255,225,77,0.12);}
+.layer-card .lc-example strong{display:block;margin-bottom:2px;}
+
+/* ANATOMY VISUAL */
+.anatomy-diagram{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;overflow-x:auto;}
+.anat-row{display:flex;gap:8px;margin-bottom:6px;align-items:stretch;min-width:600px;}
+.anat-cell{flex:1;padding:10px;border:var(--bw) solid var(--border);border-radius:10px;text-align:center;font-size:12px;font-weight:700;box-shadow:2px 2px 0 var(--border);min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.anat-cell .ac-icon{font-size:18px;}
+.anat-cell .ac-label{font-family:'Lilita One',sans-serif;font-size:11px;}
+.anat-cell .ac-desc{font-size:9px;font-weight:500;color:var(--ink-dim);line-height:1.3;}
+.anat-label{min-width:80px;max-width:80px;padding:8px;display:flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;border-radius:8px;border:2px solid var(--border);}
+.anat-sep{display:flex;align-items:center;gap:8px;margin:6px 0;min-width:600px;}
+.anat-sep hr{flex:1;border:none;height:3px;background:var(--border);}
+.anat-sep span{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:var(--yellow);padding:2px 12px;border-radius:4px;border:2px solid var(--border);white-space:nowrap;}
+.anat-arrow{text-align:center;font-size:20px;margin:2px 0;min-width:600px;}
+
+/* EXAMPLE WALKTHROUGH */
+.wt-step{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:12px;position:relative;overflow:hidden;}
+.wt-step .wt-bar{position:absolute;top:0;left:0;right:0;height:5px;}
+.wt-step h4{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.wt-step .wt-num{width:30px;height:30px;min-width:30px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:15px;box-shadow:2px 2px 0 var(--border);}
+.wt-step .wt-content{font-size:13px;color:var(--ink-dim);line-height:1.7;}
+.wt-step .wt-result{margin-top:8px;padding:10px 14px;border-radius:var(--radius-xs);border:2px dashed var(--border);font-size:12px;line-height:1.6;background:rgba(255,225,77,0.1);}
+
+/* BUILDER */
+.builder{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.builder-section{margin-bottom:16px;}
+.builder-section label{display:block;font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:6px;}
+.builder-section .bs-hint{font-size:11px;color:var(--ink-muted);font-weight:500;margin-bottom:6px;display:block;}
+.b-input{width:100%;padding:12px 16px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:14px;background:var(--white);box-shadow:var(--shadow-sm);resize:vertical;}
+.b-input:focus{outline:none;box-shadow:var(--shadow),0 0 0 3px var(--yellow);}
+.b-input::placeholder{color:var(--ink-muted);}
+.b-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:600px){.b-row{grid-template-columns:1fr;}}
+.b-btn{padding:12px 24px;border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.b-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.b-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.b-btn.green{background:var(--mint);color:var(--ink);}
+.b-btn.red{background:var(--rose);color:var(--ink);}
+.b-btn.yellow{background:var(--yellow);color:var(--ink);}
+
+/* MAP BUILDER CANVAS */
+.map-canvas{background:var(--white);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin:16px 0;min-height:260px;overflow-x:auto;}
+.mc-row{display:flex;gap:8px;margin-bottom:4px;align-items:stretch;flex-wrap:nowrap;min-width:min-content;}
+.mc-card{min-width:120px;max-width:160px;padding:10px;border:var(--bw) solid var(--border);border-radius:10px;font-size:12px;font-weight:600;box-shadow:2px 2px 0 var(--border);cursor:pointer;transition:all .12s;word-wrap:break-word;position:relative;}
+.mc-card:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-sm);}
+.mc-card .mc-del{position:absolute;top:3px;right:6px;font-size:12px;color:var(--ink-muted);cursor:pointer;line-height:1;}
+.mc-card .mc-del:hover{color:var(--l1);}
+.mc-sep{display:flex;align-items:center;gap:6px;margin:6px 0;min-width:min-content;}
+.mc-sep hr{flex:1;border:none;height:2px;background:var(--border);}
+.mc-sep span{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;background:var(--yellow);padding:2px 10px;border-radius:4px;border:2px solid var(--border);white-space:nowrap;}
+.mc-empty{padding:30px;text-align:center;color:var(--ink-muted);font-style:italic;font-size:14px;}
+
+/* GRID HELPERS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:700px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+/* PITFALL */
+.pitfall{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:12px;position:relative;padding-left:60px;}
+.pitfall .pf-num{position:absolute;left:16px;top:18px;width:34px;height:34px;border-radius:10px;border:var(--bw) solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Lilita One',sans-serif;font-size:18px;box-shadow:2px 2px 0 var(--border);background:var(--rose);}
+.pitfall h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:4px;}
+.pitfall p{font-size:13px;color:var(--ink-dim);line-height:1.6;}
+.pitfall .pf-fix{margin-top:8px;padding:8px 12px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);font-size:12px;font-weight:600;line-height:1.5;}.pitfall .pf-fix::before{content:'✅ Fix: ';}
+
+/* WORKSHOP TIMELINE */
+.ws-block{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 22px;margin-bottom:10px;display:grid;grid-template-columns:90px 1fr;gap:14px;align-items:start;}
+.ws-block .ws-time{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;padding:6px 10px;border-radius:var(--radius-xs);border:2px solid var(--border);text-align:center;box-shadow:2px 2px 0 var(--border);}
+.ws-block h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:3px;}
+.ws-block p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+/* CONNECTIONS */
+.conn{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;}
+.conn .conn-icon{width:42px;height:42px;min-width:42px;border:var(--bw) solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:2px 2px 0 var(--border);}
+.conn h4{font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:2px;}
+.conn p{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+
+/* QUIZ */
+.quiz-q{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:12px;}
+.quiz-q h4{font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:10px;}
+.q-opt{display:block;width:100%;text-align:left;padding:10px 16px;margin-bottom:6px;background:var(--white);border:2px solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .12s;box-shadow:2px 2px 0 var(--border);}
+.q-opt:hover{background:var(--cream-dark);transform:translate(-1px,-1px);box-shadow:var(--shadow-sm);}
+.q-opt.correct{background:var(--mint);border-color:var(--green);}
+.q-opt.wrong{background:var(--rose);opacity:.6;}
+.q-opt:disabled{cursor:default;transform:none;}
+.quiz-exp{margin-top:8px;padding:10px 14px;border-radius:var(--radius-xs);font-size:12px;font-weight:600;line-height:1.5;display:none;}
+.quiz-exp.show{display:block;background:var(--mint);border:2px solid var(--border);}
+.quiz-score{text-align:center;padding:20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font-family:'Lilita One',sans-serif;font-size:24px;}
+
+.back-hub{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;margin-bottom:10px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--ink);text-decoration:none;transition:all .12s;}
+.back-hub:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--ink-dim);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="container">
+<a href="index.html" class="back-hub">← Back to Hub</a>
+
+<div class="header">
+  <div class="header-badge">🗺️ DESIGN FRAMEWORK</div>
+  <h1>User Story Mapping</h1>
+  <p class="sub">See the whole picture before you decide what to build first</p>
+</div>
+
+<!-- MAP HERO — visual backbone + body -->
+<div class="map-hero">
+  <div class="map-row map-backbone">
+    <div class="map-cell"><span class="mc-icon">🔍</span><span class="mc-label">Discover</span></div>
+    <div class="map-cell"><span class="mc-icon">📝</span><span class="mc-label">Sign Up</span></div>
+    <div class="map-cell"><span class="mc-icon">🎵</span><span class="mc-label">First Lesson</span></div>
+    <div class="map-cell"><span class="mc-icon">📊</span><span class="mc-label">Track</span></div>
+    <div class="map-cell"><span class="mc-icon">💰</span><span class="mc-label">Subscribe</span></div>
+  </div>
+  <div class="map-divider"><span class="md-label">RELEASE 1 — Walking Skeleton</span></div>
+  <div class="map-row map-body1">
+    <div class="map-cell"><span class="mc-icon">🌐</span><span class="mc-label">Landing pg</span></div>
+    <div class="map-cell"><span class="mc-icon">📧</span><span class="mc-label">Email login</span></div>
+    <div class="map-cell"><span class="mc-icon">🎹</span><span class="mc-label">Play along</span></div>
+    <div class="map-cell"><span class="mc-icon">✅</span><span class="mc-label">Complete %</span></div>
+    <div class="map-cell"><span class="mc-icon">🆓</span><span class="mc-label">Free trial</span></div>
+  </div>
+  <div class="map-divider"><span class="md-label">RELEASE 2 — Lovable</span></div>
+  <div class="map-row map-body2">
+    <div class="map-cell"><span class="mc-icon">📱</span><span class="mc-label">App Store</span></div>
+    <div class="map-cell"><span class="mc-icon">🔑</span><span class="mc-label">Google SSO</span></div>
+    <div class="map-cell"><span class="mc-icon">🎯</span><span class="mc-label">Feedback</span></div>
+    <div class="map-cell"><span class="mc-icon">📈</span><span class="mc-label">Streaks</span></div>
+    <div class="map-cell"><span class="mc-icon">💳</span><span class="mc-label">In-app pay</span></div>
+  </div>
+  <div class="map-divider"><span class="md-label">RELEASE 3 — Delightful</span></div>
+  <div class="map-row map-body3">
+    <div class="map-cell"><span class="mc-icon">🎥</span><span class="mc-label">Video ads</span></div>
+    <div class="map-cell"><span class="mc-icon">👤</span><span class="mc-label">Profile</span></div>
+    <div class="map-cell"><span class="mc-icon">🏆</span><span class="mc-label">Challenges</span></div>
+    <div class="map-cell"><span class="mc-icon">🏅</span><span class="mc-label">Badges</span></div>
+    <div class="map-cell"><span class="mc-icon">👨‍👩‍👧</span><span class="mc-label">Family plan</span></div>
+  </div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-icon">⚡</div>
+  <div>
+    <p><strong>User Story Mapping</strong> arranges user stories into a 2D map: <strong>left-to-right = the user's journey</strong> (backbone), <strong>top-to-bottom = priority</strong> (body). The horizontal axis tells the story. The vertical axis tells the plan. Created by <strong>Jeff Patton</strong> — it replaced flat backlogs that lost context.</p>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="journey-nav" id="journeyNav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Anatomy</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>Example</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Builder</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>When</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>Pitfalls</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Session</button>
+  <button class="j-btn" onclick="go(7)"><span class="j-step">08</span>Quiz</button>
+</div>
+
+<!-- ========== TAB 1: CONCEPT ========== -->
+<div class="panel active" id="panel-concept">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">🗺️</div>
+    <div class="sec-label"><h2>The Core Concept</h2><p>Why flat backlogs fail and maps succeed</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:10px;">🤔 The Problem with Flat Backlogs</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:12px;">A traditional backlog is a <strong>prioritized list</strong> — item 1, item 2, item 3… down to item 200. It tells you <em>what to build next</em> but it completely loses <strong>why</strong> you're building it and <strong>how the user experiences it</strong>.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Jeff Patton's insight: <strong>"A backlog is like a grocery list. A story map is like a recipe."</strong> The list tells you what to buy. The map tells you the meal you're cooking.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="c-card" style="border-top:6px solid var(--rose);">
+      <h4 style="font-family:'Lilita One',sans-serif;font-size:16px;color:var(--l1);">❌ Flat Backlog</h4>
+      <p style="font-size:13px;color:var(--ink-dim);margin-top:6px;">1. Email login<br>2. Lesson player<br>3. Progress tracker<br>4. Payment flow<br>5. Google SSO<br>6. Streak counter<br>7. Family plan<br>…item 200</p>
+      <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;font-style:italic;">What journey does this create? No idea. Every story stands alone.</p>
+    </div>
+    <div class="c-card" style="border-top:6px solid var(--mint-deep);">
+      <h4 style="font-family:'Lilita One',sans-serif;font-size:16px;color:var(--green);">✅ Story Map</h4>
+      <p style="font-size:13px;color:var(--ink-dim);margin-top:6px;">Left→right: user journey<br>Top→bottom: priority<br><br>You see: <strong>"Release 1 gives users a complete journey from signup to first lesson — thin but end-to-end."</strong></p>
+      <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;font-style:italic;">Every release delivers a usable slice of the whole experience.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>🦴 The "Walking Skeleton"</h4>
+    <p>Release 1 is the thinnest possible end-to-end journey. Not one feature done perfectly — <strong>every step done minimally</strong>. A user can walk the entire path, even if each step is basic. This is the key insight: <strong>slice horizontally (thin journey), not vertically (one perfect feature).</strong></p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px;">📐 Two Axes, One Map</h3>
+    <div class="grid-2" style="margin-top:12px;">
+      <div style="padding:14px;background:var(--white);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;">
+        <div style="font-size:28px;margin-bottom:4px;">↔️</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;">Horizontal = Story</div>
+        <p style="font-size:12px;color:var(--ink-dim);margin-top:4px;">The user's journey from left to right. Time flows → across the top. This is the <strong>narrative</strong>.</p>
+      </div>
+      <div style="padding:14px;background:var(--white);border:2px solid var(--border);border-radius:var(--radius-xs);text-align:center;">
+        <div style="font-size:28px;margin-bottom:4px;">↕️</div>
+        <div style="font-family:'Lilita One',sans-serif;font-size:15px;">Vertical = Priority</div>
+        <p style="font-size:12px;color:var(--ink-dim);margin-top:4px;">The most important implementation is at the top. Less critical → lower. This is the <strong>plan</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">Memory trick: <strong>"Walk the map left to right to tell the story. Slice it top to bottom to plan the releases."</strong></div>
+
+  <div class="panel-nav">
+    <div></div>
+    <button class="pn-btn primary" onclick="go(1)">Anatomy →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 2: ANATOMY ========== -->
+<div class="panel" id="panel-anatomy">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky);">🦴</div>
+    <div class="sec-label"><h2>Anatomy of a Story Map</h2><p>The 4 layers that make up the map</p></div>
+  </div>
+
+  <!-- VISUAL DIAGRAM -->
+  <div class="anatomy-diagram">
+    <div style="text-align:center;font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:10px;color:var(--ink-dim);">← User's journey flows left to right →</div>
+    <div class="anat-row">
+      <div class="anat-label" style="background:var(--purple);">GOAL</div>
+      <div class="anat-cell" style="background:var(--purple);grid-column:span 5;flex:5;">
+        <span class="ac-icon">🎯</span>
+        <span class="ac-label">Learn to play an instrument online</span>
+        <span class="ac-desc">The big user goal — one per map</span>
+      </div>
+    </div>
+    <div class="anat-arrow">⬇</div>
+    <div class="anat-row">
+      <div class="anat-label" style="background:var(--orange);">ACTIVITIES</div>
+      <div class="anat-cell" style="background:var(--orange);">
+        <span class="ac-icon">🔍</span>
+        <span class="ac-label">Discover</span>
+      </div>
+      <div class="anat-cell" style="background:var(--orange);">
+        <span class="ac-icon">📝</span>
+        <span class="ac-label">Sign Up</span>
+      </div>
+      <div class="anat-cell" style="background:var(--orange);">
+        <span class="ac-icon">🎵</span>
+        <span class="ac-label">Take Lesson</span>
+      </div>
+      <div class="anat-cell" style="background:var(--orange);">
+        <span class="ac-icon">📊</span>
+        <span class="ac-label">Track Progress</span>
+      </div>
+      <div class="anat-cell" style="background:var(--orange);">
+        <span class="ac-icon">💰</span>
+        <span class="ac-label">Subscribe</span>
+      </div>
+    </div>
+    <div class="anat-arrow">⬇</div>
+    <div class="anat-row">
+      <div class="anat-label" style="background:var(--yellow);">BACKBONE<br><span style="font-size:8px;opacity:.7;">User Steps</span></div>
+      <div class="anat-cell" style="background:var(--yellow);">
+        <span class="ac-label">Search app store</span>
+      </div>
+      <div class="anat-cell" style="background:var(--yellow);">
+        <span class="ac-label">Enter email</span>
+      </div>
+      <div class="anat-cell" style="background:var(--yellow);">
+        <span class="ac-label">Play first song</span>
+      </div>
+      <div class="anat-cell" style="background:var(--yellow);">
+        <span class="ac-label">See completion %</span>
+      </div>
+      <div class="anat-cell" style="background:var(--yellow);">
+        <span class="ac-label">Start free trial</span>
+      </div>
+    </div>
+    <div class="anat-sep"><hr><span>↓ PRIORITY ↓</span><hr></div>
+    <div class="anat-row">
+      <div class="anat-label" style="background:var(--mint);">BODY<br><span style="font-size:8px;opacity:.7;">Details / Stories</span></div>
+      <div class="anat-cell" style="background:var(--mint);">
+        <span class="ac-label">Read reviews</span>
+      </div>
+      <div class="anat-cell" style="background:var(--mint);">
+        <span class="ac-label">Google SSO</span>
+      </div>
+      <div class="anat-cell" style="background:var(--mint);">
+        <span class="ac-label">Get feedback</span>
+      </div>
+      <div class="anat-cell" style="background:var(--mint);">
+        <span class="ac-label">Streak counter</span>
+      </div>
+      <div class="anat-cell" style="background:var(--mint);">
+        <span class="ac-label">Annual plan</span>
+      </div>
+    </div>
+    <div class="anat-row" style="margin-top:4px;">
+      <div class="anat-label" style="background:transparent;border-color:transparent;"></div>
+      <div class="anat-cell" style="background:var(--sky);">
+        <span class="ac-label">Watch video</span>
+      </div>
+      <div class="anat-cell" style="background:var(--sky);">
+        <span class="ac-label">Profile setup</span>
+      </div>
+      <div class="anat-cell" style="background:var(--sky);">
+        <span class="ac-label">Challenges</span>
+      </div>
+      <div class="anat-cell" style="background:var(--sky);">
+        <span class="ac-label">Badges</span>
+      </div>
+      <div class="anat-cell" style="background:var(--sky);">
+        <span class="ac-label">Family plan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER EXPLANATIONS -->
+  <div class="layer-card">
+    <div class="lc-bar" style="background:var(--purple);"></div>
+    <h3><div class="lc-num" style="background:var(--purple);">1</div> Goal</h3>
+    <div class="lc-tag" style="background:var(--purple);">ONE PER MAP</div>
+    <p>The big outcome the user wants to achieve. This goes at the very top and frames everything below it. Think of this as the "movie title" — it captures the whole story in one line.</p>
+    <div class="lc-example"><strong>Examples:</strong> "Learn to play piano online" · "Find and book a vacation rental" · "Manage my team's sprint work"</div>
+  </div>
+
+  <div class="layer-card">
+    <div class="lc-bar" style="background:var(--orange);"></div>
+    <h3><div class="lc-num" style="background:var(--orange);">2</div> Activities</h3>
+    <div class="lc-tag" style="background:var(--orange);">3–7 BIG CHUNKS</div>
+    <p>The major phases of the user's journey. These are <strong>high-level groupings</strong> that organize the steps below them. Think of them as "chapters" in the user's story. Usually 3–7 activities cover the full journey.</p>
+    <div class="lc-example"><strong>Examples:</strong> "Discover" · "Onboard" · "Learn" · "Practice" · "Share" — each contains multiple specific steps</div>
+  </div>
+
+  <div class="layer-card">
+    <div class="lc-bar" style="background:var(--yellow);"></div>
+    <h3><div class="lc-num" style="background:var(--yellow);">3</div> Backbone (User Steps)</h3>
+    <div class="lc-tag" style="background:var(--yellow);">THE NARRATIVE</div>
+    <p>Specific things the user does within each activity. These flow left-to-right and form the <strong>backbone</strong> — the horizontal spine of the map. If you read them left to right, they tell the user's story. Written from the <strong>user's perspective</strong>, not the system's.</p>
+    <div class="lc-example"><strong>Examples:</strong> Under "Sign Up": Enter email → Choose instrument → Set goal → Pick level</div>
+  </div>
+
+  <div class="layer-card">
+    <div class="lc-bar" style="background:var(--mint);"></div>
+    <h3><div class="lc-num" style="background:var(--mint);">4</div> Body (User Stories)</h3>
+    <div class="lc-tag" style="background:var(--mint);">THE PLAN</div>
+    <p>Implementation details that hang below each backbone step. These are your actual user stories / tasks. They're arranged <strong>top-to-bottom by priority</strong>: the top row becomes Release 1 (walking skeleton), the next row Release 2, and so on. <strong>Drawing a horizontal line creates a release slice.</strong></p>
+    <div class="lc-example"><strong>Examples:</strong> Under "Enter email": [R1] Email + password login · [R2] Google SSO · [R3] Apple Sign In · [R3] Magic link</div>
+  </div>
+
+  <div class="insight">
+    <h4>🔑 The Key Rule</h4>
+    <p>Every release slice must be a <strong>complete, usable journey</strong> left to right. Release 1 isn't "just the login feature done perfectly" — it's "a thin path through the entire experience." Users can walk from discovery to value in every release.</p>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(0)">← Concept</button>
+    <button class="pn-btn primary" onclick="go(2)">Example →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 3: EXAMPLE ========== -->
+<div class="panel" id="panel-example">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint);">🎵</div>
+    <div class="sec-label"><h2>Full Example</h2><p>Story mapping Trala's violin onboarding</p></div>
+  </div>
+
+  <div class="c-card" style="border-top:6px solid var(--purple);">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:6px;">🎯 Goal</h3>
+    <p style="font-size:15px;font-weight:700;color:var(--ink);">"Start learning violin with Trala and feel confident after the first session"</p>
+    <p style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Persona: Adult beginner (35), curious, no music background, downloaded the app after seeing a TikTok ad.</p>
+  </div>
+
+  <div class="wt-step">
+    <div class="wt-bar" style="background:var(--l1);"></div>
+    <h4><div class="wt-num" style="background:var(--l1);">1</div> Frame the Backbone</h4>
+    <div class="wt-content">
+      <p>Walk through the user's journey step by step. What does the user <em>do</em> from first touch to first value moment?</p>
+      <div class="wt-result" style="margin-top:10px;">
+        <strong style="display:block;margin-bottom:4px;">Backbone (left → right):</strong>
+        Download app → Open app → Create account → Choose instrument → Take placement quiz → Start first lesson → Complete first song → See results
+      </div>
+    </div>
+  </div>
+
+  <div class="wt-step">
+    <div class="wt-bar" style="background:var(--l2);"></div>
+    <h4><div class="wt-num" style="background:var(--l2);">2</div> Group into Activities</h4>
+    <div class="wt-content">
+      <p>Cluster the backbone steps into 4 high-level activities:</p>
+      <div class="wt-result">
+        <strong>🔍 Discover:</strong> Download app<br>
+        <strong>📝 Onboard:</strong> Open app → Create account → Choose instrument → Take quiz<br>
+        <strong>🎵 First Lesson:</strong> Start first lesson → Complete first song<br>
+        <strong>📊 Review:</strong> See results
+      </div>
+    </div>
+  </div>
+
+  <div class="wt-step">
+    <div class="wt-bar" style="background:var(--l3);"></div>
+    <h4><div class="wt-num" style="background:var(--l3);">3</div> Fill the Body</h4>
+    <div class="wt-content">
+      <p>Under each backbone step, brainstorm all the ways it could be implemented — from simplest to most sophisticated:</p>
+      <div class="wt-result">
+        <strong>Under "Create account":</strong><br>
+        • Email + password (simplest)<br>
+        • Google SSO<br>
+        • Apple Sign In<br>
+        • Skip signup (try before committing)<br><br>
+        <strong>Under "Start first lesson":</strong><br>
+        • Play-along with visual cues (simplest)<br>
+        • Real-time pitch detection + feedback<br>
+        • Video demonstration before each section<br>
+        • AI-powered tempo adjustment
+      </div>
+    </div>
+  </div>
+
+  <div class="wt-step">
+    <div class="wt-bar" style="background:var(--l4);"></div>
+    <h4><div class="wt-num" style="background:var(--l4);">4</div> Slice into Releases</h4>
+    <div class="wt-content">
+      <p>Draw horizontal lines to create release slices. Each slice must be a <strong>complete journey</strong>:</p>
+      <div class="wt-result">
+        <strong style="color:var(--l1);">🔴 Release 1 — Walking Skeleton (4 weeks):</strong><br>
+        App Store listing → Simple welcome → Email signup → Auto-select violin → Skip quiz → 1 guided lesson (play-along) → "Lesson complete" screen<br>
+        <em style="font-size:11px;color:var(--ink-muted);">Metric: Can a user download, sign up, and complete one lesson?</em><br><br>
+        <strong style="color:var(--l2);">🟠 Release 2 — Lovable (6 weeks):</strong><br>
+        App Store screenshots + preview → Animated onboarding → Google SSO → Instrument picker → 3-question quiz → 5 lessons with pitch detection → Progress dashboard<br>
+        <em style="font-size:11px;color:var(--ink-muted);">Metric: D7 retention > 20%, lesson completion > 60%</em><br><br>
+        <strong style="color:var(--l5);">🔵 Release 3 — Delightful (8 weeks):</strong><br>
+        Referral sharing → Apple Sign In → Skip signup option → Detailed quiz → AI tempo adjustment → Video demos → Streaks + achievements → Social sharing<br>
+        <em style="font-size:11px;color:var(--ink-muted);">Metric: D30 retention > 10%, NPS > 40</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>📐 Notice the Pattern</h4>
+    <p>Release 1 isn't "perfect onboarding." It's a <strong>thin slice across the entire journey</strong>. The user gets a basic version of every step. Each subsequent release makes the same journey richer and more polished. This is the power of story mapping — <strong>you never ship a dead-end</strong>.</p>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(1)">← Anatomy</button>
+    <button class="pn-btn primary" onclick="go(3)">Builder →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 4: BUILDER ========== -->
+<div class="panel" id="panel-builder">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint);">🔨</div>
+    <div class="sec-label"><h2>Build Your Map</h2><p>Create a story map for your product</p></div>
+  </div>
+
+  <!-- Step 1: Goal -->
+  <div class="builder" id="b-step1">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;">Step 1: Define the Goal 🎯</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">What is the user trying to accomplish?</p>
+    <input type="text" class="b-input" id="bGoal" placeholder='e.g. "Learn to play violin and feel confident after first session"' style="height:auto;">
+  </div>
+
+  <!-- Step 2: Activities -->
+  <div class="builder" id="b-step2">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;">Step 2: Activities (3–7) 📋</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">What are the major phases of the user's journey?</p>
+    <div id="activityInputs">
+      <div class="b-row" style="margin-bottom:8px;">
+        <input type="text" class="b-input act-input" placeholder="Activity 1 (e.g. Discover)">
+        <input type="text" class="b-input act-input" placeholder="Activity 2 (e.g. Onboard)">
+      </div>
+      <div class="b-row" style="margin-bottom:8px;">
+        <input type="text" class="b-input act-input" placeholder="Activity 3 (e.g. Learn)">
+        <input type="text" class="b-input act-input" placeholder="Activity 4 (e.g. Practice)">
+      </div>
+      <div class="b-row" style="margin-bottom:8px;">
+        <input type="text" class="b-input act-input" placeholder="Activity 5 (optional)">
+        <input type="text" class="b-input act-input" placeholder="Activity 6 (optional)">
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Backbone per activity -->
+  <div class="builder" id="b-step3">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;">Step 3: Backbone Steps 🦴</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">For each activity, list 2–4 specific user steps (comma-separated).</p>
+    <div id="backboneInputs"></div>
+  </div>
+
+  <!-- Step 4: Body / Stories -->
+  <div class="builder" id="b-step4">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;">Step 4: Add Stories to Body 📝</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">Click any backbone step in the map below to add stories underneath it.</p>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+    <button class="b-btn green" onclick="generateMap()">🗺️ Generate Map</button>
+    <button class="b-btn yellow" onclick="addReleaseLine()">✂️ Add Release Line</button>
+    <button class="b-btn red" onclick="clearMap()">🗑️ Clear All</button>
+  </div>
+
+  <!-- MAP CANVAS -->
+  <div class="map-canvas" id="mapCanvas">
+    <div class="mc-empty">Your story map will appear here. Fill in the goal, activities, and backbone steps, then click "Generate Map".</div>
+  </div>
+
+  <div class="tip">Pro tip: After generating, click on backbone steps to add body stories. Use "Add Release Line" to slice the body into releases. Read the map left-to-right to verify the story makes sense.</div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(2)">← Example</button>
+    <button class="pn-btn primary" onclick="go(4)">When →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 5: WHEN ========== -->
+<div class="panel" id="panel-when">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky);">🧭</div>
+    <div class="sec-label"><h2>When to Use / Skip</h2><p>Right tool, right moment</p></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="c-card" style="border-top:6px solid var(--mint-deep);">
+      <h4 style="font-family:'Lilita One',sans-serif;font-size:16px;color:var(--green);margin-bottom:8px;">✅ Use Story Mapping When</h4>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.8;">
+        <strong>Planning a new product or feature</strong> — you need to see the full journey before cutting scope<br><br>
+        <strong>Your backlog lost its story</strong> — the team builds features but can't explain the user journey<br><br>
+        <strong>Release planning</strong> — you need to decide what's in v1, v2, v3<br><br>
+        <strong>Aligning cross-functional teams</strong> — designers, engineers, and PMs all see the same picture<br><br>
+        <strong>PM interviews</strong> — show structured product thinking when asked to plan a feature
+      </p>
+    </div>
+    <div class="c-card" style="border-top:6px solid var(--rose);">
+      <h4 style="font-family:'Lilita One',sans-serif;font-size:16px;color:var(--l1);margin-bottom:8px;">⏭️ Skip Story Mapping When</h4>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.8;">
+        <strong>Quick bug fixes</strong> — you don't need a map for a broken button<br><br>
+        <strong>Single-feature work</strong> — the feature is isolated and small<br><br>
+        <strong>Optimization</strong> — you're A/B testing within an existing flow, not redesigning it<br><br>
+        <strong>You don't understand the user yet</strong> — do JTBD / Design Thinking research first, then map<br><br>
+        <strong>Team of 1</strong> — story mapping's power is shared understanding; solo, a simple list may suffice
+      </p>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:12px;">🔗 How It Connects to Other Frameworks</h3>
+
+    <div class="conn">
+      <div class="conn-icon" style="background:var(--yellow);">💎</div>
+      <div>
+        <h4>JTBD → Story Map</h4>
+        <p>JTBD defines the <em>job</em> the user is hiring for. Story Mapping plots the <em>journey</em> to fulfill that job. Start with JTBD to understand the "why," then map the "how."</p>
+      </div>
+    </div>
+    <div class="conn">
+      <div class="conn-icon" style="background:var(--purple);">💜</div>
+      <div>
+        <h4>Design Thinking → Story Map</h4>
+        <p>Design Thinking's Empathize + Define phases give you the insights. Story Mapping is your tool in the <em>Ideate → Prototype</em> transition to plan what to build and in what order.</p>
+      </div>
+    </div>
+    <div class="conn">
+      <div class="conn-icon" style="background:var(--sky);">🎯</div>
+      <div>
+        <h4>CIRCLES → Story Map</h4>
+        <p>CIRCLES helps you think through a product problem in an interview. Story Mapping is the next step: once you've identified users and solutions, you organize them into a release plan.</p>
+      </div>
+    </div>
+    <div class="conn">
+      <div class="conn-icon" style="background:var(--mint);">📊</div>
+      <div>
+        <h4>Story Map → RICE / ICE</h4>
+        <p>The body stories in your map become the items you score with RICE or ICE. The map gives context ("this story is in the Sign Up activity") that makes prioritization decisions smarter.</p>
+      </div>
+    </div>
+    <div class="conn">
+      <div class="conn-icon" style="background:var(--orange);">😍</div>
+      <div>
+        <h4>Kano + Story Map</h4>
+        <p>Kano tells you which features are Must-Have vs Delighter. Must-Haves go in Release 1 (walking skeleton). Performance features in Release 2. Delighters in Release 3.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(3)">← Builder</button>
+    <button class="pn-btn primary" onclick="go(5)">Pitfalls →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 6: PITFALLS ========== -->
+<div class="panel" id="panel-pitfalls">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--rose);">⚠️</div>
+    <div class="sec-label"><h2>Common Pitfalls</h2><p>6 mistakes that break your story map</p></div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">1</div>
+    <h4>Mapping Features, Not User Steps</h4>
+    <p>The backbone should be <strong>what the user does</strong>, not what the system does. "User authentication module" is a system view. "Create account" is the user's step.</p>
+    <div class="pf-fix">Write every backbone card starting with a <strong>verb from the user's perspective</strong>: "Search for…", "Choose a…", "Review my…"</div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">2</div>
+    <h4>Too Many Backbone Steps</h4>
+    <p>If your backbone has 25+ steps, you're at the wrong level of detail. The backbone should be 8–15 steps max. More than that and the map becomes unreadable.</p>
+    <div class="pf-fix">Group related steps into Activities. If "Enter email" and "Confirm password" are separate backbone cards, combine them under "Create account."</div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">3</div>
+    <h4>Release 1 Is a Vertical Slice</h4>
+    <p>The most common mistake. Release 1 is "perfect login" instead of "thin path from discovery to value." A vertical slice delivers one feature completely but leaves users stranded with nowhere to go next.</p>
+    <div class="pf-fix">Test your Release 1 by reading the top row left-to-right. Can a real user go from start to value? If any column is empty in R1, that's a dead-end.</div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">4</div>
+    <h4>Mapping Alone</h4>
+    <p>Story mapping is a <strong>team activity</strong>. A PM creating the map solo and presenting it defeats the purpose. The value is in the shared conversation, not the artifact.</p>
+    <div class="pf-fix">Always build the map with at least 1 designer + 1 engineer in the room. The conversation IS the deliverable. The map is the record.</div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">5</div>
+    <h4>Map It and Forget It</h4>
+    <p>The map is created in a workshop, photographed, and never touched again. Two sprints later, the backlog has drifted and the map is outdated.</p>
+    <div class="pf-fix">Keep the map alive in a digital tool (Miro, FigJam, Notion). Reference it in sprint planning: "Where does this story sit on the map?" Update it as you learn.</div>
+  </div>
+
+  <div class="pitfall">
+    <div class="pf-num">6</div>
+    <h4>No Metrics Per Release</h4>
+    <p>Each release slice should have a <strong>success metric</strong>. Without it, you can't validate whether the release actually delivered user value.</p>
+    <div class="pf-fix">Write a hypothesis for each slice: "Release 1 validates that users <em>can</em> complete the journey. Metric: 50%+ of users who sign up complete the first lesson."</div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(4)">← When</button>
+    <button class="pn-btn primary" onclick="go(6)">Session →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 7: SESSION ========== -->
+<div class="panel" id="panel-session">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange);">🎯</div>
+    <div class="sec-label"><h2>Run a Mapping Session</h2><p>2-hour workshop, step by step</p></div>
+  </div>
+
+  <div class="c-card" style="margin-bottom:16px;">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:8px;">🧰 What You Need</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.8;">
+      <strong>People (4–8):</strong> PM, Designer, 1–2 Engineers, Customer-facing person (support/sales)<br>
+      <strong>Materials:</strong> Large wall or Miro board, sticky notes (4 colors), markers, timer<br>
+      <strong>Pre-work:</strong> Bring user research (interviews, data, JTBD insights). Share context doc 24h before.<br>
+      <strong>Mindset:</strong> This is collaborative storytelling, not backlog grooming.
+    </p>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--purple);">
+    <div class="ws-time" style="background:var(--purple);">0–10 min</div>
+    <div>
+      <h4>🎯 Frame the Goal</h4>
+      <p>State the user goal and persona. Write it on a large card at the top of the board. Everyone agrees on who we're mapping for and what they're trying to achieve. <strong>"Today we're mapping the journey of [persona] trying to [goal]."</strong></p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--orange);">
+    <div class="ws-time" style="background:var(--orange);">10–30 min</div>
+    <div>
+      <h4>🦴 Build the Backbone</h4>
+      <p>Walk the user's journey step by step. Each person writes steps on stickies. Arrange left-to-right. Debate the order. Merge duplicates. Aim for 8–15 backbone steps. Read it aloud: <strong>"First they… then they… then they…"</strong> Does it tell a complete story?</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--yellow);">
+    <div class="ws-time" style="background:var(--yellow);">30–40 min</div>
+    <div>
+      <h4>📋 Group into Activities</h4>
+      <p>Cluster the backbone steps into 3–7 high-level activities. Place activity cards ABOVE the backbone. These are chapter headings. If a cluster has 6+ steps, consider splitting. If it has 1, merge it.</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--mint-deep);">
+    <div class="ws-time" style="background:var(--mint);">40–70 min</div>
+    <div>
+      <h4>📝 Fill the Body (Silent Brainstorm)</h4>
+      <p><strong>10 min silent:</strong> Everyone writes story stickies — different ways each backbone step could be implemented. From simplest to most ambitious. Stick them below the backbone step they belong to.<br><strong>20 min discuss:</strong> Walk column by column. Read, clarify, cluster duplicates, arrange top-to-bottom by priority (simplest/most essential at top).</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--l5);">
+    <div class="ws-time" style="background:var(--sky);">70–80 min</div>
+    <div>
+      <h4>☕ Break</h4>
+      <p>Let it settle. Take photos of the current state. People often have ideas during the break.</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--l1);">
+    <div class="ws-time" style="background:var(--rose);">80–100 min</div>
+    <div>
+      <h4>✂️ Slice Releases</h4>
+      <p>Draw a horizontal line under the top row of body stories. This is <strong>Release 1 — the walking skeleton</strong>. Read it left-to-right: can a user complete the whole journey? If any column is empty, move the simplest story UP into R1. Repeat for R2 and R3.</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--purple);">
+    <div class="ws-time" style="background:var(--purple);">100–115 min</div>
+    <div>
+      <h4>📊 Add Metrics & Hypotheses</h4>
+      <p>For each release slice, write a hypothesis: "Release 1 validates that [assumption]. Success metric: [specific number]." Attach these to the release line. This turns the map into a testable plan, not just a feature list.</p>
+    </div>
+  </div>
+
+  <div class="ws-block" style="border-left:5px solid var(--mint-deep);">
+    <div class="ws-time" style="background:var(--mint);">115–120 min</div>
+    <div>
+      <h4>📸 Wrap Up</h4>
+      <p>Photo the map. Assign owner to digitize it (Miro/FigJam). Agree on next step: "We'll reference this map in sprint planning starting [date]." Schedule a follow-up in 2 weeks to review and update.</p>
+    </div>
+  </div>
+
+  <div class="tip">Facilitator tip: If the team gets stuck debating a single card for 5+ minutes, <strong>time-box to 2 minutes then "parking lot" it</strong>. Keep the momentum. The map is a living doc — you'll update it.</div>
+
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(5)">← Pitfalls</button>
+    <button class="pn-btn primary" onclick="go(7)">Quiz →</button>
+  </div>
+</div>
+
+<!-- ========== TAB 8: QUIZ ========== -->
+<div class="panel" id="panel-quiz">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">🧠</div>
+    <div class="sec-label"><h2>Knowledge Check</h2><p>7 questions — test what you learned</p></div>
+  </div>
+  <div id="quizArea"></div>
+  <div class="quiz-score" id="quizScore" style="display:none;"></div>
+  <div class="panel-nav">
+    <button class="pn-btn" onclick="go(6)">← Session</button>
+    <button class="pn-btn primary" onclick="go(0)">🔄 Start Over</button>
+  </div>
+</div>
+
+<div class="footer">
+  User Story Mapping — Part of the PM Frameworks Guidebook 🗺️<br>
+  <a href="index.html" style="color:var(--ink);font-weight:700;">← Back to Hub</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== NAVIGATION =====
+const panels = ['concept','anatomy','example','builder','when','pitfalls','session','quiz'];
+const btns = document.querySelectorAll('.j-btn');
+let visited = new Set([0]);
+
+function go(i){
+  visited.add(i);
+  panels.forEach((id,idx)=>{
+    document.getElementById('panel-'+id).classList.toggle('active',idx===i);
+    btns[idx].classList.toggle('active',idx===i);
+    if(visited.has(idx)&&idx!==i) btns[idx].classList.add('completed');
+  });
+  document.getElementById('progressBar').style.width=((visited.size/panels.length)*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== MAP BUILDER =====
+let mapData = {goal:'',activities:[],backbone:{},body:{}};
+let releaseLines = [];
+
+function generateMap(){
+  const goal = document.getElementById('bGoal').value.trim();
+  const actInputs = document.querySelectorAll('.act-input');
+  const activities = [];
+  actInputs.forEach(inp=>{if(inp.value.trim()) activities.push(inp.value.trim());});
+  
+  if(activities.length<2){alert('Add at least 2 activities.');return;}
+  
+  mapData.goal = goal;
+  mapData.activities = activities;
+  mapData.backbone = {};
+  mapData.body = {};
+  releaseLines = [];
+
+  // Collect backbone steps
+  activities.forEach((act,i)=>{
+    const inp = document.getElementById('bb-'+i);
+    if(inp){
+      const steps = inp.value.split(',').map(s=>s.trim()).filter(s=>s);
+      mapData.backbone[act] = steps.length?steps:['(add steps)'];
+    } else {
+      mapData.backbone[act] = ['(add steps)'];
+    }
+    // Init body
+    mapData.backbone[act].forEach(step=>{
+      if(!mapData.body[step]) mapData.body[step]=[];
+    });
+  });
+
+  renderMap();
+}
+
+function renderMap(){
+  const canvas = document.getElementById('mapCanvas');
+  if(!mapData.activities.length){
+    canvas.innerHTML='<div class="mc-empty">Your story map will appear here.</div>';
+    return;
+  }
+
+  let html='';
+  
+  // Goal
+  if(mapData.goal){
+    html+='<div style="text-align:center;padding:10px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:10px;margin-bottom:8px;font-family:\'Lilita One\',sans-serif;font-size:14px;box-shadow:2px 2px 0 var(--border);">🎯 '+mapData.goal+'</div>';
+  }
+
+  // Activities row
+  html+='<div class="mc-row">';
+  mapData.activities.forEach(act=>{
+    const colSpan = mapData.backbone[act]?mapData.backbone[act].length:1;
+    html+='<div class="mc-card" style="background:var(--orange);min-width:'+(colSpan*128+((colSpan-1)*8))+'px;max-width:none;text-align:center;font-family:\'Lilita One\',sans-serif;font-size:13px;cursor:default;">'+act+'</div>';
+  });
+  html+='</div>';
+
+  // Backbone row
+  html+='<div class="mc-row">';
+  mapData.activities.forEach(act=>{
+    (mapData.backbone[act]||[]).forEach(step=>{
+      html+='<div class="mc-card" style="background:var(--yellow);font-size:11px;cursor:pointer;" onclick="addBodyStory(\''+escQ(step)+'\')">'+step+'<div style="font-size:9px;color:var(--ink-muted);margin-top:2px;">click to add ↓</div></div>';
+    });
+  });
+  html+='</div>';
+
+  // Body rows
+  // Find max body depth
+  let maxDepth = 0;
+  mapData.activities.forEach(act=>{
+    (mapData.backbone[act]||[]).forEach(step=>{
+      const d = (mapData.body[step]||[]).length;
+      if(d>maxDepth) maxDepth=d;
+    });
+  });
+
+  // Release lines tracking
+  const rlSet = new Set(releaseLines);
+
+  for(let row=0;row<maxDepth;row++){
+    // Check for release line
+    if(rlSet.has(row)){
+      html+='<div class="mc-sep"><hr><span>✂️ RELEASE '+(Array.from(rlSet).filter(r=>r<=row).length+1)+' LINE</span><hr></div>';
+    }
+    html+='<div class="mc-row">';
+    mapData.activities.forEach(act=>{
+      (mapData.backbone[act]||[]).forEach(step=>{
+        const stories = mapData.body[step]||[];
+        if(stories[row]){
+          html+='<div class="mc-card" style="background:var(--mint);font-size:11px;">'+stories[row]+'<span class="mc-del" onclick="removeBodyStory(\''+escQ(step)+'\','+row+')">&times;</span></div>';
+        } else {
+          html+='<div class="mc-card" style="background:var(--cream);font-size:11px;color:var(--ink-muted);border-style:dashed;cursor:pointer;" onclick="addBodyStory(\''+escQ(step)+'\')">+</div>';
+        }
+      });
+    });
+    html+='</div>';
+  }
+
+  canvas.innerHTML=html;
+}
+
+function escQ(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
+function addBodyStory(step){
+  const story = prompt('Add a story under "'+step+'":');
+  if(!story) return;
+  if(!mapData.body[step]) mapData.body[step]=[];
+  mapData.body[step].push(story.trim());
+  renderMap();
+}
+
+function removeBodyStory(step,idx){
+  if(mapData.body[step]){
+    mapData.body[step].splice(idx,1);
+    renderMap();
+  }
+}
+
+function addReleaseLine(){
+  // Find current max depth
+  let maxDepth=0;
+  Object.values(mapData.body).forEach(arr=>{if(arr.length>maxDepth) maxDepth=arr.length;});
+  if(maxDepth<1){alert('Add some body stories first.');return;}
+  const row = releaseLines.length===0?0:releaseLines[releaseLines.length-1]+1;
+  if(row>=maxDepth){alert('No more rows to slice.');return;}
+  releaseLines.push(row);
+  renderMap();
+}
+
+function clearMap(){
+  mapData={goal:'',activities:[],backbone:{},body:{}};
+  releaseLines=[];
+  document.getElementById('bGoal').value='';
+  document.querySelectorAll('.act-input').forEach(i=>i.value='');
+  document.getElementById('backboneInputs').innerHTML='';
+  document.getElementById('mapCanvas').innerHTML='<div class="mc-empty">Your story map will appear here.</div>';
+}
+
+// Dynamic backbone inputs based on activities
+document.getElementById('b-step2').addEventListener('input',function(){
+  const acts=[];
+  document.querySelectorAll('.act-input').forEach(i=>{if(i.value.trim())acts.push(i.value.trim());});
+  const container=document.getElementById('backboneInputs');
+  container.innerHTML='';
+  acts.forEach((act,i)=>{
+    const div=document.createElement('div');
+    div.className='builder-section';
+    div.innerHTML='<label>🦴 '+act+'</label><span class="bs-hint">List user steps, comma-separated (e.g. "Search app, Read reviews, Download")</span><input type="text" class="b-input" id="bb-'+i+'" placeholder="Step 1, Step 2, Step 3...">';
+    container.appendChild(div);
+  });
+});
+
+// ===== QUIZ =====
+const questions=[
+  {q:"What do the two axes of a story map represent?",opts:["X = features, Y = complexity","X = time, Y = team size","X = user journey, Y = priority","X = cost, Y = effort"],ans:2,exp:"Horizontal (left→right) = the user's journey. Vertical (top→bottom) = implementation priority."},
+  {q:"What is the 'walking skeleton' in story mapping?",opts:["The most complex feature done first","The thinnest end-to-end journey that works","A wireframe prototype","The backbone of the map without body stories"],ans:1,exp:"The walking skeleton (Release 1) is the thinnest slice that lets a user complete the entire journey — basic at every step, but complete."},
+  {q:"How many activities should the backbone typically have?",opts:["1–2","3–7","10–15","20+"],ans:1,exp:"Activities are the big phases (chapters) of the journey. 3–7 is the sweet spot — enough to tell the story, few enough to be memorable."},
+  {q:"What's the biggest story mapping mistake?",opts:["Having too many sticky notes","Making Release 1 a vertical slice (one feature deep)","Using digital instead of physical","Not color-coding the stickies"],ans:1,exp:"The most common mistake is making Release 1 go deep on one feature instead of thin across the whole journey. This creates dead-ends for users."},
+  {q:"Who should attend a story mapping session?",opts:["Only the PM","PM + Designer only","PM + Designer + Engineer + Customer-facing person","The entire company"],ans:2,exp:"4–8 people mixing PM, Design, Engineering, and customer-facing roles. The conversation IS the deliverable."},
+  {q:"How does Story Mapping connect to RICE?",opts:["They're the same framework","Story Mapping replaces RICE","Body stories from the map become items you score with RICE","RICE creates the backbone"],ans:2,exp:"Story Mapping organizes the landscape. RICE scores individual items within it. The map gives context that makes RICE decisions smarter."},
+  {q:"What comes ABOVE the backbone in a story map?",opts:["Release lines","Activities (big journey phases)","User stories","Sprint goals"],ans:1,exp:"Above the backbone sit the Activities — the 3–7 high-level phases that group backbone steps into chapters (e.g., Discover, Onboard, Learn)."}
+];
+
+let score=0,answered=0;
+function renderQuiz(){
+  const area=document.getElementById('quizArea');
+  area.innerHTML='';
+  questions.forEach((q,qi)=>{
+    let h='<div class="quiz-q" id="qq-'+qi+'"><h4>'+(qi+1)+'. '+q.q+'</h4>';
+    q.opts.forEach((o,oi)=>{
+      h+='<button class="q-opt" onclick="checkAns('+qi+','+oi+')">'+o+'</button>';
+    });
+    h+='<div class="quiz-exp" id="qe-'+qi+'">'+q.exp+'</div></div>';
+    area.innerHTML+=h;
+  });
+}
+function checkAns(qi,oi){
+  const qEl=document.getElementById('qq-'+qi);
+  const btns=qEl.querySelectorAll('.q-opt');
+  if(btns[0].disabled) return;
+  btns.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===questions[qi].ans) b.classList.add('correct');
+    else if(i===oi) b.classList.add('wrong');
+  });
+  document.getElementById('qe-'+qi).classList.add('show');
+  answered++;
+  if(oi===questions[qi].ans) score++;
+  if(answered===questions.length){
+    const el=document.getElementById('quizScore');
+    el.style.display='block';
+    el.textContent=score+'/'+questions.length+(score===questions.length?' 🏆 Perfect!':score>=5?' 🎉 Great job!':' 📚 Review the tabs and try again!');
+  }
+}
+renderQuiz();
+</script>
+</body>
+</html>

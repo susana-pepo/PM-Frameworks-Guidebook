@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prioritization Frameworks — Comparison Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#3da66a;--green-bg:#3da66a;
+  --cream:#fef9ed;--cream-dark:#fdf0d5;
+  --yellow:#ffe14d;--white:#fff;
+  --pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;
+  --orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;
+  --rose:#ff8a8a;
+  --ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;
+  --border:#1a1a2e;
+  --shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;
+  --shadow-lg:7px 7px 0px #1a1a2e;
+  --radius:20px;--radius-sm:14px;--radius-xs:10px;
+  --bw:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--green-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width 0.3s;border-radius:0 4px 4px 0;}
+
+.header{padding:32px 0 16px;text-align:center;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,4.5vw,40px);letter-spacing:1px;margin-bottom:8px;}
+.header .sub{font-size:16px;color:var(--cream);max-width:540px;margin:0 auto;font-weight:500;}
+
+/* NAV */
+.journey-nav{display:flex;gap:0;margin:24px 0;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 6px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}
+.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.active .j-step{opacity:.7;}
+.j-btn.completed::after{content:'✓';position:absolute;top:3px;right:5px;font-size:9px;color:var(--mint-deep);font-weight:900;}
+.j-btn.active.completed::after{color:var(--mint);}
+
+.panel{display:none;animation:panelIn .3s ease;}.panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+
+.c-card-static{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.tip::before{content:'💡 ';}
+.panel-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:3px dashed rgba(255,255,255,0.25);}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn:active{transform:translate(2px,2px);box-shadow:none;}
+.pn-btn.primary{background:var(--yellow);color:var(--ink);}
+
+/* COMPARISON TABLE */
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;font-size:12px;}
+.cmp-table th{background:var(--ink);color:var(--white);padding:12px 10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;font-size:11px;}
+.cmp-table th:first-child{text-align:left;padding-left:14px;}
+.cmp-table td{padding:10px;text-align:center;border-bottom:2px solid rgba(0,0,0,0.06);vertical-align:top;line-height:1.5;}
+.cmp-table td:first-child{text-align:left;font-weight:700;padding-left:14px;background:var(--cream-dark);}
+.cmp-table tr:last-child td{border-bottom:none;}
+.cmp-table .hi{background:rgba(126,232,178,0.2);font-weight:700;}
+.cmp-table .lo{background:rgba(255,138,138,0.12);}
+.cmp-table .med{background:rgba(255,225,77,0.15);}
+
+/* IDENTITY CARDS */
+.id-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.id-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;transition:all .12s;position:relative;overflow:hidden;}
+.id-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.id-card .id-bar{position:absolute;top:0;left:0;right:0;height:6px;}
+.id-card h3{font-family:'Lilita One',sans-serif;font-size:18px;margin:4px 0 6px;display:flex;align-items:center;gap:8px;}
+.id-card .id-formula{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;border:2px solid var(--border);display:inline-block;margin-bottom:8px;}
+.id-card .id-oneliner{font-size:13px;color:var(--ink-dim);font-weight:600;font-style:italic;margin-bottom:8px;}
+.id-card .id-best{font-size:12px;padding:6px 10px;border-radius:var(--radius-xs);border:2px solid var(--border);font-weight:600;line-height:1.4;}
+.id-card .id-best::before{content:'Best for: ';font-weight:800;}
+.id-card .id-speed,.id-card .id-rigor{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:6px;border:2px solid var(--border);margin-right:4px;margin-bottom:6px;}
+
+/* FLOWCHART */
+.flow-decision{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.fd-node{padding:14px 18px;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);margin-bottom:0;position:relative;font-size:14px;font-weight:600;text-align:center;}
+.fd-q{background:var(--yellow);font-family:'Lilita One',sans-serif;font-size:16px;}
+.fd-branch{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.fd-yes,.fd-no{position:relative;padding-top:24px;}
+.fd-yes::before,.fd-no::before{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:2px 10px;border-radius:100px;border:2px solid var(--border);}
+.fd-yes::before{content:'YES';background:var(--mint);}
+.fd-no::before{content:'NO';background:var(--rose);}
+.fd-result{padding:14px 18px;border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-weight:700;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.fd-result .fd-fw{font-family:'Lilita One',sans-serif;font-size:18px;}
+.fd-result .fd-why{font-size:11px;font-weight:500;color:var(--ink-dim);}
+.fd-arrow{text-align:center;font-size:18px;color:var(--ink-muted);margin:6px 0;}
+
+/* SCENARIO CARDS */
+.sc-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.sc-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;transition:all .12s;}
+.sc-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg);}
+.sc-card .sc-scenario{font-size:14px;font-weight:600;line-height:1.5;}
+.sc-card .sc-scenario em{color:var(--ink-dim);font-weight:500;}
+.sc-card .sc-answer{padding:10px 18px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);text-align:center;min-width:120px;}
+.sc-card .sc-answer .sc-fw{font-family:'Lilita One',sans-serif;font-size:16px;display:block;}
+.sc-card .sc-answer .sc-why{font-size:10px;color:var(--ink-dim);font-weight:600;}
+
+/* COMBO */
+.combo-flow{display:flex;align-items:center;gap:0;margin-bottom:16px;flex-wrap:wrap;justify-content:center;}
+.combo-step{padding:16px 20px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);text-align:center;min-width:140px;box-shadow:var(--shadow-sm);}
+.combo-step .cs-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:2px;}
+.combo-step .cs-fw{font-family:'Lilita One',sans-serif;font-size:16px;display:block;margin-bottom:2px;}
+.combo-step .cs-what{font-size:11px;color:var(--ink-dim);font-weight:600;}
+.combo-arrow{font-size:24px;color:rgba(255,255,255,0.5);padding:0 6px;flex-shrink:0;}
+
+/* INTERACTIVE PICKER */
+.picker{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.picker h3{font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;}
+.pk-q{margin-bottom:14px;padding-bottom:14px;border-bottom:2px dashed rgba(0,0,0,0.08);}
+.pk-q:last-of-type{border-bottom:none;}
+.pk-q p{font-size:14px;font-weight:600;margin-bottom:8px;}
+.pk-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.pk-opt{padding:10px 16px;background:var(--white);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);}
+.pk-opt:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pk-opt.selected{background:var(--yellow);box-shadow:var(--shadow);}
+.pk-result{margin-top:16px;padding:18px;border-radius:var(--radius-sm);border:var(--bw) solid var(--border);display:none;text-align:center;}
+.pk-result.show{display:block;animation:panelIn .3s;}
+.pk-result .pk-fw{font-family:'Lilita One',sans-serif;font-size:28px;display:block;margin-bottom:4px;}
+.pk-result .pk-reason{font-size:13px;color:var(--ink-dim);line-height:1.5;}
+
+.footer{text-align:center;padding:32px 0 48px;font-size:12px;color:rgba(255,255,255,0.5);font-weight:600;}
+
+@media(max-width:680px){
+  .id-grid{grid-template-columns:1fr;}
+  .j-btn{padding:8px 3px;font-size:9px;}.j-btn .j-step{font-size:7px;}
+  .fd-branch{grid-template-columns:1fr;}
+  .sc-card{grid-template-columns:1fr;}
+  .sc-card .sc-answer{text-align:left;}
+  .combo-flow{flex-direction:column;}.combo-arrow{transform:rotate(90deg);}
+  .tldr{flex-direction:column;}.pk-opts{flex-direction:column;}
+  .cmp-table{font-size:10px;}.cmp-table th,.cmp-table td{padding:6px 4px;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="container">
+
+<section class="header">
+  <div class="header-badge">📊 Prioritization Frameworks</div>
+  <h1>Which Framework Should I Use?</h1>
+  <p class="sub">4 tools, 4 strengths. This guide helps you pick the right one for your situation.</p>
+</section>
+
+<div class="journey-nav" id="journeyNav">
+  <button class="j-btn active" onclick="goTo('overview')"><span class="j-step">01</span>Overview</button>
+  <button class="j-btn" onclick="goTo('compare')"><span class="j-step">02</span>Compare</button>
+  <button class="j-btn" onclick="goTo('decide')"><span class="j-step">03</span>Decide</button>
+  <button class="j-btn" onclick="goTo('scenarios')"><span class="j-step">04</span>Scenarios</button>
+  <button class="j-btn" onclick="goTo('combo')"><span class="j-step">05</span>Combine</button>
+  <button class="j-btn" onclick="goTo('picker')"><span class="j-step">06</span>Picker</button>
+</div>
+
+<!-- 1. OVERVIEW -->
+<div id="p-overview" class="panel active">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky)">🗂️</div>
+    <div class="sec-label"><h2>4 Frameworks at a Glance</h2><p>Each one has a superpower</p></div>
+  </div>
+  <div class="id-grid">
+    <div class="id-card"><div class="id-bar" style="background:var(--sky)"></div>
+      <h3>🍚 RICE Score</h3>
+      <div class="id-formula" style="background:rgba(141,216,248,0.2)">R × I × C ÷ E</div>
+      <div><span class="id-speed" style="background:rgba(255,176,103,0.2)">🕐 Slow</span><span class="id-rigor" style="background:rgba(126,232,178,0.2)">📐 High Rigor</span></div>
+      <div class="id-oneliner">The most rigorous. Uses real data for Reach.</div>
+      <div class="id-best" style="background:rgba(141,216,248,0.12)">Quarterly roadmap planning with 10–15 features. Mature products with analytics data.</div>
+    </div>
+    <div class="id-card"><div class="id-bar" style="background:var(--mint)"></div>
+      <h3>⚖️ Value vs Effort</h3>
+      <div class="id-formula" style="background:rgba(126,232,178,0.2)">2×2 Matrix</div>
+      <div><span class="id-speed" style="background:rgba(126,232,178,0.2)">⚡ Fast</span><span class="id-rigor" style="background:rgba(255,176,103,0.2)">📐 Low Rigor</span></div>
+      <div class="id-oneliner">The most visual. Plot, see quadrants, decide.</div>
+      <div class="id-best" style="background:rgba(126,232,178,0.12)">Quick team alignment in 30 min. Backlog grooming. Stakeholder workshops.</div>
+    </div>
+    <div class="id-card"><div class="id-bar" style="background:var(--purple)"></div>
+      <h3>📊 Kano Model</h3>
+      <div class="id-formula" style="background:rgba(196,181,253,0.2)">Survey → Categorize</div>
+      <div><span class="id-speed" style="background:rgba(255,138,138,0.2)">🐢 Slowest</span><span class="id-rigor" style="background:rgba(126,232,178,0.2)">📐 High Rigor</span></div>
+      <div class="id-oneliner">The most user-centered. Asks users directly.</div>
+      <div class="id-best" style="background:rgba(196,181,253,0.12)">Product strategy. Understanding what TYPE of features to invest in. Requires user surveys.</div>
+    </div>
+    <div class="id-card"><div class="id-bar" style="background:var(--orange)"></div>
+      <h3>🧊 ICE Score</h3>
+      <div class="id-formula" style="background:rgba(255,176,103,0.2)">I × C × E</div>
+      <div><span class="id-speed" style="background:rgba(126,232,178,0.3)">⚡⚡ Fastest</span><span class="id-rigor" style="background:rgba(255,138,138,0.2)">📐 Lowest Rigor</span></div>
+      <div class="id-oneliner">The fastest. Three gut-check numbers, multiply, go.</div>
+      <div class="id-best" style="background:rgba(255,176,103,0.12)">Growth experiments. Rapid triage of 20+ ideas. Early-stage products with no data.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>🧠 The one-sentence cheat sheet</h4>
+    <p><strong>ICE</strong> when you need speed. <strong>Value vs Effort</strong> when you need a visual. <strong>RICE</strong> when you need precision. <strong>Kano</strong> when you need to understand users.</p>
+  </div>
+  <div class="panel-nav"><div></div><button class="pn-btn primary" onclick="goTo('compare')">Next: Side-by-Side →</button></div>
+</div>
+
+<!-- 2. COMPARE -->
+<div id="p-compare" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange)">📋</div>
+    <div class="sec-label"><h2>Side-by-Side Comparison</h2><p>Every dimension that matters</p></div>
+  </div>
+  <div class="c-card-static" style="overflow-x:auto;">
+    <table class="cmp-table">
+      <thead><tr><th>Dimension</th><th>🍚 RICE</th><th>⚖️ Value/Effort</th><th>📊 Kano</th><th>🧊 ICE</th></tr></thead>
+      <tbody>
+        <tr><td>What it does</td><td>Ranks features by score</td><td>Sorts into 4 quadrants</td><td>Categorizes feature type</td><td>Ranks features by score</td></tr>
+        <tr><td>Output</td><td>Numbered ranking</td><td>Visual 2×2 grid</td><td>5 categories</td><td>Numbered ranking</td></tr>
+        <tr><td>Data needed</td><td class="hi">Analytics (Reach)</td><td class="lo">None — gut-check</td><td class="hi">User surveys (30+)</td><td class="lo">None — gut-check</td></tr>
+        <tr><td>Time per feature</td><td class="med">5–10 min</td><td class="hi">2–3 min</td><td class="lo">1–2 weeks (survey)</td><td class="hi">1–2 min</td></tr>
+        <tr><td>Session length</td><td>90 min</td><td>45 min</td><td>60 min + survey</td><td>30 min</td></tr>
+        <tr><td>Accounts for Reach?</td><td class="hi">✅ Yes</td><td>❌ No</td><td>Indirectly</td><td>❌ No</td></tr>
+        <tr><td>Accounts for user feelings?</td><td>❌ No</td><td>❌ No</td><td class="hi">✅ Yes (survey)</td><td>❌ No</td></tr>
+        <tr><td>Subjectivity</td><td class="hi">Low (data-driven)</td><td class="lo">High</td><td class="hi">Low (user data)</td><td class="lo">High</td></tr>
+        <tr><td>Exec-ready?</td><td class="hi">✅ Yes</td><td class="med">For workshops</td><td class="hi">✅ For strategy</td><td class="lo">❌ Too informal</td></tr>
+        <tr><td>Team size</td><td>3–8 people</td><td>3–12 people</td><td>3–6 + users</td><td>2–5 people</td></tr>
+        <tr><td>Learning curve</td><td class="med">Medium</td><td class="hi">Very easy</td><td class="lo">Hardest</td><td class="hi">Easiest</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <h4>📐 Rigor vs Speed tradeoff</h4>
+    <p>There's a clear spectrum: <strong>ICE</strong> (fastest, least rigorous) → <strong>Value vs Effort</strong> → <strong>RICE</strong> → <strong>Kano</strong> (slowest, most rigorous). Match the tool to the stakes of the decision.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('overview')">← Overview</button><button class="pn-btn primary" onclick="goTo('decide')">Next: Decision Flow →</button></div>
+</div>
+
+<!-- 3. DECISION FLOW -->
+<div id="p-decide" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple)">🧭</div>
+    <div class="sec-label"><h2>Decision Flowchart</h2><p>Answer 3 questions, get the right framework</p></div>
+  </div>
+
+  <div class="flow-decision">
+    <div class="fd-node fd-q">Do you need to understand what TYPE of feature it is?</div>
+    <div class="fd-branch">
+      <div class="fd-yes">
+        <div class="fd-result" style="background:rgba(196,181,253,0.25)">
+          <span class="fd-fw">📊 Kano Model</span>
+          <span class="fd-why">Must-Have vs Performance vs Delighter. Requires user survey.</span>
+        </div>
+      </div>
+      <div class="fd-no">
+        <div class="fd-node fd-q" style="font-size:14px">Do you have analytics data for Reach?</div>
+        <div class="fd-branch" style="margin-top:10px">
+          <div class="fd-yes">
+            <div class="fd-result" style="background:rgba(141,216,248,0.25)">
+              <span class="fd-fw">🍚 RICE Score</span>
+              <span class="fd-why">Most rigorous. Uses real user numbers. 90-min session.</span>
+            </div>
+          </div>
+          <div class="fd-no">
+            <div class="fd-node fd-q" style="font-size:13px">Need a visual for stakeholders, or just a ranked list?</div>
+            <div class="fd-branch" style="margin-top:10px">
+              <div class="fd-yes">
+                <div class="fd-result" style="background:rgba(126,232,178,0.25)">
+                  <span class="fd-fw">⚖️ Value vs Effort</span>
+                  <span class="fd-why">Visual 2×2. Great for workshops. 45 min.</span>
+                </div>
+              </div>
+              <div class="fd-no">
+                <div class="fd-result" style="background:rgba(255,176,103,0.25)">
+                  <span class="fd-fw">🧊 ICE Score</span>
+                  <span class="fd-why">Fastest. 3 numbers, multiply, done. 30 min.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">This flowchart handles 80% of situations. The other 20%? Use the scenario matcher on the next tab.</div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('compare')">← Compare</button><button class="pn-btn primary" onclick="goTo('scenarios')">Next: Scenarios →</button></div>
+</div>
+
+<!-- 4. SCENARIOS -->
+<div id="p-scenarios" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink)">🎬</div>
+    <div class="sec-label"><h2>Real Scenarios</h2><p>"I'm in THIS situation — which framework?"</p></div>
+  </div>
+
+  <div class="sc-grid">
+    <div class="sc-card">
+      <div class="sc-scenario">"We have <strong>30 feature requests</strong> and need to pick 5 for next quarter. We have good analytics."</div>
+      <div class="sc-answer" style="background:rgba(141,216,248,0.25)"><span class="sc-fw">🍚 RICE</span><span class="sc-why">Data + many features = RICE shines</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"Our growth team has <strong>15 experiment ideas</strong> and we need to pick <strong>this week's</strong> tests."</div>
+      <div class="sc-answer" style="background:rgba(255,176,103,0.25)"><span class="sc-fw">🧊 ICE</span><span class="sc-why">Speed is everything for weekly experiments</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"Stakeholders can't agree on priorities. We need <strong>visual alignment</strong> in a workshop."</div>
+      <div class="sc-answer" style="background:rgba(126,232,178,0.25)"><span class="sc-fw">⚖️ Value/Effort</span><span class="sc-why">The 2×2 grid is instantly understood</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"We're building a new product and need to know which features are <strong>table stakes vs. differentiators</strong>."</div>
+      <div class="sc-answer" style="background:rgba(196,181,253,0.25)"><span class="sc-fw">📊 Kano</span><span class="sc-why">Only Kano distinguishes Must-Haves from Delighters</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"Early-stage startup. <strong>No analytics, no user base</strong>, just a list of ideas."</div>
+      <div class="sc-answer" style="background:rgba(255,176,103,0.25)"><span class="sc-fw">🧊 ICE</span><span class="sc-why">No data needed. Gut-check scoring works fine here.</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"We need to <strong>present our prioritization to the CEO</strong> with clear rationale."</div>
+      <div class="sc-answer" style="background:rgba(141,216,248,0.25)"><span class="sc-fw">🍚 RICE</span><span class="sc-why">Numbers + formulas = executive credibility</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"Quick backlog grooming with the team — <strong>20 minutes, tops</strong>."</div>
+      <div class="sc-answer" style="background:rgba(126,232,178,0.25)"><span class="sc-fw">⚖️ Value/Effort</span><span class="sc-why">Fastest visual method. Sticky notes on a grid.</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-scenario">"Users are churning and we don't know if we're <strong>missing basics or lacking wow features</strong>."</div>
+      <div class="sc-answer" style="background:rgba(196,181,253,0.25)"><span class="sc-fw">📊 Kano</span><span class="sc-why">Survey reveals broken Must-Haves vs missing Delighters</span></div>
+    </div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('decide')">← Decision Flow</button><button class="pn-btn primary" onclick="goTo('combo')">Next: Combining Them →</button></div>
+</div>
+
+<!-- 5. COMBINE -->
+<div id="p-combo" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint)">🔗</div>
+    <div class="sec-label"><h2>Using Them Together</h2><p>The most powerful approach: combine frameworks</p></div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:10px">🏆 The Full Pipeline</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:14px">For important decisions, chain frameworks. Each one narrows the funnel:</p>
+  </div>
+
+  <div class="combo-flow">
+    <div class="combo-step" style="border-color:var(--orange)">
+      <span class="cs-num">Step 1</span>
+      <span class="cs-fw">🧊 ICE</span>
+      <span class="cs-what">Rapid triage<br>30 ideas → 12</span>
+    </div>
+    <span class="combo-arrow">→</span>
+    <div class="combo-step" style="border-color:var(--purple)">
+      <span class="cs-num">Step 2</span>
+      <span class="cs-fw">📊 Kano</span>
+      <span class="cs-what">Categorize<br>Which type?</span>
+    </div>
+    <span class="combo-arrow">→</span>
+    <div class="combo-step" style="border-color:var(--sky)">
+      <span class="cs-num">Step 3</span>
+      <span class="cs-fw">🍚 RICE</span>
+      <span class="cs-what">Precise ranking<br>12 → ordered list</span>
+    </div>
+    <span class="combo-arrow">→</span>
+    <div class="combo-step" style="border-color:var(--mint)">
+      <span class="cs-num">Step 4</span>
+      <span class="cs-fw">⚖️ V vs E</span>
+      <span class="cs-what">Communicate<br>Show the grid</span>
+    </div>
+  </div>
+
+  <div class="c-card-static">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:10px">🤝 Common Pairings</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(255,176,103,0.12)">
+        <strong style="font-size:14px;display:block;margin-bottom:4px">🧊 ICE → 🍚 RICE</strong>
+        <p style="font-size:12px;color:var(--ink-dim)">ICE filters fast, RICE ranks the survivors rigorously. Best for large backlogs.</p>
+      </div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(196,181,253,0.12)">
+        <strong style="font-size:14px;display:block;margin-bottom:4px">📊 Kano → 🍚 RICE</strong>
+        <p style="font-size:12px;color:var(--ink-dim)">Kano says WHAT TYPE. RICE says WHICH ONES within each type. Partners, not competitors.</p>
+      </div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(126,232,178,0.12)">
+        <strong style="font-size:14px;display:block;margin-bottom:4px">⚖️ V/E → 🍚 RICE</strong>
+        <p style="font-size:12px;color:var(--ink-dim)">V/E for stakeholder alignment, RICE for precise ranking. Visual + rigorous.</p>
+      </div>
+      <div style="padding:14px;border-radius:var(--radius-xs);border:var(--bw) solid var(--border);background:rgba(141,216,248,0.12)">
+        <strong style="font-size:14px;display:block;margin-bottom:4px">📊 Kano → ⚖️ V/E</strong>
+        <p style="font-size:12px;color:var(--ink-dim)">Kano categorizes, then plot Performance features on V/E grid for quick sprint picks.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>⚠️ Don't over-framework</h4>
+    <p>Using all four for every decision is overkill. Most situations need <strong>one or two</strong>. The pipeline above is for high-stakes, high-ambiguity quarterly planning — not for choosing what to build this sprint.</p>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('scenarios')">← Scenarios</button><button class="pn-btn primary" onclick="goTo('picker')">Next: Interactive Picker →</button></div>
+</div>
+
+<!-- 6. INTERACTIVE PICKER -->
+<div id="p-picker" class="panel">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow)">🎯</div>
+    <div class="sec-label"><h2>Framework Picker</h2><p>Answer 3 questions, get a recommendation</p></div>
+  </div>
+  <div class="picker">
+    <h3>What's your situation?</h3>
+    <div class="pk-q" id="pkq1">
+      <p>1. How much time do you have?</p>
+      <div class="pk-opts">
+        <button class="pk-opt" onclick="pkSel(1,this,'fast')">⚡ Under 30 min</button>
+        <button class="pk-opt" onclick="pkSel(1,this,'medium')">🕐 30–90 min</button>
+        <button class="pk-opt" onclick="pkSel(1,this,'slow')">🐢 1–2 weeks (can do survey)</button>
+      </div>
+    </div>
+    <div class="pk-q" id="pkq2">
+      <p>2. Do you have analytics data?</p>
+      <div class="pk-opts">
+        <button class="pk-opt" onclick="pkSel(2,this,'yes')">📊 Yes — Reach data available</button>
+        <button class="pk-opt" onclick="pkSel(2,this,'no')">🤷 No — gut feel only</button>
+      </div>
+    </div>
+    <div class="pk-q" id="pkq3">
+      <p>3. What's the main goal?</p>
+      <div class="pk-opts">
+        <button class="pk-opt" onclick="pkSel(3,this,'rank')">📋 Rank features numerically</button>
+        <button class="pk-opt" onclick="pkSel(3,this,'visual')">🖼️ Visual alignment with team</button>
+        <button class="pk-opt" onclick="pkSel(3,this,'type')">🏷️ Understand feature types</button>
+        <button class="pk-opt" onclick="pkSel(3,this,'triage')">⚡ Fast triage of many ideas</button>
+      </div>
+    </div>
+    <div class="pk-result" id="pkResult"></div>
+  </div>
+  <div class="panel-nav"><button class="pn-btn" onclick="goTo('combo')">← Combine</button><button class="pn-btn primary" onclick="goTo('overview')">↺ Review from Start</button></div>
+</div>
+
+<div class="footer">Prioritization Frameworks — Comparison Guide · PM Frameworks Guidebook</div>
+</div>
+
+<script>
+var panels=['overview','compare','decide','scenarios','combo','picker'];
+var visited=new Set(['overview']);
+function goTo(id){
+  visited.add(id);
+  panels.forEach(function(p){document.getElementById('p-'+p).classList.remove('active');});
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    b.classList.toggle('completed',visited.has(panels[i])&&panels[i]!==id);
+    if(panels[i]===id)b.classList.add('active');
+  });
+  document.getElementById('progressBar').style.width=(visited.size/panels.length)*100+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// PICKER LOGIC
+var pkAnswers={};
+function pkSel(q,btn,val){
+  var qEl=document.getElementById('pkq'+q);
+  qEl.querySelectorAll('.pk-opt').forEach(function(b){b.classList.remove('selected');});
+  btn.classList.add('selected');
+  pkAnswers[q]=val;
+  if(pkAnswers[1]&&pkAnswers[2]&&pkAnswers[3])showPkResult();
+}
+function showPkResult(){
+  var t=pkAnswers[1],d=pkAnswers[2],g=pkAnswers[3];
+  var fw,reason,color;
+
+  // Type goal overrides
+  if(g==='type'){fw='📊 Kano Model';reason='Only Kano categorizes features by satisfaction type (Must-Have, Performance, Delighter). It requires user surveys, so plan 1–2 weeks.';color='rgba(196,181,253,0.25)';
+  } else if(g==='triage'){fw='🧊 ICE Score';reason='ICE is purpose-built for rapid triage. Score 20+ ideas in 30 min with three gut-check numbers. Follow up with RICE for the top candidates.';color='rgba(255,176,103,0.25)';
+  } else if(g==='visual'){fw='⚖️ Value vs Effort';reason='The 2×2 matrix is the best visual tool. Everyone immediately understands quadrants. Perfect for workshop alignment.';color='rgba(126,232,178,0.25)';
+  } else if(d==='yes'&&t!=='fast'){fw='🍚 RICE Score';reason='You have data and time — use the most rigorous framework. Reach makes RICE uniquely precise. Run a 90-min session.';color='rgba(141,216,248,0.25)';
+  } else if(d==='yes'&&t==='fast'){fw='🍚 RICE Score (lite)';reason='You have data but limited time. Do a quick RICE pass — even a fast version with Reach data beats ICE without it.';color='rgba(141,216,248,0.25)';
+  } else if(t==='fast'){fw='🧊 ICE Score';reason='No data + limited time = ICE. Three gut-check numbers, multiply, sort. Done in 30 min.';color='rgba(255,176,103,0.25)';
+  } else if(t==='slow'){fw='📊 Kano + 🍚 RICE';reason='With time and no data, run a Kano survey first (1–2 weeks), then RICE-score the top features using what you learned.';color='rgba(196,181,253,0.25)';
+  } else{fw='⚖️ Value vs Effort → 🍚 RICE';reason='Start with V/E for quick visual sort, then apply RICE to the top candidates for precise ranking.';color='rgba(126,232,178,0.25)';
+  }
+
+  var el=document.getElementById('pkResult');
+  el.style.background=color;
+  el.innerHTML='<span class="pk-fw">'+fw+'</span><span class="pk-reason">'+reason+'</span>';
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>

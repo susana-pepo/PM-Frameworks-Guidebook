@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blue Ocean Strategy — PM Frameworks Guidebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b8dd9;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--shadow-lg:7px 7px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;--red-ocean:#ff6b6b;--blue-ocean:#4ea8de;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:800px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:20px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:520px;margin:0 auto;}
+.tldr{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;}
+.tldr-icon{width:44px;height:44px;min-width:44px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-sm);}
+.tldr p{font-size:15px;color:var(--ink-dim);}.tldr strong{color:var(--ink);}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;position:relative;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.j-btn .j-step{display:block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:600;opacity:.5;margin-bottom:1px;letter-spacing:1px;}
+.j-btn.completed::after{content:'\2713';position:absolute;top:3px;right:4px;font-size:8px;color:var(--mint-deep);font-weight:900;}
+.section{display:none;}.section.active{display:block;}
+.sec-title{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.sec-title .sec-icon{width:48px;height:48px;min-width:48px;border:var(--bw) solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label{display:inline-block;padding:6px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);}
+.sec-title .sec-label h2{font-family:'Lilita One',sans-serif;font-size:22px;line-height:1.3;}
+.sec-title .sec-label p{font-size:13px;color:var(--ink-dim);font-weight:500;margin-top:2px;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.tip{margin-top:12px;padding:10px 16px;background:var(--yellow);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-weight:600;line-height:1.5;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.when-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;}
+.when-card h3{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;padding-bottom:10px;border-bottom:var(--bw) solid var(--border);}
+.when-card ul{list-style:none;}.when-card li{font-size:13px;color:var(--ink-dim);padding:8px 0 8px 4px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,0.08);}
+.when-card li:last-child{border-bottom:none;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .1s;}
+.quiz-opt:hover{background:var(--cream-dark);}
+.quiz-opt.correct{background:var(--mint);}.quiz-opt.wrong{background:var(--rose);opacity:.7;}
+.quiz-opt:disabled{cursor:default;}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.sec-title{flex-direction:column;align-items:flex-start;gap:10px;}.j-btn{font-size:8px;padding:10px 2px;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="prog"></div>
+<div class="wrapper">
+<a class="back-link" href="index.html">&#x2190; Hub</a>
+
+<div class="header">
+  <div class="header-badge">&#x1F4CA; Strategy</div>
+  <h1>&#x1F30A; Blue Ocean Strategy</h1>
+  <p class="sub">Stop competing. Create uncontested market space where competition becomes irrelevant.</p>
+</div>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <div class="tldr-icon">&#x26A1;</div>
+  <div><p><strong>One-liner:</strong> Instead of fighting competitors in a bloody "red ocean," find or create a "blue ocean" — new market space with no competition. You do this by simultaneously <strong>raising</strong> some factors, <strong>creating</strong> new ones, <strong>reducing</strong> others, and <strong>eliminating</strong> things the industry takes for granted.</p></div>
+</div>
+
+<!-- HERO: Ocean Comparison Visual -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+  <!-- Red Ocean -->
+  <div style="background:linear-gradient(135deg,#ff6b6b,#ee5a5a);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;text-align:center;">
+    <div style="font-size:36px;margin-bottom:6px;">&#x1F9C8;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:20px;color:var(--white);margin-bottom:8px;">Red Ocean</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.9);line-height:1.6;">
+      Compete in existing space<br>
+      Beat the competition<br>
+      Exploit existing demand<br>
+      Value <em>or</em> cost trade-off<br>
+      <span style="font-weight:800;font-size:13px;margin-top:6px;display:inline-block;">&#x2694;&#xFE0F; Bloody fight for share</span>
+    </div>
+  </div>
+  <!-- Blue Ocean -->
+  <div style="background:linear-gradient(135deg,#4ea8de,#3a8cc4);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;text-align:center;">
+    <div style="font-size:36px;margin-bottom:6px;">&#x1F30A;</div>
+    <div style="font-family:'Lilita One',sans-serif;font-size:20px;color:var(--white);margin-bottom:8px;">Blue Ocean</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.9);line-height:1.6;">
+      Create uncontested space<br>
+      Make competition irrelevant<br>
+      Create new demand<br>
+      Value <em>and</em> cost together<br>
+      <span style="font-weight:800;font-size:13px;margin-top:6px;display:inline-block;">&#x1F30A; Open water, no sharks</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)"><span class="j-step">01</span>Concept</button>
+  <button class="j-btn" onclick="go(1)"><span class="j-step">02</span>Canvas</button>
+  <button class="j-btn" onclick="go(2)"><span class="j-step">03</span>4 Actions</button>
+  <button class="j-btn" onclick="go(3)"><span class="j-step">04</span>Example</button>
+  <button class="j-btn" onclick="go(4)"><span class="j-step">05</span>Builder</button>
+  <button class="j-btn" onclick="go(5)"><span class="j-step">06</span>When</button>
+  <button class="j-btn" onclick="go(6)"><span class="j-step">07</span>Quiz</button>
+</nav>
+
+<!-- ============ SECTION 0: CONCEPT ============ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--sky);">&#x1F4A1;</div>
+    <div class="sec-label"><h2>The Core Idea</h2><p>Why fighting for market share is losing</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">The Problem with Competition</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">Most companies compete by trying to be <em>slightly better</em> than rivals on the same factors. More features, lower price, better ads. This is a <strong>red ocean</strong> — bloody with competition. Everyone fights over the same customers with the same playbook.</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Blue Ocean Strategy (by W. Chan Kim &amp; Ren&eacute;e Mauborgne) says: <strong>stop competing</strong>. Instead, redefine what you offer so you're playing a different game entirely.</p>
+  </div>
+
+  <!-- 3 Key Principles -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F3AF;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Value Innovation</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Increase value for buyers while simultaneously reducing costs. Not value OR cost — both at once.</p>
+    </div>
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F6AB;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Don't Benchmark</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">If your strategy looks like competitors', you're in a red ocean. Diverge, don't converge.</p>
+    </div>
+    <div class="c-card" style="text-align:center;padding:20px;">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F465;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:6px;">Non-Customers First</div>
+      <p style="font-size:12px;color:var(--ink-dim);line-height:1.5;">Don't just serve existing customers better. Find people who AREN'T customers yet, and ask why not.</p>
+    </div>
+  </div>
+
+  <!-- Memory Trick -->
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick</h4>
+    <p>Think of it as <strong>swimming vs. fighting</strong>. In a red ocean, you're fighting sharks over the same fish. In a blue ocean, you've found a whole new sea full of fish that nobody knew existed. The question isn't "how do I fight better?" — it's "where are there no sharks?"</p>
+  </div>
+
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Strategy Canvas &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 1: STRATEGY CANVAS ============ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--orange);">&#x1F4C8;</div>
+    <div class="sec-label"><h2>Strategy Canvas</h2><p>The visual tool that reveals blue oceans</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">What Is It?</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px;">A <strong>strategy canvas</strong> is a graph that compares how competitors invest across key factors. The X-axis lists the factors the industry competes on. The Y-axis shows the offering level (low to high). Each competitor draws a "value curve."</p>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">When all value curves look the same &#x2192; <span style="color:var(--red-ocean);font-weight:700;">Red Ocean.</span> When yours looks completely different &#x2192; <span style="color:var(--blue-ocean);font-weight:700;">Blue Ocean.</span></p>
+  </div>
+
+  <!-- Visual Strategy Canvas Example -->
+  <div class="c-card" style="padding:20px;">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:16px;text-align:center;">Example: Wine Industry (Yellow Tail)</h3>
+    <!-- Factor labels -->
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px;padding:0 10px;">
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Price</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Marketing</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Aging</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Complexity</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Vineyard</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Easy Drink</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Fun</span>
+      <span style="font-size:9px;font-weight:700;text-align:center;flex:1;">Selection</span>
+    </div>
+    <!-- Canvas grid with SVG lines -->
+    <div style="position:relative;height:140px;border-left:2px solid var(--border);border-bottom:2px solid var(--border);margin-bottom:12px;padding:0 10px;">
+      <div style="position:absolute;left:-30px;top:0;font-size:8px;color:var(--ink-muted);font-weight:600;">HIGH</div>
+      <div style="position:absolute;left:-28px;bottom:0;font-size:8px;color:var(--ink-muted);font-weight:600;">LOW</div>
+      <div style="position:absolute;top:33%;left:0;right:0;border-top:1px dashed rgba(0,0,0,0.1);"></div>
+      <div style="position:absolute;top:66%;left:0;right:0;border-top:1px dashed rgba(0,0,0,0.1);"></div>
+      <svg viewBox="0 0 800 140" style="position:absolute;top:0;left:10px;right:10px;width:calc(100% - 20px);height:100%;" preserveAspectRatio="none">
+        <polyline points="50,28 150,28 250,20 350,20 450,28 550,112 650,112 750,42" fill="none" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="50,56 150,56 250,70 350,70 450,56 550,112 650,112 750,56" fill="none" stroke="#ff9999" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="50,98 150,42 250,112 350,112 450,112 550,20 650,20 750,98" fill="none" stroke="#4ea8de" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <!-- Legend -->
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:3px;background:#ff6b6b;border-radius:2px;"></div><span style="font-size:11px;font-weight:700;">Premium wines</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2px;background:#ff9999;border-radius:2px;border:1px dashed #ff9999;"></div><span style="font-size:11px;font-weight:600;color:var(--ink-dim);">Budget wines</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:4px;background:#4ea8de;border-radius:2px;"></div><span style="font-size:11px;font-weight:800;color:var(--blue-ocean);">Yellow Tail &#x1F30A;</span></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F50D; What Yellow Tail Did</h4>
+    <p>Premium and budget wines competed on the same factors (just at different price points). Yellow Tail <strong>eliminated</strong> aging, vineyard prestige, and complexity. <strong>Created</strong> fun and easy drinking. Their value curve looks completely different — that's the blue ocean.</p>
+  </div>
+
+  <div class="tip">&#x1F4A1; <strong>The test:</strong> If your strategy canvas value curve looks similar to competitors, you're in a red ocean. The goal is to make yours look radically different.</div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Concept</button><button class="pn-btn primary" onclick="go(2)">4 Actions &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 2: FOUR ACTIONS ============ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--purple);">&#x2702;&#xFE0F;</div>
+    <div class="sec-label"><h2>The Four Actions Framework</h2><p>The tool that reshapes your value curve</p></div>
+  </div>
+
+  <div class="c-card">
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">To break the trade-off between value and cost, ask <strong>four questions</strong> about every factor in your industry. This is the heart of Blue Ocean Strategy.</p>
+  </div>
+
+  <!-- ERRC Grid - the iconic 2x2 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:16px;border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;">
+    <div style="background:var(--rose);padding:24px;border-right:2px solid var(--border);border-bottom:2px solid var(--border);">
+      <div style="font-size:28px;margin-bottom:4px;">&#x274C;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">ELIMINATE</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Which factors that the industry takes for granted should be <strong>eliminated</strong>?</p>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.5);border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--ink-dim);">&#x2193; Drops costs significantly</div>
+    </div>
+    <div style="background:var(--orange);padding:24px;border-bottom:2px solid var(--border);">
+      <div style="font-size:28px;margin-bottom:4px;">&#x1F53D;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">REDUCE</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Which factors should be <strong>reduced</strong> well below the industry standard?</p>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.5);border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--ink-dim);">&#x2193; Cuts overdesign</div>
+    </div>
+    <div style="background:var(--sky);padding:24px;border-right:2px solid var(--border);">
+      <div style="font-size:28px;margin-bottom:4px;">&#x1F53C;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">RAISE</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Which factors should be <strong>raised</strong> well above the industry standard?</p>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.5);border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--ink-dim);">&#x2191; Increases buyer value</div>
+    </div>
+    <div style="background:var(--mint);padding:24px;">
+      <div style="font-size:28px;margin-bottom:4px;">&#x2728;</div>
+      <div style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">CREATE</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Which factors should be <strong>created</strong> that the industry has never offered?</p>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.5);border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--ink-dim);">&#x2191; Creates new demand</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F9E0; Memory Trick: ERRC</h4>
+    <p><strong>E</strong>liminate, <strong>R</strong>educe, <strong>R</strong>aise, <strong>C</strong>reate. The top row (E + R) <strong>cuts costs</strong>. The bottom row (Ra + C) <strong>adds value</strong>. That's how you break the value-cost trade-off — you do both simultaneously.</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x26A0;&#xFE0F; Most People Skip the Hard Part</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">Everyone loves to "Create" and "Raise." The real magic is in "Eliminate" and "Reduce" — letting go of things the industry assumes are essential. That's where cost savings come from and where you truly differentiate.</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Canvas</button><button class="pn-btn primary" onclick="go(3)">Example &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 3: EXAMPLE ============ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--mint);">&#x1F3B5;</div>
+    <div class="sec-label"><h2>Real Example</h2><p>Blue Ocean for music learning apps</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:4px;">&#x1F3B9; Skoove / Trala Market Analysis</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:16px;">Let's apply Blue Ocean thinking to the instrument learning app market.</p>
+
+    <h4 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;color:var(--red-ocean);">&#x1F9C8; The Red Ocean (what everyone does)</h4>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-bottom:16px;">Every music learning app competes on: song library size, subscription price, gamification features, instrument coverage, tutorial video quality. They all look the same in the App Store. Users churn constantly because the experience is interchangeable.</p>
+
+    <h4 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;color:var(--blue-ocean);">&#x1F30A; A Blue Ocean Move</h4>
+  </div>
+
+  <!-- ERRC Applied -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="background:var(--rose);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x274C; ELIMINATE</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+        &#x2022; Massive song library arms race<br>
+        &#x2022; Generic "learn any instrument" positioning<br>
+        &#x2022; Social/community features nobody uses
+      </div>
+    </div>
+    <div class="c-card" style="background:var(--orange);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x1F53D; REDUCE</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+        &#x2022; Gamification (badges that don't drive learning)<br>
+        &#x2022; Content breadth (fewer songs, deeper pedagogy)<br>
+        &#x2022; Tutorial video production cost
+      </div>
+    </div>
+    <div class="c-card" style="background:var(--sky);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x1F53C; RAISE</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+        &#x2022; Real-time audio feedback accuracy<br>
+        &#x2022; Instrument-specific learning paths<br>
+        &#x2022; Practice habit design (daily streaks that work)
+      </div>
+    </div>
+    <div class="c-card" style="background:var(--mint);padding:18px;">
+      <div style="font-family:'Lilita One',sans-serif;font-size:14px;margin-bottom:8px;">&#x2728; CREATE</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+        &#x2022; AI-powered "teacher" that adapts to your mistakes<br>
+        &#x2022; Progress milestones tied to real songs you can play<br>
+        &#x2022; "Performance mode" — play along with a band
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4A1; The Blue Ocean Insight</h4>
+    <p>The industry competes on breadth (more songs, more instruments). A blue ocean move would compete on <strong>depth</strong> — the feeling of actually learning an instrument, not just tapping along. This creates value YouTube can't match (real-time feedback) while reducing cost (smaller, curated library).</p>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:15px;margin-bottom:8px;">&#x1F465; The Non-Customers</h3>
+    <p style="font-size:13px;color:var(--ink-dim);line-height:1.7;margin-bottom:10px;">Blue Ocean says: look at who <strong>ISN'T</strong> using your product and why.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+      <div style="padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:12px;margin-bottom:4px;">Tier 1: Soon-to-be non-customers</div>
+        <div style="font-size:11px;color:var(--ink-dim);">People who tried an app and churned. Why? Felt like a game, not learning.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:12px;margin-bottom:4px;">Tier 2: Refusing non-customers</div>
+        <div style="font-size:11px;color:var(--ink-dim);">People who chose a human teacher because apps feel "not real." Missing: credible learning.</div>
+      </div>
+      <div style="padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="font-weight:800;font-size:12px;margin-bottom:4px;">Tier 3: Unexplored non-customers</div>
+        <div style="font-size:11px;color:var(--ink-dim);">Adults who "always wanted to learn" but think they can't. Missing: confidence entry point.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; 4 Actions</button><button class="pn-btn primary" onclick="go(4)">Builder &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 4: BUILDER ============ -->
+<div class="section" id="s4">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F6E0;&#xFE0F;</div>
+    <div class="sec-label"><h2>ERRC Builder</h2><p>Map your own blue ocean move</p></div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Your ERRC Grid</h3>
+    <p style="font-size:13px;color:var(--ink-dim);margin-bottom:16px;">Fill in each quadrant for your product or market. Aim for at least 2 items per box.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:2px 8px;background:var(--rose);border-radius:6px;">&#x274C; Eliminate</span></label>
+        <textarea id="b_elim" rows="3" placeholder="What should you stop doing that the industry takes for granted?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:2px 8px;background:var(--orange);border-radius:6px;">&#x1F53D; Reduce</span></label>
+        <textarea id="b_reduce" rows="3" placeholder="What should you dial way down below industry standard?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:2px 8px;background:var(--sky);border-radius:6px;">&#x1F53C; Raise</span></label>
+        <textarea id="b_raise" rows="3" placeholder="What should you push way above industry standard?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;"><span style="padding:2px 8px;background:var(--mint);border-radius:6px;">&#x2728; Create</span></label>
+        <textarea id="b_create" rows="3" placeholder="What should you offer that the industry has never provided?" style="width:100%;padding:10px;border:var(--bw) solid var(--border);border-radius:var(--radius-xs);font-family:'Outfit',sans-serif;font-size:13px;resize:vertical;"></textarea>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <button onclick="analyzeERRC()" style="padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;">&#x1F30A; Analyze My Blue Ocean</button>
+    </div>
+    <div id="errc_result" style="margin-top:16px;"></div>
+  </div>
+
+  <div class="tip">&#x1F4A1; <strong>PM Interview version:</strong> "I'd apply the ERRC framework — eliminate [X], reduce [Y], raise [Z], and create [W] — to shift from competing on [old factor] to owning [new value]."</div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Example</button><button class="pn-btn primary" onclick="go(5)">When &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 5: WHEN ============ -->
+<div class="section" id="s5">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--pink);">&#x1F4C5;</div>
+    <div class="sec-label"><h2>When to Use</h2><p>Right situations and wrong ones</p></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <div class="when-card">
+      <h3>&#x2705; Use Blue Ocean When...</h3>
+      <ul>
+        <li>&#x2714;&#xFE0F; Your market feels commoditized — everyone looks the same</li>
+        <li>&#x2714;&#xFE0F; You're entering a crowded category and need a wedge</li>
+        <li>&#x2714;&#xFE0F; Growth is stalling despite product improvements</li>
+        <li>&#x2714;&#xFE0F; You need a strategic narrative for investors</li>
+        <li>&#x2714;&#xFE0F; Pricing pressure is eroding margins</li>
+      </ul>
+    </div>
+    <div class="when-card">
+      <h3>&#x26D4; Skip Blue Ocean When...</h3>
+      <ul>
+        <li>&#x274C; You need to make sprint-level feature decisions</li>
+        <li>&#x274C; The market is brand new (no red ocean yet)</li>
+        <li>&#x274C; You're optimizing, not repositioning</li>
+        <li>&#x274C; You don't understand the competitive landscape (use Porter's first)</li>
+        <li>&#x274C; You need user-level insights (use JTBD instead)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">&#x1F517; Connections to Other Frameworks</h3>
+    <div style="display:grid;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--rose);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Porter's</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Diagnose &#x2192; Prescribe:</strong> Porter tells you the ocean is red. Blue Ocean tells you how to get out.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--sky);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">JTBD</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Market &#x2192; User:</strong> Blue Ocean finds the space. JTBD uncovers what job non-customers need done.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--purple);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Playing to Win</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Vision &#x2192; Execution:</strong> Blue Ocean inspires. Playing to Win operationalizes it into choices.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--cream-dark);border-radius:var(--radius-xs);border:2px solid var(--border);">
+        <div style="padding:4px 10px;background:var(--orange);border-radius:8px;font-size:11px;font-weight:800;white-space:nowrap;">Kano</div>
+        <div style="font-size:12px;color:var(--ink-dim);"><strong>Create = Delighters:</strong> Blue Ocean's "Create" factors map to Kano's excitement features.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>&#x1F4CB; Typical Strategic Flow</h4>
+    <p style="font-size:13px;"><strong>Porter's 5 Forces</strong> (diagnose market) &#x2192; <strong>Blue Ocean</strong> (find new space) &#x2192; <strong>Playing to Win</strong> (make choices) &#x2192; <strong>Wardley Mapping</strong> (plan evolution)</p>
+  </div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Builder</button><button class="pn-btn primary" onclick="go(6)">Quiz &#x2192;</button></div>
+</div>
+
+<!-- ============ SECTION 6: QUIZ ============ -->
+<div class="section" id="s6">
+  <div class="sec-title">
+    <div class="sec-icon" style="background:var(--yellow);">&#x1F3AF;</div>
+    <div class="sec-label"><h2>Check Yourself</h2><p>6 questions to lock it in</p></div>
+  </div>
+
+  <div id="quiz_area"></div>
+
+  <div class="nav-btns"><button class="pn-btn" onclick="go(5)">&#x2190; When</button><button class="pn-btn primary" onclick="window.location.href='index.html'">&#x1F3E0; Back to Hub</button></div>
+</div>
+
+</div>
+
+<script>
+const total=7;let cur=0,visited=new Set([0]);
+function go(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+i).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});
+  visited.add(i);visited.forEach(v=>{if(v<i)document.querySelectorAll('.j-btn')[v].classList.add('completed');});
+  cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function analyzeERRC(){
+  const e=document.getElementById('b_elim').value.trim();
+  const rd=document.getElementById('b_reduce').value.trim();
+  const ra=document.getElementById('b_raise').value.trim();
+  const c=document.getElementById('b_create').value.trim();
+  const filled=[e,rd,ra,c].filter(x=>x.length>0).length;
+  const r=document.getElementById('errc_result');
+  if(filled<2){r.innerHTML='<div style="padding:16px;background:var(--rose);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;">&#x26A0;&#xFE0F; Fill in at least 2 quadrants to get feedback.</div>';return;}
+  let verdict='',color='';
+  if(filled===4){
+    if(e.length>0&&c.length>0){verdict='&#x1F30A; <strong>Strong blue ocean potential!</strong> You have both cost reduction (Eliminate + Reduce) and new value creation (Raise + Create). The key test: does your "Eliminate" list contain things competitors consider essential? If yes, you\'re truly diverging.';color='var(--mint)';}
+    else{verdict='&#x1F30A; All 4 quadrants filled! Good start. Now pressure-test: would competitors say your "Eliminate" items are crazy to drop? That\'s the sign of real blue ocean thinking.';color='var(--sky)';}
+  } else if(!e&&!rd){verdict='&#x26A0;&#xFE0F; <strong>Watch out — you\'re only adding, not subtracting.</strong> Without Eliminate and Reduce, you\'re just adding features (more cost, same game). The hardest part of Blue Ocean is deciding what to stop doing.';color='var(--orange)';
+  } else if(!ra&&!c){verdict='&#x26A0;&#xFE0F; <strong>You\'re cutting without creating new value.</strong> Without Raise and Create, this is just cost-cutting, not a blue ocean. What can you offer that nobody else does?';color='var(--orange)';
+  } else{verdict='&#x1F44D; Good start with '+filled+'/4 quadrants. Try to fill all four — the power of ERRC is in the combination. Eliminate + Create is the strongest pair.';color='var(--sky)';}
+  r.innerHTML='<div style="padding:18px;background:'+color+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;">'+verdict+'</div>';
+}
+
+const qs=[
+  {q:"What does Blue Ocean Strategy say to do instead of beating competitors?",o:["Lower prices more","Make competition irrelevant","Build more features","Acquire competitors"],a:1,e:"Blue Ocean = create uncontested space where competition becomes irrelevant. Not beating them — making them irrelevant."},
+  {q:"What are the four actions in the ERRC framework?",o:["Evaluate, Rate, Rank, Choose","Eliminate, Reduce, Raise, Create","Explore, Research, Refine, Confirm","Enter, Retain, Revenue, Cost"],a:1,e:"ERRC: Eliminate, Reduce, Raise, Create. Top row cuts costs, bottom row adds value. Together they break the value-cost trade-off."},
+  {q:"In Blue Ocean terms, what makes a strategy canvas 'blue'?",o:["Your value curve is higher than competitors on all factors","Your value curve looks radically different from competitors","Your value curve is lower cost than competitors","You have more factors than competitors"],a:1,e:"Blue ocean = your value curve looks DIFFERENT, not higher. You compete on different factors entirely."},
+  {q:"Why is 'Eliminate' the most important (and hardest) action?",o:["It's the first letter in ERRC","It generates the biggest headlines","It cuts costs and forces you to challenge industry assumptions","It's the easiest to implement"],a:2,e:"Eliminate forces you to question what the industry takes for granted. It's where the biggest cost savings and differentiation come from — and it's psychologically the hardest."},
+  {q:"What are 'non-customers' in Blue Ocean Strategy?",o:["Users who use competitor products","People who could benefit but aren't using anyone's product","Customers who pay less than average","Internal stakeholders"],a:1,e:"Non-customers = people who COULD benefit but aren't using any solution. They represent the biggest untapped demand."},
+  {q:"After using Blue Ocean to find your strategy, what framework helps you execute it?",o:["Porter's 5 Forces","RICE Scoring","Playing to Win","ICE Score"],a:2,e:"Porter's diagnoses the red ocean. Blue Ocean finds new space. Playing to Win turns that vision into concrete choices (Where to Play, How to Win)."}
+];
+let qi=0,sc=0;
+function renderQ(){
+  const area=document.getElementById('quiz_area');
+  if(qi>=qs.length){
+    let msg='',col='';
+    if(sc>=5){msg='&#x1F30A; Blue ocean thinker! You can stop competing and start creating.';col='var(--mint)';}
+    else if(sc>=3){msg='&#x1F44D; Good grasp. Review the ERRC framework — it\'s the most useful tool here.';col='var(--sky)';}
+    else{msg='&#x1F4DA; Worth another pass. Focus on the Strategy Canvas and ERRC grid.';col='var(--orange)';}
+    area.innerHTML='<div class="c-card" style="text-align:center;"><div style="font-size:40px;margin-bottom:10px;">&#x1F3AF;</div><div style="font-family:\'Lilita One\',sans-serif;font-size:24px;margin-bottom:8px;">'+sc+'/'+qs.length+'</div><div style="padding:12px;background:'+col+';border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-weight:600;margin-bottom:14px;">'+msg+'</div><button onclick="qi=0;sc=0;renderQ();" class="pn-btn primary">Retry</button></div>';
+    return;
+  }
+  const q=qs[qi];
+  let h='<div class="c-card"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:8px;">QUESTION '+(qi+1)+'/'+qs.length+'</div><div style="font-family:\'Lilita One\',sans-serif;font-size:17px;margin-bottom:16px;">'+q.q+'</div>';
+  q.o.forEach((o,i)=>{h+='<button class="quiz-opt" onclick="checkA('+qi+','+i+',this)">'+o+'</button>';});
+  h+='<div id="qfb'+qi+'" style="margin-top:10px;"></div></div>';
+  area.innerHTML=h;
+}
+function checkA(qIdx,pick,btn){
+  const q=qs[qIdx];const correct=pick===q.a;if(correct)sc++;
+  document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===pick)b.classList.add('wrong');});
+  document.getElementById('qfb'+qIdx).innerHTML='<div style="padding:12px;background:'+(correct?'var(--mint)':'var(--rose)')+';border:2px solid var(--border);border-radius:var(--radius-xs);font-size:13px;line-height:1.5;margin-top:8px;">'+(correct?'&#x2705; ':'&#x274C; ')+q.e+'</div><div style="text-align:right;margin-top:10px;"><button class="pn-btn primary" onclick="qi++;renderQ();" style="padding:8px 20px;font-size:13px;">'+(qi<qs.length-1?'Next &#x2192;':'See Results')+'</button></div>';
+}
+renderQ();
+</script>
+</body>
+</html>
