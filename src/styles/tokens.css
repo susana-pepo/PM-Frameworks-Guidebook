@@ -1,11 +1,12 @@
 /* ============================================
    PM Frameworks Guidebook — Design Tokens
-   Design Revamp: Bold colors, friendly shapes,
-   Stripe/Brilliant/Notion-inspired reference tool
+   Neo-Brutalist Colorful: thick borders, hard
+   offset shadows, sharp corners, saturated fills.
+   Gumroad × Memphis × Figma brutalism.
    ============================================ */
 
 :root {
-  /* ---- SCALE (8px grid, Notion standard) ---- */
+  /* ---- SCALE (8px grid) ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -17,17 +18,21 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* ---- RADII (Duolingo-friendly, generous) ---- */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* ---- RADII (Chunky rounded — retro code academy) ---- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
+  /* ---- BORDERS (Thick & bold) ---- */
+  --bw: 3px;
+  --bw-thin: 2px;
+
   /* ---- TYPOGRAPHY ---- */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-display: 'Cal Sans', 'Inter', -apple-system, sans-serif;
+  --font-display: 'Clash Display', 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   --text-xs: 11px;
@@ -51,104 +56,100 @@
   --weight-bold: 700;
   --weight-extrabold: 800;
 
-  /* ---- CATEGORY COLORS (Bold & Vibrant) ---- */
+  /* ---- CATEGORY COLORS (Bold & Saturated) ---- */
   --cat-prioritization: #7C5CFC;
-  --cat-prioritization-light: #EDE8FF;
-  --cat-prioritization-soft: rgba(124, 92, 252, 0.10);
-  --cat-prioritization-muted: rgba(124, 92, 252, 0.15);
-  --cat-prioritization-gradient: linear-gradient(135deg, #7C5CFC, #9B82FC);
-  --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.08), rgba(155, 130, 252, 0.04));
+  --cat-prioritization-light: #D4C8FF;
+  --cat-prioritization-soft: rgba(124, 92, 252, 0.12);
+  --cat-prioritization-muted: rgba(124, 92, 252, 0.18);
+  --cat-prioritization-fill: #EDE8FF;
 
   --cat-design: #10B981;
-  --cat-design-light: #D1FAE5;
-  --cat-design-soft: rgba(16, 185, 129, 0.10);
-  --cat-design-muted: rgba(16, 185, 129, 0.15);
-  --cat-design-gradient: linear-gradient(135deg, #10B981, #34D399);
-  --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(52, 211, 153, 0.04));
+  --cat-design-light: #A7F3D0;
+  --cat-design-soft: rgba(16, 185, 129, 0.12);
+  --cat-design-muted: rgba(16, 185, 129, 0.18);
+  --cat-design-fill: #D1FAE5;
 
   --cat-strategy: #F97066;
-  --cat-strategy-light: #FEE2E2;
-  --cat-strategy-soft: rgba(249, 112, 102, 0.10);
-  --cat-strategy-muted: rgba(249, 112, 102, 0.15);
-  --cat-strategy-gradient: linear-gradient(135deg, #F97066, #FCA5A1);
-  --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.08), rgba(252, 165, 161, 0.04));
+  --cat-strategy-light: #FECACA;
+  --cat-strategy-soft: rgba(249, 112, 102, 0.12);
+  --cat-strategy-muted: rgba(249, 112, 102, 0.18);
+  --cat-strategy-fill: #FEE2E2;
 
   --cat-growth: #3B82F6;
-  --cat-growth-light: #DBEAFE;
-  --cat-growth-soft: rgba(59, 130, 246, 0.10);
-  --cat-growth-muted: rgba(59, 130, 246, 0.15);
-  --cat-growth-gradient: linear-gradient(135deg, #3B82F6, #60A5FA);
-  --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
+  --cat-growth-light: #93C5FD;
+  --cat-growth-soft: rgba(59, 130, 246, 0.12);
+  --cat-growth-muted: rgba(59, 130, 246, 0.18);
+  --cat-growth-fill: #DBEAFE;
 
   --cat-execution: #F59E0B;
-  --cat-execution-light: #FEF3C7;
-  --cat-execution-soft: rgba(245, 158, 11, 0.10);
-  --cat-execution-muted: rgba(245, 158, 11, 0.15);
-  --cat-execution-gradient: linear-gradient(135deg, #F59E0B, #FBBF24);
-  --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(251, 191, 36, 0.04));
+  --cat-execution-light: #FCD34D;
+  --cat-execution-soft: rgba(245, 158, 11, 0.12);
+  --cat-execution-muted: rgba(245, 158, 11, 0.18);
+  --cat-execution-fill: #FEF3C7;
 
   --cat-communication: #F97316;
-  --cat-communication-light: #FFEDD5;
-  --cat-communication-soft: rgba(249, 115, 22, 0.10);
-  --cat-communication-muted: rgba(249, 115, 22, 0.15);
-  --cat-communication-gradient: linear-gradient(135deg, #F97316, #FB923C);
-  --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(251, 146, 60, 0.04));
+  --cat-communication-light: #FDBA74;
+  --cat-communication-soft: rgba(249, 115, 22, 0.12);
+  --cat-communication-muted: rgba(249, 115, 22, 0.18);
+  --cat-communication-fill: #FFEDD5;
 
-  /* ---- SEMANTIC COLORS (Light mode) ---- */
-  --bg-app: #f8f6f1;
-  --bg-sidebar: #fefcf8;
-  --bg-content: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #faf9f6;
-  --bg-muted: #f4f2ed;
-  --bg-subtle: #f0eeea;
-  --bg-input: #ffffff;
-  --bg-overlay: rgba(0, 0, 0, 0.4);
+  /* ---- SEMANTIC COLORS (Light mode — high contrast) ---- */
+  --bg-app: #FFFDF7;
+  --bg-sidebar: #FFFDF7;
+  --bg-content: #FEFCF8;
+  --bg-card: #FEFCF8;
+  --bg-card-hover: #FBF8F2;
+  --bg-muted: #F5F3EE;
+  --bg-subtle: #EDEAE4;
+  --bg-input: #FEFCF8;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  --border-default: #e5e2db;
-  --border-subtle: #ece9e2;
-  --border-strong: #d0cdc6;
-  --border-focus: #5889d0;
+  --border-default: #000000;
+  --border-subtle: #d4d0c8;
+  --border-strong: #000000;
+  --border-focus: #7C5CFC;
 
-  --text-primary: #1c1917;
-  --text-secondary: #44403c;
-  --text-tertiary: #78716c;
-  --text-muted: #918b86;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-tertiary: #666666;
+  --text-muted: #888888;
   --text-inverse: #ffffff;
-  --text-link: #5889d0;
+  --text-link: #3B82F6;
 
   /* Status colors */
-  --color-success: #4ead6b;
-  --color-success-light: #e8f5ee;
-  --color-warning: #e0a820;
-  --color-warning-light: #fdf4d8;
-  --color-error: #dc6050;
-  --color-error-light: #fce4e0;
-  --color-info: #5889d0;
-  --color-info-light: #e0eaf8;
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
 
   /* Interactive */
-  --color-action: #5889d0;
-  --color-action-hover: #4878c0;
-  --color-action-light: #e0eaf8;
+  --color-action: #7C5CFC;
+  --color-action-hover: #6B4FE0;
+  --color-action-light: #EDE8FF;
 
-  /* ---- SHADOWS (warm, lifted, Brilliant-inspired) ---- */
-  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.05);
-  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.04);
-  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.08), 0 2px 4px rgba(28, 25, 23, 0.04);
-  --shadow-lg: 0 8px 24px rgba(28, 25, 23, 0.10), 0 4px 8px rgba(28, 25, 23, 0.05);
-  --shadow-xl: 0 16px 40px rgba(28, 25, 23, 0.12), 0 8px 16px rgba(28, 25, 23, 0.06);
-  --shadow-hover: 0 12px 32px rgba(28, 25, 23, 0.14), 0 4px 12px rgba(28, 25, 23, 0.06);
-  --shadow-focus: 0 0 0 3px rgba(124, 92, 252, 0.3);
+  /* ---- SHADOWS (Hard offset, no blur — brutalist) ---- */
+  --shadow-xs: 2px 2px 0 #000000;
+  --shadow-sm: 3px 3px 0 #000000;
+  --shadow-md: 4px 4px 0 #000000;
+  --shadow-lg: 6px 6px 0 #000000;
+  --shadow-xl: 8px 8px 0 #000000;
+  --shadow-hover: 6px 6px 0 #000000;
+  --shadow-focus: 0 0 0 3px rgba(124, 92, 252, 0.4);
+  /* Colored shadow variants for category cards */
+  --shadow-color: #000000;
 
-  /* ---- TRANSITIONS (Brilliant's snappy timing) ---- */
+  /* ---- TRANSITIONS (Snappy) ---- */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-slow: 300ms;
+  --duration-fast: 120ms;
+  --duration-normal: 180ms;
+  --duration-slow: 250ms;
 
   /* ---- LAYOUT ---- */
   --sidebar-width: 260px;
@@ -157,35 +158,32 @@
   --tab-height: 48px;
 
   /* ---- LEGACY PALETTE (from original framework pages) ---- */
-  --ink: #1c1917;
-  --ink-dim: #44403c;
-  --ink-muted: #78716c;
-  --ink-soft: #a8a29e;
-  --cream: #f8f6f1;
-  --cream-dark: #f0eeea;
-  --white: #ffffff;
-  --border: #e5e2db;
-  --bw: 1px;
+  --ink: #000000;
+  --ink-dim: #333333;
+  --ink-muted: #666666;
+  --ink-soft: #999999;
+  --cream: #FFFDF7;
+  --cream-dark: #F5F3EE;
+  --white: #FEFCF8;
+  --border: #000000;
   --radius: 14px;
-  --radius-xs: 4px;
-  --shadow: 0 1px 3px rgba(28, 25, 23, 0.06);
 
-  /* Original color palette — warm-tinted for the new aesthetic */
-  --sky: #dbeafe;
-  --mint: #d1fae5;
-  --orange: #fed7aa;
-  --yellow: #fef3c7;
-  --pink: #fce7f3;
-  --rose: #ffe4e6;
-  --purple: #ede9fe;
-  --green: #d1fae5;
+  /* Original color palette — saturated fills */
+  --sky: #DBEAFE;
+  --mint: #D1FAE5;
+  --orange: #FFEDD5;
+  --yellow: #FEF3C7;
+  --pink: #FCE7F3;
+  --rose: #FFE4E6;
+  --purple: #EDE8FF;
+  --green: #D1FAE5;
 
   /* Phase accent colors */
-  --p1: #dbeafe;
-  --p2: #d1fae5;
-  --p3: #fef3c7;
-  --p4: #fed7aa;
-  --p5: #fce7f3;
+  --p1: #DBEAFE;
+  --p2: #D1FAE5;
+  --p3: #FEF3C7;
+  --p4: #FFEDD5;
+  --p5: #FCE7F3;
 
   /* CIRCLES step colors */
   --s1: #e85d5d;
@@ -196,239 +194,64 @@
   --s6: #9b82e8;
   --s7: #e870a0;
 
-  /* Comparison table radius (legacy override) */
-  /* --radius-sm already defined above as 8px */
-
   /* ---- CATEGORY SVG BACKGROUND PATTERNS ---- */
   /* Each category gets a unique geometric texture for the hero banner */
 
   /* Prioritization: Dot grid — scoring/ranking feel */
-  --pattern-prioritization: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%237C5CFC' fill-opacity='0.35'/%3E%3C/svg%3E");
+  --pattern-prioritization: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='2' fill='%237C5CFC' fill-opacity='0.25'/%3E%3C/svg%3E");
 
-  /* Design: Organic circles — creative/human-centered feel */
-  --pattern-design: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%2310B981' stroke-opacity='0.2' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%2310B981' stroke-opacity='0.15' stroke-width='1'/%3E%3C/svg%3E");
+  /* Design: Plus/cross grid — creative sketch-pad feel */
+  --pattern-design: url("data:image/svg+xml,%3Csvg width='28' height='28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 10v8M10 14h8' stroke='%2310B981' stroke-opacity='0.22' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
 
   /* Strategy: Diagonal lines — chess/military/analytical feel */
-  --pattern-strategy: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0' stroke='%23F97066' stroke-opacity='0.18' stroke-width='1'/%3E%3C/svg%3E");
+  --pattern-strategy: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0' stroke='%23F97066' stroke-opacity='0.18' stroke-width='1.5'/%3E%3C/svg%3E");
 
-  /* Growth: Upward arrows — momentum/acceleration feel */
-  --pattern-growth: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 24V8M16 8l-5 5M16 8l5 5' stroke='%233B82F6' stroke-opacity='0.18' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  /* Growth: Small diamond grid — clean metrics/data-point feel */
+  --pattern-growth: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8l4 4-4 4-4-4z' fill='none' stroke='%233B82F6' stroke-opacity='0.18' stroke-width='1.2'/%3E%3C/svg%3E");
 
   /* Execution: Horizontal bars — timeline/sprint/kanban feel */
-  --pattern-execution: url("data:image/svg+xml,%3Csvg width='40' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='4' y='7' width='32' height='2' rx='1' fill='%23F59E0B' fill-opacity='0.2'/%3E%3C/svg%3E");
+  --pattern-execution: url("data:image/svg+xml,%3Csvg width='40' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='4' y='7' width='32' height='2.5' fill='%23F59E0B' fill-opacity='0.2'/%3E%3C/svg%3E");
 
   /* Communication: Wave curves — dialogue/speech feel */
-  --pattern-communication: url("data:image/svg+xml,%3Csvg width='48' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 16c8-8 16 8 24 0s16 8 24 0' stroke='%23F97316' stroke-opacity='0.18' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+  --pattern-communication: url("data:image/svg+xml,%3Csvg width='48' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 16c8-8 16 8 24 0s16 8 24 0' stroke='%23F97316' stroke-opacity='0.18' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+
+  /* Dashboard: Subtle dot grid — neutral, warm, notebook feel */
+  --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23000000' fill-opacity='0.07'/%3E%3C/svg%3E");
 }
 
-/* ---- DARK MODE ---- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg-app: #1a1816;
-    --bg-sidebar: #211f1c;
-    --bg-content: #262420;
-    --bg-card: #2c2a26;
-    --bg-card-hover: #33312c;
-    --bg-muted: #33312c;
-    --bg-subtle: #2c2a26;
-    --bg-input: #33312c;
-    --bg-overlay: rgba(0, 0, 0, 0.6);
+/* ---- CATEGORY-COLORED PAGE BACKGROUNDS + PATTERNS ---- */
+/* When a framework page loads, .app-content gets data-category.
+   The entire content area takes on the category fill color + SVG pattern. */
 
-    --border-default: #3d3a34;
-    --border-subtle: #33312c;
-    --border-strong: #4a4740;
-    --border-focus: #9B82FC;
-
-    --text-primary: #f5f0e8;
-    --text-secondary: #c8c0b4;
-    --text-tertiary: #9a9488;
-    --text-muted: #827c73;
-    --text-link: #9B82FC;
-
-    /* Category colors — keep vibrant on dark (NOT muted) */
-    --cat-prioritization-light: #2a2340;
-    --cat-prioritization-soft: rgba(124, 92, 252, 0.15);
-    --cat-prioritization-muted: rgba(124, 92, 252, 0.20);
-    --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.12), rgba(155, 130, 252, 0.06));
-
-    --cat-design-light: #1a2e24;
-    --cat-design-soft: rgba(16, 185, 129, 0.15);
-    --cat-design-muted: rgba(16, 185, 129, 0.20);
-    --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.06));
-
-    --cat-strategy-light: #2e2024;
-    --cat-strategy-soft: rgba(249, 112, 102, 0.15);
-    --cat-strategy-muted: rgba(249, 112, 102, 0.20);
-    --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.12), rgba(252, 165, 161, 0.06));
-
-    --cat-growth-light: #1e2a3a;
-    --cat-growth-soft: rgba(59, 130, 246, 0.15);
-    --cat-growth-muted: rgba(59, 130, 246, 0.20);
-    --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06));
-
-    --cat-execution-light: #302a1a;
-    --cat-execution-soft: rgba(245, 158, 11, 0.15);
-    --cat-execution-muted: rgba(245, 158, 11, 0.20);
-    --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
-
-    --cat-communication-light: #33271a;
-    --cat-communication-soft: rgba(249, 115, 22, 0.15);
-    --cat-communication-muted: rgba(249, 115, 22, 0.20);
-    --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(251, 146, 60, 0.06));
-
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
-    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.35);
-    --shadow-focus: 0 0 0 3px rgba(155, 130, 252, 0.4);
-
-    /* Status colors — keep vibrant */
-    --color-success: #34D399;
-    --color-success-light: #1a2e24;
-    --color-warning: #FBBF24;
-    --color-warning-light: #302a1a;
-    --color-error: #FCA5A1;
-    --color-error-light: #2e2024;
-    --color-info: #60A5FA;
-    --color-info-light: #1e2a3a;
-    --color-action: #9B82FC;
-    --color-action-hover: #B09EFD;
-    --color-action-light: #2a2340;
-
-    /* Legacy palette — inverted for dark mode */
-    --ink: #f5f0e8;
-    --ink-dim: #c8c0b4;
-    --ink-muted: #9a9488;
-    --ink-soft: #6e685e;
-    --cream: #2c2a26;
-    --cream-dark: #262420;
-    --white: #1a1816;
-    --border: #3d3a34;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-
-    /* Color palette — dark muted versions */
-    --sky: #1e2a3a;
-    --mint: #1a2e24;
-    --orange: #33271a;
-    --yellow: #302a1a;
-    --pink: #2e1f28;
-    --rose: #2e2024;
-    --purple: #25213a;
-    --green: #1a2e24;
-
-    /* Phase accent colors — dark muted versions */
-    --p1: #1e2a3a;
-    --p2: #1a2e24;
-    --p3: #302a1a;
-    --p4: #33271a;
-    --p5: #2e1f28;
-  }
+/* Dashboard/hub: animated multi-category gradient */
+.app-content:not([data-category]) {
+  background:
+    var(--pattern-dashboard),
+    linear-gradient(135deg,
+      var(--cat-prioritization-light) 0%,
+      var(--cat-design-light) 18%,
+      var(--cat-strategy-light) 35%,
+      var(--cat-growth-light) 52%,
+      var(--cat-execution-light) 70%,
+      var(--cat-communication-light) 88%,
+      var(--cat-prioritization-light) 100%
+    );
+  background-size: auto, 300% 300%;
+  animation: hubBgShift 20s ease infinite;
 }
 
-[data-theme="dark"] {
-  --bg-app: #1a1816;
-  --bg-sidebar: #211f1c;
-  --bg-content: #262420;
-  --bg-card: #2c2a26;
-  --bg-card-hover: #33312c;
-  --bg-muted: #33312c;
-  --bg-subtle: #2c2a26;
-  --bg-input: #33312c;
-  --bg-overlay: rgba(0, 0, 0, 0.6);
-
-  --border-default: #3d3a34;
-  --border-subtle: #33312c;
-  --border-strong: #4a4740;
-  --border-focus: #9B82FC;
-
-  --text-primary: #f5f0e8;
-  --text-secondary: #c8c0b4;
-  --text-tertiary: #9a9488;
-  --text-muted: #827c73;
-  --text-link: #9B82FC;
-
-  /* Category colors — keep vibrant on dark (NOT muted) */
-  --cat-prioritization-light: #2a2340;
-  --cat-prioritization-soft: rgba(124, 92, 252, 0.15);
-  --cat-prioritization-muted: rgba(124, 92, 252, 0.20);
-  --cat-prioritization-gradient-subtle: linear-gradient(135deg, rgba(124, 92, 252, 0.12), rgba(155, 130, 252, 0.06));
-
-  --cat-design-light: #1a2e24;
-  --cat-design-soft: rgba(16, 185, 129, 0.15);
-  --cat-design-muted: rgba(16, 185, 129, 0.20);
-  --cat-design-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.06));
-
-  --cat-strategy-light: #2e2024;
-  --cat-strategy-soft: rgba(249, 112, 102, 0.15);
-  --cat-strategy-muted: rgba(249, 112, 102, 0.20);
-  --cat-strategy-gradient-subtle: linear-gradient(135deg, rgba(249, 112, 102, 0.12), rgba(252, 165, 161, 0.06));
-
-  --cat-growth-light: #1e2a3a;
-  --cat-growth-soft: rgba(59, 130, 246, 0.15);
-  --cat-growth-muted: rgba(59, 130, 246, 0.20);
-  --cat-growth-gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06));
-
-  --cat-execution-light: #302a1a;
-  --cat-execution-soft: rgba(245, 158, 11, 0.15);
-  --cat-execution-muted: rgba(245, 158, 11, 0.20);
-  --cat-execution-gradient-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06));
-
-  --cat-communication-light: #33271a;
-  --cat-communication-soft: rgba(249, 115, 22, 0.15);
-  --cat-communication-muted: rgba(249, 115, 22, 0.20);
-  --cat-communication-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(251, 146, 60, 0.06));
-
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.35);
-  --shadow-focus: 0 0 0 3px rgba(155, 130, 252, 0.4);
-
-  /* Status colors — keep vibrant */
-  --color-success: #34D399;
-  --color-success-light: #1a2e24;
-  --color-warning: #FBBF24;
-  --color-warning-light: #302a1a;
-  --color-error: #FCA5A1;
-  --color-error-light: #2e2024;
-  --color-info: #60A5FA;
-  --color-info-light: #1e2a3a;
-  --color-action: #9B82FC;
-  --color-action-hover: #B09EFD;
-  --color-action-light: #2a2340;
-
-  /* Legacy palette — inverted for dark mode */
-  --ink: #f5f0e8;
-  --ink-dim: #c8c0b4;
-  --ink-muted: #9a9488;
-  --ink-soft: #6e685e;
-  --cream: #2c2a26;
-  --cream-dark: #262420;
-  --white: #1a1816;
-  --border: #3d3a34;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-
-  /* Color palette — dark muted versions */
-  --sky: #1e2a3a;
-  --mint: #1a2e24;
-  --orange: #33271a;
-  --yellow: #302a1a;
-  --pink: #2e1f28;
-  --rose: #2e2024;
-  --purple: #25213a;
-  --green: #1a2e24;
-
-  /* Phase accent colors — dark muted versions */
-  --p1: #1e2a3a;
-  --p2: #1a2e24;
-  --p3: #302a1a;
-  --p4: #33271a;
-  --p5: #2e1f28;
+@keyframes hubBgShift {
+  0% { background-position: 0 0, 0% 50%; }
+  50% { background-position: 0 0, 100% 50%; }
+  100% { background-position: 0 0, 0% 50%; }
 }
+
+.app-content[data-category="prioritization"] { background: var(--cat-prioritization-fill) var(--pattern-prioritization); }
+.app-content[data-category="design"]         { background: var(--cat-design-fill) var(--pattern-design); }
+.app-content[data-category="strategy"]       { background: var(--cat-strategy-fill) var(--pattern-strategy); }
+.app-content[data-category="growth"]         { background: var(--cat-growth-fill) var(--pattern-growth); }
+.app-content[data-category="execution"]      { background: var(--cat-execution-fill) var(--pattern-execution); }
+.app-content[data-category="communication"]  { background: var(--cat-communication-fill) var(--pattern-communication); }
 
 /* ---- REDUCED MOTION ---- */
 @media (prefers-reduced-motion: reduce) {

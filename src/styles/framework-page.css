@@ -1,6 +1,7 @@
 /* ============================================
    Framework Page Styles
-   Maps old neo-brutalism classes to new warm aesthetic
+   Neo-Brutalist: thick borders, hard shadows,
+   sharp corners, bold category fills
    ============================================ */
 
 /* ---- FRAMEWORK PAGE CONTAINER ---- */
@@ -11,13 +12,20 @@
   overflow-wrap: break-word;
 }
 
-/* Font safety net — ensure Lilita One never leaks through
-   (string replacement in style-injector handles most cases,
-    this catches any edge cases or inline styles) */
+/* Font safety net — ensure Lilita One never leaks through;
+   h1-h3 use display font, h4-h6 use sans */
 .fw-page h1,
 .fw-page h2,
-.fw-page h3,
-.fw-page h4,
+.fw-page h3 {
+  font-family: var(--font-display) !important;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.fw-page h4 {
+  font-family: var(--font-display) !important;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
 .fw-page h5,
 .fw-page h6 {
   font-family: var(--font-sans) !important;
@@ -65,57 +73,26 @@
 /* ---- FULL-BLEED HERO SECTION ---- */
 /* Edge-to-edge category-colored banner containing badge + title + visualizer */
 .fw-hero-bleed {
-  --hero-rgb: 0, 0, 0;
-  --hero-glow: 0.10;
-  --hero-tint: 0.05;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  padding: var(--space-12) var(--space-6) var(--space-8);
-  margin-bottom: var(--space-4);
+  padding: var(--space-10) var(--space-6) var(--space-8);
+  margin-bottom: var(--space-6);
   position: relative;
   z-index: 1;
-  background:
-    radial-gradient(ellipse at 50% 60%, rgba(var(--hero-rgb), var(--hero-glow)) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(var(--hero-rgb), var(--hero-tint)) 0%, transparent 100%);
+  /* Hero blends into the page — same category fill, no border */
+  background: transparent;
 }
 
-/* Category hero colors — each category gets a distinct glow */
-.fw-hero-bleed[data-category="prioritization"] { --hero-rgb: 124, 92, 252; }
-.fw-hero-bleed[data-category="design"]         { --hero-rgb: 16, 185, 129; }
-.fw-hero-bleed[data-category="strategy"]       { --hero-rgb: 249, 112, 102; }
-.fw-hero-bleed[data-category="growth"]         { --hero-rgb: 59, 130, 246; }
-.fw-hero-bleed[data-category="execution"]      { --hero-rgb: 245, 158, 11; }
-.fw-hero-bleed[data-category="communication"]  { --hero-rgb: 249, 115, 22; }
+/* Category hero fills — solid saturated backgrounds */
+.fw-hero-bleed[data-category="prioritization"] { --cat-fill: var(--cat-prioritization-fill, var(--cat-prioritization-light)); }
+.fw-hero-bleed[data-category="design"]         { --cat-fill: var(--cat-design-fill, var(--cat-design-light)); }
+.fw-hero-bleed[data-category="strategy"]       { --cat-fill: var(--cat-strategy-fill, var(--cat-strategy-light)); }
+.fw-hero-bleed[data-category="growth"]         { --cat-fill: var(--cat-growth-fill, var(--cat-growth-light)); }
+.fw-hero-bleed[data-category="execution"]      { --cat-fill: var(--cat-execution-fill, var(--cat-execution-light)); }
+.fw-hero-bleed[data-category="communication"]  { --cat-fill: var(--cat-communication-fill, var(--cat-communication-light)); }
 
-/* Category SVG texture patterns — applied via ::after pseudo-element */
-.fw-hero-bleed::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: multiply;
-}
-
-.fw-hero-bleed[data-category="prioritization"]::after { background-image: var(--pattern-prioritization); }
-.fw-hero-bleed[data-category="design"]::after         { background-image: var(--pattern-design); }
-.fw-hero-bleed[data-category="strategy"]::after       { background-image: var(--pattern-strategy); }
-.fw-hero-bleed[data-category="growth"]::after         { background-image: var(--pattern-growth); }
-.fw-hero-bleed[data-category="execution"]::after      { background-image: var(--pattern-execution); }
-.fw-hero-bleed[data-category="communication"]::after  { background-image: var(--pattern-communication); }
-
-/* Dark mode: slightly higher pattern visibility */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .fw-hero-bleed::after {
-    opacity: 0.7;
-    mix-blend-mode: screen;
-  }
-}
-[data-theme="dark"] .fw-hero-bleed::after {
-  opacity: 0.7;
-  mix-blend-mode: screen;
-}
+/* Category SVG texture patterns now applied on .app-content (full page).
+   Hero ::after no longer needed — pattern covers the whole background. */
 
 /* Inner container — constrains content to readable width, above pattern overlay */
 .fw-hero-inner {
@@ -136,13 +113,14 @@
   align-items: center;
   gap: var(--space-2);
   padding: 5px var(--space-4);
-  border-radius: var(--radius-full);
+  border: var(--bw-thin) solid var(--border-default);
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: var(--weight-bold);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   margin-bottom: var(--space-4);
-  border: 1px solid transparent;
+  box-shadow: var(--shadow-xs);
 }
 
 .fw-page-header h1 {
@@ -165,18 +143,7 @@
   margin-bottom: 0;
 }
 
-/* Dark mode: stronger hero gradients */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .fw-hero-bleed {
-    --hero-glow: 0.16;
-    --hero-tint: 0.08;
-  }
-}
-
-[data-theme="dark"] .fw-hero-bleed {
-  --hero-glow: 0.16;
-  --hero-tint: 0.08;
-}
+/* Dark mode: hero uses deep saturated fills (already via --cat-fill token) */
 
 /* Mobile: match app-content padding for edge-to-edge */
 @media (max-width: 768px) {
@@ -193,8 +160,7 @@
 .fw-page .hero-diagram,
 .fw-page .header .diagram {
   background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl, var(--radius-lg));
+  border: var(--bw) solid var(--border-default);
   padding: var(--space-6);
   box-shadow: var(--shadow-md);
   margin: var(--space-4) auto;
@@ -205,9 +171,8 @@
 .fw-page .one-liner,
 .fw-page .tldr-section,
 .fw-page .tldr {
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  background: var(--color-warning-light);
+  border: var(--bw) solid var(--border-default);
   padding: var(--space-4) var(--space-5);
   margin-bottom: var(--space-6);
   max-width: 700px;
@@ -284,34 +249,33 @@
   box-shadow: none;
 }
 
-/* ---- BENTO GRID LAYOUT ---- */
-/* 2-column cover layout: TLDR + Inside chips (left) | Sections TOC (right) */
-.fw-bento-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  grid-template-rows: auto 1fr;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
+/* ---- HERO EMOJI ---- */
+/* Large framework emoji displayed above the title */
+.fw-hero-emoji {
+  font-size: 48px;
+  line-height: 1;
+  text-align: center;
+  margin-bottom: var(--space-3);
 }
 
-.bento-cell {
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
+/* ---- TLDR CARD (standalone) ---- */
+/* Quick-read card above the accordion — hidden in reading mode */
+.fw-tldr-card {
+  background: var(--color-warning-light);
+  border: var(--bw) solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow: var(--shadow-sm);
 }
 
-/* TLDR card — left col, row 1 */
-.bento-tldr {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-/* Reset TLDR inner card styles — bento cell provides the card treatment */
-.bento-tldr .one-liner,
-.bento-tldr .tldr-section,
-.bento-tldr .tldr {
+/* Reset inner TLDR styles — the card wrapper provides treatment */
+.fw-tldr-card .one-liner,
+.fw-tldr-card .tldr-section,
+.fw-tldr-card .tldr {
   background: transparent;
   border: none;
   border-radius: 0;
@@ -321,112 +285,9 @@
   max-width: none;
 }
 
-/* Inside chips card — left col, row 2 */
-.bento-inside {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-/* Reset chips styles inside bento card */
-.bento-inside .fw-whats-inside {
-  padding: 0;
-  margin: 0;
-  border-bottom: none;
-  justify-content: flex-start;
-}
-
-.bento-inside .fw-whats-inside-chips {
-  margin-top: var(--space-2);
-}
-
-/* Sections TOC — right col, spans both rows */
-.bento-toc {
-  grid-column: 2;
-  grid-row: 1 / -1;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-toc-header {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  color: var(--text-secondary);
-  margin-bottom: var(--space-3);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.bento-toc-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-}
-
-.bento-toc-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: none;
-  background: transparent;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  text-align: left;
-  color: var(--text-primary);
-  font-size: var(--text-sm);
-  font-family: inherit;
-  transition: background var(--duration-fast) var(--ease-default),
-              transform var(--duration-fast) var(--ease-default);
-}
-
-.bento-toc-item:hover {
-  background: var(--bg-muted);
-  transform: translateX(2px);
-}
-
-.bento-toc-item:active {
-  transform: scale(0.98);
-}
-
-.bento-toc-item-icon {
-  font-size: 16px;
-  flex-shrink: 0;
-  width: 24px;
-  text-align: center;
-}
-
-.bento-toc-item-label {
-  flex: 1;
-  font-weight: var(--weight-medium);
-}
-
-.bento-toc-item .accordion-type-pill {
-  flex-shrink: 0;
-  font-size: 10px;
-  padding: 2px 6px;
-}
-
-/* Hide bento grid in reading mode — mini-nav handles navigation */
-.reading-mode .fw-bento-grid {
+/* Hide TLDR in reading mode */
+.reading-mode .fw-tldr-card {
   display: none;
-}
-
-/* Mobile: single column stack */
-@media (max-width: 768px) {
-  .fw-bento-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-
-  .bento-tldr,
-  .bento-inside,
-  .bento-toc {
-    grid-column: 1;
-    grid-row: auto;
-  }
 }
 
 /* ---- PROGRESS ---- */
@@ -562,56 +423,74 @@
 }
 
 /* ---- ACCORDION CONTAINER ---- */
+/* Wrapper: column layout holding tab bar on top + panel area below */
 .accordion-nav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0;
   margin-top: var(--space-6);
+  max-width: 100%;
 }
 
-/* ---- STEP HEADER (content section card) ---- */
-.accordion-step {
+/* ---- TAB BAR ---- */
+/* Horizontal row of step buttons (like comparison guide journey-nav) */
+.accordion-tab-bar {
   display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  width: 100%;
-  padding: var(--space-4) var(--space-5);
+  flex-wrap: nowrap;
   background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-left: 4px solid transparent;
+  border: var(--bw) solid var(--border-default);
   border-radius: var(--radius-lg);
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-shadow: var(--shadow-sm);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.accordion-tab-bar::-webkit-scrollbar { display: none; }
+
+/* ---- PANEL AREA ---- */
+/* Content panels stacked below the tab bar */
+.accordion-panel-area {
+  /* Panels are hidden by default, shown individually via .open */
+}
+
+/* ---- STEP HEADER (horizontal tab) ---- */
+.accordion-step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-subtle);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-default);
-  text-align: left;
+  text-align: center;
   position: relative;
-  box-shadow: var(--shadow-xs);
+  white-space: nowrap;
+}
+
+.accordion-step:last-of-type {
+  border-right: none;
 }
 
 .accordion-step:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-strong);
-  border-left-color: var(--accent-color, var(--color-action));
-  box-shadow: var(--shadow-sm);
-  transform: translateX(2px);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
 }
 
-.accordion-step:active {
-  transform: translateX(1px);
-}
-
-/* Expanded state — category-colored left border + elevated */
+/* Expanded state — filled with accent color */
 .accordion-step.expanded {
-  background: var(--bg-card);
-  border-color: var(--border-strong);
-  border-left-color: var(--accent-color, var(--color-action));
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  color: var(--text-primary);
-  box-shadow: var(--shadow-md);
-  transform: none;
+  background: var(--accent-color, var(--color-action));
+  color: var(--text-inverse);
 }
 
 .accordion-step:focus-visible {
@@ -620,68 +499,75 @@
   z-index: 1;
 }
 
-/* ---- STEP ICON (replaces step number) ---- */
+/* ---- STEP ICON (step number) ---- */
 .accordion-step-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: var(--radius-md);
-  background: var(--bg-muted);
-  font-size: 22px;
-  flex-shrink: 0;
-  transition: all var(--duration-fast) var(--ease-default);
-}
-
-.accordion-step:hover .accordion-step-icon {
-  background: var(--accent-color, var(--color-action));
-  filter: saturate(0.3) brightness(1.5);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--weight-semibold);
+  opacity: 0.5;
+  letter-spacing: 1px;
+  /* No box/background — just the number text */
+  width: auto;
+  height: auto;
+  min-width: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
 }
 
 .accordion-step.expanded .accordion-step-icon {
-  background: var(--accent-color, var(--color-action));
-  filter: saturate(0.3) brightness(1.5);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  opacity: 0.7;
+  background: none;
+  border: none;
+  filter: none;
+  box-shadow: none;
 }
 
-/* ---- STEP CONTENT (label + description) ---- */
+.accordion-step:hover .accordion-step-icon {
+  background: none;
+  border: none;
+  filter: none;
+}
+
+/* ---- STEP CONTENT ---- */
 .accordion-step-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  display: contents;
 }
 
 .accordion-step-top {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
+  display: contents;
 }
 
 .accordion-step-label {
-  font-size: var(--text-base);
-  font-weight: var(--weight-bold);
-  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: inherit;
   line-height: var(--leading-snug);
 }
 
 .accordion-step-desc {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-  color: var(--text-tertiary);
-  line-height: var(--leading-normal);
+  display: none; /* Hidden in tab bar — no room */
+}
+
+/* Hide type pills in the tab bar — too noisy */
+.accordion-step .accordion-type-pill {
+  display: none;
+}
+
+/* Hide chevron — not needed in tab bar */
+.accordion-chevron {
+  display: none;
 }
 
 /* ---- CONTENT TYPE PILLS ---- */
 .accordion-type-pill {
   display: inline-flex;
   align-items: center;
-  padding: 1px var(--space-2);
-  border-radius: var(--radius-full);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-xs);
+  border: 1px solid currentColor;
+  font-family: var(--font-mono);
   font-size: 10px;
   font-weight: var(--weight-bold);
   text-transform: uppercase;
@@ -744,13 +630,11 @@
 /* ---- PANEL WRAPPER ---- */
 .accordion-panel-wrapper {
   display: none;
-  border: 1px solid var(--border-strong);
+  border: var(--bw) solid var(--border-strong);
   border-top: none;
-  border-left: 4px solid var(--accent-color, var(--color-action));
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  background: var(--bg-surface);
+  background: var(--bg-content);
   overflow: hidden;
-  margin-top: calc(-1 * var(--space-3));
   box-shadow: var(--shadow-md);
 }
 
@@ -803,8 +687,8 @@
   margin: var(--space-6) auto var(--space-4);
   padding: var(--space-4) var(--space-5);
   background: var(--bg-card);
-  border: 2px dashed var(--border-default);
-  border-radius: var(--radius-lg);
+  border: var(--bw) dashed var(--border-default);
+  border-radius: var(--radius-md);
   font-family: var(--font-sans);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-default);
@@ -814,12 +698,13 @@
   background: var(--bg-card-hover);
   border-color: var(--accent-color, var(--color-action));
   border-style: solid;
+  transform: translate(-2px, -2px);
   box-shadow: var(--shadow-sm);
-  transform: translateY(-2px);
 }
 
 .accordion-continue:active {
-  transform: translateY(0);
+  transform: translate(0, 0);
+  box-shadow: none;
 }
 
 .accordion-continue:focus-visible {
@@ -859,138 +744,22 @@
   transform: translateX(4px);
 }
 
-/* ---- STICKY MINI-NAV ---- */
-.accordion-mini-nav {
-  display: none;
-  position: sticky;
-  top: 0;
-  z-index: 15;
-  background: var(--bg-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border-default);
-  padding: var(--space-2) var(--space-4);
-  gap: var(--space-1);
-  align-items: center;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  box-shadow: var(--shadow-sm);
-  margin: 0 calc(-1 * var(--space-4));
-  scrollbar-width: none;
-}
-
-.accordion-mini-nav::-webkit-scrollbar { display: none; }
-
-.fw-page.reading-mode .accordion-mini-nav {
-  display: flex;
-}
-
-/* Home button */
-.accordion-home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-default);
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.accordion-home-btn:hover {
-  background: var(--bg-muted);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-.accordion-home-btn:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-/* Step pills in mini-nav */
-.accordion-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  height: 30px;
-  padding: 0 var(--space-3);
-  border-radius: var(--radius-full);
-  background: transparent;
-  border: 1px solid transparent;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
-  color: var(--text-tertiary);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-default);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.accordion-pill .pill-icon {
-  font-size: 13px;
-}
-
-.accordion-pill .pill-label {
-  max-width: 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.accordion-pill:hover {
-  background: var(--bg-muted);
-  color: var(--text-secondary);
-  border-color: var(--border-subtle);
-}
-
-.accordion-pill:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-.accordion-pill.active {
-  background: var(--accent-color, var(--color-action));
-  color: var(--text-inverse);
-  border-color: var(--accent-color, var(--color-action));
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
 /* ---- MOBILE ACCORDION ---- */
 @media (max-width: 768px) {
-  .accordion-nav {
-    gap: var(--space-2);
+  .accordion-tab-bar {
+    border-radius: var(--radius-md);
   }
 
   .accordion-step {
-    padding: var(--space-3) var(--space-4);
-    gap: var(--space-3);
-  }
-
-  .accordion-step-icon {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    font-size: 18px;
+    padding: var(--space-2) var(--space-1);
   }
 
   .accordion-step-label {
-    font-size: var(--text-sm);
+    font-size: 11px;
   }
 
-  .accordion-step-desc {
-    display: none;
-  }
-
-  .accordion-type-pill {
-    font-size: 9px;
+  .accordion-step-icon {
+    font-size: 8px;
   }
 
   .accordion-panel-wrapper .panel,
@@ -1003,40 +772,15 @@
     padding: var(--space-3) var(--space-4);
     margin: var(--space-4) auto var(--space-3);
   }
-
-  .accordion-mini-nav {
-    padding: var(--space-1) var(--space-3);
-    margin: 0 calc(-1 * var(--space-3));
-    gap: 2px;
-  }
-
-  .accordion-pill .pill-label {
-    display: none;
-  }
-
-  .accordion-pill {
-    padding: 0 var(--space-2);
-    min-width: 30px;
-    justify-content: center;
-  }
 }
 
 @media (max-width: 480px) {
   .accordion-step {
-    padding: var(--space-3);
-    gap: var(--space-2);
+    padding: var(--space-2) 4px;
   }
 
-  .accordion-step-icon {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    font-size: 16px;
-    border-radius: var(--radius-sm);
-  }
-
-  .accordion-type-pill {
-    display: none;
+  .accordion-step-label {
+    font-size: 10px;
   }
 }
 
@@ -1077,8 +821,8 @@
 /* ---- CONTENT CARDS (c-card) ---- */
 .c-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border: var(--bw) solid var(--border-default);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   padding: var(--space-5);
   margin-bottom: var(--space-4);
@@ -1086,14 +830,14 @@
 }
 
 .c-card:hover {
+  transform: translate(-2px, -2px);
   box-shadow: var(--shadow-md);
-  border-color: var(--border-strong);
 }
 
 .c-card-static {
   background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border: var(--bw) solid var(--border-default);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   padding: var(--space-5);
   margin-bottom: var(--space-4);
@@ -1117,9 +861,9 @@
 
 /* ---- TLDR BOX ---- */
 .tldr {
-  background: var(--bg-muted);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  background: var(--color-warning-light);
+  border: var(--bw) solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
   margin-bottom: var(--space-6);
   display: flex;
@@ -1131,8 +875,9 @@
   width: 40px;
   height: 40px;
   min-width: 40px;
-  background: var(--color-warning-light);
-  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: var(--bw-thin) solid var(--border-default);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1145,8 +890,8 @@
 /* ---- INSIGHT BOX ---- */
 .insight {
   background: var(--color-success-light);
-  border: 1px solid rgba(78, 173, 107, 0.2);
-  border-radius: var(--radius-lg);
+  border: var(--bw) solid var(--color-success);
+  border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
   margin-bottom: var(--space-4);
 }
@@ -1167,8 +912,8 @@
   margin-top: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-warning-light);
-  border: 1px solid rgba(224, 168, 32, 0.2);
-  border-radius: var(--radius-md);
+  border: var(--bw) solid var(--color-warning);
+  border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   line-height: var(--leading-normal);
@@ -1192,8 +937,8 @@
 
 .factor-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border: var(--bw) solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: var(--space-5);
   box-shadow: var(--shadow-sm);
   transition: all var(--duration-fast) var(--ease-default);
@@ -2579,6 +2324,52 @@ tr:hover td {
   background: var(--bg-muted);
 }
 
+/* ---- Category-colored comparison tables ---- */
+/* Applies to tables in BOTH framework pages and comparison guides.
+   Uses --accent-color set on .fw-page via inline style. */
+.fw-page .cmp-table,
+.fw-page .ctable {
+  border-color: var(--accent-color, var(--border-default));
+  box-shadow: var(--shadow-sm);
+}
+
+.fw-page .cmp-table th,
+.fw-page .ctable th {
+  border-bottom-color: var(--accent-color, var(--border-default));
+}
+
+.fw-page .cmp-table td:first-child,
+.fw-page .ctable td:first-child {
+  background: color-mix(in srgb, var(--accent-color) 6%, var(--bg-card));
+}
+
+/* Per-category table header tints */
+.fw-page[data-category="prioritization"] .cmp-table th,
+.fw-page[data-category="prioritization"] .ctable th { background: var(--cat-prioritization-fill); }
+.fw-page[data-category="design"] .cmp-table th,
+.fw-page[data-category="design"] .ctable th { background: var(--cat-design-fill); }
+.fw-page[data-category="strategy"] .cmp-table th,
+.fw-page[data-category="strategy"] .ctable th { background: var(--cat-strategy-fill); }
+.fw-page[data-category="growth"] .cmp-table th,
+.fw-page[data-category="growth"] .ctable th { background: var(--cat-growth-fill); }
+.fw-page[data-category="execution"] .cmp-table th,
+.fw-page[data-category="execution"] .ctable th { background: var(--cat-execution-fill); }
+.fw-page[data-category="communication"] .cmp-table th,
+.fw-page[data-category="communication"] .ctable th { background: var(--cat-communication-fill); }
+
+.fw-page[data-category="prioritization"] .cmp-table td:first-child,
+.fw-page[data-category="prioritization"] .ctable td:first-child { background: var(--cat-prioritization-soft); }
+.fw-page[data-category="design"] .cmp-table td:first-child,
+.fw-page[data-category="design"] .ctable td:first-child { background: var(--cat-design-soft); }
+.fw-page[data-category="strategy"] .cmp-table td:first-child,
+.fw-page[data-category="strategy"] .ctable td:first-child { background: var(--cat-strategy-soft); }
+.fw-page[data-category="growth"] .cmp-table td:first-child,
+.fw-page[data-category="growth"] .ctable td:first-child { background: var(--cat-growth-soft); }
+.fw-page[data-category="execution"] .cmp-table td:first-child,
+.fw-page[data-category="execution"] .ctable td:first-child { background: var(--cat-execution-soft); }
+.fw-page[data-category="communication"] .cmp-table td:first-child,
+.fw-page[data-category="communication"] .ctable td:first-child { background: var(--cat-communication-soft); }
+
 /* ---- ID cards (comparison overview) ---- */
 .id-grid {
   display: grid;
@@ -2722,40 +2513,6 @@ tr:hover td {
 }
 
 /* ============================================
-   DARK MODE OVERRIDES
-   Fix inline hard-coded colors from source HTML
-   ============================================ */
-[data-theme="dark"] .fw-page [style*="color:#0a8a50"],
-[data-theme="dark"] .fw-page [style*="color:#1a8a50"] {
-  color: var(--color-success) !important;
-}
-
-[data-theme="dark"] .fw-page [style*="color:#c03030"],
-[data-theme="dark"] .fw-page [style*="color:#cc3333"] {
-  color: var(--color-error) !important;
-}
-
-[data-theme="dark"] .fw-page [style*="color:#b08800"] {
-  color: var(--color-warning) !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .fw-page [style*="color:#0a8a50"],
-  :root:not([data-theme="light"]) .fw-page [style*="color:#1a8a50"] {
-    color: var(--color-success) !important;
-  }
-
-  :root:not([data-theme="light"]) .fw-page [style*="color:#c03030"],
-  :root:not([data-theme="light"]) .fw-page [style*="color:#cc3333"] {
-    color: var(--color-error) !important;
-  }
-
-  :root:not([data-theme="light"]) .fw-page [style*="color:#b08800"] {
-    color: var(--color-warning) !important;
-  }
-}
-
-/* ============================================
    MICRO-INTERACTIONS & DELIGHT
    Subtle animations that make the UI feel alive
    ============================================ */
@@ -2832,13 +2589,12 @@ tr:hover td {
 
 /* ---- Focus ring consistency ---- */
 .accordion-step:focus-visible,
-.accordion-pill:focus-visible,
-.accordion-home-btn:focus-visible,
 .hub-pill:focus-visible,
 .hub-fw-card:focus-visible,
 .hub-compare-btn:focus-visible,
 .hub-search-input:focus-visible,
-.sidebar-fw-link:focus-visible,
+.top-nav-trigger:focus-visible,
+.top-nav-fw:focus-visible,
 .btn:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
@@ -2847,8 +2603,6 @@ tr:hover td {
 
 /* ---- Active press states ---- */
 .hub-pill:active,
-.accordion-pill:active,
-.accordion-home-btn:active,
 .fw-chip:active {
   transform: scale(0.96);
   transition-duration: var(--duration-fast);

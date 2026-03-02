@@ -1,5 +1,5 @@
 import { getFramework, getCategory } from '../data/frameworks.js';
-import { extractAndCleanCSS, injectStyles } from '../utils/style-injector.js';
+import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } from '../utils/style-injector.js';
 
 /**
  * Framework page renderer.
@@ -11,7 +11,7 @@ import { extractAndCleanCSS, injectStyles } from '../utils/style-injector.js';
 // Cache loaded framework content — stores { html, css }
 const contentCache = new Map();
 
-export async function renderFrameworkPage(container, breadcrumb, slug, initialStep) {
+export async function renderFrameworkPage(container, slug, initialStep) {
   const fw = getFramework(slug);
   if (!fw) {
     container.innerHTML = '<p>Framework not found.</p>';
@@ -19,14 +19,6 @@ export async function renderFrameworkPage(container, breadcrumb, slug, initialSt
   }
 
   const cat = getCategory(fw.category);
-
-  breadcrumb.innerHTML = `
-    <a href="#/">Dashboard</a>
-    <span class="sep">›</span>
-    <a href="#/category/${cat.id}">${cat.name}</a>
-    <span class="sep">›</span>
-    <span class="current">${fw.name}</span>
-  `;
 
   // Show loading state
   container.innerHTML = `
@@ -49,8 +41,15 @@ export async function renderFrameworkPage(container, breadcrumb, slug, initialSt
       ${html}
     </div>`;
 
+    // Set category on .app-content so page background matches category fill
+    const appContent = container.closest('.app-content') || container;
+    appContent.setAttribute('data-category', cat.id);
+
     // Strip leading emojis from H1 — the SPA badge already shows the emoji
     stripLeadingEmoji(container);
+
+    // Clean inline font-family references (480 elements across HTML files)
+    cleanInlineFonts(container);
 
     // Execute any inline scripts from the loaded content
     executeScripts(container);
@@ -120,9 +119,12 @@ function executeScripts(container) {
   const globalEval = (0, eval);
   const scripts = container.querySelectorAll('script[type="text/framework-script"]');
   scripts.forEach(oldScript => {
-    const code = oldScript.textContent;
+    let code = oldScript.textContent;
     oldScript.remove();
     if (code.trim()) {
+      // Clean font references in JS strings so dynamically generated
+      // elements use design system fonts instead of Lilita One/Outfit
+      code = cleanScriptFonts(code);
       try {
         globalEval(code);
       } catch (err) {
@@ -166,6 +168,11 @@ function installFullBleedHero(container) {
   const header = fwPage.querySelector('.header');
   if (!pageHeader && !header) return;
 
+  // Look up the framework emoji from data
+  const slug = fwPage.closest('[data-fw-slug]')?.dataset.fwSlug
+    || window.location.hash.match(/framework\/([^/]+)/)?.[1];
+  const fw = slug ? getFramework(slug) : null;
+
   // Create full-bleed wrapper
   const heroBleed = document.createElement('div');
   heroBleed.className = 'fw-hero-bleed';
@@ -175,8 +182,17 @@ function installFullBleedHero(container) {
   const heroInner = document.createElement('div');
   heroInner.className = 'fw-hero-inner';
 
-  // Move badge into hero
+  // Move badge into hero (category chip goes first)
   if (pageHeader) heroInner.appendChild(pageHeader);
+
+  // Add large framework emoji between badge and title
+  if (fw?.emoji) {
+    const emojiEl = document.createElement('div');
+    emojiEl.className = 'fw-hero-emoji';
+    emojiEl.setAttribute('aria-hidden', 'true');
+    emojiEl.textContent = fw.emoji;
+    heroInner.appendChild(emojiEl);
+  }
 
   // Move the original .header (title + visualizer) into hero
   if (header) heroInner.appendChild(header);
@@ -324,42 +340,20 @@ function installAccordionSystem(container, slug, initialStep) {
   // Mark the fw-page as accordion mode
   fwPage.classList.add('accordion-mode');
 
-  // Build the mini-nav (sticky bar for reading mode)
-  const miniNav = document.createElement('div');
-  miniNav.className = 'accordion-mini-nav';
-  miniNav.setAttribute('role', 'navigation');
-  miniNav.setAttribute('aria-label', 'Step navigation');
-
-  const homeBtn = document.createElement('button');
-  homeBtn.className = 'accordion-home-btn';
-  homeBtn.innerHTML = '<span aria-hidden="true">&#8962;</span> Cover';
-  homeBtn.setAttribute('aria-label', 'Return to cover view');
-  homeBtn.addEventListener('click', () => collapseAll());
-  miniNav.appendChild(homeBtn);
-
-  steps.forEach((step, i) => {
-    const meta = getStepMeta(step.label);
-    const pill = document.createElement('button');
-    pill.className = 'accordion-pill';
-    pill.innerHTML = `<span class="pill-icon" aria-hidden="true">${meta.icon}</span><span class="pill-label">${step.label}</span>`;
-    pill.setAttribute('aria-label', `Step ${step.num}: ${step.label}`);
-    pill.addEventListener('click', () => expandStep(i));
-    miniNav.appendChild(pill);
-  });
-
-  // Insert mini-nav before the content area (after fw-page-header)
-  const headerEl = fwPage.querySelector('.fw-page-header');
-  if (headerEl) {
-    headerEl.after(miniNav);
-  } else {
-    fwPage.prepend(miniNav);
-  }
-
-  // Build accordion structure
+  // Build accordion structure — tab bar + panel area (separated)
   const accordionNav = document.createElement('div');
   accordionNav.className = 'accordion-nav';
   accordionNav.setAttribute('role', 'region');
   accordionNav.setAttribute('aria-label', 'Framework steps');
+
+  // Tab bar: horizontal row of step buttons (like comparison guides)
+  const tabBar = document.createElement('div');
+  tabBar.className = 'accordion-tab-bar';
+  tabBar.setAttribute('role', 'tablist');
+
+  // Panel area: content panels stacked below the tab bar
+  const panelArea = document.createElement('div');
+  panelArea.className = 'accordion-panel-area';
 
   steps.forEach((step, i) => {
     const panel = panels[i];
@@ -370,31 +364,24 @@ function installAccordionSystem(container, slug, initialStep) {
 
     // Get content-type metadata for this step
     const meta = getStepMeta(step.label);
-    const pillClass = getTypePillClass(meta.type);
 
-    // Create accordion step header
+    // Create tab button
     const stepHeader = document.createElement('button');
     stepHeader.className = 'accordion-step';
     stepHeader.id = headerId;
+    stepHeader.setAttribute('role', 'tab');
     stepHeader.setAttribute('aria-expanded', 'false');
     stepHeader.setAttribute('aria-controls', panelId);
     stepHeader.innerHTML = `
-      <span class="accordion-step-icon" aria-hidden="true">${meta.icon}</span>
-      <span class="accordion-step-content">
-        <span class="accordion-step-top">
-          <span class="accordion-step-label">${step.label}</span>
-          <span class="accordion-type-pill ${pillClass}">${meta.type}</span>
-        </span>
-        ${meta.desc ? `<span class="accordion-step-desc">${meta.desc}</span>` : ''}
-      </span>
-      <span class="accordion-chevron" aria-hidden="true">&#9656;</span>
+      <span class="accordion-step-icon" aria-hidden="true">${step.num}</span>
+      <span class="accordion-step-label">${step.label}</span>
     `;
 
     // Create wrapper for the panel content
     const wrapper = document.createElement('div');
     wrapper.className = 'accordion-panel-wrapper';
     wrapper.id = panelId;
-    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('role', 'tabpanel');
     wrapper.setAttribute('aria-labelledby', headerId);
     wrapper.setAttribute('data-step', String(i));
 
@@ -429,7 +416,7 @@ function installAccordionSystem(container, slug, initialStep) {
     }
     wrapper.appendChild(continueBtn);
 
-    // Click handler for step header
+    // Click handler
     stepHeader.addEventListener('click', () => {
       if (stepHeader.classList.contains('expanded')) {
         collapseAll();
@@ -438,9 +425,9 @@ function installAccordionSystem(container, slug, initialStep) {
       }
     });
 
-    // Keyboard navigation: arrow keys move between step headers
+    // Keyboard navigation
     stepHeader.addEventListener('keydown', (e) => {
-      const allHeaders = Array.from(accordionNav.querySelectorAll('.accordion-step'));
+      const allHeaders = Array.from(tabBar.querySelectorAll('.accordion-step'));
       const currentIdx = allHeaders.indexOf(stepHeader);
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -460,18 +447,18 @@ function installAccordionSystem(container, slug, initialStep) {
       }
     });
 
-    accordionNav.appendChild(stepHeader);
-    accordionNav.appendChild(wrapper);
+    tabBar.appendChild(stepHeader);
+    panelArea.appendChild(wrapper);
   });
+
+  accordionNav.appendChild(tabBar);
+  accordionNav.appendChild(panelArea);
 
   // Insert accordion after the journey-nav (which is now hidden via CSS)
   journeyNav.after(accordionNav);
 
-  // Build "What's Inside" summary chips — interactive: click to jump by type
-  buildWhatsInsideChips(steps, accordionNav, expandStep);
-
-  // Build bento grid — 2-column layout with TLDR, Inside chips, and Sections TOC
-  installBentoGrid(fwPage, steps, accordionNav, expandStep);
+  // Place TLDR card above accordion
+  installTldrCard(fwPage, accordionNav);
 
   // Override global goTo/go so any remaining onclick handlers use accordion
   window.goTo = (id) => {
@@ -487,7 +474,6 @@ function installAccordionSystem(container, slug, initialStep) {
   function expandStep(index, skipScroll) {
     const stepHeaders = accordionNav.querySelectorAll('.accordion-step');
     const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
-    const pills = miniNav.querySelectorAll('.accordion-pill');
 
     // Collapse all first
     stepHeaders.forEach(h => {
@@ -495,7 +481,6 @@ function installAccordionSystem(container, slug, initialStep) {
       h.setAttribute('aria-expanded', 'false');
     });
     wrappers.forEach(w => w.classList.remove('open'));
-    pills.forEach(p => p.classList.remove('active'));
 
     // Expand the target
     if (stepHeaders[index]) {
@@ -503,7 +488,6 @@ function installAccordionSystem(container, slug, initialStep) {
       stepHeaders[index].setAttribute('aria-expanded', 'true');
     }
     if (wrappers[index]) wrappers[index].classList.add('open');
-    if (pills[index]) pills[index].classList.add('active');
 
     // Enter reading mode
     fwPage.classList.add('reading-mode');
@@ -529,14 +513,12 @@ function installAccordionSystem(container, slug, initialStep) {
   function collapseAll() {
     const stepHeaders = accordionNav.querySelectorAll('.accordion-step');
     const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
-    const pills = miniNav.querySelectorAll('.accordion-pill');
 
     stepHeaders.forEach(h => {
       h.classList.remove('expanded');
       h.setAttribute('aria-expanded', 'false');
     });
     wrappers.forEach(w => w.classList.remove('open'));
-    pills.forEach(p => p.classList.remove('active'));
 
     // Exit reading mode
     fwPage.classList.remove('reading-mode');
@@ -562,127 +544,17 @@ function installAccordionSystem(container, slug, initialStep) {
 }
 
 /**
- * Build "What's Inside" summary chips — interactive buttons that
- * jump to the first accordion section matching the clicked content type.
- * Turns dead informational UI into a "jump by type" tool.
- */
-function buildWhatsInsideChips(steps, accordionNav, expandStep) {
-  // Count content types and track first occurrence index
-  const typeCounts = {};
-  const typeIcons = {};
-  const typeFirstIndex = {};
-  steps.forEach((step, i) => {
-    const meta = getStepMeta(step.label);
-    if (!typeCounts[meta.type]) {
-      typeCounts[meta.type] = 0;
-      typeIcons[meta.type] = meta.icon;
-      typeFirstIndex[meta.type] = i;
-    }
-    typeCounts[meta.type]++;
-  });
-
-  // Sort by count (descending), then alphabetically
-  const sorted = Object.entries(typeCounts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-
-  const whatsInside = document.createElement('div');
-  whatsInside.className = 'fw-whats-inside';
-
-  const label = document.createElement('span');
-  label.className = 'fw-whats-inside-label';
-  label.textContent = 'Inside';
-  whatsInside.appendChild(label);
-
-  const chipsContainer = document.createElement('div');
-  chipsContainer.className = 'fw-whats-inside-chips';
-
-  sorted.forEach(([type, count]) => {
-    const chip = document.createElement('button');
-    chip.className = 'fw-chip fw-chip-interactive';
-    chip.setAttribute('aria-label', `Jump to first ${type} section`);
-    chip.innerHTML = `
-      <span class="fw-chip-icon" aria-hidden="true">${typeIcons[type]}</span>
-      ${count > 1 ? `<span class="fw-chip-count">${count}</span>` : ''}
-      <span>${type}</span>
-    `;
-    chip.addEventListener('click', () => {
-      expandStep(typeFirstIndex[type]);
-    });
-    chipsContainer.appendChild(chip);
-  });
-
-  whatsInside.appendChild(chipsContainer);
-
-  // Insert before the accordion nav
-  accordionNav.before(whatsInside);
-}
-
-/**
- * Bento Grid Layout — organizes the cover page into a 2-column grid:
- *   Left col row 1: TLDR / Quick Summary card
- *   Left col row 2: What's Inside chips card
- *   Right col (spans both rows): Sections TOC with clickable navigation
- *
- * On mobile: single column stack (TLDR → Inside → TOC).
+ * TLDR Card — standalone quick-read card placed above the accordion.
  * Hidden in reading mode (when an accordion section is expanded).
  */
-function installBentoGrid(fwPage, steps, accordionNav, expandStep) {
+function installTldrCard(fwPage, accordionNav) {
   const tldr = fwPage.querySelector('.one-liner, .tldr-section, .tldr');
-  const chips = fwPage.querySelector('.fw-whats-inside');
+  if (!tldr) return;
 
-  // Need at least the TOC to justify a grid
-  if (steps.length === 0) return;
+  const card = document.createElement('div');
+  card.className = 'fw-tldr-card';
+  card.appendChild(tldr); // moves from original position
 
-  // Create bento grid container
-  const grid = document.createElement('div');
-  grid.className = 'fw-bento-grid';
-
-  // -- Left column, row 1: TLDR card --
-  if (tldr) {
-    const tldrCell = document.createElement('div');
-    tldrCell.className = 'bento-cell bento-tldr';
-    tldrCell.appendChild(tldr); // moves from original position
-    grid.appendChild(tldrCell);
-  }
-
-  // -- Left column, row 2: Inside chips card --
-  if (chips) {
-    const chipsCell = document.createElement('div');
-    chipsCell.className = 'bento-cell bento-inside';
-    chipsCell.appendChild(chips); // moves from original position
-    grid.appendChild(chipsCell);
-  }
-
-  // -- Right column: Sections TOC (spans both rows) --
-  const toc = document.createElement('div');
-  toc.className = 'bento-cell bento-toc';
-
-  const tocHeader = document.createElement('div');
-  tocHeader.className = 'bento-toc-header';
-  tocHeader.innerHTML = '<span class="bento-toc-icon" aria-hidden="true">📖</span> Sections';
-  toc.appendChild(tocHeader);
-
-  const tocList = document.createElement('div');
-  tocList.className = 'bento-toc-list';
-
-  steps.forEach((step, i) => {
-    const meta = getStepMeta(step.label);
-    const pillClass = getTypePillClass(meta.type);
-
-    const btn = document.createElement('button');
-    btn.className = 'bento-toc-item';
-    btn.setAttribute('aria-label', `Go to ${step.label} section`);
-    btn.innerHTML = `
-      <span class="bento-toc-item-icon" aria-hidden="true">${meta.icon}</span>
-      <span class="bento-toc-item-label">${step.label}</span>
-      <span class="accordion-type-pill ${pillClass}">${meta.type}</span>
-    `;
-    btn.addEventListener('click', () => expandStep(i));
-    tocList.appendChild(btn);
-  });
-
-  toc.appendChild(tocList);
-  grid.appendChild(toc);
-
-  // Insert grid before accordion nav
-  accordionNav.before(grid);
+  // Insert before accordion nav
+  accordionNav.before(card);
 }

@@ -27,7 +27,7 @@ export function renderHub(container) {
         ${categories.map(cat => `
           <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
                   style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
-            <span class="hub-pill-dot" style="background:${cat.color};" aria-hidden="true"></span>
+            <span class="hub-pill-emoji" aria-hidden="true">${cat.emoji}</span>
             ${cat.name}
             <span class="hub-pill-count">${getFrameworksByCategory(cat.id).length}</span>
           </button>
@@ -36,7 +36,11 @@ export function renderHub(container) {
     </div>
 
     <div class="hub-categories" id="hub-categories">
-      ${categories.map(cat => renderCategorySection(cat)).join('')}
+      ${categories.map(cat => renderCategoryLink(cat)).join('')}
+    </div>
+
+    <!-- Search results — shows matching frameworks when typing -->
+    <div class="hub-search-results" id="hub-search-results" style="display:none;">
     </div>
 
     <!-- Empty state for search -->
@@ -47,58 +51,22 @@ export function renderHub(container) {
     </div>
   `;
 
-  // Install search & filter interactivity
   installHubInteractions();
 }
 
-function renderCategorySection(cat) {
+function renderCategoryLink(cat) {
   const fws = getFrameworksByCategory(cat.id);
-  const comparison = comparisonGuides.find(cg => cg.category === cat.id);
 
   return `
-    <section class="hub-section" data-category="${cat.id}" id="hub-cat-${cat.id}">
-      <div class="hub-section-head" style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
-        <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
-        <div class="hub-section-text">
-          <h2 class="hub-section-title">
-            <a href="#/category/${cat.id}">${cat.name}</a>
-          </h2>
-          <p class="hub-section-desc">${cat.description}</p>
-        </div>
-        <span class="hub-section-count">${fws.length} frameworks</span>
+    <a class="hub-section-head" href="#/category/${cat.id}" data-category="${cat.id}"
+       style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
+      <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
+      <div class="hub-section-text">
+        <h2 class="hub-section-title">${cat.name}</h2>
+        <p class="hub-section-desc">${cat.description}</p>
       </div>
-
-      <div class="hub-card-grid">
-        ${fws.map(fw => renderFrameworkCard(fw, cat)).join('')}
-      </div>
-
-      ${comparison ? `
-        <div class="hub-compare-link">
-          <a href="#/compare/${comparison.slug}" class="hub-compare-btn" style="--accent-color:${cat.color};">
-            <span class="hub-compare-icon">⚖️</span>
-            <span>Compare &amp; Choose</span>
-            <span class="hub-compare-arrow">→</span>
-          </a>
-        </div>
-      ` : ''}
-    </section>
-  `;
-}
-
-function renderFrameworkCard(fw, cat) {
-  return `
-    <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
-       data-fw-name="${fw.name.toLowerCase()}"
-       data-fw-desc="${fw.description.toLowerCase()}"
-       data-fw-category="${cat.id}"
-       style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
-      <div class="hub-fw-card-top">
-        <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
-        <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
-      </div>
-      <h3 class="hub-fw-card-name">${fw.name}</h3>
-      <p class="hub-fw-card-desc">${fw.description}</p>
-      <span class="hub-fw-card-arrow" aria-hidden="true">→</span>
+      <span class="hub-section-count">${fws.length} frameworks</span>
+      <span class="hub-section-arrow" aria-hidden="true">→</span>
     </a>
   `;
 }
@@ -106,8 +74,9 @@ function renderFrameworkCard(fw, cat) {
 function installHubInteractions() {
   const searchInput = document.getElementById('hub-search');
   const pills = document.querySelectorAll('.hub-pill');
-  const sections = document.querySelectorAll('.hub-section');
-  const cards = document.querySelectorAll('.hub-fw-card');
+  const catLinks = document.querySelectorAll('.hub-section-head');
+  const categoriesWrap = document.getElementById('hub-categories');
+  const searchResults = document.getElementById('hub-search-results');
   const emptyState = document.getElementById('hub-empty-state');
   const clearBtn = emptyState?.querySelector('.hub-empty-clear');
 
@@ -116,7 +85,51 @@ function installHubInteractions() {
   // --- Search ---
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
-    filterCards(query, activeFilter);
+
+    if (!query) {
+      // No search — show category links, hide search results
+      categoriesWrap.style.display = '';
+      searchResults.style.display = 'none';
+      emptyState.style.display = 'none';
+      filterCategoryLinks(activeFilter);
+      return;
+    }
+
+    // Search mode — hide category links, show matching frameworks
+    categoriesWrap.style.display = 'none';
+
+    const matches = frameworks.filter(fw =>
+      fw.name.toLowerCase().includes(query) ||
+      fw.description.toLowerCase().includes(query)
+    );
+
+    if (matches.length === 0) {
+      searchResults.style.display = 'none';
+      emptyState.style.display = '';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    searchResults.style.display = '';
+    searchResults.innerHTML = `
+      <div class="hub-card-grid">
+        ${matches.map(fw => {
+          const cat = categories.find(c => c.id === fw.category);
+          return `
+            <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
+               style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
+              <div class="hub-fw-card-top">
+                <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
+                <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
+              </div>
+              <h3 class="hub-fw-card-name">${fw.name}</h3>
+              <p class="hub-fw-card-desc">${fw.description}</p>
+              <span class="hub-fw-card-arrow" aria-hidden="true">→</span>
+            </a>
+          `;
+        }).join('')}
+      </div>
+    `;
   });
 
   // --- Filter pills ---
@@ -130,16 +143,13 @@ function installHubInteractions() {
       pill.setAttribute('aria-selected', 'true');
       activeFilter = pill.dataset.filter;
 
-      const query = searchInput?.value.toLowerCase().trim() || '';
-      filterCards(query, activeFilter);
+      // Clear search when switching pills
+      if (searchInput) searchInput.value = '';
+      categoriesWrap.style.display = '';
+      searchResults.style.display = 'none';
+      emptyState.style.display = 'none';
 
-      // Scroll to section if filtering to a specific category
-      if (activeFilter !== 'all') {
-        const target = document.getElementById(`hub-cat-${activeFilter}`);
-        if (target && target.style.display !== 'none') {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
+      filterCategoryLinks(activeFilter);
     });
   });
 
@@ -153,38 +163,16 @@ function installHubInteractions() {
     });
     pills[0]?.classList.add('active');
     pills[0]?.setAttribute('aria-selected', 'true');
-    filterCards('', 'all');
+    categoriesWrap.style.display = '';
+    searchResults.style.display = 'none';
+    emptyState.style.display = 'none';
+    filterCategoryLinks('all');
   });
 
-  function filterCards(query, categoryFilter) {
-    let visibleCount = 0;
-
-    sections.forEach(section => {
-      const catId = section.dataset.category;
-      const catMatch = categoryFilter === 'all' || catId === categoryFilter;
-
-      if (!catMatch) {
-        section.style.display = 'none';
-        return;
-      }
-
-      let sectionVisible = 0;
-      const sectionCards = section.querySelectorAll('.hub-fw-card');
-      sectionCards.forEach(card => {
-        const name = card.dataset.fwName || '';
-        const desc = card.dataset.fwDesc || '';
-        const match = !query || name.includes(query) || desc.includes(query);
-        card.style.display = match ? '' : 'none';
-        if (match) sectionVisible++;
-      });
-
-      section.style.display = sectionVisible > 0 ? '' : 'none';
-      visibleCount += sectionVisible;
+  function filterCategoryLinks(filter) {
+    catLinks.forEach(link => {
+      const catId = link.dataset.category;
+      link.style.display = (filter === 'all' || catId === filter) ? '' : 'none';
     });
-
-    // Show/hide empty state
-    if (emptyState) {
-      emptyState.style.display = visibleCount === 0 ? '' : 'none';
-    }
   }
 }

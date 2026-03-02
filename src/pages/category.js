@@ -1,17 +1,11 @@
 import { getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
 
-export function renderCategoryPage(container, breadcrumb, categoryId) {
+export function renderCategoryPage(container, categoryId) {
   const cat = getCategory(categoryId);
   if (!cat) {
     container.innerHTML = '<p>Category not found.</p>';
     return;
   }
-
-  breadcrumb.innerHTML = `
-    <a href="#/">Dashboard</a>
-    <span class="sep">›</span>
-    <span class="current">${cat.name}</span>
-  `;
 
   const fws = getFrameworksByCategory(categoryId);
   const comparison = getComparisonGuide(categoryId);

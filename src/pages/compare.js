@@ -1,10 +1,10 @@
 import { comparisonGuides, getCategory } from '../data/frameworks.js';
-import { extractAndCleanCSS, injectStyles } from '../utils/style-injector.js';
+import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } from '../utils/style-injector.js';
 
 // Cache loaded comparison content — stores { html, css }
 const contentCache = new Map();
 
-export async function renderComparePage(container, breadcrumb, slug) {
+export async function renderComparePage(container, slug) {
   const guide = comparisonGuides.find(cg => cg.slug === slug);
   if (!guide) {
     container.innerHTML = '<p>Comparison guide not found.</p>';
@@ -12,14 +12,6 @@ export async function renderComparePage(container, breadcrumb, slug) {
   }
 
   const cat = getCategory(guide.category);
-
-  breadcrumb.innerHTML = `
-    <a href="#/">Dashboard</a>
-    <span class="sep">›</span>
-    <a href="#/category/${cat.id}">${cat.name}</a>
-    <span class="sep">›</span>
-    <span class="current">Compare</span>
-  `;
 
   container.innerHTML = `
     <div style="text-align:center;padding:var(--space-16) 0;color:var(--text-tertiary);">
@@ -42,6 +34,9 @@ export async function renderComparePage(container, breadcrumb, slug) {
     </div>`;
     // Strip leading emojis from H1 — the SPA badge already shows the emoji
     stripLeadingEmoji(container);
+
+    // Clean inline font-family references
+    cleanInlineFonts(container);
 
     executeScripts(container);
   } catch (err) {
@@ -92,9 +87,11 @@ function executeScripts(container) {
   const globalEval = (0, eval);
   const scripts = container.querySelectorAll('script[type="text/framework-script"]');
   scripts.forEach(oldScript => {
-    const code = oldScript.textContent;
+    let code = oldScript.textContent;
     oldScript.remove();
     if (code.trim()) {
+      // Clean font references in JS strings
+      code = cleanScriptFonts(code);
       try {
         globalEval(code);
       } catch (err) {
