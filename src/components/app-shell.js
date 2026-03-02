@@ -18,6 +18,12 @@ export function renderApp() {
       <nav class="top-nav" id="top-nav" aria-label="Framework navigation">
         ${renderTopNav()}
       </nav>
+      <div class="top-nav-search" id="top-nav-search">
+        <span class="top-nav-search-icon" aria-hidden="true">&#x1F50D;</span>
+        <input type="text" class="top-nav-search-input" id="top-nav-search-input"
+               placeholder="Search…" autocomplete="off" aria-label="Search frameworks" />
+        <div class="top-nav-search-results" id="top-nav-search-results"></div>
+      </div>
       <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -41,6 +47,7 @@ export function renderApp() {
 
   // Bind events
   bindTopNav();
+  bindTopNavSearch();
   bindMobileMenu();
 
   // Listen for route changes
@@ -172,6 +179,122 @@ function bindTopNav() {
         cat.querySelector('.top-nav-trigger')?.setAttribute('aria-expanded', 'false');
       });
     }
+  });
+}
+
+function bindTopNavSearch() {
+  const input = document.getElementById('top-nav-search-input');
+  const results = document.getElementById('top-nav-search-results');
+  const searchWrap = document.getElementById('top-nav-search');
+  if (!input || !results) return;
+
+  let selectedIndex = -1;
+
+  const allItems = [
+    ...frameworks.map(fw => ({
+      type: 'framework',
+      name: fw.name,
+      emoji: fw.emoji,
+      slug: fw.slug,
+      href: `#/framework/${fw.slug}`,
+    })),
+    ...comparisonGuides.map(cg => {
+      const cat = categories.find(c => c.id === cg.category);
+      return {
+        type: 'compare',
+        name: cg.name,
+        emoji: '⚖️',
+        slug: cg.slug,
+        href: `#/compare/${cg.slug}`,
+      };
+    }),
+  ];
+
+  const showResults = (matches) => {
+    if (matches.length === 0) {
+      results.innerHTML = '<div class="top-nav-search-empty">No results</div>';
+    } else {
+      results.innerHTML = matches.map((m, i) => `
+        <a class="top-nav-search-item${i === selectedIndex ? ' selected' : ''}" href="${m.href}" data-index="${i}">
+          <span class="top-nav-search-item-emoji">${m.emoji}</span>
+          <span>${m.name}</span>
+        </a>
+      `).join('');
+    }
+    results.style.display = '';
+    searchWrap.classList.add('open');
+  };
+
+  const hideResults = () => {
+    results.style.display = 'none';
+    searchWrap.classList.remove('open');
+    selectedIndex = -1;
+  };
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+    if (!q) {
+      hideResults();
+      return;
+    }
+    selectedIndex = -1;
+    const matches = allItems.filter(item =>
+      item.name.toLowerCase().includes(q)
+    ).slice(0, 8);
+    showResults(matches);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = results.querySelectorAll('.top-nav-search-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+      items.forEach((item, i) => item.classList.toggle('selected', i === selectedIndex));
+      items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      items.forEach((item, i) => item.classList.toggle('selected', i === selectedIndex));
+      items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIndex >= 0 && items[selectedIndex]) {
+        window.location.hash = items[selectedIndex].getAttribute('href');
+      } else if (items[0]) {
+        window.location.hash = items[0].getAttribute('href');
+      }
+      input.value = '';
+      hideResults();
+      input.blur();
+    } else if (e.key === 'Escape') {
+      input.value = '';
+      hideResults();
+      input.blur();
+    }
+  });
+
+  // Click on result
+  results.addEventListener('click', (e) => {
+    const item = e.target.closest('.top-nav-search-item');
+    if (item) {
+      input.value = '';
+      hideResults();
+    }
+  });
+
+  // Hide on click outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#top-nav-search')) {
+      hideResults();
+    }
+  });
+
+  // Hide on focus out
+  input.addEventListener('blur', () => {
+    // Delay to allow click on results
+    setTimeout(hideResults, 200);
   });
 }
 

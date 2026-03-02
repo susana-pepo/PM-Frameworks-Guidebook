@@ -1,4 +1,4 @@
-import { categories, frameworks, getFrameworksByCategory, comparisonGuides } from '../data/frameworks.js';
+import { categories, frameworks, getFrameworksByCategory } from '../data/frameworks.js';
 
 export function renderHub(container) {
   container.innerHTML = `
@@ -14,29 +14,25 @@ export function renderHub(container) {
 
       <!-- Hub search -->
       <div class="hub-search-wrap">
-        <span class="hub-search-icon" aria-hidden="true">🔍</span>
+        <span class="hub-search-icon" aria-hidden="true">&#x1F50D;</span>
         <input type="text" id="hub-search" class="hub-search-input"
                placeholder="Search frameworks…" autocomplete="off" />
       </div>
 
-      <!-- Category filter pills -->
-      <div class="hub-filter-pills" role="tablist" aria-label="Filter by category">
-        <button class="hub-pill active" data-filter="all" role="tab" aria-selected="true">
+      <!-- Category nav pills -->
+      <div class="hub-filter-pills" role="navigation" aria-label="Browse by category">
+        <button class="hub-pill active" data-filter="all" aria-current="true">
           All <span class="hub-pill-count">${frameworks.length}</span>
         </button>
         ${categories.map(cat => `
-          <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
-                  style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
+          <a class="hub-pill" href="#/category/${cat.id}"
+             style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
             <span class="hub-pill-emoji" aria-hidden="true">${cat.emoji}</span>
             ${cat.name}
             <span class="hub-pill-count">${getFrameworksByCategory(cat.id).length}</span>
-          </button>
+          </a>
         `).join('')}
       </div>
-    </div>
-
-    <div class="hub-categories" id="hub-categories">
-      ${categories.map(cat => renderCategoryLink(cat)).join('')}
     </div>
 
     <!-- Search results — shows matching frameworks when typing -->
@@ -45,7 +41,7 @@ export function renderHub(container) {
 
     <!-- Empty state for search -->
     <div class="hub-empty-state" id="hub-empty-state" style="display:none;">
-      <div class="hub-empty-icon">🔎</div>
+      <div class="hub-empty-icon">&#x1F50E;</div>
       <p class="hub-empty-text">No frameworks match your search.</p>
       <button class="hub-empty-clear btn btn-sm">Clear search</button>
     </div>
@@ -54,49 +50,21 @@ export function renderHub(container) {
   installHubInteractions();
 }
 
-function renderCategoryLink(cat) {
-  const fws = getFrameworksByCategory(cat.id);
-
-  return `
-    <a class="hub-section-head" href="#/category/${cat.id}" data-category="${cat.id}"
-       style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
-      <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
-      <div class="hub-section-text">
-        <h2 class="hub-section-title">${cat.name}</h2>
-        <p class="hub-section-desc">${cat.description}</p>
-      </div>
-      <span class="hub-section-count">${fws.length} frameworks</span>
-      <span class="hub-section-arrow" aria-hidden="true">→</span>
-    </a>
-  `;
-}
-
 function installHubInteractions() {
   const searchInput = document.getElementById('hub-search');
-  const pills = document.querySelectorAll('.hub-pill');
-  const catLinks = document.querySelectorAll('.hub-section-head');
-  const categoriesWrap = document.getElementById('hub-categories');
   const searchResults = document.getElementById('hub-search-results');
   const emptyState = document.getElementById('hub-empty-state');
   const clearBtn = emptyState?.querySelector('.hub-empty-clear');
-
-  let activeFilter = 'all';
 
   // --- Search ---
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
 
     if (!query) {
-      // No search — show category links, hide search results
-      categoriesWrap.style.display = '';
       searchResults.style.display = 'none';
       emptyState.style.display = 'none';
-      filterCategoryLinks(activeFilter);
       return;
     }
-
-    // Search mode — hide category links, show matching frameworks
-    categoriesWrap.style.display = 'none';
 
     const matches = frameworks.filter(fw =>
       fw.name.toLowerCase().includes(query) ||
@@ -124,7 +92,7 @@ function installHubInteractions() {
               </div>
               <h3 class="hub-fw-card-name">${fw.name}</h3>
               <p class="hub-fw-card-desc">${fw.description}</p>
-              <span class="hub-fw-card-arrow" aria-hidden="true">→</span>
+              <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
             </a>
           `;
         }).join('')}
@@ -132,47 +100,10 @@ function installHubInteractions() {
     `;
   });
 
-  // --- Filter pills ---
-  pills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      pills.forEach(p => {
-        p.classList.remove('active');
-        p.setAttribute('aria-selected', 'false');
-      });
-      pill.classList.add('active');
-      pill.setAttribute('aria-selected', 'true');
-      activeFilter = pill.dataset.filter;
-
-      // Clear search when switching pills
-      if (searchInput) searchInput.value = '';
-      categoriesWrap.style.display = '';
-      searchResults.style.display = 'none';
-      emptyState.style.display = 'none';
-
-      filterCategoryLinks(activeFilter);
-    });
-  });
-
   // --- Clear button ---
   clearBtn?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
-    activeFilter = 'all';
-    pills.forEach(p => {
-      p.classList.remove('active');
-      p.setAttribute('aria-selected', 'false');
-    });
-    pills[0]?.classList.add('active');
-    pills[0]?.setAttribute('aria-selected', 'true');
-    categoriesWrap.style.display = '';
     searchResults.style.display = 'none';
     emptyState.style.display = 'none';
-    filterCategoryLinks('all');
   });
-
-  function filterCategoryLinks(filter) {
-    catLinks.forEach(link => {
-      const catId = link.dataset.category;
-      link.style.display = (filter === 'all' || catId === filter) ? '' : 'none';
-    });
-  }
 }
