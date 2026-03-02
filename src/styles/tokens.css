@@ -195,25 +195,14 @@
   --s7: #e870a0;
 
   /* ---- CATEGORY SVG BACKGROUND PATTERNS ---- */
-  /* Each category gets a unique geometric texture for the hero banner */
+  /* All categories use the same dot grid pattern, tinted with their color */
 
-  /* Prioritization: Dot grid — scoring/ranking feel */
-  --pattern-prioritization: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='2' fill='%237C5CFC' fill-opacity='0.25'/%3E%3C/svg%3E");
-
-  /* Design: Plus/cross grid — creative sketch-pad feel */
-  --pattern-design: url("data:image/svg+xml,%3Csvg width='28' height='28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 10v8M10 14h8' stroke='%2310B981' stroke-opacity='0.22' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-
-  /* Strategy: Diagonal lines — chess/military/analytical feel */
-  --pattern-strategy: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0' stroke='%23F97066' stroke-opacity='0.18' stroke-width='1.5'/%3E%3C/svg%3E");
-
-  /* Growth: Small diamond grid — clean metrics/data-point feel */
-  --pattern-growth: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8l4 4-4 4-4-4z' fill='none' stroke='%233B82F6' stroke-opacity='0.18' stroke-width='1.2'/%3E%3C/svg%3E");
-
-  /* Execution: Horizontal bars — timeline/sprint/kanban feel */
-  --pattern-execution: url("data:image/svg+xml,%3Csvg width='40' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='4' y='7' width='32' height='2.5' fill='%23F59E0B' fill-opacity='0.2'/%3E%3C/svg%3E");
-
-  /* Communication: Wave curves — dialogue/speech feel */
-  --pattern-communication: url("data:image/svg+xml,%3Csvg width='48' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 16c8-8 16 8 24 0s16 8 24 0' stroke='%23F97316' stroke-opacity='0.18' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  --pattern-prioritization: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%237C5CFC' fill-opacity='0.18'/%3E%3C/svg%3E");
+  --pattern-design:         url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%2310B981' fill-opacity='0.18'/%3E%3C/svg%3E");
+  --pattern-strategy:       url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F97066' fill-opacity='0.18'/%3E%3C/svg%3E");
+  --pattern-growth:         url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%233B82F6' fill-opacity='0.18'/%3E%3C/svg%3E");
+  --pattern-execution:      url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F59E0B' fill-opacity='0.18'/%3E%3C/svg%3E");
+  --pattern-communication:  url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F97316' fill-opacity='0.18'/%3E%3C/svg%3E");
 
   /* Dashboard: Subtle dot grid — neutral, warm, notebook feel */
   --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23000000' fill-opacity='0.07'/%3E%3C/svg%3E");

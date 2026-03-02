@@ -21,9 +21,6 @@ export function renderHub(container) {
 
       <!-- Category nav pills -->
       <div class="hub-filter-pills" role="tablist" aria-label="Browse by category">
-        <button class="hub-pill active" data-filter="all" role="tab" aria-selected="true">
-          All <span class="hub-pill-count">${frameworks.length}</span>
-        </button>
         ${categories.map(cat => `
           <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
                   style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
@@ -129,15 +126,13 @@ function installHubInteractions() {
   // --- Clear button ---
   clearBtn?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
-    activeFilter = 'all';
+    activeFilter = null;
     pills.forEach(p => {
       p.classList.remove('active');
       p.setAttribute('aria-selected', 'false');
     });
-    pills[0]?.classList.add('active');
-    pills[0]?.setAttribute('aria-selected', 'true');
     emptyState.style.display = 'none';
-    showPillResults('all');
+    results.style.display = 'none';
   });
 
   function showPillResults(filter) {

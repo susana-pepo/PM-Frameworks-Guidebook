@@ -131,11 +131,15 @@ const FONT_REPLACEMENTS = [
  * on ~480 elements. extractAndCleanCSS() only handles <style> blocks,
  * so this function walks the live DOM and fixes inline styles.
  *
+ * Also cleans SVG font-family presentation attributes (e.g. Kano Model's
+ * <text font-family="Lilita One"> elements).
+ *
  * @param {HTMLElement} root — Container to walk (e.g. .fw-page)
  */
 export function cleanInlineFonts(root) {
   if (!root) return;
 
+  // 1. Clean inline style="" attributes
   const els = root.querySelectorAll('[style]');
   els.forEach(el => {
     const style = el.getAttribute('style');
@@ -148,6 +152,25 @@ export function cleanInlineFonts(root) {
 
     if (cleaned !== style) {
       el.setAttribute('style', cleaned);
+    }
+  });
+
+  // 2. Clean SVG font-family presentation attributes
+  //    SVG <text> elements use font-family="Lilita One" (not inside style="")
+  const svgEls = root.querySelectorAll('[font-family]');
+  svgEls.forEach(el => {
+    const ff = el.getAttribute('font-family');
+    if (!ff) return;
+
+    let replacement = null;
+    if (ff.includes('Lilita')) {
+      replacement = 'Clash Display, Inter, sans-serif';
+    } else if (ff.includes('Outfit')) {
+      replacement = 'Inter, system-ui, sans-serif';
+    }
+
+    if (replacement) {
+      el.setAttribute('font-family', replacement);
     }
   });
 }
