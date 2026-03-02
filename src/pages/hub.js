@@ -20,23 +20,23 @@ export function renderHub(container) {
       </div>
 
       <!-- Category nav pills -->
-      <div class="hub-filter-pills" role="navigation" aria-label="Browse by category">
-        <button class="hub-pill active" data-filter="all" aria-current="true">
+      <div class="hub-filter-pills" role="tablist" aria-label="Browse by category">
+        <button class="hub-pill active" data-filter="all" role="tab" aria-selected="true">
           All <span class="hub-pill-count">${frameworks.length}</span>
         </button>
         ${categories.map(cat => `
-          <a class="hub-pill" href="#/category/${cat.id}"
-             style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
+          <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
+                  style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
             <span class="hub-pill-emoji" aria-hidden="true">${cat.emoji}</span>
             ${cat.name}
             <span class="hub-pill-count">${getFrameworksByCategory(cat.id).length}</span>
-          </a>
+          </button>
         `).join('')}
       </div>
     </div>
 
-    <!-- Search results — shows matching frameworks when typing -->
-    <div class="hub-search-results" id="hub-search-results" style="display:none;">
+    <!-- Framework cards — shown when a pill is clicked or search matches -->
+    <div class="hub-search-results" id="hub-results" style="display:none;">
     </div>
 
     <!-- Empty state for search -->
@@ -50,19 +50,44 @@ export function renderHub(container) {
   installHubInteractions();
 }
 
+function renderFrameworkCards(fws) {
+  return `
+    <div class="hub-card-grid">
+      ${fws.map(fw => {
+        const cat = categories.find(c => c.id === fw.category);
+        return `
+          <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
+             style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
+            <div class="hub-fw-card-top">
+              <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
+              <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
+            </div>
+            <h3 class="hub-fw-card-name">${fw.name}</h3>
+            <p class="hub-fw-card-desc">${fw.description}</p>
+            <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+          </a>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
 function installHubInteractions() {
   const searchInput = document.getElementById('hub-search');
-  const searchResults = document.getElementById('hub-search-results');
+  const pills = document.querySelectorAll('.hub-pill');
+  const results = document.getElementById('hub-results');
   const emptyState = document.getElementById('hub-empty-state');
   const clearBtn = emptyState?.querySelector('.hub-empty-clear');
+
+  let activeFilter = 'all';
 
   // --- Search ---
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
 
     if (!query) {
-      searchResults.style.display = 'none';
-      emptyState.style.display = 'none';
+      // No search — show pill-filtered view
+      showPillResults(activeFilter);
       return;
     }
 
@@ -72,38 +97,59 @@ function installHubInteractions() {
     );
 
     if (matches.length === 0) {
-      searchResults.style.display = 'none';
+      results.style.display = 'none';
       emptyState.style.display = '';
       return;
     }
 
     emptyState.style.display = 'none';
-    searchResults.style.display = '';
-    searchResults.innerHTML = `
-      <div class="hub-card-grid">
-        ${matches.map(fw => {
-          const cat = categories.find(c => c.id === fw.category);
-          return `
-            <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
-               style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
-              <div class="hub-fw-card-top">
-                <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
-                <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
-              </div>
-              <h3 class="hub-fw-card-name">${fw.name}</h3>
-              <p class="hub-fw-card-desc">${fw.description}</p>
-              <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
-            </a>
-          `;
-        }).join('')}
-      </div>
-    `;
+    results.style.display = '';
+    results.innerHTML = renderFrameworkCards(matches);
+  });
+
+  // --- Filter pills ---
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
+      });
+      pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
+      activeFilter = pill.dataset.filter;
+
+      // Clear search when switching pills
+      if (searchInput) searchInput.value = '';
+      emptyState.style.display = 'none';
+
+      showPillResults(activeFilter);
+    });
   });
 
   // --- Clear button ---
   clearBtn?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
-    searchResults.style.display = 'none';
+    activeFilter = 'all';
+    pills.forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('aria-selected', 'false');
+    });
+    pills[0]?.classList.add('active');
+    pills[0]?.setAttribute('aria-selected', 'true');
     emptyState.style.display = 'none';
+    showPillResults('all');
   });
+
+  function showPillResults(filter) {
+    if (filter === 'all') {
+      // "All" pill — hide cards, just show the clean hub
+      results.style.display = 'none';
+      return;
+    }
+
+    // Show frameworks for the selected category
+    const fws = getFrameworksByCategory(filter);
+    results.style.display = '';
+    results.innerHTML = renderFrameworkCards(fws);
+  }
 }
