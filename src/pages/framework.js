@@ -152,10 +152,17 @@ function stripLeadingEmoji(container) {
 }
 
 /**
- * Full-bleed hero — wraps the page header (badge) and original
- * .header (H1 + hero visualizer) in a full-viewport-width banner
- * with a category-colored gradient background.
- * Called AFTER installAccordionSystem so mini-nav stays outside the hero.
+ * Split-screen layout — TWO-COLUMN design:
+ *
+ * LEFT column (sticky):  Badge + emoji + title + hero visualizer + TLDR
+ * RIGHT column:          Persistent window frame containing:
+ *                        - Window title bar (macOS dots)
+ *                        - Section nav pills inside window
+ *                        - Content area (blank until section clicked, then scrollable)
+ *
+ * The right-side window has a fixed height aligned with the left column
+ * and internal scrolling — page does NOT extend. On mobile (<900px)
+ * falls back to single-column stacked layout.
  */
 function installFullBleedHero(container) {
   const fwPage = container.querySelector('.fw-page');
@@ -178,28 +185,105 @@ function installFullBleedHero(container) {
   heroBleed.className = 'fw-hero-bleed';
   heroBleed.setAttribute('data-category', catId);
 
-  // Inner container constrains content width
-  const heroInner = document.createElement('div');
-  heroInner.className = 'fw-hero-inner';
+  // ---- SPLIT LAYOUT CONTAINER (two-column grid) ----
+  const splitLayout = document.createElement('div');
+  splitLayout.className = 'fw-split-layout';
 
-  // Move badge into hero (category chip goes first)
-  if (pageHeader) heroInner.appendChild(pageHeader);
+  // ---- LEFT COLUMN: Hero content (sticky) ----
+  const leftCol = document.createElement('div');
+  leftCol.className = 'fw-split-left';
 
-  // Add large framework emoji between badge and title
+  // Badge
+  if (pageHeader) leftCol.appendChild(pageHeader);
+
+  // Hero content area — emoji + title + visualizer + TLDR
+  const heroContent = document.createElement('div');
+  heroContent.className = 'fw-hero-content';
+
   if (fw?.emoji) {
     const emojiEl = document.createElement('div');
     emojiEl.className = 'fw-hero-emoji';
     emojiEl.setAttribute('aria-hidden', 'true');
     emojiEl.textContent = fw.emoji;
-    heroInner.appendChild(emojiEl);
+    heroContent.appendChild(emojiEl);
   }
 
-  // Move the original .header (title + visualizer) into hero
-  if (header) heroInner.appendChild(header);
+  if (header) heroContent.appendChild(header);
 
-  heroBleed.appendChild(heroInner);
+  // ---- HERO VISUALIZER ----
+  // Find visualizer elements in .container that sit between .header and .journey-nav.
+  // These are the framework diagrams, formulas, matrices, etc.
+  // Known class names + fallback to any remaining styled divs.
+  const fwContainer = fwPage.querySelector('.container, .wrapper');
+  if (fwContainer) {
+    const vizSelectors = [
+      '.formula-bar',      // RICE, ICE
+      '.matrix-hero',      // Value-vs-Effort
+      '.map-hero',         // User-Story-Mapping
+      '.kano-hero',        // Kano Model
+      '.curve-box',        // Kano Model
+      '.circles-hero',     // CIRCLES
+      '.phase-hero',       // Design Thinking
+      '.anatomy-diagram',  // User-Story-Mapping
+    ];
 
-  // Insert at the start of fw-page — mini-nav and accordion stay below
+    // Try known selectors first
+    let foundViz = false;
+    for (const sel of vizSelectors) {
+      const viz = fwContainer.querySelector(sel);
+      if (viz) {
+        heroContent.appendChild(viz);
+        foundViz = true;
+      }
+    }
+
+    // Fallback: grab any remaining direct children of .container that
+    // come BEFORE .journey-nav and are NOT: journey-nav, accordion-nav,
+    // footer, progress-bar, one-liner/tldr (already handled), or panels/sections.
+    if (!foundViz) {
+      const journeyNav = fwContainer.querySelector('.journey-nav');
+      const skipClasses = ['journey-nav', 'accordion-nav', 'footer', 'nav-btns',
+                           'one-liner', 'tldr-section', 'tldr', 'fw-tldr-card',
+                           'progress-bar', 'back-link'];
+
+      const children = Array.from(fwContainer.children);
+      const journeyIdx = journeyNav ? children.indexOf(journeyNav) : children.length;
+
+      for (let i = 0; i < journeyIdx; i++) {
+        const child = children[i];
+        // Skip known non-visualizer elements
+        if (skipClasses.some(cls => child.classList.contains(cls))) continue;
+        // Skip if it's the header (already moved)
+        if (child === header || child.classList.contains('header')) continue;
+        // Skip script tags
+        if (child.tagName === 'SCRIPT') continue;
+        // This is likely a visualizer element — move it
+        heroContent.appendChild(child);
+        foundViz = true;
+      }
+    }
+  }
+
+  const tldrCard = fwPage.querySelector('.fw-tldr-card');
+  if (tldrCard) heroContent.appendChild(tldrCard);
+
+  leftCol.appendChild(heroContent);
+
+  // ---- RIGHT COLUMN: persistent window frame ----
+  const rightCol = document.createElement('div');
+  rightCol.className = 'fw-split-right';
+
+  // Move the accordion nav (which is now the whole window) into right column
+  const accordionNav = fwPage.querySelector('.accordion-nav');
+  if (accordionNav) {
+    rightCol.appendChild(accordionNav);
+  }
+
+  splitLayout.appendChild(leftCol);
+  splitLayout.appendChild(rightCol);
+  heroBleed.appendChild(splitLayout);
+
+  // Insert at the start of fw-page
   fwPage.prepend(heroBleed);
 }
 
@@ -274,8 +358,15 @@ function getTypePillClass(type) {
 
 /**
  * Accordion System — transforms the tab-based navigation into a
- * reference-tool layout where the hero visualizer is the landing view
- * and content sections are collapsed by default with type indicators.
+ * PERSISTENT WINDOW frame layout.
+ *
+ * The entire right column is ONE window frame:
+ *   - macOS-style title bar (dots + framework name)
+ *   - "Bookmarks bar" with section pills (like browser bookmarks)
+ *   - Content area: blank/welcome when nothing selected,
+ *     section content with internal scroll when a section is clicked
+ *
+ * A "Home" bookmark returns to the blank/welcome view.
  */
 function installAccordionSystem(container, slug, initialStep) {
   const fwPage = container.querySelector('.fw-page');
@@ -287,9 +378,12 @@ function installAccordionSystem(container, slug, initialStep) {
   const jBtns = Array.from(journeyNav.querySelectorAll('.j-btn'));
   if (jBtns.length === 0) return;
 
+  // Look up the framework for window title
+  const fw = getFramework(slug);
+  const fwName = fw ? fw.name : 'Framework';
+
   // Collect all panels/sections that the tabs control
   const panels = jBtns.map((btn, i) => {
-    // goTo() system uses onclick="goTo('id')" — extract the panel ID
     const onclickAttr = btn.getAttribute('onclick') || '';
     let panel = null;
 
@@ -322,7 +416,6 @@ function installAccordionSystem(container, slug, initialStep) {
   const steps = jBtns.map((btn, i) => {
     const stepEl = btn.querySelector('.j-step');
     const stepNum = stepEl ? stepEl.textContent.trim() : String(i + 1).padStart(2, '0');
-    // Get label text (excluding the step number span)
     const clone = btn.cloneNode(true);
     const cloneStep = clone.querySelector('.j-step');
     if (cloneStep) cloneStep.remove();
@@ -340,57 +433,126 @@ function installAccordionSystem(container, slug, initialStep) {
   // Mark the fw-page as accordion mode
   fwPage.classList.add('accordion-mode');
 
-  // Build accordion structure — tab bar + panel area (separated)
+  // ====== BUILD THE PERSISTENT WINDOW FRAME ======
   const accordionNav = document.createElement('div');
   accordionNav.className = 'accordion-nav';
   accordionNav.setAttribute('role', 'region');
-  accordionNav.setAttribute('aria-label', 'Framework steps');
+  accordionNav.setAttribute('aria-label', 'Framework sections');
 
-  // Tab bar: horizontal row of step buttons (like comparison guides)
-  const tabBar = document.createElement('div');
-  tabBar.className = 'accordion-tab-bar';
-  tabBar.setAttribute('role', 'tablist');
+  // ---- WINDOW TITLE BAR (macOS style) ----
+  const windowBar = document.createElement('div');
+  windowBar.className = 'window-title-bar';
+  windowBar.innerHTML = `
+    <span class="window-title-dots">
+      <span class="window-title-dot"></span>
+      <span class="window-title-dot"></span>
+      <span class="window-title-dot"></span>
+    </span>
+    <span class="window-title-text">${fwName}</span>
+    <span class="window-title-actions"></span>
+  `;
+  accordionNav.appendChild(windowBar);
 
-  // Panel area: content panels stacked below the tab bar
-  const panelArea = document.createElement('div');
-  panelArea.className = 'accordion-panel-area';
+  // ---- BOOKMARKS BAR (section nav pills styled like browser bookmarks) ----
+  const bookmarksBar = document.createElement('div');
+  bookmarksBar.className = 'window-bookmarks-bar';
+  bookmarksBar.setAttribute('role', 'tablist');
 
+  // Home bookmark (first — returns to blank view)
+  const homeTab = document.createElement('button');
+  homeTab.className = 'window-bookmark window-bookmark-home active';
+  homeTab.setAttribute('role', 'tab');
+  homeTab.setAttribute('aria-selected', 'true');
+  homeTab.innerHTML = `
+    <span class="bookmark-icon" aria-hidden="true">⌂</span>
+    <span class="bookmark-label">Home</span>
+  `;
+  homeTab.addEventListener('click', () => collapseAll());
+  bookmarksBar.appendChild(homeTab);
+
+  // Section bookmarks
+  steps.forEach((step, i) => {
+    const panel = panels[i];
+    if (!panel) return;
+
+    const bookmark = document.createElement('button');
+    bookmark.className = 'window-bookmark';
+    bookmark.setAttribute('role', 'tab');
+    bookmark.setAttribute('aria-selected', 'false');
+    bookmark.setAttribute('data-step-index', String(i));
+    bookmark.innerHTML = `
+      <span class="bookmark-icon" aria-hidden="true">${step.num}</span>
+      <span class="bookmark-label">${step.label}</span>
+    `;
+
+    bookmark.addEventListener('click', () => {
+      if (bookmark.classList.contains('active')) {
+        collapseAll();
+      } else {
+        expandStep(i);
+      }
+    });
+
+    // Keyboard navigation
+    bookmark.addEventListener('keydown', (e) => {
+      const allBookmarks = Array.from(bookmarksBar.querySelectorAll('.window-bookmark'));
+      const currentIdx = allBookmarks.indexOf(bookmark);
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const next = allBookmarks[currentIdx + 1] || allBookmarks[0];
+        next.focus();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prev = allBookmarks[currentIdx - 1] || allBookmarks[allBookmarks.length - 1];
+        prev.focus();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        allBookmarks[0].focus();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        allBookmarks[allBookmarks.length - 1].focus();
+      }
+    });
+
+    bookmarksBar.appendChild(bookmark);
+  });
+
+  accordionNav.appendChild(bookmarksBar);
+
+  // ---- WINDOW CONTENT AREA ----
+  const windowContent = document.createElement('div');
+  windowContent.className = 'window-content-area';
+
+  // Welcome message (blank state — shown when no section selected)
+  const welcomePane = document.createElement('div');
+  welcomePane.className = 'window-welcome';
+  welcomePane.innerHTML = `
+    <div class="welcome-icon">📂</div>
+    <p class="welcome-text">Select a section from the bookmarks above</p>
+    <p class="welcome-hint">${steps.length} sections to explore</p>
+  `;
+  windowContent.appendChild(welcomePane);
+
+  // Section panels — each is a scrollable content pane inside the window
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
 
     const panelId = `accordion-panel-${slug}-${i}`;
-    const headerId = `accordion-header-${slug}-${i}`;
 
-    // Get content-type metadata for this step
-    const meta = getStepMeta(step.label);
+    const paneWrapper = document.createElement('div');
+    paneWrapper.className = 'window-pane';
+    paneWrapper.id = panelId;
+    paneWrapper.setAttribute('role', 'tabpanel');
+    paneWrapper.setAttribute('data-step', String(i));
 
-    // Create tab button
-    const stepHeader = document.createElement('button');
-    stepHeader.className = 'accordion-step';
-    stepHeader.id = headerId;
-    stepHeader.setAttribute('role', 'tab');
-    stepHeader.setAttribute('aria-expanded', 'false');
-    stepHeader.setAttribute('aria-controls', panelId);
-    stepHeader.innerHTML = `
-      <span class="accordion-step-icon" aria-hidden="true">${step.num}</span>
-      <span class="accordion-step-label">${step.label}</span>
-    `;
-
-    // Create wrapper for the panel content
-    const wrapper = document.createElement('div');
-    wrapper.className = 'accordion-panel-wrapper';
-    wrapper.id = panelId;
-    wrapper.setAttribute('role', 'tabpanel');
-    wrapper.setAttribute('aria-labelledby', headerId);
-    wrapper.setAttribute('data-step', String(i));
-
-    // Move the panel into the wrapper
+    // Move the panel into the pane
     panel.style.display = '';
     panel.classList.add('active');
-    wrapper.appendChild(panel);
+    paneWrapper.appendChild(panel);
 
-    // Add "Continue to next" button inside the wrapper
+    // Add "Continue to next" button inside the pane
     const continueBtn = document.createElement('button');
     continueBtn.className = 'accordion-continue';
     if (i < steps.length - 1) {
@@ -409,55 +571,22 @@ function installAccordionSystem(container, slug, initialStep) {
         <span class="continue-label">You've explored everything!</span>
         <span class="continue-next">
           <span class="continue-icon" aria-hidden="true">⌂</span>
-          <span>Back to Cover</span>
+          <span>Back to Home</span>
         </span>
       `;
       continueBtn.addEventListener('click', () => collapseAll());
     }
-    wrapper.appendChild(continueBtn);
+    paneWrapper.appendChild(continueBtn);
 
-    // Click handler
-    stepHeader.addEventListener('click', () => {
-      if (stepHeader.classList.contains('expanded')) {
-        collapseAll();
-      } else {
-        expandStep(i);
-      }
-    });
-
-    // Keyboard navigation
-    stepHeader.addEventListener('keydown', (e) => {
-      const allHeaders = Array.from(tabBar.querySelectorAll('.accordion-step'));
-      const currentIdx = allHeaders.indexOf(stepHeader);
-
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        e.preventDefault();
-        const next = allHeaders[currentIdx + 1] || allHeaders[0];
-        next.focus();
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const prev = allHeaders[currentIdx - 1] || allHeaders[allHeaders.length - 1];
-        prev.focus();
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        allHeaders[0].focus();
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        allHeaders[allHeaders.length - 1].focus();
-      }
-    });
-
-    tabBar.appendChild(stepHeader);
-    panelArea.appendChild(wrapper);
+    windowContent.appendChild(paneWrapper);
   });
 
-  accordionNav.appendChild(tabBar);
-  accordionNav.appendChild(panelArea);
+  accordionNav.appendChild(windowContent);
 
-  // Insert accordion after the journey-nav (which is now hidden via CSS)
+  // Insert accordion after the journey-nav (which is hidden via CSS)
   journeyNav.after(accordionNav);
 
-  // Place TLDR card above accordion
+  // Place TLDR card above accordion (will be moved into hero by installFullBleedHero)
   installTldrCard(fwPage, accordionNav);
 
   // Override global goTo/go so any remaining onclick handlers use accordion
@@ -469,56 +598,70 @@ function installAccordionSystem(container, slug, initialStep) {
     if (idx >= 0 && idx < steps.length) expandStep(idx);
   };
 
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fwPage.classList.contains('reading-mode')) {
+      collapseAll();
+    }
+  });
+
   // --- Accordion interaction functions ---
 
-  function expandStep(index, skipScroll) {
-    const stepHeaders = accordionNav.querySelectorAll('.accordion-step');
-    const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
+  function expandStep(index) {
+    const bookmarks = accordionNav.querySelectorAll('.window-bookmark');
+    const panes = accordionNav.querySelectorAll('.window-pane');
 
-    // Collapse all first
-    stepHeaders.forEach(h => {
-      h.classList.remove('expanded');
-      h.setAttribute('aria-expanded', 'false');
+    // Deactivate all bookmarks
+    bookmarks.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
     });
-    wrappers.forEach(w => w.classList.remove('open'));
+    panes.forEach(p => p.classList.remove('open'));
 
-    // Expand the target
-    if (stepHeaders[index]) {
-      stepHeaders[index].classList.add('expanded');
-      stepHeaders[index].setAttribute('aria-expanded', 'true');
+    // Hide the welcome pane
+    welcomePane.style.display = 'none';
+
+    // Activate the target bookmark (+1 for Home offset)
+    const tabIndex = index + 1;
+    if (bookmarks[tabIndex]) {
+      bookmarks[tabIndex].classList.add('active');
+      bookmarks[tabIndex].setAttribute('aria-selected', 'true');
     }
-    if (wrappers[index]) wrappers[index].classList.add('open');
+    if (panes[index]) panes[index].classList.add('open');
 
     // Enter reading mode
     fwPage.classList.add('reading-mode');
 
-    // Update URL hash for deep linking (use replaceState to avoid polluting history)
+    // Update URL hash for deep linking
     const newHash = `#/framework/${slug}/step/${index}`;
     if (window.location.hash !== newHash) {
       history.replaceState(null, '', newHash);
     }
 
-    // Scroll the expanded step into view
-    if (!skipScroll) {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (stepHeaders[index]) {
-        stepHeaders[index].scrollIntoView({
-          behavior: prefersReducedMotion ? 'instant' : 'smooth',
-          block: 'start'
-        });
-      }
-    }
+    // Scroll pane to top
+    const openPane = panes[index];
+    if (openPane) openPane.scrollTop = 0;
   }
 
   function collapseAll() {
-    const stepHeaders = accordionNav.querySelectorAll('.accordion-step');
-    const wrappers = accordionNav.querySelectorAll('.accordion-panel-wrapper');
+    const bookmarks = accordionNav.querySelectorAll('.window-bookmark');
+    const panes = accordionNav.querySelectorAll('.window-pane');
 
-    stepHeaders.forEach(h => {
-      h.classList.remove('expanded');
-      h.setAttribute('aria-expanded', 'false');
+    bookmarks.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
     });
-    wrappers.forEach(w => w.classList.remove('open'));
+    panes.forEach(p => p.classList.remove('open'));
+
+    // Show the welcome pane
+    welcomePane.style.display = '';
+
+    // Activate Home bookmark
+    const homeBtn = accordionNav.querySelector('.window-bookmark-home');
+    if (homeBtn) {
+      homeBtn.classList.add('active');
+      homeBtn.setAttribute('aria-selected', 'true');
+    }
 
     // Exit reading mode
     fwPage.classList.remove('reading-mode');
@@ -528,18 +671,11 @@ function installAccordionSystem(container, slug, initialStep) {
     if (window.location.hash !== baseHash) {
       history.replaceState(null, '', baseHash);
     }
-
-    // Scroll to top of framework page
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    fwPage.scrollIntoView({
-      behavior: prefersReducedMotion ? 'instant' : 'smooth',
-      block: 'start'
-    });
   }
 
   // Auto-expand if deep-linked to a specific step
   if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
-    expandStep(initialStep, true);
+    expandStep(initialStep);
   }
 }
 

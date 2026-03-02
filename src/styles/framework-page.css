@@ -96,10 +96,47 @@
 
 /* Inner container — constrains content to readable width, above pattern overlay */
 .fw-hero-inner {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
+}
+
+/* ---- SPLIT LAYOUT (two-column) ---- */
+/* Left: hero content (sticky). Right: section nav + window content. */
+.fw-split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+  min-height: 0; /* allow children to shrink */
+}
+
+/* Left column — hero with visualizer + TLDR */
+.fw-split-left {
+  text-align: center;
+}
+
+/* Right column — persistent window frame (sticky) */
+.fw-split-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: sticky;
+  top: var(--space-4);
+}
+
+/* Mobile: single-column stacked */
+@media (max-width: 900px) {
+  .fw-split-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .fw-split-right {
+    position: relative;
+    top: auto;
+  }
 }
 
 /* Badge inside hero */
@@ -285,9 +322,13 @@
   max-width: none;
 }
 
-/* Hide TLDR in reading mode */
-.reading-mode .fw-tldr-card {
-  display: none;
+/* TLDR stays visible in split layout (always shown in left column) */
+
+/* ---- HERO CONTENT AREA ---- */
+/* Wraps emoji + title + visualizer + TLDR.
+   In split layout, this is always visible in the left column. */
+.fw-hero-content {
+  /* No transitions — always visible in left column */
 }
 
 /* ---- PROGRESS ---- */
@@ -422,140 +463,108 @@
   display: none;
 }
 
-/* ---- ACCORDION CONTAINER ---- */
-/* Wrapper: column layout holding tab bar on top + panel area below */
+/* ---- ACCORDION CONTAINER (persistent window frame) ---- */
+/* The entire right column IS the window. Contains:
+   title bar + bookmarks bar + content area */
 .accordion-nav {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: var(--space-6);
-  max-width: 100%;
+  border: var(--bw) solid var(--border-strong);
+  background: var(--bg-content);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  /* Fixed height — content scrolls internally, page doesn't extend */
+  height: calc(100vh - 120px);
+  min-height: 500px;
+  max-height: 900px;
 }
 
-/* ---- TAB BAR ---- */
-/* Horizontal row of step buttons (like comparison guide journey-nav) */
-.accordion-tab-bar {
+/* ---- BOOKMARKS BAR (section nav — styled like browser bookmarks) ---- */
+.window-bookmarks-bar {
   display: flex;
-  flex-wrap: nowrap;
-  background: var(--bg-card);
-  border: var(--bw) solid var(--border-default);
-  border-radius: var(--radius-lg);
-  overflow-x: auto;
-  overflow-y: hidden;
-  box-shadow: var(--shadow-sm);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  max-width: 100%;
-}
-
-.accordion-tab-bar::-webkit-scrollbar { display: none; }
-
-/* ---- PANEL AREA ---- */
-/* Content panels stacked below the tab bar */
-.accordion-panel-area {
-  /* Panels are hidden by default, shown individually via .open */
-}
-
-/* ---- STEP HEADER (horizontal tab) ---- */
-.accordion-step {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 2px;
-  padding: var(--space-3) var(--space-2);
+  padding: 6px var(--space-3);
+  background: var(--bg-muted);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+/* Individual bookmark pill — styled like a Chrome bookmark */
+.window-bookmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
   background: transparent;
   border: none;
-  border-right: 1px solid var(--border-subtle);
+  border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
   color: var(--text-tertiary);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-default);
-  text-align: center;
-  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
+  position: relative;
 }
 
-.accordion-step:last-of-type {
-  border-right: none;
-}
-
-.accordion-step:hover {
-  background: var(--bg-muted);
+.window-bookmark:hover {
+  background: var(--bg-subtle);
   color: var(--text-secondary);
 }
 
-/* Expanded state — filled with accent color */
-.accordion-step.expanded {
-  background: var(--accent-color, var(--color-action));
-  color: var(--text-inverse);
+/* Active bookmark — accent-colored underline + bold text */
+.window-bookmark.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-bottom: 2px solid var(--accent-color, var(--color-action));
 }
 
-.accordion-step:focus-visible {
+.window-bookmark:active {
+  transform: scale(0.97);
+}
+
+.window-bookmark:focus-visible {
   outline: 2px solid var(--border-focus);
-  outline-offset: -2px;
+  outline-offset: 1px;
   z-index: 1;
 }
 
-/* ---- STEP ICON (step number) ---- */
-.accordion-step-icon {
-  display: block;
+/* Bookmark icon (step number or ⌂) */
+.bookmark-icon {
   font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-bold);
   opacity: 0.5;
-  letter-spacing: 1px;
-  /* No box/background — just the number text */
-  width: auto;
-  height: auto;
-  min-width: 0;
-  border: none;
-  background: none;
-  border-radius: 0;
+  letter-spacing: 0.5px;
 }
 
-.accordion-step.expanded .accordion-step-icon {
+.window-bookmark.active .bookmark-icon {
+  opacity: 0.8;
+}
+
+/* Home bookmark icon is slightly larger */
+.window-bookmark-home .bookmark-icon {
+  font-family: inherit;
+  font-size: 13px;
   opacity: 0.7;
-  background: none;
-  border: none;
-  filter: none;
-  box-shadow: none;
 }
 
-.accordion-step:hover .accordion-step-icon {
-  background: none;
-  border: none;
-  filter: none;
-}
-
-/* ---- STEP CONTENT ---- */
-.accordion-step-content {
-  display: contents;
-}
-
-.accordion-step-top {
-  display: contents;
-}
-
-.accordion-step-label {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
+/* Bookmark label */
+.bookmark-label {
+  font-size: 11px;
   color: inherit;
-  line-height: var(--leading-snug);
+  line-height: 1.2;
 }
 
-.accordion-step-desc {
-  display: none; /* Hidden in tab bar — no room */
-}
-
-/* Hide type pills in the tab bar — too noisy */
-.accordion-step .accordion-type-pill {
-  display: none;
-}
-
-/* Hide chevron — not needed in tab bar */
+/* Hide old accordion elements that are no longer used */
+.accordion-step-content,
+.accordion-step-top,
+.accordion-step-desc,
+.accordion-type-pill,
 .accordion-chevron {
   display: none;
 }
@@ -627,26 +636,81 @@
   color: var(--accent-color, var(--color-action));
 }
 
-/* ---- PANEL WRAPPER ---- */
-.accordion-panel-wrapper {
-  display: none;
-  border: var(--bw) solid var(--border-strong);
-  border-top: none;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  background: var(--bg-content);
+/* ---- WINDOW CONTENT AREA ---- */
+/* The scrollable area below the bookmarks bar.
+   Takes up remaining height in the window. */
+.window-content-area {
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  position: relative;
 }
 
-.accordion-panel-wrapper.open {
+/* ---- WELCOME PANE (blank state) ---- */
+/* Shown when no section is selected — blank/placeholder */
+.window-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-8);
+}
+
+.window-welcome .welcome-icon {
+  font-size: 40px;
+  margin-bottom: var(--space-4);
+  opacity: 0.4;
+}
+
+.window-welcome .welcome-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-2);
+}
+
+.window-welcome .welcome-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ---- SECTION PANE (scrollable content) ---- */
+/* Each section is a pane that fills the window content area */
+.window-pane {
+  display: none;
+  overflow-y: auto;
+  height: 100%;
+  padding: var(--space-6) var(--space-5);
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+.window-pane.open {
   display: block;
-  animation: accordionSlideOpen var(--duration-normal) var(--ease-out);
+  animation: paneSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes accordionSlideOpen {
+.window-pane::-webkit-scrollbar {
+  width: 6px;
+}
+.window-pane::-webkit-scrollbar-track {
+  background: transparent;
+}
+.window-pane::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+@keyframes paneSlideIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -654,27 +718,89 @@
   }
 }
 
+/* ---- WINDOW TITLE BAR ---- */
+/* macOS-style title bar at top of the persistent window */
+.window-title-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px var(--space-4);
+  background: var(--bg-muted);
+  border-bottom: 1px solid var(--border-default);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.window-title-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.window-title-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--border-default);
+}
+
+.window-title-dot:nth-child(1) { background: #FF605C; }
+.window-title-dot:nth-child(2) { background: #FFBD44; }
+.window-title-dot:nth-child(3) { background: #00CA4E; }
+
+.window-title-text {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Title bar actions area (right side) */
+.window-title-actions {
+  width: 24px; /* Spacing balance for centered title */
+}
+
+/* Close button (×) on the right of title bar — used when in reading mode */
+.window-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--duration-fast) var(--ease-default);
+  flex-shrink: 0;
+}
+
+.window-close-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .accordion-panel-wrapper.open {
+  .window-pane.open {
     animation: none;
   }
-  .accordion-chevron {
-    transition: none;
-  }
-  .accordion-step {
-    transition: none;
-  }
-  .accordion-step-icon {
+  .window-bookmark {
     transition: none;
   }
 }
 
-/* The panel/section inside the wrapper needs to be visible */
-.accordion-panel-wrapper .panel,
-.accordion-panel-wrapper .section {
+/* The panel/section inside the pane needs to be visible */
+.window-pane .panel,
+.window-pane .section {
   display: block !important;
   animation: none;
-  padding: var(--space-6) var(--space-5);
+  padding: 0;
 }
 
 /* ---- CONTINUE BUTTON ---- */
@@ -744,26 +870,25 @@
   transform: translateX(4px);
 }
 
-/* ---- MOBILE ACCORDION ---- */
-@media (max-width: 768px) {
-  .accordion-tab-bar {
-    border-radius: var(--radius-md);
+/* ---- MOBILE STYLES ---- */
+@media (max-width: 900px) {
+  .accordion-nav {
+    height: auto;
+    min-height: 400px;
+    max-height: 70vh;
   }
 
-  .accordion-step {
-    padding: var(--space-2) var(--space-1);
+  .window-bookmarks-bar {
+    padding: 4px var(--space-2);
+    gap: 1px;
   }
 
-  .accordion-step-label {
-    font-size: 11px;
+  .window-bookmark {
+    padding: 3px 6px;
+    font-size: 10px;
   }
 
-  .accordion-step-icon {
-    font-size: 8px;
-  }
-
-  .accordion-panel-wrapper .panel,
-  .accordion-panel-wrapper .section {
+  .window-pane {
     padding: var(--space-4) var(--space-3);
   }
 
@@ -772,15 +897,29 @@
     padding: var(--space-3) var(--space-4);
     margin: var(--space-4) auto var(--space-3);
   }
+
+  .window-title-bar {
+    padding: 8px var(--space-3);
+  }
+
+  .window-title-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .window-title-text {
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 480px) {
-  .accordion-step {
-    padding: var(--space-2) 4px;
+  .window-bookmark {
+    padding: 2px 5px;
+    font-size: 9px;
   }
 
-  .accordion-step-label {
-    font-size: 10px;
+  .bookmark-icon {
+    font-size: 8px;
   }
 }
 
