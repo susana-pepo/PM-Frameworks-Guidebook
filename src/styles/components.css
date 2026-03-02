@@ -192,22 +192,6 @@
   padding: var(--space-8) 0;
 }
 
-/* Compact hero when results are showing */
-.hub-hero--compact {
-  min-height: 0;
-  padding: var(--space-6) 0 var(--space-4);
-}
-
-.hub-hero--compact .hub-title {
-  font-size: clamp(28px, 5vw, 48px);
-}
-
-.hub-hero--compact .hub-subtitle,
-.hub-hero--compact .hub-search-wrap,
-.hub-hero--compact .hub-hero-eyebrow {
-  display: none;
-}
-
 .hub-hero-eyebrow {
   display: inline-flex;
   align-items: center;

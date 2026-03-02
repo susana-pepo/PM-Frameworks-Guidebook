@@ -70,7 +70,6 @@ function renderFrameworkCards(fws) {
 }
 
 function installHubInteractions() {
-  const hero = document.querySelector('.hub-hero');
   const searchInput = document.getElementById('hub-search');
   const pills = document.querySelectorAll('.hub-pill');
   const results = document.getElementById('hub-results');
@@ -79,17 +78,11 @@ function installHubInteractions() {
 
   let activeFilter = 'all';
 
-  /** Collapse hero when showing results, expand when idle */
-  function setHeroCompact(compact) {
-    hero?.classList.toggle('hub-hero--compact', compact);
-  }
-
   // --- Search ---
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
 
     if (!query) {
-      // No search — show pill-filtered view
       showPillResults(activeFilter);
       return;
     }
@@ -102,14 +95,12 @@ function installHubInteractions() {
     if (matches.length === 0) {
       results.style.display = 'none';
       emptyState.style.display = '';
-      setHeroCompact(true);
       return;
     }
 
     emptyState.style.display = 'none';
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(matches);
-    setHeroCompact(true);
   });
 
   // --- Filter pills ---
@@ -123,7 +114,6 @@ function installHubInteractions() {
       pill.setAttribute('aria-selected', 'true');
       activeFilter = pill.dataset.filter;
 
-      // Clear search when switching pills
       if (searchInput) searchInput.value = '';
       emptyState.style.display = 'none';
 
@@ -141,18 +131,14 @@ function installHubInteractions() {
     });
     emptyState.style.display = 'none';
     results.style.display = 'none';
-    setHeroCompact(false);
   });
 
   function showPillResults(filter) {
     if (filter === 'all') {
-      // "All" pill — hide cards, just show the clean hub
       results.style.display = 'none';
-      setHeroCompact(false);
       return;
     }
 
-    // Show frameworks for the selected category
     const fws = getFrameworksByCategory(filter);
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(fws);
