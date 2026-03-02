@@ -70,6 +70,7 @@ function renderFrameworkCards(fws) {
 }
 
 function installHubInteractions() {
+  const hero = document.querySelector('.hub-hero');
   const searchInput = document.getElementById('hub-search');
   const pills = document.querySelectorAll('.hub-pill');
   const results = document.getElementById('hub-results');
@@ -77,6 +78,11 @@ function installHubInteractions() {
   const clearBtn = emptyState?.querySelector('.hub-empty-clear');
 
   let activeFilter = 'all';
+
+  /** Collapse hero when showing results, expand when idle */
+  function setHeroCompact(compact) {
+    hero?.classList.toggle('hub-hero--compact', compact);
+  }
 
   // --- Search ---
   searchInput?.addEventListener('input', () => {
@@ -96,12 +102,14 @@ function installHubInteractions() {
     if (matches.length === 0) {
       results.style.display = 'none';
       emptyState.style.display = '';
+      setHeroCompact(true);
       return;
     }
 
     emptyState.style.display = 'none';
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(matches);
+    setHeroCompact(true);
   });
 
   // --- Filter pills ---
@@ -133,12 +141,14 @@ function installHubInteractions() {
     });
     emptyState.style.display = 'none';
     results.style.display = 'none';
+    setHeroCompact(false);
   });
 
   function showPillResults(filter) {
     if (filter === 'all') {
       // "All" pill — hide cards, just show the clean hub
       results.style.display = 'none';
+      setHeroCompact(false);
       return;
     }
 
@@ -146,5 +156,6 @@ function installHubInteractions() {
     const fws = getFrameworksByCategory(filter);
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(fws);
+    setHeroCompact(true);
   }
 }

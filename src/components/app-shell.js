@@ -41,6 +41,11 @@ export function renderApp() {
         <div class="content-wrapper" id="page-content">
           <!-- Page content rendered here -->
         </div>
+        <footer class="site-footer">
+          <a href="https://susana-pepo.github.io/susana-pepo-pm-portfolio/" target="_blank" rel="noopener">Susana</a>
+          <span class="site-footer-sep">&times;</span>
+          Claude
+        </footer>
       </div>
     </main>
   `;

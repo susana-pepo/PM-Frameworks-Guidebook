@@ -504,3 +504,33 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
     padding: var(--space-2);
   }
 }
+
+/* ---- SITE FOOTER ---- */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.site-footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: var(--weight-bold);
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+.site-footer a:hover {
+  color: var(--text-primary);
+}
+
+.site-footer-sep {
+  opacity: 0.35;
+}
