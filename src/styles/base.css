@@ -11,6 +11,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Explicit kerning + common ligatures: Hanken Grotesk is well-kerned and
+     this makes the running text set tighter and more deliberate. */
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+}
+
+/* Genuine mono data (scores, codes, ⌘K hints) should never form code
+   ligatures — keep figures and operators literal. */
+code, kbd, samp, pre, .font-mono, [class*="mono"] {
+  font-variant-ligatures: none;
 }
 
 /* ---- GRAIN OVERLAY ----

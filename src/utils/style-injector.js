@@ -55,6 +55,29 @@ export function liftFontSizesInText(text) {
 }
 
 /**
+ * Remove a `font-size` declaration from an inline style string.
+ *
+ * Headings (h1–h6) in the source files carry hard-coded inline sizes
+ * (e.g. `font-size:17px`) that win over the design system's type scale
+ * on specificity — leaving a "sub-head" rendering *smaller* than the
+ * 18px reading prose it introduces, and every file picking its own
+ * heading sizes. Dropping the inline size hands heading sizing back to
+ * the central scale so hierarchy is consistent across all 30 documents.
+ * Other inline props (font-family, margin, colour) are preserved.
+ *
+ * @param {string} text — an inline style attribute value
+ * @returns {string}
+ */
+export function stripInlineFontSize(text) {
+  if (!text) return text;
+  return text
+    .replace(/font-size\s*:\s*[^;]+;?/gi, '')
+    .replace(/;\s*;/g, ';')
+    .replace(/^\s*;\s*/, '')
+    .trim();
+}
+
+/**
  * Remove decorative left/right accent stripes (the most overused
  * "design touch" — a thick coloured side border). We target only
  * stripes whose colour is one of the legacy pastel fills or a hex
@@ -300,7 +323,11 @@ export function normalizeContent(root) {
 
     let cleaned = style;
     if (/font-size\s*:\s*\d/.test(cleaned) && !inFixedDiagram(el, root)) {
-      cleaned = liftFontSizesInText(cleaned);
+      // Headings hand their sizing back to the central type scale; body copy
+      // keeps its tiny-size floor lift. Both skip fixed-layout diagrams.
+      cleaned = /^H[1-6]$/.test(el.tagName)
+        ? stripInlineFontSize(cleaned)
+        : liftFontSizesInText(cleaned);
     }
     if (/border-(?:left|right)\s*:/.test(cleaned)) {
       cleaned = stripDecorativeStripes(cleaned);

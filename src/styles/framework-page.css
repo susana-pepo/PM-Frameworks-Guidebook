@@ -1451,7 +1451,7 @@
 .c-card p, .c-card-static p {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-normal);
   max-width: 70ch;
 }
 
@@ -1501,7 +1501,7 @@
 .insight p {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-normal);
   max-width: 70ch;
 }
 
@@ -1582,7 +1582,7 @@
 .factor-card p {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-normal);
 }
 
 .factor-card .fc-unit {
@@ -1896,6 +1896,8 @@ table {
   overflow: hidden;
   margin-bottom: var(--space-4);
   font-size: var(--text-sm);
+  /* Figures line up column-to-column in data tables. */
+  font-variant-numeric: tabular-nums;
 }
 
 th {
@@ -2043,6 +2045,7 @@ tr:hover td {
   font-weight: var(--weight-extrabold);
   color: var(--text-primary);
   line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
 .scale-item .sl {
@@ -2189,7 +2192,7 @@ tr:hover td {
 }
 
 .quad-card p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
 }
@@ -2340,7 +2343,7 @@ tr:hover td {
 }
 
 .cat-card p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
 }
@@ -2406,7 +2409,7 @@ tr:hover td {
 }
 
 .fstep p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
 }
@@ -2459,7 +2462,7 @@ tr:hover td {
 }
 
 .m-card p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
 }
@@ -2492,7 +2495,7 @@ tr:hover td {
 }
 
 .sc-card p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
 }
@@ -3395,8 +3398,8 @@ tr:hover td {
    real space between paragraphs and well-set lists. */
 .fw-doc-main :is(.c-card, .c-card-static, .section, .panel) > p,
 .fw-doc-main :is(.c-card, .c-card-static) li {
-  font-size: var(--text-md);            /* 17px */
-  line-height: var(--leading-relaxed);  /* 1.75 */
+  font-size: var(--text-md);            /* 18px — focal reading prose */
+  line-height: var(--leading-reading);  /* 1.7 — tuned for the ~66ch column */
   color: var(--text-secondary);
 }
 .fw-doc-main :is(.c-card, .c-card-static) > p + p { margin-top: var(--space-4); }
@@ -3417,8 +3420,10 @@ tr:hover td {
   color: var(--text-primary);
   margin: 0 0 var(--space-2);
 }
-.fw-doc-main :is(.c-card, .c-card-static) > h3 { font-size: var(--text-lg); }
-.fw-doc-main :is(.c-card, .c-card-static) > h4 { font-size: var(--text-md); }
+/* Sub-heads sit a clear step above the 18px prose (and below the 32px section
+   title) so hierarchy reads on size, not just weight — prose 18 · h4 22 · h3 26. */
+.fw-doc-main :is(.c-card, .c-card-static) > h3 { font-size: var(--text-xl); }
+.fw-doc-main :is(.c-card, .c-card-static) > h4 { font-size: var(--text-lg); }
 /* A sub-head that follows prose needs a breath above it. */
 .fw-doc-main :is(.c-card, .c-card-static) > * + :is(h3, h4) { margin-top: var(--space-6); }
 

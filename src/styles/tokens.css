@@ -44,19 +44,27 @@
   --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
-  --text-xs: 11px;
-  --text-sm: 13px;
-  --text-base: 15px;
-  --text-md: 17px;
-  --text-lg: 20px;
-  --text-xl: 24px;
-  --text-2xl: 30px;
-  --text-3xl: 36px;
-  --text-4xl: 48px;
+  /* Type scale — rem-based modular ladder (~1.2 ratio) so a reader who bumps
+     their browser font size scales the whole guide with them (this is a
+     long-read study product — "readability is the product"). Root is 16px,
+     so 1rem = 16px. Two adjacent body sizes (base = card/secondary copy,
+     md = focal reading prose & leads) then a clear, contrasty climb through
+     the heading tiers — fewer sizes, more contrast, no muddy 15/16/17 band.
+     Diagram type stays in literal px (hand-placed) and is untouched. */
+  --text-xs: 0.75rem;      /* 12 — micro labels, mono eyebrows, chip counts */
+  --text-sm: 0.8125rem;    /* 13 — secondary UI, table cells, metadata */
+  --text-base: 1rem;       /* 16 — card / secondary body, nav */
+  --text-md: 1.125rem;     /* 18 — focal reading prose, leads, TL;DR */
+  --text-lg: 1.375rem;     /* 22 — sub-heads, card titles */
+  --text-xl: 1.625rem;     /* 26 — minor section heads */
+  --text-2xl: 2rem;        /* 32 — section titles */
+  --text-3xl: 2.5rem;      /* 40 — page-level headings */
+  --text-4xl: 3rem;        /* 48 — display / framework title */
 
   --leading-tight: 1.2;
   --leading-snug: 1.35;
   --leading-normal: 1.6;
+  --leading-reading: 1.7;  /* focal prose in the ~66ch reading column */
   --leading-relaxed: 1.75;
 
   --weight-normal: 400;
