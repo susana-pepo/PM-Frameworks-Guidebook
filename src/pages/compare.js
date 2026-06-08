@@ -1,5 +1,5 @@
 import { comparisonGuides, getCategory } from '../data/frameworks.js';
-import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } from '../utils/style-injector.js';
+import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
 import { buildReadingDocument } from './framework.js';
 
 // Cache loaded comparison content — stores { html, css }
@@ -43,6 +43,9 @@ export async function renderComparePage(container, slug) {
 
     // Clean inline font-family references
     cleanInlineFonts(container);
+
+    // Elevate readability: lift tiny inline font sizes + strip side-stripes
+    normalizeContent(container);
 
     executeScripts(container);
 

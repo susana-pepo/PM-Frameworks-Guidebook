@@ -9,6 +9,70 @@
 
 const INJECTED_STYLE_ID = 'fw-injected-styles';
 
+/* ============================================================
+   CONTENT ELEVATION
+   The 30 source files were authored as a neo-brutalist sticker
+   sheet: ~1,650 inline declarations set body copy at 10–13px and
+   18 files paint decorative `border-left` accent stripes. Tokens
+   (tokens.css) already remap the legacy palette to the editorial
+   system, but they cannot reach literal `font-size:12px` or a
+   hard-coded stripe baked into a `style=""` attribute. These
+   helpers lift readability to e-learning standards (legible body
+   type, no side-stripes) centrally — every framework benefits at
+   once, no per-file rewrite.
+   ============================================================ */
+
+/**
+ * Lift a single px value toward a readable floor.
+ * Body copy (10–14px) climbs to 14.5–15px; micro labels (≤9px)
+ * climb to a still-small-but-legible 11.5–12px; anything already
+ * 15px+ (headings, display numbers) is left untouched so hierarchy
+ * and tuned diagram type are preserved.
+ *
+ * @param {number} n — original size in px
+ * @returns {number} lifted size in px
+ */
+function liftPx(n) {
+  if (n >= 15) return n;
+  if (n <= 8) return 11.5;
+  const map = { 9: 12, 10: 12.5, 11: 13.5, 12: 14.5, 13: 15, 14: 15 };
+  return map[n] != null ? map[n] : n;
+}
+
+/**
+ * Lift every `font-size:Npx` occurrence in a CSS / inline-style /
+ * JS string using liftPx. Leaves rem/em/% and var() sizes alone.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function liftFontSizesInText(text) {
+  if (!text) return text;
+  return text.replace(
+    /font-size\s*:\s*(\d+(?:\.\d+)?)px/gi,
+    (m, px) => `font-size:${liftPx(parseFloat(px))}px`
+  );
+}
+
+/**
+ * Remove decorative left/right accent stripes (the most overused
+ * "design touch" — a thick coloured side border). We target only
+ * stripes whose colour is one of the legacy pastel fills or a hex
+ * literal, so structural dividers (`var(--border)`) and CSS
+ * triangles (`...solid transparent`, used for arrows) are left
+ * intact.
+ *
+ * @param {string} text — CSS text or an inline style attribute value
+ * @returns {string}
+ */
+export function stripDecorativeStripes(text) {
+  if (!text) return text;
+  return text.replace(
+    /border-(?:left|right)\s*:\s*\d+px\s+solid\s+(?:var\(--(?:sky|mint|mint-deep|yellow|purple|orange|rose|pink|green|s[1-7]|l[1-5]|p[1-5])\)|#[0-9a-fA-F]{3,8})\s*;?/gi,
+    ''
+  );
+}
+
 /**
  * Extract CSS text from a parsed HTML document, filter out
  * dangerous global selectors, and replace Lilita One font
@@ -65,6 +129,11 @@ export function extractAndCleanCSS(doc) {
     /color:\s*rgba\(255\s*,\s*255\s*,\s*255\s*,\s*\.?85\)/g,
     'color:var(--text-secondary)'
   );
+
+  // Remove decorative side-stripes declared inside the file's own CSS rules
+  // (most live in inline styles, handled by normalizeContent, but a few files
+  // declare them at the class level).
+  css = stripDecorativeStripes(css);
 
   return css.trim();
 }
@@ -175,6 +244,74 @@ export function cleanInlineFonts(root) {
   });
 }
 
+/* Diagram canvases whose type is hand-placed to fit a fixed-size figure
+   (maps, matrices, curves, scatter plots). Text inside them is laid out by
+   pixel, so bumping it up overflows nodes and collides labels — we leave it
+   exactly as authored. The absolute-position check below catches the rest. */
+const DIAGRAM_SELECTOR =
+  '.map-hero,.map-canvas,.map-body,.map-backbone,.matrix-hero,.matrix-mini,' +
+  '.curve-box,.curve-canvas,.kano-hero,.circles-hero,.phase-hero,' +
+  '.anatomy-diagram,.plot,.plot-bg,.plot-grid,.scatter,.diagram';
+
+/**
+ * Is this element part of a fixed-layout diagram (so its font size must be
+ * left alone)? True when the element — or any ancestor up to root — is
+ * absolutely positioned or matches a known diagram canvas.
+ */
+function inFixedDiagram(el, root) {
+  let cur = el;
+  while (cur && cur !== root) {
+    const st = cur.getAttribute && cur.getAttribute('style');
+    if (st && /position\s*:\s*absolute/i.test(st)) return true;
+    if (cur.matches && cur.matches(DIAGRAM_SELECTOR)) return true;
+    cur = cur.parentElement;
+  }
+  return false;
+}
+
+/**
+ * Elevate loaded framework content to e-learning readability.
+ *
+ * Walks every element carrying an inline `style=""` and:
+ *   1. Lifts hard-coded tiny font sizes to a legible floor (the
+ *      single biggest "not usable" complaint — body copy authored
+ *      at 10–13px). Skipped inside fixed-layout diagrams, whose text
+ *      is positioned by pixel and would collide if enlarged.
+ *   2. Removes decorative left/right accent stripes (a banned
+ *      pattern) while leaving CSS triangles and structural borders.
+ *      Applied everywhere — stripes never carry diagram meaning.
+ *
+ * Runs after cleanInlineFonts(), on the live DOM, before the
+ * reading document is assembled — so it covers comparison tables and
+ * every per-file widget uniformly.
+ *
+ * Note: SVG <text> elements use a `font-size` *attribute* (not a
+ * style declaration), so they are inherently untouched here.
+ *
+ * @param {HTMLElement} root — Container to walk (e.g. .fw-page)
+ */
+export function normalizeContent(root) {
+  if (!root) return;
+
+  const els = root.querySelectorAll('[style]');
+  els.forEach(el => {
+    const style = el.getAttribute('style');
+    if (!style) return;
+
+    let cleaned = style;
+    if (/font-size\s*:\s*\d/.test(cleaned) && !inFixedDiagram(el, root)) {
+      cleaned = liftFontSizesInText(cleaned);
+    }
+    if (/border-(?:left|right)\s*:/.test(cleaned)) {
+      cleaned = stripDecorativeStripes(cleaned);
+    }
+
+    if (cleaned !== style) {
+      el.setAttribute('style', cleaned);
+    }
+  });
+}
+
 /**
  * Clean font references in a JavaScript source string before eval.
  * Some HTML files generate DOM dynamically via onclick handlers and
@@ -204,6 +341,11 @@ export function cleanScriptFonts(code) {
   for (const [from, to] of FONT_REPLACEMENTS) {
     cleaned = cleaned.replaceAll(from, to);
   }
+
+  // Lift tiny font sizes baked into dynamically-generated markup (quiz cards,
+  // OKR/RICE builders, score tables) so JS-rendered content reads as well as
+  // the static content normalised by normalizeContent().
+  cleaned = liftFontSizesInText(cleaned);
 
   return cleaned;
 }

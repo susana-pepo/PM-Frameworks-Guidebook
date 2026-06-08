@@ -1,5 +1,5 @@
 import { getFramework, getCategory } from '../data/frameworks.js';
-import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } from '../utils/style-injector.js';
+import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
 
 /**
  * Framework page renderer.
@@ -50,6 +50,10 @@ export async function renderFrameworkPage(container, slug, initialStep) {
 
     // Clean inline font-family references (480 elements across HTML files)
     cleanInlineFonts(container);
+
+    // Elevate readability: lift tiny inline font sizes to a legible floor and
+    // strip decorative side-stripes across all inline-styled content.
+    normalizeContent(container);
 
     // Execute any inline scripts from the loaded content
     executeScripts(container);

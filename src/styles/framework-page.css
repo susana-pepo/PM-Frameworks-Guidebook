@@ -326,8 +326,15 @@
 .fw-doc.is-wide .fw-doc-main .panel,
 .fw-doc.is-wide .fw-doc-main .section { max-width: none; }
 
-/* Glance section — the hero visualizer, centered on the paper */
+/* Glance section — the hero visualizer, centered on the paper.
+   The hero takes a defined width: several heroes are pure absolutely-
+   positioned diagrams (Wardley map, 2×2 matrices) whose nodes are placed
+   by percentage. As a flex item with auto side-margins they would shrink
+   to their (zero-width) in-flow content and collapse the diagram, so we
+   give them a real measure to position against. */
 .fw-doc-glance > :not(.fw-doc-marker) {
+  width: 100%;
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1440,7 +1447,8 @@
 .c-card p, .c-card-static p {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-relaxed);
+  max-width: 70ch;
 }
 
 /* ---- TLDR BOX ---- */
@@ -1468,7 +1476,7 @@
   font-size: 18px;
 }
 
-.tldr p { font-size: var(--text-sm); color: var(--text-secondary); }
+.tldr p { font-size: var(--text-base); color: var(--text-secondary); line-height: var(--leading-normal); }
 .tldr strong { color: var(--text-primary); }
 
 /* ---- INSIGHT BOX ---- */
@@ -1481,14 +1489,16 @@
 }
 
 .insight h4 {
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   font-weight: var(--weight-bold);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .insight p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 70ch;
 }
 
 /* ---- TIP BOX ---- */
@@ -1498,7 +1508,7 @@
   background: var(--color-warning-light);
   border: var(--bw) solid var(--color-warning);
   border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
   line-height: var(--leading-normal);
 }
@@ -1558,7 +1568,7 @@
 }
 
 .factor-card .fc-q {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
   color: var(--text-tertiary);
   font-style: italic;
@@ -1566,9 +1576,9 @@
 }
 
 .factor-card p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-relaxed);
 }
 
 .factor-card .fc-unit {
@@ -1630,9 +1640,9 @@
 }
 
 .when-card ul li {
-  padding: var(--space-2) 0;
+  padding: var(--space-3) 0;
   padding-left: var(--space-5);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   position: relative;
   line-height: var(--leading-normal);
@@ -1649,7 +1659,7 @@
   left: 0;
   color: var(--color-success);
   font-weight: var(--weight-bold);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 }
 
 .when-card.skip ul li::before {
@@ -1658,7 +1668,7 @@
   left: 0;
   color: var(--color-error);
   font-weight: var(--weight-bold);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 }
 
 /* ---- QUIZ ---- */
@@ -1683,16 +1693,19 @@
 }
 
 .qo, .quiz-opt {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
+  min-height: 48px;
   text-align: left;
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-2);
   background: var(--bg-muted);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
   color: var(--text-primary);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-default);
@@ -1701,6 +1714,12 @@
 .qo:hover, .quiz-opt:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-strong);
+}
+
+.qo:focus-visible, .quiz-opt:focus-visible {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-focus);
 }
 
 .qo.correct, .quiz-opt.correct {
@@ -1722,13 +1741,13 @@
 
 .qexp, .quiz-explain {
   margin-top: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   background: var(--color-info-light);
   border: 1px solid rgba(88, 137, 208, 0.2);
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-relaxed);
   display: none;
 }
 
@@ -1782,11 +1801,12 @@
 .fw-page textarea,
 .fw-page select {
   width: 100%;
+  min-height: 46px;
   padding: var(--space-3) var(--space-4);
   background: var(--bg-input);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-primary);
   transition: all var(--duration-fast) var(--ease-default);
   line-height: var(--leading-normal);
