@@ -1,4 +1,5 @@
 import { comparisonGuides, getCategory } from '../data/frameworks.js';
+import { categoryGlyph } from '../data/icons.js';
 import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
 import { buildReadingDocument } from './framework.js';
 
@@ -29,7 +30,7 @@ export async function renderComparePage(container, slug) {
 
     container.innerHTML = `<div class="fw-page compare-page" data-category="${cat.id}" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
       <div class="fw-page-header">
-        <div class="fw-category-badge">${cat.emoji} ${cat.name}</div>
+        <div class="fw-category-badge"><span class="fw-badge-glyph" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span> ${cat.name}</div>
       </div>
       ${html}
     </div>`;
@@ -51,7 +52,9 @@ export async function renderComparePage(container, slug) {
 
     // Rebuild into the same reading document as framework pages (wide measure
     // so the comparison tables get full width).
-    buildReadingDocument(container, { slug: guide.slug, emoji: cat.emoji, wide: true });
+    buildReadingDocument(container, {
+      slug: guide.slug, emoji: cat.emoji, glyph: categoryGlyph(cat.id, cat.emoji), wide: true,
+    });
   } catch (err) {
     container.innerHTML = `
       <div style="text-align:center;padding:var(--space-16) 0;">

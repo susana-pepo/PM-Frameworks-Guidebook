@@ -1,4 +1,5 @@
 import { getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
+import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { observeReveals } from '../utils/reveal.js';
 
 export function renderCategoryPage(container, categoryId) {
@@ -18,7 +19,7 @@ export function renderCategoryPage(container, categoryId) {
   container.innerHTML = `
     <div class="cat-page" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
       <header class="cat-page-head reveal">
-        <span class="cat-page-emoji" aria-hidden="true">${cat.emoji}</span>
+        <span class="cat-page-emoji" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
         <div class="cat-page-text">
           <span class="cat-page-eyebrow">Category · ${fws.length} frameworks</span>
           <h1 class="cat-page-title">${cat.name}</h1>
@@ -35,7 +36,7 @@ export function renderCategoryPage(container, categoryId) {
         ${fws.map((fw, i) => `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
              style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
-            <span class="hub-fw-card-tile" aria-hidden="true">${fw.emoji}</span>
+            <span class="hub-fw-card-tile" aria-hidden="true">${frameworkGlyph(fw.slug, fw.emoji)}</span>
             <h3 class="hub-fw-card-name">${fw.name}</h3>
             <p class="hub-fw-card-desc">${fw.description}</p>
             <span class="hub-fw-card-foot">
@@ -49,7 +50,7 @@ export function renderCategoryPage(container, categoryId) {
       ${comparison ? `
         <a href="#/compare/${comparison.slug}" class="cat-compare-card card-clickable"
            style="--accent-color:${cat.color};">
-          <span class="cat-compare-icon" aria-hidden="true">${cat.emoji}</span>
+          <span class="cat-compare-icon" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
           <span class="cat-compare-text">
             <span class="cat-compare-title">Compare all ${cat.name} frameworks</span>
             <span class="cat-compare-sub">Side-by-side comparison with an interactive picker</span>

@@ -1,4 +1,5 @@
 import { getFramework, getCategory } from '../data/frameworks.js';
+import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
 
 /**
@@ -36,7 +37,7 @@ export async function renderFrameworkPage(container, slug, initialStep) {
 
     container.innerHTML = `<div class="fw-page" data-category="${cat.id}" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
       <div class="fw-page-header">
-        <div class="fw-category-badge">${cat.emoji} ${cat.name}</div>
+        <div class="fw-category-badge"><span class="fw-badge-glyph" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span> ${cat.name}</div>
       </div>
       ${html}
     </div>`;
@@ -59,7 +60,10 @@ export async function renderFrameworkPage(container, slug, initialStep) {
     executeScripts(container);
 
     // Rebuild the raw content into the editorial reading document
-    buildReadingDocument(container, { slug, emoji: fw.emoji, title: fw.name, initialStep });
+    buildReadingDocument(container, {
+      slug, emoji: fw.emoji, glyph: frameworkGlyph(fw.slug, fw.emoji),
+      title: fw.name, initialStep,
+    });
   } catch (err) {
     container.innerHTML = `
       <div class="fw-error" role="alert">
@@ -185,7 +189,7 @@ function stripLeadingEmoji(container) {
  * @param {boolean} [opts.wide]       relax the reading measure (comparison tables)
  */
 export function buildReadingDocument(container, opts = {}) {
-  const { slug, emoji, title, initialStep, wide = false } = opts;
+  const { slug, emoji, glyph, title, initialStep, wide = false } = opts;
   const fwPage = container.querySelector('.fw-page');
   if (!fwPage) return;
 
@@ -273,11 +277,12 @@ export function buildReadingDocument(container, opts = {}) {
   const ident = document.createElement('div');
   ident.className = 'fw-doc-ident';
 
-  if (emoji) {
+  if (glyph || emoji) {
     const tile = document.createElement('span');
     tile.className = 'fw-doc-emoji';
     tile.setAttribute('aria-hidden', 'true');
-    tile.textContent = emoji;
+    if (glyph) tile.innerHTML = glyph;
+    else tile.textContent = emoji;
     ident.appendChild(tile);
   }
 
@@ -397,8 +402,7 @@ export function buildReadingDocument(container, opts = {}) {
       <span class="fw-deck-btn-tx">Back</span>
     </button>
     <div class="fw-deck-progress">
-      <div class="fw-deck-dots" role="tablist" aria-label="Jump to section"></div>
-      <span class="fw-deck-count" aria-live="polite"><span class="fw-deck-cur">1</span> / <span class="fw-deck-total">${sections.length}</span></span>
+      <span class="fw-deck-count" aria-live="polite"><span class="fw-deck-cur">1</span> <span class="fw-deck-sep">/</span> <span class="fw-deck-total">${sections.length}</span></span>
     </div>
     <button class="fw-deck-btn fw-deck-next" type="button" aria-label="Next section">
       <span class="fw-deck-btn-tx">Next</span>
@@ -426,17 +430,6 @@ export function buildReadingDocument(container, opts = {}) {
   // ===== DECK CONTROLLER =====
   if (!sections.length) return;
 
-  const dots = controls.querySelector('.fw-deck-dots');
-  sections.forEach((s, i) => {
-    const d = document.createElement('button');
-    d.type = 'button';
-    d.className = 'fw-deck-dot';
-    d.dataset.index = String(i);
-    d.setAttribute('role', 'tab');
-    d.setAttribute('aria-label', `${s.label} (${i + 1} of ${sections.length})`);
-    dots.appendChild(d);
-  });
-  const dotEls = Array.from(dots.children);
   const prevBtn = controls.querySelector('.fw-deck-prev');
   const nextBtn = controls.querySelector('.fw-deck-next');
   const curEl = controls.querySelector('.fw-deck-cur');
@@ -453,8 +446,6 @@ export function buildReadingDocument(container, opts = {}) {
       else s.link.removeAttribute('aria-current');
       s.sec.classList.toggle('is-active', on);
       s.sec.setAttribute('aria-hidden', String(!on));
-      dotEls[i].classList.toggle('active', on);
-      dotEls[i].setAttribute('aria-selected', String(on));
     });
     curEl.textContent = String(index + 1);
     barFill.style.transform = `scaleX(${(index + 1) / sections.length})`;
@@ -479,10 +470,6 @@ export function buildReadingDocument(container, opts = {}) {
     e.preventDefault();
     const i = sections.findIndex(s => s.id === link.dataset.target);
     if (i >= 0) goToIndex(i);
-  });
-  dots.addEventListener('click', (e) => {
-    const d = e.target.closest('.fw-deck-dot');
-    if (d) goToIndex(parseInt(d.dataset.index, 10));
   });
   prevBtn.addEventListener('click', () => goToIndex(index - 1));
   nextBtn.addEventListener('click', () => goToIndex(index + 1));

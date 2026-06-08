@@ -1,4 +1,5 @@
 import { categories, frameworks, comparisonGuides, getFrameworksByCategory } from '../data/frameworks.js';
+import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { onNavigate, navigate, getRoute } from '../router.js';
 import { renderHub } from '../pages/hub.js';
 import { renderFrameworkPage } from '../pages/framework.js';
@@ -131,12 +132,12 @@ function renderTopNav() {
     return `
       <div class="mega-col" style="--c:${cat.color};">
         <a class="mega-col-head" href="#/category/${cat.id}" role="menuitem">
-          <span class="mega-col-emoji" aria-hidden="true">${cat.emoji}</span>
+          <span class="mega-col-emoji" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
           <span class="mega-col-title">${cat.name}</span>
         </a>
         ${catFrameworks.map(fw => `
           <a class="mega-fw top-nav-fw" href="#/framework/${fw.slug}" data-fw-slug="${fw.slug}" role="menuitem">
-            <span class="mega-fw-emoji" aria-hidden="true">${fw.emoji}</span>
+            <span class="mega-fw-emoji" aria-hidden="true">${frameworkGlyph(fw.slug, fw.emoji)}</span>
             <span>${fw.name}</span>
           </a>
         `).join('')}
@@ -174,14 +175,14 @@ function renderMobileMenu() {
     return `
       <div class="mobile-menu-category" data-category="${cat.id}">
         <div class="mobile-menu-cat-header" data-mobile-cat="${cat.id}">
-          <span class="mobile-menu-emoji">${cat.emoji}</span>
+          <span class="mobile-menu-emoji">${categoryGlyph(cat.id, cat.emoji)}</span>
           <span>${cat.name}</span>
           <span class="mobile-menu-chevron">▾</span>
         </div>
         <div class="mobile-menu-items" data-mobile-items="${cat.id}">
           ${catFrameworks.map(fw => `
             <a class="mobile-menu-link" href="#/framework/${fw.slug}" data-fw-slug="${fw.slug}">
-              <span>${fw.emoji}</span>
+              <span class="mobile-menu-fw-glyph">${frameworkGlyph(fw.slug, fw.emoji)}</span>
               <span>${fw.name}</span>
             </a>
           `).join('')}
@@ -267,20 +268,17 @@ function bindTopNavSearch() {
     ...frameworks.map(fw => ({
       type: 'framework',
       name: fw.name,
-      emoji: fw.emoji,
+      glyph: frameworkGlyph(fw.slug, fw.emoji),
       slug: fw.slug,
       href: `#/framework/${fw.slug}`,
     })),
-    ...comparisonGuides.map(cg => {
-      const cat = categories.find(c => c.id === cg.category);
-      return {
-        type: 'compare',
-        name: cg.name,
-        emoji: '⚖️',
-        slug: cg.slug,
-        href: `#/compare/${cg.slug}`,
-      };
-    }),
+    ...comparisonGuides.map(cg => ({
+      type: 'compare',
+      name: cg.name,
+      glyph: categoryGlyph(cg.category, '⚖️'),
+      slug: cg.slug,
+      href: `#/compare/${cg.slug}`,
+    })),
   ];
 
   const showResults = (matches) => {
@@ -289,7 +287,7 @@ function bindTopNavSearch() {
     } else {
       results.innerHTML = matches.map((m, i) => `
         <a class="top-nav-search-item${i === selectedIndex ? ' selected' : ''}" href="${m.href}" data-index="${i}">
-          <span class="top-nav-search-item-emoji">${m.emoji}</span>
+          <span class="top-nav-search-item-emoji">${m.glyph}</span>
           <span>${m.name}</span>
         </a>
       `).join('');

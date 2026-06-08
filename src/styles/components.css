@@ -4,6 +4,59 @@
    badges, chunky rounded corners, bold colors
    ============================================ */
 
+/* ============================================
+   MONOLINE ICON GLYPHS
+   Bespoke thin-stroke icons (src/data/icons.js) replace the full-colour emoji
+   "stickers" in the chrome. Each sizes to its host's font-size and strokes in
+   the category accent (currentColor). Anything not yet drawn falls back to its
+   emoji via .glyph-emoji, so the system rolls out icon-by-icon with no gaps.
+   ============================================ */
+.glyph-icon {
+  width: 0.9em;
+  height: 0.9em;
+  display: block;
+  flex-shrink: 0;
+}
+.glyph-emoji { line-height: 1; }
+
+/* Identity tiles tint their icon with the category accent. The tile spans
+   already centre their child, so the icon lands dead-centre. */
+.hub-fw-card-tile,
+.cat-page-emoji,
+.cat-compare-icon,
+.fw-doc-emoji { color: var(--accent-color, var(--text-secondary)); }
+.hub-section-emoji { color: var(--section-color, var(--text-secondary)); }
+
+/* Inline hosts (pills, nav, search, mobile menu) — accent where one is in
+   scope, otherwise a calm neutral so the glyph reads as quiet utility. */
+.hub-pill-emoji,
+.mega-col-emoji,
+.mobile-menu-emoji { display: inline-flex; }
+.hub-pill-emoji { color: var(--pill-color, var(--text-secondary)); }
+.mega-col-emoji { color: var(--c, var(--text-secondary)); }
+.mobile-menu-emoji { color: var(--text-secondary); }
+.mega-fw-emoji,
+.mobile-menu-fw-glyph,
+.top-nav-search-item-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+}
+.mobile-menu-fw-glyph { width: 20px; }
+.mega-fw:hover .mega-fw-emoji,
+.mega-fw.active .mega-fw-emoji,
+.top-nav-search-item:hover .top-nav-search-item-emoji,
+.top-nav-search-item.selected .top-nav-search-item-emoji { color: var(--text-secondary); }
+.mega-fw-emoji .glyph-icon,
+.mobile-menu-fw-glyph .glyph-icon,
+.top-nav-search-item-emoji .glyph-icon { width: 16px; height: 16px; }
+
+/* Category badge in the framework/compare header — accent is already set on
+   the badge text; align + size the small leading icon. */
+.fw-badge-glyph { display: inline-flex; align-items: center; }
+.fw-badge-glyph .glyph-icon { width: 13px; height: 13px; }
+
 /* ---- BREADCRUMB ---- */
 .breadcrumb {
   display: flex;
@@ -532,34 +585,37 @@
   border-top: 1px solid var(--border-subtle);
 }
 
+/* Category label reads as quiet metadata, not a second loud tag — the section
+   header already names the category. Sentence-case, tertiary, normal tracking. */
 .hub-fw-card-cat {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--accent-color, var(--text-muted));
-  opacity: 0.85;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* Arrow rests faintly visible (a finished baseline) and resolves to the
+   category accent as the card lifts. */
 .hub-fw-card-arrow {
   font-size: var(--text-md);
   line-height: 1;
-  color: var(--accent-color, var(--text-muted));
-  opacity: 0;
-  transform: translateX(-5px);
+  color: var(--text-muted);
+  opacity: 0.55;
+  transform: translateX(0);
   transition: opacity var(--duration-normal) var(--ease-default),
-              transform var(--duration-normal) var(--ease-default);
+              transform var(--duration-normal) var(--ease-premium),
+              color var(--duration-normal) var(--ease-default);
   font-weight: var(--weight-bold);
   flex-shrink: 0;
 }
 
 .hub-fw-card:hover .hub-fw-card-arrow {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(3px);
+  color: var(--accent-color, var(--text-secondary));
 }
 
 /* ---- Compare button ---- */

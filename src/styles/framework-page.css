@@ -194,11 +194,11 @@
   padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow-xs);
 }
-/* Soften the TL;DR's leading icon box to a category-tinted chip */
+/* Drop the TL;DR's decorative emoji chip — the bold "One-liner:" / "In 15
+   seconds:" lead-in already anchors the strip, and removing the sticker keeps
+   the header band clean and consistent with the monoline iconography. */
 .fw-doc .fw-doc-tldr :is(.tldr-icon, .ol-icon, .one-liner-icon) {
-  background: var(--accent-light, var(--bg-card)) !important;
-  border: none !important;
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, transparent) !important;
+  display: none !important;
 }
 
 /* ---- BODY: rail + document ---- */
@@ -428,18 +428,22 @@
   margin-top: 3px;
 }
 
+/* De-sticker the section heading: the source `.sec-icon` was a per-file emoji
+   in a coloured tile. Suppress the glyph and keep a slim category-accent marker
+   so headings read as editorial headers, consistent with the monoline chrome. */
 .fw-page .sec-title .sec-icon {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
+  width: 4px;
+  min-width: 4px;
+  height: 30px;
+  align-self: center;
+  padding: 0 !important;
+  font-size: 0 !important;
+  color: transparent !important;
   border: none !important;
-  border-radius: var(--radius-md) !important;
-  background: var(--accent-light, var(--bg-muted)) !important;
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, transparent) !important;
-  font-size: 23px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: var(--radius-full) !important;
+  background: var(--accent-color, var(--text-tertiary)) !important;
+  box-shadow: none !important;
+  overflow: hidden;
 }
 
 /* ---- FRAMEWORK HERO / COVER ---- */
@@ -3581,22 +3585,31 @@ tr:hover td {
   will-change: transform;
 }
 
-/* Each section is one full-width panel; tall content scrolls within it. */
+/* Each section is one full-width panel; tall content scrolls within it.
+   The panel is a flex column whose first/last children carry `margin:auto`
+   (see below): short sections settle into the optical centre of the stage
+   instead of stranding a void beneath them, while tall sections top-anchor
+   and scroll normally (auto margins collapse to 0 once content overflows, so
+   nothing clips — the safe alternative to `justify-content:center`). */
 .fw-doc.deck-mode .fw-doc-section {
   flex: 0 0 100%;
   width: 100%;
   max-width: 100%;
   min-width: 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
   border-top: none;
   scroll-margin-top: 0;
-  padding: var(--space-2) var(--space-5) var(--space-8);
+  padding: var(--space-4) var(--space-5) var(--space-8);
   box-sizing: border-box;
   scrollbar-width: thin;
 }
+.fw-doc.deck-mode .fw-doc-section > :first-child { margin-top: auto; }
+.fw-doc.deck-mode .fw-doc-section > :last-child  { margin-bottom: auto; }
 .fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar { width: 8px; }
 .fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar-thumb {
   background: var(--border-default);
@@ -3616,12 +3629,8 @@ tr:hover td {
 .fw-doc.deck-mode .fw-doc-main .section { width: 100%; }
 .fw-doc.deck-mode:not(.is-wide) .fw-doc-marker { max-width: 760px; }
 
-/* "At a glance" cover panel — centre its hero vertically too. */
-.fw-doc.deck-mode .fw-doc-glance {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+/* "At a glance" cover panel — the auto-margin centring above already holds
+   its hero in the optical centre of the stage. */
 
 /* Inactive panels can't catch focus/scroll while parked off-stage. */
 .fw-doc.deck-mode .fw-doc-section[aria-hidden="true"] { pointer-events: none; }
@@ -3691,46 +3700,33 @@ tr:hover td {
 .fw-deck-next:hover .fw-deck-btn-ic { transform: translateX(2px); }
 .fw-deck-prev:hover .fw-deck-btn-ic { transform: translateX(-2px); }
 
-/* ---- Progress dots + count ---- */
+/* ---- Position count ----
+   The labelled rail (or, on narrow widths, the rail's horizontal scroller) is
+   the primary section nav, so the deck footer just needs a quiet, precise
+   "where am I" readout — no second discrete indicator competing with it. */
 .fw-deck-progress {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  justify-content: center;
   min-width: 0;
 }
-.fw-deck-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.fw-deck-dot {
-  width: 7px;
-  height: 7px;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-full);
-  background: color-mix(in oklab, var(--text-muted) 42%, transparent);
-  cursor: pointer;
-  transition: width var(--duration-normal) var(--ease-premium),
-              transform var(--duration-fast) var(--ease-spring),
-              background var(--duration-fast) var(--ease-default);
-}
-.fw-deck-dot:hover { background: var(--text-tertiary); transform: scale(1.3); }
-.fw-deck-dot.active {
-  width: 22px;
-  background: var(--accent-color, var(--text-secondary));
-}
 .fw-deck-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: var(--weight-bold);
   letter-spacing: 0.5px;
   color: var(--text-muted);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
-.fw-deck-cur { color: var(--accent-color, var(--text-secondary)); }
+.fw-deck-sep { color: var(--border-strong); font-weight: var(--weight-medium); }
+.fw-deck-cur {
+  color: var(--accent-color, var(--text-secondary));
+  font-size: 14px;
+}
 
 /* On the narrow rail / mobile, shorten the button labels to the arrows. */
 @media (max-width: 560px) {
@@ -3776,6 +3772,5 @@ tr:hover td {
   .fw-deck-track,
   .fw-deck-viewport,
   .fw-deck-bar-fill,
-  .fw-deck-btn-ic,
-  .fw-deck-dot { transition: none; }
+  .fw-deck-btn-ic { transition: none; }
 }

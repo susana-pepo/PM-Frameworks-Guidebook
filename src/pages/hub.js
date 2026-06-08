@@ -1,4 +1,5 @@
 import { categories, frameworks, comparisonGuides, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
+import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { observeReveals } from '../utils/reveal.js';
 
 export function renderHub(container) {
@@ -30,7 +31,7 @@ export function renderHub(container) {
         ${categories.map(cat => `
           <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
                   style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
-            <span class="hub-pill-emoji" aria-hidden="true">${cat.emoji}</span>
+            <span class="hub-pill-emoji" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
             ${cat.name}
             <span class="hub-pill-count">${getFrameworksByCategory(cat.id).length}</span>
           </button>
@@ -65,7 +66,7 @@ function renderCategorySection(cat, ci) {
   return `
     <section class="hub-section" data-category="${cat.id}" style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
       <div class="hub-section-head reveal" data-reveal-group="sec-${ci}-head">
-        <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
+        <span class="hub-section-emoji" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
         <span class="hub-section-text">
           <span class="hub-section-title">${cat.name}</span>
           <span class="hub-section-desc">${cat.description}</span>
@@ -93,7 +94,7 @@ function renderFrameworkCards(fws, sectionIndex = 0) {
         return `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
              style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
-            <span class="hub-fw-card-tile" aria-hidden="true">${fw.emoji}</span>
+            <span class="hub-fw-card-tile" aria-hidden="true">${frameworkGlyph(fw.slug, fw.emoji)}</span>
             <h3 class="hub-fw-card-name">${fw.name}</h3>
             <p class="hub-fw-card-desc">${fw.description}</p>
             <span class="hub-fw-card-foot">

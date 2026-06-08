@@ -8,11 +8,11 @@
   <meta name="theme-color" content="#fcfaf4">
   <script>
     /* Set theme before first paint to avoid a flash. Honors a saved
-       choice, else the OS preference. */
+       choice, else defaults to light (the "paper" field-guide look). */
     (function () {
       try {
         var saved = localStorage.getItem('pmf-theme');
-        var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        var theme = saved || 'light';
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();
