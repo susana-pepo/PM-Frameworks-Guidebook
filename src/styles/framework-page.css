@@ -115,11 +115,11 @@
 /* Left: narrow identity card (centered). Right: window frame with content. */
 .fw-split-layout {
   display: grid;
-  grid-template-columns: 1fr 7fr;
-  gap: var(--space-6);
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: var(--space-8);
   align-items: center;              /* vertically center left column against window */
   min-height: 0;
-  max-width: 1300px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 var(--space-6);
   box-sizing: border-box;
@@ -545,9 +545,11 @@
   border-radius: var(--radius-md);
   background: #FDF8EC;
   box-shadow: var(--shadow-lg);
-  height: calc(100vh - 120px);
-  min-height: 400px;
-  max-height: 800px;
+  /* Fit within the viewport (top bar 52px + hero padding + breathing room)
+     so the full window frame is visible without scrolling the page. */
+  height: calc(100dvh - 150px);
+  min-height: 420px;
+  max-height: 780px;
   overflow: hidden;                /* clip children to border-radius */
 }
 
@@ -2806,18 +2808,12 @@ tr:hover td {
 }
 
 /* ---- Staggered fade for hub cards ---- */
+/* Cascade is driven per-card by the inline --card-index variable so every
+   category section animates in, not just the first two. */
 .hub-fw-card {
   animation: cardFadeIn var(--duration-slow) var(--ease-out) both;
+  animation-delay: calc(var(--card-index, 0) * 60ms);
 }
-
-.hub-section:nth-child(1) .hub-fw-card:nth-child(1) { animation-delay: 0ms; }
-.hub-section:nth-child(1) .hub-fw-card:nth-child(2) { animation-delay: 50ms; }
-.hub-section:nth-child(1) .hub-fw-card:nth-child(3) { animation-delay: 100ms; }
-.hub-section:nth-child(1) .hub-fw-card:nth-child(4) { animation-delay: 150ms; }
-.hub-section:nth-child(2) .hub-fw-card:nth-child(1) { animation-delay: 200ms; }
-.hub-section:nth-child(2) .hub-fw-card:nth-child(2) { animation-delay: 250ms; }
-.hub-section:nth-child(2) .hub-fw-card:nth-child(3) { animation-delay: 300ms; }
-.hub-section:nth-child(2) .hub-fw-card:nth-child(4) { animation-delay: 350ms; }
 
 @keyframes cardFadeIn {
   from {

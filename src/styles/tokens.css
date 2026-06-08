@@ -212,27 +212,20 @@
 /* When a framework page loads, .app-content gets data-category.
    The entire content area takes on the category fill color + SVG pattern. */
 
-/* Dashboard/hub: animated multi-category gradient */
+/* Dashboard/hub: refined, low-saturation multi-category wash.
+   The color gradient is veiled toward the warm cream base so it reads as a
+   soft, premium tint rather than a loud rainbow. Static (no continuous
+   repaint) to keep scrolling smooth. */
 .app-content:not([data-category]) {
   background:
     var(--pattern-dashboard),
-    linear-gradient(135deg,
+    linear-gradient(180deg, rgba(255, 253, 247, 0.74), rgba(255, 253, 247, 0.9)),
+    linear-gradient(120deg,
       var(--cat-prioritization-light) 0%,
-      var(--cat-design-light) 18%,
-      var(--cat-strategy-light) 35%,
-      var(--cat-growth-light) 52%,
-      var(--cat-execution-light) 70%,
-      var(--cat-communication-light) 88%,
-      var(--cat-prioritization-light) 100%
+      var(--cat-design-light) 30%,
+      var(--cat-growth-light) 62%,
+      var(--cat-execution-light) 100%
     );
-  background-size: auto, 300% 300%;
-  animation: hubBgShift 20s ease infinite;
-}
-
-@keyframes hubBgShift {
-  0% { background-position: 0 0, 0% 50%; }
-  50% { background-position: 0 0, 100% 50%; }
-  100% { background-position: 0 0, 0% 50%; }
 }
 
 .app-content[data-category="prioritization"] { background: var(--cat-prioritization-fill) var(--pattern-prioritization); }

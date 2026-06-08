@@ -1,4 +1,4 @@
-import { categories, frameworks, getFrameworksByCategory } from '../data/frameworks.js';
+import { categories, frameworks, comparisonGuides, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
 
 export function renderHub(container) {
   container.innerHTML = `
@@ -7,20 +7,24 @@ export function renderHub(container) {
         <span class="hub-hero-dot"></span>
         <span>Reference Guide</span>
       </div>
-      <h1 class="hub-title">PM Frameworks</h1>
+      <h1 class="hub-title">PM&nbsp;Frameworks</h1>
       <p class="hub-subtitle">
-        24 frameworks across 6 categories. Look up, practice, compare — pick the right tool for the job.
+        24 frameworks across 6 categories. Look one up, practice it, or compare your options — the right tool for the job.
       </p>
 
       <!-- Hub search -->
       <div class="hub-search-wrap">
         <span class="hub-search-icon" aria-hidden="true">&#x1F50D;</span>
         <input type="text" id="hub-search" class="hub-search-input"
-               placeholder="Search frameworks…" autocomplete="off" />
+               placeholder="Search frameworks…" autocomplete="off" aria-label="Search frameworks" />
       </div>
 
-      <!-- Category nav pills -->
-      <div class="hub-filter-pills" role="tablist" aria-label="Browse by category">
+      <!-- Category filter pills -->
+      <div class="hub-filter-pills" role="tablist" aria-label="Filter by category">
+        <button class="hub-pill active" data-filter="all" role="tab" aria-selected="true">
+          All
+          <span class="hub-pill-count">${frameworks.length}</span>
+        </button>
         ${categories.map(cat => `
           <button class="hub-pill" data-filter="${cat.id}" role="tab" aria-selected="false"
                   style="--pill-color:${cat.color}; --pill-bg:${cat.colorLight};">
@@ -32,13 +36,17 @@ export function renderHub(container) {
       </div>
     </div>
 
-    <!-- Framework cards — shown when a pill is clicked or search matches -->
-    <div class="hub-search-results" id="hub-results" style="display:none;">
+    <!-- Default gallery: every category with its frameworks -->
+    <div class="hub-gallery" id="hub-gallery">
+      ${categories.map((cat, ci) => renderCategorySection(cat, ci)).join('')}
     </div>
+
+    <!-- Flat search results (shown only while searching) -->
+    <div class="hub-search-results" id="hub-results" style="display:none;"></div>
 
     <!-- Empty state for search -->
     <div class="hub-empty-state" id="hub-empty-state" style="display:none;">
-      <div class="hub-empty-icon">&#x1F50E;</div>
+      <div class="hub-empty-icon" aria-hidden="true">&#x1F50E;</div>
       <p class="hub-empty-text">No frameworks match your search.</p>
       <button class="hub-empty-clear btn btn-sm">Clear search</button>
     </div>
@@ -47,14 +55,42 @@ export function renderHub(container) {
   installHubInteractions();
 }
 
-function renderFrameworkCards(fws) {
+/** Render one category section: header + framework card grid + compare card. */
+function renderCategorySection(cat, ci) {
+  const fws = getFrameworksByCategory(cat.id);
+  const comparison = getComparisonGuide(cat.id);
+
+  return `
+    <section class="hub-section" data-category="${cat.id}" style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
+      <div class="hub-section-head">
+        <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
+        <span class="hub-section-text">
+          <span class="hub-section-title">${cat.name}</span>
+          <span class="hub-section-desc">${cat.description}</span>
+        </span>
+        ${comparison ? `
+          <a class="hub-section-compare" href="#/compare/${comparison.slug}">
+            Compare all
+            <span class="hub-section-compare-arrow" aria-hidden="true">&#x2192;</span>
+          </a>
+        ` : ''}
+        <span class="hub-section-count">${fws.length} tools</span>
+      </div>
+      <div class="hub-section-body">
+        ${renderFrameworkCards(fws, ci)}
+      </div>
+    </section>
+  `;
+}
+
+function renderFrameworkCards(fws, sectionIndex = 0) {
   return `
     <div class="hub-card-grid">
-      ${fws.map(fw => {
+      ${fws.map((fw, i) => {
         const cat = categories.find(c => c.id === fw.category);
         return `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
-             style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
+             style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
             <div class="hub-fw-card-top">
               <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
               <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
@@ -72,18 +108,30 @@ function renderFrameworkCards(fws) {
 function installHubInteractions() {
   const searchInput = document.getElementById('hub-search');
   const pills = document.querySelectorAll('.hub-pill');
+  const gallery = document.getElementById('hub-gallery');
   const results = document.getElementById('hub-results');
   const emptyState = document.getElementById('hub-empty-state');
   const clearBtn = emptyState?.querySelector('.hub-empty-clear');
 
   let activeFilter = 'all';
 
-  // --- Search ---
+  const showGallery = (filter) => {
+    results.style.display = 'none';
+    emptyState.style.display = 'none';
+    gallery.style.display = '';
+
+    gallery.querySelectorAll('.hub-section').forEach(section => {
+      const match = filter === 'all' || section.dataset.category === filter;
+      section.classList.toggle('hidden', !match);
+    });
+  };
+
+  // --- Search across all frameworks ---
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
 
     if (!query) {
-      showPillResults(activeFilter);
+      showGallery(activeFilter);
       return;
     }
 
@@ -91,6 +139,8 @@ function installHubInteractions() {
       fw.name.toLowerCase().includes(query) ||
       fw.description.toLowerCase().includes(query)
     );
+
+    gallery.style.display = 'none';
 
     if (matches.length === 0) {
       results.style.display = 'none';
@@ -115,32 +165,14 @@ function installHubInteractions() {
       activeFilter = pill.dataset.filter;
 
       if (searchInput) searchInput.value = '';
-      emptyState.style.display = 'none';
-
-      showPillResults(activeFilter);
+      showGallery(activeFilter);
     });
   });
 
-  // --- Clear button ---
+  // --- Clear search button ---
   clearBtn?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
-    activeFilter = null;
-    pills.forEach(p => {
-      p.classList.remove('active');
-      p.setAttribute('aria-selected', 'false');
-    });
-    emptyState.style.display = 'none';
-    results.style.display = 'none';
+    showGallery(activeFilter);
+    searchInput?.focus();
   });
-
-  function showPillResults(filter) {
-    if (filter === 'all') {
-      results.style.display = 'none';
-      return;
-    }
-
-    const fws = getFrameworksByCategory(filter);
-    results.style.display = '';
-    results.innerHTML = renderFrameworkCards(fws);
-  }
 }

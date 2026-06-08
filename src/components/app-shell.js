@@ -362,7 +362,7 @@ function handleRoute(route) {
 
     case 'category':
       removeInjectedStyles();
-      appContent?.removeAttribute('data-category');
+      // renderCategoryPage sets data-category on .app-content for the calm tint
       renderCategoryPage(content, route.params.id);
       break;
 
@@ -371,7 +371,7 @@ function handleRoute(route) {
       break;
 
     case 'compare':
-      appContent?.removeAttribute('data-category');
+      // renderComparePage sets data-category on .app-content for the calm tint
       renderComparePage(content, route.params.slug);
       break;
 

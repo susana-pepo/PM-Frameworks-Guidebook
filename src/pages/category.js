@@ -7,36 +7,49 @@ export function renderCategoryPage(container, categoryId) {
     return;
   }
 
+  // Tint the page background with the category fill (matches framework pages)
+  const appContent = container.closest('.app-content') || container;
+  appContent.setAttribute('data-category', categoryId);
+
   const fws = getFrameworksByCategory(categoryId);
   const comparison = getComparisonGuide(categoryId);
 
   container.innerHTML = `
-    <div style="margin-bottom:var(--space-6);">
-      <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-        <span style="font-size:28px;">${cat.emoji}</span>
-        <h1 style="font-size:var(--text-2xl);">${cat.name} Frameworks</h1>
-      </div>
-      <p style="color:var(--text-secondary);max-width:540px;">${cat.description}</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4);margin-bottom:var(--space-6);">
-      ${fws.map(fw => `
-        <a href="#/framework/${fw.slug}" class="card card-clickable" style="border-left:3px solid ${cat.color};text-decoration:none;">
-          <div style="font-size:28px;margin-bottom:var(--space-3);">${fw.emoji}</div>
-          <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">${fw.name}</h3>
-          <p style="font-size:var(--text-sm);color:var(--text-tertiary);line-height:var(--leading-normal);">${fw.description}</p>
-        </a>
-      `).join('')}
-    </div>
-
-    ${comparison ? `
-      <a href="#/compare/${comparison.slug}" class="card card-clickable" style="display:flex;align-items:center;gap:var(--space-3);text-decoration:none;border-left:3px solid ${cat.color};">
-        <span style="font-size:24px;">⚖️</span>
-        <div>
-          <h3 style="font-size:var(--text-md);">Compare All ${cat.name} Frameworks</h3>
-          <p style="font-size:var(--text-sm);color:var(--text-tertiary);">Side-by-side comparison with interactive picker</p>
+    <div class="cat-page" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
+      <div class="cat-page-head">
+        <span class="cat-page-emoji" aria-hidden="true">${cat.emoji}</span>
+        <div class="cat-page-text">
+          <h1 class="cat-page-title">${cat.name}</h1>
+          <p class="cat-page-desc">${cat.description}</p>
         </div>
-      </a>
-    ` : ''}
+      </div>
+
+      <div class="hub-card-grid cat-page-grid">
+        ${fws.map((fw, i) => `
+          <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
+             style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
+            <div class="hub-fw-card-top">
+              <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
+              <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
+            </div>
+            <h3 class="hub-fw-card-name">${fw.name}</h3>
+            <p class="hub-fw-card-desc">${fw.description}</p>
+            <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+          </a>
+        `).join('')}
+      </div>
+
+      ${comparison ? `
+        <a href="#/compare/${comparison.slug}" class="cat-compare-card card-clickable"
+           style="--accent-color:${cat.color};">
+          <span class="cat-compare-icon" aria-hidden="true">${cat.emoji}</span>
+          <span class="cat-compare-text">
+            <span class="cat-compare-title">Compare all ${cat.name} frameworks</span>
+            <span class="cat-compare-sub">Side-by-side comparison with an interactive picker</span>
+          </span>
+          <span class="cat-compare-arrow" aria-hidden="true">&#x2192;</span>
+        </a>
+      ` : ''}
+    </div>
   `;
 }

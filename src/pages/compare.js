@@ -32,6 +32,11 @@ export async function renderComparePage(container, slug) {
       </div>
       ${html}
     </div>`;
+
+    // Tint the page background with the category fill (matches framework pages)
+    const appContent = container.closest('.app-content') || container;
+    appContent.setAttribute('data-category', cat.id);
+
     // Strip leading emojis from H1 — the SPA badge already shows the emoji
     stripLeadingEmoji(container);
 
