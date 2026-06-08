@@ -1,5 +1,6 @@
 import { comparisonGuides, getCategory } from '../data/frameworks.js';
 import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } from '../utils/style-injector.js';
+import { buildReadingDocument } from './framework.js';
 
 // Cache loaded comparison content — stores { html, css }
 const contentCache = new Map();
@@ -26,9 +27,9 @@ export async function renderComparePage(container, slug) {
     // Inject comparison-specific styles (cleaned of globals + font overrides)
     injectStyles(css);
 
-    container.innerHTML = `<div class="fw-page compare-page" data-category="${cat.id}" style="--accent-color:${cat.color};">
+    container.innerHTML = `<div class="fw-page compare-page" data-category="${cat.id}" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
       <div class="fw-page-header">
-        <div class="fw-category-badge" style="background:${cat.colorLight};color:${cat.color};">${cat.emoji} ${cat.name}</div>
+        <div class="fw-category-badge">${cat.emoji} ${cat.name}</div>
       </div>
       ${html}
     </div>`;
@@ -44,6 +45,10 @@ export async function renderComparePage(container, slug) {
     cleanInlineFonts(container);
 
     executeScripts(container);
+
+    // Rebuild into the same reading document as framework pages (wide measure
+    // so the comparison tables get full width).
+    buildReadingDocument(container, { slug: guide.slug, emoji: cat.emoji, wide: true });
   } catch (err) {
     container.innerHTML = `
       <div style="text-align:center;padding:var(--space-16) 0;">

@@ -13,6 +13,32 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* ---- GRAIN OVERLAY ----
+   A fixed, non-interactive film of fine fractal noise gives every surface a
+   subtle paper tooth — the difference between a flat digital fill and a
+   printed page. Kept near-imperceptible (text stays razor sharp) but it
+   removes the sterile flatness that reads as "cheap". */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+[data-theme="dark"] body::after {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { opacity: 0.025; }
+}
+
 /* ---- HEADINGS ----
    Editorial display voice in sentence case. The previous all-caps treatment
    was loud and slower to read (worse for the AuDHD primary user); Bricolage

@@ -58,13 +58,13 @@
 .btn:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-strong);
-  transform: translate(-2px, -2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
 .btn:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-primary {
@@ -120,13 +120,13 @@
 
 .card-clickable:hover {
   border-color: var(--border-strong);
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .card-clickable:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
   transition-duration: var(--duration-fast);
 }
 
@@ -354,24 +354,36 @@
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  padding-bottom: var(--space-3);
+  padding-bottom: var(--space-4);
   margin-bottom: var(--space-5);
-  border-bottom: var(--bw-thin) solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-default);
   text-align: left;
+  position: relative;
 }
 
-/* Accent tab marker on the left of each section header */
+/* A short category-colored rule bleeds out of the header bottom edge — a
+   binder-tab index marker that ties each section to its color. */
+.hub-section-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 56px;
+  height: 2px;
+  background: var(--section-color, var(--text-primary));
+  border-radius: var(--radius-full);
+}
+
 .hub-section-emoji {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  font-size: 22px;
+  width: 44px;
+  height: 44px;
+  font-size: 23px;
   border-radius: var(--radius-md);
   background: var(--section-bg, var(--bg-muted));
-  border: var(--bw-thin) solid var(--border-default);
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--section-color, var(--border-default)) 24%, transparent);
   flex-shrink: 0;
 }
 
@@ -380,15 +392,15 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .hub-section-title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.025em;
+  line-height: 1.0;
 }
 
 .hub-section-desc {
@@ -400,21 +412,26 @@
 .hub-section-compare {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-full);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 11px;
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--section-color, var(--text-secondary));
+  background: color-mix(in oklab, var(--section-color, var(--bg-muted)) 9%, transparent);
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: gap var(--duration-fast) var(--ease-default);
+  transition: background var(--duration-fast) var(--ease-default),
+              gap var(--duration-fast) var(--ease-default);
 }
 
 .hub-section-compare:hover {
-  gap: 8px;
+  gap: 9px;
+  background: color-mix(in oklab, var(--section-color, var(--bg-muted)) 16%, transparent);
 }
 
 .hub-section-compare-arrow {
@@ -422,28 +439,30 @@
 }
 
 .hub-section-count {
-  font-size: var(--text-xs);
+  font-size: 11px;
   font-weight: var(--weight-semibold);
   color: var(--text-muted);
   white-space: nowrap;
   font-family: var(--font-mono);
   padding-left: var(--space-3);
-  border-left: 1px solid var(--border-subtle);
+  margin-left: var(--space-1);
+  border-left: 1px solid var(--border-default);
 }
 
 /* ---- Framework cards ---- */
 .hub-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
   gap: var(--space-4);
 }
 
 .hub-fw-card {
   display: flex;
   flex-direction: column;
+  gap: var(--space-3);
   padding: var(--space-5);
   background: var(--bg-card);
-  border: var(--bw) solid var(--border-default);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   text-decoration: none;
   transition:
@@ -451,50 +470,38 @@
     box-shadow var(--duration-slow) var(--ease-premium),
     border-color var(--duration-fast) var(--ease-default);
   position: relative;
-  overflow: hidden;
-  border-top: 5px solid var(--accent-color, var(--border-default));
   box-shadow: var(--shadow-sm);
 }
 
 .hub-fw-card:hover {
   border-color: var(--border-strong);
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Emoji kinetic — playful tilt + scale on card hover */
-.hub-fw-card-emoji {
-  transition: transform var(--duration-slow) var(--ease-spring);
-}
-
-.hub-fw-card:hover .hub-fw-card-emoji {
-  transform: scale(1.12) rotate(-6deg);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 .hub-fw-card:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  transform: translateY(-1px);
   transition-duration: var(--duration-fast);
 }
 
-.hub-fw-card-top {
-  display: flex;
+/* Emoji sits in a soft category-tinted tile — the category signal, replacing
+   the old floating dot + top stripe (both generic, both removed). */
+.hub-fw-card-tile {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-3);
-}
-
-.hub-fw-card-emoji {
-  font-size: 36px;
+  justify-content: center;
+  font-size: 25px;
   line-height: 1;
+  border-radius: var(--radius-md);
+  background: var(--accent-light, var(--bg-muted));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, transparent);
+  transition: transform var(--duration-slow) var(--ease-spring);
 }
 
-.hub-fw-card-cat-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  opacity: 0.6;
+.hub-fw-card:hover .hub-fw-card-tile {
+  transform: scale(1.06) rotate(-4deg);
 }
 
 .hub-fw-card-name {
@@ -502,27 +509,52 @@
   font-size: var(--text-md);
   font-weight: var(--weight-bold);
   letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: var(--space-2);
+  line-height: 1.15;
   color: var(--text-primary);
 }
 
 .hub-fw-card-desc {
   font-size: var(--text-sm);
   color: var(--text-tertiary);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-snug);
   flex: 1;
 }
 
+/* Pinned footer row — category label + arrow. Gives every card a clean
+   baseline regardless of description length, and removes the dead space. */
+.hub-fw-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hub-fw-card-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent-color, var(--text-muted));
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .hub-fw-card-arrow {
-  display: block;
-  margin-top: var(--space-3);
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
+  line-height: 1;
   color: var(--accent-color, var(--text-muted));
   opacity: 0;
-  transform: translateX(-4px);
-  transition: all var(--duration-fast) var(--ease-default);
+  transform: translateX(-5px);
+  transition: opacity var(--duration-normal) var(--ease-default),
+              transform var(--duration-normal) var(--ease-default);
   font-weight: var(--weight-bold);
+  flex-shrink: 0;
 }
 
 .hub-fw-card:hover .hub-fw-card-arrow {
@@ -557,7 +589,7 @@
   background: var(--bg-card-hover);
   border-color: var(--border-strong);
   color: var(--text-primary);
-  transform: translate(-2px, -2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
@@ -580,45 +612,90 @@
    CATEGORY PAGE
    ============================================ */
 .cat-page {
-  padding-top: var(--space-4);
+  padding-top: var(--space-5);
 }
 
 .cat-page-head {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-6);
-  border-bottom: var(--bw-thin) solid var(--border-subtle);
+  gap: var(--space-5);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .cat-page-emoji {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  font-size: 30px;
+  width: 68px;
+  height: 68px;
+  font-size: 36px;
   border-radius: var(--radius-lg);
   background: var(--accent-light, var(--bg-muted));
-  border: var(--bw) solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, transparent),
+    var(--shadow-sm);
   flex-shrink: 0;
 }
 
 .cat-page-text {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cat-page-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-color, var(--text-muted));
 }
 
 .cat-page-title {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-1);
+  font-size: var(--text-3xl);
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
 
 .cat-page-desc {
   font-size: var(--text-md);
   color: var(--text-secondary);
   line-height: var(--leading-normal);
+  max-width: 60ch;
+}
+
+/* "Reach for these when…" strip — fills the page and adds useful context */
+.cat-page-when {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--accent-color, var(--bg-card)) 7%, var(--bg-card));
+  border: 1px solid color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, var(--border-default));
+}
+
+.cat-when-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent-color, var(--text-muted));
+  flex-shrink: 0;
+}
+
+.cat-when-text {
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  line-height: var(--leading-snug);
 }
 
 .cat-page-grid {
@@ -629,23 +706,25 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-5) var(--space-5);
   background: var(--bg-card);
-  border: var(--bw) solid var(--border-default);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
-  transition: all var(--duration-normal) var(--ease-default);
+  transition: transform var(--duration-slow) var(--ease-premium),
+              box-shadow var(--duration-slow) var(--ease-premium),
+              border-color var(--duration-fast) var(--ease-default);
 }
 
 .cat-compare-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
 }
 
 .cat-compare-card:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  transform: translateY(-1px);
   transition-duration: var(--duration-fast);
 }
 
@@ -653,13 +732,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  font-size: 22px;
+  width: 48px;
+  height: 48px;
+  font-size: 23px;
   border-radius: var(--radius-md);
   background: var(--accent-light, var(--bg-muted));
-  border: var(--bw-thin) solid var(--border-default);
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, transparent);
   flex-shrink: 0;
 }
 

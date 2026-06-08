@@ -4,8 +4,8 @@ import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts } 
 /**
  * Framework page renderer.
  * Loads the original HTML source file, extracts the body content,
- * reinjects cleaned CSS (with neo-brutalist overrides stripped),
- * and injects it into the content area with the original JS preserved.
+ * reinjects cleaned CSS (with font/global overrides stripped), and then
+ * rebuilds it into a single editorial reading document.
  */
 
 // Cache loaded framework content — stores { html, css }
@@ -22,9 +22,9 @@ export async function renderFrameworkPage(container, slug, initialStep) {
 
   // Show loading state
   container.innerHTML = `
-    <div style="text-align:center;padding:var(--space-16) 0;color:var(--text-tertiary);">
-      <div style="font-size:36px;margin-bottom:var(--space-3);">${fw.emoji}</div>
-      <p>Loading ${fw.name}...</p>
+    <div class="fw-loading" role="status" aria-live="polite">
+      <div class="fw-loading-emoji">${fw.emoji}</div>
+      <p>Loading ${fw.name}…</p>
     </div>
   `;
 
@@ -34,9 +34,9 @@ export async function renderFrameworkPage(container, slug, initialStep) {
     // Inject framework-specific styles (cleaned of globals + font overrides)
     injectStyles(css);
 
-    container.innerHTML = `<div class="fw-page" data-category="${cat.id}" style="--accent-color:${cat.color};">
+    container.innerHTML = `<div class="fw-page" data-category="${cat.id}" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
       <div class="fw-page-header">
-        <div class="fw-category-badge" style="background:${cat.colorLight};color:${cat.color};">${cat.emoji} ${cat.name}</div>
+        <div class="fw-category-badge">${cat.emoji} ${cat.name}</div>
       </div>
       ${html}
     </div>`;
@@ -45,7 +45,7 @@ export async function renderFrameworkPage(container, slug, initialStep) {
     const appContent = container.closest('.app-content') || container;
     appContent.setAttribute('data-category', cat.id);
 
-    // Strip leading emojis from H1 — the SPA badge already shows the emoji
+    // Strip leading emojis from H1 — the SPA identity already shows the emoji
     stripLeadingEmoji(container);
 
     // Clean inline font-family references (480 elements across HTML files)
@@ -54,16 +54,14 @@ export async function renderFrameworkPage(container, slug, initialStep) {
     // Execute any inline scripts from the loaded content
     executeScripts(container);
 
-    // Install accordion system — transforms tabs into collapsed step navigation
-    installAccordionSystem(container, slug, initialStep);
-
-    // Install full-bleed hero — wraps header in edge-to-edge category-colored banner
-    installFullBleedHero(container);
+    // Rebuild the raw content into the editorial reading document
+    buildReadingDocument(container, { slug, emoji: fw.emoji, title: fw.name, initialStep });
   } catch (err) {
     container.innerHTML = `
-      <div style="text-align:center;padding:var(--space-16) 0;">
-        <p style="color:var(--color-error);margin-bottom:var(--space-2);">Failed to load framework content.</p>
-        <p style="font-size:var(--text-sm);color:var(--text-tertiary);">${err.message}</p>
+      <div class="fw-error" role="alert">
+        <p class="fw-error-title">We couldn't load this framework.</p>
+        <p class="fw-error-detail">${err.message}</p>
+        <a class="btn btn-sm" href="#/">Back to all frameworks</a>
       </div>
     `;
   }
@@ -136,8 +134,8 @@ function executeScripts(container) {
 
 /**
  * Strip leading emoji characters from the H1 heading.
- * The SPA-rendered category badge already shows the emoji,
- * so duplicating it in the title is redundant.
+ * The SPA-rendered identity already shows the emoji, so duplicating it in
+ * the title is redundant.
  */
 function stripLeadingEmoji(container) {
   const h1 = container.querySelector('.header h1');
@@ -146,478 +144,286 @@ function stripLeadingEmoji(container) {
   // Match leading emoji sequences (including compound emoji like 🏴‍☠️)
   // followed by optional whitespace
   h1.textContent = h1.textContent.replace(
-    /^[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200D\uFE0F]+\s*/u,
+    /^[\p{Emoji_Presentation}\p{Extended_Pictographic}‍️]+\s*/u,
     ''
   );
 }
 
 /**
- * Two-column layout:
+ * Build a reading document from raw tabbed source content.
  *
- * LEFT (narrow, centered): Badge + emoji + title + subtitle — identity card
- * RIGHT (wide):            Window frame with "At a Glance" as first section
- *                          containing hero visualizer + TLDR, then regular sections
+ * The source HTML ships as a tabbed micro-site (a `.journey-nav` rail whose
+ * buttons toggle one `.panel`/`.section` at a time). That produced an empty
+ * identity column, an overflowing tab strip, and acres of dead paper. This
+ * rebuilds it into one continuous editorial document:
  *
- * The window opens to "At a Glance" by default. Bookmarks bar inside the
- * window lets users navigate between sections.
- */
-function installFullBleedHero(container) {
-  const fwPage = container.querySelector('.fw-page');
-  if (!fwPage) return;
-
-  const catId = fwPage.dataset.category;
-  if (!catId) return;
-
-  const pageHeader = fwPage.querySelector('.fw-page-header');
-  const header = fwPage.querySelector('.header');
-  if (!pageHeader && !header) return;
-
-  const slug = fwPage.closest('[data-fw-slug]')?.dataset.fwSlug
-    || window.location.hash.match(/framework\/([^/]+)/)?.[1];
-  const fw = slug ? getFramework(slug) : null;
-
-  // Create full-bleed wrapper
-  const heroBleed = document.createElement('div');
-  heroBleed.className = 'fw-hero-bleed';
-  heroBleed.setAttribute('data-category', catId);
-
-  // ---- SPLIT LAYOUT (two-column grid) ----
-  const splitLayout = document.createElement('div');
-  splitLayout.className = 'fw-split-layout';
-
-  // ---- LEFT COLUMN: identity card (narrow, centered) ----
-  const leftCol = document.createElement('div');
-  leftCol.className = 'fw-split-left';
-
-  if (pageHeader) leftCol.appendChild(pageHeader);
-
-  if (fw?.emoji) {
-    const emojiEl = document.createElement('div');
-    emojiEl.className = 'fw-hero-emoji';
-    emojiEl.setAttribute('aria-hidden', 'true');
-    emojiEl.textContent = fw.emoji;
-    leftCol.appendChild(emojiEl);
-  }
-
-  // Move h1 + subtitle from .header into left column
-  if (header) {
-    const h1 = header.querySelector('h1');
-    const subtitle = header.querySelector('p, .subtitle, .sub');
-    if (h1) {
-      // Keep the identity title consistent with the nav + window chrome
-      if (fw?.name) h1.textContent = fw.name;
-      leftCol.appendChild(h1);
-    }
-    if (subtitle) leftCol.appendChild(subtitle);
-  }
-
-  // ---- RIGHT COLUMN: window frame ----
-  const rightCol = document.createElement('div');
-  rightCol.className = 'fw-split-right';
-
-  // Move the accordion nav (window frame) into right column
-  const accordionNav = fwPage.querySelector('.accordion-nav');
-  if (accordionNav) {
-    // ---- BUILD "AT A GLANCE" PANE (hero visualizer + TLDR) ----
-    const glancePane = document.createElement('div');
-    glancePane.className = 'window-pane at-a-glance-pane';
-    glancePane.id = `accordion-panel-${slug}-glance`;
-    glancePane.setAttribute('role', 'tabpanel');
-    glancePane.setAttribute('data-step', 'glance');
-
-    // Move hero visualizer into the glance pane
-    const fwContainer = fwPage.querySelector('.container, .wrapper');
-    if (fwContainer) {
-      const vizSelectors = [
-        '.formula-bar', '.matrix-hero', '.map-hero', '.kano-hero',
-        '.curve-box', '.circles-hero', '.phase-hero', '.anatomy-diagram',
-      ];
-
-      let foundViz = false;
-      for (const sel of vizSelectors) {
-        const viz = fwContainer.querySelector(sel);
-        if (viz) {
-          glancePane.appendChild(viz);
-          foundViz = true;
-        }
-      }
-
-      // Fallback: grab remaining children before .journey-nav
-      if (!foundViz) {
-        const journeyNav = fwContainer.querySelector('.journey-nav');
-        const skipClasses = ['journey-nav', 'accordion-nav', 'footer', 'nav-btns',
-                             'one-liner', 'tldr-section', 'tldr', 'fw-tldr-card',
-                             'progress-bar', 'back-link'];
-        const children = Array.from(fwContainer.children);
-        const journeyIdx = journeyNav ? children.indexOf(journeyNav) : children.length;
-
-        for (let i = 0; i < journeyIdx; i++) {
-          const child = children[i];
-          if (skipClasses.some(cls => child.classList.contains(cls))) continue;
-          if (child === header || child.classList.contains('header')) continue;
-          if (child.tagName === 'SCRIPT') continue;
-          glancePane.appendChild(child);
-          foundViz = true;
-        }
-      }
-    }
-
-    // Move TLDR card into glance pane
-    const tldrCard = fwPage.querySelector('.fw-tldr-card');
-    if (tldrCard) glancePane.appendChild(tldrCard);
-
-    // Insert glance pane as FIRST section in the window content area
-    const windowContentArea = accordionNav.querySelector('.window-content-area');
-    if (windowContentArea) {
-      windowContentArea.prepend(glancePane);
-    }
-
-    // If "At a Glance" bookmark is already active (set by installAccordionSystem),
-    // activate the pane too (it didn't exist when expandStep('glance') first ran)
-    const glanceBookmark = accordionNav.querySelector('.glance-bookmark.active');
-    if (glanceBookmark) {
-      glancePane.classList.add('open');
-    }
-
-    rightCol.appendChild(accordionNav);
-  }
-
-  splitLayout.appendChild(leftCol);
-  splitLayout.appendChild(rightCol);
-  heroBleed.appendChild(splitLayout);
-
-  fwPage.prepend(heroBleed);
-}
-
-/**
- * Content-type metadata for accordion sections.
- * Maps common step labels to icons, types, and descriptions.
- */
-const STEP_META = {
-  'Understand': { icon: '📖', type: 'Reading', desc: 'Core concept explained' },
-  'Concept': { icon: '📖', type: 'Reading', desc: 'What it is and why it matters' },
-  'Score': { icon: '🔢', type: 'Interactive', desc: 'Rate and calculate scores' },
-  'Funnel': { icon: '📊', type: 'Reading', desc: 'Visualize the stages' },
-  'Factors': { icon: '📖', type: 'Reading', desc: 'The key components' },
-  'Components': { icon: '📖', type: 'Reading', desc: 'Building blocks explained' },
-  'Forces': { icon: '📖', type: 'Reading', desc: 'The forces at play' },
-  'Steps': { icon: '📖', type: 'Reading', desc: 'Step-by-step process' },
-  'Stages': { icon: '📖', type: 'Reading', desc: 'The stages of the process' },
-  'Quadrants': { icon: '📊', type: 'Reading', desc: 'Map the four quadrants' },
-  'Canvas': { icon: '🧩', type: 'Interactive', desc: 'Fill in the canvas' },
-  'Metrics': { icon: '📊', type: 'Reading', desc: 'Key metrics to track' },
-  'Loops': { icon: '📖', type: 'Reading', desc: 'How growth loops work' },
-  'Example': { icon: '📋', type: 'Case Study', desc: 'Real-world application' },
-  'Examples': { icon: '📋', type: 'Case Study', desc: 'Real-world examples' },
-  'Try It': { icon: '🔧', type: 'Interactive', desc: 'Hands-on practice tool' },
-  'Builder': { icon: '🔧', type: 'Builder', desc: 'Build your own analysis' },
-  'Analyzer': { icon: '🔧', type: 'Builder', desc: 'Analyze your situation' },
-  'Calculator': { icon: '🔧', type: 'Builder', desc: 'Calculate your scores' },
-  'Plotter': { icon: '🔧', type: 'Builder', desc: 'Plot on the matrix' },
-  'Plot It': { icon: '🔧', type: 'Interactive', desc: 'Map it visually' },
-  'Map It': { icon: '🔧', type: 'Interactive', desc: 'Build your map' },
-  'When': { icon: '⏰', type: 'Reference', desc: 'When to use — and when not to' },
-  'Template': { icon: '🧩', type: 'Template', desc: 'Ready-to-use template' },
-  'Pitfalls': { icon: '⚠️', type: 'Tips', desc: 'Common mistakes to avoid' },
-  'After': { icon: '🔗', type: 'Reference', desc: 'Next steps and related frameworks' },
-  'Session': { icon: '📋', type: 'Guide', desc: 'Run a team session' },
-  'Quiz': { icon: '❓', type: 'Quiz', desc: 'Test your understanding' },
-  'Toolkit': { icon: '🧰', type: 'Reference', desc: 'Tools and resources' },
-  'Deep Dive': { icon: '🔬', type: 'Reading', desc: 'In-depth exploration' },
-  'Strategy': { icon: '♟️', type: 'Reading', desc: 'Strategic considerations' },
-  'Explore': { icon: '🔍', type: 'Reading', desc: 'Explore the details' },
-  'Decide': { icon: '🎯', type: 'Interactive', desc: 'Make your choice' },
-};
-
-/** Get step metadata by matching label to known patterns */
-function getStepMeta(label) {
-  // Exact match first
-  if (STEP_META[label]) return STEP_META[label];
-
-  // Partial match (label contains a known key)
-  for (const [key, meta] of Object.entries(STEP_META)) {
-    if (label.toLowerCase().includes(key.toLowerCase())) return meta;
-  }
-
-  // Default fallback
-  return { icon: '📄', type: 'Reading', desc: '' };
-}
-
-/** Get CSS class for content-type pill */
-function getTypePillClass(type) {
-  switch (type) {
-    case 'Interactive':
-    case 'Builder': return 'pill-interactive';
-    case 'Quiz': return 'pill-quiz';
-    case 'Template': return 'pill-template';
-    case 'Case Study': return 'pill-example';
-    case 'Reference':
-    case 'Tips':
-    case 'Guide': return 'pill-reference';
-    default: return 'pill-reading';
-  }
-}
-
-/**
- * Window Frame System — persistent window with bookmarks bar.
+ *   ┌──────────────────────────────────────────────┐
+ *   │  HEADER BAND — emoji · badge · title · TL;DR  │
+ *   ├───────────────┬──────────────────────────────┤
+ *   │  On this page │  ★ At a glance                │
+ *   │  ★ At a glance│  01 … section …               │
+ *   │  01 Understand│  02 … section …               │
+ *   │  02 Score …   │  (all sections, one scroll)   │
+ *   └───────────────┴──────────────────────────────┘
  *
- * The window has "At a Glance" (⭐) as the FIRST bookmark, containing the
- * hero visualizer + TLDR. Remaining bookmarks are the regular content sections.
- * Opens to "At a Glance" by default.
+ * The left column is now a useful sticky contents rail (scroll-spied), not
+ * decoration. Every section is visible, so the page reads top-to-bottom and
+ * fills its width. All original interactive widgets keep working — their DOM
+ * and scripts are preserved, only re-parented. Shared by framework pages and
+ * comparison guides (which set `wide` so their wide tables get full measure).
+ *
+ * @param {HTMLElement} container
+ * @param {object} opts
+ * @param {string}  opts.slug         used for section ids + scroll targets
+ * @param {string}  [opts.emoji]      identity emoji shown in the header tile
+ * @param {string}  [opts.title]      identity title; falls back to source <h1>
+ * @param {number}  [opts.initialStep] deep-link section index to scroll to
+ * @param {boolean} [opts.wide]       relax the reading measure (comparison tables)
  */
-function installAccordionSystem(container, slug, initialStep) {
+export function buildReadingDocument(container, opts = {}) {
+  const { slug, emoji, title, initialStep, wide = false } = opts;
   const fwPage = container.querySelector('.fw-page');
   if (!fwPage) return;
 
   const journeyNav = fwPage.querySelector('.journey-nav');
-  if (!journeyNav) return;
+  const jBtns = journeyNav ? Array.from(journeyNav.querySelectorAll('.j-btn')) : [];
 
-  const jBtns = Array.from(journeyNav.querySelectorAll('.j-btn'));
+  // No tab rail → leave the content as a plain scroll (defensive; all 24
+  // framework files ship a journey nav).
   if (jBtns.length === 0) return;
 
-  // Collect all panels/sections that the tabs control
+  // ---- Resolve each tab's target panel (same resolution the tabs used) ----
   const panels = jBtns.map((btn, i) => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
+    const onclick = btn.getAttribute('onclick') || '';
     let panel = null;
 
-    const goToMatch = onclickAttr.match(/goTo\(['"]([^'"]+)['"]\)/);
-    if (goToMatch) {
-      panel = fwPage.querySelector(`#${goToMatch[1]}`);
+    const goToMatch = onclick.match(/goTo\(['"]([^'"]+)['"]\)/);
+    if (goToMatch) panel = fwPage.querySelector(`#${CSS.escape(goToMatch[1])}`);
+
+    if (!panel) {
+      const goMatch = onclick.match(/go\((\d+)\)/);
+      if (goMatch) panel = fwPage.querySelectorAll('.section')[parseInt(goMatch[1], 10)] || null;
     }
 
     if (!panel) {
-      const goMatch = onclickAttr.match(/go\((\d+)\)/);
-      if (goMatch) {
-        const idx = parseInt(goMatch[1]);
-        const sections = fwPage.querySelectorAll('.section');
-        panel = sections[idx] || null;
-      }
-    }
-
-    if (!panel) {
-      const allPanels = fwPage.querySelectorAll('.panel, .section');
-      panel = allPanels[i] || null;
+      const all = fwPage.querySelectorAll('.panel, .section');
+      panel = all[i] || null;
     }
 
     return panel;
   });
 
-  // Extract step labels
+  // ---- Section labels (number + short label) from the tab buttons ----
   const steps = jBtns.map((btn, i) => {
     const stepEl = btn.querySelector('.j-step');
-    const stepNum = stepEl ? stepEl.textContent.trim() : String(i + 1).padStart(2, '0');
+    const num = stepEl ? stepEl.textContent.trim() : String(i + 1).padStart(2, '0');
     const clone = btn.cloneNode(true);
-    const cloneStep = clone.querySelector('.j-step');
-    if (cloneStep) cloneStep.remove();
-    const label = clone.textContent.trim();
-    return { num: stepNum, label };
+    clone.querySelector('.j-step')?.remove();
+    return { num, label: clone.textContent.trim() };
   });
 
-  // Collapse all panels
-  panels.forEach(p => {
-    if (!p) return;
-    p.classList.remove('active');
-    p.style.display = 'none';
-  });
+  // ---- Header band pieces ----
+  const pageHeader = fwPage.querySelector('.fw-page-header');
+  const badge = pageHeader?.querySelector('.fw-category-badge');
+  const header = fwPage.querySelector('.header');
+  const subtitle = header?.querySelector('p, .subtitle, .sub');
+  const tldr = fwPage.querySelector('.one-liner, .tldr-section, .tldr');
 
-  fwPage.classList.add('accordion-mode');
-
-  // ====== BUILD THE WINDOW FRAME ======
-  const accordionNav = document.createElement('div');
-  accordionNav.className = 'accordion-nav';
-  accordionNav.setAttribute('role', 'region');
-  accordionNav.setAttribute('aria-label', 'Framework sections');
-
-  // ---- TAB RAIL ----
-  // (No fake macOS title bar — the tab rail itself is the chrome. Identity
-  // lives once, in the left identity column.)
-  // ---- BOOKMARKS BAR ----
-  const bookmarksBar = document.createElement('div');
-  bookmarksBar.className = 'window-bookmarks-bar';
-  bookmarksBar.setAttribute('role', 'tablist');
-
-  // "At a Glance" bookmark (index -1 internally, displayed first)
-  const glanceBookmark = document.createElement('button');
-  glanceBookmark.className = 'window-bookmark glance-bookmark';
-  glanceBookmark.setAttribute('role', 'tab');
-  glanceBookmark.setAttribute('aria-selected', 'false');
-  glanceBookmark.setAttribute('data-step-index', 'glance');
-  glanceBookmark.innerHTML = `
-    <span class="bookmark-icon" aria-hidden="true">&#9733;</span>
-    <span class="bookmark-label">At a Glance</span>
-  `;
-  glanceBookmark.addEventListener('click', () => expandStep('glance'));
-  bookmarksBar.appendChild(glanceBookmark);
-
-  // Section bookmarks
-  steps.forEach((step, i) => {
-    const panel = panels[i];
-    if (!panel) return;
-
-    const bookmark = document.createElement('button');
-    bookmark.className = 'window-bookmark';
-    bookmark.setAttribute('role', 'tab');
-    bookmark.setAttribute('aria-selected', 'false');
-    bookmark.setAttribute('data-step-index', String(i));
-    bookmark.innerHTML = `
-      <span class="bookmark-icon" aria-hidden="true">${step.num}</span>
-      <span class="bookmark-label">${step.label}</span>
-    `;
-
-    bookmark.addEventListener('click', () => {
-      if (!bookmark.classList.contains('active')) {
-        expandStep(i);
+  // ---- "At a glance" visual(s): the hero diagram from the source ----
+  const glanceNodes = [];
+  const fwContainer = fwPage.querySelector('.container, .wrapper');
+  if (fwContainer) {
+    const vizSelectors = [
+      '.formula-bar', '.matrix-hero', '.map-hero', '.kano-hero',
+      '.curve-box', '.circles-hero', '.phase-hero', '.anatomy-diagram',
+    ];
+    let found = false;
+    for (const sel of vizSelectors) {
+      const viz = fwContainer.querySelector(sel);
+      if (viz) { glanceNodes.push(viz); found = true; }
+    }
+    // Fallback: grab anything before the tab rail that isn't chrome
+    if (!found) {
+      const skip = ['journey-nav', 'accordion-nav', 'footer', 'nav-btns', 'panel-nav',
+        'one-liner', 'tldr-section', 'tldr', 'fw-tldr-card', 'progress-bar', 'back-link', 'header'];
+      const kids = Array.from(fwContainer.children);
+      const navIdx = journeyNav ? kids.indexOf(journeyNav) : kids.length;
+      for (let i = 0; i < navIdx; i++) {
+        const c = kids[i];
+        if (c === header || c.tagName === 'SCRIPT') continue;
+        if (skip.some(cl => c.classList.contains(cl))) continue;
+        glanceNodes.push(c);
       }
+    }
+  }
+
+  // ===== ASSEMBLE THE DOCUMENT =====
+  const doc = document.createElement('div');
+  doc.className = 'fw-doc' + (wide ? ' is-wide' : '');
+  // --accent-color / --accent-light are inherited from .fw-page's inline style.
+
+  // ---- Header band ----
+  const head = document.createElement('header');
+  head.className = 'fw-doc-header';
+
+  const ident = document.createElement('div');
+  ident.className = 'fw-doc-ident';
+
+  if (emoji) {
+    const tile = document.createElement('span');
+    tile.className = 'fw-doc-emoji';
+    tile.setAttribute('aria-hidden', 'true');
+    tile.textContent = emoji;
+    ident.appendChild(tile);
+  }
+
+  const identText = document.createElement('div');
+  identText.className = 'fw-doc-ident-text';
+  if (badge) identText.appendChild(badge);
+  const titleEl = document.createElement('h1');
+  titleEl.className = 'fw-doc-title';
+  titleEl.textContent = title || header?.querySelector('h1')?.textContent?.trim() || slug;
+  identText.appendChild(titleEl);
+  if (subtitle) {
+    subtitle.classList.add('fw-doc-subtitle');
+    identText.appendChild(subtitle);
+  }
+  ident.appendChild(identText);
+  head.appendChild(ident);
+
+  if (tldr) {
+    const tldrWrap = document.createElement('div');
+    tldrWrap.className = 'fw-doc-tldr';
+    tldrWrap.appendChild(tldr);
+    head.appendChild(tldrWrap);
+  }
+
+  doc.appendChild(head);
+
+  // ---- Body: sticky rail + stacked document ----
+  const body = document.createElement('div');
+  body.className = 'fw-doc-body';
+
+  const rail = document.createElement('nav');
+  rail.className = 'fw-rail';
+  rail.setAttribute('aria-label', 'Sections of this guide');
+  rail.innerHTML = '<p class="fw-rail-title">On this page</p>';
+  const railList = document.createElement('ul');
+  railList.className = 'fw-rail-list';
+  rail.appendChild(railList);
+
+  const main = document.createElement('div');
+  main.className = 'fw-doc-main';
+
+  const sections = [];
+
+  const addSection = (id, num, label, nodes, extraClass) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'fw-rail-link';
+    a.href = `#${id}`;
+    a.dataset.target = id;
+    a.innerHTML = '<span class="fw-rail-num" aria-hidden="true"></span><span class="fw-rail-label"></span>';
+    a.querySelector('.fw-rail-num').textContent = num;
+    a.querySelector('.fw-rail-label').textContent = label;
+    li.appendChild(a);
+    railList.appendChild(li);
+
+    const sec = document.createElement('section');
+    sec.className = 'fw-doc-section' + (extraClass ? ' ' + extraClass : '');
+    sec.id = id;
+    const marker = document.createElement('div');
+    marker.className = 'fw-doc-marker';
+    marker.innerHTML = '<span class="fw-doc-marker-num" aria-hidden="true"></span><span class="fw-doc-marker-label"></span>';
+    marker.querySelector('.fw-doc-marker-num').textContent = num;
+    marker.querySelector('.fw-doc-marker-label').textContent = label;
+    sec.appendChild(marker);
+
+    nodes.forEach(n => {
+      if (!n) return;
+      n.style.display = '';
+      n.classList.add('active');
+      sec.appendChild(n);
     });
 
-    // Keyboard navigation
-    bookmark.addEventListener('keydown', (e) => {
-      const allBookmarks = Array.from(bookmarksBar.querySelectorAll('.window-bookmark'));
-      const currentIdx = allBookmarks.indexOf(bookmark);
-
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        (allBookmarks[currentIdx + 1] || allBookmarks[0]).focus();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        (allBookmarks[currentIdx - 1] || allBookmarks[allBookmarks.length - 1]).focus();
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        allBookmarks[0].focus();
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        allBookmarks[allBookmarks.length - 1].focus();
-      }
-    });
-
-    bookmarksBar.appendChild(bookmark);
-  });
-
-  accordionNav.appendChild(bookmarksBar);
-
-  // ---- WINDOW CONTENT AREA ----
-  const windowContent = document.createElement('div');
-  windowContent.className = 'window-content-area';
-
-  // Section panes (At a Glance pane will be prepended by installFullBleedHero)
-  steps.forEach((step, i) => {
-    const panel = panels[i];
-    if (!panel) return;
-
-    const paneWrapper = document.createElement('div');
-    paneWrapper.className = 'window-pane';
-    paneWrapper.id = `accordion-panel-${slug}-${i}`;
-    paneWrapper.setAttribute('role', 'tabpanel');
-    paneWrapper.setAttribute('data-step', String(i));
-
-    panel.style.display = '';
-    panel.classList.add('active');
-    paneWrapper.appendChild(panel);
-
-    windowContent.appendChild(paneWrapper);
-  });
-
-  accordionNav.appendChild(windowContent);
-
-  // Insert after journey-nav
-  journeyNav.after(accordionNav);
-
-  // Scroll affordance — fade the bookmark rail's edges when tabs overflow,
-  // signalling there's more to scroll to.
-  const updateBookmarkScroll = () => {
-    const max = bookmarksBar.scrollWidth - bookmarksBar.clientWidth;
-    const left = bookmarksBar.scrollLeft;
-    bookmarksBar.classList.toggle('overflow-left', left > 4);
-    bookmarksBar.classList.toggle('overflow-right', left < max - 4);
+    main.appendChild(sec);
+    sections.push({ id, link: a, sec });
   };
-  bookmarksBar.addEventListener('scroll', updateBookmarkScroll, { passive: true });
-  window.addEventListener('resize', updateBookmarkScroll);
-  requestAnimationFrame(updateBookmarkScroll);
 
-  // Place TLDR card (will be moved into At a Glance pane by installFullBleedHero)
-  installTldrCard(fwPage, accordionNav);
+  if (glanceNodes.length) {
+    addSection(`sec-${slug}-glance`, '★', 'At a glance', glanceNodes, 'fw-doc-glance');
+  }
 
-  // Override global goTo/go. Guard against firing after this page has been
-  // swapped out — a stale closure must not hijack the next route.
-  const isLive = () => document.body.contains(accordionNav);
+  steps.forEach((step, i) => {
+    const panel = panels[i];
+    if (!panel) return;
+    addSection(`sec-${slug}-${i}`, step.num, step.label, [panel]);
+  });
+
+  body.appendChild(rail);
+  body.appendChild(main);
+  doc.appendChild(body);
+
+  // ---- Hide the original chrome; everything meaningful now lives in `doc` ----
+  if (journeyNav) journeyNav.style.display = 'none';
+  if (header) header.style.display = 'none';
+  if (pageHeader) pageHeader.style.display = 'none';
+  if (fwContainer) fwContainer.style.display = 'none';
+
+  fwPage.prepend(doc);
+  fwPage.classList.add('doc-mode');
+
+  // ---- Scroll-spy: highlight the section currently under the header ----
+  const scroller = container.closest('.app-content') || document.scrollingElement;
+  const setActive = (id) => {
+    sections.forEach(s => {
+      const on = s.id === id;
+      s.link.classList.toggle('active', on);
+      if (on) s.link.setAttribute('aria-current', 'true');
+      else s.link.removeAttribute('aria-current');
+    });
+  };
+
+  if (sections.length) {
+    setActive(sections[0].id);
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setActive(visible[0].target.id);
+    }, { root: scroller, rootMargin: '-76px 0px -62% 0px', threshold: 0 });
+    sections.forEach(s => io.observe(s.sec));
+  }
+
+  // ---- Rail click → smooth scroll to section ----
+  rail.addEventListener('click', (e) => {
+    const link = e.target.closest('.fw-rail-link');
+    if (!link) return;
+    e.preventDefault();
+    const target = document.getElementById(link.dataset.target);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActive(target.id);
+    }
+  });
+
+  // ---- Preserve original goTo/go globals (now scroll instead of toggle) ----
+  const isLive = () => document.body.contains(doc);
   window.goTo = (id) => {
     if (!isLive()) return;
     const idx = panels.findIndex(p => p && p.id === id);
-    if (idx >= 0) expandStep(idx);
+    const target = idx >= 0 ? document.getElementById(`sec-${slug}-${idx}`) : null;
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
   window.go = (idx) => {
     if (!isLive()) return;
-    if (idx >= 0 && idx < steps.length) expandStep(idx);
+    document.getElementById(`sec-${slug}-${idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // --- Interaction functions ---
-
-  function expandStep(index) {
-    const bookmarks = accordionNav.querySelectorAll('.window-bookmark');
-    const panes = accordionNav.querySelectorAll('.window-pane');
-
-    // Deactivate all
-    bookmarks.forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    panes.forEach(p => p.classList.remove('open'));
-
-    if (index === 'glance') {
-      // Activate the glance bookmark + glance pane
-      glanceBookmark.classList.add('active');
-      glanceBookmark.setAttribute('aria-selected', 'true');
-      const glancePane = accordionNav.querySelector('.at-a-glance-pane');
-      if (glancePane) glancePane.classList.add('open');
-
-      history.replaceState(null, '', `#/framework/${slug}`);
-    } else {
-      // Activate a regular section bookmark + pane
-      // +1 offset because glance bookmark is index 0 in the NodeList
-      const bookmarkIdx = index + 1;
-      if (bookmarks[bookmarkIdx]) {
-        bookmarks[bookmarkIdx].classList.add('active');
-        bookmarks[bookmarkIdx].setAttribute('aria-selected', 'true');
-      }
-      // Dynamic pane offset: +1 only if the glance pane has been prepended
-      // (installFullBleedHero runs AFTER this function, so glance pane may not exist yet)
-      const hasGlancePane = accordionNav.querySelector('.at-a-glance-pane') != null;
-      const paneIdx = index + (hasGlancePane ? 1 : 0);
-      if (panes[paneIdx]) panes[paneIdx].classList.add('open');
-
-      const newHash = `#/framework/${slug}/step/${index}`;
-      if (window.location.hash !== newHash) {
-        history.replaceState(null, '', newHash);
-      }
-    }
-
-    fwPage.classList.add('reading-mode');
-
-    // Scroll the opened pane to top
-    const openPane = accordionNav.querySelector('.window-pane.open');
-    if (openPane) openPane.scrollTop = 0;
-  }
-
-  // Auto-expand: deep-link target or "At a Glance" by default
+  // ---- Deep link: jump to a requested section on load ----
   if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
-    expandStep(initialStep);
-  } else {
-    expandStep('glance');
+    requestAnimationFrame(() => {
+      document.getElementById(`sec-${slug}-${initialStep}`)?.scrollIntoView({ block: 'start' });
+    });
   }
-}
-
-/**
- * TLDR Card — standalone quick-read card placed above the accordion.
- * Hidden in reading mode (when an accordion section is expanded).
- */
-function installTldrCard(fwPage, accordionNav) {
-  const tldr = fwPage.querySelector('.one-liner, .tldr-section, .tldr');
-  if (!tldr) return;
-
-  const card = document.createElement('div');
-  card.className = 'fw-tldr-card';
-  card.appendChild(tldr); // moves from original position
-
-  // Insert before accordion nav
-  accordionNav.before(card);
 }

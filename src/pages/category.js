@@ -17,25 +17,31 @@ export function renderCategoryPage(container, categoryId) {
 
   container.innerHTML = `
     <div class="cat-page" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
-      <div class="cat-page-head reveal">
+      <header class="cat-page-head reveal">
         <span class="cat-page-emoji" aria-hidden="true">${cat.emoji}</span>
         <div class="cat-page-text">
+          <span class="cat-page-eyebrow">Category · ${fws.length} frameworks</span>
           <h1 class="cat-page-title">${cat.name}</h1>
           <p class="cat-page-desc">${cat.description}</p>
         </div>
+      </header>
+
+      <div class="cat-page-when reveal">
+        <span class="cat-when-label">Reach for these</span>
+        <p class="cat-when-text">${cat.when.replace(/^When /, 'when ')}.</p>
       </div>
 
       <div class="hub-card-grid cat-page-grid reveal" data-reveal-group="cat-cards">
         ${fws.map((fw, i) => `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
              style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
-            <div class="hub-fw-card-top">
-              <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
-              <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
-            </div>
+            <span class="hub-fw-card-tile" aria-hidden="true">${fw.emoji}</span>
             <h3 class="hub-fw-card-name">${fw.name}</h3>
             <p class="hub-fw-card-desc">${fw.description}</p>
-            <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+            <span class="hub-fw-card-foot">
+              <span class="hub-fw-card-cat">${cat.name}</span>
+              <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+            </span>
           </a>
         `).join('')}
       </div>

@@ -12,21 +12,25 @@
   overflow-wrap: break-word;
 }
 
-/* Font safety net — ensure Lilita One never leaks through;
-   h1-h3 use display font, h4-h6 use sans */
+/* Font safety net — ensure Lilita One never leaks through.
+   Headings keep their authored sentence/title case (the source files are
+   already well-cased, e.g. "The 4 Factors"). The previous forced ALL-CAPS
+   was the main reason framework pages read as a different, louder voice than
+   the rest of the product — removed for one consistent editorial tone. */
 .fw-page h1,
 .fw-page h2,
 .fw-page h3 {
   font-family: var(--font-display) !important;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  word-spacing: 0.12em;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  word-spacing: normal;
+  text-wrap: balance;
 }
 .fw-page h4 {
   font-family: var(--font-display) !important;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  word-spacing: 0.1em;
+  text-transform: none;
+  letter-spacing: -0.015em;
+  word-spacing: normal;
 }
 .fw-page h5,
 .fw-page h6 {
@@ -68,6 +72,367 @@
 .fw-page > .wrapper {
   padding: 0;
   max-width: none;
+}
+
+/* ============================================
+   FRAMEWORK READING DOCUMENT  (.doc-mode)
+   Full-width header band + sticky contents rail + one continuous,
+   readable column. Replaces the old empty-column window layout.
+   ============================================ */
+.fw-doc {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-2) 0;
+}
+
+/* ---- Loading / error states ---- */
+.fw-loading {
+  text-align: center;
+  padding: var(--space-16) 0;
+  color: var(--text-tertiary);
+}
+.fw-loading-emoji {
+  font-size: 40px;
+  margin-bottom: var(--space-3);
+  animation: fwLoadPulse 1.4s var(--ease-default) infinite;
+}
+@keyframes fwLoadPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.fw-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+}
+.fw-error-title { font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--text-primary); }
+.fw-error-detail { font-size: var(--text-sm); color: var(--text-tertiary); }
+
+/* ---- HEADER BAND ---- */
+.fw-doc-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.fw-doc-ident {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.fw-doc-emoji {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  line-height: 1;
+  border-radius: var(--radius-lg);
+  background: var(--accent-light, var(--bg-muted));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, transparent),
+    var(--shadow-sm);
+}
+
+.fw-doc-ident-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.fw-doc-header .fw-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px var(--space-3);
+  margin: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--accent-light, var(--bg-muted));
+  color: var(--accent-color, var(--text-secondary));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, transparent);
+}
+
+.fw-doc-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, var(--text-4xl));
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin: 0;
+}
+
+.fw-doc-subtitle {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  max-width: 64ch;
+  margin: 0;
+}
+
+/* TL;DR strip — the "in 15 seconds" summary, category-tinted */
+.fw-doc-tldr { margin-top: var(--space-5); }
+.fw-doc .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) {
+  margin: 0;
+  max-width: none;
+  background: color-mix(in oklab, var(--accent-color, var(--bg-card)) 7%, var(--bg-card));
+  border: 1px solid color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, var(--border-default));
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-xs);
+}
+/* Soften the TL;DR's leading icon box to a category-tinted chip */
+.fw-doc .fw-doc-tldr :is(.tldr-icon, .ol-icon, .one-liner-icon) {
+  background: var(--accent-light, var(--bg-card)) !important;
+  border: none !important;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, transparent) !important;
+}
+
+/* ---- BODY: rail + document ---- */
+.fw-doc-body {
+  display: grid;
+  grid-template-columns: 212px minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* ---- CONTENTS RAIL ---- */
+.fw-rail {
+  position: sticky;
+  top: var(--space-4);
+  align-self: start;
+  max-height: calc(100dvh - 84px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.fw-rail::-webkit-scrollbar { display: none; }
+
+.fw-rail-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+.fw-rail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fw-rail-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px var(--space-3);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
+}
+
+.fw-rail-link:hover {
+  background: var(--bg-muted);
+  color: var(--text-primary);
+}
+
+.fw-rail-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+  min-width: 15px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.fw-rail-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fw-rail-link.active {
+  background: color-mix(in oklab, var(--accent-color, var(--bg-muted)) 10%, transparent);
+  color: var(--accent-color, var(--text-primary));
+  font-weight: var(--weight-semibold);
+  border-left-color: var(--accent-color, var(--border-strong));
+}
+.fw-rail-link.active .fw-rail-num { color: var(--accent-color, var(--text-secondary)); }
+
+/* ---- DOCUMENT COLUMN ---- */
+.fw-doc-main { min-width: 0; }
+
+.fw-doc-section {
+  scroll-margin-top: 76px;
+  padding: var(--space-7) 0 var(--space-10);
+  border-top: 1px solid var(--border-subtle);
+}
+.fw-doc-section:first-child {
+  border-top: none;
+  padding-top: var(--space-2);
+}
+
+.fw-doc-marker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.fw-doc-marker-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.5px;
+  color: var(--accent-color, var(--text-secondary));
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: color-mix(in oklab, var(--accent-color, var(--bg-muted)) 12%, transparent);
+}
+.fw-doc-marker-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+/* Comfortable reading measure for body content (not full-bleed widgets) */
+.fw-doc-main .panel,
+.fw-doc-main .section { max-width: 820px; }
+
+/* Comparison guides opt into full width for their wide tables */
+.fw-doc.is-wide .fw-doc-main .panel,
+.fw-doc.is-wide .fw-doc-main .section { max-width: none; }
+
+/* Glance section — the hero visualizer, centered on the paper */
+.fw-doc-glance > :not(.fw-doc-marker) {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive: rail becomes a sticky horizontal scroller above the document */
+@media (max-width: 900px) {
+  .fw-doc { padding-top: var(--space-2); }
+
+  .fw-doc-body {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .fw-rail {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0 calc(-1 * var(--space-4));
+    padding: var(--space-2) var(--space-4);
+    background: color-mix(in oklab, var(--bg-app) 86%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .fw-rail-title { display: none; }
+  .fw-rail-list { flex-direction: row; gap: var(--space-1); }
+  .fw-rail-link {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    padding: 6px 10px;
+  }
+  .fw-rail-link.active {
+    border-left: none;
+    border-bottom-color: var(--accent-color, var(--border-strong));
+  }
+
+  .fw-doc-emoji { width: 58px; height: 58px; font-size: 30px; }
+  .fw-doc-ident { gap: var(--space-4); }
+}
+
+/* ============================================
+   NORMALIZE INJECTED SECTION HEADERS
+   Each of the 30 source files styles its own `.sec-title` as a tinted box in
+   a per-file colour. Flatten them to one consistent editorial header — a
+   category-tinted icon tile + display heading + caption — so every framework
+   and comparison guide reads as the same product. Applies to both the reading
+   document and comparison pages.
+   ============================================ */
+.fw-page .sec-title {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  margin-bottom: var(--space-5);
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.fw-page .sec-title .sec-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.fw-page .sec-title :is(h2, h3),
+.fw-page .sec-title .sec-label :is(h2, h3) {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  text-transform: none;
+  background: none !important;
+  -webkit-text-fill-color: currentColor;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: var(--text-primary);
+}
+
+.fw-page .sec-title .sec-label p {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+
+.fw-page .sec-title .sec-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--accent-light, var(--bg-muted)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-color, var(--border-default)) 20%, transparent) !important;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---- FRAMEWORK HERO / COVER ---- */
@@ -1049,7 +1414,7 @@
 }
 
 .c-card:hover {
-  transform: translate(-2px, -2px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
@@ -2937,3 +3302,12 @@ tr:hover td {
 [data-theme="dark"] .fw-page:not(.accordion-mode) .sec-label {
   background: var(--bg-muted);
 }
+
+/* The reading document's TL;DR strip sits on a dark category-tinted surface in
+   dark mode, so its text must stay light — overrides the pastel-cell pin above
+   (which assumes a light pastel background). */
+[data-theme="dark"] .fw-doc .fw-doc-tldr :is(.tldr, .tldr-section, .one-liner),
+[data-theme="dark"] .fw-doc .fw-doc-tldr :is(.tldr, .tldr-section, .one-liner) :is(p, span, li, div) {
+  color: var(--text-secondary);
+}
+[data-theme="dark"] .fw-doc .fw-doc-tldr strong { color: var(--text-primary); }

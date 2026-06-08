@@ -1,8 +1,9 @@
 /* ============================================
    PM Frameworks Guidebook — Design Tokens
-   Neo-Brutalist Colorful: thick borders, hard
-   offset shadows, sharp corners, saturated fills.
-   Gumroad × Memphis × Figma brutalism.
+   "Field Guide" — refined editorial reference manual.
+   Warm OKLCH ink-on-paper, hairline rules, soft
+   layered shadows, calm category index colors.
+   The look of a paid product, not a sticker sheet.
    ============================================ */
 
 :root {
@@ -18,17 +19,20 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* ---- RADII (Chunky rounded — retro code academy) ---- */
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
+  /* ---- RADII (Refined — softer on containers, tighter inside) ---- */
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
-  /* ---- BORDERS (Thick & bold) ---- */
-  --bw: 3px;
-  --bw-thin: 2px;
+  /* ---- BORDERS (Hairline by default — editorial, not brutalist) ----
+     The default border is now a thin warm-gray rule. True ink lines are
+     reserved (--border-ink) for the rare moment a hard structural edge
+     genuinely helps. Heaviness was the main "cheap" tell — removed. */
+  --bw: 1px;
+  --bw-thin: 1px;
 
   /* ---- TYPOGRAPHY ----
      Field-guide editorial voice. Bricolage Grotesque is a characterful,
@@ -118,9 +122,12 @@
   --bg-input: oklch(0.997 0.005 83);
   --bg-overlay: oklch(0.22 0.02 60 / 0.46);
 
-  --border-default: oklch(0.24 0.018 58);   /* warm ink — the brutalist line */
-  --border-subtle: oklch(0.86 0.013 78);
-  --border-strong: oklch(0.18 0.02 58);
+  /* Hairline rules in a warm gray — the editorial default. --border-ink is
+     the rare deliberate hard line; --border-strong is for hover emphasis. */
+  --border-default: oklch(0.885 0.008 78);   /* soft warm hairline */
+  --border-subtle: oklch(0.925 0.006 80);    /* barely-there divider */
+  --border-strong: oklch(0.80 0.010 72);     /* hover / emphasis */
+  --border-ink: oklch(0.30 0.018 58);        /* deliberate hard edge (rare) */
   --border-focus: var(--cat-prioritization);
 
   --text-primary: oklch(0.235 0.018 56);    /* warm near-black ink */
@@ -145,17 +152,31 @@
   --color-action-hover: #6B4FE0;
   --color-action-light: #EDE8FF;
 
-  /* ---- SHADOWS (Hard offset, no blur — brutalist, warm ink) ----
-     Warm deep ink instead of pure black: the offset stays crisp and
-     confident but reads as part of the paper world, not a cold drop. */
-  --shadow-color: oklch(0.26 0.022 56);
-  --shadow-xs: 2px 2px 0 var(--shadow-color);
-  --shadow-sm: 3px 3px 0 var(--shadow-color);
-  --shadow-md: 4px 4px 0 var(--shadow-color);
-  --shadow-lg: 6px 6px 0 var(--shadow-color);
-  --shadow-xl: 8px 8px 0 var(--shadow-color);
-  --shadow-hover: 6px 6px 0 var(--shadow-color);
-  --shadow-focus: 0 0 0 3px oklch(0.62 0.21 285 / 0.38);
+  /* ---- SHADOWS (Soft, layered, warm-tinted — premium elevation) ----
+     Real blur in the brand's warm-ink hue at low opacity, layered (a tight
+     contact shadow + a wider ambient one) so surfaces feel lifted off the
+     paper rather than stamped onto it. The hard offset blocks were the
+     loudest "cheap" tell; gone. */
+  --shadow-tint: 56 0.03;  /* hue chroma for shadow oklch */
+  --shadow-xs:
+    0 1px 1px oklch(0.28 0.03 56 / 0.05),
+    0 1px 2px oklch(0.28 0.03 56 / 0.04);
+  --shadow-sm:
+    0 1px 2px oklch(0.28 0.03 56 / 0.06),
+    0 2px 5px oklch(0.28 0.03 56 / 0.05);
+  --shadow-md:
+    0 1px 2px oklch(0.28 0.03 56 / 0.05),
+    0 4px 10px oklch(0.28 0.03 56 / 0.07);
+  --shadow-lg:
+    0 2px 4px oklch(0.28 0.03 56 / 0.05),
+    0 10px 24px oklch(0.28 0.03 56 / 0.10);
+  --shadow-xl:
+    0 4px 8px oklch(0.28 0.03 56 / 0.06),
+    0 20px 44px oklch(0.28 0.03 56 / 0.13);
+  --shadow-hover:
+    0 3px 6px oklch(0.28 0.03 56 / 0.07),
+    0 14px 32px oklch(0.28 0.03 56 / 0.13);
+  --shadow-focus: 0 0 0 3px oklch(0.62 0.21 285 / 0.30);
 
   /* ---- TRANSITIONS (Snappy) ---- */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
@@ -176,16 +197,18 @@
   --header-height: 56px;
   --tab-height: 48px;
 
-  /* ---- LEGACY PALETTE (from original framework pages) ---- */
-  --ink: #000000;
-  --ink-dim: #333333;
-  --ink-muted: #666666;
-  --ink-soft: #999999;
-  --cream: #FFFDF7;
-  --cream-dark: #F5F3EE;
-  --white: #FEFCF8;
-  --border: #000000;
-  --radius: 14px;
+  /* ---- LEGACY PALETTE (from original framework pages) ----
+     Mapped onto the refined system so the 30 injected HTML files inherit
+     warm ink + hairline borders instead of their original pure-black. */
+  --ink: var(--text-primary);
+  --ink-dim: var(--text-secondary);
+  --ink-muted: var(--text-tertiary);
+  --ink-soft: var(--text-muted);
+  --cream: var(--bg-app);
+  --cream-dark: var(--bg-muted);
+  --white: var(--bg-card);
+  --border: var(--border-default);
+  --radius: 12px;
 
   /* Original color palette — saturated fills */
   --sky: #DBEAFE;
@@ -237,22 +260,29 @@
    repaint) to keep scrolling smooth. */
 .app-content:not([data-category]) {
   background:
-    var(--pattern-dashboard),
-    linear-gradient(180deg, rgba(255, 253, 247, 0.74), rgba(255, 253, 247, 0.9)),
-    linear-gradient(120deg,
+    radial-gradient(120% 60% at 50% -5%, oklch(0.995 0.004 83 / 0.65), transparent 60%),
+    linear-gradient(180deg, oklch(0.985 0.008 83 / 0.86), oklch(0.985 0.008 83 / 0.96)),
+    linear-gradient(115deg,
       var(--cat-prioritization-light) 0%,
-      var(--cat-design-light) 30%,
-      var(--cat-growth-light) 62%,
+      var(--cat-design-light) 32%,
+      var(--cat-growth-light) 66%,
       var(--cat-execution-light) 100%
     );
+  background-attachment: fixed;
 }
 
-.app-content[data-category="prioritization"] { background: var(--cat-prioritization-fill) var(--pattern-prioritization); }
-.app-content[data-category="design"]         { background: var(--cat-design-fill) var(--pattern-design); }
-.app-content[data-category="strategy"]       { background: var(--cat-strategy-fill) var(--pattern-strategy); }
-.app-content[data-category="growth"]         { background: var(--cat-growth-fill) var(--pattern-growth); }
-.app-content[data-category="execution"]      { background: var(--cat-execution-fill) var(--pattern-execution); }
-.app-content[data-category="communication"]  { background: var(--cat-communication-fill) var(--pattern-communication); }
+/* A calm single-category wash with a soft top highlight so the page reads as
+   tinted paper catching light, not a flat fill. Texture comes from the global
+   grain overlay (body::after), not loud dot grids. */
+.app-content[data-category] {
+  background-attachment: fixed;
+}
+.app-content[data-category="prioritization"] { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 287 / 0.85), transparent 55%), var(--cat-prioritization-fill); }
+.app-content[data-category="design"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 165 / 0.85), transparent 55%), var(--cat-design-fill); }
+.app-content[data-category="strategy"]       { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 32 / 0.85), transparent 55%), var(--cat-strategy-fill); }
+.app-content[data-category="growth"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 258 / 0.85), transparent 55%), var(--cat-growth-fill); }
+.app-content[data-category="execution"]      { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 80 / 0.85), transparent 55%), var(--cat-execution-fill); }
+.app-content[data-category="communication"]  { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 55 / 0.85), transparent 55%), var(--cat-communication-fill); }
 
 /* ============================================
    DARK THEME — "field guide at night"
@@ -276,9 +306,10 @@
   --bg-input: oklch(0.242 0.013 74);
   --bg-overlay: oklch(0.12 0.01 70 / 0.62);
 
-  --border-default: oklch(0.50 0.018 76);
-  --border-subtle: oklch(0.37 0.014 74);
-  --border-strong: oklch(0.64 0.02 78);
+  --border-default: oklch(0.40 0.014 74);    /* soft hairline on charcoal */
+  --border-subtle: oklch(0.33 0.012 74);     /* barely-there divider */
+  --border-strong: oklch(0.52 0.018 76);     /* hover / emphasis */
+  --border-ink: oklch(0.62 0.02 78);         /* deliberate edge (rare) */
   --border-focus: var(--cat-prioritization);
 
   --text-primary: oklch(0.935 0.012 84);
@@ -287,7 +318,26 @@
   --text-muted: oklch(0.585 0.012 80);
   --text-inverse: oklch(0.205 0.012 72);
 
-  --shadow-color: oklch(0.10 0.012 70);
+  /* Dark elevation — deeper, still layered. Surfaces also lift via a faint
+     top inset highlight applied in components, not just the drop shadow. */
+  --shadow-xs:
+    0 1px 1px oklch(0.08 0.01 70 / 0.40),
+    0 1px 2px oklch(0.08 0.01 70 / 0.30);
+  --shadow-sm:
+    0 1px 2px oklch(0.08 0.01 70 / 0.45),
+    0 2px 6px oklch(0.08 0.01 70 / 0.35);
+  --shadow-md:
+    0 1px 2px oklch(0.08 0.01 70 / 0.40),
+    0 4px 12px oklch(0.08 0.01 70 / 0.45);
+  --shadow-lg:
+    0 2px 4px oklch(0.08 0.01 70 / 0.40),
+    0 12px 28px oklch(0.06 0.01 70 / 0.55);
+  --shadow-xl:
+    0 4px 8px oklch(0.08 0.01 70 / 0.45),
+    0 24px 50px oklch(0.06 0.01 70 / 0.60);
+  --shadow-hover:
+    0 3px 6px oklch(0.08 0.01 70 / 0.45),
+    0 16px 36px oklch(0.06 0.01 70 / 0.55);
   --shadow-focus: 0 0 0 3px oklch(0.70 0.17 287 / 0.45);
 
   /* Brighten category colours for legibility on dark */
@@ -322,7 +372,27 @@
   --cream: oklch(0.205 0.011 72);
   --cream-dark: oklch(0.180 0.010 72);
   --white: oklch(0.255 0.014 74);
-  --border: oklch(0.50 0.018 76);
+  --border: oklch(0.40 0.014 74);
+
+  /* Legacy pastel BACKGROUNDS — flipped to deep hue-tinted surfaces in dark
+     mode. The source files paint hero diagrams and cells with these and set
+     their text in --ink (which flips light), so on the old stay-light pastels
+     the text vanished. Deep tints keep the colour cue and let light text read.
+     (The status -light tokens and score-cell pins are handled separately so
+     small highlight chips still pop.) */
+  --sky:    oklch(0.34 0.055 250);
+  --mint:   oklch(0.34 0.055 165);
+  --orange: oklch(0.35 0.055 60);
+  --yellow: oklch(0.36 0.055 92);
+  --pink:   oklch(0.34 0.055 350);
+  --rose:   oklch(0.34 0.055 18);
+  --purple: oklch(0.35 0.060 290);
+  --green:  oklch(0.34 0.055 150);
+  --p1: oklch(0.34 0.055 250);
+  --p2: oklch(0.34 0.055 165);
+  --p3: oklch(0.36 0.055 92);
+  --p4: oklch(0.35 0.055 60);
+  --p5: oklch(0.34 0.055 350);
 
   --color-action: var(--cat-prioritization);
   --color-action-hover: oklch(0.78 0.16 288);

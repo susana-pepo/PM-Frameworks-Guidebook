@@ -93,13 +93,13 @@ function renderFrameworkCards(fws, sectionIndex = 0) {
         return `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
              style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
-            <div class="hub-fw-card-top">
-              <span class="hub-fw-card-emoji" aria-hidden="true">${fw.emoji}</span>
-              <span class="hub-fw-card-cat-dot" style="background:${cat.color};" title="${cat.name}"></span>
-            </div>
+            <span class="hub-fw-card-tile" aria-hidden="true">${fw.emoji}</span>
             <h3 class="hub-fw-card-name">${fw.name}</h3>
             <p class="hub-fw-card-desc">${fw.description}</p>
-            <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+            <span class="hub-fw-card-foot">
+              <span class="hub-fw-card-cat">${cat.name}</span>
+              <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
+            </span>
           </a>
         `;
       }).join('')}
