@@ -19,12 +19,14 @@
 .fw-page h3 {
   font-family: var(--font-display) !important;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  word-spacing: 0.12em;
 }
 .fw-page h4 {
   font-family: var(--font-display) !important;
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  word-spacing: 0.1em;
 }
 .fw-page h5,
 .fw-page h6 {
@@ -117,7 +119,7 @@
   display: grid;
   grid-template-columns: minmax(220px, 280px) 1fr;
   gap: var(--space-8);
-  align-items: center;              /* vertically center left column against window */
+  align-items: start;              /* top-align so identity card can stick */
   min-height: 0;
   max-width: 1320px;
   margin: 0 auto;
@@ -125,15 +127,19 @@
   box-sizing: border-box;
 }
 
-/* Left column — identity card: badge, emoji, title, subtitle */
+/* Left column — identity card: badge, emoji, title, subtitle.
+   Sticky so it stays in view while the (now full-height) window scrolls. */
 .fw-split-left {
+  position: sticky;
+  top: var(--space-6);
+  align-self: start;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-6) var(--space-4);
   min-width: 160px;
 }
 
@@ -161,7 +167,8 @@
   flex-direction: column;
   min-height: 0;
   min-width: 0;              /* prevent grid blowout from content */
-  overflow: hidden;
+  /* overflow must stay visible so the window's sticky bookmark rail works */
+  overflow: visible;
 }
 
 /* ---- "At a Glance" pane content ---- */
@@ -208,7 +215,9 @@
   }
 
   .fw-split-left {
+    position: static;          /* don't stick when stacked above the window */
     width: 100%;
+    padding: var(--space-3) var(--space-4);
   }
 }
 
@@ -545,12 +554,12 @@
   border-radius: var(--radius-md);
   background: #FDF8EC;
   box-shadow: var(--shadow-lg);
-  /* Fit within the viewport (top bar 52px + hero padding + breathing room)
-     so the full window frame is visible without scrolling the page. */
-  height: calc(100dvh - 150px);
-  min-height: 420px;
-  max-height: 780px;
-  overflow: hidden;                /* clip children to border-radius */
+  /* Natural height — content flows with the page (no nested scroll trap).
+     The bookmark rail sticks to the top so section nav stays reachable. */
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  overflow: visible;               /* required so the sticky bookmark rail works */
 }
 
 /* ---- BOOKMARKS BAR ---- */
@@ -565,10 +574,29 @@
   overflow-x: auto;
   flex-shrink: 0;
   scrollbar-width: none;
+  /* Sticky section rail — stays reachable while content scrolls the page */
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  box-shadow: 0 6px 14px -10px rgba(0, 0, 0, 0.45);
 }
 
 .window-bookmarks-bar::-webkit-scrollbar {
   display: none;
+}
+
+/* Edge fades signal horizontal scrollability of the section rail */
+.window-bookmarks-bar.overflow-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+          mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+}
+.window-bookmarks-bar.overflow-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 26px);
+          mask-image: linear-gradient(to right, transparent, #000 26px);
+}
+.window-bookmarks-bar.overflow-left.overflow-right {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 26px, #000 calc(100% - 26px), transparent);
+          mask-image: linear-gradient(to right, transparent, #000 26px, #000 calc(100% - 26px), transparent);
 }
 
 /* Individual bookmark button */
@@ -702,24 +730,19 @@
 /* The scrollable area below the title bar inside toggle window.
    Takes up remaining height in the window. */
 .window-content-area {
-  flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: hidden;                           /* clip content to the window's bottom radius */
   position: relative;
   background: #FDF8EC;                         /* warm cream — matches window frame */
   border-radius: 0 0 11px 11px;                /* match parent 14px minus 3px border */
 }
 
-/* ---- SECTION PANE (scrollable content) ---- */
-/* Each section is a pane that fills the window content area */
+/* ---- SECTION PANE (natural-height content) ---- */
+/* Each section flows at its natural height — no nested scroll. */
 .window-pane {
   display: none;
-  overflow-y: auto;
-  height: 100%;
+  height: auto;
   padding: var(--space-6) var(--space-5);
-  /* Custom scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-default) transparent;
 }
 
 .window-pane.open {

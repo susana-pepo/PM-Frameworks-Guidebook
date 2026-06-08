@@ -1,4 +1,5 @@
 import { getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
+import { observeReveals } from '../utils/reveal.js';
 
 export function renderCategoryPage(container, categoryId) {
   const cat = getCategory(categoryId);
@@ -16,7 +17,7 @@ export function renderCategoryPage(container, categoryId) {
 
   container.innerHTML = `
     <div class="cat-page" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
-      <div class="cat-page-head">
+      <div class="cat-page-head reveal">
         <span class="cat-page-emoji" aria-hidden="true">${cat.emoji}</span>
         <div class="cat-page-text">
           <h1 class="cat-page-title">${cat.name}</h1>
@@ -24,7 +25,7 @@ export function renderCategoryPage(container, categoryId) {
         </div>
       </div>
 
-      <div class="hub-card-grid cat-page-grid">
+      <div class="hub-card-grid cat-page-grid reveal" data-reveal-group="cat-cards">
         ${fws.map((fw, i) => `
           <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
              style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
@@ -52,4 +53,6 @@ export function renderCategoryPage(container, categoryId) {
       ` : ''}
     </div>
   `;
+
+  observeReveals(container);
 }

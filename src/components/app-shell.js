@@ -22,6 +22,7 @@ export function renderApp() {
         <span class="top-nav-search-icon" aria-hidden="true">&#x1F50D;</span>
         <input type="text" class="top-nav-search-input" id="top-nav-search-input"
                placeholder="Search…" autocomplete="off" aria-label="Search frameworks" />
+        <kbd class="search-kbd-hint search-kbd-hint--topbar" aria-hidden="true"><span class="kbd-cmd">⌘</span>K</kbd>
         <div class="top-nav-search-results" id="top-nav-search-results"></div>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
@@ -54,9 +55,34 @@ export function renderApp() {
   bindTopNav();
   bindTopNavSearch();
   bindMobileMenu();
+  bindGlobalShortcuts();
 
   // Listen for route changes
   onNavigate(handleRoute);
+}
+
+/**
+ * Cmd/Ctrl-K focuses search — the hub's prominent hero search when on the hub,
+ * otherwise the persistent top-bar search. "/" works too (when not typing).
+ */
+function bindGlobalShortcuts() {
+  document.addEventListener('keydown', (e) => {
+    const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
+    const isSlash = e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey;
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')
+      || document.activeElement?.isContentEditable;
+
+    if (isCmdK || (isSlash && !typing)) {
+      const hubSearch = document.getElementById('hub-search');
+      const topSearch = document.getElementById('top-nav-search-input');
+      const target = (hubSearch && hubSearch.offsetParent !== null) ? hubSearch : topSearch;
+      if (target) {
+        e.preventDefault();
+        target.focus();
+        target.select?.();
+      }
+    }
+  });
 }
 
 function renderTopNav() {
@@ -338,6 +364,18 @@ function bindMobileMenu() {
 
 function handleRoute(route) {
   const content = document.getElementById('page-content');
+
+  // Tear down navigation globals leaked by the previous page's inline scripts.
+  // Framework pages assign window.go / window.goTo (closures bound to their own
+  // DOM); left in place they fire on the NEXT page and hijack it. The incoming
+  // page re-defines whatever it needs.
+  delete window.go;
+  delete window.goTo;
+
+  // The hub has a prominent hero search, so suppress the redundant
+  // top-bar search there; show it everywhere else.
+  document.getElementById('top-nav-search')
+    ?.classList.toggle('is-hidden-on-hub', route.page === 'hub');
 
   // Update active state in top nav
   document.querySelectorAll('.top-nav-fw').forEach(link => {

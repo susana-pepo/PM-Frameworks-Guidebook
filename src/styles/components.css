@@ -188,8 +188,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(var(--space-8), 6vh, var(--space-12)) 0 var(--space-8);
-  margin-bottom: var(--space-8);
+  padding: clamp(var(--space-5), 3.5vh, var(--space-8)) 0 var(--space-6);
+  margin-bottom: var(--space-6);
   border-bottom: var(--bw-thin) solid var(--border-subtle);
 }
 
@@ -222,28 +222,30 @@
 
 .hub-title {
   font-family: var(--font-display);
-  font-size: clamp(34px, 7vw, 64px);
-  letter-spacing: -0.03em;
-  margin-bottom: var(--space-4);
+  font-size: clamp(32px, 5.5vw, 54px);
+  letter-spacing: -0.02em;
+  word-spacing: 0.12em;
+  margin-bottom: var(--space-3);
   font-weight: var(--weight-extrabold);
   text-transform: uppercase;
   line-height: 0.95;
-  max-width: 14ch;
+  max-width: 16ch;
 }
 
 .hub-subtitle {
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   color: var(--text-secondary);
-  max-width: 520px;
-  margin: 0 auto var(--space-5);
-  line-height: var(--leading-relaxed);
+  max-width: 600px;
+  margin: 0 auto var(--space-4);
+  line-height: var(--leading-normal);
 }
 
 /* ---- Hub search ---- */
 .hub-search-wrap {
   position: relative;
-  max-width: 420px;
-  margin: 0 auto var(--space-5);
+  max-width: 440px;
+  margin: 0 auto var(--space-4);
+  width: 100%;
 }
 
 .hub-search-icon {
@@ -257,7 +259,7 @@
 
 .hub-search-input {
   width: 100%;
-  padding: var(--space-3) var(--space-4) var(--space-3) 40px;
+  padding: var(--space-3) 56px var(--space-3) 40px;
   background: var(--bg-card);
   border: var(--bw) solid var(--border-default);
   border-radius: var(--radius-md);
@@ -388,6 +390,7 @@
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  word-spacing: 0.1em;
   line-height: 1.1;
 }
 
@@ -446,7 +449,10 @@
   border: var(--bw) solid var(--border-default);
   border-radius: var(--radius-lg);
   text-decoration: none;
-  transition: all var(--duration-normal) var(--ease-default);
+  transition:
+    transform var(--duration-slow) var(--ease-premium),
+    box-shadow var(--duration-slow) var(--ease-premium),
+    border-color var(--duration-fast) var(--ease-default);
   position: relative;
   overflow: hidden;
   border-top: 5px solid var(--accent-color, var(--border-default));
@@ -457,6 +463,15 @@
   border-color: var(--border-strong);
   transform: translate(-3px, -3px);
   box-shadow: var(--shadow-lg);
+}
+
+/* Emoji kinetic — playful tilt + scale on card hover */
+.hub-fw-card-emoji {
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.hub-fw-card:hover .hub-fw-card-emoji {
+  transform: scale(1.12) rotate(-6deg);
 }
 
 .hub-fw-card:active {
@@ -665,6 +680,7 @@
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  word-spacing: 0.1em;
   color: var(--text-primary);
 }
 
@@ -731,6 +747,9 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding-bottom: var(--space-2);
+    /* Fade the right edge to signal more pills are scrollable */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
   }
 
   .hub-filter-pills::-webkit-scrollbar {

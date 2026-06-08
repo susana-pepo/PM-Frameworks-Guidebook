@@ -1,4 +1,5 @@
 import { categories, frameworks, comparisonGuides, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
+import { observeReveals } from '../utils/reveal.js';
 
 export function renderHub(container) {
   container.innerHTML = `
@@ -17,6 +18,7 @@ export function renderHub(container) {
         <span class="hub-search-icon" aria-hidden="true">&#x1F50D;</span>
         <input type="text" id="hub-search" class="hub-search-input"
                placeholder="Search frameworks…" autocomplete="off" aria-label="Search frameworks" />
+        <kbd class="search-kbd-hint" aria-hidden="true"><span class="kbd-cmd">⌘</span>K</kbd>
       </div>
 
       <!-- Category filter pills -->
@@ -62,7 +64,7 @@ function renderCategorySection(cat, ci) {
 
   return `
     <section class="hub-section" data-category="${cat.id}" style="--section-color:${cat.color}; --section-bg:${cat.colorLight};">
-      <div class="hub-section-head">
+      <div class="hub-section-head reveal" data-reveal-group="sec-${ci}-head">
         <span class="hub-section-emoji" aria-hidden="true">${cat.emoji}</span>
         <span class="hub-section-text">
           <span class="hub-section-title">${cat.name}</span>
@@ -85,7 +87,7 @@ function renderCategorySection(cat, ci) {
 
 function renderFrameworkCards(fws, sectionIndex = 0) {
   return `
-    <div class="hub-card-grid">
+    <div class="hub-card-grid reveal" data-reveal-group="grid-${sectionIndex}">
       ${fws.map((fw, i) => {
         const cat = categories.find(c => c.id === fw.category);
         return `
@@ -151,6 +153,7 @@ function installHubInteractions() {
     emptyState.style.display = 'none';
     results.style.display = '';
     results.innerHTML = renderFrameworkCards(matches);
+    observeReveals(results);
   });
 
   // --- Filter pills ---
@@ -175,4 +178,7 @@ function installHubInteractions() {
     showGallery(activeFilter);
     searchInput?.focus();
   });
+
+  // Kick off staggered scroll-reveal for the gallery
+  observeReveals(gallery);
 }

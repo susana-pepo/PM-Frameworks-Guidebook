@@ -203,7 +203,11 @@ function installFullBleedHero(container) {
   if (header) {
     const h1 = header.querySelector('h1');
     const subtitle = header.querySelector('p, .subtitle, .sub');
-    if (h1) leftCol.appendChild(h1);
+    if (h1) {
+      // Keep the identity title consistent with the nav + window chrome
+      if (fw?.name) h1.textContent = fw.name;
+      leftCol.appendChild(h1);
+    }
     if (subtitle) leftCol.appendChild(subtitle);
   }
 
@@ -532,15 +536,31 @@ function installAccordionSystem(container, slug, initialStep) {
   // Insert after journey-nav
   journeyNav.after(accordionNav);
 
+  // Scroll affordance — fade the bookmark rail's edges when tabs overflow,
+  // signalling there's more to scroll to.
+  const updateBookmarkScroll = () => {
+    const max = bookmarksBar.scrollWidth - bookmarksBar.clientWidth;
+    const left = bookmarksBar.scrollLeft;
+    bookmarksBar.classList.toggle('overflow-left', left > 4);
+    bookmarksBar.classList.toggle('overflow-right', left < max - 4);
+  };
+  bookmarksBar.addEventListener('scroll', updateBookmarkScroll, { passive: true });
+  window.addEventListener('resize', updateBookmarkScroll);
+  requestAnimationFrame(updateBookmarkScroll);
+
   // Place TLDR card (will be moved into At a Glance pane by installFullBleedHero)
   installTldrCard(fwPage, accordionNav);
 
-  // Override global goTo/go
+  // Override global goTo/go. Guard against firing after this page has been
+  // swapped out — a stale closure must not hijack the next route.
+  const isLive = () => document.body.contains(accordionNav);
   window.goTo = (id) => {
+    if (!isLive()) return;
     const idx = panels.findIndex(p => p && p.id === id);
     if (idx >= 0) expandStep(idx);
   };
   window.go = (idx) => {
+    if (!isLive()) return;
     if (idx >= 0 && idx < steps.length) expandStep(idx);
   };
 
