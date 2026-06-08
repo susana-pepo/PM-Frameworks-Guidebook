@@ -3540,12 +3540,25 @@ tr:hover td {
   overflow-y: auto;
 }
 
-/* Compact the title band so the stage gets the vertical room. */
-.fw-doc.deck-mode .fw-doc-header { margin-bottom: var(--space-5); padding-bottom: var(--space-5); }
-.fw-doc.deck-mode .fw-doc-emoji { width: 56px; height: 56px; font-size: 29px; }
-.fw-doc.deck-mode .fw-doc-title { font-size: clamp(24px, 3.2vw, 34px); }
-.fw-doc.deck-mode .fw-doc-tldr { margin-top: var(--space-3); }
-.fw-doc.deck-mode .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) { padding: var(--space-3) var(--space-4); }
+/* Slim identity bar: glyph + badge + title on one tight row. The subtitle and
+   TL;DR now live in the opening cover panel, so the band stays lean and the
+   stage inherits the reclaimed height. */
+.fw-doc.deck-mode .fw-doc-header {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+.fw-doc.deck-mode .fw-doc-ident { gap: var(--space-4); align-items: center; }
+.fw-doc.deck-mode .fw-doc-ident-text { gap: 6px; }
+.fw-doc.deck-mode .fw-doc-emoji { width: 50px; height: 50px; font-size: 26px; border-radius: var(--radius-md); }
+.fw-doc.deck-mode .fw-doc-title { font-size: clamp(22px, 2.8vw, 30px); line-height: 1.02; }
+.fw-doc.deck-mode .fw-doc-header .fw-category-badge { padding: 3px 10px; font-size: 10px; }
+/* Subtitle only appears in the header when there's no cover panel (e.g.
+   comparison guides) — keep it to a compact line so the band stays slim. */
+.fw-doc.deck-mode .fw-doc-ident-text .fw-doc-subtitle {
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  max-width: 72ch;
+}
 
 .fw-deck {
   flex: 1;
@@ -3573,48 +3586,71 @@ tr:hover td {
   transition: transform var(--duration-slow) var(--ease-premium);
 }
 
-/* ---- Sliding viewport + track ----
-   The viewport fills the stage; the track is a flex row of full-width
-   panels translated horizontally. Each panel scrolls internally if tall. */
-.fw-deck-viewport {
+/* ---- Stage · sliding viewport · track ----
+   The stage is a flex band filling the room between the progress bar and the
+   controls, with the viewport centred inside it. The viewport's height is
+   JS-synced to the active panel (transitioned, so page-turns morph height as
+   they slide). The track is a flex row of full-width, natural-height panels;
+   `flex-start` lets each keep its own height so the active panel can be
+   measured and the viewport can hug it. */
+.fw-deck-stage {
   flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fw-deck-viewport {
+  width: 100%;
+  max-height: 100%;
   min-height: 0;
   overflow: hidden;
   position: relative;
+  /* Height morph is paced just under the slide so the page-turn reads as one
+     coordinated motion (the stage reshapes as the new panel arrives). */
+  transition: height 500ms var(--ease-premium);
+  will-change: height;
 }
 .fw-deck-track {
   display: flex;
-  align-items: stretch;
-  height: 100%;
+  align-items: flex-start;
   transition: transform 620ms var(--ease-premium);
   will-change: transform;
 }
 
-/* Each section is one full-width panel; tall content scrolls within it.
-   The panel is a flex column whose first/last children carry `margin:auto`
-   (see below): short sections settle into the optical centre of the stage
-   instead of stranding a void beneath them, while tall sections top-anchor
-   and scroll normally (auto margins collapse to 0 once content overflows, so
-   nothing clips — the safe alternative to `justify-content:center`). */
+/* The incoming panel's content settles in with a gentle, heavy lift as the
+   slide lands — a touch of life on every page-turn, GPU-only. */
+@keyframes deckPanelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.fw-doc.deck-mode .fw-doc-section.is-active {
+  animation: deckPanelIn 520ms var(--ease-reveal);
+}
+
+/* Each section is one full-width, natural-height panel. It only scrolls within
+   itself when JS caps it (.is-capped) because its content genuinely overflows
+   the stage; otherwise the viewport simply hugs it and the stage centres it. */
 .fw-doc.deck-mode .fw-doc-section {
   flex: 0 0 100%;
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  height: auto;
+  display: block;
+  overflow: visible;
   overscroll-behavior: contain;
   border-top: none;
   scroll-margin-top: 0;
-  padding: var(--space-4) var(--space-5) var(--space-8);
+  padding: var(--space-3) var(--space-5) var(--space-5);
   box-sizing: border-box;
   scrollbar-width: thin;
 }
-.fw-doc.deck-mode .fw-doc-section > :first-child { margin-top: auto; }
-.fw-doc.deck-mode .fw-doc-section > :last-child  { margin-bottom: auto; }
+.fw-doc.deck-mode .fw-doc-section.is-capped {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: var(--space-4);
+}
 .fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar { width: 8px; }
 .fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar-thumb {
   background: var(--border-default);
@@ -3634,8 +3670,24 @@ tr:hover td {
 .fw-doc.deck-mode .fw-doc-main .section { width: 100%; }
 .fw-doc.deck-mode:not(.is-wide) .fw-doc-marker { max-width: 760px; }
 
-/* "At a glance" cover panel — the auto-margin centring above already holds
-   its hero in the optical centre of the stage. */
+/* ---- "At a glance" cover panel ----
+   A composed title card: a centred lead-in, the 15-second summary, then the
+   hero visual — stacked with breathing room and centred on the stage. */
+.fw-doc.deck-mode .fw-doc-glance { text-align: center; }
+.fw-doc.deck-mode .fw-doc-glance .fw-doc-marker { justify-content: center; margin-bottom: var(--space-4); }
+.fw-doc-glance > * + * { margin-top: var(--space-5); }
+.fw-doc-glance .fw-doc-lead {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, var(--text-lg));
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  line-height: var(--leading-snug);
+  color: var(--text-secondary);
+  max-width: 46ch;
+  text-wrap: balance;
+}
+.fw-doc-glance .fw-doc-tldr { max-width: 620px; }
+.fw-doc-glance .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) { text-align: left; }
 
 /* Inactive panels can't catch focus/scroll while parked off-stage. */
 .fw-doc.deck-mode .fw-doc-section[aria-hidden="true"] { pointer-events: none; }
@@ -3749,27 +3801,26 @@ tr:hover td {
     grid-template-rows: auto minmax(0, 1fr);
     gap: var(--space-3);
   }
+  /* Horizontal tab strip: fade the trailing edge so the overflow reads as
+     "more sections, scroll →" instead of a hard clip. */
   .fw-doc.deck-mode .fw-rail {
     overflow-x: auto;
     overflow-y: hidden;
     max-height: none;
+    scroll-padding-inline: 24px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
   }
   .fw-doc.deck-mode .fw-doc-section { padding-left: var(--space-2); padding-right: var(--space-2); }
 }
 
-/* Phones: reclaim vertical room for the stage — the concise subtitle carries
-   the gist, so drop the longer pinned TL;DR (its detail lives in the sections)
-   and tighten the title band. */
+/* Phones: tighten the identity band so the stage keeps as much room as
+   possible. (The TL;DR and lead now live in the cover panel, not the header,
+   so they stay available — only the band chrome is compacted here.) */
 @media (max-width: 768px) {
-  .fw-doc.deck-mode .fw-doc-tldr { display: none; }
   .fw-doc.deck-mode .fw-doc-header { margin-bottom: var(--space-3); padding-bottom: var(--space-3); }
-  .fw-doc.deck-mode .fw-doc-subtitle {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .fw-doc.deck-mode .fw-doc-emoji { width: 48px; height: 48px; font-size: 24px; }
+  .fw-doc.deck-mode .fw-doc-emoji { width: 44px; height: 44px; font-size: 23px; }
+  .fw-doc.deck-mode .fw-doc-title { font-size: clamp(20px, 5.5vw, 26px); }
   .fw-doc.deck-mode .fw-doc-ident { gap: var(--space-3); }
 }
 
@@ -3778,4 +3829,5 @@ tr:hover td {
   .fw-deck-viewport,
   .fw-deck-bar-fill,
   .fw-deck-btn-ic { transition: none; }
+  .fw-doc.deck-mode .fw-doc-section.is-active { animation: none; }
 }

@@ -270,7 +270,11 @@ export function buildReadingDocument(container, opts = {}) {
   doc.className = 'fw-doc deck-mode' + (wide ? ' is-wide' : '');
   // --accent-color / --accent-light are inherited from .fw-page's inline style.
 
-  // ---- Header band ----
+  // ---- Header band (slim identity bar) ----
+  // The header is pinned above every section in the deck, so it must stay
+  // lean: glyph + category badge + title only. The subtitle and TL;DR move
+  // into the opening "At a glance" cover (below) so they introduce the guide
+  // without stealing vertical room from every single section.
   const head = document.createElement('header');
   head.className = 'fw-doc-header';
 
@@ -293,19 +297,18 @@ export function buildReadingDocument(container, opts = {}) {
   titleEl.className = 'fw-doc-title';
   titleEl.textContent = title || header?.querySelector('h1')?.textContent?.trim() || slug;
   identText.appendChild(titleEl);
-  if (subtitle) {
+
+  // A cover panel is only worth its own view when it carries substance — a hero
+  // visual or the 15-second summary. When all we have is a one-line subtitle
+  // (e.g. comparison guides), keep it inline in the slim header instead.
+  const hasCover = glanceNodes.length > 0 || !!tldr;
+  if (subtitle && !hasCover) {
     subtitle.classList.add('fw-doc-subtitle');
     identText.appendChild(subtitle);
   }
+
   ident.appendChild(identText);
   head.appendChild(ident);
-
-  if (tldr) {
-    const tldrWrap = document.createElement('div');
-    tldrWrap.className = 'fw-doc-tldr';
-    tldrWrap.appendChild(tldr);
-    head.appendChild(tldrWrap);
-  }
 
   doc.appendChild(head);
 
@@ -337,15 +340,22 @@ export function buildReadingDocument(container, opts = {}) {
   bar.className = 'fw-deck-bar';
   bar.innerHTML = '<span class="fw-deck-bar-fill"></span>';
 
-  // Viewport clips the sliding track; its height is JS-synced to the active panel
+  // The stage is a flex band that fills the room between the progress bar and
+  // the controls; the viewport is vertically centred within it. The viewport
+  // clips the sliding track and its height is JS-synced to the active panel
+  // (see syncHeight below) — short panels sit as a composed card in the centre
+  // of the stage, tall panels fill it and scroll within.
+  const stage = document.createElement('div');
+  stage.className = 'fw-deck-stage';
   const viewport = document.createElement('div');
   viewport.className = 'fw-deck-viewport';
   const track = document.createElement('div');
   track.className = 'fw-deck-track';
   viewport.appendChild(track);
+  stage.appendChild(viewport);
 
   deck.appendChild(bar);
-  deck.appendChild(viewport);
+  deck.appendChild(stage);
   main.appendChild(deck);
 
   const sections = [];
@@ -383,8 +393,30 @@ export function buildReadingDocument(container, opts = {}) {
     sections.push({ id, link: a, sec, label });
   };
 
-  if (glanceNodes.length) {
-    addSection(`sec-${slug}-glance`, '★', 'At a glance', glanceNodes, 'fw-doc-glance');
+  // ---- The opening cover: lead-in + 15-second summary + hero visual ----
+  // Composing these into the first panel both reclaims the header's height and
+  // turns the once-empty "At a glance" stage into a deliberate title card.
+  // Order is lead → hero → summary: the one-line essence opens, the signature
+  // visual is the centrepiece (so it stays above the fold even for tall
+  // diagrams), and the 15-second summary trails as supporting detail.
+  const glanceContent = [];
+  if (hasCover) {
+    if (subtitle) {
+      subtitle.classList.add('fw-doc-subtitle', 'fw-doc-lead');
+      glanceContent.push(subtitle);
+    }
+    glanceContent.push(...glanceNodes);
+    if (tldr) {
+      const tldrWrap = document.createElement('div');
+      tldrWrap.className = 'fw-doc-tldr';
+      tldrWrap.appendChild(tldr);
+      glanceContent.push(tldrWrap);
+    }
+  }
+
+  const hasGlance = glanceContent.length > 0;
+  if (hasGlance) {
+    addSection(`sec-${slug}-glance`, '★', 'At a glance', glanceContent, 'fw-doc-glance');
   }
 
   steps.forEach((step, i) => {
@@ -436,6 +468,43 @@ export function buildReadingDocument(container, opts = {}) {
   const barFill = bar.querySelector('.fw-deck-bar-fill');
 
   let index = 0;
+  const isLive = () => document.body.contains(doc);
+
+  // ===== STAGE HEIGHT SYNC =====
+  // The viewport height tracks the *active* panel's natural content height,
+  // clamped to the room the stage offers. This is what dissolves the dead
+  // space (short panels hug their content and centre in the stage) and the
+  // nested-scroll cramping (only a panel that genuinely overflows the stage
+  // scrolls within itself). The CSS transition on the viewport height turns
+  // every page-turn into a smooth morph alongside the horizontal slide.
+  let syncing = false;
+  const measureNatural = (sec) => {
+    // Read the content's true height with any cap temporarily lifted.
+    const pm = sec.style.maxHeight, po = sec.style.overflowY;
+    sec.style.maxHeight = 'none';
+    sec.style.overflowY = 'visible';
+    const h = sec.scrollHeight;
+    sec.style.maxHeight = pm;
+    sec.style.overflowY = po;
+    return h;
+  };
+  const syncHeight = () => {
+    const active = sections[index]?.sec;
+    if (!active || !stage) return;
+    const avail = stage.clientHeight;
+    if (!avail) return;
+    syncing = true;
+    const natural = measureNatural(active);
+    const capped = natural > avail;
+    viewport.style.height = Math.min(natural, avail) + 'px';
+    sections.forEach((s, i) => {
+      const isActiveCapped = i === index && capped;
+      s.sec.style.maxHeight = isActiveCapped ? avail + 'px' : '';
+      s.sec.style.overflowY = isActiveCapped ? 'auto' : '';
+      s.sec.classList.toggle('is-capped', isActiveCapped);
+    });
+    requestAnimationFrame(() => { syncing = false; });
+  };
 
   const render = () => {
     track.style.transform = `translateX(${-index * 100}%)`;
@@ -451,6 +520,7 @@ export function buildReadingDocument(container, opts = {}) {
     barFill.style.transform = `scaleX(${(index + 1) / sections.length})`;
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === sections.length - 1;
+    syncHeight();
   };
 
   const goToIndex = (i) => {
@@ -501,9 +571,36 @@ export function buildReadingDocument(container, opts = {}) {
     }
   });
 
+  // Keep the stage matched to its panel as the window resizes, fonts settle,
+  // or an interactive widget inside a panel changes height. The `syncing` guard
+  // prevents our own height writes from re-triggering the observer in a loop;
+  // all listeners self-detach once the deck leaves the DOM.
+  let ro = null;
+  const cleanup = () => {
+    window.removeEventListener('resize', onResize);
+    ro?.disconnect();
+  };
+  const onResize = () => {
+    if (!isLive()) { cleanup(); return; }
+    syncHeight();
+  };
+  if ('ResizeObserver' in window) {
+    ro = new ResizeObserver(() => {
+      if (syncing) return;
+      if (!isLive()) { cleanup(); return; }
+      syncHeight();
+    });
+    ro.observe(stage);
+    sections.forEach((s) => ro.observe(s.sec));
+  }
+  window.addEventListener('resize', onResize);
+  // A couple of late re-syncs catch web-font swaps and script-built widgets
+  // that finish laying out after the first paint.
+  window.addEventListener('load', () => { if (isLive()) syncHeight(); });
+  setTimeout(() => { if (isLive()) syncHeight(); }, 350);
+
   // ---- Preserve original goTo/go globals (now switch the deck) ----
-  const glanceOffset = glanceNodes.length ? 1 : 0;
-  const isLive = () => document.body.contains(doc);
+  const glanceOffset = hasGlance ? 1 : 0;
   window.goTo = (id) => {
     if (!isLive()) return;
     const idx = panels.findIndex(p => p && p.id === id);

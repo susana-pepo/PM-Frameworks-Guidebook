@@ -411,6 +411,16 @@
   --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E");
 }
 
+/* Single-category page wash, dark variant — the light theme's near-white top
+   highlight reads as a silvery glare on charcoal, so dark mode uses a gentle,
+   low-alpha hue-tinted lift instead: tinted paper catching dim light. */
+[data-theme="dark"] .app-content[data-category="prioritization"] { background: radial-gradient(135% 72% at 50% -12%, oklch(0.42 0.045 288 / 0.40), transparent 58%), var(--cat-prioritization-fill); }
+[data-theme="dark"] .app-content[data-category="design"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 165 / 0.40), transparent 58%), var(--cat-design-fill); }
+[data-theme="dark"] .app-content[data-category="strategy"]       { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 32 / 0.40), transparent 58%), var(--cat-strategy-fill); }
+[data-theme="dark"] .app-content[data-category="growth"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.43 0.045 258 / 0.40), transparent 58%), var(--cat-growth-fill); }
+[data-theme="dark"] .app-content[data-category="execution"]      { background: radial-gradient(135% 72% at 50% -12%, oklch(0.45 0.045 80 / 0.40), transparent 58%), var(--cat-execution-fill); }
+[data-theme="dark"] .app-content[data-category="communication"]  { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 55 / 0.40), transparent 58%), var(--cat-communication-fill); }
+
 /* Hub multi-category wash, dark variant — veiled toward charcoal */
 [data-theme="dark"] .app-content:not([data-category]) {
   background:
