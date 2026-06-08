@@ -259,7 +259,7 @@ export function buildReadingDocument(container, opts = {}) {
 
   // ===== ASSEMBLE THE DOCUMENT =====
   const doc = document.createElement('div');
-  doc.className = 'fw-doc' + (wide ? ' is-wide' : '');
+  doc.className = 'fw-doc deck-mode' + (wide ? ' is-wide' : '');
   // --accent-color / --accent-light are inherited from .fw-page's inline style.
 
   // ---- Header band ----
@@ -312,8 +312,32 @@ export function buildReadingDocument(container, opts = {}) {
   railList.className = 'fw-rail-list';
   rail.appendChild(railList);
 
+  // The document column becomes a horizontal "section deck": one section
+  // fills the reading panel at a time and moving between them slides sideways
+  // like turning a page. Friendlier to digest than an endless scroll — one
+  // idea per view, clear progress, and the page only scrolls if a single
+  // section genuinely runs tall.
   const main = document.createElement('div');
   main.className = 'fw-doc-main';
+
+  const deck = document.createElement('div');
+  deck.className = 'fw-deck';
+
+  // Slim progress bar across the top of the deck
+  const bar = document.createElement('div');
+  bar.className = 'fw-deck-bar';
+  bar.innerHTML = '<span class="fw-deck-bar-fill"></span>';
+
+  // Viewport clips the sliding track; its height is JS-synced to the active panel
+  const viewport = document.createElement('div');
+  viewport.className = 'fw-deck-viewport';
+  const track = document.createElement('div');
+  track.className = 'fw-deck-track';
+  viewport.appendChild(track);
+
+  deck.appendChild(bar);
+  deck.appendChild(viewport);
+  main.appendChild(deck);
 
   const sections = [];
 
@@ -346,8 +370,8 @@ export function buildReadingDocument(container, opts = {}) {
       sec.appendChild(n);
     });
 
-    main.appendChild(sec);
-    sections.push({ id, link: a, sec });
+    track.appendChild(sec);
+    sections.push({ id, link: a, sec, label });
   };
 
   if (glanceNodes.length) {
@@ -360,6 +384,25 @@ export function buildReadingDocument(container, opts = {}) {
     addSection(`sec-${slug}-${i}`, step.num, step.label, [panel]);
   });
 
+  // ---- Deck controls: prev · progress dots · next ----
+  const controls = document.createElement('div');
+  controls.className = 'fw-deck-controls';
+  controls.innerHTML = `
+    <button class="fw-deck-btn fw-deck-prev" type="button" aria-label="Previous section">
+      <span class="fw-deck-btn-ic" aria-hidden="true">&#8592;</span>
+      <span class="fw-deck-btn-tx">Back</span>
+    </button>
+    <div class="fw-deck-progress">
+      <div class="fw-deck-dots" role="tablist" aria-label="Jump to section"></div>
+      <span class="fw-deck-count" aria-live="polite"><span class="fw-deck-cur">1</span> / <span class="fw-deck-total">${sections.length}</span></span>
+    </div>
+    <button class="fw-deck-btn fw-deck-next" type="button" aria-label="Next section">
+      <span class="fw-deck-btn-tx">Next</span>
+      <span class="fw-deck-btn-ic" aria-hidden="true">&#8594;</span>
+    </button>
+  `;
+  deck.appendChild(controls);
+
   body.appendChild(rail);
   body.appendChild(main);
   doc.appendChild(body);
@@ -371,59 +414,118 @@ export function buildReadingDocument(container, opts = {}) {
   if (fwContainer) fwContainer.style.display = 'none';
 
   fwPage.prepend(doc);
-  fwPage.classList.add('doc-mode');
+  fwPage.classList.add('doc-mode', 'deck-mode');
 
-  // ---- Scroll-spy: highlight the section currently under the header ----
-  const scroller = container.closest('.app-content') || document.scrollingElement;
-  const setActive = (id) => {
-    sections.forEach(s => {
-      const on = s.id === id;
+  const appContent = container.closest('.app-content');
+  appContent?.setAttribute('data-mode', 'deck');
+
+  // ===== DECK CONTROLLER =====
+  if (!sections.length) return;
+
+  const dots = controls.querySelector('.fw-deck-dots');
+  sections.forEach((s, i) => {
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'fw-deck-dot';
+    d.dataset.index = String(i);
+    d.setAttribute('role', 'tab');
+    d.setAttribute('aria-label', `${s.label} (${i + 1} of ${sections.length})`);
+    dots.appendChild(d);
+  });
+  const dotEls = Array.from(dots.children);
+  const prevBtn = controls.querySelector('.fw-deck-prev');
+  const nextBtn = controls.querySelector('.fw-deck-next');
+  const curEl = controls.querySelector('.fw-deck-cur');
+  const barFill = bar.querySelector('.fw-deck-bar-fill');
+
+  let index = 0;
+
+  const render = () => {
+    track.style.transform = `translateX(${-index * 100}%)`;
+    sections.forEach((s, i) => {
+      const on = i === index;
       s.link.classList.toggle('active', on);
       if (on) s.link.setAttribute('aria-current', 'true');
       else s.link.removeAttribute('aria-current');
+      s.sec.classList.toggle('is-active', on);
+      s.sec.setAttribute('aria-hidden', String(!on));
+      dotEls[i].classList.toggle('active', on);
+      dotEls[i].setAttribute('aria-selected', String(on));
     });
+    curEl.textContent = String(index + 1);
+    barFill.style.transform = `scaleX(${(index + 1) / sections.length})`;
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === sections.length - 1;
   };
 
-  if (sections.length) {
-    setActive(sections[0].id);
-    const io = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      if (visible[0]) setActive(visible[0].target.id);
-    }, { root: scroller, rootMargin: '-76px 0px -62% 0px', threshold: 0 });
-    sections.forEach(s => io.observe(s.sec));
-  }
+  const goToIndex = (i) => {
+    index = Math.max(0, Math.min(sections.length - 1, i));
+    render();
+    // Each panel scrolls within its own stage — start a freshly-shown one at
+    // the top so every section is read from its beginning.
+    const active = sections[index]?.sec;
+    if (active) active.scrollTo ? active.scrollTo({ top: 0 }) : (active.scrollTop = 0);
+    sections[index]?.link.scrollIntoView({ block: 'nearest', inline: 'center' });
+  };
 
-  // ---- Rail click → smooth scroll to section ----
+  // Rail + dots → jump
   rail.addEventListener('click', (e) => {
     const link = e.target.closest('.fw-rail-link');
     if (!link) return;
     e.preventDefault();
-    const target = document.getElementById(link.dataset.target);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActive(target.id);
+    const i = sections.findIndex(s => s.id === link.dataset.target);
+    if (i >= 0) goToIndex(i);
+  });
+  dots.addEventListener('click', (e) => {
+    const d = e.target.closest('.fw-deck-dot');
+    if (d) goToIndex(parseInt(d.dataset.index, 10));
+  });
+  prevBtn.addEventListener('click', () => goToIndex(index - 1));
+  nextBtn.addEventListener('click', () => goToIndex(index + 1));
+
+  // Keyboard ← / → (ignored while typing in a field). Self-detaches once the
+  // deck leaves the DOM so it never hijacks a later page.
+  const onKey = (e) => {
+    if (!document.body.contains(doc)) { document.removeEventListener('keydown', onKey); return; }
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')
+      || document.activeElement?.isContentEditable;
+    if (typing) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); goToIndex(index + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); goToIndex(index - 1); }
+  };
+  document.addEventListener('keydown', onKey);
+
+  // Touch / pen swipe between sections (horizontal intent only — vertical
+  // gestures still scroll a tall panel).
+  let sx = 0, sy = 0, swiping = false;
+  viewport.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse') return;
+    sx = e.clientX; sy = e.clientY; swiping = true;
+  });
+  viewport.addEventListener('pointerup', (e) => {
+    if (!swiping) return; swiping = false;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      goToIndex(index + (dx < 0 ? 1 : -1));
     }
   });
 
-  // ---- Preserve original goTo/go globals (now scroll instead of toggle) ----
+  // ---- Preserve original goTo/go globals (now switch the deck) ----
+  const glanceOffset = glanceNodes.length ? 1 : 0;
   const isLive = () => document.body.contains(doc);
   window.goTo = (id) => {
     if (!isLive()) return;
     const idx = panels.findIndex(p => p && p.id === id);
-    const target = idx >= 0 ? document.getElementById(`sec-${slug}-${idx}`) : null;
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (idx >= 0) goToIndex(idx + glanceOffset);
   };
   window.go = (idx) => {
     if (!isLive()) return;
-    document.getElementById(`sec-${slug}-${idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    goToIndex(idx + glanceOffset);
   };
 
-  // ---- Deep link: jump to a requested section on load ----
-  if (initialStep != null && initialStep >= 0 && initialStep < steps.length) {
-    requestAnimationFrame(() => {
-      document.getElementById(`sec-${slug}-${initialStep}`)?.scrollIntoView({ block: 'start' });
-    });
-  }
+  // ---- Initial section (honour deep link) ----
+  const start = (initialStep != null && initialStep >= 0 && initialStep < steps.length)
+    ? initialStep + glanceOffset : 0;
+  index = start;
+  requestAnimationFrame(render);
 }

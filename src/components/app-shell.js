@@ -437,11 +437,13 @@ function handleRoute(route) {
     case 'hub':
       removeInjectedStyles();
       appContent?.removeAttribute('data-category');
+      appContent?.removeAttribute('data-mode');
       renderHub(content);
       break;
 
     case 'category':
       removeInjectedStyles();
+      appContent?.removeAttribute('data-mode');
       // renderCategoryPage sets data-category on .app-content for the calm tint
       renderCategoryPage(content, route.params.id);
       break;
@@ -458,6 +460,7 @@ function handleRoute(route) {
     default:
       removeInjectedStyles();
       appContent?.removeAttribute('data-category');
+      appContent?.removeAttribute('data-mode');
       renderHub(content);
   }
 }

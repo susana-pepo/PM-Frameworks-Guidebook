@@ -3311,3 +3311,451 @@ tr:hover td {
   color: var(--text-secondary);
 }
 [data-theme="dark"] .fw-doc .fw-doc-tldr strong { color: var(--text-primary); }
+
+/* ============================================================
+   READING REFINEMENT  (appended last — wins by source order)
+
+   The reading document used to render every paragraph inside a full
+   card (surface + border + shadow), nested 2–3 deep, at a ~95-character
+   measure. That read as "a stack of boxes," not a guide you'd want to
+   read. This layer rebuilds the page as an *article*:
+
+     • a calm reading measure (~66ch) for running text
+     • prose that flows directly on the paper — no card per paragraph
+     • containment reserved for genuine figures (grids, tables, tools)
+       and lightened, left-ruled callouts
+
+   Everything is scoped to .fw-doc so the hub, category and nav pages
+   are untouched. No source HTML files are modified — all 24 frameworks
+   and 6 comparison guides inherit this through the shared renderer.
+   ============================================================ */
+
+/* ---- 1 · READING MEASURE ----------------------------------------
+   Running text holds a comfortable measure; figures (grids, tables,
+   tools, heroes) are allowed to breathe wider, left-aligned to the
+   same edge — the classic narrow-text / wide-figure article rhythm. */
+.fw-doc-main { --measure: 66ch; }
+
+.fw-doc-main .panel,
+.fw-doc-main .section { max-width: 760px; }
+.fw-doc.is-wide .fw-doc-main .panel,
+.fw-doc.is-wide .fw-doc-main .section { max-width: none; }
+
+/* Constrain running text + headings; figures opt out further down. */
+.fw-doc-main .section > :is(p, ul, ol, h2, h3, h4, blockquote),
+.fw-doc-main .panel   > :is(p, ul, ol, h2, h3, h4, blockquote),
+.fw-doc-main :is(.c-card, .c-card-static) > :is(p, ul, ol, h2, h3, h4, blockquote) {
+  max-width: var(--measure);
+}
+
+/* ---- 2 · DE-BOX THE PROSE ---------------------------------------
+   .c-card / .c-card-static wrap most running prose and carried the
+   heaviest chrome. Flatten them to plain blocks with vertical rhythm
+   only. (They never wrap grids in the source — verified — so this is
+   safe; grid ITEMS like .factor-card keep their card treatment below.) */
+.fw-doc-main :is(.c-card, .c-card-static) {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+}
+.fw-doc-main :is(.c-card, .c-card-static):hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- 3 · PROSE TYPOGRAPHY & RHYTHM ------------------------------
+   Slightly larger, more open body type for sustained reading, with
+   real space between paragraphs and well-set lists. */
+.fw-doc-main :is(.c-card, .c-card-static, .section, .panel) > p,
+.fw-doc-main :is(.c-card, .c-card-static) li {
+  font-size: var(--text-md);            /* 17px */
+  line-height: var(--leading-relaxed);  /* 1.75 */
+  color: var(--text-secondary);
+}
+.fw-doc-main :is(.c-card, .c-card-static) > p + p { margin-top: var(--space-4); }
+.fw-doc-main :is(.c-card, .c-card-static) strong { color: var(--text-primary); }
+
+.fw-doc-main :is(.c-card, .c-card-static) > ul,
+.fw-doc-main :is(.c-card, .c-card-static) > ol {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+}
+.fw-doc-main :is(.c-card, .c-card-static) li { margin-bottom: var(--space-2); }
+
+/* Card sub-headings become article sub-heads, not box titles. */
+.fw-doc-main :is(.c-card, .c-card-static) > :is(h3, h4) {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+}
+.fw-doc-main :is(.c-card, .c-card-static) > h3 { font-size: var(--text-lg); }
+.fw-doc-main :is(.c-card, .c-card-static) > h4 { font-size: var(--text-md); }
+/* A sub-head that follows prose needs a breath above it. */
+.fw-doc-main :is(.c-card, .c-card-static) > * + :is(h3, h4) { margin-top: var(--space-6); }
+
+/* ---- 4 · CALM THE FIGURES ---------------------------------------
+   Genuine cards (grid items, tools, quizzes, process steps) stay
+   contained but step down to ONE quiet treatment — a hairline border
+   and a whisper of shadow — so they read as figures, not competing
+   blocks. (.when-card is excluded: its use/skip green/red border is a
+   meaningful signal and is left intact.) */
+.fw-doc-main :is(.factor-card, .quad-card, .cat-card, .m-card, .sc-card,
+                 .qq, .scale-item, .conn-card, .builder, .id-card,
+                 .session-template, .build-area, .loop-diagram, .cycle-wrap,
+                 .matrix-hero, .flow, .fstep) {
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ---- 5 · CALLOUTS → LEFT-RULED ASIDES ---------------------------
+   .insight (incl. "Memory trick") and .tip were heavy filled boxes in
+   clashing yellow/green/blue. Unify them into a calm category-tinted
+   aside marked by a left rule — a supporting note, not another block.
+   The tint mixes into --bg-card so it flips correctly in dark mode. */
+.fw-doc-main :is(.insight, .tip) {
+  background: color-mix(in oklab, var(--accent-color, var(--text-tertiary)) 7%, var(--bg-card));
+  border: none;
+  border-left: 3px solid color-mix(in oklab, var(--accent-color, var(--border-strong)) 60%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: none;
+  padding: var(--space-3) var(--space-5);
+  margin: var(--space-5) 0;
+  max-width: var(--measure);
+}
+.fw-doc-main :is(.insight, .tip) :is(p, li) {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+.fw-doc-main :is(.insight, .tip) :is(h4, strong) { color: var(--text-primary); }
+/* The shared dark-mode pin (line ~3287) forces .insight/.tip text to a
+   FIXED dark ink because it assumes a light pastel fill. Our asides are
+   theme-aware (tint mixes into --bg-card), so restore flipping tokens. */
+[data-theme="dark"] .fw-doc-main :is(.insight, .tip),
+[data-theme="dark"] .fw-doc-main :is(.insight, .tip) :is(p, li, span) {
+  color: var(--text-secondary);
+}
+[data-theme="dark"] .fw-doc-main :is(.insight, .tip) :is(h4, strong) {
+  color: var(--text-primary);
+}
+
+/* ---- 6 · SECTION HEADER POLISH ----------------------------------
+   Each section already shows a small mono eyebrow (01 · UNDERSTAND).
+   Make the source's own section title a reliably high-contrast H2 so
+   the hierarchy reads eyebrow → title → prose (some source files tint
+   it gray or use gradient text — pin it to ink). */
+.fw-doc-main .sec-title :is(h2, h3),
+.fw-doc-main .sec-title .sec-label :is(h2, h3) {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  font-size: var(--text-2xl);
+}
+.fw-doc-main .sec-title { margin-bottom: var(--space-6); }
+
+/* ============================================================
+   SECTION DECK  (carousel reading mode)
+
+   The reading document is presented as a horizontal deck: one section
+   fills the panel at a time and moving between them slides sideways like
+   turning a page. One idea per view, clear progress, no endless scroll.
+   Motion uses the premium decelerating curve (real mass, no linear/ease).
+   ============================================================ */
+
+/* ---- App-like height cascade -------------------------------------
+   In deck mode the framework page becomes a fixed stage that fills the
+   viewport: the page itself does not scroll, the title band is pinned at
+   the top, the controls are pinned at the bottom, and the active section
+   scrolls *within* its own panel if it runs tall. This is what kills the
+   endless page scroll. */
+.app-content[data-mode="deck"] {
+  overflow: hidden;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-5);
+}
+.app-content[data-mode="deck"] .content-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 1180px;
+}
+.app-content[data-mode="deck"] .site-footer { display: none; }
+
+.fw-page.deck-mode { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fw-doc.deck-mode {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.fw-doc.deck-mode .fw-doc-header { flex-shrink: 0; }
+.fw-doc.deck-mode .fw-doc-body {
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+.fw-doc.deck-mode .fw-doc-main { display: flex; flex-direction: column; min-height: 0; }
+
+/* Rail becomes a full-height column (no sticky needed on a fixed stage). */
+.fw-doc.deck-mode .fw-rail {
+  position: static;
+  align-self: stretch;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* Compact the title band so the stage gets the vertical room. */
+.fw-doc.deck-mode .fw-doc-header { margin-bottom: var(--space-5); padding-bottom: var(--space-5); }
+.fw-doc.deck-mode .fw-doc-emoji { width: 56px; height: 56px; font-size: 29px; }
+.fw-doc.deck-mode .fw-doc-title { font-size: clamp(24px, 3.2vw, 34px); }
+.fw-doc.deck-mode .fw-doc-tldr { margin-top: var(--space-3); }
+.fw-doc.deck-mode .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) { padding: var(--space-3) var(--space-4); }
+
+.fw-deck {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---- Top progress bar ---- */
+.fw-deck-bar {
+  position: relative;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: color-mix(in oklab, var(--accent-color, var(--border-default)) 15%, transparent);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+}
+.fw-deck-bar-fill {
+  display: block;
+  height: 100%;
+  transform-origin: left center;
+  background: var(--accent-color, var(--text-secondary));
+  border-radius: var(--radius-full);
+  transition: transform var(--duration-slow) var(--ease-premium);
+}
+
+/* ---- Sliding viewport + track ----
+   The viewport fills the stage; the track is a flex row of full-width
+   panels translated horizontally. Each panel scrolls internally if tall. */
+.fw-deck-viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+.fw-deck-track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  transition: transform 620ms var(--ease-premium);
+  will-change: transform;
+}
+
+/* Each section is one full-width panel; tall content scrolls within it. */
+.fw-doc.deck-mode .fw-doc-section {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  border-top: none;
+  scroll-margin-top: 0;
+  padding: var(--space-2) var(--space-5) var(--space-8);
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+.fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar { width: 8px; }
+.fw-doc.deck-mode .fw-doc-section::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Centre the reading column within the wide panel. */
+.fw-doc.deck-mode .fw-doc-main .panel,
+.fw-doc.deck-mode .fw-doc-main .section,
+.fw-doc.deck-mode .fw-doc-marker {
+  margin-left: auto;
+  margin-right: auto;
+}
+.fw-doc.deck-mode .fw-doc-main .panel,
+.fw-doc.deck-mode .fw-doc-main .section { width: 100%; }
+.fw-doc.deck-mode:not(.is-wide) .fw-doc-marker { max-width: 760px; }
+
+/* "At a glance" cover panel — centre its hero vertically too. */
+.fw-doc.deck-mode .fw-doc-glance {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Inactive panels can't catch focus/scroll while parked off-stage. */
+.fw-doc.deck-mode .fw-doc-section[aria-hidden="true"] { pointer-events: none; }
+.fw-doc.deck-mode .fw-doc-section.is-active { pointer-events: auto; }
+
+/* ---- Controls: prev · progress · next ---- */
+.fw-deck-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.fw-deck-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px var(--space-4) 7px 7px;     /* prev: icon hugs the left */
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default),
+              opacity var(--duration-fast) var(--ease-default);
+}
+.fw-deck-next { padding: 7px 7px 7px var(--space-4); }   /* next: icon hugs the right */
+
+.fw-deck-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+.fw-deck-btn:active { transform: scale(0.97); }
+.fw-deck-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Button-in-button: the arrow lives in its own circular wrapper. */
+.fw-deck-btn-ic {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: color-mix(in oklab, var(--accent-color, var(--text-tertiary)) 16%, var(--bg-muted));
+  color: var(--accent-color, var(--text-secondary));
+  font-size: 15px;
+  line-height: 1;
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+.fw-deck-next:hover .fw-deck-btn-ic { transform: translateX(2px); }
+.fw-deck-prev:hover .fw-deck-btn-ic { transform: translateX(-2px); }
+
+/* ---- Progress dots + count ---- */
+.fw-deck-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.fw-deck-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.fw-deck-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: color-mix(in oklab, var(--text-muted) 42%, transparent);
+  cursor: pointer;
+  transition: width var(--duration-normal) var(--ease-premium),
+              transform var(--duration-fast) var(--ease-spring),
+              background var(--duration-fast) var(--ease-default);
+}
+.fw-deck-dot:hover { background: var(--text-tertiary); transform: scale(1.3); }
+.fw-deck-dot.active {
+  width: 22px;
+  background: var(--accent-color, var(--text-secondary));
+}
+.fw-deck-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.fw-deck-cur { color: var(--accent-color, var(--text-secondary)); }
+
+/* On the narrow rail / mobile, shorten the button labels to the arrows. */
+@media (max-width: 560px) {
+  .fw-deck-btn-tx { display: none; }
+  .fw-deck-btn,
+  .fw-deck-next { padding: 6px; }
+  .fw-deck-controls { gap: var(--space-3); }
+}
+
+/* ---- Mobile / narrow: rail rides on top as a horizontal tab strip, the
+   stage fills the row below it. ---- */
+@media (max-width: 900px) {
+  .fw-doc.deck-mode .fw-doc-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+  .fw-doc.deck-mode .fw-rail {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: none;
+  }
+  .fw-doc.deck-mode .fw-doc-section { padding-left: var(--space-2); padding-right: var(--space-2); }
+}
+
+/* Phones: reclaim vertical room for the stage — the concise subtitle carries
+   the gist, so drop the longer pinned TL;DR (its detail lives in the sections)
+   and tighten the title band. */
+@media (max-width: 768px) {
+  .fw-doc.deck-mode .fw-doc-tldr { display: none; }
+  .fw-doc.deck-mode .fw-doc-header { margin-bottom: var(--space-3); padding-bottom: var(--space-3); }
+  .fw-doc.deck-mode .fw-doc-subtitle {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .fw-doc.deck-mode .fw-doc-emoji { width: 48px; height: 48px; font-size: 24px; }
+  .fw-doc.deck-mode .fw-doc-ident { gap: var(--space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-deck-track,
+  .fw-deck-viewport,
+  .fw-deck-bar-fill,
+  .fw-deck-btn-ic,
+  .fw-deck-dot { transition: none; }
+}
