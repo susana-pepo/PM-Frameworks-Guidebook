@@ -375,9 +375,6 @@ function installAccordionSystem(container, slug, initialStep) {
   const jBtns = Array.from(journeyNav.querySelectorAll('.j-btn'));
   if (jBtns.length === 0) return;
 
-  const fw = getFramework(slug);
-  const fwName = fw ? fw.name : 'Framework';
-
   // Collect all panels/sections that the tabs control
   const panels = jBtns.map((btn, i) => {
     const onclickAttr = btn.getAttribute('onclick') || '';
@@ -431,20 +428,9 @@ function installAccordionSystem(container, slug, initialStep) {
   accordionNav.setAttribute('role', 'region');
   accordionNav.setAttribute('aria-label', 'Framework sections');
 
-  // ---- TITLE BAR ----
-  const windowBar = document.createElement('div');
-  windowBar.className = 'window-title-bar';
-  windowBar.innerHTML = `
-    <span class="window-title-dots">
-      <span class="window-title-dot"></span>
-      <span class="window-title-dot"></span>
-      <span class="window-title-dot"></span>
-    </span>
-    <span class="window-title-text">${fwName}</span>
-    <span class="window-title-actions"></span>
-  `;
-  accordionNav.appendChild(windowBar);
-
+  // ---- TAB RAIL ----
+  // (No fake macOS title bar — the tab rail itself is the chrome. Identity
+  // lives once, in the left identity column.)
   // ---- BOOKMARKS BAR ----
   const bookmarksBar = document.createElement('div');
   bookmarksBar.className = 'window-bookmarks-bar';

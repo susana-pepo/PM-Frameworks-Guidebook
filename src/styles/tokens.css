@@ -30,10 +30,15 @@
   --bw: 3px;
   --bw-thin: 2px;
 
-  /* ---- TYPOGRAPHY ---- */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-display: 'Clash Display', 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* ---- TYPOGRAPHY ----
+     Field-guide editorial voice. Bricolage Grotesque is a characterful,
+     optically-sized display grotesque (the "designed object" feel of a
+     well-set reference manual); Hanken Grotesk is a warm, highly legible
+     text face built for long reading sessions; JetBrains Mono is reserved
+     for genuine data — codes, scores, keyboard hints — never decoration. */
+  --font-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
   --text-xs: 11px;
   --text-sm: 13px;
@@ -56,65 +61,74 @@
   --weight-bold: 700;
   --weight-extrabold: 800;
 
-  /* ---- CATEGORY COLORS (Bold & Saturated) ---- */
-  --cat-prioritization: #7C5CFC;
-  --cat-prioritization-light: #D4C8FF;
-  --cat-prioritization-soft: rgba(124, 92, 252, 0.12);
-  --cat-prioritization-muted: rgba(124, 92, 252, 0.18);
-  --cat-prioritization-fill: #EDE8FF;
+  /* ---- CATEGORY COLORS ----
+     Each category is an index colour, like the coloured tabs of a reference
+     binder. The strong base colour is reserved for accents (rare, 10%);
+     -light tints surfaces; -fill is a near-paper page wash so a whole
+     framework page reads calm, not drenched. */
+  --cat-prioritization: oklch(0.60 0.205 287);   /* royal violet */
+  --cat-prioritization-light: oklch(0.90 0.06 287);
+  --cat-prioritization-soft: oklch(0.60 0.205 287 / 0.12);
+  --cat-prioritization-muted: oklch(0.60 0.205 287 / 0.18);
+  --cat-prioritization-fill: oklch(0.965 0.022 287);
 
-  --cat-design: #10B981;
-  --cat-design-light: #A7F3D0;
-  --cat-design-soft: rgba(16, 185, 129, 0.12);
-  --cat-design-muted: rgba(16, 185, 129, 0.18);
-  --cat-design-fill: #D1FAE5;
+  --cat-design: oklch(0.70 0.155 165);            /* emerald */
+  --cat-design-light: oklch(0.90 0.07 165);
+  --cat-design-soft: oklch(0.70 0.155 165 / 0.12);
+  --cat-design-muted: oklch(0.70 0.155 165 / 0.18);
+  --cat-design-fill: oklch(0.965 0.028 165);
 
-  --cat-strategy: #F97066;
-  --cat-strategy-light: #FECACA;
-  --cat-strategy-soft: rgba(249, 112, 102, 0.12);
-  --cat-strategy-muted: rgba(249, 112, 102, 0.18);
-  --cat-strategy-fill: #FEE2E2;
+  --cat-strategy: oklch(0.685 0.165 32);          /* coral */
+  --cat-strategy-light: oklch(0.89 0.07 32);
+  --cat-strategy-soft: oklch(0.685 0.165 32 / 0.12);
+  --cat-strategy-muted: oklch(0.685 0.165 32 / 0.18);
+  --cat-strategy-fill: oklch(0.965 0.026 32);
 
-  --cat-growth: #3B82F6;
-  --cat-growth-light: #93C5FD;
-  --cat-growth-soft: rgba(59, 130, 246, 0.12);
-  --cat-growth-muted: rgba(59, 130, 246, 0.18);
-  --cat-growth-fill: #DBEAFE;
+  --cat-growth: oklch(0.62 0.19 258);             /* ocean blue */
+  --cat-growth-light: oklch(0.88 0.065 258);
+  --cat-growth-soft: oklch(0.62 0.19 258 / 0.12);
+  --cat-growth-muted: oklch(0.62 0.19 258 / 0.18);
+  --cat-growth-fill: oklch(0.963 0.026 258);
 
-  --cat-execution: #F59E0B;
-  --cat-execution-light: #FCD34D;
-  --cat-execution-soft: rgba(245, 158, 11, 0.12);
-  --cat-execution-muted: rgba(245, 158, 11, 0.18);
-  --cat-execution-fill: #FEF3C7;
+  --cat-execution: oklch(0.74 0.155 70);          /* amber */
+  --cat-execution-light: oklch(0.89 0.08 78);
+  --cat-execution-soft: oklch(0.74 0.155 70 / 0.12);
+  --cat-execution-muted: oklch(0.74 0.155 70 / 0.18);
+  --cat-execution-fill: oklch(0.967 0.034 80);
 
-  --cat-communication: #F97316;
-  --cat-communication-light: #FDBA74;
-  --cat-communication-soft: rgba(249, 115, 22, 0.12);
-  --cat-communication-muted: rgba(249, 115, 22, 0.18);
-  --cat-communication-fill: #FFEDD5;
+  --cat-communication: oklch(0.70 0.17 50);       /* tangerine */
+  --cat-communication-light: oklch(0.88 0.08 55);
+  --cat-communication-soft: oklch(0.70 0.17 50 / 0.12);
+  --cat-communication-muted: oklch(0.70 0.17 50 / 0.18);
+  --cat-communication-fill: oklch(0.965 0.032 55);
 
-  /* ---- SEMANTIC COLORS (Light mode — high contrast) ---- */
-  --bg-app: #FFFDF7;
-  --bg-sidebar: #FFFDF7;
-  --bg-content: #FEFCF8;
-  --bg-card: #FEFCF8;
-  --bg-card-hover: #FBF8F2;
-  --bg-muted: #F5F3EE;
-  --bg-subtle: #EDEAE4;
-  --bg-input: #FEFCF8;
-  --bg-overlay: rgba(0, 0, 0, 0.5);
+  /* ---- SEMANTIC COLORS (Warm ink on paper) ----
+     OKLCH, perceptually uniform. Neutrals are tinted toward the brand's
+     warm paper hue (~83) so surfaces feel like a printed field guide rather
+     than a cold UI. "Black" is a deep warm ink (never #000) — keeps the
+     brutalist contrast punch while removing the clinical harshness that
+     fatigues long reading sessions. */
+  --bg-app: oklch(0.984 0.009 83);       /* warm cream paper */
+  --bg-sidebar: oklch(0.984 0.009 83);
+  --bg-content: oklch(0.988 0.008 83);
+  --bg-card: oklch(0.996 0.006 83);      /* near-white, faintly warm */
+  --bg-card-hover: oklch(0.972 0.012 83);
+  --bg-muted: oklch(0.949 0.013 83);
+  --bg-subtle: oklch(0.915 0.015 83);
+  --bg-input: oklch(0.997 0.005 83);
+  --bg-overlay: oklch(0.22 0.02 60 / 0.46);
 
-  --border-default: #000000;
-  --border-subtle: #d4d0c8;
-  --border-strong: #000000;
-  --border-focus: #7C5CFC;
+  --border-default: oklch(0.24 0.018 58);   /* warm ink — the brutalist line */
+  --border-subtle: oklch(0.86 0.013 78);
+  --border-strong: oklch(0.18 0.02 58);
+  --border-focus: var(--cat-prioritization);
 
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --text-tertiary: #666666;
-  --text-muted: #888888;
-  --text-inverse: #ffffff;
-  --text-link: #3B82F6;
+  --text-primary: oklch(0.235 0.018 56);    /* warm near-black ink */
+  --text-secondary: oklch(0.40 0.016 56);
+  --text-tertiary: oklch(0.52 0.014 58);
+  --text-muted: oklch(0.605 0.012 60);
+  --text-inverse: oklch(0.985 0.006 83);
+  --text-link: var(--cat-growth);
 
   /* Status colors */
   --color-success: #10B981;
@@ -131,16 +145,17 @@
   --color-action-hover: #6B4FE0;
   --color-action-light: #EDE8FF;
 
-  /* ---- SHADOWS (Hard offset, no blur — brutalist) ---- */
-  --shadow-xs: 2px 2px 0 #000000;
-  --shadow-sm: 3px 3px 0 #000000;
-  --shadow-md: 4px 4px 0 #000000;
-  --shadow-lg: 6px 6px 0 #000000;
-  --shadow-xl: 8px 8px 0 #000000;
-  --shadow-hover: 6px 6px 0 #000000;
-  --shadow-focus: 0 0 0 3px rgba(124, 92, 252, 0.4);
-  /* Colored shadow variants for category cards */
-  --shadow-color: #000000;
+  /* ---- SHADOWS (Hard offset, no blur — brutalist, warm ink) ----
+     Warm deep ink instead of pure black: the offset stays crisp and
+     confident but reads as part of the paper world, not a cold drop. */
+  --shadow-color: oklch(0.26 0.022 56);
+  --shadow-xs: 2px 2px 0 var(--shadow-color);
+  --shadow-sm: 3px 3px 0 var(--shadow-color);
+  --shadow-md: 4px 4px 0 var(--shadow-color);
+  --shadow-lg: 6px 6px 0 var(--shadow-color);
+  --shadow-xl: 8px 8px 0 var(--shadow-color);
+  --shadow-hover: 6px 6px 0 var(--shadow-color);
+  --shadow-focus: 0 0 0 3px oklch(0.62 0.21 285 / 0.38);
 
   /* ---- TRANSITIONS (Snappy) ---- */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
@@ -238,6 +253,98 @@
 .app-content[data-category="growth"]         { background: var(--cat-growth-fill) var(--pattern-growth); }
 .app-content[data-category="execution"]      { background: var(--cat-execution-fill) var(--pattern-execution); }
 .app-content[data-category="communication"]  { background: var(--cat-communication-fill) var(--pattern-communication); }
+
+/* ============================================
+   DARK THEME — "field guide at night"
+   Same OKLCH system with inverted lightness. Tinted
+   toward warm charcoal so it reads like dim paper, not
+   a cold UI. Saturated pastel/accent tokens (--mint,
+   --yellow, score cells, status -light) deliberately
+   STAY light so highlighted cells and chips pop on the
+   dark page and keep their dark text readable.
+   ============================================ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-app: oklch(0.205 0.011 72);
+  --bg-sidebar: oklch(0.205 0.011 72);
+  --bg-content: oklch(0.228 0.012 72);
+  --bg-card: oklch(0.255 0.014 74);
+  --bg-card-hover: oklch(0.298 0.016 74);
+  --bg-muted: oklch(0.305 0.014 74);
+  --bg-subtle: oklch(0.350 0.015 74);
+  --bg-input: oklch(0.242 0.013 74);
+  --bg-overlay: oklch(0.12 0.01 70 / 0.62);
+
+  --border-default: oklch(0.50 0.018 76);
+  --border-subtle: oklch(0.37 0.014 74);
+  --border-strong: oklch(0.64 0.02 78);
+  --border-focus: var(--cat-prioritization);
+
+  --text-primary: oklch(0.935 0.012 84);
+  --text-secondary: oklch(0.80 0.013 84);
+  --text-tertiary: oklch(0.665 0.013 82);
+  --text-muted: oklch(0.585 0.012 80);
+  --text-inverse: oklch(0.205 0.012 72);
+
+  --shadow-color: oklch(0.10 0.012 70);
+  --shadow-focus: 0 0 0 3px oklch(0.70 0.17 287 / 0.45);
+
+  /* Brighten category colours for legibility on dark */
+  --cat-prioritization: oklch(0.72 0.17 288);
+  --cat-design: oklch(0.79 0.14 165);
+  --cat-strategy: oklch(0.76 0.15 32);
+  --cat-growth: oklch(0.74 0.16 258);
+  --cat-execution: oklch(0.82 0.14 80);
+  --cat-communication: oklch(0.78 0.15 50);
+
+  /* Page-washes → deep category-tinted charcoal */
+  --cat-prioritization-fill: oklch(0.232 0.030 288);
+  --cat-design-fill: oklch(0.232 0.030 165);
+  --cat-strategy-fill: oklch(0.232 0.030 32);
+  --cat-growth-fill: oklch(0.230 0.030 258);
+  --cat-execution-fill: oklch(0.234 0.032 80);
+  --cat-communication-fill: oklch(0.232 0.032 55);
+
+  /* -light (chip / icon backings) → dark tinted */
+  --cat-prioritization-light: oklch(0.345 0.075 288);
+  --cat-design-light: oklch(0.345 0.075 165);
+  --cat-strategy-light: oklch(0.345 0.075 32);
+  --cat-growth-light: oklch(0.345 0.075 258);
+  --cat-execution-light: oklch(0.350 0.080 80);
+  --cat-communication-light: oklch(0.345 0.080 55);
+
+  /* Legacy aliases used pervasively by injected framework HTML */
+  --ink: oklch(0.935 0.012 84);
+  --ink-dim: oklch(0.80 0.013 84);
+  --ink-muted: oklch(0.665 0.013 82);
+  --ink-soft: oklch(0.56 0.012 80);
+  --cream: oklch(0.205 0.011 72);
+  --cream-dark: oklch(0.180 0.010 72);
+  --white: oklch(0.255 0.014 74);
+  --border: oklch(0.50 0.018 76);
+
+  --color-action: var(--cat-prioritization);
+  --color-action-hover: oklch(0.78 0.16 288);
+  --color-action-light: oklch(0.345 0.075 288);
+  --text-link: var(--cat-growth);
+
+  /* Dashboard dot grid → light dots on dark */
+  --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* Hub multi-category wash, dark variant — veiled toward charcoal */
+[data-theme="dark"] .app-content:not([data-category]) {
+  background:
+    var(--pattern-dashboard),
+    linear-gradient(180deg, oklch(0.205 0.011 72 / 0.82), oklch(0.205 0.011 72 / 0.95)),
+    linear-gradient(120deg,
+      var(--cat-prioritization-fill) 0%,
+      var(--cat-design-fill) 30%,
+      var(--cat-growth-fill) 62%,
+      var(--cat-execution-fill) 100%
+    );
+}
 
 /* ---- REDUCED MOTION ---- */
 @media (prefers-reduced-motion: reduce) {

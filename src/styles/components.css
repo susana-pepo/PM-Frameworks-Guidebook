@@ -222,14 +222,13 @@
 
 .hub-title {
   font-family: var(--font-display);
-  font-size: clamp(32px, 5.5vw, 54px);
-  letter-spacing: -0.02em;
-  word-spacing: 0.12em;
+  font-size: clamp(44px, 7.5vw, 82px);
+  letter-spacing: -0.035em;
   margin-bottom: var(--space-3);
   font-weight: var(--weight-extrabold);
   text-transform: uppercase;
-  line-height: 0.95;
-  max-width: 16ch;
+  line-height: 0.9;
+  max-width: 14ch;
 }
 
 .hub-subtitle {
@@ -386,12 +385,10 @@
 
 .hub-section-title {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  word-spacing: 0.1em;
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
 .hub-section-desc {
@@ -502,10 +499,10 @@
 
 .hub-fw-card-name {
   font-family: var(--font-display);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
 }
@@ -636,7 +633,6 @@
   background: var(--bg-card);
   border: var(--bw) solid var(--border-default);
   border-radius: var(--radius-lg);
-  border-left: 6px solid var(--accent-color, var(--border-default));
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   transition: all var(--duration-normal) var(--ease-default);
@@ -657,12 +653,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   font-size: 22px;
   border-radius: var(--radius-md);
-  background: var(--bg-muted);
+  background: var(--accent-light, var(--bg-muted));
   border: var(--bw-thin) solid var(--border-default);
+  box-shadow: var(--shadow-xs);
   flex-shrink: 0;
 }
 
@@ -678,9 +675,7 @@
   font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  word-spacing: 0.1em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 

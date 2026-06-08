@@ -550,27 +550,29 @@
 .accordion-nav {
   display: flex;
   flex-direction: column;
-  border: var(--bw) solid var(--border-strong);
+  border: var(--bw-thin) solid var(--border-default);
   border-radius: var(--radius-md);
-  background: #FDF8EC;
-  box-shadow: var(--shadow-lg);
+  background: var(--bg-content);
+  box-shadow: var(--shadow-md);
   /* Natural height — content flows with the page (no nested scroll trap).
-     The bookmark rail sticks to the top so section nav stays reachable. */
+     The tab rail sticks to the top so section nav stays reachable. */
   height: auto;
   min-height: 0;
   max-height: none;
-  overflow: visible;               /* required so the sticky bookmark rail works */
+  overflow: visible;               /* required so the sticky tab rail works */
 }
 
-/* ---- BOOKMARKS BAR ---- */
-/* Horizontal row of section bookmarks inside the window, below title bar */
+/* ---- TAB RAIL ---- */
+/* Horizontal row of section tabs — the top of the document. Shares the paper
+   surface so the active tab can merge down into the content (folder-tab feel). */
 .window-bookmarks-bar {
   display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 6px var(--space-3);
-  background: #EDEAE4;
+  align-items: flex-end;
+  gap: 3px;
+  padding: var(--space-2) var(--space-3) 0;
+  background: var(--bg-content);
   border-bottom: 1px solid var(--border-subtle);
+  border-radius: calc(var(--radius-md) - 2px) calc(var(--radius-md) - 2px) 0 0;
   overflow-x: auto;
   flex-shrink: 0;
   scrollbar-width: none;
@@ -578,7 +580,6 @@
   position: sticky;
   top: 0;
   z-index: 6;
-  box-shadow: 0 6px 14px -10px rgba(0, 0, 0, 0.45);
 }
 
 .window-bookmarks-bar::-webkit-scrollbar {
@@ -599,42 +600,49 @@
           mask-image: linear-gradient(to right, transparent, #000 26px, #000 calc(100% - 26px), transparent);
 }
 
-/* Individual bookmark button */
+/* Individual section tab. Inactive tabs sit on the rail; the active tab is a
+   raised "page" that merges into the content below via a negative bottom margin
+   that covers the rail's divider — the folder/browser-tab connection. */
 .window-bookmark {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 5px;
+  padding: 7px 12px;
+  margin-bottom: -1px;                /* overlap the rail's bottom divider */
   background: transparent;
-  border: 1.5px solid transparent;
-  border-radius: 4px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: var(--weight-semibold);
   color: var(--text-tertiary);
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--duration-fast) var(--ease-default);
+  position: relative;
+  transition: background var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
   flex-shrink: 0;
 }
 
 .window-bookmark:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--bg-muted);
   color: var(--text-secondary);
 }
 
+/* Active tab merges with the content: same surface, slim category top edge,
+   and its bottom sits flush over the divider so it reads as one document. */
 .window-bookmark.active {
-  background: var(--bg-card);
-  border-color: var(--border-default);
+  background: var(--bg-content);
+  border-color: var(--border-subtle);
+  border-top: 2px solid var(--accent-color, var(--border-default));
   color: var(--text-primary);
-  box-shadow: var(--shadow-xs);
+  padding-top: 6px;                  /* compensate the 2px accent edge */
 }
 
-/* Glance bookmark — star accent */
+/* Glance tab keeps its star but follows the same connected style */
 .window-bookmark.glance-bookmark.active {
-  background: var(--color-warning-light);
-  border-color: var(--color-warning);
-  color: var(--color-warning);
+  color: var(--text-primary);
 }
 
 .bookmark-icon {
@@ -733,8 +741,8 @@
   min-height: 0;
   overflow: hidden;                           /* clip content to the window's bottom radius */
   position: relative;
-  background: #FDF8EC;                         /* warm cream — matches window frame */
-  border-radius: 0 0 11px 11px;                /* match parent 14px minus 3px border */
+  background: var(--bg-content);              /* paper — matches the document frame */
+  border-radius: 0 0 12px 12px;               /* match parent radius minus border */
 }
 
 /* ---- SECTION PANE (natural-height content) ---- */
@@ -784,8 +792,8 @@
   align-items: center;
   gap: var(--space-3);
   padding: 10px var(--space-4);
-  background: #1a1a1a;                         /* dark title bar */
-  color: #ffffff;
+  background: oklch(0.205 0.016 58);          /* warm deep ink title bar */
+  color: oklch(0.97 0.01 84);
   border-bottom: 1px solid var(--border-default);
   user-select: none;
   flex-shrink: 0;
@@ -879,7 +887,7 @@
 .window-pane .quiz-card,
 .window-pane .pitfall-card,
 .window-pane table {
-  background: #FFFFFF;
+  background: var(--bg-card);
 }
 
 /* Section title headers inside pane — clean, no box, just text */
@@ -894,8 +902,11 @@
 
 .window-pane .sec-title h2,
 .window-pane .sec-title h3 {
-  font-size: var(--text-lg);
-  letter-spacing: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  text-transform: none;
   background: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -935,17 +946,24 @@
   border-bottom: 2px solid var(--border-subtle) !important;
 }
 
-/* Content card polish inside panes */
-.window-pane .c-card,
-.window-pane .c-card-static {
-  background: #FFFFFF;
+/* ---- CALM CONTENT CARDS INSIDE THE DOCUMENT ----
+   Now the document frame is quiet (2px border, soft shadow), the content
+   cards step down one further: a hairline border + a whisper of offset, on a
+   card surface a touch brighter than the paper. One calm field-guide page
+   instead of a stack of heavy boxes. (.when-card keeps its use/skip tint &
+   border, so it's excluded from the border-colour reset.) */
+.window-pane :is(.c-card, .c-card-static, .factor-card, .qq,
+                 .card, .feature-card, .example-card, .step-card,
+                 .tip-card, .quiz-card, .pitfall-card, .connection-card) {
+  background: var(--bg-card);
+  border-width: 1px;
   border-color: var(--border-subtle);
-  box-shadow: 1px 1px 0 var(--border-subtle);
+  box-shadow: var(--shadow-xs);
 }
 
-.window-pane .c-card:hover {
+.window-pane :is(.c-card, .factor-card):hover {
   transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--border-subtle);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Continue buttons removed — nav bar handles navigation */
@@ -1180,8 +1198,6 @@
   color: var(--text-tertiary);
   font-style: italic;
   margin-bottom: var(--space-2);
-  padding-left: var(--space-3);
-  border-left: 3px solid var(--color-success);
 }
 
 .factor-card p {
@@ -1235,12 +1251,17 @@
   margin-bottom: var(--space-3);
 }
 
+/* use / skip distinguished by an adaptive tint + the ✓/✕ list markers
+   below (no side-stripe). The tint mixes into --bg-card so it flips
+   correctly between light and dark themes. */
 .when-card.use {
-  border-left: 3px solid var(--color-success);
+  background: color-mix(in oklab, var(--color-success) 9%, var(--bg-card));
+  border-color: color-mix(in oklab, var(--color-success) 40%, var(--border-default));
 }
 
 .when-card.skip {
-  border-left: 3px solid var(--color-error);
+  background: color-mix(in oklab, var(--color-error) 9%, var(--bg-card));
+  border-color: color-mix(in oklab, var(--color-error) 40%, var(--border-default));
 }
 
 .when-card ul li {
@@ -2801,8 +2822,16 @@ tr:hover td {
 .hub-fw-card:focus-visible,
 .hub-compare-btn:focus-visible,
 .hub-search-input:focus-visible,
-.top-nav-trigger:focus-visible,
+.top-nav-browse-trigger:focus-visible,
+.top-nav-search-input:focus-visible,
+.theme-toggle:focus-visible,
+.hamburger:focus-visible,
+.mega-fw:focus-visible,
+.mega-col-head:focus-visible,
+.mega-compare:focus-visible,
 .top-nav-fw:focus-visible,
+.window-bookmark:focus-visible,
+.cat-compare-card:focus-visible,
 .btn:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
@@ -2871,4 +2900,40 @@ tr:hover td {
   .app-content {
     scroll-behavior: auto;
   }
+}
+
+/* ============================================
+   DARK THEME — framework page overrides
+   The window frame & bookmark rail use hardcoded warm
+   creams; flip them to dark surface tokens. The macOS
+   title bar stays dark (now deeper than the content so
+   the frame still reads as a window).
+   ============================================ */
+/* The document frame, tab rail and content area all use --bg-content, which
+   already flips in dark mode — no per-element overrides needed. */
+[data-theme="dark"] .fw-category-badge::after {
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.10), transparent);
+}
+
+/* Highlight surfaces (TLDR, callouts, quiz feedback, table hi/lo/med) keep
+   their light pastel fills in dark mode so they pop — but their text comes
+   from tokens that flip light. Pin it back to a fixed dark ink so the pastel
+   cells stay legible. */
+[data-theme="dark"] :is(.tldr, .insight, .tip),
+[data-theme="dark"] :is(.tldr, .insight, .tip) :is(p, h4, strong, li, span),
+[data-theme="dark"] .fw-tldr-card,
+[data-theme="dark"] .fw-tldr-card :is(p, h4, strong, li, span, div),
+[data-theme="dark"] :is(.cmp-table, .ctable) :is(.hi, .lo, .med),
+[data-theme="dark"] :is(.qo, .quiz-opt).correct,
+[data-theme="dark"] :is(.qo, .quiz-opt).wrong,
+[data-theme="dark"] :is(.qexp, .quiz-explain),
+[data-theme="dark"] :is(.qexp, .quiz-explain) :is(p, strong, li, span) {
+  color: oklch(0.27 0.018 60);
+}
+
+/* Comparison guides give their section-header labels a pastel fill (outside
+   the window-pane that flattens framework-page headers). Give those boxes a
+   dark surface in dark mode so the light heading text stays legible. */
+[data-theme="dark"] .fw-page:not(.accordion-mode) .sec-label {
+  background: var(--bg-muted);
 }

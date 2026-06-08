@@ -18,16 +18,27 @@ export function renderApp() {
       <nav class="top-nav" id="top-nav" aria-label="Framework navigation">
         ${renderTopNav()}
       </nav>
-      <div class="top-nav-search" id="top-nav-search">
-        <span class="top-nav-search-icon" aria-hidden="true">&#x1F50D;</span>
-        <input type="text" class="top-nav-search-input" id="top-nav-search-input"
-               placeholder="Search…" autocomplete="off" aria-label="Search frameworks" />
-        <kbd class="search-kbd-hint search-kbd-hint--topbar" aria-hidden="true"><span class="kbd-cmd">⌘</span>K</kbd>
-        <div class="top-nav-search-results" id="top-nav-search-results"></div>
+      <div class="top-bar-right">
+        <div class="top-nav-search" id="top-nav-search">
+          <span class="top-nav-search-icon" aria-hidden="true">&#x1F50D;</span>
+          <input type="text" class="top-nav-search-input" id="top-nav-search-input"
+                 placeholder="Search…" autocomplete="off" aria-label="Search frameworks" />
+          <kbd class="search-kbd-hint search-kbd-hint--topbar" aria-hidden="true"><span class="kbd-cmd">⌘</span>K</kbd>
+          <div class="top-nav-search-results" id="top-nav-search-results"></div>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark theme" title="Toggle theme">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+          </svg>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </header>
 
     <!-- Mobile dropdown menu -->
@@ -56,6 +67,7 @@ export function renderApp() {
   bindTopNavSearch();
   bindMobileMenu();
   bindGlobalShortcuts();
+  bindThemeToggle();
 
   // Listen for route changes
   onNavigate(handleRoute);
@@ -85,35 +97,73 @@ function bindGlobalShortcuts() {
   });
 }
 
+/**
+ * Light/dark theme toggle. The boot-time theme is set inline in index.html
+ * (before paint, no flash); this wires the button, persists the choice, and
+ * keeps the address-bar theme-color in sync.
+ */
+function bindThemeToggle() {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  const apply = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    const dark = theme === 'dark';
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    document.querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', dark ? '#2b2620' : '#fcfaf4');
+  };
+
+  apply(document.documentElement.getAttribute('data-theme') || 'light');
+
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('pmf-theme', next); } catch (e) { /* private mode */ }
+    apply(next);
+  });
+}
+
 function renderTopNav() {
-  return categories.map(cat => {
+  const columns = categories.map(cat => {
     const catFrameworks = getFrameworksByCategory(cat.id);
     const comparison = comparisonGuides.find(cg => cg.category === cat.id);
 
     return `
-      <div class="top-nav-category" data-category="${cat.id}">
-        <button class="top-nav-trigger" aria-haspopup="true" aria-expanded="false">
-          <span class="top-nav-emoji">${cat.emoji}</span>
-          <span class="top-nav-label">${cat.name}</span>
-        </button>
-        <div class="top-nav-dropdown" role="menu">
-          ${catFrameworks.map(fw => `
-            <a class="top-nav-fw" href="#/framework/${fw.slug}" data-fw-slug="${fw.slug}" role="menuitem">
-              <span class="top-nav-fw-emoji">${fw.emoji}</span>
-              <span>${fw.name}</span>
-            </a>
-          `).join('')}
-          ${comparison ? `
-            <div class="top-nav-divider"></div>
-            <a class="top-nav-fw top-nav-compare" href="#/compare/${comparison.slug}" role="menuitem">
-              <span class="top-nav-fw-emoji">⚖️</span>
-              <span>Compare All</span>
-            </a>
-          ` : ''}
-        </div>
+      <div class="mega-col" style="--c:${cat.color};">
+        <a class="mega-col-head" href="#/category/${cat.id}" role="menuitem">
+          <span class="mega-col-emoji" aria-hidden="true">${cat.emoji}</span>
+          <span class="mega-col-title">${cat.name}</span>
+        </a>
+        ${catFrameworks.map(fw => `
+          <a class="mega-fw top-nav-fw" href="#/framework/${fw.slug}" data-fw-slug="${fw.slug}" role="menuitem">
+            <span class="mega-fw-emoji" aria-hidden="true">${fw.emoji}</span>
+            <span>${fw.name}</span>
+          </a>
+        `).join('')}
+        ${comparison ? `
+          <a class="mega-compare" href="#/compare/${comparison.slug}" role="menuitem">
+            Compare all ${cat.name}
+            <span aria-hidden="true">&#x2192;</span>
+          </a>
+        ` : ''}
       </div>
     `;
   }).join('');
+
+  return `
+    <div class="top-nav-browse" id="top-nav-browse">
+      <button class="top-nav-browse-trigger" aria-haspopup="true" aria-expanded="false">
+        <span class="top-nav-browse-icon" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span class="top-nav-browse-label">Browse</span>
+        <span class="top-nav-browse-chev" aria-hidden="true">&#x25BE;</span>
+      </button>
+      <div class="top-nav-mega" role="menu" aria-label="All frameworks">
+        ${columns}
+      </div>
+    </div>
+  `;
 }
 
 function renderMobileMenu() {
@@ -148,68 +198,60 @@ function renderMobileMenu() {
 }
 
 function bindTopNav() {
-  // Dropdown on hover/focus for desktop
-  document.querySelectorAll('.top-nav-category').forEach(cat => {
-    const trigger = cat.querySelector('.top-nav-trigger');
-    const dropdown = cat.querySelector('.top-nav-dropdown');
-    let hoverTimeout;
+  const browse = document.getElementById('top-nav-browse');
+  if (!browse) return;
+  const trigger = browse.querySelector('.top-nav-browse-trigger');
+  const mega = browse.querySelector('.top-nav-mega');
+  let hoverTimeout;
 
-    const showDropdown = () => {
-      clearTimeout(hoverTimeout);
-      // Close all other dropdowns first
-      document.querySelectorAll('.top-nav-category.open').forEach(other => {
-        if (other !== cat) other.classList.remove('open');
-      });
-      cat.classList.add('open');
-      trigger.setAttribute('aria-expanded', 'true');
+  const open = () => {
+    clearTimeout(hoverTimeout);
+    browse.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+  };
+
+  const close = (immediate = false) => {
+    clearTimeout(hoverTimeout);
+    const doClose = () => {
+      browse.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
     };
+    if (immediate) doClose();
+    else hoverTimeout = setTimeout(doClose, 140);
+  };
 
-    const hideDropdown = () => {
-      hoverTimeout = setTimeout(() => {
-        cat.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-      }, 150);
-    };
+  browse.addEventListener('mouseenter', open);
+  browse.addEventListener('mouseleave', () => close());
 
-    cat.addEventListener('mouseenter', showDropdown);
-    cat.addEventListener('mouseleave', hideDropdown);
-
-    // Keyboard support
-    trigger.addEventListener('focus', showDropdown);
-    trigger.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        showDropdown();
-        const firstLink = dropdown.querySelector('.top-nav-fw');
-        firstLink?.focus();
-      }
-      if (e.key === 'Escape') {
-        hideDropdown();
-        trigger.focus();
-      }
-    });
-
-    // Keep dropdown open when focused inside it
-    dropdown.addEventListener('focusin', () => clearTimeout(hoverTimeout));
-    dropdown.addEventListener('focusout', hideDropdown);
-
-    // Close dropdown when a link is clicked
-    dropdown.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        cat.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-      });
-    });
+  // Click toggles (touch + deliberate click); hover handles the rest
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    browse.classList.contains('open') ? close(true) : open();
   });
 
-  // Close dropdowns on click outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.top-nav-category')) {
-      document.querySelectorAll('.top-nav-category.open').forEach(cat => {
-        cat.classList.remove('open');
-        cat.querySelector('.top-nav-trigger')?.setAttribute('aria-expanded', 'false');
-      });
+  trigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      open();
+      mega.querySelector('a')?.focus();
     }
+    if (e.key === 'Escape') { close(true); trigger.focus(); }
+  });
+
+  mega.addEventListener('focusin', () => clearTimeout(hoverTimeout));
+  mega.addEventListener('focusout', () => close());
+  mega.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { close(true); trigger.focus(); }
+  });
+
+  // Close when a link is chosen
+  mega.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => close(true));
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.top-nav-browse')) close(true);
   });
 }
 
