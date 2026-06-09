@@ -3398,10 +3398,16 @@ tr:hover td {
    real space between paragraphs and well-set lists. */
 .fw-doc-main :is(.c-card, .c-card-static, .section, .panel) > p,
 .fw-doc-main :is(.c-card, .c-card-static) li {
+  font-family: var(--font-reading);     /* Literata — reads like a printed page */
+  font-optical-sizing: auto;
   font-size: var(--text-md);            /* 18px — focal reading prose */
   line-height: var(--leading-reading);  /* 1.7 — tuned for the ~66ch column */
+  letter-spacing: 0;                    /* serif wants no negative tracking */
   color: var(--text-secondary);
 }
+/* Italic emphasis inside reading prose stays in the serif's true italic. */
+.fw-doc-main :is(.c-card, .c-card-static, .section, .panel) > p :is(em, i),
+.fw-doc-main :is(.c-card, .c-card-static) li :is(em, i) { font-style: italic; }
 .fw-doc-main :is(.c-card, .c-card-static) > p + p { margin-top: var(--space-4); }
 .fw-doc-main :is(.c-card, .c-card-static) strong { color: var(--text-primary); }
 
@@ -3433,11 +3439,25 @@ tr:hover td {
    and a whisper of shadow — so they read as figures, not competing
    blocks. (.when-card is excluded: its use/skip green/red border is a
    meaningful signal and is left intact.) */
-.fw-doc-main :is(.factor-card, .quad-card, .cat-card, .m-card, .sc-card,
-                 .qq, .scale-item, .conn-card, .builder, .id-card,
-                 .session-template, .build-area, .loop-diagram, .cycle-wrap,
+/* Structural / data figures keep whatever fill they carry (scale cells, plot
+   canvases, flow rails) — just calm their edge to one quiet treatment. */
+.fw-doc-main :is(.qq, .scale-item, .loop-diagram, .cycle-wrap,
                  .matrix-hero, .flow, .fstep) {
   border-color: var(--border-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Container figures (factor / quadrant / metric / category cards, builders,
+   templates) were painted source-white and "punched out" as bright windows
+   against the tinted page wash. Sit them on a faint category-tinted vellum
+   with an integrated hairline so they read as inset panels of the same paper,
+   not floating cut-outs. The tint is a whisper of --accent-color mixed into
+   the card surface, so it flips correctly in dark mode. */
+.fw-doc-main :is(.factor-card, .quad-card, .cat-card, .m-card, .sc-card,
+                 .conn-card, .id-card, .builder, .session-template,
+                 .build-area) {
+  background: color-mix(in oklab, var(--bg-card) 93%, var(--accent-color, var(--bg-card)));
+  border-color: color-mix(in oklab, var(--accent-color, var(--border-default)) 16%, var(--border-default));
   box-shadow: var(--shadow-xs);
 }
 
@@ -3457,11 +3477,24 @@ tr:hover td {
   max-width: var(--measure);
 }
 .fw-doc-main :is(.insight, .tip) :is(p, li) {
+  font-family: var(--font-reading);
+  font-optical-sizing: auto;
   font-size: var(--text-base);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-relaxed);
+  letter-spacing: 0;
   color: var(--text-secondary);
 }
 .fw-doc-main :is(.insight, .tip) :is(h4, strong) { color: var(--text-primary); }
+/* The "tip" lightbulb was a hardcoded 💡 in CSS; drop it — the left rule and
+   tint already mark the aside, and any inline 💡 in the source becomes a
+   monoline idea glyph via the content-glyph pass. */
+.fw-doc-main .tip::before { content: none; }
+/* TL;DR ("in 15 seconds") reads as the book's opening line — serif too. */
+.fw-doc .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) :is(p, span, li) {
+  font-family: var(--font-reading);
+  font-optical-sizing: auto;
+  letter-spacing: 0;
+}
 /* The shared dark-mode pin (line ~3287) forces .insight/.tip text to a
    FIXED dark ink because it assumes a light pastel fill. Our asides are
    theme-aware (tint mixes into --bg-card), so restore flipping tokens. */
@@ -3485,6 +3518,141 @@ tr:hover td {
   font-size: var(--text-2xl);
 }
 .fw-doc-main .sec-title { margin-bottom: var(--space-6); }
+
+/* ---- 7 · ONE TABLE, EVERYWHERE -----------------------------------
+   The source files ship three competing table styles — raw <table>,
+   .cmp-table and .ctable — plus loud off-system cell fills. Collapse
+   them into a single editorial table: a hairline-framed card with a
+   quiet category-tinted header, airy rows, tabular figures and a calm
+   first column. Scoped to .fw-doc-main so it wins by specificity and
+   every guide's tables read as the same designed object. */
+.fw-doc-main :is(table, .cmp-table, .ctable) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;               /* clip header + zebra to the rounded frame */
+  box-shadow: var(--shadow-xs);
+  margin: var(--space-5) 0;
+}
+
+/* Scroll container (added at render time) — lets a wide comparison matrix be
+   swiped on a phone instead of being clipped by the deck panel. On desktop the
+   table fits, so the wrapper never scrolls and stays invisible. */
+.fw-doc-main .fw-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: var(--space-5) 0;
+  border-radius: var(--radius-md);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.fw-doc-main .fw-table-wrap > :is(table, .cmp-table, .ctable) { margin: 0; }
+.fw-doc-main .fw-table-wrap::-webkit-scrollbar { height: 8px; }
+.fw-doc-main .fw-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Header row — small mono-ish caps on a faint category tint. */
+.fw-doc-main :is(table thead th, .cmp-table th, .ctable th) {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+  text-align: left;
+  vertical-align: bottom;
+  color: var(--text-secondary);
+  background: color-mix(in oklab, var(--accent-color, var(--bg-muted)) 13%, var(--bg-muted));
+  padding: 11px var(--space-4);
+  border: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent-color, var(--border-default)) 30%, var(--border-default));
+}
+
+/* Body cells — comfortable, hairline-ruled, figures aligned. */
+.fw-doc-main :is(table td, .cmp-table td, .ctable td) {
+  padding: 11px var(--space-4);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: var(--text-secondary);
+  vertical-align: top;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  font-variant-numeric: tabular-nums;
+}
+.fw-doc-main :is(table, .cmp-table, .ctable) tr:last-child td { border-bottom: none; }
+
+/* Subtle zebra for scanning wide comparisons. */
+.fw-doc-main :is(table tbody tr:nth-child(even) td, .cmp-table tr:nth-child(even) td, .ctable tr:nth-child(even) td) {
+  background: color-mix(in oklab, var(--accent-color, var(--text-muted)) 4%, transparent);
+}
+
+/* First column reads as the row label: weighted ink, never re-tinted. */
+.fw-doc-main :is(table td:first-child, .cmp-table td:first-child, .ctable td:first-child) {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  background: none;
+}
+
+/* Verdict cells — calm semantic tints from the token palette (replaces the
+   old #D1FAE5 / #FEE2E2 fills). Light tints so the dark-mode pin keeps them
+   legible with dark ink. */
+.fw-doc-main :is(.cmp-table, .ctable) .hi {
+  background: var(--color-success-light);
+  font-weight: var(--weight-semibold);
+}
+.fw-doc-main :is(.cmp-table, .ctable) .lo { background: var(--color-error-light); }
+.fw-doc-main :is(.cmp-table, .ctable) .med { background: var(--color-warning-light); }
+
+/* ---- Growth-Loops cycle diagram --------------------------------
+   Rebuilt from a cramped 280px absolute layout whose centre pill overlapped
+   the side cards. Now a 3×3 grid: stage cards at N/E/S/W, the hub pill in the
+   true centre cell, loop arrows in the corners — gaps make overlap impossible,
+   and it shrinks cleanly on phones. Node background tints stay inline. */
+.fw-doc-main .loop-node {
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  text-align: center;
+  min-width: 100px;
+  box-sizing: border-box;
+}
+.fw-doc-main .loop-ico { font-size: 18px; line-height: 1; }
+.fw-doc-main .loop-label {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 13px;
+  line-height: 1.2;
+  margin-top: 4px;
+  letter-spacing: -0.005em;
+}
+.fw-doc-main .loop-arrow { font-size: 22px; line-height: 1; color: var(--cat-growth); }
+.fw-doc-main .loop-hub {
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .fw-doc-main .loop-grid { gap: 8px 4px; max-width: 100%; }
+  .fw-doc-main .loop-node { min-width: 0; width: 100%; padding: 8px 5px; }
+  .fw-doc-main .loop-label { font-size: 10.5px; overflow-wrap: normal; word-break: keep-all; }
+  .fw-doc-main .loop-ico { font-size: 14px; }
+  .fw-doc-main .loop-arrow { font-size: 16px; }
+  .fw-doc-main .loop-hub { font-size: 9.5px; padding: 6px 8px; letter-spacing: 0.02em; }
+}
 
 /* ============================================================
    SECTION DECK  (carousel reading mode)

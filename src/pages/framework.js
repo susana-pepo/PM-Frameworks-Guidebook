@@ -1,6 +1,7 @@
 import { getFramework, getCategory } from '../data/frameworks.js';
 import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
+import { decorateGlyphs, wrapTables, observeGlyphs } from '../data/content-glyphs.js';
 
 /**
  * Framework page renderer.
@@ -59,11 +60,19 @@ export async function renderFrameworkPage(container, slug, initialStep) {
     // Execute any inline scripts from the loaded content
     executeScripts(container);
 
+    // Replace the emoji still living inside the content (decorative glyphs,
+    // semantic ✅/❌/⚠️ signals, status dots) with the bespoke monoline family.
+    decorateGlyphs(container);
+    wrapTables(container);
+
     // Rebuild the raw content into the editorial reading document
     buildReadingDocument(container, {
       slug, emoji: fw.emoji, glyph: frameworkGlyph(fw.slug, fw.emoji),
       title: fw.name, initialStep,
     });
+
+    // Keep de-emojifying content that interactive widgets inject after load.
+    observeGlyphs(container);
   } catch (err) {
     container.innerHTML = `
       <div class="fw-error" role="alert">

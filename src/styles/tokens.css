@@ -42,6 +42,11 @@
      for genuine data — codes, scores, keyboard hints — never decoration. */
   --font-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', -apple-system, sans-serif;
+  /* Reading face — Literata, the literary serif Google drew for digital books
+     (optical sizing, generous x-height). It is applied ONLY to flowing reading
+     prose (paragraphs, list items, callout notes) so each guide reads like a
+     printed page; tables, widgets, labels and data stay in the crisp sans. */
+  --font-reading: 'Literata', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
   /* Type scale — rem-based modular ladder (~1.2 ratio) so a reader who bumps
@@ -73,46 +78,50 @@
   --weight-bold: 700;
   --weight-extrabold: 800;
 
-  /* ---- CATEGORY COLORS ----
+  /* ---- CATEGORY COLORS — "Refined almanac" ----
      Each category is an index colour, like the coloured tabs of a reference
-     binder. The strong base colour is reserved for accents (rare, 10%);
-     -light tints surfaces; -fill is a near-paper page wash so a whole
-     framework page reads calm, not drenched. */
-  --cat-prioritization: oklch(0.60 0.205 287);   /* royal violet */
-  --cat-prioritization-light: oklch(0.90 0.06 287);
-  --cat-prioritization-soft: oklch(0.60 0.205 287 / 0.12);
-  --cat-prioritization-muted: oklch(0.60 0.205 287 / 0.18);
-  --cat-prioritization-fill: oklch(0.965 0.022 287);
+     binder. The six hues are spaced around the wheel and the chroma is held
+     *muted* (~0.10–0.14) so they read as a curated, paper-and-ink almanac
+     palette — distinct, never garish. The earlier set bunched strategy,
+     execution and communication all in the warm 32–70° range (they looked
+     like one colour); they're now pulled apart to terracotta, ochre and plum.
+     The strong base is reserved for accents (rare, ~10%); -light tints chips;
+     -fill is a near-paper page wash so a whole page reads calm, not drenched. */
+  --cat-prioritization: oklch(0.55 0.145 290);    /* indigo-violet */
+  --cat-prioritization-light: oklch(0.905 0.055 290);
+  --cat-prioritization-soft: oklch(0.55 0.145 290 / 0.12);
+  --cat-prioritization-muted: oklch(0.55 0.145 290 / 0.18);
+  --cat-prioritization-fill: oklch(0.966 0.020 290);
 
-  --cat-design: oklch(0.70 0.155 165);            /* emerald */
-  --cat-design-light: oklch(0.90 0.07 165);
-  --cat-design-soft: oklch(0.70 0.155 165 / 0.12);
-  --cat-design-muted: oklch(0.70 0.155 165 / 0.18);
-  --cat-design-fill: oklch(0.965 0.028 165);
+  --cat-design: oklch(0.575 0.098 182);           /* viridian / deep teal */
+  --cat-design-light: oklch(0.895 0.052 182);
+  --cat-design-soft: oklch(0.575 0.098 182 / 0.13);
+  --cat-design-muted: oklch(0.575 0.098 182 / 0.19);
+  --cat-design-fill: oklch(0.966 0.022 182);
 
-  --cat-strategy: oklch(0.685 0.165 32);          /* coral */
-  --cat-strategy-light: oklch(0.89 0.07 32);
-  --cat-strategy-soft: oklch(0.685 0.165 32 / 0.12);
-  --cat-strategy-muted: oklch(0.685 0.165 32 / 0.18);
-  --cat-strategy-fill: oklch(0.965 0.026 32);
+  --cat-strategy: oklch(0.585 0.135 42);          /* terracotta clay */
+  --cat-strategy-light: oklch(0.895 0.058 42);
+  --cat-strategy-soft: oklch(0.585 0.135 42 / 0.12);
+  --cat-strategy-muted: oklch(0.585 0.135 42 / 0.18);
+  --cat-strategy-fill: oklch(0.966 0.024 42);
 
-  --cat-growth: oklch(0.62 0.19 258);             /* ocean blue */
-  --cat-growth-light: oklch(0.88 0.065 258);
-  --cat-growth-soft: oklch(0.62 0.19 258 / 0.12);
-  --cat-growth-muted: oklch(0.62 0.19 258 / 0.18);
-  --cat-growth-fill: oklch(0.963 0.026 258);
+  --cat-growth: oklch(0.55 0.135 242);            /* deep ocean blue */
+  --cat-growth-light: oklch(0.89 0.055 242);
+  --cat-growth-soft: oklch(0.55 0.135 242 / 0.12);
+  --cat-growth-muted: oklch(0.55 0.135 242 / 0.18);
+  --cat-growth-fill: oklch(0.965 0.022 242);
 
-  --cat-execution: oklch(0.74 0.155 70);          /* amber */
-  --cat-execution-light: oklch(0.89 0.08 78);
-  --cat-execution-soft: oklch(0.74 0.155 70 / 0.12);
-  --cat-execution-muted: oklch(0.74 0.155 70 / 0.18);
-  --cat-execution-fill: oklch(0.967 0.034 80);
+  --cat-execution: oklch(0.60 0.118 88);          /* ochre / mustard */
+  --cat-execution-light: oklch(0.895 0.062 90);
+  --cat-execution-soft: oklch(0.60 0.118 88 / 0.13);
+  --cat-execution-muted: oklch(0.60 0.118 88 / 0.19);
+  --cat-execution-fill: oklch(0.967 0.026 90);
 
-  --cat-communication: oklch(0.70 0.17 50);       /* tangerine */
-  --cat-communication-light: oklch(0.88 0.08 55);
-  --cat-communication-soft: oklch(0.70 0.17 50 / 0.12);
-  --cat-communication-muted: oklch(0.70 0.17 50 / 0.18);
-  --cat-communication-fill: oklch(0.965 0.032 55);
+  --cat-communication: oklch(0.555 0.135 342);    /* plum / aubergine */
+  --cat-communication-light: oklch(0.895 0.055 342);
+  --cat-communication-soft: oklch(0.555 0.135 342 / 0.12);
+  --cat-communication-muted: oklch(0.555 0.135 342 / 0.18);
+  --cat-communication-fill: oklch(0.965 0.022 342);
 
   /* ---- SEMANTIC COLORS (Warm ink on paper) ----
      OKLCH, perceptually uniform. Neutrals are tinted toward the brand's
@@ -145,20 +154,25 @@
   --text-inverse: oklch(0.985 0.006 83);
   --text-link: var(--cat-growth);
 
-  /* Status colors */
-  --color-success: #10B981;
-  --color-success-light: #D1FAE5;
-  --color-warning: #F59E0B;
-  --color-warning-light: #FEF3C7;
-  --color-error: #EF4444;
-  --color-error-light: #FEE2E2;
-  --color-info: #3B82F6;
-  --color-info-light: #DBEAFE;
+  /* Status colors — warm OKLCH, muted to sit inside the almanac palette.
+     Used by use/skip + do/don't markers, factor-card letters, quiz feedback
+     and table hi/lo/med cells, so they must read as the same designed family
+     as the category index colours (the old #10B981/#EF4444 hexes were the
+     loudest off-system tell in the comparison tables). The -light tints stay
+     genuinely light so highlighted cells keep popping with dark text. */
+  --color-success: oklch(0.60 0.115 158);
+  --color-success-light: oklch(0.925 0.052 158);
+  --color-warning: oklch(0.70 0.125 78);
+  --color-warning-light: oklch(0.928 0.058 82);
+  --color-error: oklch(0.585 0.155 25);
+  --color-error-light: oklch(0.918 0.048 25);
+  --color-info: oklch(0.58 0.125 242);
+  --color-info-light: oklch(0.925 0.05 242);
 
-  /* Interactive */
-  --color-action: #7C5CFC;
-  --color-action-hover: #6B4FE0;
-  --color-action-light: #EDE8FF;
+  /* Interactive — anchored to the prioritization index colour for cohesion. */
+  --color-action: var(--cat-prioritization);
+  --color-action-hover: oklch(0.48 0.15 290);
+  --color-action-light: var(--cat-prioritization-light);
 
   /* ---- SHADOWS (Soft, layered, warm-tinted — premium elevation) ----
      Real blur in the brand's warm-ink hue at low opacity, layered (a tight
@@ -184,7 +198,7 @@
   --shadow-hover:
     0 3px 6px oklch(0.28 0.03 56 / 0.07),
     0 14px 32px oklch(0.28 0.03 56 / 0.13);
-  --shadow-focus: 0 0 0 3px oklch(0.62 0.21 285 / 0.30);
+  --shadow-focus: 0 0 0 3px oklch(0.55 0.145 290 / 0.32);
 
   /* ---- TRANSITIONS (Snappy) ---- */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
@@ -285,12 +299,12 @@
 .app-content[data-category] {
   background-attachment: fixed;
 }
-.app-content[data-category="prioritization"] { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 287 / 0.85), transparent 55%), var(--cat-prioritization-fill); }
-.app-content[data-category="design"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 165 / 0.85), transparent 55%), var(--cat-design-fill); }
-.app-content[data-category="strategy"]       { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 32 / 0.85), transparent 55%), var(--cat-strategy-fill); }
-.app-content[data-category="growth"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 258 / 0.85), transparent 55%), var(--cat-growth-fill); }
-.app-content[data-category="execution"]      { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 80 / 0.85), transparent 55%), var(--cat-execution-fill); }
-.app-content[data-category="communication"]  { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 55 / 0.85), transparent 55%), var(--cat-communication-fill); }
+.app-content[data-category="prioritization"] { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 290 / 0.85), transparent 55%), var(--cat-prioritization-fill); }
+.app-content[data-category="design"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 182 / 0.85), transparent 55%), var(--cat-design-fill); }
+.app-content[data-category="strategy"]       { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 42 / 0.85), transparent 55%), var(--cat-strategy-fill); }
+.app-content[data-category="growth"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 242 / 0.85), transparent 55%), var(--cat-growth-fill); }
+.app-content[data-category="execution"]      { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 90 / 0.85), transparent 55%), var(--cat-execution-fill); }
+.app-content[data-category="communication"]  { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 342 / 0.85), transparent 55%), var(--cat-communication-fill); }
 
 /* ============================================
    DARK THEME — "field guide at night"
@@ -346,31 +360,32 @@
   --shadow-hover:
     0 3px 6px oklch(0.08 0.01 70 / 0.45),
     0 16px 36px oklch(0.06 0.01 70 / 0.55);
-  --shadow-focus: 0 0 0 3px oklch(0.70 0.17 287 / 0.45);
+  --shadow-focus: 0 0 0 3px oklch(0.74 0.145 290 / 0.45);
 
-  /* Brighten category colours for legibility on dark */
-  --cat-prioritization: oklch(0.72 0.17 288);
-  --cat-design: oklch(0.79 0.14 165);
-  --cat-strategy: oklch(0.76 0.15 32);
-  --cat-growth: oklch(0.74 0.16 258);
-  --cat-execution: oklch(0.82 0.14 80);
-  --cat-communication: oklch(0.78 0.15 50);
+  /* Brighten category colours for legibility on dark — same refined-almanac
+     hues, lifted in lightness and held at a muted chroma. */
+  --cat-prioritization: oklch(0.74 0.145 290);
+  --cat-design: oklch(0.78 0.105 182);
+  --cat-strategy: oklch(0.755 0.130 44);
+  --cat-growth: oklch(0.725 0.135 244);
+  --cat-execution: oklch(0.80 0.115 90);
+  --cat-communication: oklch(0.745 0.135 342);
 
   /* Page-washes → deep category-tinted charcoal */
-  --cat-prioritization-fill: oklch(0.232 0.030 288);
-  --cat-design-fill: oklch(0.232 0.030 165);
-  --cat-strategy-fill: oklch(0.232 0.030 32);
-  --cat-growth-fill: oklch(0.230 0.030 258);
-  --cat-execution-fill: oklch(0.234 0.032 80);
-  --cat-communication-fill: oklch(0.232 0.032 55);
+  --cat-prioritization-fill: oklch(0.232 0.030 290);
+  --cat-design-fill: oklch(0.232 0.028 182);
+  --cat-strategy-fill: oklch(0.233 0.032 42);
+  --cat-growth-fill: oklch(0.230 0.030 242);
+  --cat-execution-fill: oklch(0.234 0.030 90);
+  --cat-communication-fill: oklch(0.232 0.032 342);
 
   /* -light (chip / icon backings) → dark tinted */
-  --cat-prioritization-light: oklch(0.345 0.075 288);
-  --cat-design-light: oklch(0.345 0.075 165);
-  --cat-strategy-light: oklch(0.345 0.075 32);
-  --cat-growth-light: oklch(0.345 0.075 258);
-  --cat-execution-light: oklch(0.350 0.080 80);
-  --cat-communication-light: oklch(0.345 0.080 55);
+  --cat-prioritization-light: oklch(0.345 0.075 290);
+  --cat-design-light: oklch(0.345 0.065 182);
+  --cat-strategy-light: oklch(0.348 0.075 42);
+  --cat-growth-light: oklch(0.345 0.072 242);
+  --cat-execution-light: oklch(0.350 0.070 90);
+  --cat-communication-light: oklch(0.346 0.075 342);
 
   /* Legacy aliases used pervasively by injected framework HTML */
   --ink: oklch(0.935 0.012 84);
@@ -403,8 +418,8 @@
   --p5: oklch(0.34 0.055 350);
 
   --color-action: var(--cat-prioritization);
-  --color-action-hover: oklch(0.78 0.16 288);
-  --color-action-light: oklch(0.345 0.075 288);
+  --color-action-hover: oklch(0.80 0.15 290);
+  --color-action-light: var(--cat-prioritization-light);
   --text-link: var(--cat-growth);
 
   /* Dashboard dot grid → light dots on dark */
@@ -414,12 +429,12 @@
 /* Single-category page wash, dark variant — the light theme's near-white top
    highlight reads as a silvery glare on charcoal, so dark mode uses a gentle,
    low-alpha hue-tinted lift instead: tinted paper catching dim light. */
-[data-theme="dark"] .app-content[data-category="prioritization"] { background: radial-gradient(135% 72% at 50% -12%, oklch(0.42 0.045 288 / 0.40), transparent 58%), var(--cat-prioritization-fill); }
-[data-theme="dark"] .app-content[data-category="design"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 165 / 0.40), transparent 58%), var(--cat-design-fill); }
-[data-theme="dark"] .app-content[data-category="strategy"]       { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 32 / 0.40), transparent 58%), var(--cat-strategy-fill); }
-[data-theme="dark"] .app-content[data-category="growth"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.43 0.045 258 / 0.40), transparent 58%), var(--cat-growth-fill); }
-[data-theme="dark"] .app-content[data-category="execution"]      { background: radial-gradient(135% 72% at 50% -12%, oklch(0.45 0.045 80 / 0.40), transparent 58%), var(--cat-execution-fill); }
-[data-theme="dark"] .app-content[data-category="communication"]  { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 55 / 0.40), transparent 58%), var(--cat-communication-fill); }
+[data-theme="dark"] .app-content[data-category="prioritization"] { background: radial-gradient(135% 72% at 50% -12%, oklch(0.42 0.045 290 / 0.40), transparent 58%), var(--cat-prioritization-fill); }
+[data-theme="dark"] .app-content[data-category="design"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 182 / 0.40), transparent 58%), var(--cat-design-fill); }
+[data-theme="dark"] .app-content[data-category="strategy"]       { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 42 / 0.40), transparent 58%), var(--cat-strategy-fill); }
+[data-theme="dark"] .app-content[data-category="growth"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.43 0.045 242 / 0.40), transparent 58%), var(--cat-growth-fill); }
+[data-theme="dark"] .app-content[data-category="execution"]      { background: radial-gradient(135% 72% at 50% -12%, oklch(0.45 0.045 90 / 0.40), transparent 58%), var(--cat-execution-fill); }
+[data-theme="dark"] .app-content[data-category="communication"]  { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 342 / 0.40), transparent 58%), var(--cat-communication-fill); }
 
 /* Hub multi-category wash, dark variant — veiled toward charcoal */
 [data-theme="dark"] .app-content:not([data-category]) {

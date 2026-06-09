@@ -2,6 +2,7 @@ import { comparisonGuides, getCategory } from '../data/frameworks.js';
 import { categoryGlyph } from '../data/icons.js';
 import { extractAndCleanCSS, injectStyles, cleanInlineFonts, cleanScriptFonts, normalizeContent } from '../utils/style-injector.js';
 import { buildReadingDocument } from './framework.js';
+import { decorateGlyphs, wrapTables, observeGlyphs } from '../data/content-glyphs.js';
 
 // Cache loaded comparison content — stores { html, css }
 const contentCache = new Map();
@@ -50,11 +51,17 @@ export async function renderComparePage(container, slug) {
 
     executeScripts(container);
 
+    // Swap in-content emoji for the monoline glyph family (same as framework pages).
+    decorateGlyphs(container);
+    wrapTables(container);
+
     // Rebuild into the same reading document as framework pages (wide measure
     // so the comparison tables get full width).
     buildReadingDocument(container, {
       slug: guide.slug, emoji: cat.emoji, glyph: categoryGlyph(cat.id, cat.emoji), wide: true,
     });
+
+    observeGlyphs(container);
   } catch (err) {
     container.innerHTML = `
       <div style="text-align:center;padding:var(--space-16) 0;">

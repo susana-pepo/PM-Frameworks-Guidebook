@@ -57,6 +57,47 @@
 .fw-badge-glyph { display: inline-flex; align-items: center; }
 .fw-badge-glyph .glyph-icon { width: 13px; height: 13px; }
 
+/* ============================================
+   CONTENT GLYPHS — in-article monoline icons
+   Swapped in for the emoji that still lived inside the framework content
+   (src/data/content-glyphs.js): decorative concepts, semantic ✅/❌/⚠️ signals
+   and coloured status dots. They size to the host font (an emoji that sat in a
+   large icon tile stays large) and stroke in the surrounding ink inline, or the
+   category accent when the glyph is an element's whole content (an illustration).
+   ============================================ */
+.glyph-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.14em;
+  flex-shrink: 0;
+}
+.glyph-ico svg { width: 100%; height: 100%; display: block; }
+.glyph-ico--accent { color: var(--accent-color, currentColor); }
+.glyph-ico--ok   { color: var(--color-success); }
+.glyph-ico--no   { color: var(--color-error); }
+.glyph-ico--warn { color: var(--color-warning); }
+.glyph-ico--q    { color: var(--text-muted); }
+
+/* Coloured status dots → a small disc in the matching status colour. */
+.glyph-dot {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  vertical-align: 0.04em;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.glyph-dot--red    { background: var(--color-error); }
+.glyph-dot--green  { background: var(--color-success); }
+.glyph-dot--amber  { background: var(--color-warning); }
+.glyph-dot--blue   { background: var(--color-info); }
+.glyph-dot--violet { background: var(--cat-prioritization); }
+.glyph-dot--ink    { background: var(--text-secondary); }
+
 /* ---- BREADCRUMB ---- */
 .breadcrumb {
   display: flex;
