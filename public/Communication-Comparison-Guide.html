@@ -6,146 +6,197 @@
 <title>Communication Comparison Guide — PM Frameworks Guidebook</title>
 <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
-*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
-.wrapper{max-width:860px;margin:0 auto;padding:16px 16px 60px;}a{color:inherit;text-decoration:none;}
-.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
-.header{text-align:center;margin-bottom:24px;}.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(24px,5vw,36px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:560px;margin:0 auto;}
-.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;}
-.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:20px;}.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
-
-/* COMPARISON TABLE */
-.comp-table{width:100%;border-collapse:separate;border-spacing:0;border:var(--bw) solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow);font-size:12px;}
-.comp-table th{background:var(--ink);color:var(--white);padding:12px 10px;font-family:'Lilita One',sans-serif;font-size:13px;text-align:center;letter-spacing:.5px;border-right:2px solid rgba(255,255,255,.15);}.comp-table th:first-child{text-align:left;background:var(--ink);}.comp-table th:last-child{border-right:none;}
-.comp-table td{padding:10px;border-bottom:1px solid rgba(0,0,0,.08);border-right:1px solid rgba(0,0,0,.06);background:var(--cream);vertical-align:top;line-height:1.5;}.comp-table td:first-child{font-weight:700;background:var(--cream-dark);white-space:nowrap;font-size:11px;}.comp-table td:last-child{border-right:none;}.comp-table tr:last-child td{border-bottom:none;}
-.comp-table .col-star{background:var(--purple);}.comp-table .col-pyr{background:var(--sky);}.comp-table .col-nar{background:var(--orange);}.comp-table .col-exec{background:var(--mint);}
-
-/* PICKER */
-.picker-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;}
+:root{--bg:#e88840;--cream:#fef9ed;--cream-dark:#fdf0d5;--yellow:#ffe14d;--white:#fff;--pink:#ffb8d4;--purple:#c4b5fd;--sky:#8dd8f8;--orange:#ffb067;--mint:#7ee8b2;--mint-deep:#3dd68c;--rose:#ff8a8a;--green:#3da66a;--ink:#1a1a2e;--ink-soft:#333;--ink-dim:#555;--ink-muted:#888;--border:#1a1a2e;--shadow:5px 5px 0px #1a1a2e;--shadow-sm:3px 3px 0px #1a1a2e;--radius:20px;--radius-sm:14px;--radius-xs:10px;--bw:3px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+.progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--yellow);z-index:100;transition:width .3s;border-radius:0 4px 4px 0;}
+.wrapper{max-width:860px;margin:0 auto;padding:16px 16px 60px;}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;margin-bottom:16px;cursor:pointer;transition:all .12s;}
+.back-link:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.header{text-align:center;margin-bottom:24px;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;box-shadow:var(--shadow-sm);font-family:'Lilita One',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.header h1{font-family:'Lilita One',sans-serif;font-size:clamp(26px,5vw,38px);letter-spacing:1px;margin-bottom:8px;color:var(--white);}
+.header p.sub{font-size:15px;color:rgba(255,255,255,.85);max-width:540px;margin:0 auto;}
+.journey-nav{display:flex;gap:0;margin-bottom:24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:sticky;top:7px;z-index:50;}
+.j-btn{flex:1;padding:12px 4px;background:transparent;border:none;border-right:2px solid var(--border);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;}
+.j-btn:last-child{border-right:none;}.j-btn:hover{background:var(--cream-dark);color:var(--ink);}
+.j-btn.active{background:var(--ink);color:var(--white);}
+.section{display:none;}.section.active{display:block;}
+.c-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+.insight{background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px;}
+.insight h4{font-family:'Lilita One',sans-serif;font-size:17px;margin-bottom:4px;}
+.insight p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.nav-btns{display:flex;gap:10px;justify-content:space-between;margin-top:28px;}
+.pn-btn{padding:12px 24px;background:var(--cream);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .12s;}
+.pn-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);}
+.pn-btn.primary{background:var(--yellow);}
+.pill{display:inline-block;padding:4px 12px;border:2px solid var(--border);border-radius:100px;font-size:11px;font-weight:800;}
 .pick-q{font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:14px;text-align:center;}
 .pick-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.pick-btn{padding:14px 12px;background:var(--cream-dark);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all .12s;box-shadow:var(--shadow-sm);}.pick-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);background:var(--yellow);}.pick-btn.selected{background:var(--yellow);box-shadow:var(--shadow);}
-#pick-result{margin-top:16px;}
-
-/* FLOW */
-.flow-card{background:var(--cream);border:var(--bw) solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;}
-
-@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.pick-opts{grid-template-columns:1fr;}.comp-table{font-size:10px;}.comp-table td:first-child{font-size:9px;}}
+.pick-btn{padding:14px 12px;background:var(--cream-dark);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all .12s;box-shadow:var(--shadow-sm);}
+.pick-btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow);background:var(--yellow);}.pick-btn.selected{background:var(--yellow);box-shadow:var(--shadow);}
+@media(max-width:600px){.wrapper{padding:10px 10px 50px;}.j-btn{font-size:9px;padding:10px 2px;}.pick-opts{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
+<div class="progress-bar" id="prog"></div>
 <div class="wrapper">
 <a class="back-link" href="index.html">&#x2190; Hub</a>
 <div class="header">
   <div class="header-badge">Communication</div>
-  <h1>Communication Comparison Guide</h1>
-  <p class="sub">STAR vs Pyramid vs Narrative Arc vs Executive Summary. Which framework for which situation? Quick reference + interactive picker.</p>
+  <h1>Which Communication Framework?</h1>
+  <p class="sub">STAR vs Pyramid vs Narrative Arc vs Executive Summary — which framework for which situation, and how they connect.</p>
 </div>
 
-<!-- QUICK SUMMARY -->
-<div class="c-card">
-  <h3 style="font-family:'Lilita One',sans-serif;font-size:20px;margin-bottom:16px;text-align:center;">One-Line Each</h3>
-  <div style="display:grid;gap:8px;">
-    <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--purple);border:2px solid var(--border);border-radius:var(--radius-xs);">
-      <div style="font-size:20px;min-width:30px;text-align:center;">&#x2B50;</div>
-      <div><a href="STAR-Method.html" style="font-weight:800;font-size:14px;text-decoration:underline;">STAR Method</a><div style="font-size:11px;color:var(--ink-soft);">Situation &#x2192; Task &#x2192; Action &#x2192; Result. Structure interview answers as 90-second stories.</div></div>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--sky);border:2px solid var(--border);border-radius:var(--radius-xs);">
-      <div style="font-size:20px;min-width:30px;text-align:center;">&#x1F53A;</div>
-      <div><a href="Pyramid-Principle.html" style="font-weight:800;font-size:14px;text-decoration:underline;">Pyramid Principle</a><div style="font-size:11px;color:var(--ink-soft);">Answer first, then grouped reasons, then evidence. Top-down for efficiency.</div></div>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--orange);border:2px solid var(--border);border-radius:var(--radius-xs);">
-      <div style="font-size:20px;min-width:30px;text-align:center;">&#x1F4D6;</div>
-      <div><a href="Narrative-Arc.html" style="font-weight:800;font-size:14px;text-decoration:underline;">Narrative Arc</a><div style="font-size:11px;color:var(--ink-soft);">Status Quo &#x2192; Disruption &#x2192; Struggle &#x2192; Resolution &#x2192; New Reality. Build buy-in through tension.</div></div>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;padding:12px;background:var(--mint);border:2px solid var(--border);border-radius:var(--radius-xs);">
-      <div style="font-size:20px;min-width:30px;text-align:center;">&#x1F4CB;</div>
-      <div><a href="Executive-Summary.html" style="font-weight:800;font-size:14px;text-decoration:underline;">Executive Summary</a><div style="font-size:11px;color:var(--ink-soft);">One-page decision doc: Recommendation, Context, Data, Options, Risks, Ask.</div></div>
-    </div>
+<nav class="journey-nav" id="nav">
+  <button class="j-btn active" onclick="go(0)">Overview</button>
+  <button class="j-btn" onclick="go(1)">Compare</button>
+  <button class="j-btn" onclick="go(2)">Decide</button>
+  <button class="j-btn" onclick="go(3)">Scenarios</button>
+  <button class="j-btn" onclick="go(4)">Combine</button>
+  <button class="j-btn" onclick="go(5)">Picker</button>
+</nav>
+
+<!-- TAB 0: OVERVIEW -->
+<div class="section active" id="s0">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;">The Key Difference</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;">These four frameworks all answer one question — <strong>how do I get my message across?</strong> — but for different channels. STAR tells a story out loud. Pyramid leads with the answer. Narrative Arc builds buy-in through tension. Executive Summary puts a decision on one page.</p>
   </div>
-</div>
-
-<!-- COMPARISON TABLE -->
-<table class="comp-table">
-  <thead>
-    <tr><th style="width:16%;">Dimension</th><th class="col-star" style="width:21%;">STAR</th><th class="col-pyr" style="width:21%;">Pyramid</th><th class="col-nar" style="width:21%;">Narrative Arc</th><th class="col-exec" style="width:21%;">Exec Summary</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>Purpose</td><td>Tell your story in interviews</td><td>Deliver conclusions efficiently</td><td>Persuade through storytelling</td><td>Enable decisions on paper</td></tr>
-    <tr><td>Format</td><td>Spoken (90-120 sec)</td><td>Spoken or written (any length)</td><td>Spoken (5-20 min presentation)</td><td>Written (1 page only)</td></tr>
-    <tr><td>Core Logic</td><td>Chronological story</td><td>Top-down deduction</td><td>Tension &#x2192; release arc</td><td>Pyramid on paper + options/risks</td></tr>
-    <tr><td>Audience</td><td>Interviewers</td><td>Anyone who wants the answer fast</td><td>Audiences needing buy-in</td><td>Executives, leadership</td></tr>
-    <tr><td>Answer Position</td><td>End (Result)</td><td>First sentence</td><td>Middle-late (Resolution)</td><td>First sentence</td></tr>
-    <tr><td>Tension?</td><td>Implied (the challenge)</td><td>None &#x2014; answer upfront</td><td>Maximum &#x2014; builds then resolves</td><td>None &#x2014; answer upfront</td></tr>
-    <tr><td>Data Role</td><td>Result section (metrics)</td><td>Evidence under reasons</td><td>Struggle (cost of inaction) + Resolution (proof)</td><td>Dedicated Key Data section</td></tr>
-    <tr><td>Best For</td><td>Behavioral interviews, portfolio stories</td><td>Slack, email, exec updates, PRD intros</td><td>Pitches, all-hands, presentations</td><td>Product proposals, QBRs, PRD page 1</td></tr>
-    <tr><td>&#x274C; Skip When</td><td>Case interviews, presentations</td><td>Need to build buy-in first</td><td>Quick updates, emails</td><td>Team docs, brainstorms</td></tr>
-  </tbody>
-</table>
-
-<!-- DECISION FLOW -->
-<div class="flow-card">
-  <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:16px;text-align:center;">Quick Decision Flow</h3>
-  <div style="display:grid;gap:6px;max-width:500px;margin:0 auto;">
-    <div style="padding:12px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-xs);text-align:center;font-weight:800;font-size:14px;">What are you communicating?</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:8px;text-align:center;font-size:11px;"><strong>Answering an interview question?</strong><br><span style="padding:2px 8px;background:var(--purple);border-radius:4px;font-weight:800;font-size:10px;margin-top:4px;display:inline-block;">&#x2192; STAR</span></div>
-      <div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:8px;text-align:center;font-size:11px;"><strong>Writing a doc for leadership?</strong><br><span style="padding:2px 8px;background:var(--mint);border-radius:4px;font-weight:800;font-size:10px;margin-top:4px;display:inline-block;">&#x2192; Exec Summary</span></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:8px;text-align:center;font-size:11px;"><strong>Presenting &amp; need buy-in?</strong><br><span style="padding:2px 8px;background:var(--orange);border-radius:4px;font-weight:800;font-size:10px;margin-top:4px;display:inline-block;">&#x2192; Narrative Arc</span></div>
-      <div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:8px;text-align:center;font-size:11px;"><strong>Updating, emailing, or Slacking?</strong><br><span style="padding:2px 8px;background:var(--sky);border-radius:4px;font-weight:800;font-size:10px;margin-top:4px;display:inline-block;">&#x2192; Pyramid</span></div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x2B50;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">STAR Method</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Situation &#x2192; Task &#x2192; Action &#x2192; Result. Structure interview answers as 90-second stories.</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">BEST FOR: Behavioral interviews</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F53A;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Pyramid Principle</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Answer first, then grouped reasons, then evidence. Top-down for efficiency.</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">BEST FOR: Email, Slack, exec updates</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F4D6;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Narrative Arc</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">Status Quo &#x2192; Disruption &#x2192; Struggle &#x2192; Resolution &#x2192; New Reality. Build buy-in through tension.</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">BEST FOR: Pitches & presentations</div></div>
+    <div class="c-card" style="padding:18px;"><div style="font-size:24px;margin-bottom:4px;">&#x1F4CB;</div><div style="font-family:'Lilita One',sans-serif;font-size:16px;">Executive Summary</div><div style="font-size:12px;color:var(--ink-dim);margin-bottom:8px;">One-page decision doc: Recommendation, Context, Data, Options, Risks, Ask.</div><div style="font-size:10px;font-weight:700;color:var(--ink-muted);">BEST FOR: Docs for leadership</div></div>
   </div>
+  <div class="insight"><h4>One Sentence Each</h4><p><strong>STAR:</strong> "Here's a story that proves I can do this." <strong>Pyramid:</strong> "Here's my answer — and the three reasons behind it." <strong>Narrative Arc:</strong> "Feel the problem, then the solution lands." <strong>Exec Summary:</strong> "Everything you need to decide, on one page."</p></div>
+  <div class="nav-btns"><div></div><button class="pn-btn primary" onclick="go(1)">Compare &#x2192;</button></div>
 </div>
 
-<!-- COMBINATION PATTERNS -->
-<div class="c-card">
-  <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Power Combinations</h3>
-  <div style="display:grid;gap:10px;">
-    <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Presentation + Follow-up:</strong> Present with <span style="padding:2px 6px;background:var(--orange);border-radius:4px;font-weight:700;">Narrative Arc</span> in the meeting, then send the <span style="padding:2px 6px;background:var(--mint);border-radius:4px;font-weight:700;">Exec Summary</span> as a follow-up doc. Spoken story + written one-pager = complete coverage.</div>
-    <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Interview prep:</strong> Prepare 6-8 <span style="padding:2px 6px;background:var(--purple);border-radius:4px;font-weight:700;">STAR</span> stories. For case interviews, structure your analysis with <span style="padding:2px 6px;background:var(--sky);border-radius:4px;font-weight:700;">Pyramid</span> (conclusion first, grouped reasons).</div>
-    <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Inside an Exec Summary:</strong> Use <span style="padding:2px 6px;background:var(--sky);border-radius:4px;font-weight:700;">Pyramid</span> structure for the Context and Key Data sections. The Exec Summary IS a Pyramid in document form with added Options and Risks.</div>
-    <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Portfolio case studies:</strong> Write each project as a <span style="padding:2px 6px;background:var(--purple);border-radius:4px;font-weight:700;">STAR</span> story with an <span style="padding:2px 6px;background:var(--mint);border-radius:4px;font-weight:700;">Exec Summary</span> header. Recruiters scan the summary; interviewers hear the story.</div>
+<!-- TAB 1: COMPARE -->
+<div class="section" id="s1">
+  <div class="c-card" style="padding:16px;overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead><tr style="background:var(--ink);color:var(--white);"><th style="padding:10px 8px;text-align:left;font-size:10px;">Dimension</th><th style="padding:10px 6px;text-align:center;font-size:10px;">STAR</th><th style="padding:10px 6px;text-align:center;font-size:10px;">Pyramid</th><th style="padding:10px 6px;text-align:center;font-size:10px;">Narrative Arc</th><th style="padding:10px 6px;text-align:center;font-size:10px;">Exec Summary</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Purpose</td><td style="padding:8px;text-align:center;">Tell your story in interviews</td><td style="padding:8px;text-align:center;">Deliver conclusions efficiently</td><td style="padding:8px;text-align:center;">Persuade through storytelling</td><td style="padding:8px;text-align:center;">Enable decisions on paper</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Format</td><td style="padding:8px;text-align:center;">Spoken (90-120 sec)</td><td style="padding:8px;text-align:center;">Spoken or written (any length)</td><td style="padding:8px;text-align:center;">Spoken (5-20 min)</td><td style="padding:8px;text-align:center;">Written (1 page only)</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Core logic</td><td style="padding:8px;text-align:center;">Chronological story</td><td style="padding:8px;text-align:center;">Top-down deduction</td><td style="padding:8px;text-align:center;">Tension &#x2192; release arc</td><td style="padding:8px;text-align:center;">Pyramid + options/risks</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Audience</td><td style="padding:8px;text-align:center;">Interviewers</td><td style="padding:8px;text-align:center;">Anyone who wants the answer fast</td><td style="padding:8px;text-align:center;">Audiences needing buy-in</td><td style="padding:8px;text-align:center;">Executives, leadership</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Answer position</td><td style="padding:8px;text-align:center;">End (Result)</td><td style="padding:8px;text-align:center;">First sentence</td><td style="padding:8px;text-align:center;">Middle-late (Resolution)</td><td style="padding:8px;text-align:center;">First sentence</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Tension?</td><td style="padding:8px;text-align:center;">Implied (the challenge)</td><td style="padding:8px;text-align:center;">None &#x2014; answer upfront</td><td style="padding:8px;text-align:center;">Maximum &#x2014; builds then resolves</td><td style="padding:8px;text-align:center;">None &#x2014; answer upfront</td></tr>
+        <tr style="background:var(--cream-dark);"><td style="padding:8px;font-weight:800;">Data role</td><td style="padding:8px;text-align:center;">Result section (metrics)</td><td style="padding:8px;text-align:center;">Evidence under reasons</td><td style="padding:8px;text-align:center;">Cost of inaction + proof</td><td style="padding:8px;text-align:center;">Dedicated Key Data section</td></tr>
+        <tr><td style="padding:8px;font-weight:800;">Skip when</td><td style="padding:8px;text-align:center;">Case interviews, presentations</td><td style="padding:8px;text-align:center;">Need to build buy-in first</td><td style="padding:8px;text-align:center;">Quick updates, emails</td><td style="padding:8px;text-align:center;">Team docs, brainstorms</td></tr>
+      </tbody>
+    </table>
   </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(0)">&#x2190; Overview</button><button class="pn-btn primary" onclick="go(2)">Decide &#x2192;</button></div>
 </div>
 
-<!-- INTERACTIVE PICKER -->
-<div class="picker-card">
-  <h3 style="font-family:'Lilita One',sans-serif;font-size:20px;margin-bottom:6px;text-align:center;">Framework Picker</h3>
-  <p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:20px;">Answer the questions to get a recommendation.</p>
-  <div id="picker">
-    <div id="pq0">
-      <div class="pick-q">What's the channel?</div>
-      <div class="pick-opts">
-        <button class="pick-btn" onclick="pickA(0,'spoken_interview')">Spoken &#x2014; Interview</button>
-        <button class="pick-btn" onclick="pickA(0,'spoken_present')">Spoken &#x2014; Presentation</button>
-        <button class="pick-btn" onclick="pickA(0,'written_quick')">Written &#x2014; Quick update</button>
-        <button class="pick-btn" onclick="pickA(0,'written_doc')">Written &#x2014; Formal document</button>
+<!-- TAB 2: DECIDE -->
+<div class="section" id="s2">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:14px;">Decision Flowchart</h3>
+    <div style="display:grid;gap:10px;max-width:500px;margin:0 auto;">
+      <div style="text-align:center;padding:14px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-weight:800;font-size:14px;">What are you communicating?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">Answering an interview question?</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--purple);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">STAR</div></div>
+        <div style="text-align:center;"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">Writing a doc for leadership?</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--mint);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">Exec Summary</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="text-align:center;"><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">Presenting &amp; need buy-in?</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--orange);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">Narrative Arc</div></div>
+        <div style="text-align:center;"><div style="padding:10px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:11px;font-weight:700;margin-bottom:6px;">Updating, emailing, or Slacking?</div><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid var(--border);margin:0 auto 6px;"></div><div style="padding:10px;background:var(--sky);border:var(--bw) solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:800;">Pyramid</div></div>
       </div>
     </div>
   </div>
-  <div id="pick-result"></div>
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:16px;margin-bottom:12px;">Quick Rules</h3>
+    <div style="display:grid;gap:8px;">
+      <div style="font-size:13px;padding:10px;background:var(--purple);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Interview?</strong> &#x2192; STAR (90s story with metrics)</div>
+      <div style="font-size:13px;padding:10px;background:var(--sky);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Email / Slack?</strong> &#x2192; Pyramid (answer first)</div>
+      <div style="font-size:13px;padding:10px;background:var(--orange);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Presentation needing buy-in?</strong> &#x2192; Narrative Arc (build tension, then resolve)</div>
+      <div style="font-size:13px;padding:10px;background:var(--mint);border-radius:var(--radius-xs);border:2px solid var(--border);"><strong>Document for leadership?</strong> &#x2192; Executive Summary (1-page decision tool)</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(1)">&#x2190; Compare</button><button class="pn-btn primary" onclick="go(3)">Scenarios &#x2192;</button></div>
 </div>
 
-<!-- CHEAT SHEET -->
-<div class="insight">
-  <h4>Communication Cheat Sheet</h4>
-  <p style="margin-top:8px;">
-    <strong>Interview?</strong> &#x2192; STAR (90s story with metrics).<br>
-    <strong>Email/Slack?</strong> &#x2192; Pyramid (answer first).<br>
-    <strong>Presentation?</strong> &#x2192; Narrative Arc (build tension, then resolve).<br>
-    <strong>Document for leadership?</strong> &#x2192; Executive Summary (1-page decision tool).<br>
-    <strong>Not sure?</strong> &#x2192; Default to Pyramid. It works almost everywhere.
-  </p>
+<!-- TAB 3: SCENARIOS -->
+<div class="section" id="s3">
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F3A4;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">"Tell me about a time you led through conflict"</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">A behavioral interview question. You need a tight, memorable answer that proves the competency with evidence.</div><div class="pill" style="background:var(--purple);">STAR Method</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">90-second story: set the Situation, your Task, the Action you took (50% of the answer), and a quantified Result.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F4CA;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">Presenting a roadmap pivot to a skeptical leadership team</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">They're attached to the current plan. You need them to feel why the status quo is failing before you reveal the new direction.</div><div class="pill" style="background:var(--orange);">Narrative Arc</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Status Quo &#x2192; Disruption &#x2192; Struggle (peak tension) &#x2192; Resolution (the pivot) &#x2192; New Reality. Land the proof at the resolution.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F4AC;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">Slack update: should we ship Friday or slip a week?</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">A quick async decision. People are scanning. Burying the answer wastes everyone's time.</div><div class="pill" style="background:var(--sky);">Pyramid Principle</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Lead with the recommendation: "Slip a week. Three reasons: QA gap, a P0 bug, and the holiday freeze." Detail underneath for anyone who wants it.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F4CB;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">One-page proposal for a new initiative going to the exec team</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">Leadership will read it cold, decide on it, and never see your slides. The page has to stand alone.</div><div class="pill" style="background:var(--mint);">Executive Summary</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Recommendation first, then Context, Key Data, Options, Risks, and the Ask. Written last, read first.</div></div></div></div>
+    <div class="c-card" style="padding:18px;"><div style="display:flex;gap:10px;align-items:flex-start;"><div style="font-size:22px;min-width:28px;">&#x1F3AF;</div><div><div style="font-weight:800;font-size:14px;margin-bottom:4px;">Big all-hands pitch <em>plus</em> a doc people take away</div><div style="font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:8px;">You're presenting live and need a leave-behind that survives without you in the room.</div><div class="pill" style="background:var(--purple);">Narrative Arc + Exec Summary</div><div style="margin-top:6px;font-size:11px;color:var(--ink-muted);">Present with the Arc to win the room, then send the one-page Exec Summary so the decision sticks afterwards.</div></div></div></div>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(2)">&#x2190; Decide</button><button class="pn-btn primary" onclick="go(4)">Combine &#x2192;</button></div>
 </div>
 
-<div style="text-align:center;margin-top:24px;">
-  <a href="index.html" style="display:inline-block;padding:14px 32px;background:var(--yellow);border:var(--bw) solid var(--border);border-radius:100px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;box-shadow:var(--shadow);text-decoration:none;color:var(--ink);">Back to Hub</a>
+<!-- TAB 4: COMBINE -->
+<div class="section" id="s4">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:12px;">Power Combinations</h3>
+    <p style="font-size:14px;color:var(--ink-dim);line-height:1.7;margin-bottom:16px;">The frameworks aren't rivals — they layer. The strongest communicators reach for two at once.</p>
+    <div style="display:grid;gap:10px;">
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Presentation + follow-up:</strong> Present with <span class="pill" style="background:var(--orange);padding:2px 8px;">Narrative Arc</span> in the meeting, then send the <span class="pill" style="background:var(--mint);padding:2px 8px;">Exec Summary</span> as a follow-up doc. Spoken story + written one-pager = complete coverage.</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Interview prep:</strong> Prepare 6-8 <span class="pill" style="background:var(--purple);padding:2px 8px;">STAR</span> stories. For case interviews, structure your analysis with <span class="pill" style="background:var(--sky);padding:2px 8px;">Pyramid</span> (conclusion first, grouped reasons).</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Inside an Exec Summary:</strong> Use <span class="pill" style="background:var(--sky);padding:2px 8px;">Pyramid</span> structure for the Context and Key Data sections. The Exec Summary <em>is</em> a Pyramid in document form, with added Options and Risks.</div>
+      <div style="padding:12px;background:var(--cream-dark);border:2px solid var(--border);border-radius:var(--radius-xs);font-size:12px;line-height:1.5;"><strong>Portfolio case studies:</strong> Write each project as a <span class="pill" style="background:var(--purple);padding:2px 8px;">STAR</span> story with an <span class="pill" style="background:var(--mint);padding:2px 8px;">Exec Summary</span> header. Recruiters scan the summary; interviewers hear the story.</div>
+    </div>
+  </div>
+  <div class="insight">
+    <h4>For PM Interviews</h4>
+    <p>You rarely need all four at once. But <strong>naming the right tool out loud</strong> signals communication maturity: "I'd answer this as a STAR story," or "Let me give you the headline first, Pyramid-style, then the reasoning." That framing alone reads as senior — it shows you choose your structure on purpose.</p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(3)">&#x2190; Scenarios</button><button class="pn-btn primary" onclick="go(5)">Picker &#x2192;</button></div>
 </div>
+
+<!-- TAB 5: PICKER -->
+<div class="section" id="s5">
+  <div class="c-card">
+    <h3 style="font-family:'Lilita One',sans-serif;font-size:18px;margin-bottom:6px;text-align:center;">Framework Picker</h3>
+    <p style="font-size:13px;color:var(--ink-dim);text-align:center;margin-bottom:20px;">Answer the questions to get a recommendation.</p>
+    <div id="picker">
+      <div id="pq0">
+        <div class="pick-q">What's the channel?</div>
+        <div class="pick-opts">
+          <button class="pick-btn" onclick="pickA(0,'spoken_interview')">Spoken &#x2014; Interview</button>
+          <button class="pick-btn" onclick="pickA(0,'spoken_present')">Spoken &#x2014; Presentation</button>
+          <button class="pick-btn" onclick="pickA(0,'written_quick')">Written &#x2014; Quick update</button>
+          <button class="pick-btn" onclick="pickA(0,'written_doc')">Written &#x2014; Formal document</button>
+        </div>
+      </div>
+    </div>
+    <div id="pick-result"></div>
+  </div>
+
+  <div class="insight">
+    <h4>Communication Cheat Sheet</h4>
+    <p style="margin-top:8px;">
+      <strong>Interview?</strong> &#x2192; STAR (90s story with metrics).<br>
+      <strong>Email / Slack?</strong> &#x2192; Pyramid (answer first).<br>
+      <strong>Presentation?</strong> &#x2192; Narrative Arc (build tension, then resolve).<br>
+      <strong>Document for leadership?</strong> &#x2192; Executive Summary (1-page decision tool).<br>
+      <strong>Not sure?</strong> &#x2192; Default to Pyramid. It works almost everywhere.
+    </p>
+  </div>
+  <div class="nav-btns"><button class="pn-btn" onclick="go(4)">&#x2190; Combine</button><button class="pn-btn primary" onclick="window.location.href='index.html'">Back to Hub</button></div>
+</div>
+
 </div>
 
 <script>
+const total=6;let cur=0;
+function go(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+i).classList.add('active');
+  document.querySelectorAll('.j-btn').forEach((b,idx)=>{b.classList.remove('active');if(idx===i)b.classList.add('active');});
+  cur=i;document.getElementById('prog').style.width=((i+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 const tree={
   'spoken_interview':{fw:'STAR Method',emoji:'&#x2B50;',color:'var(--purple)',link:'STAR-Method.html',reason:'For behavioral interviews, STAR gives you a 90-second story with clear structure: Situation, Task, Action, Result. Prepare 6-8 stories covering different themes (data, conflict, failure, leadership). Action should be 50% of your answer. Always include numbers in the Result.'},
   'spoken_present':{next:'present_buyin'},

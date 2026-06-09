@@ -1700,7 +1700,7 @@
   color: var(--text-primary);
 }
 
-.qo, .quiz-opt {
+.qo, .quiz-opt, .q-opt {
   display: flex;
   align-items: center;
   width: 100%;
@@ -1719,35 +1719,35 @@
   transition: all var(--duration-fast) var(--ease-default);
 }
 
-.qo:hover, .quiz-opt:hover {
+.qo:hover, .quiz-opt:hover, .q-opt:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-strong);
 }
 
-.qo:focus-visible, .quiz-opt:focus-visible {
+.qo:focus-visible, .quiz-opt:focus-visible, .q-opt:focus-visible {
   outline: none;
   border-color: var(--border-focus);
   box-shadow: var(--shadow-focus);
 }
 
-.qo.correct, .quiz-opt.correct {
+.qo.correct, .quiz-opt.correct, .q-opt.correct {
   background: var(--color-success-light);
   border-color: var(--color-success);
   color: var(--text-primary);
 }
 
-.qo.wrong, .quiz-opt.wrong {
+.qo.wrong, .quiz-opt.wrong, .q-opt.wrong {
   background: var(--color-error-light);
   border-color: var(--color-error);
   color: var(--text-primary);
 }
 
-.qo:disabled, .quiz-opt:disabled {
+.qo:disabled, .quiz-opt:disabled, .q-opt:disabled {
   cursor: default;
   opacity: 0.7;
 }
 
-.qexp, .quiz-explain {
+.qexp, .quiz-explain, .quiz-exp {
   margin-top: var(--space-3);
   padding: var(--space-4);
   background: var(--color-info-light);
@@ -1759,8 +1759,13 @@
   display: none;
 }
 
-.qexp.show, .quiz-explain.show {
+.qexp.show, .quiz-explain.show, .quiz-exp.show {
   display: block;
+  /* Pin the surface here (0,2,0) so a file-local `.show` fill — e.g. User
+     Story Mapping's `.quiz-exp.show{background:var(--mint)}` — can't override
+     it. Every quiz's feedback then reads as the same neutral info panel. */
+  background: var(--color-info-light);
+  border: 1px solid rgba(88, 137, 208, 0.2);
 }
 
 /* ---- PANEL NAV (next/prev buttons) ---- */
@@ -3332,10 +3337,10 @@ tr:hover td {
 [data-theme="dark"] .fw-tldr-card,
 [data-theme="dark"] .fw-tldr-card :is(p, h4, strong, li, span, div),
 [data-theme="dark"] :is(.cmp-table, .ctable) :is(.hi, .lo, .med),
-[data-theme="dark"] :is(.qo, .quiz-opt).correct,
-[data-theme="dark"] :is(.qo, .quiz-opt).wrong,
-[data-theme="dark"] :is(.qexp, .quiz-explain),
-[data-theme="dark"] :is(.qexp, .quiz-explain) :is(p, strong, li, span) {
+[data-theme="dark"] :is(.qo, .quiz-opt, .q-opt).correct,
+[data-theme="dark"] :is(.qo, .quiz-opt, .q-opt).wrong,
+[data-theme="dark"] :is(.qexp, .quiz-explain, .quiz-exp),
+[data-theme="dark"] :is(.qexp, .quiz-explain, .quiz-exp) :is(p, strong, li, span) {
   color: oklch(0.27 0.018 60);
 }
 
@@ -3461,6 +3466,16 @@ tr:hover td {
                  .matrix-hero, .flow, .fstep) {
   border-color: var(--border-subtle);
   box-shadow: var(--shadow-xs);
+}
+
+/* The Value-vs-Effort plot canvases size by `aspect-ratio` against a full-width
+   column, so in the wide reading deck they balloon past 600px tall — acres of
+   empty paper with the dots clustered at spawn. Cap them to a tidy, centred
+   square-ish figure so the 2×2 reads at a glance and the panel needn't scroll. */
+.fw-doc-main :is(.grid-canvas, .plot-grid) {
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Container figures (factor / quadrant / metric / category cards, builders,

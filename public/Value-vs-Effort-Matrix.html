@@ -584,8 +584,11 @@ function addFeature(){
   dot.className='g-dot';
   dot.style.background=color;
   dot.textContent=name;
-  dot.style.left='40%';
-  dot.style.top='40%';
+  // Fan freshly-added dots across a small grid near the centre so several are
+  // distinguishable before you drag them — they used to spawn on one pixel.
+  var n=features.length;
+  dot.style.left=(32+(n%4)*10)+'%';
+  dot.style.top=(32+(Math.floor(n/4)%4)*11)+'%';
   dot.dataset.name=name;
 
   var removeBtn=document.createElement('div');
