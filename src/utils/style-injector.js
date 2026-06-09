@@ -77,6 +77,63 @@ export function stripInlineFontSize(text) {
     .trim();
 }
 
+/* The legacy source files paint figure cards with hard-coded pastel fills
+   (background:var(--sky) / #DBEAFE …) chosen per-card, with no class for any
+   stylesheet rule to reach — so a flat sky-blue card lands on a terracotta
+   Strategy page, off the category palette and louder than the calm vellum the
+   newer files use. Map each legacy pastel to a quiet tint of the *page's*
+   --accent-color so every figure reads as inset paper of the same hue family.
+   Distinct mix strengths per pastel keep a grid of differently-tinted cards
+   visually varied (tonal steps in one hue, not one flat wash). Neutral paper
+   (--cream/--cream-dark), semantic --color-* fills, gradients and plain
+   white/black are deliberately absent from the map, so they pass through
+   untouched — and because we only rewrite `background`, any `color:`/`border:`
+   use of the same token is never affected. */
+const PASTEL_BG_MIX = {
+  '--sky': 9,  '--p1': 9,  '#dbeafe': 9,
+  '--mint': 13, '--green': 13, '--p2': 13, '#d1fae5': 13,
+  '--yellow': 7, '--p3': 7,  '#fef3c7': 7,
+  '--orange': 11, '--p4': 11, '#ffedd5': 11,
+  '--rose': 15, '#ffe4e6': 15,
+  '--pink': 6,  '--p5': 6,  '#fce7f3': 6,
+  '--purple': 17, '#ede8ff': 17,
+};
+
+/**
+ * Rewrite a flat pastel `background` in an inline style to a calm tint of the
+ * page category accent. Only a single token/hex fill is matched (gradients and
+ * compound backgrounds are left alone); the rest of the style string — padding,
+ * radius, border, colour — is preserved.
+ *
+ * @param {string} text — an inline style attribute value
+ * @returns {string}
+ */
+export function harmonizeBackground(text) {
+  if (!text || !/background/i.test(text)) return text;
+  return text.replace(
+    /background(?:-color)?\s*:\s*(var\(\s*--[a-z0-9]+\s*\)|#[0-9a-fA-F]{3,8})(\s*!important)?/gi,
+    (m, value, bang) => {
+      const key = value.startsWith('#')
+        ? value.toLowerCase()
+        : (value.match(/--[a-z0-9]+/i) || [''])[0].toLowerCase();
+      const pct = PASTEL_BG_MIX[key];
+      if (pct == null) return m;
+      return `background:color-mix(in oklab, var(--accent-color) ${pct}%, var(--bg-card))${bang || ''}`;
+    }
+  );
+}
+
+/* Reading-prose selectors — the exact elements framework-page.css sets to the
+   18px Literata reading scale. Legacy files pin these to per-file inline sizes
+   (font-size:13px …) that win on specificity, so the same paragraph reads 15px
+   on one page and 18px on another. Stripping the inline size on just these
+   flow-text carriers hands them back to the shared scale; small captions inside
+   figure cards (not matched here) keep their tuned size via the floor lift. */
+const PROSE_SELECTOR =
+  ':is(.c-card, .c-card-static, .section, .panel) > p,' +
+  ':is(.c-card, .c-card-static) li,' +
+  ':is(.insight, .tip) p, :is(.insight, .tip) li';
+
 /**
  * Remove decorative left/right accent stripes (the most overused
  * "design touch" — a thick coloured side border). We target only
@@ -323,11 +380,17 @@ export function normalizeContent(root) {
 
     let cleaned = style;
     if (/font-size\s*:\s*\d/.test(cleaned) && !inFixedDiagram(el, root)) {
-      // Headings hand their sizing back to the central type scale; body copy
-      // keeps its tiny-size floor lift. Both skip fixed-layout diagrams.
-      cleaned = /^H[1-6]$/.test(el.tagName)
+      // Headings and flowing prose hand their sizing back to the central type
+      // scale (so a sub-head never renders smaller than the prose it
+      // introduces, and the same paragraph reads at one size everywhere); all
+      // other body copy keeps its tiny-size floor lift. Both skip diagrams.
+      cleaned = (/^H[1-6]$/.test(el.tagName) || (el.matches && el.matches(PROSE_SELECTOR)))
         ? stripInlineFontSize(cleaned)
         : liftFontSizesInText(cleaned);
+    }
+    if (/background/i.test(cleaned) && !inFixedDiagram(el, root)) {
+      // Harmonize hard-coded pastel figure fills to the page category accent.
+      cleaned = harmonizeBackground(cleaned);
     }
     if (/border-(?:left|right)\s*:/.test(cleaned)) {
       cleaned = stripDecorativeStripes(cleaned);
@@ -373,6 +436,13 @@ export function cleanScriptFonts(code) {
   // OKR/RICE builders, score tables) so JS-rendered content reads as well as
   // the static content normalised by normalizeContent().
   cleaned = liftFontSizesInText(cleaned);
+
+  // Harmonize hard-coded pastel fills baked into the same generated markup
+  // (builder result cards, story-map cells) to the page category accent, so a
+  // widget that paints itself on interaction matches the static content. Each
+  // pastel maps to a distinct tint strength, so multi-cell widgets keep their
+  // visual distinction as tonal steps in one hue.
+  cleaned = harmonizeBackground(cleaned);
 
   return cleaned;
 }

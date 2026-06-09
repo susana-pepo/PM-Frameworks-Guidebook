@@ -59,6 +59,10 @@ export async function renderComparePage(container, slug) {
     // so the comparison tables get full width).
     buildReadingDocument(container, {
       slug: guide.slug, emoji: cat.emoji, glyph: categoryGlyph(cat.id, cat.emoji), wide: true,
+      // Compose a deliberate "At a glance" title card so comparison guides open
+      // the same way frameworks do, instead of dumping the subtitle in the
+      // header and jumping to section 1.
+      forceCover: true,
     });
 
     observeGlyphs(container);

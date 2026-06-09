@@ -234,6 +234,72 @@ function stripLeadingEmoji(container) {
   );
 }
 
+/* Canonical section titles for comparison guides, mirrored verbatim from the
+   two well-formed guides (Prioritization / Design) so the headerless guides
+   read as the same product. Used only as a fallback when a headerless guide's
+   section carries no heading of its own. Title Case matches both those guides'
+   titles and the promoted source headings ("Decision Flowchart", "The
+   Strategic Pipeline"), so casing stays consistent within a guide. Keyed by the
+   lowercased journey-nav label. */
+const COMPARE_STEP_TITLE = {
+  overview: 'At a Glance',
+  compare: 'Side-by-Side Comparison',
+  decide: 'Decision Flowchart',
+  scenarios: 'Real Scenarios',
+  combine: 'Using Them Together',
+  picker: 'Framework Picker',
+};
+
+/**
+ * Give a section the editorial header every framework section has.
+ *
+ * The four "canonical-template" comparison guides (Strategy/Growth/Execution/
+ * Communication) ship section bodies with no `.sec-title` — just a bare `<h3>`,
+ * or nothing — so they render visibly thinner than every framework section
+ * (which opens with an accent-barred display title + caption). This synthesises
+ * the same `.sec-title` structure (the central CSS then styles it identically):
+ * it promotes the section's OWN first heading where it has one (keeping each
+ * guide's specific voice, e.g. "The Strategic Pipeline"), otherwise falls back
+ * to the canonical step title above. No-ops when a real `.sec-title` already
+ * exists, so frameworks and the two complete comparison guides are untouched.
+ *
+ * @param {HTMLElement} panel — the section's source panel
+ * @param {string} label — the journey-nav label for this step (fallback title)
+ */
+function ensureSectionHeader(panel, label) {
+  if (!panel || panel.querySelector('.sec-title')) return;
+
+  // Prefer a heading the section already carries — look only shallowly (the
+  // panel itself or its first card) so we promote the section's title, never a
+  // sub-head buried deeper in the content.
+  const heading = panel.querySelector(
+    ':scope > h2, :scope > h3, ' +
+    ':scope > .c-card > h2, :scope > .c-card > h3, ' +
+    ':scope > .c-card-static > h2, :scope > .c-card-static > h3'
+  );
+  let titleText = '';
+  if (heading) {
+    titleText = heading.textContent.trim();
+    heading.remove();
+  } else {
+    titleText = COMPARE_STEP_TITLE[(label || '').trim().toLowerCase()] || (label || '').trim();
+  }
+  if (!titleText) return;
+
+  const secTitle = document.createElement('div');
+  secTitle.className = 'sec-title fw-synth-header';
+  const bar = document.createElement('div');
+  bar.className = 'sec-icon';            // de-stickered to the 4px accent bar by CSS
+  const labelWrap = document.createElement('div');
+  labelWrap.className = 'sec-label';
+  const h = document.createElement('h2');
+  h.textContent = titleText;
+  labelWrap.appendChild(h);
+  secTitle.appendChild(bar);
+  secTitle.appendChild(labelWrap);
+  panel.insertBefore(secTitle, panel.firstChild);
+}
+
 /**
  * Build a reading document from raw tabbed source content.
  *
@@ -266,7 +332,7 @@ function stripLeadingEmoji(container) {
  * @param {boolean} [opts.wide]       relax the reading measure (comparison tables)
  */
 export function buildReadingDocument(container, opts = {}) {
-  const { slug, emoji, glyph, title, initialStep, wide = false } = opts;
+  const { slug, emoji, glyph, title, initialStep, wide = false, forceCover = false } = opts;
   const fwPage = container.querySelector('.fw-page');
   if (!fwPage) return;
 
@@ -376,9 +442,12 @@ export function buildReadingDocument(container, opts = {}) {
   identText.appendChild(titleEl);
 
   // A cover panel is only worth its own view when it carries substance — a hero
-  // visual or the 15-second summary. When all we have is a one-line subtitle
-  // (e.g. comparison guides), keep it inline in the slim header instead.
-  const hasCover = glanceNodes.length > 0 || !!tldr;
+  // visual or the 15-second summary. Comparison guides have neither, so they
+  // used to open straight into section 1 with the subtitle crammed in the slim
+  // header; `forceCover` (passed by compare.js) instead composes a deliberate
+  // title card from the category mark + subtitle so all 30 guides open the same
+  // way (★ At a glance → numbered sections).
+  const hasCover = glanceNodes.length > 0 || !!tldr || forceCover;
   if (subtitle && !hasCover) {
     subtitle.classList.add('fw-doc-subtitle');
     identText.appendChild(subtitle);
@@ -478,6 +547,16 @@ export function buildReadingDocument(container, opts = {}) {
   // diagrams), and the 15-second summary trails as supporting detail.
   const glanceContent = [];
   if (hasCover) {
+    // For a forced cover with no hero/TL;DR (comparison guides), lead with a
+    // large category mark so the opening reads as a composed title card rather
+    // than a stray line of subtitle.
+    if (forceCover && glanceNodes.length === 0 && !tldr && glyph) {
+      const mark = document.createElement('div');
+      mark.className = 'fw-doc-cover-mark';
+      mark.setAttribute('aria-hidden', 'true');
+      mark.innerHTML = glyph;
+      glanceContent.push(mark);
+    }
     if (subtitle) {
       subtitle.classList.add('fw-doc-subtitle', 'fw-doc-lead');
       glanceContent.push(subtitle);
@@ -499,6 +578,9 @@ export function buildReadingDocument(container, opts = {}) {
   steps.forEach((step, i) => {
     const panel = panels[i];
     if (!panel) return;
+    // Headerless comparison-guide sections get the same editorial header every
+    // framework section carries (no-op where a real .sec-title already exists).
+    ensureSectionHeader(panel, step.label);
     addSection(`sec-${slug}-${i}`, step.num, step.label, [panel]);
   });
 

@@ -3905,6 +3905,27 @@ tr:hover td {
 .fw-doc-glance .formula-bar .fop { font-size: clamp(24px, 3.5vw, 38px); }
 .fw-doc-glance .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) { text-align: left; }
 
+/* Composed-cover mark — anchors the comparison-guide title card when there's no
+   hero diagram or TL;DR to lead with. A larger echo of the header identity
+   tile: a soft category-tinted enclosure holding the monoline category glyph. */
+.fw-doc-glance .fw-doc-cover-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--accent-color, var(--text-tertiary)) 12%, var(--bg-card));
+  border: 1px solid color-mix(in oklab, var(--accent-color, var(--border-default)) 22%, var(--border-default));
+  color: var(--accent-color, var(--text-secondary));
+  box-shadow: var(--shadow-sm), inset 0 1px 0 color-mix(in oklab, var(--bg-app) 60%, transparent);
+}
+.fw-doc-glance .fw-doc-cover-mark .glyph-icon,
+.fw-doc-glance .fw-doc-cover-mark svg { width: 42px; height: 42px; }
+.fw-doc-glance .fw-doc-cover-mark .glyph-emoji { font-size: 42px; line-height: 1; }
+/* On a forced cover the lead is the hero, so let it run a touch larger. */
+.fw-doc-glance .fw-doc-cover-mark + .fw-doc-lead { max-width: 32ch; }
+
 /* Inactive panels can't catch focus/scroll while parked off-stage. */
 .fw-doc.deck-mode .fw-doc-section[aria-hidden="true"] { pointer-events: none; }
 .fw-doc.deck-mode .fw-doc-section.is-active { pointer-events: auto; }
