@@ -73,6 +73,10 @@ export async function renderFrameworkPage(container, slug, initialStep) {
 
     // Keep de-emojifying content that interactive widgets inject after load.
     observeGlyphs(container);
+
+    // Give live computed numbers (calculator scores, factor echoes) a brief
+    // "the system heard you" pulse whenever their value changes.
+    observeLiveNumbers(container);
   } catch (err) {
     container.innerHTML = `
       <div class="fw-error" role="alert">
@@ -147,6 +151,70 @@ function executeScripts(container) {
       }
     }
   });
+}
+
+/**
+ * Animate live computed numbers with a brief pulse when their value changes.
+ *
+ * Result displays are heterogeneous across the 24 frameworks (only `.calc-
+ * result-num` is shared; most use framework-specific ids), so rather than wire
+ * per-file selectors this watches the whole content for any *leaf* element
+ * whose text is a pure number and whose value just changed — a calculator
+ * score, a factor echo, a running total. On change it adds `.fw-num-pulse`
+ * (a GPU-only scale + accent flash, auto-removed). It NEVER rewrites the
+ * number, so each framework's own math and formatting stay the source of truth
+ * and there's no observer feedback loop (the class is an attribute mutation).
+ *
+ * Tuned to ignore prose and equation strings: the element must be childless and
+ * its full trimmed text must read as a single number (commas/decimal/%/× ok).
+ *
+ * @param {HTMLElement} root — container to watch (e.g. .fw-page)
+ */
+function observeLiveNumbers(root) {
+  if (!root || typeof MutationObserver === 'undefined') return;
+
+  // A single number: optional sign/currency, digits with thousands/decimals,
+  // optional trailing unit (%, ×, x). Equations ("5,000 × 1 ÷ 2") have inner
+  // markup so they're never childless — and so never match here.
+  const NUM_RE = /^[\s$€£+-]*\d[\d.,\s]*\s*[%×x]?\s*$/;
+  const isNumberDisplay = (el) => {
+    if (!el || el.nodeType !== 1 || el.children.length > 0) return false;
+    const t = (el.textContent || '').trim();
+    return t.length > 0 && t.length <= 14 && /\d/.test(t) && NUM_RE.test(t);
+  };
+
+  const last = new WeakMap();
+  // Seed current values so the first *real* change pulses, not initial render.
+  root.querySelectorAll('*').forEach((el) => {
+    if (isNumberDisplay(el)) last.set(el, el.textContent.trim());
+  });
+
+  const pulse = (el) => {
+    const t = el.textContent.trim();
+    const prev = last.get(el);
+    last.set(el, t);
+    if (prev === undefined || prev === t) return;
+    el.classList.remove('fw-num-pulse');
+    void el.offsetWidth;            // restart the animation if retriggered fast
+    el.classList.add('fw-num-pulse');
+  };
+
+  root.addEventListener('animationend', (e) => {
+    if (e.animationName === 'fwNumPulse') e.target.classList.remove('fw-num-pulse');
+  });
+
+  const obs = new MutationObserver((muts) => {
+    const seen = new Set();
+    for (const mu of muts) {
+      let el = mu.target;
+      if (el && el.nodeType === 3) el = el.parentElement;
+      if (el && el.nodeType === 1 && !seen.has(el) && isNumberDisplay(el)) {
+        seen.add(el);
+        pulse(el);
+      }
+    }
+  });
+  obs.observe(root, { childList: true, characterData: true, subtree: true });
 }
 
 /**

@@ -307,7 +307,9 @@
   color: var(--accent-color, var(--text-secondary));
   padding: 3px 9px;
   border-radius: var(--radius-full);
-  background: color-mix(in oklab, var(--accent-color, var(--bg-muted)) 12%, transparent);
+  /* Lift the chip fill so the section number reads as a real wayfinding marker,
+     not a ghost (was 12% — too faint over the tinted page wash). */
+  background: color-mix(in oklab, var(--accent-color, var(--bg-muted)) 18%, transparent);
 }
 .fw-doc-marker-label {
   font-family: var(--font-mono);
@@ -315,7 +317,9 @@
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--text-muted);
+  /* Eyebrow wayfinding label — was --text-muted (too low-contrast on the page
+     wash). Step up to --text-tertiary so the section name stays legible. */
+  color: var(--text-tertiary);
 }
 
 /* Comfortable reading measure for body content (not full-bleed widgets) */
@@ -2245,6 +2249,18 @@ tr:hover td {
 .mq-fi { background: var(--color-warning-light); }
 .mq-av { background: var(--color-error-light); }
 
+/* Dark mode: the quadrant fills above are status -light tints that stay light
+   in dark mode (so highlight colour still pops). But the quadrant title/sub
+   text inherits the theme ink, which flips to near-white — leaving white-on-
+   pastel and rendering the labels invisible (measured ΔL ≈ 0.01). Pin a fixed
+   warm ink on the text the same way the comparison-table .hi/.lo cells already
+   do. Monoline glyph icons keep their own accent colour. */
+[data-theme="dark"] :is(.matrix-hero, .matrix-mini) .mq,
+[data-theme="dark"] :is(.matrix-hero, .matrix-mini) .mq
+  :is(.mq-label, .mq-sub, .mq-emoji, h3, h4, h5, p, strong, b, span:not([class*="glyph"])) {
+  color: oklch(0.28 0.018 56);
+}
+
 .matrix-hero .y-label,
 .matrix-hero .x-label,
 .matrix-hero .axis-label {
@@ -3842,19 +3858,36 @@ tr:hover td {
    A composed title card: a centred lead-in, the 15-second summary, then the
    hero visual — stacked with breathing room and centred on the stage. */
 .fw-doc.deck-mode .fw-doc-glance { text-align: center; }
-.fw-doc.deck-mode .fw-doc-glance .fw-doc-marker { justify-content: center; margin-bottom: var(--space-4); }
-.fw-doc-glance > * + * { margin-top: var(--space-5); }
+.fw-doc.deck-mode .fw-doc-glance .fw-doc-marker { justify-content: center; margin-bottom: var(--space-5); }
+/* Generous vertical rhythm so the cover reads as a composed title spread that
+   fills the stage, not a small block floating in the centre of it. */
+.fw-doc-glance > * + * { margin-top: var(--space-8); }
+/* The lead is the framework's essence in one line — promote it to a real
+   display headline (the "catching" first read) rather than a quiet caption. */
 .fw-doc-glance .fw-doc-lead {
   font-family: var(--font-display);
-  font-size: clamp(18px, 2vw, var(--text-lg));
-  font-weight: var(--weight-medium);
-  letter-spacing: -0.01em;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.018em;
   line-height: var(--leading-snug);
-  color: var(--text-secondary);
-  max-width: 46ch;
+  color: var(--text-primary);
+  max-width: 28ch;
   text-wrap: balance;
 }
 .fw-doc-glance .fw-doc-tldr { max-width: 620px; }
+
+/* Scale the signature hero up on the cover so a compact diagram (a formula
+   pill, a small loop) still anchors the spread the way a tall 2×2 matrix does
+   — the cover should feel deliberately centred, never sparse. (The lead keeps
+   its own tighter headline measure, set above.) */
+.fw-doc-glance > :not(.fw-doc-marker):not(.fw-doc-lead) { max-width: 720px; }
+.fw-doc-glance .formula-bar {
+  max-width: 100%;
+  padding: var(--space-6) clamp(var(--space-5), 5vw, var(--space-10));
+  margin-block: 0;
+}
+.fw-doc-glance .formula-bar .fl { font-size: clamp(40px, 6vw, 60px); }
+.fw-doc-glance .formula-bar .fop { font-size: clamp(24px, 3.5vw, 38px); }
 .fw-doc-glance .fw-doc-tldr :is(.one-liner, .tldr-section, .tldr) { text-align: left; }
 
 /* Inactive panels can't catch focus/scroll while parked off-stage. */
@@ -3998,4 +4031,91 @@ tr:hover td {
   .fw-deck-bar-fill,
   .fw-deck-btn-ic { transition: none; }
   .fw-doc.deck-mode .fw-doc-section.is-active { animation: none; }
+}
+
+/* ============================================
+   LIVE-NUMBER FEEDBACK  (.fw-num-pulse)
+   A computed value (calculator score, factor echo, running total) briefly
+   lifts and flashes the category accent the moment it changes — the rare,
+   meaningful "the system heard you" confirmation. Driven by observeLiveNumbers
+   in framework.js, which adds the class on a real value change and removes it
+   on animationend. Colour returns to the element's own ink at the end (the
+   keyframe animates back to `inherit`), so nothing is left overridden.
+   ============================================ */
+@keyframes fwNumPulse {
+  0%   { transform: scale(1);    color: inherit; }
+  30%  { transform: scale(1.07); color: var(--accent-color, var(--color-action)); }
+  100% { transform: scale(1);    color: inherit; }
+}
+.fw-num-pulse {
+  animation: fwNumPulse 280ms var(--ease-out);
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ============================================
+   DECK CARD RHYTHM + STAGGER
+   In the deck, compact the repeating card grids a touch so common 2×2 layouts
+   (4 factors, use/skip, quadrants) fit one stage without a second scroll, and
+   fade their cards in as a gentle cascade when the panel arrives. The fade is
+   opacity-only so it never fights the section's own translate-in entrance, and
+   page-turns are occasional enough to earn a standard entrance animation.
+   ============================================ */
+.fw-doc.deck-mode :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) {
+  gap: var(--space-3);
+}
+.fw-doc.deck-mode :is(.factor-card, .when-card, .quad-card) {
+  padding: var(--space-4);
+}
+
+@keyframes deckCardFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fw-doc.deck-mode .fw-doc-section.is-active
+  :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > * {
+  animation: deckCardFade 360ms var(--ease-out) both;
+}
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(1) { animation-delay: 40ms; }
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(2) { animation-delay: 90ms; }
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(3) { animation-delay: 140ms; }
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(4) { animation-delay: 190ms; }
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(5) { animation-delay: 240ms; }
+.fw-doc.deck-mode .fw-doc-section.is-active :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > *:nth-child(n+6) { animation-delay: 280ms; }
+
+/* ---- Compact card variant (dense 2×2 grids in the deck) ----
+   The content-rich 4-factor and quadrant grids are the tallest content panels.
+   In the deck they take a denser layout — smaller index tile, tighter heading
+   and chip rhythm, snug line-height — so the full 2×2 fits one stage at common
+   viewport heights WITHOUT hiding any text (descriptions stay full, just
+   set tighter). The body copy holds a legible floor; only chrome is compressed. */
+.fw-doc.deck-mode :is(.factor-grid, .quad-grid) { gap: var(--space-2); }
+.fw-doc.deck-mode :is(.factor-card, .quad-card) { padding: 10px var(--space-4); }
+.fw-doc.deck-mode .factor-card .fc-head { gap: var(--space-2); margin-bottom: var(--space-2); }
+.fw-doc.deck-mode .factor-card .fc-letter,
+.fw-doc.deck-mode .quad-card .qc-icon {
+  width: 34px; height: 34px; min-width: 34px; font-size: 16px;
+}
+.fw-doc.deck-mode :is(.factor-card, .quad-card) :is(h3, h4) { font-size: var(--text-md); }
+.fw-doc.deck-mode .factor-card .fc-q { font-size: var(--text-sm); margin-bottom: var(--space-1); }
+/* Body copy steps to the secondary size with a snug measure — still a legible
+   reading floor, but a long description folds to ~2 lines instead of ~4 so the
+   full 2×2 clears the stage. */
+.fw-doc.deck-mode :is(.factor-card, .quad-card) p { font-size: var(--text-sm); line-height: var(--leading-snug); }
+.fw-doc.deck-mode .factor-card .fc-unit { margin-top: var(--space-2); padding: 4px var(--space-3); }
+.fw-doc.deck-mode .factor-card .fc-role { margin-top: var(--space-1); }
+.fw-doc.deck-mode .quad-card .qc-head { margin-bottom: var(--space-2); }
+.fw-doc.deck-mode .quad-card .qc-tag { margin-bottom: var(--space-1); }
+.fw-doc.deck-mode .quad-card .qc-action { margin-top: var(--space-2); }
+/* Trim the section chrome on these panels so the recovered room goes to the
+   grid: tighter section padding, eyebrow gap, and a slightly smaller heading. */
+.fw-doc.deck-mode .fw-doc-section:has(.factor-grid, .quad-grid) { padding-top: var(--space-1); padding-bottom: var(--space-2); }
+.fw-doc.deck-mode .fw-doc-section:has(.factor-grid, .quad-grid) .fw-doc-marker { margin-bottom: var(--space-2); }
+.fw-doc.deck-mode .fw-doc-section:has(.factor-grid, .quad-grid) .sec-title { margin-bottom: var(--space-3); }
+.fw-doc.deck-mode .fw-doc-section:has(.factor-grid, .quad-grid) .sec-title :is(h2, h3) { font-size: var(--text-xl); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-num-pulse { animation: none; }
+  .fw-doc.deck-mode .fw-doc-section.is-active
+    :is(.factor-grid, .when-grid, .quad-grid, .grid-2, .grid-3) > * { animation: none; }
 }
