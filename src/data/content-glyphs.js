@@ -220,6 +220,45 @@ const B = {
   rails:
     '<path d="M6.5 3 4.5 21"/><path d="M17.5 3 19.5 21"/>' +
     '<path d="M5.2 8.5h13.6"/><path d="M4.8 13h14.4"/><path d="M4.4 17.5h15.2"/>',
+  waves:
+    '<path d="M3 8.5c1.6-2 3.2-2 4.8 0s3.2 2 4.8 0 3.2-2 4.8 0"/>' +
+    '<path d="M3 13c1.6-2 3.2-2 4.8 0s3.2 2 4.8 0 3.2-2 4.8 0"/>' +
+    '<path d="M3 17.5c1.6-2 3.2-2 4.8 0s3.2 2 4.8 0 3.2-2 4.8 0"/>',
+  skull:
+    '<path d="M12 3.4a7 7 0 0 0-4 12.9V19a1.5 1.5 0 0 0 1.5 1.5h5A1.5 1.5 0 0 0 16 19v-2.7A7 7 0 0 0 12 3.4z"/>' +
+    '<circle cx="9.3" cy="11.2" r="1.4"/><circle cx="14.7" cy="11.2" r="1.4"/>' +
+    '<path d="M12 14v2.2"/>',
+  crown:
+    '<path d="M4.5 17.5 3.4 7l4.6 3.6L12 4.4l4 6.2L20.6 7l-1.1 10.5z"/>' +
+    '<path d="M4.9 20.2h14.2"/>',
+  laptop:
+    '<rect x="5" y="5" width="14" height="9.5" rx="1.5"/>' +
+    '<path d="M3 18.5h18l-1.4-3.2H4.4z"/>',
+  zzz:
+    '<path d="M6.5 7.5h4.6l-4.6 5.5h4.6"/><path d="M13 11.5h4l-4 5h4"/>',
+  inbox:
+    '<path d="M4 13 6.4 5.6h11.2L20 13v4.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.4z"/>' +
+    '<path d="M4 13h4.5l1.4 2.4h4.2L15.5 13H20"/>',
+  muscle:
+    '<path d="M5 9.6c2.5-.8 3.9-2.4 5.9-2.4 1.7 0 2.7 1.1 2.7 2.9v1.1h3.2a3 3 0 0 1 3 3v3.7H8.3v-1.9a4.2 4.2 0 0 0-3.3-4.1z"/>' +
+    '<path d="M5 9.6V16"/>',
+  drop: '<path d="M12 4.2s5.8 6.6 5.8 10.6a5.8 5.8 0 0 1-11.6 0C6.2 10.8 12 4.2 12 4.2z"/>',
+  door:
+    '<rect x="6" y="3.5" width="12" height="16.8" rx="1.2"/><path d="M5 20.5h14"/>' +
+    '<circle cx="14.7" cy="12" r="0.95" fill="currentColor" stroke="none"/>',
+  gamepad:
+    '<path d="M8 8h8a5 5 0 0 1 5 5 3.4 3.4 0 0 1-6 2.1l-.7-.8H9.7l-.7.8A3.4 3.4 0 0 1 3 13a5 5 0 0 1 5-5z"/>' +
+    '<path d="M7 11.4v3"/><path d="M5.5 12.9h3"/>' +
+    '<circle cx="15.4" cy="12" r="1" fill="currentColor" stroke="none"/>' +
+    '<circle cx="17.4" cy="14" r="1" fill="currentColor" stroke="none"/>',
+  skip: '<path d="M6 6l9 6-9 6z"/><path d="M16.6 6v12"/>',
+  factory:
+    '<path d="M3.5 20.5V11l5 3.2V11l5 3.2V8l5 3.2v8.3z"/><path d="M3.5 20.5h17"/>' +
+    '<path d="M6 17h2"/><path d="M11 17h2"/><path d="M16 17h2"/>',
+  block: '<rect x="5" y="6.5" width="14" height="11" rx="2"/><path d="M5 10.5h14"/>',
+  think:
+    '<path d="M9.2 9.3a2.9 2.9 0 1 1 4.2 2.6c-1 .5-1.4 1.1-1.4 2.1"/>' +
+    '<circle cx="12" cy="17.2" r="0.95" fill="currentColor" stroke="none"/>',
 };
 
 /* ---- Decorative emoji → concept body. Inherits ink inline; accent when an
@@ -260,6 +299,13 @@ const DECOR = {
   '🎰': B.dice, '🎲': B.dice, '⚔': B.swords, '🛡️': B.shield, '🦴': B.spine,
   '📢': B.announce, '📣': B.announce, '🔊': B.announce, '🔉': B.announce,
   '🔈': B.announce, '🗣': B.announce,
+  // Round 2 — entity-encoded emoji the literal-char audits missed.
+  '🌊': B.waves, '🌊️': B.waves, '🏴': B.flag, '🏴‍☠️': B.flag, '☠': B.skull, '💀': B.skull,
+  '↩': B.cycle, '↪': B.cycle, '👑': B.crown, '💻': B.laptop, '🖥': B.laptop,
+  '🧈': B.block, '📦': B.block, '💤': B.zzz, '📥': B.inbox, '📤': B.inbox,
+  '💸': B.coin, '🔬': B.search, '📏': B.ruler, '💪': B.muscle, '💧': B.drop, '💦': B.drop,
+  '🏭': B.factory, '🚪': B.door, '🎮': B.gamepad, '🕹': B.gamepad, '🤔': B.think,
+  '⏭': B.skip, '⏮': B.skip, '⏯': B.skip,
   // Emoji-PRESENTATION block arrows (render as colour emoji) → monoline arrows.
   // The plain TEXT arrows (→ ← ↑ ↓, U+2190–2193) are deliberately left as text.
   '➡': B.arrowR, '⮕': B.arrowR, '▶': B.arrowR, '⏩': B.arrowR,
