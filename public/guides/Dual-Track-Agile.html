@@ -1,0 +1,738 @@
+<article class="guide" data-guide="dual-track">
+
+  <header class="guide-intro">
+    <p class="lede">Dual-track agile runs discovery and delivery side by side in the same team: discovery tests ideas cheaply to find out what is worth building, and delivery builds and ships what discovery has de-risked. It keeps a team from spending engineering time on ideas nobody has checked.</p>
+
+    <figure class="figure" data-hero>
+      <div class="dta-tracks">
+        <div class="dta-lane" data-series="3">
+          <div class="dta-lane-head">
+            <p class="dta-lane-name"><span class="key-dot" aria-hidden="true"></span>Discovery</p>
+            <p class="dta-lane-q">Should we build this?</p>
+          </div>
+          <ol class="dta-stages" aria-label="Discovery activities">
+            <li>Interview users</li>
+            <li>Prototype</li>
+            <li>Usability test</li>
+            <li class="dta-stage-end">Ready to build</li>
+          </ol>
+        </div>
+
+        <div class="dta-link">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+          <p>An idea crosses into delivery when the evidence is in, not on a fixed schedule</p>
+        </div>
+
+        <div class="dta-lane" data-series="4">
+          <div class="dta-lane-head">
+            <p class="dta-lane-name"><span class="key-dot" aria-hidden="true"></span>Delivery</p>
+            <p class="dta-lane-q">Can we ship it reliably?</p>
+          </div>
+          <ol class="dta-stages" aria-label="Delivery activities">
+            <li>Plan the Sprint</li>
+            <li>Build</li>
+            <li>Test and QA</li>
+            <li class="dta-stage-end">Ship</li>
+          </ol>
+        </div>
+
+        <div class="dta-link">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+          <p>Back to discovery: what ships is measured with real users, and the results raise the next questions</p>
+        </div>
+
+        <p class="dta-team">One team, every week: the product manager, designer and tech lead run discovery, and everyone builds and ships.</p>
+      </div>
+      <figcaption>Both tracks run all the time in one team, and ideas move between them when they are ready</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Every week, the product trio of product manager, designer and tech lead runs small experiments on upcoming ideas while the whole team builds and ships ideas that have already been tested. An idea moves into delivery when evidence answers its value, usability, feasibility and viability risks, not after a fixed lag. Less engineering time goes into ideas that do not work.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Learning and building at the same time</h2>
+      <p class="chapter-dek">Running discovery and delivery in sequence is what turns a team into a feature factory</p>
+    </header>
+
+    <p>In many teams, the Product Owner writes stories, engineers build them, and nobody checks whether users need them. The result is a <dfn>feature factory</dfn>: a team that ships feature after feature without moving the metrics those features were meant to move.</p>
+    <p>The root cause is that <strong>discovery and delivery happen in sequence</strong>. First the team researches for weeks, then it builds for weeks, then it learns the idea was wrong. Dual-track agile runs the two kinds of work in parallel instead.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Single track</p>
+        <p>Research, then wait. Write the spec, then wait. Build, then wait. Ship, and only then learn the idea was wrong. Months pass before the team finds out.</p>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Dual-track</p>
+        <p>The team tests its next ideas while it builds the ones it has already tested. By the time an idea reaches engineering, its biggest risks are already smaller, and ideas that fail have cost days of testing rather than Sprints of building.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Not a relay between two teams</p>
+      <p>Discovery is not a separate group passing work across a wall, and it does not run a fixed number of Sprints ahead. The people who test an idea are the people who build it, and they move between both kinds of work during the week.</p>
+    </div>
+
+    <p>Desirée Sy described parallel design and development tracks at Autodesk in 2007, with designers working a cycle ahead of developers. Jeff Patton and Marty Cagan later popularized the name “dual-track” and stressed that the two tracks are continuous and run by one team. That later version is the one this guide teaches.</p>
+    <p>Dual-track agile is not a delivery method of its own. A team keeps the way it already delivers, Scrum Sprints or Shape Up cycles, and adds continuous discovery alongside it, done by the same people.</p>
+  </section>
+
+  <section class="chapter" id="tracks" data-nav="The tracks">
+    <header class="chapter-head">
+      <h2>What each track does</h2>
+      <p class="chapter-dek">Discovery decides what is worth building; delivery builds it well</p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="table table--compare">
+        <caption>The discovery and delivery tracks compared</caption>
+        <thead>
+          <tr><th scope="col">Aspect</th><th scope="col">Discovery</th><th scope="col">Delivery</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Question</th><td>Should we build this?</td><td>Can we build and ship it reliably?</td></tr>
+          <tr><th scope="row">Who</th><td>The product trio: product manager, designer and tech lead. Other engineers join as needed.</td><td>The whole team: engineers, designer and QA, with the product manager</td></tr>
+          <tr><th scope="row">Goal</th><td>Answer the four risks before building: is it valuable, usable, feasible and viable?</td><td>Build, test and ship de-risked items reliably</td></tr>
+          <tr><th scope="row">Cadence</th><td>Continuous, with several experiments a week. Fast, cheap and disposable.</td><td>Whatever the team already uses: Scrum Sprints of one month or less (Larkwell’s are two weeks), Shape Up cycles, or continuous flow</td></tr>
+          <tr><th scope="row">Takes in</th><td>Ideas, open questions and results from what has already shipped</td><td>Ideas that discovery has de-risked</td></tr>
+          <tr><th scope="row">Produces</th><td>Evidence, and backlog items ready to build</td><td>Working product in users’ hands, and data from real use</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">When an idea crosses over</p>
+      <p>An idea moves into delivery when experiments have answered its four risks well enough to bet on it. It is not a handoff: the tech lead who ran the feasibility spike is in the room when the team plans the build. Keep only a small stock of ready items, enough that delivery always has work but not so much that the evidence goes stale before anyone builds it.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="discovery" data-nav="Discovery">
+    <header class="chapter-head">
+      <h2>Four risks, tested in hours or days</h2>
+      <p class="chapter-dek">Find the riskiest question about an idea and answer it with the cheapest test</p>
+    </header>
+
+    <p>Marty Cagan groups everything that can go wrong with a product idea into four risks. Discovery exists to reduce them before delivery spends real effort. Start with the risk that worries you most.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card" data-risk="value">
+        <span class="card-key" data-series="1">V</span>
+        <h3 class="card-title">Value risk</h3>
+        <p class="card-q">Will users want this?</p>
+        <p>Whether customers will choose it, use it or pay for it.</p>
+        <p class="card-meta" data-risk-tests>Ways to test: user interviews, fake door tests or a landing page MVP</p>
+      </div>
+      <div class="card" data-risk="usability">
+        <span class="card-key" data-series="2">U</span>
+        <h3 class="card-title">Usability risk</h3>
+        <p class="card-q">Can users figure it out?</p>
+        <p>Whether people can work out how to use it without help.</p>
+        <p class="card-meta" data-risk-tests>Ways to test: prototype usability tests with about 5 users, or a Wizard of Oz test</p>
+      </div>
+      <div class="card" data-risk="feasibility">
+        <span class="card-key" data-series="5">F</span>
+        <h3 class="card-title">Feasibility risk</h3>
+        <p class="card-q">Can we build this?</p>
+        <p>Whether the team can build it with the time, skills and technology it has.</p>
+        <p class="card-meta" data-risk-tests>Ways to test: a technical spike of 1–2 days on the hard part, or an architecture review</p>
+      </div>
+      <div class="card" data-risk="viability">
+        <span class="card-key" data-series="6">B</span>
+        <h3 class="card-title">Business viability risk</h3>
+        <p class="card-q">Does it work for the business?</p>
+        <p>Whether it fits the business model, the law, sales, support and the company’s budget.</p>
+        <p class="card-meta" data-risk-tests>Ways to test: a stakeholder review, a legal check or a look at the unit economics</p>
+      </div>
+    </div>
+
+    <h3>Write the idea as a hypothesis</h3>
+    <p>A hypothesis says who will do what, and why. The “because” is what makes it testable: the experiment checks whether the reason holds.</p>
+    <p class="formula" role="img" aria-label="Hypothesis template: we believe a user type will take an action because of a reason">
+      <span class="formula-term"><span class="op">We believe</span><var>user type</var></span>
+      <span class="formula-term"><span class="op">will</span><var>action</var></span>
+      <span class="formula-term"><span class="op">because</span><var>reason</var></span>
+    </p>
+
+    <h3>Keep each experiment small</h3>
+    <p>Each experiment should take <strong>hours to days, not weeks</strong>. A rough prototype tested with a handful of users often shows whether an idea works before any engineering starts. Testing with about 5 users is a common rule of thumb for finding most usability problems in one round of testing (Jakob Nielsen and Tom Landauer, 1993; Nielsen, 2000). It applies to usability problems, not to every question discovery asks.</p>
+
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Typical time for common discovery experiments</caption>
+        <thead>
+          <tr><th scope="col">Experiment</th><th scope="col">Mainly tests</th><th scope="col">Typical time</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Fake door test</th><td>Value</td><td>2–3 hours to set up, a few days of traffic</td></tr>
+          <tr><th scope="row">User interview</th><td>Value</td><td>1 hour</td></tr>
+          <tr><th scope="row">Usability test</th><td>Usability</td><td>1 day</td></tr>
+          <tr><th scope="row">Clickable prototype</th><td>Usability</td><td>1–2 days</td></tr>
+          <tr><th scope="row">Technical spike</th><td>Feasibility</td><td>1–2 days</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Enough evidence to bet, not certainty</p>
+      <p>You do not need to remove all risk, only enough to make a confident bet. If usability was the open risk and 4 of 5 users complete the task in your prototype, that is enough to build it, measure it and iterate. Discovery reduces risk; delivery confirms the result at scale.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Larkwell tests Play Along while it ships onboarding</h2>
+      <p class="chapter-dek">Two Sprints in which one team runs discovery and delivery side by side</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>The Onboarding team in Sprints 15 and 16</h3>
+      <p>Larkwell, a fictional piano-learning app, has an Onboarding team that works in 2-week Sprints. All figures are illustrative. In Sprints 15 and 16 the team built and shipped its redesigned onboarding, cut from 7 steps to 3, and finished the inline microphone and keyboard check carried over from Sprint 14. In the same two Sprints the trio ran discovery on the next idea, Play Along: should early lessons let learners play along with a backing track?</p>
+
+      <div class="table-wrap">
+        <table class="table table--stack">
+          <caption>What the Onboarding team did on each track, Sprint by Sprint</caption>
+          <thead>
+            <tr><th scope="col">When</th><th scope="col">Discovery: Play Along</th><th scope="col">Delivery: the new onboarding</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Sprint 15, week 1</th>
+              <td><p>Interviewed 8 learners: 6 of 8 want to play “with someone”, but the phrase means two things: live with a friend, or along with a recording.</p><p>The tech lead ran a feasibility spike: live two-person sync would take 6 months or more, a backing-track version 3–4 weeks.</p></td>
+              <td>Building the redesigned 3-step onboarding</td>
+            </tr>
+            <tr>
+              <th scope="row">Sprint 15, week 2</th>
+              <td>Tested a clickable prototype of the backing-track version with 5 learners, against a pass mark set beforehand of 4 of 5 completing the flow: 4 of 5 completed it. The sync button confused people, so the designer redesigned it.</td>
+              <td>Finishing the inline microphone and keyboard check carried over from Sprint 14</td>
+            </tr>
+            <tr>
+              <th scope="row">Sprint 16</th>
+              <td>Decision: the backing-track version goes into the Product Backlog for a later Sprint, and live sync is dropped. The trio moves on to its next question.</td>
+              <td>Shipped the 3-step onboarding as an A/B test against the old 7-step flow, and the inline microphone and keyboard check to all new users</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-reading">
+        <h4>What the two tracks show</h4>
+        <p><strong>One team did both.</strong> The tech lead’s spike was discovery work, done by someone who was building the onboarding flow that same week.</p>
+        <p><strong>Discovery shrank the idea before anyone built it.</strong> The interviews and the spike turned a vague request into a version the team can build in 3–4 weeks, and dropped one that would have taken 6 months or more.</p>
+        <p><strong>Ideas cross over when the evidence is in.</strong> Play Along joins the Product Backlog because its tests passed, not because a Sprint was fixed for it in advance. How long an idea waits before the build depends on the idea and on what else is ready; there is no set gap.</p>
+        <p><strong>Delivery still checks the result at scale.</strong> The new onboarding ships as an A/B test, because a prototype test with 5 people cannot show the effect on activation, which stands at 45% of new accounts against a target of 55%.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Plan a discovery experiment</h2>
+      <p class="chapter-dek">Name the hypothesis, the biggest risk, the test and what counts as passing</p>
+    </header>
+
+    <div class="tool" data-tool="discovery-planner">
+      <div class="tool-head">
+        <h3 class="tool-title">Discovery planner</h3>
+        <p class="tool-hint">Fill in at least the hypothesis and the biggest risk, then review the plan. The checks update as you edit.</p>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="dtp-hyp">Hypothesis</label>
+          <input id="dtp-hyp" type="text" autocomplete="off" placeholder="We believe [user type] will [action] because [reason]" aria-describedby="dtp-hyp-help">
+          <p class="field-help" id="dtp-hyp-help">Who will do what, and why</p>
+        </div>
+        <div class="field">
+          <label for="dtp-risk">Biggest risk</label>
+          <select id="dtp-risk" aria-describedby="dtp-risk-help">
+            <option value="">Choose the biggest risk</option>
+            <option value="value">Value: will users want this?</option>
+            <option value="usability">Usability: can users figure it out?</option>
+            <option value="feasibility">Feasibility: can we build this?</option>
+            <option value="viability">Business viability: does it work for the business?</option>
+          </select>
+          <p class="field-help" id="dtp-risk-help">The one that would hurt most if you were wrong</p>
+        </div>
+        <div class="field">
+          <label for="dtp-exp">Experiment</label>
+          <input id="dtp-exp" type="text" autocomplete="off" placeholder="e.g. Prototype usability test with 5 users" aria-describedby="dtp-exp-help">
+          <p class="field-help" id="dtp-exp-help">The cheapest, fastest test that answers the risk</p>
+        </div>
+        <div class="field">
+          <label for="dtp-crit">Success criteria</label>
+          <input id="dtp-crit" type="text" autocomplete="off" placeholder="e.g. 4 of 5 users complete the task in under 2 minutes" aria-describedby="dtp-crit-help">
+          <p class="field-help" id="dtp-crit-help">The result that means “build it”, decided before the test</p>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="dtp-review">Review my plan</button>
+        <button type="button" class="btn" id="dtp-sample">Use the Play Along example</button>
+        <button type="button" class="btn" id="dtp-clear">Clear</button>
+      </div>
+
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Plan status</p>
+        <output class="tool-result" id="dtp-result" for="dtp-hyp dtp-risk dtp-exp dtp-crit">Not reviewed yet</output>
+        <p class="tool-output-note" id="dtp-note">Write a hypothesis and choose a risk to begin.</p>
+        <ul class="checks" id="dtp-checks"></ul>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>Before building anything, I’d run a quick discovery cycle: define the hypothesis, identify the biggest risk, run the cheapest experiment that answers it, and build it only if the result meets the success criteria we set in advance. Meanwhile the team keeps shipping work we have already tested.</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When dual-track agile fits, and when it does not</h2>
+      <p class="chapter-dek">It pays off when building the wrong thing is expensive and users are easy to reach</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>The product manager, designer and tech lead have time for discovery every week</li>
+          <li>Uncertainty is high and building the wrong thing is costly</li>
+          <li>You want to stop being a feature factory</li>
+          <li>The team is mature enough to run two kinds of work in parallel</li>
+          <li>You can reach users for testing easily, as with most consumer products</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>The team is so small that the product manager also does delivery work</li>
+          <li>The requirements are clear and already validated</li>
+          <li>The product is in a maintenance or bug-fix phase. A flow-based method such as Kanban (not covered in this guide) suits that better.</li>
+          <li>You have no access to users to test with</li>
+          <li>The team cannot take on the load of two tracks at once</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>To compare dual-track agile with Scrum, Shape Up and OKRs, see <a data-guide-link="compare-execution">Choosing an execution framework</a>.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Five ways dual-track goes wrong</h2>
+      <p class="chapter-dek">Most of them turn the two tracks back into a sequence</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Discovery as a handoff</h3>
+        <p>A discovery group that passes a “validated backlog” to a separate delivery group recreates a small waterfall. Context is lost at the handoff, and the builders never saw the evidence. Jeff Patton calls this “duel track” rather than dual-track.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> have the same team work both tracks every week.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Leaving engineers out of discovery</h3>
+        <p>Without the tech lead, feasibility risks surface only once delivery has started, when they are expensive to fix.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> run discovery as a product trio, with the tech lead as a full member.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Tests that never fail</h3>
+        <p>Discovery that never kills an idea is confirming, not testing. Without criteria set in advance, any result can be explained as a success.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write down before each test what result would stop the idea.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Testing only usability</h3>
+        <p>A prototype that users can operate can still be something nobody wants, or something the business cannot support.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> list each idea’s value, usability, feasibility and viability risks and test the riskiest first.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Big-batch discovery</h3>
+        <p>Weeks of research before the first test delay learning, and the team ends up back in a single track.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> keep each experiment to hours or days.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Nine questions on the two tracks, the four risks and running discovery</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What problem does dual-track agile solve?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Slow deployment pipelines that delay every release</button></li>
+          <li><button type="button">Too many bugs reaching production after each Sprint</button></li>
+          <li><button type="button">Discovery and delivery run one after the other</button></li>
+          <li><button type="button">Sprints that do not have enough planning events</button></li>
+        </ul>
+        <div class="quiz-why"><p>Run in sequence, a team either researches while engineers wait or builds without research. Running both tracks continuously de-risks future work while current work ships.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Which four risks does discovery test?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Value, usability, feasibility and business viability</button></li>
+          <li><button type="button">Cost, timeline, quality and scope of the project</button></li>
+          <li><button type="button">Acquisition, activation, retention and referral</button></li>
+          <li><button type="button">Reach, impact, confidence and effort for each idea</button></li>
+        </ul>
+        <div class="quiz-why"><p>These are Marty Cagan’s four product risks: will users want it, can they use it, can we build it, and does it work for the business. Address the biggest one first.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">How far ahead of delivery should discovery run?</p>
+        <ul class="quiz-options">
+          <li><button type="button">3–6 months, so the roadmap is settled in advance</button></li>
+          <li><button type="button">Exactly one Sprint, building what the last one tested</button></li>
+          <li><button type="button">Not at all: both tracks always work on the same item</button></li>
+          <li><button type="button">No fixed distance: ideas cross when they are ready</button></li>
+        </ul>
+        <div class="quiz-why"><p>Dual-track is two continuous kinds of work in one team, not a schedule. Fixing a set gap as a rule turns discovery into a handoff. Keep a small stock of ready items so delivery has work and the evidence stays fresh.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">When is an idea ready to move into delivery?</p>
+        <ul class="quiz-options">
+          <li><button type="button">When the team has estimated it in story points</button></li>
+          <li><button type="button">When experiments have answered its four risks</button></li>
+          <li><button type="button">When a senior stakeholder has signed off on it</button></li>
+          <li><button type="button">When it has a ticket in the backlog tool</button></li>
+        </ul>
+        <div class="quiz-why"><p>Readiness comes from evidence that the idea is valuable, usable, feasible and viable, well enough to bet on, not from estimates, approval or paperwork.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A product manager skips discovery and sends ideas straight to engineering. What is the likely result?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Faster learning, because building is the most realistic test</button></li>
+          <li><button type="button">Little change, because experienced product managers usually guess right</button></li>
+          <li><button type="button">A feature factory: features ship, but many do not move their metrics</button></li>
+          <li><button type="button">Engineers push back, and the ideas improve during the Sprint</button></li>
+        </ul>
+        <div class="quiz-why"><p>Many ideas do not move the metric they were meant to move, so testing an idea cheaply before building it saves engineering time. Building is a realistic test, but it is the most expensive one, and experience does not replace evidence.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A trio’s discovery has approved every idea it tested this quarter. What is the most likely problem?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Its tests had no pass or fail criteria set in advance</button></li>
+          <li><button type="button">It ran too many experiments for a single quarter</button></li>
+          <li><button type="button">Its experiments were too short to give reliable answers</button></li>
+          <li><button type="button">Delivery shipped too slowly to feed results back to it</button></li>
+        </ul>
+        <div class="quiz-why"><p>Discovery that never kills an idea is confirming, not testing. Without a result written down before each test that would stop the idea, any outcome can be read as a success. Short, frequent experiments are what discovery is meant to run.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A prototype test meets its criteria: 4 of 5 learners complete the flow, and the tech lead’s spike puts the build at 3–4 weeks. What should happen next?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Keep testing until all 5 learners complete the flow</button></li>
+          <li><button type="button">Wait a fixed two Sprints, then hand the spec to delivery</button></li>
+          <li><button type="button">Add it to the backlog and measure it with real users</button></li>
+          <li><button type="button">Pass a validated spec to a separate delivery team</button></li>
+        </ul>
+        <div class="quiz-why"><p>Discovery needs enough evidence to bet, not certainty. Once the criteria set in advance are met, the idea goes into the Product Backlog, and the same team builds it and measures the result at scale. A fixed waiting period or a handoff to another team turns the two tracks back into a sequence.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Who leads discovery in dual-track agile?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The product manager alone, who then briefs the designer</button></li>
+          <li><button type="button">The product trio: product manager, designer and tech lead</button></li>
+          <li><button type="button">A separate research team that hands results to delivery</button></li>
+          <li><button type="button">The designer, with engineers joining once an idea is validated</button></li>
+        </ul>
+        <div class="quiz-why"><p>The tech lead is a full member of discovery, so feasibility is tested early. Other engineers join as needed, and the people who learned from the tests also build the result.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">How does dual-track agile relate to Scrum?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Dual-track replaces Scrum entirely, Sprints included</button></li>
+          <li><button type="button">They compete, so a team has to pick one or the other</button></li>
+          <li><button type="button">Dual-track works only with continuous flow, not Sprints</button></li>
+          <li><button type="button">Scrum can run delivery, with discovery alongside it</button></li>
+        </ul>
+        <div class="quiz-why"><p>Scrum provides a way to deliver; dual-track adds continuous discovery next to it, worked by the same people. The two are complementary.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the two tracks, the crossing and the return of results */
+  .guide[data-guide="dual-track"] .dta-tracks { display: grid; gap: var(--s-3); }
+  .guide[data-guide="dual-track"] .dta-lane {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: var(--s-4);
+    align-items: center;
+    padding: var(--s-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="dual-track"] .dta-lane-head { display: grid; gap: 2px; }
+  .guide[data-guide="dual-track"] .dta-lane-name {
+    font-family:var(--font-serif);
+    font-size: var(--fs-20);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="dual-track"] .dta-lane-q {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  /* Stages read as a sequence, not as controls: plain text, order shown by a chevron (wide) or a step number (two columns) */
+  .guide[data-guide="dual-track"] .dta-stages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-2) var(--s-6);
+    counter-reset: dta-step;
+  }
+  .guide[data-guide="dual-track"] .dta-stages > li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--s-1) 0;
+    counter-increment: dta-step;
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="dual-track"] .dta-stages > .dta-stage-end {
+    color: var(--series-ink);
+    font-weight: var(--w-semibold);
+  }
+  @media (min-width: 761px) {
+    .guide[data-guide="dual-track"] .dta-stages > li + li::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: calc(var(--s-6) / -2 - 4px);
+      width: 6px;
+      height: 6px;
+      border-top: 1.5px solid var(--ink-3);
+      border-right: 1.5px solid var(--ink-3);
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+  .guide[data-guide="dual-track"] .dta-link {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: 0 var(--s-4);
+  }
+  .guide[data-guide="dual-track"] .dta-link svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--cat-ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .guide[data-guide="dual-track"] .dta-link p {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="dual-track"] .dta-team {
+    padding: var(--s-3) var(--s-4);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--r-md);
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  /* Discovery planner: the shared checks list stays out of the way until the first review */
+  .guide[data-guide="dual-track"] .checks:empty { display: none; }
+
+  /* With the contents rail beside it (1001–1080px), the lane name moves above the stages so each stage keeps its width */
+  @media (min-width: 1001px) and (max-width: 1080px) {
+    .guide[data-guide="dual-track"] .dta-lane { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+  }
+  @media (max-width: 760px) {
+    .guide[data-guide="dual-track"] .dta-lane { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+    .guide[data-guide="dual-track"] .dta-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-4); }
+    .guide[data-guide="dual-track"] .dta-stages > li::before {
+      content: counter(dta-step);
+      flex: none;
+      min-width: 1.25em;
+      color: var(--ink-3);
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+    }
+    .guide[data-guide="dual-track"] .dta-link { padding: 0 var(--s-2); }
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="discovery-planner"]');
+  const doc = root.ownerDocument;
+  const hyp = tool.querySelector('#dtp-hyp');
+  const risk = tool.querySelector('#dtp-risk');
+  const exp = tool.querySelector('#dtp-exp');
+  const crit = tool.querySelector('#dtp-crit');
+  const hypHelp = tool.querySelector('#dtp-hyp-help');
+  const riskHelp = tool.querySelector('#dtp-risk-help');
+  const result = tool.querySelector('#dtp-result');
+  const note = tool.querySelector('#dtp-note');
+  const checksList = tool.querySelector('#dtp-checks');
+
+  const HELP = { hyp: hypHelp.textContent, risk: riskHelp.textContent };
+
+  // The recommended experiments come from the four risk cards, so the two never disagree.
+  const METHODS = {};
+  root.querySelectorAll('[data-risk]').forEach(card => {
+    const tests = card.querySelector('[data-risk-tests]');
+    const name = card.querySelector('.card-title');
+    if (tests && name) METHODS[card.dataset.risk] = { name: name.textContent.trim(), tests: tests.textContent.trim().replace(/^Ways to test:\s*/, '') };
+  });
+
+  const SAMPLE = {
+    hyp: 'We believe adult beginners will finish a play-along session without help because the redesigned sync button shows when the backing track will start',
+    risk: 'usability',
+    exp: 'Clickable prototype with the redesigned sync button, tested with 5 learners',
+    crit: '4 of 5 learners finish the play-along flow without help',
+  };
+
+  let reviewed = false;
+  const value = (el) => el.value.trim();
+  // A criterion is countable when it names a ratio, a percentage, a count of something or a threshold.
+  const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  const NUM = `(?:\\d+(?:[.,]\\d+)?|${WORDS.join('|')})`;
+  const COUNTABLE = new RegExp([
+    `\\b${NUM}\\s*(?:of|out of|in)\\s*${NUM}\\b`,
+    '\\d\\s*(?:%|percent\\b)',
+    `\\b${NUM}\\s*(?:users?|learners?|people|customers?|participants?|visitors?|sign-?ups?|clicks?|seconds?|minutes?|hours?|days?)\\b`,
+    `\\b(?:under|over|at least|at most|more than|fewer than|less than|above|below)\\s+${NUM}\\b`,
+  ].join('|'), 'i');
+  const hasNumber = (text) => COUNTABLE.test(text);
+
+  // Long means a duration past a working week: more than 5 days, 2 or more weeks, or any number of Sprints, months or quarters.
+  const DURATION = new RegExp(`\\b(${NUM})\\s*-?\\s*(days?|weeks?|sprints?|months?|quarters?)\\b`, 'gi');
+  const toNumber = (word) => {
+    const i = WORDS.indexOf(word.toLowerCase());
+    return i >= 0 ? i : parseFloat(word.replace(',', '.'));
+  };
+  function soundsLong(text) {
+    if (/\b(?:a few|several|many|multiple)\s+(?:weeks|sprints|months|quarters)\b/i.test(text)) return true;
+    if (/\b(?:a|a full|a whole|an entire)\s+(?:month|quarter)\b/i.test(text)) return true;
+    for (const m of text.matchAll(DURATION)) {
+      const n = toNumber(m[1]);
+      const unit = m[2].toLowerCase();
+      if (unit.startsWith('day') ? n > 5 : unit.startsWith('week') ? n >= 2 : n >= 1) return true;
+    }
+    return false;
+  }
+
+  function span(cls, text) {
+    const el = doc.createElement('span');
+    if (cls) el.className = cls;
+    el.textContent = text;
+    return el;
+  }
+
+  function setError(input, help, message, fallback) {
+    input.setAttribute('aria-invalid', String(Boolean(message)));
+    help.textContent = message || fallback;
+    help.classList.toggle('is-error', Boolean(message));
+  }
+
+  function clearErrors() {
+    setError(hyp, hypHelp, '', HELP.hyp);
+    setError(risk, riskHelp, '', HELP.risk);
+  }
+
+  function review() {
+    const v = { hyp: value(hyp), risk: risk.value, exp: value(exp), crit: value(crit) };
+    const missingHyp = !v.hyp;
+    const missingRisk = !v.risk;
+    setError(hyp, hypHelp, missingHyp ? 'Write a hypothesis to review the plan' : '', HELP.hyp);
+    setError(risk, riskHelp, missingRisk ? 'Choose the risk you most need to test' : '', HELP.risk);
+
+    if (missingHyp || missingRisk) {
+      result.textContent = 'Not ready to review';
+      note.textContent = 'Fill in at least the hypothesis and the biggest risk.';
+      checksList.replaceChildren();
+      return;
+    }
+
+    const method = METHODS[v.risk];
+    const checks = [];
+    const because = /\bbecause\b/i.test(v.hyp);
+    checks.push(because
+      ? { state: 'ok', text: 'The hypothesis includes the reason, so the test can show whether the reason holds.' }
+      : { state: 'revise', text: 'Add “because [reason]” to the hypothesis to make it specific and testable.' });
+
+    if (method) checks.push({ state: 'info', text: `For ${method.name.toLowerCase()}, try ${method.tests}.` });
+
+    if (!v.exp) {
+      checks.push({ state: 'missing', text: 'No experiment yet. What is the cheapest, fastest test of this risk? It should take hours or days, not weeks.' });
+    } else if (soundsLong(v.exp)) {
+      checks.push({ state: 'revise', text: 'The experiment sounds long. Cut it down to something you can run in hours or days.' });
+    } else {
+      checks.push({ state: 'ok', text: 'Experiment planned. Keep it to hours or days.' });
+    }
+
+    if (!v.crit) {
+      checks.push({ state: 'missing', text: 'No success criteria. Decide now what result means “build it”, for example “4 of 5 users complete the task”.' });
+    } else if (!hasNumber(v.crit)) {
+      checks.push({ state: 'revise', text: 'Make the criteria countable, for example “4 of 5 users complete the task” or “20% of visitors click”, so the result cannot be argued away.' });
+    } else {
+      checks.push({ state: 'ok', text: 'Success criteria set before the test, which stops the result being explained away afterward.' });
+    }
+
+    const graded = checks.filter(c => c.state !== 'info');
+    const ready = graded.filter(c => c.state === 'ok').length;
+    result.textContent = ready === graded.length ? 'Ready to run' : `${ready} of ${graded.length} checks passed`;
+    note.textContent = ready === graded.length
+      ? 'Run the experiment, then compare the result with your criteria before deciding to build.'
+      : 'Work through the checks marked “Not yet”.';
+
+    checksList.replaceChildren(...checks.map(c => {
+      const li = doc.createElement('li');
+      li.dataset.state = c.state;
+      const label = c.state === 'ok' ? 'Yes' : c.state === 'info' ? 'Tests' : 'Not yet';
+      li.append(span('check-state', label), span('', c.text));
+      return li;
+    }));
+  }
+
+  tool.querySelector('#dtp-review').addEventListener('click', () => {
+    reviewed = true;
+    review();
+  });
+
+  [hyp, exp, crit].forEach(el => el.addEventListener('input', () => { if (reviewed) review(); }));
+  risk.addEventListener('change', () => { if (reviewed) review(); });
+
+  tool.querySelector('#dtp-sample').addEventListener('click', () => {
+    hyp.value = SAMPLE.hyp;
+    risk.value = SAMPLE.risk;
+    exp.value = SAMPLE.exp;
+    crit.value = SAMPLE.crit;
+    reviewed = true;
+    review();
+  });
+
+  tool.querySelector('#dtp-clear').addEventListener('click', () => {
+    [hyp, exp, crit].forEach(el => { el.value = ''; });
+    risk.value = '';
+    reviewed = false;
+    clearErrors();
+    result.textContent = 'Not reviewed yet';
+    note.textContent = 'Write a hypothesis and choose a risk to begin.';
+    checksList.replaceChildren();
+    hyp.focus();
+  });
+</script>

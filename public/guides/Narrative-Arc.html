@@ -1,0 +1,751 @@
+<article class="guide" data-guide="narrative-arc">
+
+  <header class="guide-intro">
+    <p class="lede">The narrative arc structures a product story in five beats: Status quo, Disruption, Struggle, Resolution and New reality. It builds tension before it offers the answer, so the audience feels the problem before they hear the solution.</p>
+
+    <figure class="figure" data-hero>
+      <div class="arc">
+        <p class="arc-axis">Tension</p>
+        <div class="arc-plot" role="img" aria-label="A tension curve. Tension is low at the Status quo, rises through the Disruption, peaks at the end of the Struggle, falls through the Resolution and settles at the New reality.">
+          <svg viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <line class="arc-divider" x1="100" y1="0" x2="100" y2="300"/>
+            <line class="arc-divider" x1="250" y1="0" x2="250" y2="300"/>
+            <line class="arc-divider" x1="500" y1="0" x2="500" y2="300"/>
+            <line class="arc-divider" x1="800" y1="0" x2="800" y2="300"/>
+            <path class="arc-line" data-series="5" d="M0 240 C33.3 240 66.7 240.7 100 234"/>
+            <path class="arc-line" data-series="4" d="M100 234 C133.3 227.3 183.3 184 250 150"/>
+            <path class="arc-line" data-series="6" d="M250 150 C316.7 116 408.3 30 500 30"/>
+            <path class="arc-line" data-series="2" d="M500 30 C591.7 30 716.7 159 800 190"/>
+            <path class="arc-line" data-series="3" d="M800 190 C883.3 221 966.7 217.3 1000 216"/>
+          </svg>
+          <span class="arc-peak" style="--x: 0.5; --y: 0.1" aria-hidden="true">Peak tension</span>
+          <span class="arc-marker" data-series="5" style="--x: 0.05; --y: 0.798" aria-hidden="true">1</span>
+          <span class="arc-marker" data-series="4" style="--x: 0.163; --y: 0.674" aria-hidden="true">2</span>
+          <span class="arc-marker" data-series="6" style="--x: 0.366; --y: 0.258" aria-hidden="true">3</span>
+          <span class="arc-marker" data-series="2" style="--x: 0.653; --y: 0.328" aria-hidden="true">4</span>
+          <span class="arc-marker" data-series="3" style="--x: 0.919; --y: 0.717" aria-hidden="true">5</span>
+        </div>
+        <p class="arc-axis arc-axis--x">Time in the talk</p>
+        <ol class="arc-beats" aria-label="The five beats and their share of the talk">
+          <li data-series="5"><span class="arc-beat-key">1</span><span class="arc-beat-name">Status quo</span><span class="arc-beat-share">10%</span></li>
+          <li data-series="4"><span class="arc-beat-key">2</span><span class="arc-beat-name">Disruption</span><span class="arc-beat-share">15%</span></li>
+          <li data-series="6"><span class="arc-beat-key">3</span><span class="arc-beat-name">Struggle</span><span class="arc-beat-share">25%</span></li>
+          <li data-series="2"><span class="arc-beat-key">4</span><span class="arc-beat-name">Resolution</span><span class="arc-beat-share">30%</span></li>
+          <li data-series="3"><span class="arc-beat-key">5</span><span class="arc-beat-name">New reality</span><span class="arc-beat-share">20%</span></li>
+        </ol>
+      </div>
+      <figcaption>Tension rises through the Disruption, peaks at the end of the Struggle and eases as your solution arrives. Each beat’s stretch of the curve is its rough share of the talk, a rule of thumb rather than a fixed rule.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Open with a status quo everyone agrees with, break it with a “but”, and put a number on the cost of doing nothing before you present your solution and its evidence. End on the better future and a clear ask. Save it for talks where the audience must be persuaded; when they only need the answer, give it first with the Pyramid Principle.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Build the tension before you give the answer</h2>
+      <p class="chapter-dek">Five beats move the audience from agreement to the ask</p>
+    </header>
+
+    <p>A presentation that asks people to change course has one extra hurdle. If the audience does not yet feel the problem, your solution sounds like one more request competing for their time. So the arc makes the cost of the problem arrive before the answer does.</p>
+
+    <div class="contrast">
+      <div class="contrast-col">
+        <p class="contrast-label">Pyramid Principle: efficient</p>
+        <p>“Here is the answer. Here is why.”</p>
+        <p>For audiences that already agree or only want the answer. Answer first, details if they ask. Email, Slack, executive updates, readouts.</p>
+      </div>
+      <div class="contrast-col">
+        <p class="contrast-label">Narrative arc: persuasive</p>
+        <p>“Here is the world today. Here is what went wrong. Here is how hard it is. Here is the solution. Here is the better future.”</p>
+        <p>For audiences that need convincing. Build tension, create the need, then deliver. Persuasive presentations, pitches, all-hands talks that ask for a change of course.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">The “So what?” test</p>
+      <p>When you are unsure, default to the <a data-guide-link="pyramid">Pyramid Principle</a>: it costs the audience less time, and you can build the case if they push back. Use the arc only when the audience must be persuaded before it will accept the answer. The “So what?” test is how you check: would my recommendation alone make them act? If yes, lead with it. If they need to feel the problem first, tell the story.</p>
+    </div>
+
+    <p>The five beats are this guide’s adaptation of two sources. Gustav Freytag’s pyramid of dramatic structure, in <cite>Die Technik des Dramas</cite> (1863), splits a drama into five parts: exposition, rising action, climax, falling action and dénouement. Nancy Duarte’s presentation form, in <cite>Resonate</cite> (2010), moves back and forth between “what is” and “what could be” and ends with a call to action. The time shares are a rule of thumb, not part of either source.</p>
+
+    <h3>How it differs from the Pyramid Principle and STAR</h3>
+    <p>The <a data-guide-link="pyramid">Pyramid Principle</a> gives the answer first; the arc gives it after the tension. The two still combine: inside the Resolution, a small pyramid can present your evidence, with the recommendation first and the reasons grouped under it.</p>
+    <p>The <a data-guide-link="star">STAR Method</a> follows a similar story order for an interview answer, but the beats do not map one to one. Roughly, Situation covers the Status quo and the Disruption, Action covers the Struggle and the Resolution, and Result is the New reality. Task is your assignment, not the disruption.</p>
+  </section>
+
+  <section class="chapter" id="beats" data-nav="The five beats">
+    <header class="chapter-head">
+      <h2>Five beats, from shared reality to the ask</h2>
+      <p class="chapter-dek">Each beat has one job and a rough share of the talk</p>
+    </header>
+
+    <p>The example lines below come from one pitch by a product manager at Larkwell, a fictional piano-learning app, made last year before it built bridge lessons. Its lesson library had tripled, but retention had not moved. All figures are illustrative.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="5">1</span>
+        <h3 class="card-title">Status quo</h3>
+        <p class="card-q">What is true today?</p>
+        <p>Establish a shared reality: where the product stands and what is going well. The audience should nod along.</p>
+        <p>“Larkwell has 400,000 monthly active learners, and our lesson library has tripled in two years.”</p>
+        <p class="card-meta">About 10% of the talk</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">2</span>
+        <h3 class="card-title">Disruption</h3>
+        <p class="card-q">What changed, or what is wrong?</p>
+        <p>Open a gap between how things are and how they should be. This is the “but” that creates tension.</p>
+        <p>“But day-7 (D7) retention has not moved: only 12% of new users are active after a week.”</p>
+        <p class="card-meta">About 15% of the talk</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="6">3</span>
+        <h3 class="card-title">Struggle</h3>
+        <p class="card-q">What happens if we do nothing?</p>
+        <p>Make the problem urgent by showing the consequences of inaction, in numbers. By the end of this beat the audience wants a solution.</p>
+        <p>“We spend $150,000 a month on paid installs, and most of those learners are gone within a week. Every month we don’t fix this, we pay again for learners we cannot keep.”</p>
+        <p class="card-meta">About 25% of the talk · peak tension</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">4</span>
+        <h3 class="card-title">Resolution</h3>
+        <p class="card-q">What do we do about it?</p>
+        <p>Your solution, and the relief. Deliver it with confidence and with evidence that it works.</p>
+        <p>“We propose bridge lessons: short review exercises at the difficulty jumps in lessons 3–5, where 80% of week-one drop-offs happen. They take two Sprints of engineering to build. In a two-week pilot with 2,000 new learners, completion of lessons 3–5 rose 25%.”</p>
+        <p class="card-meta">About 30% of the talk</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="3">5</span>
+        <h3 class="card-title">New reality</h3>
+        <p class="card-q">What does the world look like after?</p>
+        <p>Paint the future the solution creates, then end with the call to action.</p>
+        <p>“By the end of the quarter, D7 retention reaches at least 18%, and we will have a reusable way to smooth every difficulty jump in the course. I’m asking for two Sprints this quarter to get there.”</p>
+        <p class="card-meta">About 20% of the talk</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Time per beat in a 15-minute presentation, by rule of thumb: the Resolution gets the most</caption>
+        <thead>
+          <tr>
+            <th scope="col">Beat</th>
+            <th scope="col" class="num">Share</th>
+            <th scope="col" class="num">Minutes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1. Status quo</th><td class="num">10%</td><td class="num">1.5</td></tr>
+          <tr><th scope="row">2. Disruption</th><td class="num">15%</td><td class="num">2.25</td></tr>
+          <tr><th scope="row">3. Struggle</th><td class="num">25%</td><td class="num">3.75</td></tr>
+          <tr><th scope="row">4. Resolution</th><td class="num">30%</td><td class="num">4.5</td></tr>
+          <tr><th scope="row">5. New reality</th><td class="num">20%</td><td class="num">3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">In a short slot, the setup shrinks first</p>
+      <p>The shares above assume a 15-minute presentation. For a 5-minute pitch, compress Status quo and Disruption into one minute and spend three on the Resolution, which leaves about a minute for the Struggle and the New reality.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="formats" data-nav="Formats">
+    <header class="chapter-head">
+      <h2>The same five beats in four PM formats</h2>
+      <p class="chapter-dek">What each beat carries in a strategy pitch, a QBR, a launch and a take-home case</p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="table table--compare" id="arc-formats">
+        <caption>The five beats mapped onto common PM presentations</caption>
+        <thead>
+          <tr>
+            <th scope="col">Beat</th>
+            <th scope="col">Product strategy pitch</th>
+            <th scope="col">Quarterly business review</th>
+            <th scope="col">Feature launch announcement</th>
+            <th scope="col">Take-home case presentation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Status quo</th>
+            <td>Market position and current metrics</td>
+            <td>Where we were at the start of the quarter</td>
+            <td>“Users love the app, but…”</td>
+            <td>“The company has X users and Y revenue.”</td>
+          </tr>
+          <tr>
+            <th scope="row">Disruption</th>
+            <td>A competitor’s move or a market shift</td>
+            <td>What surprised us, wins or setbacks</td>
+            <td>The pain point users have been living with</td>
+            <td>“But growth has stalled because…”</td>
+          </tr>
+          <tr>
+            <th scope="row">Struggle</th>
+            <td>What happens if we don’t respond</td>
+            <td>The biggest challenge we faced</td>
+            <td>How hard this was to solve, with user quotes</td>
+            <td>“If this goes unaddressed, they will lose market share to…”</td>
+          </tr>
+          <tr>
+            <th scope="row">Resolution</th>
+            <td>Your strategy, with evidence</td>
+            <td>How we responded, and the outcomes</td>
+            <td>The new feature and how it works</td>
+            <td>“I would recommend three initiatives…”</td>
+          </tr>
+          <tr>
+            <th scope="row">New reality</th>
+            <td>Market position after execution</td>
+            <td>Where we are now, and next quarter’s priorities</td>
+            <td>The better experience users have now</td>
+            <td>“This positions them for…”</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Use the QBR column only when the review has to win support for a change of course. A QBR that only reports results is a readout, so lead with the answer, as the <a data-guide-link="pyramid">Pyramid Principle</a> describes.</p>
+
+    <p>The take-home column is for a take-home case that you prepare and present to a panel as a deck. When an interviewer asks a case question live, lead with your answer and group the reasons under it, as the <a data-guide-link="pyramid">Pyramid Principle</a> describes.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Pitching Practice Mode to leadership</h2>
+      <p class="chapter-dek">A product manager asks leadership for one six-week cycle</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>“Why Larkwell needs Practice Mode”</h3>
+      <p>Larkwell, a fictional piano-learning app, runs its Practice team in six-week cycles with one designer and two programmers. A product manager on that team wants leadership to fund Practice Mode for the next cycle. All figures are illustrative.</p>
+      <ol class="steps">
+        <li>
+          <h4 class="step-title">Status quo</h4>
+          <p>“Larkwell has 60,000 paying subscribers, and reviews keep praising the real-time feedback on every note.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Disruption</h4>
+          <p>“But 70% of learners who finish a lesson never come back to practice it. The Practice button only replays the lesson. There is no real practice experience.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Struggle</h4>
+          <p>“Without practice, learners don’t build muscle memory, and they stall around week three. Day-30 (D30) retention of new accounts is 9%. Every month about 4,200 subscribers cancel, taking $37,800 of monthly recurring revenue (MRR) with them, and each point of monthly churn is about 600 subscribers, or $5,400 of MRR.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Resolution</h4>
+          <p>“I’m proposing Practice Mode: a Practice screen on every finished lesson, with a tempo slider, tap-to-loop sections and a mistake heatmap built from data our lessons already record. It fits one six-week cycle for one designer and two programmers. In a beta with 50 learners, practice sessions tripled, from 0.4 to 1.2 a week per learner.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">New reality</h4>
+          <p>“Our goal is D30 retention from 9% to 11%, and an A/B test from day one will show how much of that Practice Mode earns. Every point of churn we remove keeps about $5,400 of MRR a month. Practice Mode is also the first step toward practice plans built from each learner’s own mistakes. I’m asking for the next six-week cycle.”</p>
+        </li>
+      </ol>
+      <div class="example-reading">
+        <h4>Why the pitch works</h4>
+        <p><strong>Each beat changes what the decision looks like.</strong> The Status quo gets leadership agreeing with facts they already know. The 70% in the Disruption shows that learners are not practicing the lessons whose feedback leadership is proud of. The $37,800 figure turns a retention chart into a cost leadership is already paying, so one six-week cycle is weighed against a loss leadership is already absorbing every month.</p>
+        <p><strong>The numbers hold together, and the claim stays modest.</strong> 4,200 cancellations a month is 7% of 60,000 subscribers, and at $9.00 of revenue per subscriber a month that is $37,800 of MRR. One point of churn is 600 subscribers, or $5,400. The pitch does not promise to recover the whole $37,800; it names a target and the A/B test that will measure Practice Mode’s share.</p>
+        <p><strong>The evidence sits in the Resolution.</strong> The beta result and the fixed six-week scope turn the proposal from a hope into a plan, and the ask closes the talk instead of trailing after it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Draft your own arc</h2>
+      <p class="chapter-dek">Write a sentence or two per beat, then review the draft</p>
+    </header>
+
+    <div class="tool" data-tool="arc-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">Arc builder</h3>
+        <p class="tool-hint">Status quo, Disruption and Resolution are required. The review checks that each beat does its job.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="arc-sq"><span class="card-key card-key--sm" data-series="5">1</span>Status quo</label>
+          <textarea id="arc-sq" rows="2" aria-describedby="arc-sq-help"></textarea>
+          <p class="field-help" id="arc-sq-help">The world as it is. What is going well? Set the stage.</p>
+        </div>
+        <div class="field">
+          <label for="arc-dis"><span class="card-key card-key--sm" data-series="4">2</span>Disruption</label>
+          <textarea id="arc-dis" rows="2" aria-describedby="arc-dis-help"></textarea>
+          <p class="field-help" id="arc-dis-help">The “but”: what changed, or what is wrong?</p>
+        </div>
+        <div class="field">
+          <label for="arc-str"><span class="card-key card-key--sm" data-series="6">3</span>Struggle</label>
+          <textarea id="arc-str" rows="2" aria-describedby="arc-str-help"></textarea>
+          <p class="field-help" id="arc-str-help">Why this is urgent. What happens if we do nothing? Include numbers.</p>
+        </div>
+        <div class="field">
+          <label for="arc-res"><span class="card-key card-key--sm" data-series="2">4</span>Resolution</label>
+          <textarea id="arc-res" rows="2" aria-describedby="arc-res-help"></textarea>
+          <p class="field-help" id="arc-res-help">Your solution, and the evidence that it works.</p>
+        </div>
+        <div class="field">
+          <label for="arc-new"><span class="card-key card-key--sm" data-series="3">5</span>New reality</label>
+          <textarea id="arc-new" rows="2" aria-describedby="arc-new-help"></textarea>
+          <p class="field-help" id="arc-new-help">The better future, and your call to action.</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="arc-review">Review my arc</button>
+        <button type="button" class="btn" id="arc-copy">Copy as outline</button>
+        <button type="button" class="btn" id="arc-clear">Clear</button>
+      </div>
+      <p class="field-help" id="arc-status" aria-live="polite"></p>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Checks passed</p>
+        <output class="tool-result" id="arc-result" for="arc-sq arc-dis arc-str arc-res arc-new"></output>
+        <p class="tool-output-note" id="arc-note">Draft at least the Status quo, Disruption and Resolution, then review.</p>
+        <ul class="checks" id="arc-feedback" aria-label="Review checks"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When the arc fits, and when it does not</h2>
+      <p class="chapter-dek">The arc needs time, attention and an audience that is not yet convinced</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are presenting a product strategy that asks people to change course</li>
+          <li>You are giving an all-hands or town hall talk that asks people to back a change</li>
+          <li>You are pitching to investors or the board</li>
+          <li>You are announcing a feature launch that users or teams must be won over to</li>
+          <li>You are presenting a take-home interview case as a deck</li>
+          <li>You need buy-in, not just to share information</li>
+          <li>A skeptical audience has given you time for a full talk</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You are sending a quick stakeholder update or a readout. Use the <a data-guide-link="pyramid">Pyramid Principle</a> instead.</li>
+          <li>You are answering a live case interview question. Lead with the answer and grouped reasons, as in the <a data-guide-link="pyramid">Pyramid Principle</a>.</li>
+          <li>You are answering a behavioral interview question. Use the <a data-guide-link="star">STAR Method</a> instead.</li>
+          <li>You are answering a product design question. Use the <a data-guide-link="circles">CIRCLES Method</a> instead.</li>
+          <li>You are writing an executive one-pager. Use an <a data-guide-link="exec-summary">executive summary</a> instead.</li>
+          <li>The audience already agrees and only needs the details</li>
+          <li>The reader is short of time, as in a Slack message or email. Lead with the answer.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>To choose between the four communication frameworks for a given situation, see <a data-guide-link="compare-communication">Choosing a communication framework</a>.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways an arc goes flat</h2>
+      <p class="chapter-dek">Most of them come from a beat that skips its job</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">A disruption with no turn</h3>
+        <p>Without a clear contrast, the disruption reads as one more fact about the status quo, and no tension builds.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> open the beat with “But”, “However” or “Despite” so the pivot is explicit.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">A struggle without honest numbers</h3>
+        <p>“We’re losing users” asks the audience to take your word for it, and a Struggle that skips the cost of doing nothing leaves the resolution without urgency. “$37,800 of MRR lost to cancellations every month” makes the cost of waiting concrete. Manufactured drama is worse than no number: exaggerated stakes or a figure nobody can trace lose a skeptical room the moment someone checks, and the rest of the story goes with them.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> quantify what the problem costs in the Struggle beat, in money lost, users churned or time wasted. Use only figures you can show, and say where they come from.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">A resolution built on hope</h3>
+        <p>A solution with no proof sounds like optimism, and a skeptical room will treat it that way.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> bring evidence into the beat: pilot data, a prototype result, a comparable case or an engineering estimate.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Ending on the vision</h3>
+        <p>A bright future with no ask leaves the room inspired and nothing decided.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> end with a specific ask and the metric that will show it worked, for example “I’m asking for the next six-week cycle; an A/B test on D30 retention will tell us if it worked.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Spending the talk on setup</h3>
+        <p>The Status quo beat should be about 10% of the talk. When the context runs long, the Resolution gets squeezed into the last minute.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> keep the Status quo to facts the audience already accepts, and in a short slot fold it into the Disruption.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Telling a story to someone who wanted the answer</h3>
+        <p>The arc needs time and attention. For an audience that already agrees, or in a Slack thread or a quick executive update, building tension delays the one thing the reader asked for.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use the <a data-guide-link="pyramid">Pyramid Principle</a> for updates, and the arc only when you must persuade.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the beats and when to use them</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What is the main difference between the Pyramid Principle and the narrative arc?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The pyramid relies on data, while the arc relies on emotion</button></li>
+          <li><button type="button">The arc suits written documents better than the pyramid</button></li>
+          <li><button type="button">The pyramid leads with the answer; the arc builds to it</button></li>
+          <li><button type="button">The pyramid is for small groups; the arc for large ones</button></li>
+        </ul>
+        <div class="quiz-why"><p>Both can carry the same content and the same evidence. The pyramid leads with the answer for audiences who want it fast; the arc builds tension first for audiences who need convincing. The difference is the order.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">By this guide’s rule of thumb, which beat gets the most time in a 15-minute presentation?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Resolution</button></li>
+          <li><button type="button">Struggle</button></li>
+          <li><button type="button">Status quo</button></li>
+          <li><button type="button">New reality</button></li>
+        </ul>
+        <div class="quiz-why"><p>The Resolution takes about 30%, roughly 4.5 minutes, because it carries your solution and its evidence. The Struggle is close behind at 25%: together they take more than half the talk.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">What makes the Struggle beat work?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Listing every problem the team has found</button></li>
+          <li><button type="button">Telling a vivid story about one frustrated user</button></li>
+          <li><button type="button">Showing each option you tried that failed</button></li>
+          <li><button type="button">Putting a figure on the cost of waiting</button></li>
+        </ul>
+        <div class="quiz-why"><p>Urgency comes from consequences the audience can weigh, such as $150,000 a month spent on paid installs when most of those learners are gone within a week. One user’s story makes the problem vivid but leaves its size to guesswork, a long list of problems spreads attention without raising the stakes, and failed options belong in the Resolution’s evidence, not in the cost of waiting.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Your VP asks in Slack whether Friday’s launch is still on. Which structure fits the reply?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The narrative arc, so the VP understands the context</button></li>
+          <li><button type="button">The Pyramid Principle, leading with yes or no</button></li>
+          <li><button type="button">STAR, starting with the situation that changed</button></li>
+          <li><button type="button">A short arc: Disruption, Resolution, New reality</button></li>
+        </ul>
+        <div class="quiz-why"><p>The VP wants a yes or a no. A story, even a short one, delays the answer the reader asked for. Lead with it and add reasons only as needed.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">How does STAR relate to the narrative arc?</p>
+        <ul class="quiz-options">
+          <li><button type="button">STAR’s Task maps to the arc’s Disruption</button></li>
+          <li><button type="button">STAR gives the Situation most of its time</button></li>
+          <li><button type="button">It follows a similar order, but not beat for beat</button></li>
+          <li><button type="button">STAR suits a skeptical boardroom better than the arc</button></li>
+        </ul>
+        <div class="quiz-why"><p>STAR tells a past story in a similar order, but the beats only map roughly: Situation covers the Status quo and the Disruption, Action covers the Struggle and the Resolution, and Result is the New reality. Task is your assignment, not the disruption. STAR gives most of its time to the Action, and a skeptical boardroom that has given you time for a talk needs the full arc.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">You have 20 minutes to propose a feature to a skeptical CPO. Which structure?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The Pyramid Principle, as executives want the answer first</button></li>
+          <li><button type="button">STAR, framed as a story about your team</button></li>
+          <li><button type="button">An executive summary, sent as a one-pager instead</button></li>
+          <li><button type="button">The narrative arc, building the case before the proposal</button></li>
+        </ul>
+        <div class="quiz-why"><p>A skeptical listener who has given you time for a talk needs to feel the problem before the solution will land. Lead with the proposal and it can be dismissed before the evidence arrives. If the same CPO only wanted the answer, as in a quick update or a readout, the Pyramid Principle would fit better.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Your 15-minute slot is cut to 5 minutes. How do you adapt the arc?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Fold the setup into a minute; give Resolution three</button></li>
+          <li><button type="button">Cut the Struggle and keep the setup at full length</button></li>
+          <li><button type="button">Keep the 15-minute shares and scale each beat down</button></li>
+          <li><button type="button">Drop the New reality so the talk ends on the solution</button></li>
+        </ul>
+        <div class="quiz-why"><p>In a short slot the setup shrinks first. Scaling every share down would leave the Resolution only 1.5 minutes. One minute for Status quo and Disruption and three for the Resolution leaves about a minute for the Struggle and the New reality, so the solution keeps its room and the talk still ends on the ask.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">In a live case interview, you are asked how a struggling app should grow. You have no slides. Which structure fits your answer?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The narrative arc, so the panel feels the problem first</button></li>
+          <li><button type="button">STAR, starting with a situation you have faced</button></li>
+          <li><button type="button">The Pyramid Principle: your answer, then grouped reasons</button></li>
+          <li><button type="button">An executive summary, read aloud section by section</button></li>
+        </ul>
+        <div class="quiz-why"><p>A live case question wants a recommendation the interviewer can probe, so lead with the answer and group the reasons under it. STAR is for behavioral questions about your past. The arc fits a take-home case you present as a deck, where you have the time and the slides to build the case.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the tension curve with the five beats */
+  .guide[data-guide="narrative-arc"] .arc { max-width: 760px; margin: 0 auto; }
+  .guide[data-guide="narrative-arc"] .arc-axis {
+    margin: 0 var(--s-4);
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="narrative-arc"] .arc-axis--x { margin-top: var(--s-2); text-align: right; }
+  .guide[data-guide="narrative-arc"] .arc-plot {
+    position: relative;
+    height: clamp(150px, 28vw, 230px);
+    margin: var(--s-8) var(--s-4) 0;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .guide[data-guide="narrative-arc"] .arc-plot svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .guide[data-guide="narrative-arc"] .arc-divider {
+    stroke: var(--rule);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    vector-effect: non-scaling-stroke;
+  }
+  .guide[data-guide="narrative-arc"] .arc-line {
+    fill: none;
+    stroke: var(--series);
+    stroke-width: 4;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  /* A beat's numeral, ringed in its series colour: on the curve and in the list below */
+  .guide[data-guide="narrative-arc"] :is(.arc-marker, .arc-beat-key) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--series);
+    border-radius: 50%;
+    background: var(--paper-raised);
+    color: var(--series-ink);
+    font-family: var(--font-sans);
+    font-weight: var(--w-semibold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .guide[data-guide="narrative-arc"] .arc-marker {
+    position: absolute;
+    left: calc(var(--x) * 100%);
+    top: calc(var(--y) * 100%);
+    width: 28px;
+    height: 28px;
+    transform: translate(-50%, -50%);
+    font-size: var(--fs-14);
+  }
+  .guide[data-guide="narrative-arc"] .arc-peak {
+    position: absolute;
+    left: calc(var(--x) * 100%);
+    top: calc(var(--y) * 100%);
+    transform: translate(-50%, calc(-100% - var(--s-2)));
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  /* Desktop: each beat's width is its share of the talk, under a top rule in its colour */
+  .guide[data-guide="narrative-arc"] .arc-beats {
+    display: grid;
+    grid-template-columns: 10fr 15fr 25fr 30fr 20fr;
+    grid-template-rows: auto auto auto;
+    column-gap: var(--s-1);
+    margin: var(--s-4) var(--s-4) 0;
+  }
+  /* Each beat spans the list's three rows (numeral, name, share), so all five shares
+     sit on one line even when a narrow column wraps its name onto two */
+  .guide[data-guide="narrative-arc"] .arc-beats li {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    align-content: start;
+    justify-items: start;
+    padding: var(--s-2) var(--s-2) 0 0;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.3;
+  }
+  .guide[data-guide="narrative-arc"] .arc-beat-key {
+    width: 22px;
+    height: 22px;
+    margin: 0 0 var(--s-1);
+    font-size: var(--fs-12);
+  }
+  .guide[data-guide="narrative-arc"] .arc-beat-name { display: block; font-weight: var(--w-semibold); color: var(--ink); }
+  .guide[data-guide="narrative-arc"] .arc-beat-share {
+    display: block;
+    margin-top: var(--s-1);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Phones: a plain list, keyed by the same ringed numerals as the curve */
+  @media (max-width: 640px) {
+    .guide[data-guide="narrative-arc"] .arc-beats { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: 0; }
+    .guide[data-guide="narrative-arc"] .arc-beats li {
+      display: grid;
+      grid-row: auto;
+      grid-template-rows: none;
+      justify-items: stretch;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: var(--s-3);
+      padding: var(--s-2) 0;
+      border-top: 1px solid var(--rule);
+    }
+    .guide[data-guide="narrative-arc"] .arc-beats li:first-child { border-top: 0; }
+    .guide[data-guide="narrative-arc"] .arc-beat-key { margin: 0; }
+    .guide[data-guide="narrative-arc"] .arc-beat-share { margin-top: 0; }
+  }
+
+  /* The formats table: let it scroll on narrow screens instead of crushing the columns */
+  .guide[data-guide="narrative-arc"] #arc-formats { min-width: 760px; }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="arc-builder"]');
+  const result = tool.querySelector('#arc-result');
+  const note = tool.querySelector('#arc-note');
+  const feedback = tool.querySelector('#arc-feedback');
+  const status = tool.querySelector('#arc-status');
+  const NOTE_DEFAULT = note.textContent;
+
+  const beats = [
+    { id: 'sq', name: 'Status quo', required: true },
+    { id: 'dis', name: 'Disruption', required: true },
+    { id: 'str', name: 'Struggle', required: false },
+    { id: 'res', name: 'Resolution', required: true },
+    { id: 'new', name: 'New reality', required: false },
+  ].map(b => {
+    const el = tool.querySelector(`#arc-${b.id}`);
+    const help = tool.querySelector(`#arc-${b.id}-help`);
+    return { ...b, el, help, defaultHelp: help.textContent };
+  });
+  const beat = Object.fromEntries(beats.map(b => [b.id, b]));
+
+  // Whole-word checks, so "button" does not count as "but".
+  const CONTRAST = /\b(but|however|despite|although|yet)\b/i;
+  const QUANTIFIED = /\d|[€$£¥%]/;
+  // Evidence is a measured result (a figure with a unit) or a named source of proof, not a plan to test later.
+  const EVIDENCE = /\d[\d,.]*\s*(%|×|x\b|percent|points?|users|customers|learners|people|sprints?|weeks?|days?|months?)|[€$£]\s?\d|\b(pilot|piloted|prototype|prototyped|beta|tested|experiment|a\/b|benchmarks?|comparable|estimates?|estimated|interviews?|surveyed|research)\b/i;
+  // An ask is a request from the speaker, so "learners no longer need to guess" does not count.
+  const ASK = /\b(I['’]?m|I am|we['’]?re|we are)\s+(asking|requesting)\b|\b(ask|asking|request|requesting)\s+(for|you|that)\b|\b(the|my|our)\s+ask\b|\b(approve|approval|fund|funding|budget|sign[- ]off|green[- ]light)\b/i;
+
+  const STATE_WORD = { ok: 'Ready', revise: 'Revise', missing: 'Missing' };
+
+  const wordCount = (s) => (s ? s.split(/\s+/).length : 0);
+  const joinNames = (names) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+
+  function setError(b, message) {
+    b.el.setAttribute('aria-invalid', String(Boolean(message)));
+    b.help.textContent = message || b.defaultHelp;
+    b.help.classList.toggle('is-error', Boolean(message));
+  }
+
+  function clearOutput() {
+    result.textContent = '';
+    feedback.replaceChildren();
+  }
+
+  function review() {
+    status.textContent = '';
+    const v = Object.fromEntries(beats.map(b => [b.id, b.el.value.trim()]));
+    const missing = beats.filter(b => b.required && !v[b.id]);
+    beats.forEach(b => setError(b, missing.includes(b) ? `Write the ${b.name} before reviewing.` : null));
+
+    if (missing.length) {
+      clearOutput();
+      note.textContent = `Fill in ${joinNames(missing.map(b => b.name))} to review your arc.`;
+      missing[0].el.focus();
+      return;
+    }
+
+    const checks = [];
+    // At 10% of the talk against 30%, the setup should run about a third of the Resolution; flag it past half.
+    if (wordCount(v.sq) > wordCount(v.res) / 2) {
+      checks.push({ beat: 'Status quo', state: 'revise', title: 'trim the setup', text: 'It is more than half as long as your Resolution. At about 10% of the talk against 30%, keep it to the facts the audience already accepts.' });
+    } else {
+      checks.push({ beat: 'Status quo', state: 'ok', title: 'short setup', text: 'It leaves room for the solution.' });
+    }
+
+    if (CONTRAST.test(v.dis)) {
+      checks.push({ beat: 'Disruption', state: 'ok', title: 'clear turn', text: 'The contrast with the status quo is what builds tension.' });
+    } else {
+      checks.push({ beat: 'Disruption', state: 'revise', title: 'add a turn', text: 'Start it with “But…”, “However…” or “Despite…” so the pivot from the status quo is explicit.' });
+    }
+
+    if (!v.str) {
+      checks.push({ beat: 'Struggle', state: 'missing', title: 'missing', text: 'This is where urgency lives. What happens if you do nothing? Add the consequences, with numbers.' });
+    } else if (QUANTIFIED.test(v.str)) {
+      checks.push({ beat: 'Struggle', state: 'ok', title: 'quantified', text: 'A figure such as “$37,800 of MRR lost every month” lands harder than “we’re losing users”.' });
+    } else {
+      checks.push({ beat: 'Struggle', state: 'revise', title: 'add numbers', text: 'Put a figure on the cost of inaction: money lost, users churned or time wasted.' });
+    }
+
+    if (v.res.length <= 20) {
+      checks.push({ beat: 'Resolution', state: 'revise', title: 'too thin', text: 'Say what you will build and why it will work, in a sentence or two.' });
+    } else if (EVIDENCE.test(v.res)) {
+      checks.push({ beat: 'Resolution', state: 'ok', title: 'evidence included', text: 'Data, a prototype or an estimate makes it credible rather than hopeful.' });
+    } else {
+      checks.push({ beat: 'Resolution', state: 'revise', title: 'add evidence', text: 'Back the solution with pilot data, a prototype result, a comparable case or an estimate.' });
+    }
+
+    if (!v.new) {
+      checks.push({ beat: 'New reality', state: 'missing', title: 'missing', text: 'End with the future your solution creates, and a call to action.' });
+    } else if (ASK.test(v.new)) {
+      checks.push({ beat: 'New reality', state: 'ok', title: 'clear ask', text: 'The audience knows what you want from them.' });
+    } else {
+      checks.push({ beat: 'New reality', state: 'revise', title: 'add the ask', text: 'Close with what you need: “I’m asking for X to make this happen.”' });
+    }
+
+    const passed = checks.filter(c => c.state === 'ok').length;
+    result.textContent = `${passed} of ${checks.length}`;
+    note.textContent = passed === checks.length
+      ? 'Every beat is doing its job. Rehearse it out loud and time each beat.'
+      : 'Work through the notes below, then review again.';
+
+    feedback.replaceChildren(...checks.map(c => {
+      const li = document.createElement('li');
+      li.dataset.state = c.state;
+      const state = document.createElement('span');
+      state.className = 'check-state';
+      state.textContent = STATE_WORD[c.state];
+      const body = document.createElement('span');
+      const label = document.createElement('strong');
+      label.textContent = `${c.beat}: ${c.title}. `;
+      body.append(label, c.text);
+      li.append(state, body);
+      return li;
+    }));
+  }
+
+  beats.forEach(b => b.el.addEventListener('input', () => {
+    if (b.el.getAttribute('aria-invalid') === 'true' && b.el.value.trim()) setError(b, null);
+  }));
+
+  tool.querySelector('#arc-review').addEventListener('click', review);
+
+  tool.querySelector('#arc-copy').addEventListener('click', async () => {
+    if (!beats.some(b => b.el.value.trim())) {
+      status.textContent = 'Write at least one beat before copying.';
+      return;
+    }
+    const text = beats.map((b, i) => `${i + 1}. ${b.name}\n${b.el.value.trim() || '(not drafted yet)'}`).join('\n\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      status.textContent = 'Your arc is copied as a plain-text outline.';
+    } catch (err) {
+      status.textContent = 'Copying is not available here. Select the text in each field and copy it by hand.';
+    }
+  });
+
+  tool.querySelector('#arc-clear').addEventListener('click', () => {
+    beats.forEach(b => { b.el.value = ''; setError(b, null); });
+    clearOutput();
+    note.textContent = NOTE_DEFAULT;
+    status.textContent = '';
+    beat.sq.el.focus();
+  });
+</script>

@@ -1,0 +1,782 @@
+<article class="guide" data-guide="aarrr">
+
+  <header class="guide-intro">
+    <p class="lede">AARRR (pirate metrics) splits the customer lifecycle into five stages and gives each one a metric: Acquisition, Activation, Retention, Referral and Revenue. It shows where in the journey people drop out, and so where to work first.</p>
+
+    <figure class="figure" data-hero>
+      <ol class="af-funnel" aria-label="The five AARRR stages, from Acquisition to Revenue">
+        <li data-series="1"><span class="af-num">1</span><span class="af-text"><span class="af-name">Acquisition</span><span class="af-q">How do users find you?</span></span></li>
+        <li data-series="2"><span class="af-num">2</span><span class="af-text"><span class="af-name">Activation</span><span class="af-q">Do they have a great first experience?</span></span></li>
+        <li data-series="3"><span class="af-num">3</span><span class="af-text"><span class="af-name">Retention</span><span class="af-q">Do they come back?</span></span></li>
+        <li data-series="4"><span class="af-num">4</span><span class="af-text"><span class="af-name">Referral</span><span class="af-q">Do they tell others?</span></span></li>
+        <li data-series="5"><span class="af-num">5</span><span class="af-text"><span class="af-name">Revenue</span><span class="af-q">Do they pay?</span></span></li>
+      </ol>
+      <figcaption>Acquisition, Activation and Retention each keep fewer people than the stage before; Referral and Revenue measure what users bring back, in new users and in payment. The step that keeps the smallest share of its users is the first place to look.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Track five numbers: how people find you, whether they reach the moment the product proves its value, whether they come back, whether they bring others and whether they pay. Fix activation and retention before you pay for more acquisition, because more traffic will not fix a funnel that leaks in the middle. Your own cohort numbers show which stage keeps the smallest share of the users who reach it.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>A funnel that shows where people drop out</h2>
+      <p class="chapter-dek">Your product is a leaky bucket; the funnel shows where the holes are</p>
+    </header>
+
+    <p>Many teams report totals that only grow, such as sign-ups or downloads, and those say nothing about whether anyone stays. AARRR looks at the <strong>full user lifecycle</strong> and asks where people drop out, so the work goes into fixing leaks and more of the people you already attract make it through.</p>
+    <p>Dave McClure introduced the model in 2007, in a talk called “Startup Metrics for Pirates: AARRR!”, to give startups a simple way to think about growth that is more than “get more traffic”. Read the initials aloud and you get a pirate’s “AARRR”, hence pirate metrics. His talk lists the stages as Acquisition, Activation, Retention, Referral and Revenue, the order this guide uses. Many later write-ups put Revenue before Referral. The letters are the same either way, and measuring both stages matters more than their order.</p>
+    <p>Each stage gets one number, measured on a <dfn>cohort</dfn>: a group of users who share a start event in the same period, such as everyone who signed up in one month. Following one cohort from stage to stage shows the share each step keeps, and the step that keeps the smallest share is the first candidate to fix.</p>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Fix activation and retention before buying acquisition</p>
+      <p>People often read AARRR top-down and start with acquisition. A better default is to fix activation and retention before you pay for more acquisition, because acquired users who never activate or never return are wasted spend. Before product-market fit, retention is the signal that matters; the full funnel becomes more useful after it. No stage is the most important in general. Treat this as a heuristic, and let your own numbers decide which stage to start with.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="stages" data-nav="The stages">
+    <header class="chapter-head">
+      <h2>Five stages, each one a place to lose people</h2>
+      <p class="chapter-dek">One question per stage, and the metric that answers it</p>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <h3 class="step-title">Acquisition</h3>
+        <p class="step-note">How do users find your product?</p>
+        <p>Channels include SEO, paid ads, social media, the app store, partnerships, word of mouth and content marketing. Measure the cost of each new user by channel, not only as one total.</p>
+        <p>Aim for the channels whose users go on to activate and stay, not the most volume.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Activation</h3>
+        <p class="step-note">Do users have a great first experience?</p>
+        <p>Activation is the first time a new user experiences the product’s core value, the <dfn>aha moment</dfn>, defined as a specific event in a time window. For Larkwell, the fictional piano-learning app in this guide’s example, it is playing a first song with real-time feedback. For a team chat tool, it might be sending a first message and getting a reply. Users who never reach the aha moment rarely come back.</p>
+        <p>Define your aha moment, then remove every point of friction between sign-up and it.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Retention</h3>
+        <p class="step-note">Do users come back?</p>
+        <p>If users do not return, acquisition spend is wasted and revenue cannot build. Measure D1, D7 and D30 retention: the share of a sign-up cohort that is active 1, 7 and 30 days after signing up. Retention is an output metric: a team moves it by changing what users do in the product, not directly.</p>
+        <p>Find out whether users stay before you scale acquisition.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Referral</h3>
+        <p class="step-note">Do users tell others?</p>
+        <p>Organic growth through NPS, referral programs, social sharing and the <dfn>viral coefficient</dfn> or K-factor: invitations sent per user multiplied by the share of invitations that become new users. Above 1, each cohort brings in more than itself and growth compounds on its own. Sustained K above 1 is rare and usually temporary; at a K-factor of 0.10, every 100 new users bring in about 10 more.</p>
+        <p>Referral is free acquisition, but people only recommend products they keep using.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Revenue</h3>
+        <p class="step-note">Do users pay, and how much?</p>
+        <p>Monetization through subscriptions, in-app purchases, ads or upsells. The key metrics are conversion to paid (free-to-paid or trial-to-paid), ARPU and ARPPU, LTV, and LTV compared with CAC: a customer has to bring in more than it cost to win them.</p>
+        <p>Revenue depends on retention: users who stay keep paying, so revenue compounds.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="metrics" data-nav="Metrics">
+    <header class="chapter-head">
+      <h2>What to measure at each stage</h2>
+      <p class="chapter-dek">One primary metric per stage, a few secondary ones, and the definitions that keep them apart</p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="table table--stack">
+        <caption>Metrics for each stage, with Larkwell’s values as an illustration</caption>
+        <thead>
+          <tr>
+            <th scope="col">Stage</th>
+            <th scope="col">Primary metric</th>
+            <th scope="col">Secondary metrics</th>
+            <th scope="col">Larkwell (illustrative)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Acquisition</th><td>New accounts and CPI, by channel</td><td>Traffic sources, install rate, sign-up rate, CPA</td><td>80,000 new accounts a month; CPI $2.50 on paid installs</td></tr>
+          <tr><th scope="row">Activation</th><td>Share of new accounts that reach the aha moment within a stated window</td><td>Onboarding completion, time to value</td><td>45% complete a first song lesson within 24 hours</td></tr>
+          <tr><th scope="row">Retention</th><td>D30 retention</td><td>D1, D7, DAU/MAU ratio</td><td>D1 40%, D7 19%, D30 9%</td></tr>
+          <tr><th scope="row">Referral</th><td>K-factor</td><td>NPS, shares per user, invite rate</td><td>K-factor 0.10; about 3% of activated learners share a clip</td></tr>
+          <tr><th scope="row">Revenue</th><td>ARPPU and LTV</td><td>Trial-to-paid conversion, MRR, subscriber churn, LTV:CAC</td><td>ARPPU $9.00 a month; 30% trial-to-paid; churn 7% a month</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Larkwell is a fictional company, and all of its figures are illustrative. They are not industry benchmarks. Ranges that circulate among consumer app teams vary widely by category, platform and year and rarely name a source, so compare each stage with your own earlier cohorts first.</p>
+
+    <h3>Terms that are easy to mix up</h3>
+    <p>Acquisition cost comes in three forms, each divided by something different. The rest of the lifecycle has its own shorthand. Where the case has the numbers, the Larkwell figures show how each one is calculated.</p>
+    <dl class="facts">
+      <div><dt>CAC</dt><dd>Customer acquisition cost: total sales and marketing spend in a period divided by the new paying customers won in that period. Say whether it is blended (all channels) or per channel. Larkwell: $180,000 ÷ 6,000 = $30 blended.</dd></div>
+      <div><dt>CPI</dt><dd>Cost per install: paid spend divided by installs from paid channels. Lower than CAC, because not every install becomes a customer. Larkwell: $150,000 ÷ 60,000 = $2.50.</dd></div>
+      <div><dt>CPA</dt><dd>Cost per acquisition: paid spend divided by the number of a defined action, such as a sign-up or a trial start. Always name the action. Larkwell: $150,000 ÷ 48,000 paid new accounts, about $3.13 per account.</dd></div>
+      <div><dt>LTV</dt><dd>Lifetime value: the expected gross profit from a customer over the whole time they stay. Simple form: ARPPU × gross margin ÷ monthly churn. Larkwell: $9.00 × 75% ÷ 7%, about $96.</dd></div>
+      <div><dt>ARPU</dt><dd>Average revenue per user: revenue in a period divided by all users in the base you state, paying or not. Larkwell: $1.35 a month per monthly active user.</dd></div>
+      <div><dt>ARPPU</dt><dd>Average revenue per paying user: revenue in a period divided by paying subscribers. Larkwell: $9.00 a month.</dd></div>
+      <div><dt>K-factor</dt><dd>Invitations sent per user multiplied by the share of invitations that become new users. Larkwell: 0.5 × 20% = 0.10.</dd></div>
+      <div><dt>Churn</dt><dd>The share of paying subscribers at the start of a month who cancel during it. Retention, by contrast, is measured on a cohort of all new users. Larkwell: about 4,200 of 60,000 subscribers cancel each month, 7%.</dd></div>
+      <div><dt>DAU/MAU</dt><dd>Daily active users divided by monthly active users: how often people come back within a month.</dd></div>
+    </dl>
+
+    <h3>LTV:CAC, the check on whether growth pays</h3>
+    <p>Dividing LTV by CAC is a widely used test of whether acquisition is worth paying for.</p>
+    <ol class="scale" aria-label="LTV to CAC ratio bands">
+      <li><span class="scale-value">3:1+</span><span class="scale-label">Healthy</span><span class="scale-note">Each customer returns at least three times what it cost to win them. 3:1 or better is a widely cited rule of thumb for subscription businesses, for example in David Skok’s writing on SaaS metrics. There is room to invest more in acquisition.</span></li>
+      <li><span class="scale-value">1–3:1</span><span class="scale-label">Hard to pay back</span><span class="scale-note">Customers earn back what they cost, but slowly and with little to spare. Below about 3:1, acquisition spending is hard to pay back, so improve retention or pricing before you scale spend.</span></li>
+      <li><span class="scale-value">&lt;1:1</span><span class="scale-label">Losing money</span><span class="scale-note">Every new customer costs more than they bring in. Stop spending and fix the funnel.</span></li>
+    </ol>
+    <p>Larkwell sits just above the line: about $96 of lifetime value against a $30 CAC is roughly 3.2:1. Its payback period, the months of gross profit needed to recover CAC, is $30 ÷ ($9.00 × 75%), about 4.4 months.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Finding the leak in Larkwell’s piano funnel</h2>
+      <p class="chapter-dek">One month of new accounts, followed through all five stages</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>A subscription app that teaches adults piano at home</h3>
+      <p>Larkwell, a fictional piano-learning app, listens through the phone’s microphone or a MIDI keyboard and gives real-time feedback on each note. All figures are illustrative, chosen to show the method. The table follows one month of new accounts in McClure’s order.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <caption>One month of Larkwell’s new accounts, stage by stage</caption>
+          <thead>
+            <tr>
+              <th scope="col">Stage</th>
+              <th scope="col">What is counted</th>
+              <th scope="col" class="num">Accounts</th>
+              <th scope="col" class="num">Share of new accounts</th>
+              <th scope="col" class="num">Kept from the stage before</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Acquisition</th><td>New accounts from 100,000 installs</td><td class="num">80,000</td><td class="num">100%</td><td class="num">–</td></tr>
+            <tr><th scope="row">Activation</th><td>Completed a first song lesson within 24 hours of sign-up</td><td class="num">36,000</td><td class="num">45%</td><td class="num">45%</td></tr>
+            <tr class="is-top"><th scope="row">Retention</th><td>Active on day 30</td><td class="num">7,200</td><td class="num">9%</td><td class="num">20%</td></tr>
+            <tr><th scope="row">Referral</th><td>New accounts from invites and shared clips, a K-factor of 0.10</td><td class="num">8,000</td><td class="num">–</td><td class="num">–</td></tr>
+            <tr><th scope="row">Revenue</th><td>Became paying subscribers</td><td class="num">6,000</td><td class="num">7.5%</td><td class="num">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="facts">
+        <div><dt>Acquisition</dt><dd>100,000 installs a month: 60,000 from paid app store and video ads, 30,000 from organic app store search for “learn piano” and 10,000 from referrals and shared clips. 80% of installs become accounts, which gives 80,000 new accounts. Paid installs cost $2.50 each. Organic search costs nothing per install, and those learners arrive with high intent; whether it is the best channel depends on how many of them activate and stay.</dd></div>
+        <div><dt>Activation</dt><dd>Aha moment: playing a first song with real-time feedback. Metric: the share of new accounts that complete a first song lesson within 24 hours of sign-up, 45% today. Blocker: new users who never connect their instrument.</dd></div>
+        <div><dt>Retention</dt><dd>D1 40%, D7 19% and D30 9% of new accounts. Of activated learners, about 42% are active on day 7 and 20% on day 30, so four in five are gone within a month, most of them in the first week. Levers: practice reminders, streaks, progressive difficulty and songs learners already know. Key metrics: D7 and D30.</dd></div>
+        <div><dt>Referral</dt><dd>Built in: a “Give a friend 30 days free” program. Organic: about 3% of activated learners share a clip of their first song. Each new account sends 0.5 invitations on average and 20% are accepted, a K-factor of 0.10, or about 8,000 new accounts a month. NPS is likely to be highest among learners who pass the 30-day mark.</dd></div>
+        <div><dt>Revenue</dt><dd>Model: a 7-day free trial, then $14.99 a month or $89.99 a year ($7.50 a month). 25% of new accounts start a trial and 30% of trials convert, so 6,000 new subscribers a month, 7.5% of new accounts. With 80% of subscribers on the annual plan, ARPPU is $9.00 a month. Lever: show the paywall after the aha moment, not before.</dd></div>
+      </dl>
+      <div class="example-reading">
+        <h4>Retention, not acquisition, is where Larkwell leaks</h4>
+        <p><strong>Retention is the leak.</strong> Compare the share each step keeps of the users who reach it: Activation keeps 45% of new accounts and Retention keeps 20% of activated learners. Retention keeps the smallest share, so four in five activated learners are gone within a month. Activation is the second-largest loss, with 55% of new accounts never completing a first lesson. It also loses more people in raw numbers (44,000 against 28,800), but only shares can be compared across stages of different sizes.</p>
+        <p><strong>Revenue is not the constraint.</strong> 30% of trial starts convert, and each subscriber is worth about $96 in gross profit against a $30 CAC. The problem is that too few learners stay long enough to matter.</p>
+        <p><strong>Industry ranges would not settle it.</strong> Figures that circulate for consumer apps vary by category, platform and year. The step comparison is what points at retention, and Larkwell’s own earlier cohorts are the better benchmark.</p>
+        <p><strong>More marketing would not help.</strong> Larkwell spends $150,000 a month on paid installs, which buys 60,000 installs and 48,000 new accounts. If those accounts retain like the rest, about 4,320 are still active on day 30: about $35 per retained learner. Raising D30 retention from 9% to 11% would keep 5,280 for the same spend, about $28 each.</p>
+        <p><strong>The fix is habit formation.</strong> Make progress visible and make practice feel rewarding rather than like homework, then measure D30 against the 11% target.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Find the leak in your own funnel</h2>
+      <p class="chapter-dek">Enter a cohort to see the weakest step, then map what happens at each stage</p>
+    </header>
+
+    <div class="tool" data-tool="leak-finder">
+      <div class="tool-head">
+        <h3 class="tool-title">Leak finder</h3>
+        <p class="tool-hint">It starts with Larkwell’s month from the example. Replace the numbers with one cohort of your own users. Activation and Retention are compared as steps; Referral and Revenue are shown as a share of new users, because not every paying or referring user passes through day 30.</p>
+      </div>
+      <div class="fields" data-cols="3" data-compact>
+        <div class="field">
+          <label for="af-acq"><span class="card-key card-key--sm" data-series="1" aria-hidden="true">1</span>Acquisition</label>
+          <input id="af-acq" type="number" min="0" step="1" value="80000" inputmode="numeric" aria-describedby="af-acq-help">
+          <p class="field-help" id="af-acq-help">New users in the period</p>
+        </div>
+        <div class="field">
+          <label for="af-act"><span class="card-key card-key--sm" data-series="2" aria-hidden="true">2</span>Activation</label>
+          <input id="af-act" type="number" min="0" step="1" value="36000" inputmode="numeric" aria-describedby="af-act-help">
+          <p class="field-help" id="af-act-help">Reached the aha moment</p>
+        </div>
+        <div class="field">
+          <label for="af-ret"><span class="card-key card-key--sm" data-series="3" aria-hidden="true">3</span>Retention</label>
+          <input id="af-ret" type="number" min="0" step="1" value="7200" inputmode="numeric" aria-describedby="af-ret-help">
+          <p class="field-help" id="af-ret-help">Still active at day 30</p>
+        </div>
+        <div class="field">
+          <label for="af-ref"><span class="card-key card-key--sm" data-series="4" aria-hidden="true">4</span>Referral</label>
+          <input id="af-ref" type="number" min="0" step="1" value="8000" inputmode="numeric" aria-describedby="af-ref-help">
+          <p class="field-help" id="af-ref-help">New users who came from referrals</p>
+        </div>
+        <div class="field">
+          <label for="af-rev"><span class="card-key card-key--sm" data-series="5" aria-hidden="true">5</span>Revenue</label>
+          <input id="af-rev" type="number" min="0" step="1" value="6000" inputmode="numeric" aria-describedby="af-rev-help">
+          <p class="field-help" id="af-rev-help">Became paying customers</p>
+        </div>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Biggest leak</p>
+        <output class="tool-result" id="af-result" for="af-acq af-act af-ret af-ref af-rev">Retention</output>
+        <p class="tool-output-note" id="af-note">Keeps 20% of activated users, the smallest share of any step, so 80% drop out here.</p>
+        <ul class="af-steps" id="af-steps" aria-label="Share kept at each step"></ul>
+        <p class="tool-output-note" id="af-overall">9% of new users are still active at day 30, and 7.5% became paying customers.</p>
+        <p class="tool-output-note" id="af-k">K-factor 0.10: every 100 new users bring in 10 more.</p>
+      </div>
+    </div>
+
+    <div class="tool" data-tool="funnel-map">
+      <div class="tool-head">
+        <h3 class="tool-title">Funnel map</h3>
+        <p class="tool-hint">Describe what happens at each stage of your product, then check the map for common gaps.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="fm-acq"><span class="card-key card-key--sm" data-series="1" aria-hidden="true">1</span>Acquisition</label>
+          <textarea id="fm-acq" rows="2" placeholder="Main channels? Cost per new user? Best-performing source?"></textarea>
+        </div>
+        <div class="field">
+          <label for="fm-act"><span class="card-key card-key--sm" data-series="2" aria-hidden="true">2</span>Activation</label>
+          <textarea id="fm-act" rows="2" placeholder="What is the aha moment? What share of sign-ups reach it? Biggest friction?"></textarea>
+        </div>
+        <div class="field">
+          <label for="fm-ret"><span class="card-key card-key--sm" data-series="3" aria-hidden="true">3</span>Retention</label>
+          <textarea id="fm-ret" rows="2" placeholder="D1, D7 and D30 rates? What brings users back? Where do they drop off?"></textarea>
+        </div>
+        <div class="field">
+          <label for="fm-ref"><span class="card-key card-key--sm" data-series="4" aria-hidden="true">4</span>Referral</label>
+          <textarea id="fm-ref" rows="2" placeholder="How do users share? Referral program? K-factor?"></textarea>
+        </div>
+        <div class="field">
+          <label for="fm-rev"><span class="card-key card-key--sm" data-series="5" aria-hidden="true">5</span>Revenue</label>
+          <textarea id="fm-rev" rows="2" placeholder="Business model? Conversion to paid? LTV:CAC ratio?"></textarea>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="fm-run">Find my leaks</button>
+        <button type="button" class="btn" id="fm-clear">Clear</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Feedback</p>
+        <output class="tool-result" id="fm-result" for="fm-acq fm-act fm-ret fm-ref fm-rev"></output>
+        <p class="tool-output-note" id="fm-note">Fill in at least two stages, then select Find my leaks.</p>
+        <ul class="checks" id="fm-feedback" aria-label="Gaps in the map" hidden></ul>
+      </div>
+    </div>
+
+    <h3>A three-sentence growth diagnosis</h3>
+    <p>When a product interview asks about growth, the funnel gives your answer a structure. Fill in the gaps from what you know about the product.</p>
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>I’d analyze the AARRR funnel to find the leakiest stage.
+For this product, I suspect the biggest drop-off is at [stage] because [reason].
+I’d focus on improving [metric] by [action].</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When AARRR fits, and when it does not</h2>
+      <p class="chapter-dek">It diagnoses a product that has users; it does not choose features or set strategy</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are diagnosing where growth is stuck</li>
+          <li>You are deciding which stage to work on next</li>
+          <li>A PM interview asks about growth strategy</li>
+          <li>You are reporting metrics to leadership</li>
+          <li>You are building a growth team’s dashboard</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You are before product-market fit. Watch retention as the sign of fit; optimizing the whole funnel is premature.</li>
+          <li>You sell B2B enterprise deals with long sales cycles. A sales pipeline funnel fits better.</li>
+          <li>You need to prioritize features. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead.</li>
+          <li>You need strategic direction. Use <a data-guide-link="playing-to-win">Playing to Win</a>.</li>
+          <li>You need user insight. Use <a data-guide-link="jtbd">Jobs to Be Done</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>AARRR is usually the first step of a growth plan: it finds the leak before the team chooses a North Star Metric. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways to misread the funnel</h2>
+      <p class="chapter-dek">Most of them come from looking at the wrong stage or the wrong number</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Buying users the funnel cannot keep</h3>
+        <p>Spending on ads and marketing while activation or retention is broken is like pouring water into a bucket with a hole in the bottom. You pay for every user, including the ones who leave in the first week. A blended view makes it worse, because cheap volume from a weak channel can look like success.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> compute each stage’s conversion first and fix the largest relative loss before you raise acquisition spend. Judge each channel by how many of its users activate and stay, not by volume.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Reporting vanity metrics</h3>
+        <p>Installs and sign-ups can grow while the value users get does not. A running total rises even in a month when most new users leave, so it cannot show where people drop out.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> pick one actionable metric per stage, defined on a cohort and a time window, and report the share of each cohort that moves from one stage to the next.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Leaving the aha moment vague</h3>
+        <p>“Users like it” or “active” without a specific event and window cannot be measured, and onboarding cannot be designed toward it. A related mistake is to put the paywall in front of it: people asked to pay before they have felt the value leave at Activation, before the product has had a chance to prove itself.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> define the aha moment from data, for example the action that best separates users who stay from users who leave, such as “completed a first song lesson within 24 hours”. Remove every step between sign-up and it, and show the paywall only after it.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mixing up CAC, CPI and CPA</h3>
+        <p>The three divide spend by different things: new paying customers, installs and a chosen action. A $2.50 cost per install is not a $2.50 customer; at Larkwell the blended CAC is $30.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> say which denominator you mean every time, measure acquisition cost by channel as well as blended, and use CAC in the LTV:CAC ratio.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Borrowing someone else’s benchmarks</h3>
+        <p>Industry figures rarely match your product, channel mix or metric definitions, and most of the ranges that circulate have no named source. A stage can look fine against a borrowed range and still be your biggest leak.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> compare each cohort with your own earlier cohorts, and use the step comparison to choose where to work.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating a looping product as a straight line</h3>
+        <p>A funnel ends at its last stage, so it misses how users bring in other users: referred learners, shared clips and content all feed new users back to the top. Reforge’s criticism of funnel-only thinking makes this point.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> map the product’s <a data-guide-link="growth-loops">growth loops</a> alongside the funnel, and measure each step of a loop as a conversion.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the stages, the metrics and where to start</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">Which five stages make up AARRR?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Awareness, Adoption, Retention, Referral, Revenue</button></li>
+          <li><button type="button">Acquisition, Analysis, Retention, Reach, Revenue</button></li>
+          <li><button type="button">Attention, Activation, Retention, Referral, Renewal</button></li>
+          <li><button type="button">Acquisition, Activation, Retention, Referral, Revenue</button></li>
+        </ul>
+        <div class="quiz-why"><p>Acquisition, Activation, Retention, Referral and Revenue, in the order of McClure’s 2007 talk. Many later write-ups put Revenue before Referral; both orders circulate and the stages are the same. The order in which you fix them is a separate question.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A team sees 45% activation and 9% D30 retention, and the marketing lead wants to double the ad budget. What does the AARRR heuristic suggest?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Fix activation and retention before buying more installs</button></li>
+          <li><button type="button">Double the budget, since acquisition feeds every later stage</button></li>
+          <li><button type="button">Launch a referral program to bring acquisition costs down</button></li>
+          <li><button type="button">Raise prices so that each new user is worth more</button></li>
+        </ul>
+        <div class="quiz-why"><p>Acquired users who never activate or never return are wasted spend, so the heuristic is to fix activation and retention before paying for more acquisition. A referral program and a price rise both depend on users who stay. The team’s own step comparison then shows which of the two to start with.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What is the aha moment in Activation?</p>
+        <ul class="quiz-options">
+          <li><button type="button">When the user pays for the first time</button></li>
+          <li><button type="button">When the user refers a friend to the app</button></li>
+          <li><button type="button">When the user first gets the core value</button></li>
+          <li><button type="button">When the user completes their profile</button></li>
+        </ul>
+        <div class="quiz-why"><p>It is the first time a new user experiences the product’s core value, defined as a specific event in a time window: for Larkwell, playing a first song with real-time feedback; for a team chat tool, sending a first message and getting a reply. Everything in onboarding should lead to it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Which LTV:CAC ratio is usually called healthy?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Above 1:1</button></li>
+          <li><button type="button">At least 3:1</button></li>
+          <li><button type="button">At least 10:1</button></li>
+          <li><button type="button">Around 2:1</button></li>
+        </ul>
+        <div class="quiz-why"><p>3:1 or better is a widely cited rule of thumb. Below about 3:1, acquisition spending is hard to pay back, and below 1:1 every new customer costs more than they bring in. Above 3:1 there is room to invest in acquisition.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">Why is spending heavily on acquisition while retention is poor a mistake?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Paid ads always cost more per user than organic channels</button></li>
+          <li><button type="button">Acquisition is much harder to measure than retention</button></li>
+          <li><button type="button">Acquisition should always be the last stage you work on</button></li>
+          <li><button type="button">You pay for users who leave, so each kept user costs more</button></li>
+        </ul>
+        <div class="quiz-why"><p>This is the leaky bucket. If only 9% of new accounts are active on day 30, most acquisition spend buys users who leave; raising retention makes every acquisition dollar return more.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Larkwell pays $2.50 per paid install, yet its blended CAC is $30. What explains the gap?</p>
+        <ul class="quiz-options">
+          <li><button type="button">CPI leaves out the app store’s commission on each install</button></li>
+          <li><button type="button">CAC divides all marketing spend by new paying customers</button></li>
+          <li><button type="button">CAC also counts the cost of running the free trials</button></li>
+          <li><button type="button">CPI counts organic installs as well as paid ones</button></li>
+        </ul>
+        <div class="quiz-why"><p>CPI is paid spend divided by paid installs. CAC is total sales and marketing spend ($180,000) divided by new paying customers (6,000). Most installs never become paying customers, so the cost per customer is far higher than the cost per install.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">How does AARRR relate to a North Star Metric?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They are two names for the same set of growth metrics</button></li>
+          <li><button type="button">AARRR maps every stage; a North Star Metric is one focus</button></li>
+          <li><button type="button">A North Star Metric replaces AARRR once a product matures</button></li>
+          <li><button type="button">The North Star Framework suits B2B, AARRR suits B2C</button></li>
+        </ul>
+        <div class="quiz-why"><p>AARRR gives the full picture of the lifecycle. A North Star Metric is the single metric that best captures the core value customers get, and the whole team rallies around it; the funnel shows which stages feed it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">An app keeps 50% of new users through Activation, 20% of activated users through Retention, and converts 40% of retained users to paid. Where is the biggest leak?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Acquisition</button></li>
+          <li><button type="button">Activation</button></li>
+          <li><button type="button">Retention</button></li>
+          <li><button type="button">Revenue</button></li>
+        </ul>
+        <div class="quiz-why"><p>Retention loses 80% of the users who reach it, more than Activation (50%) or Revenue (60%). That is where to look first.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the five stages as a narrowing funnel */
+  .guide[data-guide="aarrr"] .af-funnel {
+    display: grid;
+    gap: var(--s-1);
+    justify-items: center;
+  }
+  .guide[data-guide="aarrr"] .af-funnel > li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    width: 100%;
+    min-width: 0;
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-sm);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="aarrr"] .af-funnel > li:nth-child(2) { width: 88%; }
+  .guide[data-guide="aarrr"] .af-funnel > li:nth-child(3) { width: 76%; }
+  .guide[data-guide="aarrr"] .af-funnel > li:nth-child(4) { width: 64%; }
+  .guide[data-guide="aarrr"] .af-funnel > li:nth-child(5) { width: 52%; }
+  .guide[data-guide="aarrr"] .af-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--series);
+    background: var(--paper-raised);
+    color: var(--series-ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="aarrr"] .af-text { display: grid; gap: 2px; min-width: 0; }
+  .guide[data-guide="aarrr"] .af-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-18);
+    font-weight: var(--w-medium);
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .guide[data-guide="aarrr"] .af-q {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  @media (max-width: 560px) {
+    .guide[data-guide="aarrr"] .af-funnel > li { padding: var(--s-3); }
+    .guide[data-guide="aarrr"] .af-funnel > li:nth-child(2) { width: 96%; }
+    .guide[data-guide="aarrr"] .af-funnel > li:nth-child(3) { width: 92%; }
+    .guide[data-guide="aarrr"] .af-funnel > li:nth-child(4) { width: 88%; }
+    .guide[data-guide="aarrr"] .af-funnel > li:nth-child(5) { width: 84%; }
+  }
+
+  /* Leak finder: share kept at each step */
+  /* Columns live on the list; each row is a subgrid, so every track starts and ends at the same x. */
+  .guide[data-guide="aarrr"] .af-steps {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) minmax(0, 2fr) max-content;
+    gap: var(--s-3);
+    padding-top: var(--s-2);
+  }
+  .guide[data-guide="aarrr"] .af-steps:empty { display: none; }
+  .guide[data-guide="aarrr"] .af-steps > li {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-areas: "label track value";
+    row-gap: var(--s-1);
+    align-items: center;
+  }
+  .guide[data-guide="aarrr"] .af-step-label { grid-area: label; display: grid; font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--w-medium); color: var(--ink); }
+  .guide[data-guide="aarrr"] .af-step-from { font-size: var(--fs-12); font-weight: var(--w-regular); color: var(--ink-3); }
+  .guide[data-guide="aarrr"] .af-track {
+    grid-area: track;
+    display: block;
+    height: 12px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .guide[data-guide="aarrr"] .af-bar { display: block; height: 100%; width: calc(var(--x, 0) * 100%); background: var(--series); }
+  .guide[data-guide="aarrr"] .af-step-value {
+    grid-area: value;
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    text-align: right;
+  }
+  .guide[data-guide="aarrr"] .af-steps > li.is-leak .af-step-value { color: var(--ink); font-weight: var(--w-semibold); }
+  .guide[data-guide="aarrr"] .af-steps > li.is-leak .af-track { border-color: var(--ink-3); }
+  @media (max-width: 560px) {
+    .guide[data-guide="aarrr"] .af-steps { grid-template-columns: minmax(0, 1fr) auto; }
+    .guide[data-guide="aarrr"] .af-steps > li { grid-template-areas: "label value" "track track"; }
+  }
+</style>
+
+<script data-guide-script>
+  const doc = root.ownerDocument;
+  // Percentages to one decimal place at most ("45%", "7.5%"), never rounding a nonzero share to 0% or a partial one to 100%.
+  const pct = (r) => {
+    const p = r * 100;
+    const tenth = Math.round(p * 10) / 10;
+    if (tenth === 0 && p > 0) return 'under 0.1%';
+    if (tenth === 100 && p < 100) return 'over 99.9%';
+    return `${tenth.toLocaleString('en-US', { maximumFractionDigits: 1 })}%`;
+  };
+  const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  const fmtK = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const listJoin = (items) => (items.length < 3
+    ? items.join(' and ')
+    : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
+
+  function el(tag, cls, text) {
+    const node = doc.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  /* ---- Leak finder ---- */
+  const leak = root.querySelector('[data-tool="leak-finder"]');
+  // The narrowing chain: each stage is a subset of the one before.
+  const STAGES = [
+    { key: 'acq', name: 'Acquisition', series: '1', users: 'new users', help: 'New users in the period' },
+    { key: 'act', name: 'Activation', series: '2', users: 'activated users', help: 'Reached the aha moment' },
+    { key: 'ret', name: 'Retention', series: '3', users: 'retained users', help: 'Still active at day 30' },
+  ];
+  // Referral and Revenue are measured against the cohort's new users.
+  const REFERRAL = { key: 'ref', name: 'Referral', help: 'New users who came from referrals' };
+  const REVENUE = { key: 'rev', name: 'Revenue', help: 'Became paying customers' };
+  const inputs = {};
+  const helps = {};
+  [...STAGES, REFERRAL, REVENUE].forEach((s) => {
+    inputs[s.key] = leak.querySelector(`#af-${s.key}`);
+    helps[s.key] = leak.querySelector(`#af-${s.key}-help`);
+  });
+  const result = leak.querySelector('#af-result');
+  const note = leak.querySelector('#af-note');
+  const steps = leak.querySelector('#af-steps');
+  const overall = leak.querySelector('#af-overall');
+  const kLine = leak.querySelector('#af-k');
+
+  function setHelp(stage, message) {
+    const input = inputs[stage.key];
+    const help = helps[stage.key];
+    input.setAttribute('aria-invalid', String(Boolean(message)));
+    help.textContent = message || stage.help;
+    help.classList.toggle('is-error', Boolean(message));
+  }
+
+  function readCount(input) {
+    const raw = input.value.trim();
+    if (raw === '') return { error: 'Enter a number of users, 0 or more' };
+    const n = Number(raw);
+    if (!Number.isFinite(n) || n < 0) return { error: 'Enter a number of users, 0 or more' };
+    return { value: n };
+  }
+
+  function updateLeak() {
+    const values = [];
+    let valid = true;
+
+    STAGES.forEach((stage, i) => {
+      const read = readCount(inputs[stage.key]);
+      let message = read.error || '';
+      if (!message && i === 0 && read.value === 0) message = 'Enter at least 1 new user';
+      if (!message && i > 0 && Number.isFinite(values[i - 1]) && read.value > values[i - 1]) {
+        message = `Cannot be more than ${STAGES[i - 1].name} (${fmt(values[i - 1])})`;
+      }
+      setHelp(stage, message);
+      if (message) valid = false;
+      values.push(read.error ? NaN : read.value);
+    });
+
+    const acq = values[0];
+    const ref = readCount(inputs.ref);
+    setHelp(REFERRAL, ref.error || '');
+    const rev = readCount(inputs.rev);
+    let revError = rev.error || '';
+    if (!revError && Number.isFinite(acq) && rev.value > acq) revError = `Cannot be more than Acquisition (${fmt(acq)})`;
+    setHelp(REVENUE, revError);
+
+    steps.replaceChildren();
+    if (!valid) {
+      result.textContent = '–';
+      note.textContent = 'Fix the highlighted fields to see where the funnel leaks.';
+      overall.textContent = '';
+      kLine.textContent = '';
+      return;
+    }
+
+    // Share kept at each step from one stage to the next.
+    const rows = [];
+    for (let i = 1; i < STAGES.length; i++) {
+      const prev = values[i - 1];
+      rows.push({ stage: STAGES[i], from: STAGES[i - 1], kept: prev > 0 ? values[i] / prev : null });
+    }
+    const losses = rows.filter((r) => r.kept !== null).map((r) => 1 - r.kept);
+    const worst = losses.length ? Math.max(...losses) : 0;
+    const leaks = rows.filter((r) => r.kept !== null && worst > 0 && Math.abs(1 - r.kept - worst) < 1e-9);
+
+    rows.forEach((r) => {
+      const li = el('li');
+      li.dataset.series = r.stage.series;
+      const label = el('span', 'af-step-label', r.stage.name);
+      label.append(el('span', 'af-step-from', `from ${r.from.name}`));
+      const track = el('span', 'af-track');
+      const bar = el('span', 'af-bar');
+      bar.style.setProperty('--x', String(r.kept === null ? 0 : r.kept));
+      track.append(bar);
+      let valueText = r.kept === null ? 'No users to keep' : `${pct(r.kept)} kept`;
+      if (leaks.includes(r)) {
+        li.classList.add('is-leak');
+        valueText += ', biggest leak';
+      }
+      li.append(label, track, el('span', 'af-step-value', valueText));
+      steps.append(li);
+    });
+
+    if (!leaks.length) {
+      result.textContent = 'No leak';
+      note.textContent = 'Every stage keeps everyone from the stage before. Check that the numbers come from one cohort.';
+    } else {
+      result.textContent = listJoin(leaks.map((r) => r.stage.name));
+      const first = leaks[0];
+      note.textContent = leaks.length > 1
+        ? `These stages tie: each keeps ${pct(first.kept)} of the users who reach it, the smallest share of any step, so ${pct(worst)} drop out at each.`
+        : `Keeps ${pct(first.kept)} of ${first.from.users}, the smallest share of any step, so ${pct(worst)} drop out here.`;
+    }
+
+    const retained = `${pct(values[2] / acq)} of new users are still active at day 30`;
+    overall.textContent = revError
+      ? `${retained}. Fix the Revenue field to see the share who pay.`
+      : `${retained}, and ${pct(rev.value / acq)} became paying customers.`;
+    if (ref.error) {
+      kLine.textContent = 'Enter referred users to see the K-factor.';
+    } else {
+      const k = ref.value / acq;
+      kLine.textContent = `K-factor ${fmtK(k)}: every 100 new users bring in ${fmt(Math.round(k * 1000) / 10)} more.`;
+    }
+  }
+
+  Object.values(inputs).forEach((input) => input.addEventListener('input', updateLeak));
+  updateLeak();
+
+  /* ---- Funnel map ---- */
+  const map = root.querySelector('[data-tool="funnel-map"]');
+  const MAP_STAGES = [
+    { key: 'acq', name: 'Acquisition' },
+    { key: 'act', name: 'Activation' },
+    { key: 'ret', name: 'Retention' },
+    { key: 'ref', name: 'Referral' },
+    { key: 'rev', name: 'Revenue' },
+  ].map((s) => ({ ...s, field: map.querySelector(`#fm-${s.key}`) }));
+  const mapResult = map.querySelector('#fm-result');
+  const mapNote = map.querySelector('#fm-note');
+  const feedback = map.querySelector('#fm-feedback');
+  const INTRO = 'Fill in at least two stages, then select Find my leaks.';
+
+  // Rules match whole words after lowercasing, so "Low D30" and "churning" both count.
+  // Phrases that describe good retention ("low churn", "churn is low") are removed before the check.
+  const RETENTION_GOOD = [
+    /\b(low|lower|little|minimal|reduced)\s+(churn\w*|drop[- ]?offs?|drop\w*)/g,
+    /\b(churn\w*|drop[- ]?offs?)\s+(is|are|was|stays|remains)?\s*(low|lower|minimal)\b/g,
+  ];
+  const RETENTION_WEAK = /\b(low|lower|churn\w*|drop\w*|leav(e|es|ing)|quit\w*|lapse\w*)\b/;
+  const AHA = /\b(aha|moment|first)\b/;
+  const HAS_NUMBER = /\d/;
+
+  // Items use the shared checks list: the state word first, then the gap and what to do.
+  const STATE_WORD = { revise: 'Revise', missing: 'Missing', info: 'Next' };
+  function addFeedback(state, tag, text) {
+    const li = el('li');
+    li.dataset.state = state;
+    const body = el('span');
+    if (tag) body.append(el('strong', '', `${tag}.`), ' ');
+    body.append(text);
+    li.append(el('span', 'check-state', STATE_WORD[state]), body);
+    feedback.append(li);
+    feedback.hidden = false;
+  }
+
+  function analyze() {
+    const text = {};
+    MAP_STAGES.forEach((s) => { text[s.key] = s.field.value.trim(); });
+    const filled = MAP_STAGES.filter((s) => text[s.key]);
+    const missing = MAP_STAGES.filter((s) => !text[s.key]);
+    feedback.replaceChildren();
+    feedback.hidden = true;
+
+    if (filled.length < 2) {
+      mapResult.textContent = '';
+      mapNote.textContent = 'Fill in at least two stages to get feedback.';
+      return;
+    }
+
+    mapResult.textContent = `${filled.length} of 5 stages mapped`;
+    mapNote.textContent = missing.length ? `Missing: ${missing.map((s) => s.name).join(', ')}.` : 'Every stage has a description.';
+
+    const lower = (key) => text[key].toLowerCase();
+    let flags = 0;
+
+    const retText = text.ret ? RETENTION_GOOD.reduce((t, re) => t.replace(re, ' '), lower('ret')) : '';
+    if (retText && RETENTION_WEAK.test(retText)) {
+      flags++;
+      addFeedback('revise', 'Retention may be weak', 'This may be the place to start: more acquisition will not make up for users who leave. Look at habit triggers, progress visibility and re-engagement.');
+    }
+    if (text.act && !AHA.test(lower('act'))) {
+      flags++;
+      addFeedback('revise', 'No clear aha moment', 'Name the exact event and time window where a new user first gets value, such as “completed a first lesson within 24 hours” or “sent a first message”.');
+    }
+    if (text.acq && !text.ret) {
+      flags++;
+      addFeedback('revise', 'Acquisition without Retention', 'Spending on acquisition before you know whether users stay is a common funnel mistake. Define retention metrics first.');
+    }
+
+    const hasNumbers = filled.some((s) => HAS_NUMBER.test(text[s.key]));
+    if (!hasNumbers) {
+      addFeedback('missing', 'Add numbers', 'What share of users moves from each stage to the next? Put the counts into the leak finder above: the step that keeps the smallest share of its users is usually where to start.');
+    } else if (!flags) {
+      addFeedback('info', '', 'Compare the conversion from each stage to the next. The step that keeps the smallest share of its users is usually where to start.');
+    }
+  }
+
+  map.querySelector('#fm-run').addEventListener('click', analyze);
+  map.querySelector('#fm-clear').addEventListener('click', () => {
+    MAP_STAGES.forEach((s) => { s.field.value = ''; });
+    feedback.replaceChildren();
+    feedback.hidden = true;
+    mapResult.textContent = '';
+    mapNote.textContent = INTRO;
+  });
+</script>

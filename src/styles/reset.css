@@ -4,12 +4,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
 }
 
 body {
@@ -44,15 +39,4 @@ ul, ol { list-style: none; }
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-/* Focus visible for keyboard users */
-:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-:focus:not(:focus-visible) {
-  outline: none;
 }

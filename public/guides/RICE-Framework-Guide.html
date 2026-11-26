@@ -1,0 +1,503 @@
+<article class="guide" data-guide="rice">
+
+  <header class="guide-intro">
+    <p class="lede">RICE gives every product idea a single score from four estimates: how many people it reaches, how much it changes things for each of them, how sure you are, and how much work it takes. Rank by the score and use the order to start the roadmap discussion.</p>
+
+    <figure class="figure" data-hero>
+      <p class="formula" role="img" aria-label="RICE score equals reach times impact times confidence, divided by effort">
+        <var data-series="4">Reach</var>
+        <span class="formula-term"><span class="op">×</span><var data-series="1">Impact</var></span>
+        <span class="formula-term"><span class="op">×</span><var data-series="5">Confidence</var></span>
+        <span class="formula-term"><span class="op">÷</span><var data-series="6">Effort</var></span>
+        <span class="formula-term"><span class="op">=</span><span class="formula-result">Score</span></span>
+      </p>
+      <figcaption>Three factors multiply the value of an idea. Effort, the cost, divides it.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Multiply how many users a feature reaches by how much each one benefits and by how confident you are in those numbers, then divide by the total effort. The higher the score, the stronger the case for building it soon.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Four factors, one score</h2>
+      <p class="chapter-dek">Three multiply the value of an idea and one divides it</p>
+    </header>
+
+    <p>RICE scores an idea as Reach × Impact × Confidence ÷ Effort. Reach is how many people the idea affects in a fixed period, Impact is how much it changes things for each of them, Confidence is how sure you are of the other estimates, and Effort is the total work it takes. Sean McBride introduced RICE in “RICE: Simple prioritization for product managers” on the Intercom blog, describing how the product team there ranked its ideas.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="4">R</span>
+        <h3 class="card-title">Reach</h3>
+        <p class="card-q">How many people will this touch?</p>
+        <p>An estimated count of the users who will meet the feature in a set period, usually a quarter. Base it on analytics rather than guessing, and use the same period for every feature you compare.</p>
+        <p class="card-meta">Users per quarter · multiplies the score</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="1">I</span>
+        <h3 class="card-title">Impact</h3>
+        <p class="card-q">How much will each person benefit?</p>
+        <p>How strongly the feature changes things for each user who meets it. It is the most subjective factor, so everyone scores it on the same fixed scale.</p>
+        <p class="card-meta">0.25, 0.5, 1, 2 or 3 · multiplies the score</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="5">C</span>
+        <h3 class="card-title">Confidence</h3>
+        <p class="card-q">How sure are we about these numbers?</p>
+        <p>The honesty check. A result from an A/B test earns 100%; a hunch earns 50%. It stops a well-argued guess from outranking an idea you have researched.</p>
+        <p class="card-meta">50%, 80% or 100% · multiplies the score</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="6">E</span>
+        <h3 class="card-title">Effort</h3>
+        <p class="card-q">How much total work will this take?</p>
+        <p>Person-months across design, engineering, QA and documentation. It is the only divisor, so more effort lowers the score. Count every discipline, not only engineering.</p>
+        <p class="card-meta">Person-months · divides the score</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">A return-on-investment estimate</p>
+      <p>Reach × Impact × Confidence is the expected value: how many people, how much, how sure. Dividing by Effort turns that value into a return on the work you would put in.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="score" data-nav="Scoring">
+    <header class="chapter-head">
+      <h2>Scoring each factor</h2>
+      <p class="chapter-dek">Impact and Confidence use fixed values so a team scores the same way</p>
+    </header>
+
+    <h3>Reach</h3>
+    <p>Reach is an estimated count for a stated period, not a choice from a list. Use the number of users your analytics show for the period. If you have no data for an idea, the bands below give rough orders of magnitude; they are never required values.</p>
+    <ol class="scale" aria-label="Reach: rough orders of magnitude">
+      <li><span class="scale-value">50,000+</span><span class="scale-label">Everyone</span><span class="scale-note">All active users see it</span></li>
+      <li><span class="scale-value">10,000</span><span class="scale-label">Broad</span><span class="scale-note">Most active users</span></li>
+      <li><span class="scale-value">1,000</span><span class="scale-label">Segment</span><span class="scale-note">One user group</span></li>
+      <li><span class="scale-value">100</span><span class="scale-label">Niche</span><span class="scale-note">Power users only</span></li>
+    </ol>
+    <p>When an idea's Reach rests on a band rather than data, lower its Confidence to make up for it.</p>
+
+    <h3>Impact</h3>
+    <p>Pick one of five multipliers. Everyone on the team uses the same five.</p>
+    <ol class="scale" aria-label="Impact scale">
+      <li><span class="scale-value">3×</span><span class="scale-label">Massive</span><span class="scale-note">Changes how people use the product</span></li>
+      <li><span class="scale-value">2×</span><span class="scale-label">High</span><span class="scale-note">A major improvement</span></li>
+      <li><span class="scale-value">1×</span><span class="scale-label">Medium</span><span class="scale-note">A clear improvement</span></li>
+      <li><span class="scale-value">0.5×</span><span class="scale-label">Low</span><span class="scale-note">Helps a little</span></li>
+      <li><span class="scale-value">0.25×</span><span class="scale-label">Minimal</span><span class="scale-note">Barely noticed</span></li>
+    </ol>
+    <div class="callout callout--tip">
+      <p class="callout-title">The 20% rule</p>
+      <p>Most features are 1× or less. As a rule of thumb, if more than one in five of your features score 2× or 3×, the team is inflating Impact.</p>
+    </div>
+
+    <h3>Confidence</h3>
+    <p>Score how much evidence sits behind your Reach and Impact estimates. Be strict: this factor exists to discount optimism.</p>
+    <ol class="scale" aria-label="Confidence scale">
+      <li><span class="scale-value">100%</span><span class="scale-label">High</span><span class="scale-note">Data behind every estimate, such as usage analytics or an A/B test result</span></li>
+      <li><span class="scale-value">80%</span><span class="scale-label">Medium</span><span class="scale-note">Data behind some estimates, such as a survey or consistent customer feedback</span></li>
+      <li><span class="scale-value">50%</span><span class="scale-label">Low</span><span class="scale-note">Gut feel: “I think users want this”</span></li>
+    </ol>
+    <div class="callout callout--tip">
+      <p>When you are unsure between two values, take the lower one. Overconfidence is a common way for RICE scores to go wrong.</p>
+    </div>
+
+    <h3>Effort</h3>
+    <p>Estimate the total person-months, adding up design, engineering, QA and documentation. These anchors are RICE's own; other scoring frameworks use different effort scales, and the scales do not convert.</p>
+    <ol class="scale" aria-label="Effort reference points">
+      <li><span class="scale-value">6+</span><span class="scale-label">Large</span><span class="scale-note">A full squad for two months or more</span></li>
+      <li><span class="scale-value">3</span><span class="scale-label">Medium</span><span class="scale-note">A small team for about six weeks</span></li>
+      <li><span class="scale-value">1</span><span class="scale-label">Small</span><span class="scale-note">One developer for a month</span></li>
+      <li><span class="scale-value">0.5</span><span class="scale-label">Tiny</span><span class="scale-note">One developer for two weeks</span></li>
+    </ol>
+    <p>When you are unsure, round Effort up. Estimates often miss work outside engineering.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Scoring three features for a music app</h2>
+      <p class="chapter-dek">A streaming team can build one or two of these next quarter</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>Smart Shuffle, Social Playlists and Lyrics Display</h3>
+      <p>The streaming team is fictional and all figures are illustrative. It ranks three candidates with the scales from the previous chapter.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <caption>Three candidate features ranked by RICE score</caption>
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col" class="num">Reach</th>
+              <th scope="col" class="num">Impact</th>
+              <th scope="col" class="num">Confidence</th>
+              <th scope="col" class="num">Effort (person-months)</th>
+              <th scope="col" class="num">RICE score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-top"><th scope="row">Smart Shuffle</th><td class="num">40,000</td><td class="num">2×</td><td class="num">80%</td><td class="num">2</td><td class="num">32,000</td></tr>
+            <tr><th scope="row">Social Playlists</th><td class="num">15,000</td><td class="num">3×</td><td class="num">50%</td><td class="num">3</td><td class="num">7,500</td></tr>
+            <tr><th scope="row">Lyrics Display</th><td class="num">50,000</td><td class="num">0.5×</td><td class="num">100%</td><td class="num">6</td><td class="num">4,167</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-reading">
+        <h4>What the scores tell us</h4>
+        <p><strong>Smart Shuffle wins.</strong> It has wide reach, high impact, reasonable confidence and moderate effort: 40,000 × 2 × 80% ÷ 2 = 32,000, the best return of the three.</p>
+        <p><strong>Social Playlists has the highest impact but ranks second.</strong> Its 50% confidence is a gut feel, and that halves the score. A survey that raised confidence to 80% would lift it to 12,000, still behind Smart Shuffle.</p>
+        <p><strong>Lyrics Display reaches everyone but ranks last.</strong> Wide reach cannot make up for low impact and six person-months of work: 50,000 × 0.5 × 100% ÷ 6 is about 4,167.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Score a feature of your own</h2>
+      <p class="chapter-dek">Try one feature in the calculator, then score the whole list in a spreadsheet</p>
+    </header>
+
+    <div class="tool" data-tool="rice-calculator">
+      <div class="tool-head">
+        <h3 class="tool-title">RICE calculator</h3>
+        <p class="tool-hint">Start from the defaults, then enter your own numbers. The score updates as you type.</p>
+      </div>
+      <div class="fields" data-cols="2" data-compact>
+        <div class="field">
+          <label for="rice-reach">Reach</label>
+          <input id="rice-reach" type="number" min="0" step="100" value="5000" inputmode="numeric" aria-describedby="rice-reach-help">
+          <p class="field-help" id="rice-reach-help">Users per quarter</p>
+        </div>
+        <div class="field">
+          <label for="rice-impact">Impact</label>
+          <select id="rice-impact">
+            <option value="3">3× Massive</option>
+            <option value="2">2× High</option>
+            <option value="1" selected>1× Medium</option>
+            <option value="0.5">0.5× Low</option>
+            <option value="0.25">0.25× Minimal</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rice-confidence">Confidence</label>
+          <select id="rice-confidence">
+            <option value="1">100% High</option>
+            <option value="0.8" selected>80% Medium</option>
+            <option value="0.5">50% Low</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rice-effort">Effort</label>
+          <input id="rice-effort" type="number" min="0.1" step="0.5" value="2" inputmode="decimal" aria-describedby="rice-effort-help">
+          <p class="field-help" id="rice-effort-help">Person-months, all disciplines</p>
+        </div>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">RICE score</p>
+        <output class="tool-result" id="rice-result" for="rice-reach rice-impact rice-confidence rice-effort">2,000</output>
+        <p class="tool-output-note" id="rice-equation">5,000 × 1 × 80% ÷ 2</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Three experiments to try</p>
+      <ol>
+        <li>Set Confidence to 50%. The score drops from 2,000 to 1,250, more than a third: that is the cost of a guess.</li>
+        <li>Double Effort from 2 to 4. The score halves.</li>
+        <li>Set Impact to 3×. The score triples, which is why teams are tempted to inflate it.</li>
+      </ol>
+    </div>
+
+    <h3>A spreadsheet for the whole list</h3>
+    <p>The template has one row per feature and a score column that calculates itself. Fill it in and sort by score.</p>
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Columns of the RICE template, with one example row</caption>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">Reach</th>
+            <th scope="col">Impact</th>
+            <th scope="col">Confidence</th>
+            <th scope="col">Effort</th>
+            <th scope="col">RICE score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">What it holds</th><td>Users per quarter</td><td>0.25, 0.5, 1, 2 or 3</td><td>50%, 80% or 100%</td><td>Person-months</td><td>R × I × C ÷ E</td></tr>
+          <tr><th scope="row">Smart Shuffle</th><td>40,000</td><td>2</td><td>80%</td><td>2</td><td>32,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tool-actions">
+      <button type="button" class="btn btn--primary" id="rice-download">Download the CSV template</button>
+    </div>
+
+    <h3>Filling in the spreadsheet</h3>
+    <ol class="steps">
+      <li><h4 class="step-title">List every candidate feature</h4><p>One per row in the first column.</p></li>
+      <li><h4 class="step-title">Score Reach</h4><p>Base it on analytics, using the same period for every feature.</p></li>
+      <li><h4 class="step-title">Score Impact</h4><p>Use only 0.25, 0.5, 1, 2 or 3.</p></li>
+      <li><h4 class="step-title">Score Confidence</h4><p>Use only 50%, 80% or 100%. Type the percent sign so the spreadsheet stores 80% as 0.8.</p></li>
+      <li><h4 class="step-title">Estimate Effort</h4><p>In person-months, across every discipline.</p></li>
+      <li><h4 class="step-title">Calculate and sort</h4><p>The score column computes R × I × C ÷ E for each row. Sort from highest to lowest.</p></li>
+      <li><h4 class="step-title">Discuss the ranking</h4><p>The scores give you an order to discuss, not a decision.</p></li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When RICE fits, and when it does not</h2>
+      <p class="chapter-dek">It needs data and a long enough list to be worth the setup</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You have ten or more competing ideas to rank</li>
+          <li>Stakeholders disagree and you need a shared, explicit method</li>
+          <li>You have analytics data to estimate Reach</li>
+          <li>You are planning a quarterly roadmap across teams</li>
+          <li>You want to reduce decisions made on gut feel</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>The product is new and has no usage data to estimate Reach. Use <a data-guide-link="ice">ICE</a> until it does.</li>
+          <li>You need an answer today. Use <a data-guide-link="ice">ICE</a> or <a data-guide-link="value-effort">Value vs Effort</a> instead.</li>
+          <li>The items are not comparable, such as infrastructure work against features</li>
+          <li>The team is small enough to decide in ten minutes</li>
+          <li>People are gaming the scores instead of debating them</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">The most rigorous way to rank, and one of the slower ones</p>
+      <p>Because Reach comes from usage data, RICE is the most rigorous of the prioritization frameworks for ranking. From fastest to slowest, they run ICE, Value vs Effort, RICE, then the <a data-guide-link="kano">Kano model</a>, which gathers the most direct user evidence but classifies features rather than ranking them. A common sequence: ICE or Value vs Effort cuts 30 ideas to about 10, RICE ranks the shortlist, and Kano runs alongside when you need to know how a feature affects satisfaction. <a data-guide-link="compare-prioritization">Choosing a prioritization framework</a> sets the four side by side.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways RICE goes wrong</h2>
+      <p class="chapter-dek">The formula is simple; scoring honestly is the hard part</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Inflating Impact</h3>
+        <p>Everyone believes their own feature deserves 3×. If more than 20% of features score 2× or 3×, the scale has stopped meaning anything.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> agree on a distribution in advance: one or two features at 3×, most at 0.5× or 1×.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Guessing Reach</h3>
+        <p>Reach is the one factor RICE expects you to base on data. Guessing it removes the method’s main advantage.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> pull Reach from analytics. If one idea has no data behind its Reach, set its Confidence to 50%; if most ideas have none, use a faster framework until data exists.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mixing time periods</h3>
+        <p>Reach per month for one feature and per year for another makes the comparison meaningless.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use one period, usually a quarter, for every feature in the batch.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Underestimating Effort</h3>
+        <p>A common mistake is to count only engineering time, while design, QA, documentation and migration can take months.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> ask each discipline for its own estimate, add them up and round up.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Scoring alone</h3>
+        <p>One person’s scores carry one person’s biases. RICE works when a group calibrates together.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> score as a team. Where estimates are more than one step apart on a factor's scale, you have found the conversation worth having.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating scores as final</h3>
+        <p>RICE cannot see strategy, dependencies or team morale. Sometimes a lower-scoring item is the right call.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use the ranking to set the order of discussion, not to approve the roadmap automatically.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running a 90-minute scoring session</h2>
+      <p class="chapter-dek">Who to invite, how to spend the time and what to do with the ranking</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Must attend</dt><dd>PM (facilitates), engineering lead, design lead</dd></div>
+      <div><dt>Useful to have</dt><dd>Data analyst, QA lead, a stakeholder who observes</dd></div>
+      <div><dt>Prepare</dt><dd>A shared spreadsheet with every candidate feature listed and the agreed period for Reach</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–10 min</span><div><p class="agenda-title">Set the stage</p><p>Explain RICE, share the spreadsheet, and agree on the period and the goal.</p></div></li>
+      <li><span class="agenda-time">10–20 min</span><div><p class="agenda-title">Score Reach</p><p>The data analyst leads, feature by feature: how many users per quarter?</p></div></li>
+      <li><span class="agenda-time">20–40 min</span><div><p class="agenda-title">Score Impact and Confidence</p><p>Each person writes down a value from the factor's own scale (0.25 to 3 for Impact; 50%, 80% or 100% for Confidence), then everyone reveals. Discuss any factor where estimates are more than one step apart on that scale.</p></div></li>
+      <li><span class="agenda-time">40–55 min</span><div><p class="agenda-title">Score Effort</p><p>The engineering lead drives. The PM stays out of it and lets the people building it estimate.</p></div></li>
+      <li><span class="agenda-time">55–70 min</span><div><p class="agenda-title">Calculate and react</p><p>Sort live, give two minutes of silent reading, then ask what surprises people.</p></div></li>
+      <li><span class="agenda-time">70–90 min</span><div><p class="agenda-title">Debate and decide</p><p>Discuss the top five, apply strategic filters, record overrides and commit, following the steps below.</p></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Three facilitation habits</p>
+      <ul>
+        <li><strong>Write estimates down first</strong> so the loudest voice does not anchor the room.</li>
+        <li><strong>Timebox each debate</strong> to three minutes per feature, and park anything that stalls.</li>
+        <li><strong>Capture the reasoning</strong> in a notes column; you will want it next quarter.</li>
+      </ul>
+    </div>
+
+    <h3>From a ranked list to a roadmap</h3>
+    <p>Five steps sit between sorting the scores and committing to work.</p>
+    <ol class="steps">
+      <li>
+        <h4 class="step-title">Sort and review</h4>
+        <p>Sort from highest to lowest and read the list before reacting. Does the order look roughly right?</p>
+        <p class="step-note">Ask: if the CEO saw the top five, would anything look wrong?</p>
+      </li>
+      <li>
+        <h4 class="step-title">Apply strategic filters</h4>
+        <p>Check the top ten against company goals, dependencies and risks to retention.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Record every override</h4>
+        <p>A lower-scoring item can move up the queue, as long as you write down why.</p>
+        <p class="step-note">A rule of thumb: if you override more than 20% of the ranking, recalibrate your inputs.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Check capacity</h4>
+        <p>Compare the total Effort against the person-months you actually have, and draw the cut line.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Commit and communicate</h4>
+        <p>Commit to two to four items. Share the whole list, including what you said no to and why.</p>
+        <p class="step-note">Keep the spreadsheet. Next quarter, compare your estimates with what happened.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Six questions on the formula and how to use it</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Where does Effort sit in the RICE formula?</p>
+        <ul class="quiz-options">
+          <li><button type="button">It multiplies the score</button></li>
+          <li><button type="button">It divides the score, as the only divisor</button></li>
+          <li><button type="button">It breaks ties between equal scores</button></li>
+        </ul>
+        <div class="quiz-why"><p>Effort is the only divisor: Reach × Impact × Confidence ÷ Effort. The more work a feature takes, the lower its score, which is what makes the result a return on the work.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Reach 10,000 × Impact 2 × Confidence 50% ÷ Effort 2 = ?</p>
+        <ul class="quiz-options">
+          <li><button type="button">5,000</button></li>
+          <li><button type="button">10,000</button></li>
+          <li><button type="button">20,000</button></li>
+        </ul>
+        <div class="quiz-why"><p>10,000 × 2 × 50% ÷ 2 = 5,000. Leaving out Confidence or Effort gives 10,000; leaving out both gives 20,000. Low confidence halves the score.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Halfway through a scoring session, seven of the ten features have an Impact of 2× or 3×. What is the most likely explanation?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The backlog is unusually strong this quarter</button></li>
+          <li><button type="button">Effort has been underestimated across the board</button></li>
+          <li><button type="button">The team is inflating its Impact estimates</button></li>
+        </ul>
+        <div class="quiz-why"><p>Most features are 1×, a clear improvement, or less. When most of a list sits at 2× or 3×, the scale has stopped separating ideas, so agree on a distribution or an anchor feature for each value and rescore. Effort is a separate estimate and does not explain a skewed Impact column.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Your team has just sorted 15 features by RICE score. What comes next?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Build the top-scoring feature straight away</button></li>
+          <li><button type="button">Check the list against strategy and capacity</button></li>
+          <li><button type="button">Send the ranking to leadership for sign-off</button></li>
+        </ul>
+        <div class="quiz-why"><p>The ranking starts the discussion. Check the top of the list against goals, dependencies and the person-months you have, record any overrides, then commit and share the whole list.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A team launches a new app next month. It has no usage data and twelve ideas to rank this week. What fits best?</p>
+        <ul class="quiz-options">
+          <li><button type="button">ICE or Value vs Effort until data exists</button></li>
+          <li><button type="button">RICE, with Reach read from the band table</button></li>
+          <li><button type="button">RICE, with every Confidence set to 100%</button></li>
+        </ul>
+        <div class="quiz-why"><p>Without data, every Reach is a guess, and RICE loses its advantage over faster methods. The bands are only rough orders of magnitude, and 100% Confidence needs strong evidence such as an A/B test.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">The Reach and Impact estimates for a feature come from a customer survey, not from a test. What Confidence should it get?</p>
+        <ul class="quiz-options">
+          <li><button type="button">100%</button></li>
+          <li><button type="button">80%</button></li>
+          <li><button type="button">50%</button></li>
+        </ul>
+        <div class="quiz-why"><p>A survey puts data behind the estimates without testing them, which is 80%. 100% needs data behind every estimate, such as usage analytics or an A/B test result, and 50% is for gut feel with no evidence behind it.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<script data-guide-script>
+  const reach = root.querySelector('#rice-reach');
+  const impact = root.querySelector('#rice-impact');
+  const confidence = root.querySelector('#rice-confidence');
+  const effort = root.querySelector('#rice-effort');
+  const result = root.querySelector('#rice-result');
+  const equation = root.querySelector('#rice-equation');
+  const effortHelp = root.querySelector('#rice-effort-help');
+  const reachHelp = root.querySelector('#rice-reach-help');
+  const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
+
+  function update() {
+    const r = parseFloat(reach.value);
+    const i = parseFloat(impact.value);
+    const c = parseFloat(confidence.value);
+    const e = parseFloat(effort.value);
+
+    const reachOk = Number.isFinite(r) && r >= 0;
+    const effortOk = Number.isFinite(e) && e > 0;
+    reach.setAttribute('aria-invalid', String(!reachOk));
+    effort.setAttribute('aria-invalid', String(!effortOk));
+    reachHelp.textContent = reachOk ? 'Users per quarter' : 'Enter a number of users, 0 or more';
+    reachHelp.classList.toggle('is-error', !reachOk);
+    effortHelp.textContent = effortOk ? 'Person-months, all disciplines' : 'Enter an effort greater than 0';
+    effortHelp.classList.toggle('is-error', !effortOk);
+
+    if (!reachOk || !effortOk) {
+      result.textContent = '–';
+      equation.textContent = 'Fill in Reach and Effort to see a score';
+      return;
+    }
+    const score = (r * i * c) / e;
+    result.textContent = score >= 100 ? Math.round(score).toLocaleString('en-US') : fmt(score);
+    equation.textContent = `${fmt(r)} × ${i} × ${Math.round(c * 100)}% ÷ ${fmt(e)}`;
+  }
+
+  [reach, effort].forEach(el => el.addEventListener('input', update));
+  [impact, confidence].forEach(el => el.addEventListener('change', update));
+  update();
+
+  root.querySelector('#rice-download').addEventListener('click', () => {
+    const rows = ['Feature,Reach (users per quarter),Impact (0.25 to 3),Confidence (%),Effort (person-months),RICE score,Notes'];
+    for (let n = 2; n <= 11; n++) rows.push(`"",,,,,=IF(E${n}>0,B${n}*C${n}*D${n}/E${n},""),""`);
+    const url = URL.createObjectURL(new Blob([rows.join('\n')], { type: 'text/csv' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'RICE-scoring-template.csv';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+</script>

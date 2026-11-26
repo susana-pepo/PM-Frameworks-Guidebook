@@ -1,65 +1,67 @@
-import { getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
-import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
-import { observeReveals } from '../utils/reveal.js';
+import { categories, getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
+import { frameworkGlyph } from '../data/icons.js';
+import { setPageMeta } from '../utils/page-meta.js';
+import { renderNotFound } from './not-found.js';
+
+const ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 export function renderCategoryPage(container, categoryId) {
   const cat = getCategory(categoryId);
-  if (!cat) {
-    container.innerHTML = '<p>Category not found.</p>';
-    return;
-  }
+  if (!cat) return renderNotFound(container);
 
-  // Tint the page background with the category fill (matches framework pages)
-  const appContent = container.closest('.app-content') || container;
-  appContent.setAttribute('data-category', categoryId);
-
-  const fws = getFrameworksByCategory(categoryId);
-  const comparison = getComparisonGuide(categoryId);
+  const list = getFrameworksByCategory(cat.id);
+  const guide = getComparisonGuide(cat.id);
+  const others = categories.filter(c => c.id !== cat.id);
 
   container.innerHTML = `
-    <div class="cat-page" style="--accent-color:${cat.color}; --accent-light:${cat.colorLight};">
-      <header class="cat-page-head reveal">
-        <span class="cat-page-emoji" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
-        <div class="cat-page-text">
-          <span class="cat-page-eyebrow">Category · ${fws.length} frameworks</span>
-          <h1 class="cat-page-title">${cat.name}</h1>
-          <p class="cat-page-desc">${cat.description}</p>
-        </div>
+    <div class="page family-page" data-cat="${cat.id}">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol><li><a href="#/">Index</a></li><li aria-current="page">${cat.name}</li></ol>
+      </nav>
+
+      <header class="family-page-head">
+        <span class="thumb thumb--lg" aria-hidden="true"></span>
+        <h1>${cat.name}</h1>
+        <p class="family-page-lede">${cat.description} Reach for them when ${lowerFirst(cat.when)}</p>
       </header>
 
-      <div class="cat-page-when reveal">
-        <span class="cat-when-label">Reach for these</span>
-        <p class="cat-when-text">${cat.when.replace(/^When /, 'when ')}.</p>
-      </div>
+      <ol class="family-page-list">
+        ${list.map((fw, i) => `
+          <li>
+            <a class="feature" href="#/framework/${fw.slug}">
+              <span class="feature-glyph" aria-hidden="true">${frameworkGlyph(fw.slug, cat.id)}</span>
+              <span class="feature-body">
+                <span class="feature-name">${fw.name}</span>
+                <span class="feature-question">${fw.question}</span>
+                <span class="feature-desc">${fw.description}</span>
+                <span class="feature-origin">${fw.origin}</span>
+              </span>
+              ${ARROW}
+            </a>
+          </li>`).join('')}
+      </ol>
 
-      <div class="hub-card-grid cat-page-grid reveal" data-reveal-group="cat-cards">
-        ${fws.map((fw, i) => `
-          <a href="#/framework/${fw.slug}" class="hub-fw-card card-clickable"
-             style="--accent-color:${cat.color}; --accent-light:${cat.colorLight}; --card-index:${i};">
-            <span class="hub-fw-card-tile" aria-hidden="true">${frameworkGlyph(fw.slug, fw.emoji)}</span>
-            <h3 class="hub-fw-card-name">${fw.name}</h3>
-            <p class="hub-fw-card-desc">${fw.description}</p>
-            <span class="hub-fw-card-foot">
-              <span class="hub-fw-card-cat">${cat.name}</span>
-              <span class="hub-fw-card-arrow" aria-hidden="true">&#x2192;</span>
-            </span>
-          </a>
-        `).join('')}
-      </div>
-
-      ${comparison ? `
-        <a href="#/compare/${comparison.slug}" class="cat-compare-card card-clickable"
-           style="--accent-color:${cat.color};">
-          <span class="cat-compare-icon" aria-hidden="true">${categoryGlyph(cat.id, cat.emoji)}</span>
-          <span class="cat-compare-text">
-            <span class="cat-compare-title">Compare all ${cat.name} frameworks</span>
-            <span class="cat-compare-sub">Side-by-side comparison with an interactive picker</span>
+      ${guide ? `
+        <a class="choose" href="#/compare/${guide.slug}">
+          <span class="choose-text">
+            <span class="choose-title">${guide.name}</span>
+            <span class="choose-desc">${guide.description} Includes a decision guide and a picker.</span>
           </span>
-          <span class="cat-compare-arrow" aria-hidden="true">&#x2192;</span>
-        </a>
-      ` : ''}
+          ${ARROW}
+        </a>` : ''}
+
+      <nav class="other-families" aria-label="Other families">
+        <h2 class="other-families-title">Other families</h2>
+        <ul>
+          ${others.map(o => `<li data-cat="${o.id}"><a href="#/category/${o.id}"><span class="thumb thumb--sm" aria-hidden="true"></span>${o.name}</a></li>`).join('')}
+        </ul>
+      </nav>
     </div>
   `;
 
-  observeReveals(container);
+  setPageMeta({ title: cat.name });
+}
+
+function lowerFirst(s) {
+  return s.charAt(0).toLowerCase() + s.slice(1);
 }

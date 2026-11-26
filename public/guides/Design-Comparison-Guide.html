@@ -1,0 +1,530 @@
+<article class="guide" data-guide="compare-design">
+
+  <header class="guide-intro">
+    <p class="lede">Jobs to Be Done, design thinking and User Story Mapping each answer a different design question at a different stage of product work; the CIRCLES Method structures a spoken answer to a product design question in an interview. This guide shows when to reach for each one and how their outputs feed one another.</p>
+
+    <figure class="figure" data-hero>
+      <div class="dc-stages">
+        <ol class="dc-flow" aria-label="The product pipeline, in order">
+          <li data-series="2">
+            <span class="dc-ask">Why?</span>
+            <span class="dc-name"><span class="key-dot" aria-hidden="true"></span>Jobs to Be Done</span>
+            <span class="dc-does">Discover the job people hire the product for</span>
+            <span class="dc-time">1–3 weeks</span>
+          </li>
+          <li data-series="5">
+            <span class="dc-ask">What?</span>
+            <span class="dc-name"><span class="key-dot" aria-hidden="true"></span>Design thinking</span>
+            <span class="dc-does">Explore solutions and test them with users</span>
+            <span class="dc-time">2–6 weeks</span>
+          </li>
+          <li data-series="4">
+            <span class="dc-ask">When?</span>
+            <span class="dc-name"><span class="key-dot" aria-hidden="true"></span>User Story Mapping</span>
+            <span class="dc-does">Plan what ships first, second and third</span>
+            <span class="dc-time">A 2-hour workshop</span>
+          </li>
+          <li data-series="7">
+            <span class="dc-ask">Build</span>
+            <span class="dc-name"><span class="key-dot" aria-hidden="true"></span>Execute</span>
+            <span class="dc-does">Agile sprints deliver the first release</span>
+            <span class="dc-time">Ongoing</span>
+          </li>
+        </ol>
+        <div class="dc-aside" data-series="1">
+          <span class="dc-ask">In an interview</span>
+          <span class="dc-name"><span class="key-dot" aria-hidden="true"></span>CIRCLES</span>
+          <span class="dc-does">Structure your answer to a product design question</span>
+          <span class="dc-time">About 20 minutes</span>
+        </div>
+      </div>
+      <figcaption>Three frameworks hand work to each other, from understanding the job to planning releases; times are typical. CIRCLES, set below the pipeline, is for interview answers.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Use Jobs to Be Done when you do not know why people behave as they do, design thinking when you do not know what to build, and story mapping when you know what to build but not what ships first. In a PM interview, structure your answer with CIRCLES. In real work the first three often run in that order, each one feeding the next.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="overview" data-nav="At a glance">
+    <header class="chapter-head">
+      <h2>What each framework is for</h2>
+      <p class="chapter-dek">The four in brief, and how long each one takes</p>
+    </header>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="1">7 steps</span>
+        <h3 class="card-title"><a data-guide-link="circles">CIRCLES Method</a></h3>
+        <p>A seven-step structure for answering product design interview questions such as “Design a product for X”: Comprehend the situation, Identify the customer, Report the customer’s needs, Cut through prioritization, List solutions, Evaluate tradeoffs and Summarize your recommendation.</p>
+        <p class="card-meta">Best for a product design question in a PM interview</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">Job stories</span>
+        <h3 class="card-title"><a data-guide-link="jtbd">Jobs to Be Done</a></h3>
+        <p>Looks at the progress a person is trying to make in a particular situation. People “hire” a product to make that progress and “fire” it when something serves them better. It moves the focus from demographics to motivations, and shows the real competition and the needs nobody is meeting.</p>
+        <p class="card-meta">Best for churn, positioning and finding the real competition</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="5">5 modes</span>
+        <h3 class="card-title"><a data-guide-link="design-thinking">Design thinking</a></h3>
+        <p>A human-centered way to solve a problem you do not fully understand yet. The Stanford d.school’s model has five modes: Empathize, Define, Ideate, Prototype and Test. Teams move back and forth between them rather than through them once, and each cycle ends with a prototype tested with real users.</p>
+        <p class="card-meta">Best for new products and redesigns where nobody has framed the problem yet</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">2D map</span>
+        <h3 class="card-title"><a data-guide-link="user-story-mapping">User Story Mapping</a></h3>
+        <p>Lays the user’s journey left to right and the possible stories for each step top to bottom, in priority order. Lines drawn across the map cut it into releases, so every release covers the whole journey. It turns a flat backlog into a map the whole team understands.</p>
+        <p class="card-meta">Best for turning a long backlog into releases that work end to end</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Each one answers a different question</p>
+      <p>Jobs to Be Done asks what job people need done, design thinking asks what solution serves them, and story mapping asks what ships when. CIRCLES asks how to lay out a design answer so an interviewer can follow it. Treat the first three as <strong>a sequence you can enter at any point</strong>: start at the question you cannot yet answer.</p>
+    </div>
+
+    <h3>How long each one takes</h3>
+    <p>These are typical times, longest first. The four differ by orders of magnitude, from minutes to weeks, so the right one depends partly on how much time you have. Each framework’s own guide gives the details.</p>
+
+    <ol class="scale" aria-label="Typical time each framework takes, longest first">
+      <li><span class="scale-value">Weeks</span><span class="scale-label">Design thinking</span><span class="scale-note">2–6 weeks for a full cycle, from empathy research to a tested prototype</span></li>
+      <li><span class="scale-value">Weeks</span><span class="scale-label">Jobs to Be Done</span><span class="scale-note">1–3 weeks for a full study of 8–12 switch interviews</span></li>
+      <li><span class="scale-value">Hours</span><span class="scale-label">Story mapping</span><span class="scale-note">One 2-hour workshop with 4–8 people</span></li>
+      <li><span class="scale-value">Minutes</span><span class="scale-label">CIRCLES</span><span class="scale-note">About 20 minutes for the seven steps of a 35-minute interview question, leaving about 15 minutes for follow-up</span></li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="compare" data-nav="Side by side">
+    <header class="chapter-head">
+      <h2>Nine ways the four differ</h2>
+      <p class="chapter-dek">What each one needs, what it produces and who takes part</p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="table table--compare">
+        <caption>CIRCLES, Jobs to Be Done, design thinking and story mapping compared on nine dimensions</caption>
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">CIRCLES</th>
+            <th scope="col">Jobs to Be Done</th>
+            <th scope="col">Design thinking</th>
+            <th scope="col">Story mapping</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Core question</th><td>“How would you design X?”</td><td>“Why do people hire this product?”</td><td>“What solution best serves these users?”</td><td>“What ships first, second and third?”</td></tr>
+          <tr><th scope="row">Primary use</th><td>Product design questions in PM interviews</td><td>Strategy, positioning, churn analysis</td><td>Discovery, innovation, redesign</td><td>Release planning, organizing the backlog</td></tr>
+          <tr><th scope="row">Typical time</th><td>About 20 minutes</td><td>1–3 weeks</td><td>2–6 weeks</td><td>A 2-hour workshop</td></tr>
+          <tr><th scope="row">Team size</th><td>One person, the candidate</td><td>1–2 researchers</td><td>4–8, cross-functional</td><td>4–8, cross-functional</td></tr>
+          <tr><th scope="row">Input needed</th><td>A problem prompt</td><td>Access to users or customers</td><td>User research and a problem space</td><td>A known user journey and the features to place on it</td></tr>
+          <tr><th scope="row">Output</th><td>A structured answer to a design question</td><td>Job stories and a map of the four forces of progress</td><td>A POV statement, How Might We questions and a tested prototype</td><td>A visual map with release slices</td></tr>
+          <tr><th scope="row">Strengths</th><td>Fast and structured; shows how you think as a PM</td><td>Deep insight; reveals the real competition</td><td>User-centered and iterative; validates ideas before you build them</td><td>Shared understanding; releases that work end to end</td></tr>
+          <tr><th scope="row">Weaknesses</th><td>Surface-level; no real users involved</td><td>Slow; needs interviewing skill</td><td>Takes a lot of time; can feel academic</td><td>Organizes ideas rather than generating them</td></tr>
+          <tr><th scope="row">Origin</th><td>Lewis C. Lin, <cite>Decode and Conquer</cite> (2013)</td><td>Clayton Christensen and Tony Ulwick; the switch interview and the forces of progress from Bob Moesta and Chris Spiek; the job story from Paul Adams at Intercom, developed by Alan Klement</td><td>IDEO and the Stanford d.school (the five-mode model)</td><td>Jeff Patton with Peter Economy, <cite>User Story Mapping</cite> (2014)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Each one in a sentence</h3>
+    <dl class="facts">
+      <div><dt>CIRCLES</dt><dd>“Walk me through your thinking”: a structured interview answer in seven steps.</dd></div>
+      <div><dt>Jobs to Be Done</dt><dd>“People don’t want a quarter-inch drill, they want a quarter-inch hole.” The line is usually credited to Theodore Levitt, who credited Leo McGinneva. Understand the job people need done, whoever they are.</dd></div>
+      <div><dt>Design thinking</dt><dd>Understand the person before you design for them: empathize, explore, test and iterate.</dd></div>
+      <div><dt>Story mapping</dt><dd>See the whole journey, then slice it: from a flat backlog to a release plan.</dd></div>
+    </dl>
+  </section>
+
+  <section class="chapter" id="decide" data-nav="How to decide">
+    <header class="chapter-head">
+      <h2>Start from what you need to figure out</h2>
+      <p class="chapter-dek">Two questions lead to a starting framework</p>
+    </header>
+
+    <ol class="decision">
+      <li>
+        <p class="decision-q">Are you answering a product design question in an interview, such as “Design a product for X”?</p>
+        <ul>
+          <li><span class="decision-if">Yes</span><span><a data-guide-link="circles">Use CIRCLES</a>. Its seven steps give you a structured answer.</span></li>
+          <li><span class="decision-if">No</span><span>You are making real product decisions. Go to question 2.</span></li>
+        </ul>
+      </li>
+      <li>
+        <p class="decision-q">What do you need to figure out?</p>
+        <ul>
+          <li><span class="decision-if">Why</span><span>Why users behave as they do, for example why they churn. You need to understand their motivations: <a data-guide-link="jtbd">use Jobs to Be Done</a>.</span></li>
+          <li><span class="decision-if">What</span><span>What to build. The problem is fuzzy and needs exploring: <a data-guide-link="design-thinking">use design thinking</a>.</span></li>
+          <li><span class="decision-if">When</span><span>What ships first. You know what to build and need to sequence it into releases: <a data-guide-link="user-story-mapping">use User Story Mapping</a>.</span></li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">The path picks a starting point</p>
+      <p>In practice you will often use two or three together. Once Jobs to Be Done has found the job, you might move to design thinking to explore solutions, then build a story map to plan delivery. See <a href="#combine" data-section-link>using them together</a>, or answer up to three questions in the <a href="#picker" data-section-link>picker</a>.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="scenarios" data-nav="Scenarios">
+    <header class="chapter-head">
+      <h2>Eight situations and where to start</h2>
+      <p class="chapter-dek">Find the one closest to yours</p>
+    </header>
+
+    <p>Several of these use the same running example: Larkwell, a fictional piano-learning app for adults, sold by subscription.</p>
+
+    <ul class="scenarios">
+      <li>
+        <p class="scenario-q">“Design a fitness app for seniors.”</p>
+        <p>A PM interview. You have 35 minutes, and the interviewer wants to see structured thinking, not a shipped product.</p>
+        <p class="scenario-a"><a data-guide-link="circles">CIRCLES</a>: walk through all seven steps so the interviewer can follow how you think.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Larkwell subscribers cancel after their first month: why?”</p>
+        <p>You have data showing the churn but not its cause. You need to understand what users were trying to achieve.</p>
+        <p class="scenario-a"><a data-guide-link="jtbd">Jobs to Be Done</a>: run switch interviews to learn what job people hired Larkwell for and why they “fired” it.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Leadership says we need a social feature, but nobody knows what that means.”</p>
+        <p>A vague directive, an unclear problem and no research yet. Stakeholders each picture something different when they say “social”.</p>
+        <p class="scenario-a"><a data-guide-link="design-thinking">Design thinking</a>: empathize with users first, define the real need, then ideate and prototype options.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“The backlog for a new product area has 40 features.”</p>
+        <p>Engineering asks what to build first. You know the features but need to organize them into releases that make sense.</p>
+        <p class="scenario-a"><a data-guide-link="user-story-mapping">User Story Mapping</a>: lay out the user journey, place each feature under the step it supports and draw release lines.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Larkwell is considering a version for children.”</p>
+        <p>A new audience with different needs and no existing data. You need to learn whether the idea is viable and what the product would look like.</p>
+        <p class="scenario-a"><a data-guide-link="jtbd">Jobs to Be Done</a> first, to learn what job parents and children would hire a piano-learning app for. Then <a data-guide-link="design-thinking">design thinking</a> to explore solutions.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“How would you improve Spotify’s Discover Weekly?”</p>
+        <p>A product improvement question in the same 35-minute interview format. The interviewer expects structure.</p>
+        <p class="scenario-a"><a data-guide-link="circles">CIRCLES</a>: comprehend the feature, identify the customer and report their needs, then list solutions and evaluate the tradeoffs with metrics.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“New team members do not understand how the whole product fits together.”</p>
+        <p>This is staff onboarding. The product has grown piece by piece, and no single view of the user experience exists.</p>
+        <p class="scenario-a"><a data-guide-link="user-story-mapping">User Story Mapping</a>: build the map together as a team exercise. Making the map is the onboarding, because everyone walks the whole journey.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Users are asking for an offline mode. Should we build it?”</p>
+        <p>The request is specific, but you are unsure about the need behind it.</p>
+        <p class="scenario-a"><a data-guide-link="jtbd">Jobs to Be Done</a>: investigate the job. Is it “practice on the subway” or “avoid using mobile data”? The answer might not be offline mode at all.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="chapter" id="combine" data-nav="Using them together">
+    <header class="chapter-head">
+      <h2>Most real problems need two or three</h2>
+      <p class="chapter-dek">Each framework’s output becomes the next one’s input</p>
+    </header>
+
+    <h3>The full product pipeline</h3>
+    <p>In real work the three research and planning frameworks chain together, and each step hands something concrete to the next. The notes below show what passes along at each handoff.</p>
+
+    <ol class="chain">
+      <li><span class="chain-name">Jobs to Be Done</span><span class="chain-note">Passes on job stories and the four forces of progress.</span></li>
+      <li><span class="chain-name">Design thinking</span><span class="chain-note">Passes on a POV statement and a tested prototype.</span></li>
+      <li><span class="chain-name">User Story Mapping</span><span class="chain-note">Passes on release slices, starting with Release 1.</span></li>
+      <li><span class="chain-name">Execute</span><span class="chain-note">Takes Release 1 into the sprint backlog.</span></li>
+    </ol>
+
+    <h3>Three common combinations</h3>
+    <p>The examples continue with Larkwell, the fictional piano-learning app from the scenarios.</p>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <h4 class="card-title">Jobs to Be Done, then story mapping</h4>
+        <p class="card-q">A feature-rich product that is losing focus</p>
+        <p>Jobs to Be Done reveals the core job. The story map organizes the features around that job, and the release slices make sure every version delivers on it.</p>
+        <p><strong>Example:</strong> Larkwell’s app has grown to dozens of features. Interviews show the job is “feel progress fast”, and the story map reprioritizes everything around it.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Design thinking, then story mapping</h4>
+        <p class="card-q">A new product or a major redesign</p>
+        <p>Design thinking generates and validates solutions. The story map turns the validated ideas into a release plan.</p>
+        <p><strong>Example:</strong> Larkwell’s onboarding redesign. Testing shows that “play a first song in five minutes” wins, and the story map plans the first three releases of the new onboarding.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">All three, in sequence</h4>
+        <p class="card-q">Entering a new market</p>
+        <p>Jobs to Be Done interviews reveal the job in the new market, design thinking explores what the product looks like for that job, and a story map plans the first release.</p>
+        <p><strong>Example:</strong> Larkwell’s proposed version for children. Interviews with parents, design workshops with children, then a story map for the first release of the children’s version.</p>
+      </div>
+    </div>
+
+    <h3>Where each output goes</h3>
+    <div class="table-wrap">
+      <table class="table table--stack">
+        <caption>What each framework produces and where it feeds in</caption>
+        <thead>
+          <tr>
+            <th scope="col">From</th>
+            <th scope="col">Output</th>
+            <th scope="col">Feeds into</th>
+            <th scope="col">How</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Jobs to Be Done</th><td>Job stories</td><td>The story map’s goal</td><td>The job becomes the goal the whole map serves.</td></tr>
+          <tr><th scope="row">Jobs to Be Done</th><td>The four forces of progress</td><td>Design thinking: Empathize</td><td>Push, pull, anxiety and habit show the worries and routines to design around. Jobs to Be Done is one lens for empathy research, which is broader.</td></tr>
+          <tr><th scope="row">Design thinking</th><td>POV statement</td><td>The story map’s goal and user</td><td>The POV names whose journey the backbone follows and what they need from it.</td></tr>
+          <tr><th scope="row">Design thinking</th><td>A tested prototype</td><td>The story map’s body</td><td>Each feature in the prototype becomes a body story under the backbone step it supports.</td></tr>
+          <tr><th scope="row">User Story Mapping</th><td>The Release 1 slice</td><td>The sprint backlog</td><td>The top slice goes straight into agile sprints.</td></tr>
+          <tr><th scope="row">User Story Mapping</th><td>The full map</td><td>Stakeholder updates</td><td>One picture explains the whole roadmap.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">CIRCLES stays outside the pipeline</p>
+      <p>CIRCLES does not combine with the other three in day-to-day work, and it is not a compressed form of design thinking. It structures a spoken answer of about 20 minutes, mostly in interviews. CIRCLES and design thinking follow a similar path, from users to needs to solutions, but they were developed separately: design thinking is research and prototyping with real users over days or weeks, while CIRCLES involves no real users, so it does not replace the research the other three do.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="picker" data-nav="Picker">
+    <header class="chapter-head">
+      <h2>Get a recommendation for your situation</h2>
+      <p class="chapter-dek">Up to three questions: the decision path, plus the time you have</p>
+    </header>
+
+    <div class="tool" data-tool="framework-picker">
+      <div class="tool-head">
+        <h3 class="tool-title">Framework picker</h3>
+        <p class="tool-hint">Choose one answer to each question. Use the arrow keys to move between answers.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <p class="field-label" id="pk-context-label">1. What is the context?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-context-label" data-question="context">
+            <button type="button" class="choice" aria-pressed="false" data-value="interview">A PM interview</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="work">Real product work</button>
+          </div>
+        </div>
+        <div class="field" data-step="work" hidden>
+          <p class="field-label" id="pk-unclear-label">2. What is unclear right now?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-unclear-label" data-question="unclear">
+            <button type="button" class="choice" aria-pressed="false" data-value="why">Why users behave this way</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="what">What solution to build</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="when">What to ship first</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="all">Everything</button>
+          </div>
+        </div>
+        <div class="field" data-step="work" hidden>
+          <p class="field-label" id="pk-time-label">3. How much time do you have?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-time-label" data-question="time">
+            <button type="button" class="choice" aria-pressed="false" data-value="quick">Hours</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="medium">1–2 weeks</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="deep">Weeks to months</button>
+          </div>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="pk-reset">Start over</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Recommendation</p>
+        <output class="tool-result" id="pk-result"></output>
+        <p class="tool-output-note" id="pk-reason">Answer the questions to see a recommendation.</p>
+        <p class="pk-links" id="pk-links"></p>
+      </div>
+    </div>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the pipeline, with CIRCLES set apart */
+  .guide[data-guide="compare-design"] .dc-stages {
+    display: grid;
+    gap: var(--s-4);
+  }
+  .guide[data-guide="compare-design"] .dc-flow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+  .guide[data-guide="compare-design"] .dc-flow > li,
+  .guide[data-guide="compare-design"] .dc-aside {
+    position: relative;
+    display: grid;
+    gap: var(--s-1);
+    align-content: start;
+    padding: var(--s-3) var(--s-4) var(--s-4);
+    border-radius: var(--r-sm);
+    background: var(--paper);
+  }
+  .guide[data-guide="compare-design"] .dc-flow > li + li::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--s-6) + 4px);
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    background: var(--ink-3);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .guide[data-guide="compare-design"] .dc-aside {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--s-4);
+    align-items: baseline;
+    padding: var(--s-3) var(--s-4);
+  }
+  .guide[data-guide="compare-design"] .dc-ask {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="compare-design"] .dc-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .guide[data-guide="compare-design"] .dc-does {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="compare-design"] .dc-time {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="compare-design"] .dc-aside .dc-does,
+  .guide[data-guide="compare-design"] .dc-aside .dc-time { grid-column: 2; }
+  .guide[data-guide="compare-design"] .dc-aside .dc-ask { grid-row: 1; }
+  .guide[data-guide="compare-design"] .dc-aside .dc-name { grid-column: 2; grid-row: 1; }
+  @media (max-width: 760px) {
+    .guide[data-guide="compare-design"] .dc-flow { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
+    .guide[data-guide="compare-design"] .dc-flow > li + li::before {
+      left: 50%;
+      top: calc(-1 * var(--s-6) + 4px);
+      transform: translateX(-50%) rotate(90deg);
+    }
+    .guide[data-guide="compare-design"] .dc-aside { grid-template-columns: minmax(0, 1fr); }
+    .guide[data-guide="compare-design"] .dc-aside .dc-ask,
+    .guide[data-guide="compare-design"] .dc-aside .dc-name,
+    .guide[data-guide="compare-design"] .dc-aside .dc-does,
+    .guide[data-guide="compare-design"] .dc-aside .dc-time { grid-column: 1; grid-row: auto; }
+  }
+
+  /* Picker */
+  .guide[data-guide="compare-design"] .pk-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+  }
+  .guide[data-guide="compare-design"] .pk-links:empty { display: none; }
+  .guide[data-guide="compare-design"] .pk-links a { font-weight: var(--w-semibold); }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="framework-picker"]');
+  const groups = [...tool.querySelectorAll('.choices[data-question]')];
+  const workSteps = [...tool.querySelectorAll('.field[data-step="work"]')];
+  const result = tool.querySelector('#pk-result');
+  const reason = tool.querySelector('#pk-reason');
+  const links = tool.querySelector('#pk-links');
+  const answers = {};
+  const QUESTION_NAMES = { context: 'the context', unclear: 'what is unclear', time: 'how much time you have' };
+  const GUIDE_NAMES = {
+    circles: 'CIRCLES Method',
+    jtbd: 'Jobs to Be Done',
+    'design-thinking': 'Design Thinking',
+    'user-story-mapping': 'User Story Mapping',
+  };
+
+  const RESULTS = {
+    circles: { title: 'CIRCLES Method', slugs: ['circles'],
+      text: 'You are in an interview. Structure your answer in seven steps: Comprehend the situation, Identify the customer, Report the customer’s needs, Cut through prioritization, List solutions, Evaluate tradeoffs and Summarize your recommendation. In a 35-minute question, aim for about 20 minutes on the seven steps, leave about 15 for follow-up, and say your reasoning out loud.' },
+    jtbdQuick: { title: 'Jobs to Be Done, quick version', slugs: ['jtbd'],
+      text: 'You need to understand why, fast. Hold 5–6 short conversations with recent users as a starting point, and write what you hear as job stories: “When [situation], I want to [motivation], so I can [expected outcome].” Look for patterns in the functional, emotional and social sides of the job, and treat the result as a hypothesis until a fuller study confirms it.' },
+    jtbdFull: { title: 'Jobs to Be Done, full research', slugs: ['jtbd'],
+      text: 'You have time to do this properly. Run 8–12 switch interviews, a common practitioner guideline, with people who recently started or stopped using the product, and map the four forces of progress: push, pull, anxiety and habit. Understand the whole job before you make product decisions.' },
+    dtSprint: { title: 'Design thinking, sprint mode', slugs: ['design-thinking'],
+      text: 'With only hours there is no time for fresh empathy research. If empathy research already exists, such as past interviews, support tickets or session recordings, run the 200-minute workshop (3 hours 20 minutes, a half-day). It starts at Define: frame the problem, ideate and paper-prototype in the session, then test with 3–5 users the next day. If you have no research, mark the problem statement as an assumption.' },
+    dtCycle: { title: 'Design thinking, first cycle', slugs: ['design-thinking'],
+      text: 'Spend week 1 on Empathize, with 5–8 user interviews and some observation. Hold a workshop for Define and Ideate, then prototype and test in week 2. Two weeks is the short end of a full cycle; plan on 2–6 weeks once you iterate on what testing finds.' },
+    jtbdThenDt: { title: 'Jobs to Be Done, then design thinking', slugs: ['jtbd', 'design-thinking'],
+      text: 'With this much time, start with Jobs to Be Done research in weeks 1–2 to understand the job in depth. Then run a full design thinking cycle in weeks 3–5, informed by what you learned. The job is one lens for Empathize, not a replacement for it, and it gives Empathize and Define a sharper starting point.' },
+    storyMap: { title: 'User Story Mapping', slugs: ['user-story-mapping'],
+      text: 'You know what to build and need to plan delivery. Run a 2-hour mapping workshop with 4–8 people across product, design and engineering. Lay out the backbone of activities and user steps, add body stories under each step and draw release lines. You leave with a shared plan, and a 2-hour session fits whatever time you have.' },
+    jtbdBeforeMap: { title: 'Jobs to Be Done first, map later', slugs: ['jtbd', 'user-story-mapping'],
+      text: 'When everything is unclear, start with the user: hold 5–6 quick Jobs to Be Done conversations on your riskiest assumption, as a starting point, and write what you hear as job stories. A story map built before you understand the user only organizes guesses, so map once the job is clear.' },
+    jtbdThenMap: { title: 'Jobs to Be Done, then story mapping', slugs: ['jtbd', 'user-story-mapping'],
+      text: 'Week 1: run 5–6 switch interviews to find the core job. That is fewer than a full study, so treat the job as a working hypothesis. Week 2: hold a 2-hour story mapping workshop with 4–8 people from the team, with the job as the map’s goal, to plan releases.' },
+    pipeline: { title: 'Jobs to Be Done, then design thinking, then story mapping', slugs: ['jtbd', 'design-thinking', 'user-story-mapping'],
+      text: 'The full pipeline. Jobs to Be Done in weeks 1–2 to discover the job, design thinking in weeks 3–5 to explore and validate solutions, and a 2-hour story mapping workshop in week 6 to plan delivery.' },
+  };
+
+  function recommend({ context, unclear, time }) {
+    if (context === 'interview') return RESULTS.circles;
+    if (unclear === 'why') return time === 'quick' ? RESULTS.jtbdQuick : RESULTS.jtbdFull;
+    if (unclear === 'what') return { quick: RESULTS.dtSprint, medium: RESULTS.dtCycle, deep: RESULTS.jtbdThenDt }[time];
+    if (unclear === 'when') return RESULTS.storyMap;
+    return { quick: RESULTS.jtbdBeforeMap, medium: RESULTS.jtbdThenMap, deep: RESULTS.pipeline }[time];
+  }
+
+  function render() {
+    const isWork = answers.context === 'work';
+    workSteps.forEach(step => { step.hidden = !isWork; });
+    links.textContent = '';
+
+    const needed = isWork ? ['context', 'unclear', 'time'] : ['context'];
+    const missing = needed.filter(k => !answers[k]);
+    if (missing.length) {
+      result.textContent = '';
+      reason.textContent = answers.context
+        ? `Still to answer: ${missing.map(k => QUESTION_NAMES[k]).join(' and ')}.`
+        : 'Answer the questions to see a recommendation.';
+      return;
+    }
+
+    const rec = recommend(answers);
+    result.textContent = rec.title;
+    reason.textContent = rec.text;
+    rec.slugs.forEach(slug => {
+      const a = document.createElement('a');
+      a.href = `#/framework/${slug}`;
+      a.textContent = `Read the ${GUIDE_NAMES[slug]} guide`;
+      links.appendChild(a);
+    });
+  }
+
+  groups.forEach(group => {
+    const options = [...group.querySelectorAll('.choice')];
+    const select = (btn) => {
+      options.forEach(o => o.setAttribute('aria-pressed', String(o === btn)));
+      answers[group.dataset.question] = btn.dataset.value;
+      render();
+    };
+    options.forEach((btn, i) => {
+      btn.addEventListener('click', () => select(btn));
+      btn.addEventListener('keydown', (e) => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        const next = options[(i + step + options.length) % options.length];
+        next.focus();
+        select(next);
+      });
+    });
+  });
+
+  tool.querySelector('#pk-reset').addEventListener('click', () => {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    tool.querySelectorAll('.choice').forEach(o => o.setAttribute('aria-pressed', 'false'));
+    render();
+  });
+
+  render();
+</script>

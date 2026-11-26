@@ -1,0 +1,952 @@
+<article class="guide" data-guide="input-output">
+
+  <header class="guide-intro">
+    <p class="lede">Input and Output Metrics separate the numbers a team can move directly from the business results it is trying to achieve. Use the split to give every team a lever it controls and a visible line from that lever to the result.</p>
+
+    <figure class="figure" data-hero>
+      <div class="io-flow">
+        <div class="io-col">
+          <p class="io-head">Inputs: the teams move these</p>
+          <ul class="io-list">
+            <li class="io-node" data-series="1">Quality-reviewed beginner lessons available</li>
+            <li class="io-node" data-series="1">Median time to first note</li>
+            <li class="io-node" data-series="1">Day-3 reminder return rate</li>
+          </ul>
+        </div>
+        <div class="io-arrow" aria-hidden="true"></div>
+        <div class="io-col">
+          <p class="io-head">Output: the teams are judged by this</p>
+          <p class="io-node io-node--out" data-series="4">Weekly Active Learners</p>
+        </div>
+      </div>
+      <figcaption>Three input metrics at Larkwell, a fictional piano-learning app, and the output they drive: teams spend their effort on the inputs and measure success by the output</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Output metrics are the results you want, such as revenue or retention. Input metrics are the controllable, customer-facing measures a team can move directly and that, when they rise, push the outputs up. Give each team an input to work on, pair any input that can be gamed with a counter-metric, and judge progress by the output.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Inputs you control, outputs you measure</h2>
+      <p class="chapter-dek">Retention is a result, so no team can work on it directly</p>
+    </header>
+
+    <p>Larkwell, a fictional piano-learning app, has a company key result that reads “D30 retention of new accounts from 9% to 11%.” It is a clear goal, but it does not tell any team what to work on this week. Retention is an <strong>output</strong>: no team can change it directly, only the things that influence it.</p>
+    <p>The model separates what a team controls (inputs) from what it is trying to achieve (outputs). When the link between the two is written down, each team knows which number its daily work should move. Separating leading measures from lagging ones is an old management idea: Andy Grove wrote about leading indicators, and about pairing each one with a guard against its side effects, in High Output Management (1983). The version product teams usually cite comes from Amazon, whose leaders review a set of controllable input metrics every week in the Weekly Business Review (WBR), next to the financial results they lead to. Colin Bryar and Bill Carr describe the practice in their book Working Backwards (2021).</p>
+
+    <div class="contrast">
+      <div class="contrast-col">
+        <p class="contrast-label">Input metrics: they move first</p>
+        <p>Controllable, customer-facing measures the team <strong>moves directly</strong> through its own work, such as median time to first note, lesson completion rate or the share of lapsed learners who return after a day-3 reminder. They respond within days, so they give an early signal.</p>
+      </div>
+      <div class="contrast-col">
+        <p class="contrast-label">Output metrics: they follow the inputs</p>
+        <p>The business results you <strong>want to achieve</strong>: retention, revenue, NPS, growth rate. Many inputs and outside factors shape them, so no team can change them directly. They lag the inputs that drive them.</p>
+      </div>
+    </div>
+
+    <p>No one can “do retention.” A team can only do things that cause it, and the input metric is how it checks that the work is landing. Retention stays an output even inside a metric tree: it can sit between the inputs and the North Star Metric as an intermediate output, but no team owns it as an input.</p>
+
+    <h3>Activities are not input metrics</h3>
+    <p>Redesigning onboarding is something a team does. Median time to first note is the number that work should move. In the same way, publishing 8 new beginner song lessons is an activity; quality-reviewed beginner lessons available is the input metric it moves. Track the number, and treat each project as one way of moving it.</p>
+    <ol class="chain">
+      <li><span class="chain-name">Redesign onboarding</span><span class="chain-note">Activity: what the team does</span></li>
+      <li><span class="chain-name">Median time to first note</span><span class="chain-note">Input metric: what the work moves directly</span></li>
+      <li><span class="chain-name">Weekly Active Learners</span><span class="chain-note">Output metric: the result it should lead to</span></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Leading and lagging depend on the level</p>
+      <p>Weekly Active Learners is an output: the teams below it move it through their inputs. It is also a leading indicator of revenue, because it moves before revenue does. A North Star Metric leads revenue and lags the inputs that drive it. Name the level before you argue about whether a metric leads or lags.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="model" data-nav="The model">
+    <header class="chapter-head">
+      <h2>Three layers, from team work to business results</h2>
+      <p class="chapter-dek">Each layer drives the next one, and each has its own owner</p>
+    </header>
+
+    <figure class="figure">
+      <ol class="io-layers">
+        <li data-series="1">
+          <p class="io-layer-name">Team inputs</p>
+          <p class="io-layer-ex">Median time to first note, quality-reviewed beginner lessons available, day-3 reminder return rate</p>
+          <p class="io-layer-owner">Owner: each team owns its own</p>
+        </li>
+        <li data-series="4">
+          <p class="io-layer-name">Product output (the North Star Metric)</p>
+          <p class="io-layer-ex">Weekly Active Learners; nights booked or messages sent in commonly cited examples</p>
+          <p class="io-layer-owner">Owner: the head of product</p>
+        </li>
+        <li data-series="5">
+          <p class="io-layer-name">Business outcome</p>
+          <p class="io-layer-ex">Revenue, profit, market share</p>
+          <p class="io-layer-owner">Owner: the CEO and leadership team</p>
+        </li>
+      </ol>
+      <figcaption>Team inputs drive the product output, and the product output drives the business outcome</figcaption>
+    </figure>
+
+    <p>Retention, where a team tracks it, sits between the first two layers as an intermediate output: the inputs move it, and it moves the North Star Metric.</p>
+
+    <h3>Three tests for an input metric</h3>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <span class="card-key">1</span>
+        <h4 class="card-title">Controllable</h4>
+        <p class="card-q">Can the team move it through its own work?</p>
+        <p>“Median time to first note” passes. “App Store ranking” does not: too many outside factors move it.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">2</span>
+        <h4 class="card-title">Predictive</h4>
+        <p class="card-q">When it rises, does the output follow?</p>
+        <p>The output should follow, with some lag. Validate the link with data: more push notifications do not always mean more retention.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">3</span>
+        <h4 class="card-title">Timely</h4>
+        <p class="card-q">Does it move faster than the output?</p>
+        <p>An input should give a weekly signal, ideally a daily one. If you have to wait six months to learn whether it worked, it is too slow.</p>
+      </div>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Inputs get sharper over time</p>
+      <p>In Bryar and Carr’s account, Amazon’s retail team first tracked how many new product pages it created, then how often those pages were viewed, and finally the share of views where the item was in stock and ready to ship. Each change moved the input closer to what customers experienced. Larkwell’s content team makes the same move: rather than count the lessons it publishes, it tracks the quality-reviewed beginner lessons available to learners. Expect to revise your inputs once you see how well they predict the output.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="counter" data-nav="Counter-metrics and trees">
+    <header class="chapter-head">
+      <h2>Guard each input, then trace it to revenue</h2>
+      <p class="chapter-dek">A counter-metric catches over-optimization; a metric tree shows which lever moves which result</p>
+    </header>
+
+    <h3>Counter-metrics catch over-optimization</h3>
+    <p>Many inputs can be gamed or pushed too far. If the input is the day-3 reminder return rate, a team can lift it by sending reminders every few hours: good for the input, bad for the people receiving them. A <dfn>counter-metric</dfn> is a metric that gets worse when that happens. Pair any input that can be gamed with one, track it next to the input, and read the two together.</p>
+    <p>A counter-metric must pull against the metric it guards, not move with it. Subscriber churn is not a counter-metric for Weekly Active Learners: it tends to rise when the North Star Metric falls, so it moves with it and cannot warn that the North Star Metric is being pushed in a harmful way.</p>
+
+    <div class="table-wrap">
+      <table class="table table--stack">
+        <caption>Four inputs, their counter-metrics and what each pair catches</caption>
+        <thead>
+          <tr>
+            <th scope="col">Input</th>
+            <th scope="col">Counter-metric</th>
+            <th scope="col">What it catches</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Day-3 reminder return rate</th><td>Notification opt-out rate</td><td>Returns go up and opt-outs spike: the team is buying returns with annoyance.</td></tr>
+          <tr><th scope="row">Median time to first note</th><td>Week-1 setup errors reported</td><td>Setup gets faster and errors rise: steps were cut that learners needed.</td></tr>
+          <tr><th scope="row">New activated learners per week</th><td>D7 retention of new cohorts</td><td>Activations go up and D7 retention drops: shortcuts bring in learners who leave within a week.</td></tr>
+          <tr><th scope="row">Free trial starts</th><td>Trial-to-paid conversion rate</td><td>Trial starts go up and conversion drops: the product is attracting people who will not pay.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Ask what breaks at twice the volume</p>
+      <p>For each input, ask what would go wrong if a team doubled it. The answer usually names the counter-metric. An input that cannot be pushed in a harmful way may not need one.</p>
+    </div>
+
+    <h3>A metric tree breaks an output into its levers</h3>
+    <p>A metric tree decomposes an output into the inputs that produce it. Each branch is a different lever, and often a different team’s focus. Monthly recurring revenue, for a subscription product, splits into how many people pay and how much each of them pays. At Larkwell that is 60,000 paying subscribers × $9.00 ARPPU = $540,000 of MRR.</p>
+
+    <figure class="figure">
+      <div class="io-tree">
+        <p class="io-tree-node io-tree-root" data-series="5"><span class="io-tree-name">MRR</span><span class="io-tree-sub">Monthly recurring revenue</span></p>
+        <div class="io-tree-branches">
+          <div class="io-tree-branch">
+            <p class="io-tree-node"><span class="io-tree-name">Paying subscribers</span></p>
+            <ul class="io-tree-leaves">
+              <li class="io-tree-node io-tree-leaf">New subscribers</li>
+              <li class="io-tree-op">+</li>
+              <li class="io-tree-node io-tree-leaf">Retained subscribers</li>
+            </ul>
+          </div>
+          <p class="io-tree-op io-tree-op--main">×</p>
+          <div class="io-tree-branch">
+            <p class="io-tree-node"><span class="io-tree-name">ARPPU</span><span class="io-tree-sub">Average revenue per paying user</span></p>
+            <p class="io-tree-rel">Driven by</p>
+            <ul class="io-tree-leaves">
+              <li class="io-tree-node io-tree-leaf">Plan mix</li>
+              <li class="io-tree-node io-tree-leaf">Upsells</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <figcaption>MRR equals paying subscribers × ARPPU. Each branch is a lever on MRR; some, such as retained subscribers, are outputs that teams move through their own input metrics.</figcaption>
+    </figure>
+
+    <h3>Decompose with arithmetic</h3>
+    <p>Any output can be broken into factors with a formula. Each factor is a branch that a team can work on through its own input metrics.</p>
+    <p class="formula" role="img" aria-label="Monthly recurring revenue equals monthly active users times paid share times average revenue per paying user">
+      <var>MAU</var>
+      <span class="formula-term"><span class="op">×</span><var>Paid share</var></span>
+      <span class="formula-term"><span class="op">×</span><var>ARPPU</var></span>
+      <span class="formula-term"><span class="op">=</span><span class="formula-result">MRR</span></span>
+    </p>
+    <p>At Larkwell: 400,000 monthly active users × 15% paying × $9.00 = $540,000. Paid share in turn depends on trial-to-paid conversion, so this is how “increase revenue” (vague) becomes “raise trial-to-paid conversion from 30% to 33%” (a number one team can work on). With 20,000 trial starts a month, that is 600 more new subscribers each month.</p>
+
+    <div class="callout callout--caution">
+      <p class="callout-title">Use revenue per paying user, not per user</p>
+      <p>ARPU averages revenue across every user, paying or not, so it already includes the conversion rate: Larkwell’s ARPU is 15% × $9.00 = $1.35 a month. Multiplying it by conversion counts conversion twice. Write either MAU × paid share × ARPPU or MAU × ARPU (400,000 × $1.35 = $540,000), never MAU × paid share × ARPU.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Building Larkwell’s metric stack, from MRR to each team’s lever</h2>
+      <p class="chapter-dek">Two outputs and four team inputs, each with a counter-metric</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>One owner and one counter-metric for every metric</h3>
+      <p>Larkwell, a fictional piano-learning app for adults, has 400,000 monthly active users and 60,000 paying subscribers; all its figures are illustrative. Its North Star Metric is Weekly Active Learners, learners who complete at least 3 lessons in a calendar week. Four inputs sit below it, each with an owner.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <caption>Larkwell’s metric stack, with an owner and a counter-metric for each metric</caption>
+          <thead>
+            <tr>
+              <th scope="col">Metric</th>
+              <th scope="col">Layer</th>
+              <th scope="col">Type</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Counter-metric</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">MRR ($540,000)</th><td>Business</td><td>Output</td><td>CEO</td><td>Refund rate</td></tr>
+            <tr><th scope="row">Weekly Active Learners (40,000)</th><td>North Star</td><td>Output, leading indicator of revenue</td><td>Head of product</td><td>Average lesson rating</td></tr>
+            <tr><th scope="row">New activated learners per week</th><td>Growth</td><td>Input</td><td>Growth team</td><td>D7 retention of new cohorts</td></tr>
+            <tr><th scope="row">Quality-reviewed beginner lessons available</th><td>Content</td><td>Input</td><td>Content team</td><td>Completion rate of new lessons</td></tr>
+            <tr><th scope="row">Median time to first note</th><td>Onboarding</td><td>Input</td><td>Onboarding team</td><td>Week-1 setup errors reported</td></tr>
+            <tr><th scope="row">Day-3 reminder return rate</th><td>Lifecycle</td><td>Input</td><td>Growth team (lifecycle)</td><td>Notification opt-out rate</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-reading">
+        <h4>How the stack connects</h4>
+        <ol>
+          <li>The growth team brings in new learners and gets them to complete a first song lesson within 24 hours (about 8,300 a week).</li>
+          <li>The onboarding team cuts the time to first note, so the first session feels like progress.</li>
+          <li>The content team grows the library of quality-reviewed beginner lessons waiting for them (120 today).</li>
+          <li>The growth team’s lifecycle work brings back learners who lapse, measured by the day-3 reminder return rate.</li>
+          <li>Together, these lift retention, an intermediate output no team owns, and Weekly Active Learners, which drives MRR.</li>
+        </ol>
+        <p>Each team has one number it can move this week and a clear line from that number to the business result. The counters pull against what they guard: Weekly Active Learners is read against the average lesson rating, which falls if the team splits lessons into shorter, thinner ones to reach three a week, and MRR against the refund rate.</p>
+        <h4>What the counter-metric caught</h4>
+        <p>This quarter the content team publishes 8 new beginner song lessons, taking quality-reviewed beginner lessons available from 120 to 128, so its input rises. The completion rate of new lessons, its counter-metric, drops. The likely cause is that the new lessons are too hard. Without the counter, the team would celebrate the input and miss that it was hurting the output.</p>
+      </div>
+    </div>
+
+    <h3>From the stack to this quarter’s OKRs</h3>
+    <p>The stack translates into the company OKR and each team’s OKR without changing any metric. The objective stays qualitative. The North Star Metric, or one of its inputs, appears as a key result; it is never the objective, and the projects that move it are initiatives, not key results.</p>
+    <dl class="facts">
+      <div><dt>Company objective</dt><dd>Make Larkwell the app adult beginners keep playing with</dd></div>
+      <div><dt>Key result (output)</dt><dd>Weekly Active Learners from 40,000 to 50,000</dd></div>
+      <div><dt>Onboarding team objective</dt><dd>Make a new learner’s first week feel like progress</dd></div>
+      <div><dt>Key result (input)</dt><dd>Median time to first note from 4 minutes to under 90 seconds</dd></div>
+      <div><dt>Guardrail (counter)</dt><dd>Week-1 setup errors reported do not rise</dd></div>
+      <div><dt>Initiative</dt><dd>The onboarding team’s Sprint 14 work, such as skipping instrument setup for the first lesson</dd></div>
+    </dl>
+    <p>The content team’s plan has one deliberate exception. It lists “Publish 8 new beginner song lessons” as a committed key result: the team promises the deliverable, and its other key results measure whether it worked. In the stack the lessons are still the activity; the input metric they move is quality-reviewed beginner lessons available, from 120 to 128.</p>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Map your own metric stack</h2>
+      <p class="chapter-dek">Name the output, add the inputs that drive it and pair each with a counter-metric</p>
+    </header>
+
+    <div class="tool" data-tool="io-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">Metric stack builder</h3>
+        <p class="tool-hint">Three to five inputs is typical. Each counter-metric belongs to the input on its row.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="io-output">Primary output (your North Star Metric)</label>
+          <input id="io-output" type="text" placeholder="For example, Weekly Active Learners" aria-describedby="io-output-help">
+          <p class="field-help" id="io-output-help">The result the inputs should move</p>
+        </div>
+      </div>
+      <div class="io-rows" id="io-rows">
+        <fieldset class="io-row">
+          <legend>Input 1</legend>
+          <div class="fields" data-cols="2">
+            <div class="field">
+              <label for="io-in-1">Input metric</label>
+              <input id="io-in-1" class="io-in" type="text" placeholder="For example, new activated learners per week">
+            </div>
+            <div class="field">
+              <label for="io-counter-1">Counter-metric</label>
+              <input id="io-counter-1" class="io-counter" type="text" placeholder="For example, D7 retention of new cohorts">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="io-row">
+          <legend>Input 2</legend>
+          <div class="fields" data-cols="2">
+            <div class="field">
+              <label for="io-in-2">Input metric</label>
+              <input id="io-in-2" class="io-in" type="text">
+            </div>
+            <div class="field">
+              <label for="io-counter-2">Counter-metric</label>
+              <input id="io-counter-2" class="io-counter" type="text">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="io-row">
+          <legend>Input 3</legend>
+          <div class="fields" data-cols="2">
+            <div class="field">
+              <label for="io-in-3">Input metric</label>
+              <input id="io-in-3" class="io-in" type="text">
+            </div>
+            <div class="field">
+              <label for="io-counter-3">Counter-metric</label>
+              <input id="io-counter-3" class="io-counter" type="text">
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="io-add">
+        <button type="button" class="btn btn--quiet" id="io-add">Add an input</button>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="io-check">Check my stack</button>
+        <button type="button" class="btn" id="io-clear">Clear</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Your stack</p>
+        <output class="tool-result io-result" id="io-result" for="io-output"></output>
+        <p class="tool-output-note" id="io-note">Name your output, add the inputs with their counter-metrics, then check the stack.</p>
+        <ul class="checks" id="io-feedback" aria-label="Notes on your stack" hidden></ul>
+        <p class="io-validate" id="io-validate" hidden><strong>Validation step:</strong> for each input, ask whether doubling it would move the output. If you cannot answer yes with data, run an experiment before you commit a team to it.</p>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>I would structure the metrics as a stack. The output we are optimizing for is [X], and the team inputs that drive it are [A], [B] and [C]. I would track counter-metrics such as [Y] to make sure we are not over-optimizing one lever at the expense of the user experience.</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When the model fits, and when it does not</h2>
+      <p class="chapter-dek">It turns a chosen goal into team levers, so it comes after the goal is set</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are setting team-level OKRs and goals</li>
+          <li>You need to turn a North Star Metric into work for each team</li>
+          <li>An interviewer asks “how would you measure success?”</li>
+          <li>You are building a product analytics dashboard</li>
+          <li>Functions need to agree who owns which metric</li>
+          <li>You are planning a sprint and need to name the inputs it will move</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You have not chosen your North Star Metric yet. Start with the <a data-guide-link="north-star">North Star Framework</a>.</li>
+          <li>You are before product-market fit, when it is too early to optimize</li>
+          <li>You are diagnosing where a funnel leaks. Use <a data-guide-link="aarrr">AARRR (pirate metrics)</a> instead.</li>
+          <li>You are setting high-level strategic direction. Use <a data-guide-link="playing-to-win">Playing to Win</a> instead.</li>
+          <li>You are prioritizing individual features. Use <a data-guide-link="rice">RICE</a> instead.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>In a growth plan, inputs and outputs usually come third, once the North Star Metric is chosen. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together, from diagnosing the funnel to designing loops.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways a metric stack goes wrong</h2>
+      <p class="chapter-dek">Most failures come from a weak link between an input, its counter and the output</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Calling an activity an input</h3>
+        <p>“Publish 8 new lessons,” “onboarding redesign” and “push notification timing” are deliverables, projects and settings, not metrics the team moves week to week. Once the project ships, there is nothing left to track.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> name the customer-facing metric the work should move, such as quality-reviewed beginner lessons available, median time to first note or day-3 reminder return rate, and keep tracking it after the project ends.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mistaking a correlation for a lever</h3>
+        <p>An input that rises with the output may not cause it. “We sent more emails” does not always mean “retention improved.” A team can push an input for a quarter and leave the output where it was.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> test the link with an experiment before making the input a team’s goal: if we double this input, does the output move? If not, find a better lever.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Choosing inputs the team cannot move</h3>
+        <p>An App Store ranking or a market-wide trend responds to too many outside factors. The team cannot tell whether its work made the difference.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> apply the three tests. Keep inputs the team controls, that predict the output and that give a weekly signal.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Reading an input without its counter</h3>
+        <p>A team can push an input up in ways that hurt users, such as sending more reminders, and an input on its own always looks like progress when it rises. Larkwell’s content team would have celebrated 8 new lessons while the completion rate of new lessons fell.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> pair each input that can be gamed with a counter-metric, put the two side by side on the same dashboard and review them together.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">A counter-metric that moves with the input</h3>
+        <p>A metric that rises and falls with the one it guards cannot warn you. Subscriber churn tends to rise when Weekly Active Learners falls, so it says nothing about how the number was reached.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> pick a metric that gets worse when the input is pushed too far, such as the average lesson rating for Weekly Active Learners.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Reviewing only outputs</h3>
+        <p>Weekly reviews of revenue and retention show results too late to act on, and they do not say which lever to pull.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> review controllable inputs every week, as Amazon’s Weekly Business Review does (Bryar and Carr, 2021), and read the outputs next to them as results to explain, not as levers to pull.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Seven questions on inputs, outputs, counter-metrics and OKRs</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What separates an input metric from an output metric?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Inputs are reported to teams, outputs to executives</button></li>
+          <li><button type="button">Inputs are qualitative, outputs are quantitative</button></li>
+          <li><button type="button">Teams move inputs directly; outputs follow them</button></li>
+          <li><button type="button">Inputs are raw counts, outputs are percentages</button></li>
+        </ul>
+        <div class="quiz-why"><p>An input is a controllable, customer-facing measure the team’s own work moves, such as median time to first note. An output, such as retention or revenue, results from many inputs and cannot be changed directly. Both can be counts or rates, and both go to teams and executives.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A team’s only goal is “D30 retention of new accounts from 9% to 11%.” What is missing?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Inputs the team can move to raise it</button></li>
+          <li><button type="button">A stretch target, such as 15% retention</button></li>
+          <li><button type="button">A revenue target set for the same quarter</button></li>
+        </ul>
+        <div class="quiz-why"><p>Retention is an output: it lags the inputs that drive it. The goal says what should happen but not what the team should work on. Inputs give the team levers and an earlier signal of whether its work is landing. A higher target or a second output would not change that.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">What does a counter-metric do?</p>
+        <ul class="quiz-options">
+          <li><button type="button">It tracks the inverse of the North Star Metric</button></li>
+          <li><button type="button">It tracks a competitor’s result on the same metric</button></li>
+          <li><button type="button">It replaces an input that has stopped working</button></li>
+          <li><button type="button">It shows when pushing an input starts to do harm</button></li>
+        </ul>
+        <div class="quiz-why"><p>A counter-metric is a guardrail that gets worse when an input is pushed too far. A day-3 reminder return rate read without the notification opt-out rate can hide a team sending so many reminders that learners switch notifications off.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Which makes the best input metric?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The one that is easiest to measure and report</button></li>
+          <li><button type="button">Controllable, predictive of the output and fast</button></li>
+          <li><button type="button">The one that grows fastest in absolute terms</button></li>
+          <li><button type="button">One that matches the company’s revenue target</button></li>
+        </ul>
+        <div class="quiz-why"><p>A good input passes three tests: the team can move it (controllable), the output follows when it rises (predictive), and it gives a weekly or daily signal (timely). Ease of reporting, raw growth and a link to the revenue target say nothing about whether the team can move it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Larkwell’s onboarding team drafts an OKR. Objective: “Median time to first note under 90 seconds.” Key result: “Ship the Sprint 14 onboarding changes.” How should it be rewritten?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Qualitative objective; time to first note as a key result; Sprint 14 as an initiative</button></li>
+          <li><button type="button">Weekly Active Learners at 50,000 as the objective; time to first note as its key result</button></li>
+          <li><button type="button">Qualitative objective; shipping Sprint 14 on time as the key result, with no input metric</button></li>
+          <li><button type="button">Keep the draft, since a numeric objective and a shipping key result are both measurable</button></li>
+        </ul>
+        <div class="quiz-why"><p>An objective is qualitative, such as “make a new learner’s first week feel like progress.” The input metric becomes the key result, median time to first note from 4 minutes to under 90 seconds, with week-1 setup errors as its guardrail. The Sprint 14 changes are the initiative that should move it: shipping them measures the work, not its effect. The North Star Metric is never the objective either; Weekly Active Learners from 40,000 to 50,000 is a company key result.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Larkwell’s content team publishes 8 new beginner song lessons, so quality-reviewed beginner lessons available rises from 120 to 128, but the completion rate of new lessons drops. What is the most likely reading?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The completion data must be wrong or delayed</button></li>
+          <li><button type="button">More lessons always lower completion, as expected</button></li>
+          <li><button type="button">The new lessons are too hard or too long</button></li>
+          <li><button type="button">Completion rate does not matter to the content team</button></li>
+        </ul>
+        <div class="quiz-why"><p>This is the case counter-metrics exist for. The input looks healthy, but the counter shows the new content is hurting the learning experience. Nothing in the numbers points to bad data, and a larger library does not lower completion by itself. Without the counter, the team would celebrate while learners struggled.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A product manager proposes subscriber churn as the counter-metric for Weekly Active Learners. What is the problem?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Churn moves with active learners, so it cannot catch gaming</button></li>
+          <li><button type="button">Churn is an input metric, so it cannot guard an output metric</button></li>
+          <li><button type="button">Churn is a business metric, so only the CEO can act on it</button></li>
+          <li><button type="button">Only input metrics need counter-metrics, never output metrics</button></li>
+        </ul>
+        <div class="quiz-why"><p>A counter-metric must pull against the metric it guards. Churn rises when active learners fall, so it tells the team what the North Star Metric already shows. If the team reached three lessons a week by splitting lessons into thinner ones, churn would not catch it; the average lesson rating would. Churn is an output, and outputs such as the North Star Metric can have counters too. Who can act on churn is beside the point; what matters is whether the metric pulls against the one it guards.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+
+<style data-guide-style>
+  /* Hero: inputs feeding one output */
+  .guide[data-guide="input-output"] .io-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) var(--s-10) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--s-4);
+  }
+  .guide[data-guide="input-output"] .io-col > * + * { margin-top: var(--s-3); }
+  .guide[data-guide="input-output"] .io-head {
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="input-output"] .io-list { display: grid; gap: var(--s-2); }
+  .guide[data-guide="input-output"] .io-node {
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-md);
+    background: var(--series-wash);
+    font-family: var(--font-sans);
+    font-size: var(--fs-16);
+    font-weight: var(--w-medium);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .guide[data-guide="input-output"] .io-node--out {
+    padding: var(--s-6) var(--s-5);
+    font-family: var(--font-serif);
+    font-size: var(--fs-24);
+    line-height: var(--lh-snug);
+    text-align: center;
+  }
+  .guide[data-guide="input-output"] .io-arrow {
+    width: var(--s-10);
+    height: var(--s-6);
+    background: var(--ink-3);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h33M29 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h33M29 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  @media (max-width: 640px) {
+    .guide[data-guide="input-output"] .io-flow { grid-template-columns: minmax(0, 1fr); }
+    .guide[data-guide="input-output"] .io-arrow {
+      justify-self: center;
+      width: var(--s-6);
+      height: var(--s-8);
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v25M5 21l7 7 7-7'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v25M5 21l7 7 7-7'/%3E%3C/svg%3E");
+    }
+    .guide[data-guide="input-output"] .io-node--out { padding: var(--s-4); font-size: var(--fs-20); }
+  }
+
+  /* Three-layer stack, read top to bottom */
+  .guide[data-guide="input-output"] .io-layers {
+    display: grid;
+    gap: var(--s-10);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .guide[data-guide="input-output"] .io-layers > li {
+    position: relative;
+    display: grid;
+    gap: var(--s-1);
+    padding: var(--s-4) var(--s-5);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-md);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="input-output"] .io-layers > li + li::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-1 * var(--s-10) + var(--s-1));
+    width: var(--s-4);
+    height: var(--s-8);
+    margin-left: calc(-1 * var(--s-2));
+    background: var(--ink-3);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 28' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v23M3 20l5 5 5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 28' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v23M3 20l5 5 5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .guide[data-guide="input-output"] .io-layers > li + li::after {
+    content: 'drives';
+    position: absolute;
+    left: calc(50% + var(--s-4));
+    top: calc(-1 * var(--s-8));
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="input-output"] .io-layer-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="input-output"] .io-layer-ex {
+    font-family: var(--font-sans);
+    font-size: var(--fs-16);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .guide[data-guide="input-output"] .io-layer-owner {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+
+  /* Metric tree */
+  .guide[data-guide="input-output"] .io-tree {
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+  }
+  .guide[data-guide="input-output"] .io-tree-node {
+    display: grid;
+    gap: var(--s-1);
+    justify-items: center;
+    padding: var(--s-2) var(--s-4);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    font-family: var(--font-sans);
+    font-size: var(--fs-16);
+    font-weight: var(--w-medium);
+    line-height: 1.35;
+    text-align: center;
+    color: var(--ink);
+  }
+  .guide[data-guide="input-output"] .io-tree-node[data-series] {
+    border-color: var(--series-line);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="input-output"] .io-tree-name { font-weight: var(--w-semibold); }
+  .guide[data-guide="input-output"] .io-tree-sub {
+    font-size: var(--fs-14);
+    font-weight: var(--w-regular);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="input-output"] .io-tree-root {
+    position: relative;
+    padding: var(--s-3) var(--s-6);
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+  }
+  .guide[data-guide="input-output"] .io-tree-root .io-tree-sub { font-family: var(--font-sans); }
+  .guide[data-guide="input-output"] .io-tree-root::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 1px;
+    height: var(--s-5);
+    background: var(--rule-strong);
+  }
+  .guide[data-guide="input-output"] .io-tree-branches {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--s-10) minmax(0, 1fr);
+    gap: var(--s-4);
+    width: 100%;
+    margin-top: var(--s-5);
+    padding-top: var(--s-5);
+  }
+  .guide[data-guide="input-output"] .io-tree-branches::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc((100% - var(--s-10) - 2 * var(--s-4)) / 4);
+    right: calc((100% - var(--s-10) - 2 * var(--s-4)) / 4);
+    height: 1px;
+    background: var(--rule-strong);
+  }
+  .guide[data-guide="input-output"] .io-tree-branch {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: var(--s-4);
+  }
+  .guide[data-guide="input-output"] .io-tree-branch::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-1 * var(--s-5));
+    width: 1px;
+    height: var(--s-5);
+    background: var(--rule-strong);
+  }
+  .guide[data-guide="input-output"] .io-tree-leaves {
+    display: grid;
+    justify-items: center;
+    gap: var(--s-2);
+  }
+  .guide[data-guide="input-output"] .io-tree-leaf { font-size: var(--fs-14); }
+  .guide[data-guide="input-output"] .io-tree-op {
+    align-self: center;
+    justify-self: center;
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    line-height: 1.2;
+    color: var(--ink-3);
+  }
+  .guide[data-guide="input-output"] .io-tree-op--main { font-size: var(--fs-30); }
+  .guide[data-guide="input-output"] .io-tree-rel {
+    margin-top: calc(-1 * var(--s-2));
+    margin-bottom: calc(-1 * var(--s-2));
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  /* Phones: the branches stack, so connectors cannot reach both of them.
+     Each branch becomes an outlined group instead, with its leaves indented
+     under the parent on a rule, and the × between the two groups. */
+  @media (max-width: 600px) {
+    .guide[data-guide="input-output"] .io-tree-root::after,
+    .guide[data-guide="input-output"] .io-tree-branches::before,
+    .guide[data-guide="input-output"] .io-tree-branch::before { display: none; }
+    .guide[data-guide="input-output"] .io-tree-branches {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--s-2);
+      margin-top: var(--s-4);
+      padding-top: 0;
+    }
+    .guide[data-guide="input-output"] .io-tree-branch {
+      justify-items: start;
+      gap: var(--s-3);
+      padding: var(--s-4);
+      border: 1px solid var(--rule-strong);
+      border-radius: var(--r-md);
+    }
+    .guide[data-guide="input-output"] .io-tree-branch > .io-tree-node { justify-items: start; text-align: left; }
+    .guide[data-guide="input-output"] .io-tree-rel { margin: 0 0 calc(-1 * var(--s-2)) var(--s-4); }
+    .guide[data-guide="input-output"] .io-tree-leaves {
+      justify-items: start;
+      margin-left: var(--s-4);
+      padding-left: var(--s-4);
+      border-left: 1px solid var(--rule-strong);
+    }
+    .guide[data-guide="input-output"] .io-tree-leaves .io-tree-op { justify-self: start; padding-left: var(--s-4); }
+  }
+  /* Long placeholders: smaller on phones, and an ellipsis if they still overflow. */
+  @media (max-width: 600px) {
+    .guide[data-guide="input-output"] .fields input { text-overflow: ellipsis; }
+    .guide[data-guide="input-output"] .fields input::placeholder { font-size: var(--fs-14); }
+  }
+
+  /* Builder */
+  .guide[data-guide="input-output"] .io-rows { display: grid; gap: var(--s-4); }
+  .guide[data-guide="input-output"] .io-row {
+    min-width: 0;
+    margin: 0;
+    padding: var(--s-4) 0 0;
+    border: 0;
+    border-top: 1px solid var(--rule);
+    border-radius: 0;
+  }
+  /* Float the legend so it sits below the hairline instead of cutting into it. */
+  .guide[data-guide="input-output"] .io-row legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin-bottom: var(--s-3);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+  .guide[data-guide="input-output"] .io-row > .fields { clear: both; }
+  .guide[data-guide="input-output"] .io-add { margin-top: var(--s-3); }
+  /* The result is the output's name, so let a long one wrap. */
+  .guide[data-guide="input-output"] .io-result { overflow-wrap: anywhere; }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="io-builder"]');
+  const doc = root.ownerDocument;
+  const outputField = tool.querySelector('#io-output');
+  const outputHelp = tool.querySelector('#io-output-help');
+  const rowsEl = tool.querySelector('#io-rows');
+  const addBtn = tool.querySelector('#io-add');
+  const result = tool.querySelector('#io-result');
+  const note = tool.querySelector('#io-note');
+  const feedback = tool.querySelector('#io-feedback');
+  const validate = tool.querySelector('#io-validate');
+
+  const MIN_ROWS = 3;
+  const MAX_ROWS = 5;
+  const OUTPUT_HELP = 'The result the inputs should move';
+  const INTRO = 'Name your output, add the inputs with their counter-metrics, then check the stack.';
+  // A phrase reads as an activity when it starts with a verb of work ("Publish 5 lessons")
+  // or names a project ("Onboarding redesign"), unless it also names a measure ("Run rate").
+  const WORK_VERB = /^(redesign|launch|ship|build|send|add|create|run|write|publish|release|migrate|fix|implement|introduce|hire|improve|update)\b/i;
+  const PROJECT_NOUN = /\b(redesign|launch|timing|migration|rollout|revamp|overhaul|refresh|campaign|project)$/i;
+  const METRIC_WORD = /%|\b(rate|ratio|per|share|percent|percentage|time|frequency|count|number|average|score|minutes|days|value)\b/i;
+  const isActivity = text => !METRIC_WORD.test(text) && (WORK_VERB.test(text) || PROJECT_NOUN.test(text));
+  let checked = false;
+
+  function makeField(id, labelText, cls) {
+    const field = doc.createElement('div');
+    field.className = 'field';
+    const label = doc.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText;
+    const input = doc.createElement('input');
+    input.id = id;
+    input.type = 'text';
+    input.className = cls;
+    field.append(label, input);
+    return field;
+  }
+
+  function makeRow(n) {
+    const row = doc.createElement('fieldset');
+    row.className = 'io-row';
+    const legend = doc.createElement('legend');
+    legend.textContent = `Input ${n}`;
+    const fields = doc.createElement('div');
+    fields.className = 'fields';
+    fields.dataset.cols = '2';
+    fields.append(makeField(`io-in-${n}`, 'Input metric', 'io-in'), makeField(`io-counter-${n}`, 'Counter-metric', 'io-counter'));
+    row.append(legend, fields);
+    return row;
+  }
+
+  function rows() {
+    return [...rowsEl.querySelectorAll('.io-row')].map((row, i) => ({
+      n: i + 1,
+      input: row.querySelector('.io-in').value.trim(),
+      counter: row.querySelector('.io-counter').value.trim(),
+    }));
+  }
+
+  // Feedback uses the shared .checks list: a state word, then the note.
+  const STATE_WORD = { ok: 'Clear', revise: 'Revise', missing: 'Missing' };
+
+  function showList(items) {
+    feedback.replaceChildren(...items.map(item => {
+      const li = doc.createElement('li');
+      li.dataset.state = item.state;
+      const word = doc.createElement('span');
+      word.className = 'check-state';
+      word.textContent = STATE_WORD[item.state];
+      const body = doc.createElement('span');
+      const title = doc.createElement('strong');
+      title.textContent = `${item.title}.`;
+      body.append(title, ` ${item.text}`);
+      li.append(word, body);
+      return li;
+    }));
+    feedback.hidden = items.length === 0;
+  }
+
+  function setOutputError(isError) {
+    outputField.setAttribute('aria-invalid', String(isError));
+    outputHelp.textContent = isError ? 'Enter your primary output metric first' : OUTPUT_HELP;
+    outputHelp.classList.toggle('is-error', isError);
+  }
+
+  function analyze() {
+    const out = outputField.value.trim();
+    const all = rows();
+    if (!out) {
+      setOutputError(true);
+      result.textContent = '';
+      note.textContent = 'Name the output before checking the inputs.';
+      showList([]);
+      validate.hidden = true;
+      return;
+    }
+    setOutputError(false);
+
+    const inputs = all.filter(r => r.input);
+    const orphans = all.filter(r => r.counter && !r.input);
+    const paired = inputs.filter(r => r.counter);
+    const items = [];
+
+    result.textContent = out;
+    note.textContent = inputs.length ? `Driven by: ${inputs.map(r => r.input).join(' + ')}` : 'No input metrics yet';
+
+    if (inputs.length === 0) {
+      items.push({ state: 'missing', title: 'No inputs yet', text: `Add three to five input metrics: measures a team can move directly that should lead to “${out}”.` });
+    } else if (inputs.length < 3) {
+      items.push({ state: 'revise', title: `Only ${inputs.length === 1 ? 'one input' : 'two inputs'}`, text: `Three to five is typical, so the stack covers more than one lever. What else could a team move that leads to “${out}”?` });
+    } else {
+      items.push({ state: 'ok', title: `${inputs.length} inputs defined`, text: 'Make sure each one has a clear team owner.' });
+    }
+
+    inputs.filter(r => isActivity(r.input)).forEach(r => {
+      items.push({ state: 'revise', title: `Input ${r.n} reads like an activity`, text: `“${r.input}” describes work to do. Name the number that work should move, such as a completion rate or a return rate.` });
+    });
+
+    orphans.forEach(r => {
+      items.push({ state: 'revise', title: `Counter-metric ${r.n} has no input`, text: `“${r.counter}” is on a row with no input metric, so it guards nothing. Name the input it belongs to, or clear it.` });
+    });
+
+    if (inputs.length) {
+      if (paired.length === 0) {
+        items.push({ state: 'missing', title: 'No counter-metrics', text: 'For each input, ask what would go wrong if a team pushed it too hard. The answer is usually the counter-metric.' });
+      } else if (paired.length < inputs.length) {
+        items.push({ state: 'revise', title: `${paired.length} of ${inputs.length} inputs ${paired.length === 1 ? 'has' : 'have'} a counter-metric`, text: 'Check whether the others could be pushed in a way that hurts users. If they could, add a counter.' });
+      } else {
+        items.push({ state: 'ok', title: 'Every input has a counter-metric', text: 'Review each pair together, so a rise in an input is always read against its counter.' });
+      }
+    }
+
+    showList(items);
+    validate.hidden = inputs.length === 0;
+  }
+
+  function syncAddButton() {
+    const full = rowsEl.querySelectorAll('.io-row').length >= MAX_ROWS;
+    addBtn.disabled = full;
+    addBtn.textContent = full ? `Up to ${MAX_ROWS} inputs` : 'Add an input';
+  }
+
+  function clearAll() {
+    outputField.value = '';
+    outputField.removeAttribute('aria-invalid');
+    outputHelp.textContent = OUTPUT_HELP;
+    outputHelp.classList.remove('is-error');
+    [...rowsEl.querySelectorAll('.io-row')].forEach((row, i) => {
+      if (i >= MIN_ROWS) { row.remove(); return; }
+      row.querySelectorAll('input').forEach(input => { input.value = ''; });
+    });
+    checked = false;
+    result.textContent = '';
+    note.textContent = INTRO;
+    showList([]);
+    validate.hidden = true;
+    syncAddButton();
+  }
+
+  tool.querySelector('#io-check').addEventListener('click', () => {
+    checked = true;
+    analyze();
+  });
+
+  addBtn.addEventListener('click', () => {
+    const count = rowsEl.querySelectorAll('.io-row').length;
+    if (count >= MAX_ROWS) return;
+    const row = makeRow(count + 1);
+    rowsEl.append(row);
+    row.querySelector('.io-in').focus();
+    syncAddButton();
+    if (checked) analyze();
+  });
+
+  tool.querySelector('#io-clear').addEventListener('click', clearAll);
+
+  // Once checked, keep the feedback in step with edits, including rows added later.
+  tool.addEventListener('input', () => { if (checked) analyze(); });
+
+  syncAddButton();
+</script>

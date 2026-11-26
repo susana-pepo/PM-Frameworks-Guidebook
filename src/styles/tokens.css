@@ -1,459 +1,239 @@
-/* ============================================
-   PM Frameworks Guidebook — Design Tokens
-   "Field Guide" — refined editorial reference manual.
-   Warm OKLCH ink-on-paper, hairline rules, soft
-   layered shadows, calm category index colors.
-   The look of a paid product, not a sticker sheet.
-   ============================================ */
+/* ==========================================================================
+   PM Frameworks — Field Guide · design tokens (v2)
+
+   One authoritative system. Everything on every page is drawn from here:
+   no legacy aliases, no per-file palettes.
+
+   Direction
+   - Product    A study reference that teaches product managers 24 frameworks
+                well enough to use them today, plus guides for choosing.
+   - Character  Calm, exact, quietly warm.
+   - World      A printed field guide: paper, ink, ruled tables, numbered
+                plates, thumb-index tabs on the page edge.
+   - Moments    Each framework's own diagram ("the plate") and its live
+                worked numbers. Chrome stays quiet so these carry the colour.
+   - Signature  The thumb index: a small category-coloured tab mark. It is
+                the only place a category colour touches the chrome.
+   ========================================================================== */
 
 :root {
-  /* ---- SCALE (8px grid) ---- */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
+  color-scheme: light;
 
-  /* ---- RADII (Refined — softer on containers, tighter inside) ---- */
-  --radius-xs: 5px;
-  --radius-sm: 8px;
-  --radius-md: 11px;
-  --radius-lg: 15px;
-  --radius-xl: 20px;
-  --radius-full: 9999px;
-
-  /* ---- BORDERS (Hairline by default — editorial, not brutalist) ----
-     The default border is now a thin warm-gray rule. True ink lines are
-     reserved (--border-ink) for the rare moment a hard structural edge
-     genuinely helps. Heaviness was the main "cheap" tell — removed. */
-  --bw: 1px;
-  --bw-thin: 1px;
-
-  /* ---- TYPOGRAPHY ----
-     Field-guide editorial voice. Bricolage Grotesque is a characterful,
-     optically-sized display grotesque (the "designed object" feel of a
-     well-set reference manual); Hanken Grotesk is a warm, highly legible
-     text face built for long reading sessions; JetBrains Mono is reserved
-     for genuine data — codes, scores, keyboard hints — never decoration. */
+  /* ---- Type families -------------------------------------------------- */
+  /* Literata: display + long-form reading. Hanken Grotesk: interface,
+     labels, tables, controls, figures (tabular). Two families, no mono. */
+  --font-serif: 'Literata', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
   --font-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', -apple-system, sans-serif;
-  /* Reading face — Literata, the literary serif Google drew for digital books
-     (optical sizing, generous x-height). It is applied ONLY to flowing reading
-     prose (paragraphs, list items, callout notes) so each guide reads like a
-     printed page; tables, widgets, labels and data stay in the crisp sans. */
-  --font-reading: 'Literata', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
-  /* Type scale — rem-based modular ladder (~1.2 ratio) so a reader who bumps
-     their browser font size scales the whole guide with them (this is a
-     long-read study product — "readability is the product"). Root is 16px,
-     so 1rem = 16px. Two adjacent body sizes (base = card/secondary copy,
-     md = focal reading prose & leads) then a clear, contrasty climb through
-     the heading tiers — fewer sizes, more contrast, no muddy 15/16/17 band.
-     Diagram type stays in literal px (hand-placed) and is untouched. */
-  --text-xs: 0.75rem;      /* 12 — micro labels, mono eyebrows, chip counts */
-  --text-sm: 0.8125rem;    /* 13 — secondary UI, table cells, metadata */
-  --text-base: 1rem;       /* 16 — card / secondary body, nav */
-  --text-md: 1.125rem;     /* 18 — focal reading prose, leads, TL;DR */
-  --text-lg: 1.375rem;     /* 22 — sub-heads, card titles */
-  --text-xl: 1.625rem;     /* 26 — minor section heads */
-  --text-2xl: 2rem;        /* 32 — section titles */
-  --text-3xl: 2.5rem;      /* 40 — page-level headings */
-  --text-4xl: 3rem;        /* 48 — display / framework title */
+  /* ---- Type scale (rem, root 16px) ------------------------------------ */
+  --fs-12: 0.75rem;    /* meta, captions under figures */
+  --fs-14: 0.875rem;   /* secondary UI, table cells, labels */
+  --fs-16: 1rem;       /* UI body, card body */
+  --fs-18: 1.125rem;   /* reading prose */
+  --fs-20: 1.25rem;    /* lede, small headings (h4) */
+  --fs-24: 1.5rem;     /* h3 */
+  --fs-30: 1.875rem;   /* h2 / section title */
+  --fs-38: 2.375rem;   /* page title (mobile display) */
+  --fs-48: 3rem;       /* page title (desktop display) */
 
-  --leading-tight: 1.2;
-  --leading-snug: 1.35;
-  --leading-normal: 1.6;
-  --leading-reading: 1.7;  /* focal prose in the ~66ch reading column */
-  --leading-relaxed: 1.75;
+  --lh-tight: 1.15;
+  --lh-snug: 1.3;
+  --lh-ui: 1.5;
+  --lh-read: 1.68;
 
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-  --weight-extrabold: 800;
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
 
-  /* ---- CATEGORY COLORS — "Refined almanac" ----
-     Each category is an index colour, like the coloured tabs of a reference
-     binder. The six hues are spaced around the wheel and the chroma is held
-     *muted* (~0.10–0.14) so they read as a curated, paper-and-ink almanac
-     palette — distinct, never garish. The earlier set bunched strategy,
-     execution and communication all in the warm 32–70° range (they looked
-     like one colour); they're now pulled apart to terracotta, ochre and plum.
-     The strong base is reserved for accents (rare, ~10%); -light tints chips;
-     -fill is a near-paper page wash so a whole page reads calm, not drenched. */
-  --cat-prioritization: oklch(0.55 0.145 290);    /* indigo-violet */
-  --cat-prioritization-light: oklch(0.905 0.055 290);
-  --cat-prioritization-soft: oklch(0.55 0.145 290 / 0.12);
-  --cat-prioritization-muted: oklch(0.55 0.145 290 / 0.18);
-  --cat-prioritization-fill: oklch(0.966 0.020 290);
+  --measure: 68ch;     /* reading line length */
+  --measure-box: 42rem;/* the same edge as a fixed length, for sans text inside
+                          components and for callouts, whose ch would differ */
 
-  --cat-design: oklch(0.575 0.098 182);           /* viridian / deep teal */
-  --cat-design-light: oklch(0.895 0.052 182);
-  --cat-design-soft: oklch(0.575 0.098 182 / 0.13);
-  --cat-design-muted: oklch(0.575 0.098 182 / 0.19);
-  --cat-design-fill: oklch(0.966 0.022 182);
+  /* ---- Spacing (4px grid) --------------------------------------------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
 
-  --cat-strategy: oklch(0.585 0.135 42);          /* terracotta clay */
-  --cat-strategy-light: oklch(0.895 0.058 42);
-  --cat-strategy-soft: oklch(0.585 0.135 42 / 0.12);
-  --cat-strategy-muted: oklch(0.585 0.135 42 / 0.18);
-  --cat-strategy-fill: oklch(0.966 0.024 42);
+  /* ---- Radii (nested: inner = outer − padding, min 4) ----------------- */
+  --r-sm: 6px;         /* controls, chips, cells */
+  --r-md: 10px;        /* cards */
+  --r-lg: 14px;        /* panels, plates */
+  --r-pill: 999px;     /* only for the theme switch track + tiny status dots */
 
-  --cat-growth: oklch(0.55 0.135 242);            /* deep ocean blue */
-  --cat-growth-light: oklch(0.89 0.055 242);
-  --cat-growth-soft: oklch(0.55 0.135 242 / 0.12);
-  --cat-growth-muted: oklch(0.55 0.135 242 / 0.18);
-  --cat-growth-fill: oklch(0.965 0.022 242);
+  /* ---- Neutral ramp: warm paper, ink ----------------------------------- */
+  --paper: oklch(0.985 0.006 85);          /* page */
+  --paper-raised: oklch(0.997 0.003 85);   /* cards, plates */
+  --paper-sunk: oklch(0.962 0.008 85);     /* wells, table header, code */
+  --paper-hover: oklch(0.950 0.009 85);
 
-  --cat-execution: oklch(0.60 0.118 88);          /* ochre / mustard */
-  --cat-execution-light: oklch(0.895 0.062 90);
-  --cat-execution-soft: oklch(0.60 0.118 88 / 0.13);
-  --cat-execution-muted: oklch(0.60 0.118 88 / 0.19);
-  --cat-execution-fill: oklch(0.967 0.026 90);
+  --ink: oklch(0.240 0.014 60);            /* primary text */
+  --ink-2: oklch(0.420 0.012 60);          /* secondary text */
+  --ink-3: oklch(0.545 0.010 62);          /* muted text, meta (4.6:1 on paper) */
 
-  --cat-communication: oklch(0.555 0.135 342);    /* plum / aubergine */
-  --cat-communication-light: oklch(0.895 0.055 342);
-  --cat-communication-soft: oklch(0.555 0.135 342 / 0.12);
-  --cat-communication-muted: oklch(0.555 0.135 342 / 0.18);
-  --cat-communication-fill: oklch(0.965 0.022 342);
+  --rule: oklch(0.240 0.014 60 / 0.10);    /* hairline */
+  --rule-strong: oklch(0.240 0.014 60 / 0.18);
+  --rule-ink: oklch(0.240 0.014 60 / 0.82);/* deliberate ruled line (tables, plates) */
 
-  /* ---- SEMANTIC COLORS (Warm ink on paper) ----
-     OKLCH, perceptually uniform. Neutrals are tinted toward the brand's
-     warm paper hue (~83) so surfaces feel like a printed field guide rather
-     than a cold UI. "Black" is a deep warm ink (never #000) — keeps the
-     brutalist contrast punch while removing the clinical harshness that
-     fatigues long reading sessions. */
-  --bg-app: oklch(0.984 0.009 83);       /* warm cream paper */
-  --bg-sidebar: oklch(0.984 0.009 83);
-  --bg-content: oklch(0.988 0.008 83);
-  --bg-card: oklch(0.996 0.006 83);      /* near-white, faintly warm */
-  --bg-card-hover: oklch(0.972 0.012 83);
-  --bg-muted: oklch(0.949 0.013 83);
-  --bg-subtle: oklch(0.915 0.015 83);
-  --bg-input: oklch(0.997 0.005 83);
-  --bg-overlay: oklch(0.22 0.02 60 / 0.46);
+  /* Chrome accent: a deep ink blue. Links, focus, the primary action.
+     Inside a guide it is replaced by the category ink (see [data-cat]). */
+  --accent: oklch(0.455 0.120 255);
+  --accent-ink: oklch(0.455 0.120 255);    /* accent as text on paper, ≥4.5:1 */
+  --accent-wash: oklch(0.455 0.120 255 / 0.08);
+  --on-accent: oklch(0.990 0.004 85);
 
-  /* Hairline rules in a warm gray — the editorial default. --border-ink is
-     the rare deliberate hard line; --border-strong is for hover emphasis. */
-  --border-default: oklch(0.885 0.008 78);   /* soft warm hairline */
-  --border-subtle: oklch(0.925 0.006 80);    /* barely-there divider */
-  --border-strong: oklch(0.80 0.010 72);     /* hover / emphasis */
-  --border-ink: oklch(0.30 0.018 58);        /* deliberate hard edge (rare) */
-  --border-focus: var(--cat-prioritization);
+  --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.455 0.120 255 / 0.55);
 
-  --text-primary: oklch(0.235 0.018 56);    /* warm near-black ink */
-  --text-secondary: oklch(0.40 0.016 56);
-  --text-tertiary: oklch(0.52 0.014 58);
-  --text-muted: oklch(0.605 0.012 60);
-  --text-inverse: oklch(0.985 0.006 83);
-  --text-link: var(--cat-growth);
+  /* ---- Semantic (toned to sit in the palette) ------------------------- */
+  --good: oklch(0.520 0.110 155);
+  --good-wash: oklch(0.520 0.110 155 / 0.10);
+  --bad: oklch(0.530 0.150 28);
+  --bad-wash: oklch(0.530 0.150 28 / 0.09);
+  --warn: oklch(0.560 0.115 75);
+  --warn-wash: oklch(0.700 0.120 80 / 0.14);
+  --warn-ink: oklch(0.470 0.100 70);       /* warn as text on paper, ≥4.5:1 */
 
-  /* Status colors — warm OKLCH, muted to sit inside the almanac palette.
-     Used by use/skip + do/don't markers, factor-card letters, quiz feedback
-     and table hi/lo/med cells, so they must read as the same designed family
-     as the category index colours (the old #10B981/#EF4444 hexes were the
-     loudest off-system tell in the comparison tables). The -light tints stay
-     genuinely light so highlighted cells keep popping with dark text. */
-  --color-success: oklch(0.60 0.115 158);
-  --color-success-light: oklch(0.925 0.052 158);
-  --color-warning: oklch(0.70 0.125 78);
-  --color-warning-light: oklch(0.928 0.058 82);
-  --color-error: oklch(0.585 0.155 25);
-  --color-error-light: oklch(0.918 0.048 25);
-  --color-info: oklch(0.58 0.125 242);
-  --color-info-light: oklch(0.925 0.05 242);
+  /* ---- Category index colours ------------------------------------------
+     Each has: the mark (thumb tab, figure accents), an ink variant for text
+     on paper (≥4.5:1), and a faint wash for one highlighted cell/row. */
+  --cat-prioritization: oklch(0.560 0.140 290);
+  --cat-prioritization-ink: oklch(0.470 0.140 290);
+  --cat-prioritization-wash: oklch(0.560 0.140 290 / 0.09);
 
-  /* Interactive — anchored to the prioritization index colour for cohesion. */
-  --color-action: var(--cat-prioritization);
-  --color-action-hover: oklch(0.48 0.15 290);
-  --color-action-light: var(--cat-prioritization-light);
+  --cat-design: oklch(0.570 0.095 182);
+  --cat-design-ink: oklch(0.460 0.085 182);
+  --cat-design-wash: oklch(0.570 0.095 182 / 0.10);
 
-  /* ---- SHADOWS (Soft, layered, warm-tinted — premium elevation) ----
-     Real blur in the brand's warm-ink hue at low opacity, layered (a tight
-     contact shadow + a wider ambient one) so surfaces feel lifted off the
-     paper rather than stamped onto it. The hard offset blocks were the
-     loudest "cheap" tell; gone. */
-  --shadow-tint: 56 0.03;  /* hue chroma for shadow oklch */
-  --shadow-xs:
-    0 1px 1px oklch(0.28 0.03 56 / 0.05),
-    0 1px 2px oklch(0.28 0.03 56 / 0.04);
-  --shadow-sm:
-    0 1px 2px oklch(0.28 0.03 56 / 0.06),
-    0 2px 5px oklch(0.28 0.03 56 / 0.05);
-  --shadow-md:
-    0 1px 2px oklch(0.28 0.03 56 / 0.05),
-    0 4px 10px oklch(0.28 0.03 56 / 0.07);
-  --shadow-lg:
-    0 2px 4px oklch(0.28 0.03 56 / 0.05),
-    0 10px 24px oklch(0.28 0.03 56 / 0.10);
-  --shadow-xl:
-    0 4px 8px oklch(0.28 0.03 56 / 0.06),
-    0 20px 44px oklch(0.28 0.03 56 / 0.13);
-  --shadow-hover:
-    0 3px 6px oklch(0.28 0.03 56 / 0.07),
-    0 14px 32px oklch(0.28 0.03 56 / 0.13);
-  --shadow-focus: 0 0 0 3px oklch(0.55 0.145 290 / 0.32);
+  --cat-strategy: oklch(0.590 0.135 42);
+  --cat-strategy-ink: oklch(0.490 0.130 40);
+  --cat-strategy-wash: oklch(0.590 0.135 42 / 0.09);
 
-  /* ---- TRANSITIONS (Snappy) ---- */
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  /* Premium decelerating curves — physical mass, no linear/ease-in-out */
-  --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 120ms;
-  --duration-normal: 180ms;
-  --duration-slow: 250ms;
-  --duration-reveal: 520ms;
+  --cat-growth: oklch(0.550 0.130 242);
+  --cat-growth-ink: oklch(0.465 0.125 245);
+  --cat-growth-wash: oklch(0.550 0.130 242 / 0.09);
 
-  /* ---- LAYOUT ---- */
-  --sidebar-width: 260px;
-  --content-max: 740px;
-  --header-height: 56px;
-  --tab-height: 48px;
+  --cat-execution: oklch(0.640 0.120 85);
+  --cat-execution-ink: oklch(0.480 0.095 75);
+  --cat-execution-wash: oklch(0.640 0.120 85 / 0.12);
 
-  /* ---- LEGACY PALETTE (from original framework pages) ----
-     Mapped onto the refined system so the 30 injected HTML files inherit
-     warm ink + hairline borders instead of their original pure-black. */
-  --ink: var(--text-primary);
-  --ink-dim: var(--text-secondary);
-  --ink-muted: var(--text-tertiary);
-  --ink-soft: var(--text-muted);
-  --cream: var(--bg-app);
-  --cream-dark: var(--bg-muted);
-  --white: var(--bg-card);
-  --border: var(--border-default);
-  --radius: 12px;
+  --cat-communication: oklch(0.555 0.130 342);
+  --cat-communication-ink: oklch(0.470 0.125 345);
+  --cat-communication-wash: oklch(0.555 0.130 342 / 0.09);
 
-  /* Original color palette — saturated fills */
-  --sky: #DBEAFE;
-  --mint: #D1FAE5;
-  --orange: #FFEDD5;
-  --yellow: #FEF3C7;
-  --pink: #FCE7F3;
-  --rose: #FFE4E6;
-  --purple: #EDE8FF;
-  --green: #D1FAE5;
+  /* Ordered series colours for diagrams that must tell several things apart
+     (e.g. CIRCLES steps, Kano categories, AARRR stages). Same lightness band
+     so no one series shouts. Used only inside plates/figures. */
+  --series-1: oklch(0.590 0.135 42);
+  --series-2: oklch(0.640 0.120 85);
+  --series-3: oklch(0.570 0.095 160);
+  --series-4: oklch(0.550 0.130 242);
+  --series-5: oklch(0.560 0.140 290);
+  --series-6: oklch(0.555 0.130 342);
+  --series-7: oklch(0.560 0.030 70);
 
-  /* Phase accent colors */
-  --p1: #DBEAFE;
-  --p2: #D1FAE5;
-  --p3: #FEF3C7;
-  --p4: #FFEDD5;
-  --p5: #FCE7F3;
+  /* ---- Elevation (light theme only; dark uses surface steps) ----------- */
+  --shadow-1: 0 1px 2px oklch(0.24 0.02 60 / 0.06);
+  --shadow-2: 0 1px 2px oklch(0.24 0.02 60 / 0.05), 0 6px 16px oklch(0.24 0.02 60 / 0.07);
+  --shadow-3: 0 2px 4px oklch(0.24 0.02 60 / 0.06), 0 16px 40px oklch(0.24 0.02 60 / 0.12);
 
-  /* CIRCLES step colors */
-  --s1: #e85d5d;
-  --s2: #e89444;
-  --s3: #e8c63a;
-  --s4: #5bc06a;
-  --s5: #5bade8;
-  --s6: #9b82e8;
-  --s7: #e870a0;
+  /* ---- Motion: one curve, three durations ----------------------------- */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --t-slow: 320ms;
 
-  /* ---- CATEGORY SVG BACKGROUND PATTERNS ---- */
-  /* All categories use the same dot grid pattern, tinted with their color */
+  /* ---- Layout ---------------------------------------------------------- */
+  --bar-h: 56px;
+  --shell-max: 1280px;
+  --rail-w: 232px;
+  --gutter: 24px;
+  --label-col: 10rem;  /* label column of facts and agenda lists */
+  --control-h: 44px;   /* inputs, buttons and choices inside tools */
 
-  --pattern-prioritization: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%237C5CFC' fill-opacity='0.18'/%3E%3C/svg%3E");
-  --pattern-design:         url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%2310B981' fill-opacity='0.18'/%3E%3C/svg%3E");
-  --pattern-strategy:       url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F97066' fill-opacity='0.18'/%3E%3C/svg%3E");
-  --pattern-growth:         url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%233B82F6' fill-opacity='0.18'/%3E%3C/svg%3E");
-  --pattern-execution:      url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F59E0B' fill-opacity='0.18'/%3E%3C/svg%3E");
-  --pattern-communication:  url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F97316' fill-opacity='0.18'/%3E%3C/svg%3E");
-
-  /* Dashboard: Subtle dot grid — neutral, warm, notebook feel */
-  --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23000000' fill-opacity='0.07'/%3E%3C/svg%3E");
+  /* Select chevron. A data URI cannot read a token, so each theme carries
+     its own stroke (ink-3). */
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23857e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
 }
 
-/* ---- CATEGORY-COLORED PAGE BACKGROUNDS + PATTERNS ---- */
-/* When a framework page loads, .app-content gets data-category.
-   The entire content area takes on the category fill color + SVG pattern. */
+/* Category context: any subtree with data-cat swaps the accent to its ink. */
+[data-cat="prioritization"] { --cat: var(--cat-prioritization); --cat-ink: var(--cat-prioritization-ink); --cat-wash: var(--cat-prioritization-wash); }
+[data-cat="design"]         { --cat: var(--cat-design);         --cat-ink: var(--cat-design-ink);         --cat-wash: var(--cat-design-wash); }
+[data-cat="strategy"]       { --cat: var(--cat-strategy);       --cat-ink: var(--cat-strategy-ink);       --cat-wash: var(--cat-strategy-wash); }
+[data-cat="growth"]         { --cat: var(--cat-growth);         --cat-ink: var(--cat-growth-ink);         --cat-wash: var(--cat-growth-wash); }
+[data-cat="execution"]      { --cat: var(--cat-execution);      --cat-ink: var(--cat-execution-ink);      --cat-wash: var(--cat-execution-wash); }
+[data-cat="communication"]  { --cat: var(--cat-communication);  --cat-ink: var(--cat-communication-ink);  --cat-wash: var(--cat-communication-wash); }
 
-/* Dashboard/hub: refined, low-saturation multi-category wash.
-   The color gradient is veiled toward the warm cream base so it reads as a
-   soft, premium tint rather than a loud rainbow. Static (no continuous
-   repaint) to keep scrolling smooth. */
-.app-content:not([data-category]) {
-  background:
-    radial-gradient(120% 60% at 50% -5%, oklch(0.995 0.004 83 / 0.65), transparent 60%),
-    linear-gradient(180deg, oklch(0.985 0.008 83 / 0.86), oklch(0.985 0.008 83 / 0.96)),
-    linear-gradient(115deg,
-      var(--cat-prioritization-light) 0%,
-      var(--cat-design-light) 32%,
-      var(--cat-growth-light) 66%,
-      var(--cat-execution-light) 100%
-    );
-  background-attachment: fixed;
-}
-
-/* A calm single-category wash with a soft top highlight so the page reads as
-   tinted paper catching light, not a flat fill. Texture comes from the global
-   grain overlay (body::after), not loud dot grids. */
-.app-content[data-category] {
-  background-attachment: fixed;
-}
-.app-content[data-category="prioritization"] { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 290 / 0.85), transparent 55%), var(--cat-prioritization-fill); }
-.app-content[data-category="design"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 182 / 0.85), transparent 55%), var(--cat-design-fill); }
-.app-content[data-category="strategy"]       { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 42 / 0.85), transparent 55%), var(--cat-strategy-fill); }
-.app-content[data-category="growth"]         { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 242 / 0.85), transparent 55%), var(--cat-growth-fill); }
-.app-content[data-category="execution"]      { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 90 / 0.85), transparent 55%), var(--cat-execution-fill); }
-.app-content[data-category="communication"]  { background: radial-gradient(135% 70% at 50% -10%, oklch(0.995 0.004 342 / 0.85), transparent 55%), var(--cat-communication-fill); }
-
-/* ============================================
-   DARK THEME — "field guide at night"
-   Same OKLCH system with inverted lightness. Tinted
-   toward warm charcoal so it reads like dim paper, not
-   a cold UI. Saturated pastel/accent tokens (--mint,
-   --yellow, score cells, status -light) deliberately
-   STAY light so highlighted cells and chips pop on the
-   dark page and keep their dark text readable.
-   ============================================ */
-[data-theme="dark"] {
+/* ==========================================================================
+   Dark — "field guide at night". Depth from surface steps + hairlines.
+   ========================================================================== */
+:root[data-theme="dark"] {
   color-scheme: dark;
 
-  --bg-app: oklch(0.205 0.011 72);
-  --bg-sidebar: oklch(0.205 0.011 72);
-  --bg-content: oklch(0.228 0.012 72);
-  --bg-card: oklch(0.255 0.014 74);
-  --bg-card-hover: oklch(0.298 0.016 74);
-  --bg-muted: oklch(0.305 0.014 74);
-  --bg-subtle: oklch(0.350 0.015 74);
-  --bg-input: oklch(0.242 0.013 74);
-  --bg-overlay: oklch(0.12 0.01 70 / 0.62);
+  --paper: oklch(0.195 0.008 70);
+  --paper-raised: oklch(0.228 0.009 70);
+  --paper-sunk: oklch(0.172 0.008 70);
+  --paper-hover: oklch(0.262 0.010 70);
 
-  --border-default: oklch(0.40 0.014 74);    /* soft hairline on charcoal */
-  --border-subtle: oklch(0.33 0.012 74);     /* barely-there divider */
-  --border-strong: oklch(0.52 0.018 76);     /* hover / emphasis */
-  --border-ink: oklch(0.62 0.02 78);         /* deliberate edge (rare) */
-  --border-focus: var(--cat-prioritization);
+  --ink: oklch(0.930 0.010 85);
+  --ink-2: oklch(0.790 0.010 85);
+  --ink-3: oklch(0.660 0.010 82);
 
-  --text-primary: oklch(0.935 0.012 84);
-  --text-secondary: oklch(0.80 0.013 84);
-  --text-tertiary: oklch(0.665 0.013 82);
-  --text-muted: oklch(0.585 0.012 80);
-  --text-inverse: oklch(0.205 0.012 72);
+  --rule: oklch(0.930 0.010 85 / 0.10);
+  --rule-strong: oklch(0.930 0.010 85 / 0.18);
+  --rule-ink: oklch(0.930 0.010 85 / 0.70);
 
-  /* Dark elevation — deeper, still layered. Surfaces also lift via a faint
-     top inset highlight applied in components, not just the drop shadow. */
-  --shadow-xs:
-    0 1px 1px oklch(0.08 0.01 70 / 0.40),
-    0 1px 2px oklch(0.08 0.01 70 / 0.30);
-  --shadow-sm:
-    0 1px 2px oklch(0.08 0.01 70 / 0.45),
-    0 2px 6px oklch(0.08 0.01 70 / 0.35);
-  --shadow-md:
-    0 1px 2px oklch(0.08 0.01 70 / 0.40),
-    0 4px 12px oklch(0.08 0.01 70 / 0.45);
-  --shadow-lg:
-    0 2px 4px oklch(0.08 0.01 70 / 0.40),
-    0 12px 28px oklch(0.06 0.01 70 / 0.55);
-  --shadow-xl:
-    0 4px 8px oklch(0.08 0.01 70 / 0.45),
-    0 24px 50px oklch(0.06 0.01 70 / 0.60);
-  --shadow-hover:
-    0 3px 6px oklch(0.08 0.01 70 / 0.45),
-    0 16px 36px oklch(0.06 0.01 70 / 0.55);
-  --shadow-focus: 0 0 0 3px oklch(0.74 0.145 290 / 0.45);
+  --accent: oklch(0.740 0.105 250);
+  --accent-ink: oklch(0.780 0.095 250);
+  --accent-wash: oklch(0.740 0.105 250 / 0.12);
+  --on-accent: oklch(0.195 0.008 70);
+  --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.740 0.105 250 / 0.6);
 
-  /* Brighten category colours for legibility on dark — same refined-almanac
-     hues, lifted in lightness and held at a muted chroma. */
-  --cat-prioritization: oklch(0.74 0.145 290);
-  --cat-design: oklch(0.78 0.105 182);
-  --cat-strategy: oklch(0.755 0.130 44);
-  --cat-growth: oklch(0.725 0.135 244);
-  --cat-execution: oklch(0.80 0.115 90);
-  --cat-communication: oklch(0.745 0.135 342);
+  --good: oklch(0.740 0.120 155);
+  --good-wash: oklch(0.740 0.120 155 / 0.13);
+  --bad: oklch(0.720 0.140 28);
+  --bad-wash: oklch(0.720 0.140 28 / 0.13);
+  --warn: oklch(0.800 0.120 80);
+  --warn-wash: oklch(0.800 0.120 80 / 0.14);
+  --warn-ink: var(--warn);
 
-  /* Page-washes → deep category-tinted charcoal */
-  --cat-prioritization-fill: oklch(0.232 0.030 290);
-  --cat-design-fill: oklch(0.232 0.028 182);
-  --cat-strategy-fill: oklch(0.233 0.032 42);
-  --cat-growth-fill: oklch(0.230 0.030 242);
-  --cat-execution-fill: oklch(0.234 0.030 90);
-  --cat-communication-fill: oklch(0.232 0.032 342);
+  --cat-prioritization: oklch(0.700 0.120 290);
+  --cat-prioritization-ink: oklch(0.780 0.100 290);
+  --cat-prioritization-wash: oklch(0.700 0.120 290 / 0.14);
+  --cat-design: oklch(0.720 0.090 182);
+  --cat-design-ink: oklch(0.790 0.080 182);
+  --cat-design-wash: oklch(0.720 0.090 182 / 0.14);
+  --cat-strategy: oklch(0.720 0.120 42);
+  --cat-strategy-ink: oklch(0.790 0.105 45);
+  --cat-strategy-wash: oklch(0.720 0.120 42 / 0.14);
+  --cat-growth: oklch(0.720 0.110 242);
+  --cat-growth-ink: oklch(0.790 0.095 242);
+  --cat-growth-wash: oklch(0.720 0.110 242 / 0.14);
+  --cat-execution: oklch(0.780 0.115 85);
+  --cat-execution-ink: oklch(0.830 0.100 85);
+  --cat-execution-wash: oklch(0.780 0.115 85 / 0.14);
+  --cat-communication: oklch(0.720 0.115 342);
+  --cat-communication-ink: oklch(0.790 0.100 342);
+  --cat-communication-wash: oklch(0.720 0.115 342 / 0.14);
 
-  /* -light (chip / icon backings) → dark tinted */
-  --cat-prioritization-light: oklch(0.345 0.075 290);
-  --cat-design-light: oklch(0.345 0.065 182);
-  --cat-strategy-light: oklch(0.348 0.075 42);
-  --cat-growth-light: oklch(0.345 0.072 242);
-  --cat-execution-light: oklch(0.350 0.070 90);
-  --cat-communication-light: oklch(0.346 0.075 342);
+  --series-1: oklch(0.720 0.120 42);
+  --series-2: oklch(0.780 0.115 85);
+  --series-3: oklch(0.720 0.090 160);
+  --series-4: oklch(0.720 0.110 242);
+  --series-5: oklch(0.700 0.120 290);
+  --series-6: oklch(0.720 0.115 342);
+  --series-7: oklch(0.700 0.025 70);
 
-  /* Legacy aliases used pervasively by injected framework HTML */
-  --ink: oklch(0.935 0.012 84);
-  --ink-dim: oklch(0.80 0.013 84);
-  --ink-muted: oklch(0.665 0.013 82);
-  --ink-soft: oklch(0.56 0.012 80);
-  --cream: oklch(0.205 0.011 72);
-  --cream-dark: oklch(0.180 0.010 72);
-  --white: oklch(0.255 0.014 74);
-  --border: oklch(0.40 0.014 74);
+  --shadow-1: none;
+  --shadow-2: 0 0 0 1px var(--rule);
+  --shadow-3: 0 0 0 1px var(--rule-strong), 0 16px 40px oklch(0 0 0 / 0.45);
 
-  /* Legacy pastel BACKGROUNDS — flipped to deep hue-tinted surfaces in dark
-     mode. The source files paint hero diagrams and cells with these and set
-     their text in --ink (which flips light), so on the old stay-light pastels
-     the text vanished. Deep tints keep the colour cue and let light text read.
-     (The status -light tokens and score-cell pins are handled separately so
-     small highlight chips still pop.) */
-  --sky:    oklch(0.34 0.055 250);
-  --mint:   oklch(0.34 0.055 165);
-  --orange: oklch(0.35 0.055 60);
-  --yellow: oklch(0.36 0.055 92);
-  --pink:   oklch(0.34 0.055 350);
-  --rose:   oklch(0.34 0.055 18);
-  --purple: oklch(0.35 0.060 290);
-  --green:  oklch(0.34 0.055 150);
-  --p1: oklch(0.34 0.055 250);
-  --p2: oklch(0.34 0.055 165);
-  --p3: oklch(0.36 0.055 92);
-  --p4: oklch(0.35 0.055 60);
-  --p5: oklch(0.34 0.055 350);
-
-  --color-action: var(--cat-prioritization);
-  --color-action-hover: oklch(0.80 0.15 290);
-  --color-action-light: var(--cat-prioritization-light);
-  --text-link: var(--cat-growth);
-
-  /* Dashboard dot grid → light dots on dark */
-  --pattern-dashboard: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E");
-}
-
-/* Single-category page wash, dark variant — the light theme's near-white top
-   highlight reads as a silvery glare on charcoal, so dark mode uses a gentle,
-   low-alpha hue-tinted lift instead: tinted paper catching dim light. */
-[data-theme="dark"] .app-content[data-category="prioritization"] { background: radial-gradient(135% 72% at 50% -12%, oklch(0.42 0.045 290 / 0.40), transparent 58%), var(--cat-prioritization-fill); }
-[data-theme="dark"] .app-content[data-category="design"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 182 / 0.40), transparent 58%), var(--cat-design-fill); }
-[data-theme="dark"] .app-content[data-category="strategy"]       { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 42 / 0.40), transparent 58%), var(--cat-strategy-fill); }
-[data-theme="dark"] .app-content[data-category="growth"]         { background: radial-gradient(135% 72% at 50% -12%, oklch(0.43 0.045 242 / 0.40), transparent 58%), var(--cat-growth-fill); }
-[data-theme="dark"] .app-content[data-category="execution"]      { background: radial-gradient(135% 72% at 50% -12%, oklch(0.45 0.045 90 / 0.40), transparent 58%), var(--cat-execution-fill); }
-[data-theme="dark"] .app-content[data-category="communication"]  { background: radial-gradient(135% 72% at 50% -12%, oklch(0.44 0.045 342 / 0.40), transparent 58%), var(--cat-communication-fill); }
-
-/* Hub multi-category wash, dark variant — veiled toward charcoal */
-[data-theme="dark"] .app-content:not([data-category]) {
-  background:
-    var(--pattern-dashboard),
-    linear-gradient(180deg, oklch(0.205 0.011 72 / 0.82), oklch(0.205 0.011 72 / 0.95)),
-    linear-gradient(120deg,
-      var(--cat-prioritization-fill) 0%,
-      var(--cat-design-fill) 30%,
-      var(--cat-growth-fill) 62%,
-      var(--cat-execution-fill) 100%
-    );
-}
-
-/* ---- REDUCED MOTION ---- */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-fast: 0ms;
-    --duration-normal: 0ms;
-    --duration-slow: 0ms;
-  }
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2395928b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
 }

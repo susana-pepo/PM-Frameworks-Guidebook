@@ -1,0 +1,878 @@
+<article class="guide" data-guide="circles">
+
+  <header class="guide-intro">
+    <p class="lede">The CIRCLES Method is a seven-step structure for answering product design interview questions, the “design a product for X” kind. Lewis C. Lin set it out for PM interviews, and the same order also helps when a stakeholder asks you to build something before anyone has framed the problem.</p>
+
+    <figure class="figure" data-hero>
+      <ol class="circles-map" aria-label="The seven CIRCLES steps, grouped in three phases">
+        <li class="circles-phase">
+          <p class="circles-phase-name">Narrow the problem</p>
+          <ol class="circles-steps">
+            <li class="circles-step" data-series="1"><span class="circles-letter" aria-hidden="true">C</span><span class="circles-name"><span class="circles-word">Comprehend</span> <span class="circles-rest">the situation</span></span></li>
+            <li class="circles-step" data-series="2"><span class="circles-letter" aria-hidden="true">I</span><span class="circles-name"><span class="circles-word">Identify</span> <span class="circles-rest">the customer</span></span></li>
+            <li class="circles-step" data-series="3"><span class="circles-letter" aria-hidden="true">R</span><span class="circles-name"><span class="circles-word">Report</span> <span class="circles-rest">the customer’s needs</span></span></li>
+            <li class="circles-step" data-series="4"><span class="circles-letter" aria-hidden="true">C</span><span class="circles-name"><span class="circles-word">Cut</span> <span class="circles-rest">through prioritization</span></span></li>
+          </ol>
+        </li>
+        <li class="circles-phase">
+          <p class="circles-phase-name">Widen</p>
+          <ol class="circles-steps" start="5">
+            <li class="circles-step" data-series="5"><span class="circles-letter" aria-hidden="true">L</span><span class="circles-name"><span class="circles-word">List</span> <span class="circles-rest">solutions</span></span></li>
+          </ol>
+        </li>
+        <li class="circles-phase">
+          <p class="circles-phase-name">Choose</p>
+          <ol class="circles-steps" start="6">
+            <li class="circles-step" data-series="6"><span class="circles-letter" aria-hidden="true">E</span><span class="circles-name"><span class="circles-word">Evaluate</span> <span class="circles-rest">tradeoffs</span></span></li>
+            <li class="circles-step" data-series="7"><span class="circles-letter" aria-hidden="true">S</span><span class="circles-name"><span class="circles-word">Summarize</span> <span class="circles-rest">your recommendation</span></span></li>
+          </ol>
+        </li>
+      </ol>
+      <figcaption>The seven steps in the order you take them. The label over each group says what those steps do to the problem.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Comprehend the situation, Identify the customer, Report the customer’s needs, Cut through prioritization, List solutions, Evaluate tradeoffs and Summarize your recommendation. The first four steps narrow the prompt to one user and one problem; the last three generate options, choose one and say how you would measure it. In an interview the whole answer takes about 20 minutes.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Each step depends on the one before it</h2>
+      <p class="chapter-dek">Why the order is fixed, what each phase hands the next, and what to do and say at each step</p>
+    </header>
+
+    <p>Product design questions are open on purpose. Whether the asker is an interviewer or a stakeholder, they want to see how you get from a vague prompt to a clear recommendation. CIRCLES gives that path a fixed order, so your attention goes to the problem instead of to what to say next.</p>
+    <p>Skipping ahead breaks that chain. You cannot rank needs until you know whose needs they are, and you cannot weigh solutions until you have more than one. A solution proposed in the first minute has no user or need to be judged against.</p>
+    <p>Each phase hands the next one something specific. By the end of Cut you have one user segment and one need, written as a problem rather than a feature. List turns that need into three candidates of different scope, so there is something to compare. Evaluate and Summarize turn the comparison into a decision: the option you pick, what it costs you, the metric that would show it worked and a small test to check it before you build the full version.</p>
+    <p>CIRCLES and <a data-guide-link="design-thinking">design thinking</a> follow a similar path, from users to needs to solutions, but they were developed separately and do different jobs. CIRCLES structures a spoken answer of about 20 minutes with no real users, so the users and needs in it are assumptions you state out loud. Design thinking is a research and prototyping process with real users that runs for days or weeks.</p>
+
+    <div class="callout">
+      <p class="callout-title">The detective’s order</p>
+      <p>If the letters will not stick, remember how a detective works: understand the scene, identify the person, discover the problem, narrow the lead, explore the options, weigh the evidence and present the case.</p>
+    </div>
+
+    <h3>What to do and say at each step</h3>
+    <p>Each step answers one question before the next one begins.</p>
+
+    <ol class="steps">
+      <li>
+        <h4 class="step-title">Comprehend the situation</h4>
+        <p class="step-note">What exactly are we solving?</p>
+        <p>Clarify the prompt before you touch any solution. Pin down the goal, the company and its context, the constraints (time, budget, platform) and what success would look like.</p>
+        <p><strong>Say:</strong> “Before I jump in, let me make sure I understand the problem.”</p>
+        <p><strong>Questions to ask:</strong></p>
+        <ul>
+          <li>What metric are we optimizing for?</li>
+          <li>Is this mobile, web or both?</li>
+          <li>Who is the target audience?</li>
+          <li>What is the timeline?</li>
+          <li>Are competitors already doing this?</li>
+        </ul>
+      </li>
+      <li>
+        <h4 class="step-title">Identify the customer</h4>
+        <p class="step-note">Who are we building for?</p>
+        <p>List 2–3 user segments. For each, note their context, their goals and how comfortable they are with technology. Then pick one to focus on and say why. You cannot design for everyone, so choose.</p>
+        <p><strong>Say:</strong> “Let me think about who uses this.”</p>
+        <p><strong>Template:</strong> “I see three types of users: [A], [B] and [C]. I’ll focus on [A] because they feel the most pain and are the largest segment.”</p>
+      </li>
+      <li>
+        <h4 class="step-title">Report the customer’s needs</h4>
+        <p class="step-note">What are their pain points?</p>
+        <p>List the 3–5 biggest needs or pain points of the user you chose, and rank them by how severe and how frequent they are. Ground each one in a concrete situation the user is in, say which ones you would check against data, and write it as “They need to [verb] because [reason].”</p>
+        <p><strong>Say:</strong> “For this user, the biggest pain points are…”</p>
+        <p><strong>Needs, not features:</strong> “They need to find friends easily” is a need. “They need a search bar” is a solution in disguise.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Cut through prioritization</h4>
+        <p class="step-note">Which need do we solve first?</p>
+        <p>Pick one pain point and give a clear reason: it has the highest impact, affects the most users, is the most urgent, fits the company’s goals or closes the biggest gap with competitors.</p>
+        <p><strong>Say:</strong> “If I had to pick one, I’d focus on…”</p>
+        <p><strong>Template:</strong> “I’ll focus on [need] because it affects the most users and directly moves [metric].”</p>
+      </li>
+      <li>
+        <h4 class="step-title">List solutions</h4>
+        <p class="step-note">How could we solve this?</p>
+        <p>Generate three solutions: one simple and fast, one medium, one ambitious. Describe each briefly in terms of what the user sees and does. Do not judge them yet; this is the creative step.</p>
+        <p><strong>Say:</strong> “Here are a few ways we could solve this.”</p>
+        <p><strong>Template:</strong> “Quick win: [simple]. Better: [medium]. Best: [ambitious].” The range shows you can trade scope against ambition, which a single idea cannot.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Evaluate tradeoffs</h4>
+        <p class="step-note">Which solution wins, and why?</p>
+        <p>Compare the options on user impact, implementation effort, risk and fit with the goal. Pick a winner and say what you are giving up. <strong>Naming what you give up</strong> is what separates a recommendation from a preference.</p>
+        <p><strong>Say:</strong> “Comparing these options…”</p>
+        <p><strong>Template:</strong> “I’d go with [B] because it delivers [X impact] for [Y effort]. [A] is faster but does not solve the core problem. [C] is ideal in the long run but too risky for now.”</p>
+      </li>
+      <li>
+        <h4 class="step-title">Summarize your recommendation</h4>
+        <p class="step-note">What do we build, and how will we know it worked?</p>
+        <p>Recap in about 30 seconds: who the user is, which problem you are solving, the solution you recommend, why it wins and how you would measure success. Add the next step, usually a small test.</p>
+        <p><strong>Say:</strong> “To wrap up…”</p>
+        <p><strong>Template:</strong> “We’re solving [problem] for [user] by building [solution]. I’d measure success with [metric] and test it with [MVP approach].”</p>
+      </li>
+    </ol>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">About 20 minutes end to end</p>
+      <p>In a 35-minute interview the seven steps take about 20 minutes, which leaves about 15 for follow-up questions. List gets the most time, about 5 minutes. Do not rush, and do not linger on any single step. The minute-by-minute plan is in <a href="#session" data-section-link>the interview section</a>.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Making ride-sharing easier for elderly users</h2>
+      <p class="chapter-dek">One full answer, with the reasoning and what you would say at each step</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>“Design a feature for elderly users to use ride-sharing apps more easily.”</h3>
+
+      <ol class="steps">
+        <li>
+          <h4 class="step-title">Comprehend the situation</h4>
+          <p>Clarify: is this for an existing app such as Uber or Lyft, or a new product? What counts as “elderly”? Are we focused on booking, navigation or the whole journey?</p>
+          <p><strong>Say:</strong> “I’ll assume we’re designing for Uber, for users aged 70 and over, and focusing on booking, since that is where I expect this group to hit the most friction.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Identify the customer</h4>
+          <p>Three segments: (A) tech-comfortable seniors who use a smartphone every day, (B) reluctant tech users who stick to basic apps, and (C) seniors who do not use technology and depend on family for help.</p>
+          <p><strong>Say:</strong> “I’ll focus on group B, the reluctant tech users. They have a smartphone but find complex interfaces overwhelming. I’d expect them to be a large group with the most room to improve, and I’d check that against usage data.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Report the customer’s needs</h4>
+          <p>The top pain points: (1) booking takes too many steps, (2) small text and a confusing map, (3) anxiety about getting into a stranger’s car, (4) difficulty communicating with drivers, and (5) no easy way for family to follow a trip.</p>
+          <p><strong>Say:</strong> “These users need to book without working through many screens, to read what is in front of them, to feel safe with a driver they do not know, and to keep their family in the loop.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Cut through prioritization</h4>
+          <p>Pain point 1, too many steps, is the gateway problem. If they cannot book the ride, nothing else matters.</p>
+          <p><strong>Say:</strong> “I’ll focus on booking friction because it blocks everything after it. If more of these users complete a first ride, they have a reason to come back, so this is where retention starts.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">List solutions</h4>
+          <p>(A) <strong>One-tap favorites:</strong> save frequent destinations such as the doctor, the grocery store and home, with one large button for each. (B) <strong>Voice booking:</strong> say “Take me to Dr. Smith” to book. (C) <strong>Family booking:</strong> a relative schedules rides remotely from their own app.</p>
+          <p><strong>Say:</strong> “I see three options, from a simple interface change to voice input to coordinating two users: one-tap favorites, voice booking and family booking.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Evaluate tradeoffs</h4>
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <caption>Three solutions for reluctant tech users, compared</caption>
+              <thead>
+                <tr><th scope="col">Option</th><th scope="col">Scope</th><th scope="col">Strength</th><th scope="col">Weakness</th></tr>
+              </thead>
+              <tbody>
+                <tr class="is-top"><th scope="row">A. One-tap favorites</th><td>Quick win</td><td>Easiest to build and test; low effort with a clear impact</td><td>Covers only destinations the user has saved</td></tr>
+                <tr><th scope="row">B. Voice booking</th><td>Medium</td><td>No screens to work through</td><td>Voice interfaces are hard to get right and error-prone for this group</td></tr>
+                <tr><th scope="row">C. Family booking</th><td>Ambitious</td><td>Builds on the help many of these users already get from family</td><td>Needs a second person to adopt the feature</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Say:</strong> “I’d recommend one-tap favorites as the MVP. It removes the core friction with the least complexity, and we can add voice and family booking later as the user base grows.”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Summarize your recommendation</h4>
+          <p>Recap the chain in one breath: user, problem, solution, metric, test.</p>
+          <p><strong>Say:</strong> “We’re solving ride-booking friction for reluctant tech users aged 70 and over by adding one-tap favorite destinations: large buttons for Home, Doctor and Grocery that book a ride in one tap. I’d measure success with the first-ride completion rate for users aged 70 and over and with weekly active bookings. For the MVP, I’d add three preset buttons to the home screen and test them with 500 users in one city for four weeks.”</p>
+        </li>
+      </ol>
+
+      <div class="example-reading">
+        <h4>The answer narrows, widens, then chooses</h4>
+        <p>Notice the funnel. The answer starts broad with all elderly users, narrows to one segment and then to one problem, widens to three solutions, picks the simplest one that solves the problem and ends with a measurable definition of success. That shape is CIRCLES at work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Practice on a fresh prompt</h2>
+      <p class="chapter-dek">Work through all seven steps, then copy your answer or time yourself</p>
+    </header>
+
+    <div class="tool" data-tool="circles-practice">
+      <div class="tool-head">
+        <h3 class="tool-title">CIRCLES practice sheet</h3>
+        <p class="tool-hint">Draft each step in a sentence or two. What you type stays in this page.</p>
+      </div>
+
+      <div class="circles-prompt-box">
+        <p class="circles-prompt-label" id="circles-prompt-count">Prompt 1 of 10</p>
+        <p class="circles-prompt" id="circles-prompt" aria-live="polite">“Design a feature for a fitness app that helps users stay motivated.”</p>
+        <button type="button" class="btn" id="circles-next-prompt">New prompt</button>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="circles-c1"><span class="card-key card-key--sm" data-series="1" aria-hidden="true">C</span>Comprehend: your clarifying questions</label>
+          <textarea id="circles-c1" rows="3" placeholder="What would you ask? Goal, platform, constraints…" aria-describedby="circles-c1-help"></textarea>
+          <p class="field-help" id="circles-c1-help">Aim for 3–5 specific questions. Avoid generic ones.</p>
+        </div>
+        <div class="field">
+          <label for="circles-c2"><span class="card-key card-key--sm" data-series="2" aria-hidden="true">I</span>Identify: who is the customer?</label>
+          <textarea id="circles-c2" rows="3" placeholder="List 2–3 user segments, then pick one to focus on…" aria-describedby="circles-c2-help"></textarea>
+          <p class="field-help" id="circles-c2-help">Name the segment you chose and say why you chose it.</p>
+        </div>
+        <div class="field">
+          <label for="circles-c3"><span class="card-key card-key--sm" data-series="3" aria-hidden="true">R</span>Report: the customer’s needs and pain points</label>
+          <textarea id="circles-c3" rows="3" placeholder="The top 3–5 needs or pain points of your chosen user…" aria-describedby="circles-c3-help"></textarea>
+          <p class="field-help" id="circles-c3-help">Frame them as problems: “They struggle to…”, not “They need a button.”</p>
+        </div>
+        <div class="field">
+          <label for="circles-c4"><span class="card-key card-key--sm" data-series="4" aria-hidden="true">C</span>Cut: the one need you will solve</label>
+          <textarea id="circles-c4" rows="3" placeholder="Which pain point do you focus on, and why?" aria-describedby="circles-c4-help"></textarea>
+          <p class="field-help" id="circles-c4-help">Justify the choice with impact, reach or fit with the goal.</p>
+        </div>
+        <div class="field">
+          <label for="circles-c5"><span class="card-key card-key--sm" data-series="5" aria-hidden="true">L</span>List: three solutions</label>
+          <textarea id="circles-c5" rows="3" placeholder="A quick win, a medium option and an ambitious one…" aria-describedby="circles-c5-help"></textarea>
+          <p class="field-help" id="circles-c5-help">Range from simple to ambitious. Do not filter yourself yet.</p>
+        </div>
+        <div class="field">
+          <label for="circles-c6"><span class="card-key card-key--sm" data-series="6" aria-hidden="true">E</span>Evaluate: compare and pick</label>
+          <textarea id="circles-c6" rows="3" placeholder="Which solution wins? What are the tradeoffs?" aria-describedby="circles-c6-help"></textarea>
+          <p class="field-help" id="circles-c6-help">Say what you give up with the option you pick.</p>
+        </div>
+        <div class="field">
+          <label for="circles-c7"><span class="card-key card-key--sm" data-series="7" aria-hidden="true">S</span>Summarize: your 30-second pitch</label>
+          <textarea id="circles-c7" rows="3" placeholder="User, problem, solution, why, metric, MVP" aria-describedby="circles-c7-help"></textarea>
+          <p class="field-help" id="circles-c7-help">Say it out loud. Keep it under 30 seconds.</p>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="circles-copy">Copy my answer</button>
+        <button type="button" class="btn" id="circles-timer-toggle">Start 20-minute timer</button>
+        <button type="button" class="btn btn--quiet" id="circles-clear">Clear answers</button>
+      </div>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Time left</p>
+        <p class="tool-result" id="circles-timer" role="timer">20:00</p>
+        <p class="tool-output-note" id="circles-timer-step">The timer follows the interview plan: 3 minutes for Comprehend, 5 for List, 20 in all.</p>
+      </div>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Steps drafted</p>
+        <output class="tool-result" id="circles-progress" for="circles-c1 circles-c2 circles-c3 circles-c4 circles-c5 circles-c6 circles-c7">0 of 7</output>
+        <p class="tool-output-note" id="circles-progress-note">Start with Comprehend.</p>
+        <p class="tool-output-note" id="circles-status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Practice against the clock</p>
+      <p>Timed practice works best. Start the 20-minute timer, work through the whole prompt without stopping, then repeat with 3–5 different prompts.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When CIRCLES fits, and when it does not</h2>
+      <p class="chapter-dek">Built for interviews, and handy for thinking aloud through a request before any research starts</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>A PM interview asks you to “design a product or feature for X”</li>
+          <li>You want to think a feature request through out loud before committing to research or a build</li>
+          <li>A stakeholder says “We should build X” and you want to think before committing</li>
+          <li>You need a quick first framing of an unfamiliar problem before any research starts</li>
+          <li>You are teaching junior PMs how to approach product design</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You already understand the problem well and only need solutions</li>
+          <li>You are fixing an urgent bug or outage, which is no time for a structured exercise</li>
+          <li>You are choosing between features you already have. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead.</li>
+          <li>The work is technical design, such as architecture or APIs, which needs its own design methods</li>
+          <li>The question is behavioral (“Tell me about a time when…”). Use the <a data-guide-link="star">STAR Method</a> instead.</li>
+          <li>The question is a business case (“Should we enter this market?”). Lead with the answer and grouped reasons, as the <a data-guide-link="pyramid">Pyramid Principle</a> does.</li>
+          <li>You need evidence of what real users need. CIRCLES runs on stated assumptions; run <a data-guide-link="design-thinking">design thinking</a> or <a data-guide-link="jtbd">Jobs to Be Done</a> research instead.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways a CIRCLES answer goes wrong</h2>
+      <p class="chapter-dek">Half of them happen before a single solution is on the table</p>
+    </header>
+
+    <p>Candidates often rush the first two steps; that is where answers go wrong. The later mistakes are about range and evidence: one idea instead of three, a choice with no tradeoff, a recommendation with no metric.</p>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Skipping Comprehend</h3>
+        <p>Jumping straight to solutions. The prompt is vague on purpose: the interviewer wants to see you clarify it.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> ask 3–5 questions before anything else. “Let me make sure I understand…” buys you clarity and time.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Designing for everyone</h3>
+        <p>Not picking a specific user. Designing for all users means designing for no one.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> name 2–3 segments, pick one and say why: “I’ll focus on segment B because…”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Listing solutions as needs</h3>
+        <p>“They need a search bar” is a solution. “They can’t find what they’re looking for” is the need.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write needs as “They struggle to…” or “They need to [verb]…”, and never name an interface element in the Report step.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Offering only one solution</h3>
+        <p>Going straight to your best idea makes it look as if you cannot think broadly. Interviewers want to see range.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> always generate three: a quick win, a medium option and an ambitious one. Even when you know which will win, show the range first.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Evaluating without tradeoffs</h3>
+        <p>“Solution B is the best” with no comparison gives the listener no way to check your reasoning or push back on it.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> for each option, say what you gain and what you lose: “B has higher impact but takes longer. A is faster but does not fully solve the problem.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Summarizing without a metric</h3>
+        <p>A strong recommendation with no way to measure it leaves the obvious question open: how would you know it worked?</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> end with “I’d measure success with [metric] and test it with [MVP approach].” It shows product rigor.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="In the interview">
+    <header class="chapter-head">
+      <h2>A 35-minute plan for a product design question</h2>
+      <p class="chapter-dek">About 20 minutes for the seven steps and 15 for follow-up</p>
+    </header>
+
+    <p>Product design rounds vary in length; this plan assumes a common 35-minute slot for one question. For a longer or shorter round, scale each step in proportion and keep List as the longest.</p>
+
+    <figure class="figure">
+      <ol class="circles-clock" aria-label="Minutes per step in a 35-minute interview">
+        <li data-series="1" data-min="3"><span class="circles-clock-key" aria-hidden="true">C</span><span class="visually-hidden">Comprehend, 3 minutes</span></li>
+        <li data-series="2" data-min="2"><span class="circles-clock-key" aria-hidden="true">I</span><span class="visually-hidden">Identify, 2 minutes</span></li>
+        <li data-series="3" data-min="3"><span class="circles-clock-key" aria-hidden="true">R</span><span class="visually-hidden">Report, 3 minutes</span></li>
+        <li data-series="4" data-min="2"><span class="circles-clock-key" aria-hidden="true">C</span><span class="visually-hidden">Cut, 2 minutes</span></li>
+        <li data-series="5" data-min="5"><span class="circles-clock-key" aria-hidden="true">L</span><span class="visually-hidden">List, 5 minutes</span></li>
+        <li data-series="6" data-min="3"><span class="circles-clock-key" aria-hidden="true">E</span><span class="visually-hidden">Evaluate, 3 minutes</span></li>
+        <li data-series="7" data-min="2"><span class="circles-clock-key" aria-hidden="true">S</span><span class="visually-hidden">Summarize, 2 minutes</span></li>
+        <li class="circles-clock-rest" data-min="15"><span class="circles-clock-key" aria-hidden="true">Follow-up</span><span class="visually-hidden">Follow-up discussion, 15 minutes</span></li>
+      </ol>
+      <div class="circles-clock-axis" aria-hidden="true">
+        <span>0–20 min: the seven steps</span>
+        <span>20–35 min: follow-up</span>
+      </div>
+      <figcaption>Each block is drawn to scale. List solutions gets the longest slot of the seven steps.</figcaption>
+    </figure>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–3 min</span><div><p class="agenda-title">Comprehend the situation</p><p>Listen to the prompt and ask 3–5 clarifying questions. Restate your understanding: “So I’m designing [X] for [Y] to achieve [Z].”</p></div></li>
+      <li><span class="agenda-time">3–5 min</span><div><p class="agenda-title">Identify the customer</p><p>Name 2–3 user segments and pick one: “I’ll focus on [segment] because [reason].” Pause for the interviewer to agree.</p></div></li>
+      <li><span class="agenda-time">5–8 min</span><div><p class="agenda-title">Report the customer’s needs</p><p>List 3–5 pain points for the user you chose, each tied to a concrete situation: “When they try to [action], they struggle because…”</p></div></li>
+      <li><span class="agenda-time">8–10 min</span><div><p class="agenda-title">Cut through prioritization</p><p>Pick one pain point with a brief justification: “I’ll focus on [need] because it has the highest impact on [metric].”</p></div></li>
+      <li><span class="agenda-time">10–15 min</span><div><p class="agenda-title">List solutions</p><p>The creative part of the answer, and the longest step. Describe three solutions in enough detail that the interviewer can picture them.</p></div></li>
+      <li><span class="agenda-time">15–18 min</span><div><p class="agenda-title">Evaluate tradeoffs</p><p>Compare the solutions on impact and effort, and state the tradeoff plainly: “I recommend [B] because [reasoning]. The tradeoff is [what you give up].”</p></div></li>
+      <li><span class="agenda-time">18–20 min</span><div><p class="agenda-title">Summarize your recommendation</p><p>A 30-second recap: user, problem, solution, metric, MVP. Keep it crisp and confident.</p></div></li>
+      <li><span class="agenda-time">20–35 min</span><div><p class="agenda-title">Follow-up discussion</p><p>The interviewer probes your choices. Be ready to defend them or change course: “If we weigh [X] more heavily, I would shift to…”</p></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Three habits that help</p>
+      <ul>
+        <li><strong>Signal each step out loud:</strong> “Now let me identify the users…” It shows structure and lets the interviewer follow your thinking.</li>
+        <li><strong>Check in after step 2:</strong> “Does this user focus make sense, or would you like me to explore a different segment?” It shows you collaborate.</li>
+        <li><strong>Internalize rather than memorize.</strong> Interviewers can spot a rehearsed answer. Practice until the order feels natural instead of scripted.</li>
+      </ul>
+    </div>
+
+    <h3>What interviewers are scoring</h3>
+    <div class="contrast">
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Signals strength</p>
+        <ul>
+          <li>Asking clarifying questions</li>
+          <li>Choosing a specific user</li>
+          <li>Explaining tradeoffs</li>
+          <li>Mentioning metrics</li>
+          <li>Structured thinking</li>
+        </ul>
+      </div>
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Signals weakness</p>
+        <ul>
+          <li>Jumping to solutions</li>
+          <li>Designing for “everyone”</li>
+          <li>Offering only one idea</li>
+          <li>No tradeoffs</li>
+          <li>No success metrics</li>
+          <li>A robotic, memorized delivery</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the steps, the timing and where CIRCLES fits</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">You have just heard a product design prompt. What should you do first?</p>
+        <ul class="quiz-options">
+          <li><button type="button">List the user segments the prompt points to</button></li>
+          <li><button type="button">Sketch the most promising solution</button></li>
+          <li><button type="button">Ask about the goal and the constraints</button></li>
+        </ul>
+        <div class="quiz-why"><p>Comprehend comes first. The prompt is vague on purpose, and clarifying it shows you think before you build. Segments and solutions come later, once you know what you are solving.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">“They need a search bar.” Is this a need or a solution?</p>
+        <ul class="quiz-options">
+          <li><button type="button">A solution</button></li>
+          <li><button type="button">A need</button></li>
+          <li><button type="button">Both</button></li>
+        </ul>
+        <div class="quiz-why"><p>A search bar is one way to solve a problem. The need is the problem itself: users struggle to find specific items. Even if users ask for a search bar, the request points to the need rather than being it. Writing needs as problems keeps the solution space open for the List step.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">How many solutions should you put forward in the List step?</p>
+        <ul class="quiz-options">
+          <li><button type="button">One strong idea, explained in full depth</button></li>
+          <li><button type="button">Three, from a quick win to an ambitious one</button></li>
+          <li><button type="button">As many as you can name in the time you have</button></li>
+        </ul>
+        <div class="quiz-why"><p>Three gives range without using up the clock: a quick win, a medium option and an ambitious one. One idea looks narrow, and a long list leaves no time to evaluate.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What makes an Evaluate step convincing?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Choosing the most ambitious option</button></li>
+          <li><button type="button">Estimating how long each option would take to build</button></li>
+          <li><button type="button">Saying what each option gains and gives up</button></li>
+        </ul>
+        <div class="quiz-why"><p>Evaluate is a comparison, and a comparison names what each option gives up: “B has higher impact but costs more. A is faster but does not fully solve it.” Build time is one input to that comparison, not the whole of it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">How should your summary end?</p>
+        <ul class="quiz-options">
+          <li><button type="button">With a success metric and how you would test an MVP</button></li>
+          <li><button type="button">With a recap of every option you considered</button></li>
+          <li><button type="button">With the risks that could change your recommendation</button></li>
+        </ul>
+        <div class="quiz-why"><p>“I’d measure success with [metric] and test it with [MVP]” shows you think about outcomes as well as outputs. Recapping every option repeats the Evaluate step, and risks belong in the tradeoffs.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">A month into a new PM job, you inherit a backlog of 20 feature ideas, each with usage data. Which framework ranks them?</p>
+        <ul class="quiz-options">
+          <li><button type="button">CIRCLES, run once for each idea</button></li>
+          <li><button type="button">RICE or ICE</button></li>
+          <li><button type="button">The Kano model</button></li>
+        </ul>
+        <div class="quiz-why"><p>RICE and ICE give each idea a score so you can rank them, and RICE can take Reach straight from the usage data. CIRCLES structures a spoken answer to one design question, so it does not compare a backlog. The Kano model classifies features by how they affect satisfaction; it does not rank them.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Which step should get the most time in a 35-minute interview?</p>
+        <ul class="quiz-options">
+          <li><button type="button">List solutions</button></li>
+          <li><button type="button">Comprehend the situation</button></li>
+          <li><button type="button">Evaluate tradeoffs</button></li>
+        </ul>
+        <div class="quiz-why"><p>List is the creative step, so it gets about 5 of the 20 minutes. Comprehend and Evaluate get about 3 each.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A colleague calls CIRCLES “design thinking squeezed into 20 minutes.” What is the main difference between the two?</p>
+        <ul class="quiz-options">
+          <li><button type="button">CIRCLES runs design thinking’s Prototype and Test as its Evaluate step</button></li>
+          <li><button type="button">CIRCLES is the Define and Ideate modes of design thinking, run faster</button></li>
+          <li><button type="button">CIRCLES works from stated assumptions; design thinking tests with real users</button></li>
+        </ul>
+        <div class="quiz-why"><p>Both move from users to needs to solutions, but they were developed separately and do different jobs. CIRCLES structures a spoken answer of about 20 minutes with no real users, so its users and needs are assumptions you state. Design thinking researches and prototypes with real users over days or weeks. Evaluate compares options out loud; it does not prototype or test anything with users, and CIRCLES is not a subset of the design thinking modes.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the seven steps grouped in three phases */
+  .guide[data-guide="circles"] .circles-map {
+    display: grid;
+    grid-template-columns: 4fr 1fr 2fr;
+    gap: var(--s-3);
+    min-width: 560px;
+  }
+  .guide[data-guide="circles"] .circles-phase {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--s-3);
+    min-width: 0;
+  }
+  .guide[data-guide="circles"] .circles-phase-name {
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--rule-strong);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .guide[data-guide="circles"] .circles-steps {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: var(--s-1);
+  }
+  .guide[data-guide="circles"] .circles-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    padding: var(--s-4) var(--s-1);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    text-align: center;
+  }
+  .guide[data-guide="circles"] .circles-letter {
+    font-family: var(--font-serif);
+    font-size: var(--fs-30);
+    font-weight: var(--w-medium);
+    line-height: 1.1;
+    color: var(--series-ink);
+  }
+  .guide[data-guide="circles"] .circles-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    margin-top: var(--s-1);
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .guide[data-guide="circles"] .circles-word {
+    font-size: var(--fs-12);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+  .guide[data-guide="circles"] .circles-rest {
+    font-size: var(--fs-12);
+    line-height: 1.35;
+    color: var(--ink-3);
+  }
+  @media (max-width: 760px) {
+    .guide[data-guide="circles"] .circles-map { grid-template-columns: minmax(0, 1fr); min-width: 0; gap: var(--s-5); }
+    .guide[data-guide="circles"] .circles-phase { gap: var(--s-2); }
+    .guide[data-guide="circles"] .circles-phase-name { text-align: left; }
+    .guide[data-guide="circles"] .circles-steps { grid-auto-flow: row; gap: var(--s-2); }
+    .guide[data-guide="circles"] .circles-step {
+      flex-direction: row;
+      align-items: baseline;
+      gap: var(--s-2);
+      padding: var(--s-2) var(--s-3);
+      text-align: left;
+    }
+    .guide[data-guide="circles"] .circles-letter { flex: none; width: 24px; font-size: var(--fs-24); }
+    .guide[data-guide="circles"] .circles-name { display: block; margin-top: 0; }
+    .guide[data-guide="circles"] .circles-word { font-size: var(--fs-16); }
+    .guide[data-guide="circles"] .circles-rest { font-size: var(--fs-16); }
+  }
+
+  /* Practice sheet */
+  .guide[data-guide="circles"] .circles-prompt-box {
+    display: grid;
+    gap: var(--s-2);
+    justify-items: start;
+    padding: var(--s-5);
+    border-radius: var(--r-md);
+    background: var(--cat-wash);
+  }
+  .guide[data-guide="circles"] .circles-prompt-label {
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="circles"] .circles-prompt {
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  /* Interview clock: one block per step, drawn to scale */
+  .guide[data-guide="circles"] .circles-clock {
+    display: flex;
+    gap: 2px;
+  }
+  .guide[data-guide="circles"] .circles-clock > li {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border-radius: var(--r-sm);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="circles"] .circles-clock > [data-min="2"] { flex-grow: 2; }
+  .guide[data-guide="circles"] .circles-clock > [data-min="3"] { flex-grow: 3; }
+  .guide[data-guide="circles"] .circles-clock > [data-min="5"] { flex-grow: 5; }
+  .guide[data-guide="circles"] .circles-clock > [data-min="15"] { flex-grow: 15; }
+  .guide[data-guide="circles"] .circles-clock > .circles-clock-rest { background: var(--paper-sunk); }
+  .guide[data-guide="circles"] .circles-clock-key {
+    font-family: var(--font-serif);
+    font-size: var(--fs-16);
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="circles"] .circles-clock-rest .circles-clock-key {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-medium);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="circles"] .circles-clock-axis {
+    display: grid;
+    grid-template-columns: 20fr 15fr;
+    gap: 2px;
+    margin-top: var(--s-2);
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="circles"] .circles-clock-axis > span {
+    padding-top: var(--s-1);
+    border-top: 1px solid var(--rule-strong);
+  }
+  /* Practice sheet: a wrapped label hangs after its letter key */
+  .guide[data-guide="circles"] .field > label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+  }
+  .guide[data-guide="circles"] .field > label > .card-key--sm {
+    flex: none;
+    margin: 0;
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="circles-practice"]');
+  const promptText = tool.querySelector('#circles-prompt');
+  const promptCount = tool.querySelector('#circles-prompt-count');
+  const nextPromptBtn = tool.querySelector('#circles-next-prompt');
+  const copyBtn = tool.querySelector('#circles-copy');
+  const timerBtn = tool.querySelector('#circles-timer-toggle');
+  const clearBtn = tool.querySelector('#circles-clear');
+  const timerOut = tool.querySelector('#circles-timer');
+  const timerStep = tool.querySelector('#circles-timer-step');
+  const progress = tool.querySelector('#circles-progress');
+  const progressNote = tool.querySelector('#circles-progress-note');
+  const status = tool.querySelector('#circles-status');
+
+  const prompts = [
+    'Design a feature for a fitness app that helps users stay motivated.',
+    'Design a grocery delivery experience for busy parents.',
+    'Improve the airport check-in experience.',
+    'Design a feature to help remote teams build culture.',
+    'Design a tool to help college students manage their finances.',
+    'Improve how people discover new restaurants in their neighborhood.',
+    'Design a feature for a music app to help users discover new artists.',
+    'Design an experience to help first-time home buyers.',
+    'Improve the experience of returning online purchases.',
+    'Design a feature to reduce food waste in households.',
+  ];
+
+  // The seven steps, with the minute each one should end by in a 20-minute answer.
+  const steps = [
+    { letter: 'C', name: 'Comprehend', endsAt: 3 },
+    { letter: 'I', name: 'Identify', endsAt: 5 },
+    { letter: 'R', name: 'Report', endsAt: 8 },
+    { letter: 'C', name: 'Cut', endsAt: 10 },
+    { letter: 'L', name: 'List', endsAt: 15 },
+    { letter: 'E', name: 'Evaluate', endsAt: 18 },
+    { letter: 'S', name: 'Summarize', endsAt: 20 },
+  ].map((s, i) => {
+    const el = tool.querySelector(`#circles-c${i + 1}`);
+    const help = tool.querySelector(`#circles-c${i + 1}-help`);
+    return { ...s, el, help, defaultHelp: help.textContent };
+  });
+
+  const needs = steps[2];
+  const summary = steps[6];
+  // Interface elements that turn a need into a solution. Words that are also
+  // ordinary verbs or real pain points (filter, toggle, notification) only
+  // count as part of a noun phrase such as "filter button" or "push notification".
+  const SOLUTION_WORDS = /\b(buttons?|search bars?|drop-?downs?|menus?|icons?|filter (buttons?|bars?|menus?)|pop-?ups?|modals?|widgets?|checkbox(es)?|sliders?|banners?|push notifications?|chatbots?|dashboards?)\b/i;
+  const WORDS_PER_SECOND = 2.5; // a speaking pace of about 150 words a minute
+
+  let current = 0;
+  const hasAnswers = () => steps.some(s => s.el.value.trim() !== '');
+
+  function showPrompt() {
+    promptText.textContent = `“${prompts[current]}”`;
+    promptCount.textContent = `Prompt ${current + 1} of ${prompts.length}`;
+  }
+
+  function update() {
+    const drafted = steps.filter(s => s.el.value.trim() !== '');
+    progress.textContent = `${drafted.length} of ${steps.length}`;
+    const next = steps.find(s => s.el.value.trim() === '');
+    progressNote.textContent = next
+      ? `Next: ${next.name}.`
+      : 'All seven steps drafted. Now say the summary out loud.';
+
+    const match = needs.el.value.match(SOLUTION_WORDS);
+    needs.help.textContent = match
+      ? `“${match[0]}” may name a solution. If it does, describe the problem the user has instead.`
+      : needs.defaultHelp;
+    needs.help.classList.toggle('is-error', Boolean(match));
+
+    const text = summary.el.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    if (!words) {
+      summary.help.textContent = summary.defaultHelp;
+      summary.help.classList.remove('is-error');
+    } else {
+      const seconds = Math.max(1, Math.round(words / WORDS_PER_SECOND));
+      const tooLong = seconds > 30;
+      summary.help.textContent = `${words.toLocaleString('en-US')} ${words === 1 ? 'word' : 'words'}, about ${seconds} seconds out loud.${tooLong ? ' Cut it to 30 seconds or less.' : ''}`;
+      summary.help.classList.toggle('is-error', tooLong);
+    }
+  }
+
+  steps.forEach(s => s.el.addEventListener('input', update));
+
+  nextPromptBtn.addEventListener('click', () => {
+    current = (current + 1) % prompts.length;
+    showPrompt();
+    status.textContent = hasAnswers()
+      ? 'New prompt. Your earlier answers are still in the fields; clear them to start fresh.'
+      : '';
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    if (!hasAnswers()) {
+      status.textContent = 'Write at least one step before copying.';
+      return;
+    }
+    const lines = [`Prompt: ${prompts[current]}`, ''];
+    steps.forEach(s => {
+      lines.push(`${s.letter}: ${s.name}`, s.el.value.trim() || '(not drafted yet)', '');
+    });
+    try {
+      await navigator.clipboard.writeText(lines.join('\n').trim());
+      status.textContent = 'Your answer is copied as plain text.';
+    } catch (err) {
+      status.textContent = 'Copying is not available here. Select the text in each field and copy it by hand.';
+    }
+  });
+
+  // Timer: 20 minutes, with the step you should be on from the interview plan.
+  const TOTAL = 20 * 60;
+  let remaining = TOTAL;
+  let timerId = null;
+  let lastStep = -1;
+  const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  const defaultStepText = timerStep.textContent;
+
+  // The label speaks in the clock's own frame: the time left at which to move on.
+  function stepLabel(i) {
+    if (i === steps.length - 1) return `Now: ${steps[i].name}. Finish before the clock reaches 0:00.`;
+    const moveAt = clock(TOTAL - steps[i].endsAt * 60);
+    return `Now: ${steps[i].name}. Move on to ${steps[i + 1].name} when the clock reads ${moveAt}.`;
+  }
+
+  function stepAt(elapsedSeconds) {
+    const minute = elapsedSeconds / 60;
+    const i = steps.findIndex(s => minute < s.endsAt);
+    return i === -1 ? steps.length - 1 : i;
+  }
+
+  function tick() {
+    remaining -= 1;
+    timerOut.textContent = clock(Math.max(0, remaining));
+    if (remaining <= 0) {
+      stopTimer();
+      timerOut.textContent = clock(0);
+      timerStep.textContent = 'Time is up. Close with your summary.';
+      status.textContent = 'Time is up. Close with your summary.';
+      return;
+    }
+    const i = stepAt(TOTAL - remaining);
+    if (i !== lastStep) {
+      lastStep = i;
+      timerStep.textContent = stepLabel(i);
+      status.textContent = `Move on to ${steps[i].name}.`;
+    }
+  }
+
+  function stopTimer() {
+    if (timerId !== null) clearInterval(timerId);
+    timerId = null;
+    timerBtn.textContent = 'Start 20-minute timer';
+  }
+
+  timerBtn.addEventListener('click', () => {
+    if (timerId !== null) {
+      stopTimer();
+      remaining = TOTAL;
+      lastStep = -1;
+      timerOut.textContent = clock(TOTAL);
+      timerStep.textContent = defaultStepText;
+      status.textContent = 'Timer stopped and reset.';
+      return;
+    }
+    remaining = TOTAL;
+    lastStep = 0;
+    timerOut.textContent = clock(TOTAL);
+    timerStep.textContent = stepLabel(0);
+    status.textContent = 'Timer started. Begin with Comprehend.';
+    timerBtn.textContent = 'Stop and reset timer';
+    timerId = setInterval(tick, 1000);
+  });
+
+  // Clearing asks for a second press so a stray click does not wipe the sheet.
+  let clearArmed = false;
+  let clearTimeoutId = null;
+  function disarmClear() {
+    clearArmed = false;
+    if (clearTimeoutId !== null) clearTimeout(clearTimeoutId);
+    clearTimeoutId = null;
+    clearBtn.textContent = 'Clear answers';
+  }
+
+  clearBtn.addEventListener('click', () => {
+    if (!hasAnswers()) {
+      disarmClear();
+      status.textContent = 'There is nothing to clear.';
+      return;
+    }
+    if (!clearArmed) {
+      clearArmed = true;
+      clearBtn.textContent = 'Press again to clear';
+      status.textContent = 'Press Clear again within 5 seconds to erase all seven fields.';
+      clearTimeoutId = setTimeout(disarmClear, 5000);
+      return;
+    }
+    disarmClear();
+    steps.forEach(s => { s.el.value = ''; });
+    update();
+    status.textContent = 'All answers cleared.';
+    steps[0].el.focus();
+  });
+
+  api.onCleanup(() => {
+    stopTimer();
+    disarmClear();
+  });
+
+  showPrompt();
+  update();
+</script>

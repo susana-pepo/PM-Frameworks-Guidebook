@@ -1,0 +1,1177 @@
+<article class="guide" data-guide="wardley-mapping">
+
+  <header class="guide-intro">
+    <p class="lede">A Wardley map places the components that serve a user need on two axes: how visible each component is to the user (the value chain, top to bottom) and how evolved it is (left to right, from genesis to commodity). Because components evolve, the map shows where to build, where to buy and where to outsource.</p>
+
+    <figure class="figure" data-hero>
+      <div class="wm-frame" data-narrow-below="640">
+          <svg class="wm-map wm-map--wide" viewBox="0 0 700 440" role="img" aria-label="An illustrative Wardley map for Larkwell, a fictional piano-learning app. At the top is the anchor: an adult beginner who wants to play songs they love. Highest on the map are the lesson experience, which is custom-built, and practice plans, which are in genesis. Below them sit the lesson library, which is custom-built, real-time note detection, which is custom-built and moving toward product, and gamification and song licensing, which are products. Lowest are the cross-platform mobile framework, a product, and payments and subscriptions and cloud hosting, which are commodities.">
+            <line class="wm-grid" x1="210" y1="60" x2="210" y2="378"/>
+            <line class="wm-grid" x1="350" y1="60" x2="350" y2="378"/>
+            <line class="wm-grid" x1="490" y1="60" x2="490" y2="378"/>
+            <line class="wm-axis" x1="70" y1="378" x2="70" y2="44"/>
+            <polygon class="wm-axis-head" points="64,46 70,34 76,46"/>
+            <line class="wm-axis" x1="70" y1="378" x2="636" y2="378"/>
+            <polygon class="wm-axis-head" points="634,372 646,378 634,384"/>
+            <rect class="wm-bar" data-series="5" x="70" y="382" width="140" height="6"/>
+            <rect class="wm-bar" data-series="4" x="210" y="382" width="140" height="6"/>
+            <rect class="wm-bar" data-series="2" x="350" y="382" width="140" height="6"/>
+            <rect class="wm-bar" data-series="3" x="490" y="382" width="140" height="6"/>
+            <text class="wm-stage" x="140" y="408" text-anchor="middle">Genesis</text>
+            <text class="wm-stage" x="280" y="408" text-anchor="middle">Custom-built</text>
+            <text class="wm-stage" x="420" y="408" text-anchor="middle">Product</text>
+            <text class="wm-stage" x="560" y="408" text-anchor="middle">Commodity</text>
+            <text class="wm-axis-title" x="350" y="432" text-anchor="middle">Evolution</text>
+            <text class="wm-axis-title" x="30" y="211" text-anchor="middle" transform="rotate(-90 30 211)">Visibility to the user</text>
+            <text class="wm-tick" x="80" y="52">Visible</text>
+            <text class="wm-tick" x="80" y="370">Hidden</text>
+
+            <path class="wm-edge" d="M300,66L320,120M300,66L190,102M320,120L298,264M320,120L273,188M320,120L460,158M320,120L600,298M190,102L273,188M273,188L464,230M273,188L530,335M298,264L395,330"/>
+            <line class="wm-move" x1="307" y1="264" x2="362" y2="264"/>
+            <polygon class="wm-move-head" points="361,259 370,264 361,269"/>
+
+            <circle class="wm-anchor" cx="300" cy="66" r="7"/>
+            <text class="wm-anchor-label" x="300" y="51" text-anchor="middle">Adult beginner: play songs they love</text>
+            <g class="wm-node" data-series="4"><circle cx="320" cy="120" r="6"/><text x="331" y="110">Lesson experience</text></g>
+            <g class="wm-node" data-series="5"><circle cx="190" cy="102" r="6"/><text x="179" y="106.5" text-anchor="end">Practice plans</text></g>
+            <g class="wm-node" data-series="4"><circle cx="298" cy="264" r="6"/><text x="287" y="268.5" text-anchor="end">Real-time note detection</text></g>
+            <g class="wm-node" data-series="4"><circle cx="273" cy="188" r="6"/><text x="262" y="205" text-anchor="end">Lesson library</text></g>
+            <g class="wm-node" data-series="2"><circle cx="464" cy="230" r="6"/><text x="464" y="258" text-anchor="middle">Song licensing</text></g>
+            <g class="wm-node" data-series="2"><circle cx="460" cy="158" r="6"/><text x="471" y="162.5">Gamification</text></g>
+            <g class="wm-node" data-series="2"><circle cx="395" cy="330" r="6"/><text x="395" y="352" text-anchor="middle">Cross-platform mobile framework</text></g>
+            <g class="wm-node" data-series="3"><circle cx="600" cy="298" r="6"/><text x="612" y="320" text-anchor="middle">Payments and subscriptions</text></g>
+            <g class="wm-node" data-series="3"><circle cx="530" cy="335" r="6"/><text x="540" y="359">Cloud hosting</text></g>
+          </svg>
+          <svg class="wm-map wm-map--narrow" viewBox="0 0 330 580" role="img" aria-label="An illustrative Wardley map for Larkwell, a fictional piano-learning app. At the top is the anchor: an adult beginner who wants to play songs they love. Highest on the map are the lesson experience, which is custom-built, and practice plans, which are in genesis. Below them sit the lesson library, which is custom-built, real-time note detection, which is custom-built and moving toward product, and gamification and song licensing, which are products. Lowest are the cross-platform mobile framework, a product, and payments and subscriptions and cloud hosting, which are commodities.">
+            <line class="wm-grid" x1="110" y1="50" x2="110" y2="495"/>
+            <line class="wm-grid" x1="180" y1="50" x2="180" y2="495"/>
+            <line class="wm-grid" x1="250" y1="50" x2="250" y2="495"/>
+            <line class="wm-axis" x1="40" y1="495" x2="40" y2="50"/>
+            <polygon class="wm-axis-head" points="34,52 40,40 46,52"/>
+            <line class="wm-axis" x1="40" y1="495" x2="318" y2="495"/>
+            <polygon class="wm-axis-head" points="316,489 328,495 316,501"/>
+            <rect class="wm-bar" data-series="5" x="40" y="499" width="70" height="6"/>
+            <rect class="wm-bar" data-series="4" x="110" y="499" width="70" height="6"/>
+            <rect class="wm-bar" data-series="2" x="180" y="499" width="70" height="6"/>
+            <rect class="wm-bar" data-series="3" x="250" y="499" width="70" height="6"/>
+            <text class="wm-stage" x="75" y="525" text-anchor="middle">Genesis</text>
+            <text class="wm-stage" x="145" y="546" text-anchor="middle">Custom-built</text>
+            <text class="wm-stage" x="215" y="525" text-anchor="middle">Product</text>
+            <text class="wm-stage" x="285" y="546" text-anchor="middle">Commodity</text>
+            <text class="wm-axis-title" x="180" y="572" text-anchor="middle">Evolution</text>
+            <text class="wm-axis-title" x="16" y="272" text-anchor="middle" transform="rotate(-90 16 272)">Visibility to the user</text>
+            <text class="wm-tick" x="48" y="52">Visible</text>
+            <text class="wm-tick" x="48" y="487">Hidden</text>
+
+            <path class="wm-edge" d="M170,72L145,150M170,72L89,110M145,150L160,345M145,150L124,250M145,150L225,215M145,150L300,365M89,110L124,250M124,250L195,280M124,250L245,458M160,345L190,440"/>
+            <line class="wm-move" x1="169" y1="345" x2="211" y2="345"/>
+            <polygon class="wm-move-head" points="210,340 219,345 210,350"/>
+
+            <circle class="wm-anchor" cx="170" cy="72" r="7"/>
+            <text class="wm-anchor-label" x="185" y="26" text-anchor="middle">Adult beginner: play songs they love</text>
+            <g class="wm-node" data-series="5"><circle cx="89" cy="110" r="6"/><text x="73" y="79" text-anchor="middle"><tspan x="73">Practice</tspan><tspan x="73" dy="17">plans</tspan></text></g>
+            <g class="wm-node" data-series="4"><circle cx="145" cy="150" r="6"/><text x="156" y="148.5">Lesson experience</text></g>
+            <g class="wm-node" data-series="2"><circle cx="225" cy="215" r="6"/><text x="236" y="219.5">Gamification</text></g>
+            <g class="wm-node" data-series="4"><circle cx="124" cy="250" r="6"/><text x="96" y="276" text-anchor="middle"><tspan x="96">Lesson</tspan><tspan x="96" dy="17">library</tspan></text></g>
+            <g class="wm-node" data-series="2"><circle cx="195" cy="280" r="6"/><text x="208" y="304" text-anchor="middle"><tspan x="208">Song</tspan><tspan x="208" dy="17">licensing</tspan></text></g>
+            <g class="wm-node" data-series="4"><circle cx="160" cy="345" r="6"/><text x="149" y="341" text-anchor="end"><tspan x="149">Real-time</tspan><tspan x="149" dy="17">note detection</tspan></text></g>
+            <g class="wm-node" data-series="3"><circle cx="300" cy="365" r="6"/><text x="326" y="389" text-anchor="end"><tspan x="326">Payments and</tspan><tspan x="326" dy="17">subscriptions</tspan></text></g>
+            <g class="wm-node" data-series="2"><circle cx="190" cy="440" r="6"/><text x="179" y="437" text-anchor="end"><tspan x="179">Cross-platform</tspan><tspan x="179" dy="17">mobile framework</tspan></text></g>
+            <g class="wm-node" data-series="3"><circle cx="245" cy="458" r="6"/><text x="245" y="481" text-anchor="middle">Cloud hosting</text></g>
+          </svg>
+      </div>
+      <ul class="wm-legend" aria-label="Map key">
+        <li><span class="wm-key wm-key--anchor"></span>The user and their need, the anchor</li>
+        <li><span class="wm-key wm-key--edge"></span>Depends on the component below</li>
+        <li><span class="wm-key wm-key--move"></span>Moving right as it evolves</li>
+      </ul>
+      <figcaption>An illustrative map for Larkwell, a fictional piano-learning app. The learner’s need sits at the top, each line joins a component to one it depends on and the color of each dot matches its stage of evolution.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Put the user’s need at the top, list the components that serve it in order of how visible they are and place each one by how evolved it is, from genesis to commodity. Explore what is in genesis, build where you differentiate, buy or adopt products and outsource commodities. Then watch what is moving: the direction of evolution is predictable, its timing is not.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>A map of what you need and how mature it is</h2>
+      <p class="chapter-dek">Two axes turn a list of dependencies into a picture a team can argue about</p>
+    </header>
+
+    <p>Teams often plan strategy knowing their capabilities and goals but without <strong>situational awareness</strong>: they cannot see the landscape or how it is changing.</p>
+    <p>Simon Wardley developed Wardley Mapping around 2005 to give strategy the equivalent of a geographical map, and has published it online as a book, <cite>Wardley Maps</cite>, since 2016. A map shows what you need to serve a user, how visible each part is to that user, how evolved each part is and where each part is heading.</p>
+
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <h3 class="card-title">Situational awareness</h3>
+        <p>See the whole landscape: your value chain, what depends on what and how evolved each component is.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Everything evolves</h3>
+        <p>Every component moves from genesis to custom-built to product to commodity as competition spreads it. The direction of this movement is predictable; its timing is not.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Build, buy or outsource</h3>
+        <p>A component’s position tells you how to source it: explore what is new, build where you differentiate, buy products and outsource commodities.</p>
+      </div>
+    </div>
+
+    <h3>Height is visibility, width is evolution</h3>
+    <div class="contrast">
+      <div class="contrast-col">
+        <p class="contrast-label">Vertical axis: the value chain, by visibility</p>
+        <p><strong>Top:</strong> the anchor (the user and their need), then what the user sees and cares about directly, such as the app and its lessons.</p>
+        <p><strong>Bottom:</strong> infrastructure the user never sees, such as cloud hosting, databases and SDKs.</p>
+        <p>Height on the map is visibility, not importance. A hidden component can matter a great deal.</p>
+      </div>
+      <div class="contrast-col">
+        <p class="contrast-label">Horizontal axis: evolution</p>
+        <p><strong>Left:</strong> genesis, new and uncertain. It needs exploring.</p>
+        <p><strong>Right:</strong> commodity, standard and well understood. Outsource it.</p>
+        <p>Position on this axis is a stage, not a date.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Dirt paths and highways</p>
+      <p>Read the horizontal position as the state of a road. On the left is a dirt path you have to scout; on the right is a highway everyone uses without thinking. A component on a dirt path needs different treatment from one on a highway.</p>
+    </div>
+
+    <h3>The map is one step in a strategy cycle</h3>
+    <p>The axes and the build, buy or outsource rule are only the start. Wardley places the map inside a strategy cycle, adapted from Sun Tzu: the map is the landscape, and the other steps turn that picture into decisions.</p>
+
+    <ol class="chain">
+      <li><span class="chain-name">Purpose</span><span class="chain-note">Why you are doing this and for whom</span></li>
+      <li><span class="chain-name">Landscape</span><span class="chain-note">The map of your value chain</span></li>
+      <li><span class="chain-name">Climate</span><span class="chain-note">Patterns that change the map over time</span></li>
+      <li><span class="chain-name">Doctrine</span><span class="chain-note">Habits that make any organization better</span></li>
+      <li><span class="chain-name">Leadership</span><span class="chain-note">The moves you choose to make</span></li>
+    </ol>
+    <p>The moves you make change the landscape, so the cycle starts again from purpose with a new map. Climate and the moves it allows are covered under <a href="#evolution" data-section-link>evolution</a>; doctrine applies to every map.</p>
+
+    <h3>Doctrine: habits that hold on any map</h3>
+    <ul>
+      <li><strong>Focus on user needs.</strong> Every map starts from the anchor.</li>
+      <li><strong>Use a common language.</strong> A shared map lets engineering, design and the business argue about the same picture.</li>
+      <li><strong>Challenge assumptions.</strong> Positions on the map are claims; ask for the evidence.</li>
+      <li><strong>Use appropriate methods.</strong> Explore genesis with small agile teams, buy products and run commodities for efficiency.</li>
+    </ul>
+  </section>
+
+  <section class="chapter" id="map" data-nav="The map">
+    <header class="chapter-head">
+      <h2>Building a map in five steps</h2>
+      <p class="chapter-dek">Start from the user and work down the value chain</p>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <h3 class="step-title">Start with the user need</h3>
+        <p>What does the user ultimately want? The user and that need are the anchor, and they go at the top of the map.</p>
+      </li>
+      <li>
+        <h3 class="step-title">List the components that serve the need</h3>
+        <p>What do you need to deliver it? The app, content, technology, infrastructure, data and people.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Draw the dependencies</h3>
+        <p>Connect each component to the ones it relies on. The user need depends on the app, the app depends on content and technology, and so on down. Each component sits below whatever depends on it.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Place each component on the evolution axis</h3>
+        <p>Is it in genesis (new and poorly understood), custom-built (understood well enough to build, but made to order), a product (sold by several providers) or a commodity (standard, often bought as a utility)?</p>
+        <p class="step-note">Judge it by the characteristics in the next section, such as how many providers exist and how well it is understood.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Add movement</h3>
+        <p>Everything moves right over time. Mark the components that are actively evolving, because that is where the strategic decisions are.</p>
+      </li>
+    </ol>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Draw it together, and roughly</p>
+      <p>Do not aim for a perfect first map. A rough one that reveals a single insight is better than no map, and you can refine it later. Draw it with engineering, design and the business: a map drawn by one person carries one person’s assumptions, and where people disagree about a position, you have found the conversation worth having.</p>
+    </div>
+
+    <h3>Five marks make up a map</h3>
+    <dl class="facts">
+      <div><dt>Anchor</dt><dd>The user and their need, at the top</dd></div>
+      <div><dt>Component</dt><dd>A dot for each thing needed to meet the need, placed by visibility and evolution</dd></div>
+      <div><dt>Dependency</dt><dd>A line from a component down to one it relies on</dd></div>
+      <div><dt>Movement</dt><dd>An arrow pointing right, from where a component is to where it is heading</dd></div>
+      <div><dt>Inertia</dt><dd>A short bar across a movement arrow, where something resists the change</dd></div>
+    </dl>
+  </section>
+
+  <section class="chapter" id="evolution" data-nav="Evolution">
+    <header class="chapter-head">
+      <h2>Every component moves from genesis to commodity</h2>
+      <p class="chapter-dek">Each stage calls for a different way to source and run a component, and the movement shapes the moves you can make</p>
+    </header>
+
+    <p>The central idea of Wardley Mapping is that <strong>every component evolves in the same direction</strong>, from new and uncertain to standard and commodity, driven by supply and demand competition. Where a component sits tells you how to treat it.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="5">1</span>
+        <h3 class="card-title">Genesis</h3>
+        <ul>
+          <li>Brand new, never done before</li>
+          <li>Uncertain and experimental</li>
+          <li>High failure rate</li>
+          <li>Needs an agile, exploratory approach</li>
+        </ul>
+        <p class="card-meta">Explore: build in-house and tolerate failure</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">2</span>
+        <h3 class="card-title">Custom-built</h3>
+        <ul>
+          <li>Proven concept, bespoke implementation</li>
+          <li>Few providers, and expensive</li>
+          <li>A competitive advantage if done well</li>
+          <li>Needs skilled engineers</li>
+        </ul>
+        <p class="card-meta">Build where it differentiates</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">3</span>
+        <h3 class="card-title">Product (including rental)</h3>
+        <ul>
+          <li>Several providers, with features converging</li>
+          <li>Off-the-shelf options cover most needs</li>
+          <li>Shrinking competitive advantage</li>
+          <li>The point where you decide to buy or build</li>
+        </ul>
+        <p class="card-meta">Buy or adopt, unless you have a clear reason to differentiate</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="3">4</span>
+        <h3 class="card-title">Commodity (including utility)</h3>
+        <ul>
+          <li>Standardized and interchangeable</li>
+          <li>Providers compete mainly on price</li>
+          <li>No competitive advantage left</li>
+          <li>Users expect it to just work</li>
+        </ul>
+        <p class="card-meta">Outsource or use a utility; do not invest in building it</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table table--compare">
+        <caption>How a component’s characteristics change as it evolves</caption>
+        <thead>
+          <tr>
+            <th scope="col">Characteristic</th>
+            <th scope="col">Genesis</th>
+            <th scope="col">Custom-built</th>
+            <th scope="col">Product</th>
+            <th scope="col">Commodity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Ubiquity</th><td>Rare</td><td>Slowly spreading</td><td>Spreading fast</td><td>Widespread and stable</td></tr>
+          <tr><th scope="row">Certainty</th><td>Poorly understood</td><td>Learning fast</td><td>Fit for purpose</td><td>Commonly understood</td></tr>
+          <tr><th scope="row">Market</th><td>Undefined</td><td>Forming</td><td>Growing</td><td>Mature</td></tr>
+          <tr><th scope="row">Failure</th><td>Expected and tolerated</td><td>Unsurprising</td><td>Not tolerated</td><td>A surprise</td></tr>
+          <tr><th scope="row">Practice</th><td>Novel</td><td>Emerging</td><td>Good</td><td>Best</td></tr>
+          <tr><th scope="row">Data</th><td>Unmodelled</td><td>Divergent</td><td>Convergent</td><td>Modelled</td></tr>
+          <tr><th scope="row">Knowledge</th><td>Concept</td><td>Hypothesis</td><td>Theory</td><td>Accepted</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The last three rows are parallel label sets for practices, data and knowledge. Each one runs the full width of the axis, so use a set whole rather than mixing its labels with the stage names.</p>
+
+    <div class="callout">
+      <p class="callout-title">Direction is predictable, timing is not</p>
+      <p>You can say which way a component will move, because competition keeps pushing it right, but not when it will get there. The horizontal axis is not a timeline, so treat any forecast of the date a component becomes a commodity as a guess.</p>
+    </div>
+
+    <h3>What movement means for you</h3>
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h4 class="card-title">When a component moves right</h4>
+        <p>Switch from building it to buying it. What was your advantage becomes table stakes, because competitors can now buy the same thing.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">When a commodity makes something new possible</h4>
+        <p>Commodities become the building blocks of new, higher-order systems. When electricity became a utility, it made radio and television possible. When computing became a utility, for example with Amazon EC2 in 2006, a wave of new online services could be built without owning servers.</p>
+      </div>
+    </div>
+
+    <h3>Climate: what happens whatever you do</h3>
+    <ul>
+      <li><strong>Competition drives evolution.</strong> Wherever supply and demand competition exists, components move right.</li>
+      <li><strong>Characteristics change as components evolve.</strong> The same component needs different methods, skills and contracts at each stage.</li>
+      <li><strong>Practices evolve with the components they serve.</strong> As computing became a utility, new ways of running it, such as DevOps, grew up alongside.</li>
+      <li><strong>Success breeds inertia.</strong> The more a company earns from the current way of doing things, the harder it resists the next one.</li>
+    </ul>
+
+    <h3>Inertia: why organizations hold on</h3>
+    <p>Inertia is resistance to a change the map says is coming. It comes from past investment, existing contracts, skills built for the old way and revenue that depends on it. A company that earns its money from managed servers, for example, has every reason to resist utility computing. Mark inertia on the map so the team plans for it rather than being surprised by it.</p>
+
+    <h3>Gameplay: moves the map makes visible</h3>
+    <ul>
+      <li><strong>Open approaches.</strong> Open-sourcing a component speeds its move to commodity, which can undercut a rival who sells it.</li>
+      <li><strong>Sensing engines.</strong> Offer a component as a utility and let others innovate on top of it. Usage of your utility shows which of their ideas are spreading, and you commoditize the most successful into new utilities. Wardley calls this pattern ILC: others innovate on your utility, you spot what spreads from its usage and you commoditize it.</li>
+      <li><strong>Exploiting inertia.</strong> Industrializing a component that a rival still custom-builds leaves them paying more for the same component than you do, while their inertia slows the switch.</li>
+    </ul>
+
+    <h3>Pioneers, settlers and town planners</h3>
+    <p>Different stages need different kinds of people. Wardley suggests organizing around three groups, each taking work from the one before.</p>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <span class="card-key" data-series="5">P</span>
+        <h4 class="card-title">Pioneers</h4>
+        <p>Explore the uncharted. They work in genesis, try many things and expect most of them to fail.</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">S</span>
+        <h4 class="card-title">Settlers</h4>
+        <p>Turn the pioneers’ prototypes into products people understand, moving components from custom-built to product.</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="3">T</span>
+        <h4 class="card-title">Town planners</h4>
+        <p>Industrialize products into commodities and utilities that run at scale and low cost.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Mapping Larkwell’s piano app</h2>
+      <p class="chapter-dek">Nine components and what the map says to do with each</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>An app that teaches adults to play the piano</h3>
+      <p>Larkwell, a fictional piano-learning app, listens through the phone’s microphone or a MIDI keyboard and gives feedback on each note. Its anchor is an adult beginner who wants to play songs they love. The map at the top of this guide shows its value chain; the table lists the same nine components with their position and what follows from it.</p>
+      <div class="table-wrap">
+        <table class="table table--stack">
+          <caption>Larkwell’s components, by visibility and evolution</caption>
+          <thead>
+            <tr>
+              <th scope="col">Component</th>
+              <th scope="col">Visibility</th>
+              <th scope="col">Evolution</th>
+              <th scope="col">What to do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-top"><th scope="row">Lesson experience</th><td data-rating="high">High</td><td>Custom-built</td><td>Differentiate here; build in-house</td></tr>
+            <tr><th scope="row">Practice plans</th><td data-rating="high">High</td><td>Genesis</td><td>Explore; small bets such as Practice Mode</td></tr>
+            <tr><th scope="row">Real-time note detection</th><td data-rating="mid">Medium</td><td>Custom-built, moving toward product</td><td>Keep investing while it differentiates; watch off-the-shelf libraries (for example Basic Pitch) and be ready to adopt one</td></tr>
+            <tr><th scope="row">Lesson library</th><td data-rating="mid">Medium</td><td>Custom-built</td><td>Curate for quality, not volume</td></tr>
+            <tr><th scope="row">Song licensing</th><td data-rating="mid">Medium</td><td>Product</td><td>Standard publisher deals; negotiate, don’t invent</td></tr>
+            <tr><th scope="row">Gamification</th><td data-rating="mid">Medium</td><td>Product</td><td>Use established patterns</td></tr>
+            <tr><th scope="row">Cross-platform mobile framework</th><td data-rating="low">Low</td><td>Product</td><td>Adopt; don’t build</td></tr>
+            <tr><th scope="row">Payments and subscriptions</th><td data-rating="low">Low</td><td>Commodity</td><td>Use app store billing or a payment provider</td></tr>
+            <tr><th scope="row">Cloud hosting</th><td data-rating="low">Low</td><td>Commodity</td><td>Use a utility provider</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-reading">
+        <h4>Build the lesson experience, adopt the rest, watch note detection</h4>
+        <p><strong>Two components high on the map are still early in evolution, and that is where Larkwell can stand apart.</strong> The lesson experience is custom-built, so Larkwell builds it in-house and differentiates there. Practice plans are in genesis: nobody yet knows what works, so the team explores with small bets such as Practice Mode rather than a large build.</p>
+        <p>Everything low on the map is a product or a commodity. Larkwell adopts a cross-platform mobile framework, bills through the app stores or a payment provider and rents cloud hosting. In the middle, song licensing and gamification are products, so standard deals and established patterns are enough, while the lesson library is custom-built and worth curating for quality rather than volume. If engineers are custom-building gamification or payment flows, that effort will not set Larkwell apart.</p>
+        <p><strong>The movement to watch is real-time note detection.</strong> Note-detection libraries are already available off the shelf (for example Spotify’s open-source Basic Pitch, 2022), so this component is moving toward product. Larkwell keeps investing while its own detection differentiates, watches the libraries and adopts one when it matches Larkwell’s accuracy. The map says which way note detection is heading, not when it will get there.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Map the components of your product</h2>
+      <p class="chapter-dek">Classify each one and see where to invest and where to outsource</p>
+    </header>
+
+    <div class="tool" data-tool="wardley-mapper">
+      <div class="tool-head">
+        <h3 class="tool-title">Component mapper</h3>
+        <p class="tool-hint">List 5–10 components and choose a stage and a visibility for each to plot them on the map. The sample is Larkwell’s map from the example; clear it to start your own.</p>
+      </div>
+
+      <div class="fields" data-cols="3">
+        <div class="field">
+          <label for="wm-name">Component</label>
+          <input id="wm-name" type="text" maxlength="60" autocomplete="off" placeholder="For example, search" aria-describedby="wm-add-help">
+        </div>
+        <div class="field">
+          <label for="wm-stage">Evolution</label>
+          <select id="wm-stage" aria-describedby="wm-add-help">
+            <option value="">Choose a stage</option>
+            <option value="genesis">Genesis</option>
+            <option value="custom">Custom-built</option>
+            <option value="product">Product</option>
+            <option value="commodity">Commodity</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="wm-vis">Visibility</label>
+          <select id="wm-vis" aria-describedby="wm-add-help">
+            <option value="">Choose a visibility</option>
+            <option value="high">High: the user sees it</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low: infrastructure</option>
+          </select>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="wm-add">Add component</button>
+      </div>
+      <p class="field-help" id="wm-add-help" role="status">Name the component, choose both values, then press Enter or select Add component</p>
+
+      <ol class="wm-list" id="wm-list" aria-label="Components on your map"></ol>
+
+      <div class="wm-frame" data-narrow-below="626">
+        <div class="wm-plot">
+          <svg class="wm-plot-svg wm-plot-svg--wide" viewBox="0 0 600 330" role="img" aria-label="Your components plotted by evolution and visibility. The numbers match the list above.">
+            <line class="wm-grid" x1="207.5" y1="20" x2="207.5" y2="275"/>
+            <line class="wm-grid" x1="335" y1="20" x2="335" y2="275"/>
+            <line class="wm-grid" x1="462.5" y1="20" x2="462.5" y2="275"/>
+            <line class="wm-grid" x1="80" y1="105" x2="590" y2="105"/>
+            <line class="wm-grid" x1="80" y1="190" x2="590" y2="190"/>
+            <line class="wm-axis" x1="80" y1="275" x2="80" y2="20"/>
+            <line class="wm-axis" x1="80" y1="275" x2="590" y2="275"/>
+            <rect class="wm-bar" data-series="5" x="80" y="278" width="127.5" height="6"/>
+            <rect class="wm-bar" data-series="4" x="207.5" y="278" width="127.5" height="6"/>
+            <rect class="wm-bar" data-series="2" x="335" y="278" width="127.5" height="6"/>
+            <rect class="wm-bar" data-series="3" x="462.5" y="278" width="127.5" height="6"/>
+            <text class="wm-stage" x="143.75" y="304" text-anchor="middle">Genesis</text>
+            <text class="wm-stage" x="271.25" y="304" text-anchor="middle">Custom-built</text>
+            <text class="wm-stage" x="398.75" y="304" text-anchor="middle">Product</text>
+            <text class="wm-stage" x="526.25" y="304" text-anchor="middle">Commodity</text>
+            <text class="wm-tick" x="72" y="67" text-anchor="end">High</text>
+            <text class="wm-tick" x="72" y="152" text-anchor="end">Medium</text>
+            <text class="wm-tick" x="72" y="237" text-anchor="end">Low</text>
+            <text class="wm-axis-title" x="16" y="147" text-anchor="middle" transform="rotate(-90 16 147)">Visibility</text>
+            <text class="wm-axis-title" x="335" y="326" text-anchor="middle">Evolution</text>
+            <g data-role="markers"></g>
+          </svg>
+          <svg class="wm-plot-svg wm-plot-svg--narrow" viewBox="0 0 300 444" role="img" aria-label="Your components plotted by evolution and visibility. The numbers match the list above.">
+            <line class="wm-grid" x1="124" y1="30" x2="124" y2="360"/>
+            <line class="wm-grid" x1="182" y1="30" x2="182" y2="360"/>
+            <line class="wm-grid" x1="240" y1="30" x2="240" y2="360"/>
+            <line class="wm-grid" x1="66" y1="140" x2="298" y2="140"/>
+            <line class="wm-grid" x1="66" y1="250" x2="298" y2="250"/>
+            <line class="wm-axis" x1="66" y1="360" x2="66" y2="30"/>
+            <line class="wm-axis" x1="66" y1="360" x2="298" y2="360"/>
+            <rect class="wm-bar" data-series="5" x="66" y="363" width="58" height="6"/>
+            <rect class="wm-bar" data-series="4" x="124" y="363" width="58" height="6"/>
+            <rect class="wm-bar" data-series="2" x="182" y="363" width="58" height="6"/>
+            <rect class="wm-bar" data-series="3" x="240" y="363" width="58" height="6"/>
+            <text class="wm-stage" x="95" y="390" text-anchor="middle">Genesis</text>
+            <text class="wm-stage" x="153" y="410" text-anchor="middle">Custom-built</text>
+            <text class="wm-stage" x="211" y="390" text-anchor="middle">Product</text>
+            <text class="wm-stage" x="298" y="410" text-anchor="end">Commodity</text>
+            <text class="wm-tick" x="58" y="90" text-anchor="end">High</text>
+            <text class="wm-tick" x="58" y="200" text-anchor="end">Medium</text>
+            <text class="wm-tick" x="58" y="310" text-anchor="end">Low</text>
+            <text class="wm-axis-title" x="2" y="20">Visibility</text>
+            <text class="wm-axis-title" x="182" y="438" text-anchor="middle">Evolution</text>
+            <g data-role="markers"></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Components mapped</p>
+        <output class="tool-result" id="wm-count" for="wm-name wm-stage wm-vis">0</output>
+        <dl class="wm-counts" aria-label="Components by stage">
+          <div data-series="5"><dt><span class="key-dot" data-series="5"></span>Genesis</dt><dd><span class="wm-count-n" data-stage="genesis">0</span> Explore</dd></div>
+          <div data-series="4"><dt><span class="key-dot" data-series="4"></span>Custom-built</dt><dd><span class="wm-count-n" data-stage="custom">0</span> Build</dd></div>
+          <div data-series="2"><dt><span class="key-dot" data-series="2"></span>Product</dt><dd><span class="wm-count-n" data-stage="product">0</span> Buy</dd></div>
+          <div data-series="3"><dt><span class="key-dot" data-series="3"></span>Commodity</dt><dd><span class="wm-count-n" data-stage="commodity">0</span> Outsource</dd></div>
+        </dl>
+        <ul class="checks" id="wm-insights"></ul>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn" id="wm-sample">Load the sample</button>
+        <button type="button" class="btn btn--quiet" id="wm-clear">Clear all</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When a Wardley map fits, and when it does not</h2>
+      <p class="chapter-dek">It answers questions about sourcing and change, not about features or users</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You face a build or buy decision: should you build this or use a service?</li>
+          <li>You are planning a tech stack and deciding where to invest engineering effort</li>
+          <li>You need a competitive strategy and want to see where advantage can come from</li>
+          <li>You want to anticipate disruption: what will commoditize next?</li>
+          <li>You need to show leadership a strategy visually</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You need to prioritize features. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead.</li>
+          <li>You need user insights. Use <a data-guide-link="jtbd">Jobs to Be Done</a> or user research instead.</li>
+          <li>You are in a 30-minute PM interview. Mention the map and what it would show; do not draw a full one.</li>
+          <li>The product is simple and has few components</li>
+          <li>You have not done a basic competitive analysis yet. Start with <a data-guide-link="porters-5-forces">Porter’s Five Forces</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>I won’t draw a full map here, but I’d map the value chain to separate the commodities we should outsource from the components still in genesis or custom-built. The components users can see that are still early in evolution are the first place I’d look for a differentiator, and I’d check whether a rival’s inertia gives us an opening too.</pre>
+    </div>
+
+    <p>Wardley Mapping usually comes after the strategic choices are made, to decide which capabilities to build, buy or outsource. The guide to <a data-guide-link="compare-strategy">choosing a strategy framework</a> shows how the strategy frameworks fit together and when to skip a step.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways teams misread or misuse a map</h2>
+      <p class="chapter-dek">Three are about drawing and reading the map, three about acting on it</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Mapping without a user need</h3>
+        <p>Without an anchor, the map becomes an architecture diagram: a list of technology with no way to judge what is visible or valuable.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write down the user and their need first, and place every component below whatever depends on it.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Reading the axes as a 2×2</h3>
+        <p>Treating the vertical axis as importance, or a corner of the map as the place where advantage lives, turns a map into a quadrant chart and misreads it. Visible, early-stage components are a place to start looking, not a rule.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> read vertical position as visibility to the user through the value chain and horizontal position as evolution. Judge each component by both, and by what it depends on.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Reading evolution as a timeline</h3>
+        <p>The horizontal axis shows how evolved a component is, not when it will change. Claiming a component will be a commodity next year turns a sound direction into a false forecast.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> commit to the direction, keep timing assumptions explicit and watch for signals, such as new providers, falling prices and standard interfaces.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Custom-building commodities</h3>
+        <p>Building your own authentication, payment processing or hosting spends engineering time on solved problems. The map makes this easy to see: these components sit on the right.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> outsource or rent anything in the commodity stage and move the people to components that differentiate.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Defending yesterday’s advantage</h3>
+        <p>When a differentiator evolves from custom-built to product, competitors can buy it off the shelf and the advantage erodes. Past success makes teams hold on anyway, which is inertia at work in your own organization.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> for each differentiator, ask what happens when it becomes a product. Mark where your team or your rivals will resist the move, and start exploring the next genesis component before then.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Using one method for everything</h3>
+        <p>Running genesis work to fixed plans and targets smothers it; running commodities as experiments wastes money.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> match the method to the stage, as doctrine says. Give genesis work room to fail, and hold commodities to cost and reliability targets.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Nine questions on the axes, the stages and how maps change</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What does the horizontal axis of a Wardley map show?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Time until each component is built</button></li>
+          <li><button type="button">Cost of each component to the company</button></li>
+          <li><button type="button">Evolution, from genesis to commodity</button></li>
+          <li><button type="button">User satisfaction with each component</button></li>
+        </ul>
+        <div class="quiz-why"><p>The horizontal axis is evolution: genesis on the left, commodity on the right. Components move left to right as competition spreads them, but the axis shows a stage, not a date.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">What does the vertical axis show?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Position in the value chain, by visibility to the user</button></li>
+          <li><button type="button">Importance of each component to the business strategy</button></li>
+          <li><button type="button">Revenue each component brings in</button></li>
+          <li><button type="button">Technical complexity of each component</button></li>
+        </ul>
+        <div class="quiz-why"><p>The top holds the user’s need and what the user sees directly; the bottom holds infrastructure they never see. Each component sits below what depends on it. Height is not importance: a hidden component such as hosting can matter a great deal.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">What should you do with a component at the commodity stage?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Build it in-house to keep control of it</button></li>
+          <li><button type="button">Invest in it to stand out from rivals</button></li>
+          <li><button type="button">Leave it off the map, since it cannot differentiate</button></li>
+          <li><button type="button">Outsource it or use a utility service</button></li>
+        </ul>
+        <div class="quiz-why"><p>A payment provider, a cloud host or an authentication service does the job for less than building your own. You cannot differentiate on a commodity, but you still depend on it, so it stays on the map.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Larkwell’s song licensing sits at the product stage: several publishers offer standard deals. What does the map suggest?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Commission original songs so that licensing is no longer needed</button></li>
+          <li><button type="button">Negotiate standard publisher deals rather than invent a new model</button></li>
+          <li><button type="button">Make licensing the main differentiator and invest heavily in it</button></li>
+          <li><button type="button">Hand it to a utility provider, as with cloud hosting</button></li>
+        </ul>
+        <div class="quiz-why"><p>At the product stage, buying or adopting a standard offer is usually right unless you have a clear reason to differentiate. Publishers already offer licensing deals, so the effort goes into negotiating them well. A utility is the commodity-stage answer, one stage further right.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A team is building its own payment processing and login system. What does the map suggest?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Keep building, because owning them gives the team control</button></li>
+          <li><button type="button">Wait for them to evolve further before deciding</button></li>
+          <li><button type="button">Switch to existing services and redeploy the engineers</button></li>
+          <li><button type="button">Make them the product’s main differentiator</button></li>
+        </ul>
+        <div class="quiz-why"><p>Payments and authentication are commodities, so building them in-house spends effort on solved problems. The same goes for hosting and build pipelines: anything on the right of the map is better bought or rented, which frees engineers for work users notice.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">Larkwell’s real-time note detection is custom-built, and open-source note-detection libraries keep improving. What should the team plan for?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Nothing, because custom-built components keep their lead</button></li>
+          <li><button type="button">Dropping the feature, because users will stop noticing it</button></li>
+          <li><button type="button">Rebuilding the detection engine from scratch every year to stay ahead of the libraries</button></li>
+          <li><button type="button">Losing the edge once a library matches it, and being ready to adopt one</button></li>
+        </ul>
+        <div class="quiz-why"><p>As a component moves from custom-built to product, rivals can buy an equivalent off the shelf, so the advantage erodes. The map says which way note detection is heading, not when, so the team keeps investing while it differentiates and watches the libraries.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Which statement about evolution is accurate?</p>
+        <ul class="quiz-options">
+          <li><button type="button">You can predict both its direction and its timing</button></li>
+          <li><button type="button">You can predict its direction but not its timing</button></li>
+          <li><button type="button">You can predict its timing but not its direction</button></li>
+          <li><button type="button">It applies only to software and hardware</button></li>
+        </ul>
+        <div class="quiz-why"><p>Competition pushes every component toward commodity, so the direction is reliable. When it gets there is not, which is why the horizontal axis is not a timeline. Evolution applies to practices, data and knowledge as well as technology.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">In Wardley Mapping, what is inertia?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Resistance to a coming change, often because of past success</button></li>
+          <li><button type="button">The speed at which a component moves toward commodity</button></li>
+          <li><button type="button">The cost of switching a component to a new provider</button></li>
+          <li><button type="button">A dependency that ties one component to another one below it</button></li>
+        </ul>
+        <div class="quiz-why"><p>Inertia comes from past investment, contracts, skills and revenue tied to the old way. The more successful the current model, the stronger the resistance, so it is worth marking on the map.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Which group turns a product into a commodity or utility?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Pioneers</button></li>
+          <li><button type="button">Settlers</button></li>
+          <li><button type="button">Town planners</button></li>
+          <li><button type="button">The team that first built the component</button></li>
+        </ul>
+        <div class="quiz-why"><p>Pioneers explore genesis, settlers turn prototypes into products and town planners industrialize products into commodities and utilities that run at scale. Work passes from one group to the next rather than staying with the team that started it.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* ---- Shared map drawing (hero and mapper) ----
+     Each drawing comes in two cuts: a wide one, and a portrait one with
+     narrow evolution columns. The script switches a frame to the portrait
+     cut (data-cut="narrow") while it is narrower than its data-narrow-below
+     width, where the wide cut's labels would get too small, so neither
+     drawing ever scrolls sideways. */
+  .guide[data-guide="wardley-mapping"] .wm-map,
+  .guide[data-guide="wardley-mapping"] .wm-plot-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-inline: auto;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-map--wide { max-width: 760px; }
+  .guide[data-guide="wardley-mapping"] .wm-map--narrow { max-width: 400px; }
+  .guide[data-guide="wardley-mapping"] .wm-plot-svg--narrow { max-width: 360px; }
+  .guide[data-guide="wardley-mapping"] .wm-map--narrow,
+  .guide[data-guide="wardley-mapping"] .wm-plot-svg--narrow,
+  .guide[data-guide="wardley-mapping"] .wm-frame[data-cut="narrow"] .wm-map--wide,
+  .guide[data-guide="wardley-mapping"] .wm-frame[data-cut="narrow"] .wm-plot-svg--wide { display: none; }
+  .guide[data-guide="wardley-mapping"] .wm-frame[data-cut="narrow"] .wm-map--narrow,
+  .guide[data-guide="wardley-mapping"] .wm-frame[data-cut="narrow"] .wm-plot-svg--narrow { display: block; }
+  .guide[data-guide="wardley-mapping"] .wm-grid {
+    stroke: var(--rule);
+    stroke-width: 1;
+    stroke-dasharray: 4 5;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-axis {
+    stroke: var(--ink-3);
+    stroke-width: 1.5;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-axis-head { fill: var(--ink-3); }
+  .guide[data-guide="wardley-mapping"] .wm-bar { fill: var(--series); }
+  .guide[data-guide="wardley-mapping"] svg text {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    fill: var(--ink-2);
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-stage {
+    font-weight: var(--w-semibold);
+    fill: var(--ink);
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-axis-title {
+    font-weight: var(--w-semibold);
+    fill: var(--ink-2);
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-tick { fill: var(--ink-3); }
+  /* The portrait cuts render at a little under their own width on a phone,
+     so their labels are set larger to land at 14px or more. */
+  .guide[data-guide="wardley-mapping"] .wm-map--narrow text,
+  .guide[data-guide="wardley-mapping"] .wm-plot-svg--narrow text { font-size: 16px; }
+  .guide[data-guide="wardley-mapping"] .wm-edge {
+    fill: none;
+    stroke: var(--ink-3);
+    stroke-width: 1.25;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-move {
+    stroke: var(--ink-2);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-move-head { fill: var(--ink-2); }
+  .guide[data-guide="wardley-mapping"] .wm-anchor {
+    fill: var(--paper-raised);
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-anchor-label {
+    font-weight: var(--w-semibold);
+    fill: var(--ink);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-node circle {
+    fill: var(--series);
+    stroke: var(--paper-raised);
+    stroke-width: 2;
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-node text,
+  .guide[data-guide="wardley-mapping"] svg .wm-anchor-label {
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--paper-raised);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+  }
+
+  /* ---- Hero key ---- */
+  .guide[data-guide="wardley-mapping"] .wm-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--s-2) var(--s-6);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-key {
+    flex: none;
+    display: inline-block;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-key--anchor {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-key--edge {
+    width: 24px;
+    border-top: 2px solid var(--ink-3);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-key--move {
+    width: 24px;
+    border-top: 2px dashed var(--ink-2);
+  }
+
+  /* ---- Mapper: add form and list ---- */
+  .guide[data-guide="wardley-mapping"] .wm-list { border-top: 1px solid var(--rule); }
+  .guide[data-guide="wardley-mapping"] .wm-list:empty { display: none; }
+  .guide[data-guide="wardley-mapping"] .wm-row {
+    display: grid;
+    grid-template-columns: var(--s-8) minmax(0, 1fr) 150px 170px auto;
+    gap: var(--s-3);
+    align-items: center;
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-row-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--series);
+    border-radius: 50%;
+    background: var(--series-wash);
+    color: var(--ink);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-row:not([data-series]) .wm-row-num { --series: var(--ink-3); }
+  .guide[data-guide="wardley-mapping"] .tool .wm-row-name {
+    font-size: var(--fs-16);
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .guide[data-guide="wardley-mapping"] .wm-plot {
+    padding: var(--s-3);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-marker circle {
+    fill: var(--series-wash);
+    stroke: var(--series);
+    stroke-width: 2.5;
+  }
+  .guide[data-guide="wardley-mapping"] svg .wm-marker text {
+    font-weight: var(--w-semibold);
+    fill: var(--ink);
+  }
+
+  /* ---- Mapper: output ---- */
+  .guide[data-guide="wardley-mapping"] .wm-counts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-2);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-counts > div {
+    padding: var(--s-3);
+    border-radius: var(--r-sm);
+    background: var(--paper-raised);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-counts dt {
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-counts dd {
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="wardley-mapping"] .wm-count-n {
+    display: block;
+    font-family:var(--font-serif);
+    font-size: var(--fs-24);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 760px) {
+    .guide[data-guide="wardley-mapping"] .wm-row {
+      /* The two selects share the second line in equal halves: the outer
+         tracks match so each half is one --s-8 track plus one 1fr track. */
+      grid-template-columns: var(--s-8) minmax(0, 1fr) minmax(0, 1fr) var(--s-8);
+      grid-template-areas: "num name remove remove" "stage stage vis vis";
+      column-gap: var(--s-2);
+      row-gap: var(--s-2);
+    }
+    .guide[data-guide="wardley-mapping"] .wm-row-num { grid-area: num; align-self: start; }
+    .guide[data-guide="wardley-mapping"] .wm-row-name { grid-area: name; }
+    .guide[data-guide="wardley-mapping"] .wm-row-stage { grid-area: stage; }
+    .guide[data-guide="wardley-mapping"] .wm-row-vis { grid-area: vis; }
+    .guide[data-guide="wardley-mapping"] .wm-row > .btn { grid-area: remove; justify-self: end; }
+    .guide[data-guide="wardley-mapping"] .wm-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+
+<script data-guide-script>
+  const STAGES = {
+    genesis: { name: 'Genesis', series: '5', col: 0 },
+    custom: { name: 'Custom-built', series: '4', col: 1 },
+    product: { name: 'Product', series: '2', col: 2 },
+    commodity: { name: 'Commodity', series: '3', col: 3 },
+  };
+  const VIS = {
+    high: { name: 'High', row: 0 },
+    medium: { name: 'Medium', row: 1 },
+    low: { name: 'Low', row: 2 },
+  };
+  // Larkwell's components, the same list as the hero map and the example table.
+  const SAMPLE = [
+    ['Lesson experience', 'custom', 'high'],
+    ['Practice plans', 'genesis', 'high'],
+    ['Real-time note detection', 'custom', 'medium'],
+    ['Lesson library', 'custom', 'medium'],
+    ['Song licensing', 'product', 'medium'],
+    ['Gamification', 'product', 'medium'],
+    ['Cross-platform mobile framework', 'product', 'low'],
+    ['Payments and subscriptions', 'commodity', 'low'],
+    ['Cloud hosting', 'commodity', 'low'],
+  ];
+  const MAX = 12;
+  const HINT = 'Name the component, choose both values, then press Enter or select Add component';
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  // Plot geometry, matching the static axes in each of the mapper's two drawings:
+  // the wide one, and the portrait one shown when the tool is narrow.
+  const PLOT_GEO = {
+    wide: { x0: 80, colW: 127.5, y0: 20, rowH: 85, perLine: 4, gapX: 30, gapY: 26, r: 11, dy: 5 },
+    narrow: { x0: 66, colW: 58, y0: 30, rowH: 110, perLine: 2, gapX: 26, gapY: 25, r: 11, dy: 5 },
+  };
+
+  const tool = root.querySelector('[data-tool="wardley-mapper"]');
+  const nameInput = tool.querySelector('#wm-name');
+  const stageSelect = tool.querySelector('#wm-stage');
+  const visSelect = tool.querySelector('#wm-vis');
+  const help = tool.querySelector('#wm-add-help');
+  const list = tool.querySelector('#wm-list');
+  const plots = Object.entries(PLOT_GEO).map(([size, geo]) => ({
+    geo,
+    markers: tool.querySelector(`.wm-plot-svg--${size} [data-role="markers"]`),
+  }));
+  const count = tool.querySelector('#wm-count');
+  const insights = tool.querySelector('#wm-insights');
+  const stageCounts = [...tool.querySelectorAll('.wm-count-n')];
+  let nextId = 1;
+
+  const joinNames = (names) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+
+  function setHint(text, isError) {
+    // The hint is a live region, so only touch it when the message changes.
+    if (help.textContent !== text) help.textContent = text;
+    help.classList.toggle('is-error', isError);
+  }
+
+  function makeSelect(id, labelText, options, value, className) {
+    const wrap = document.createElement('div');
+    wrap.className = className;
+    const label = document.createElement('label');
+    label.className = 'visually-hidden';
+    label.htmlFor = id;
+    label.textContent = labelText;
+    const select = document.createElement('select');
+    select.id = id;
+    Object.entries(options).forEach(([key, opt]) => {
+      const o = document.createElement('option');
+      o.value = key;
+      o.textContent = opt.name;
+      select.append(o);
+    });
+    select.value = value;
+    select.addEventListener('change', render);
+    wrap.append(label, select);
+    return { wrap, select };
+  }
+
+  function addRow(name, stage, vis) {
+    const id = nextId++;
+    const row = document.createElement('li');
+    row.className = 'wm-row';
+    row.dataset.name = name;
+
+    const num = document.createElement('span');
+    num.className = 'wm-row-num';
+    num.setAttribute('aria-hidden', 'true');
+
+    const label = document.createElement('span');
+    label.className = 'wm-row-name';
+    label.textContent = name;
+
+    const stageField = makeSelect(`wm-row-stage-${id}`, `Evolution of ${name}`, STAGES, stage, 'wm-row-stage');
+    stageField.select.dataset.role = 'stage';
+    const visField = makeSelect(`wm-row-vis-${id}`, `Visibility of ${name}`, VIS, vis, 'wm-row-vis');
+    visField.select.dataset.role = 'vis';
+
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'btn btn--quiet';
+    remove.textContent = 'Remove';
+    remove.setAttribute('aria-label', `Remove ${name}`);
+    remove.addEventListener('click', () => {
+      row.remove();
+      setHint(HINT, false);
+      render();
+      nameInput.focus();
+    });
+
+    row.append(num, label, stageField.wrap, visField.wrap, remove);
+    list.append(row);
+  }
+
+  function readRows() {
+    return [...list.querySelectorAll('.wm-row')].map(row => ({
+      row,
+      name: row.dataset.name,
+      stage: row.querySelector('[data-role="stage"]').value,
+      vis: row.querySelector('[data-role="vis"]').value,
+    }));
+  }
+
+  function plot(comps) {
+    const cells = {};
+    comps.forEach((c, i) => {
+      const key = `${c.stage}|${c.vis}`;
+      (cells[key] = cells[key] || []).push(i);
+    });
+    plots.forEach(({ geo, markers }) => {
+      markers.replaceChildren();
+      Object.entries(cells).forEach(([key, idxs]) => {
+        const [stage, vis] = key.split('|');
+        const cx = geo.x0 + geo.colW * (STAGES[stage].col + 0.5);
+        const cy = geo.y0 + geo.rowH * (VIS[vis].row + 0.5);
+        const lines = Math.ceil(idxs.length / geo.perLine);
+        // A crowded cell packs its lines closer so they stay inside the row.
+        const gapY = lines > 1 ? Math.min(geo.gapY, (geo.rowH - 2 * geo.r - 6) / (lines - 1)) : 0;
+        idxs.forEach((idx, k) => {
+          const line = Math.floor(k / geo.perLine);
+          const inLine = Math.min(geo.perLine, idxs.length - line * geo.perLine);
+          const pos = k % geo.perLine;
+          const x = cx + (pos - (inLine - 1) / 2) * geo.gapX;
+          const y = cy + (line - (lines - 1) / 2) * gapY;
+          const g = document.createElementNS(SVGNS, 'g');
+          g.setAttribute('class', 'wm-marker');
+          g.setAttribute('data-series', STAGES[stage].series);
+          const circle = document.createElementNS(SVGNS, 'circle');
+          circle.setAttribute('cx', String(x));
+          circle.setAttribute('cy', String(y));
+          circle.setAttribute('r', String(geo.r));
+          const text = document.createElementNS(SVGNS, 'text');
+          text.setAttribute('x', String(x));
+          text.setAttribute('y', String(y + geo.dy));
+          text.setAttribute('text-anchor', 'middle');
+          text.textContent = String(idx + 1);
+          const title = document.createElementNS(SVGNS, 'title');
+          title.textContent = `${idx + 1}. ${comps[idx].name}`;
+          g.append(title, circle, text);
+          markers.append(g);
+        });
+      });
+    });
+  }
+
+  // Each insight is a row of the shared checks list: a state word, then the text.
+  const STATE_WORD = { ok: 'Strength', revise: 'Check', missing: 'Missing', info: 'Note' };
+  function addInsight(state, lead, body) {
+    const li = document.createElement('li');
+    li.dataset.state = state;
+    const word = document.createElement('span');
+    word.className = 'check-state';
+    word.textContent = STATE_WORD[state];
+    const text = document.createElement('span');
+    if (lead) {
+      const strong = document.createElement('strong');
+      strong.textContent = lead;
+      text.append(strong, ' ');
+    }
+    text.append(body);
+    li.append(word, text);
+    insights.append(li);
+  }
+
+  function render() {
+    const comps = readRows();
+    comps.forEach((c, i) => {
+      c.row.setAttribute('data-series', STAGES[c.stage].series);
+      c.row.querySelector('.wm-row-num').textContent = String(i + 1);
+    });
+    plot(comps);
+
+    count.textContent = String(comps.length);
+    const by = (stage) => comps.filter(c => c.stage === stage);
+    stageCounts.forEach(el => { el.textContent = String(by(el.dataset.stage).length); });
+
+    insights.replaceChildren();
+    if (comps.length < 3) {
+      addInsight('info', '', comps.length ? 'Map at least three components to see what stands out.' : 'Add a component, or load the sample, to start the map.');
+      return;
+    }
+    const early = comps.filter(c => c.vis === 'high' && (c.stage === 'genesis' || c.stage === 'custom'));
+    if (early.length) {
+      const one = early.length === 1;
+      addInsight('ok', one ? 'Possible differentiator:' : 'Possible differentiators:', `${joinNames(early.map(c => c.name))}. Users can see ${one ? 'it and it is' : 'them and they are'} still early in evolution, so this is where investment is most likely to set you apart.`);
+    }
+    if (!by('commodity').length) {
+      addInsight('revise', 'No commodities yet.', 'Check again: cloud hosting, authentication, payments and email sending usually are. If you are building any of these yourself, the effort is unlikely to pay back.');
+    }
+    if (!by('genesis').length && !by('custom').length) {
+      addInsight('missing', 'No genesis or custom-built components.', 'If everything is a product or a commodity, competitors can buy the same parts. Look for at least one novel component that users can see.');
+    }
+    const hidden = comps.filter(c => c.vis === 'low' && c.stage === 'genesis');
+    if (hidden.length) {
+      addInsight('revise', 'Hidden innovation:', `${joinNames(hidden.map(c => c.name))} ${hidden.length > 1 ? 'are' : 'is'} in genesis but low on the map. Users cannot feel an advantage they never see, so consider whether it can show up in the experience.`);
+    }
+    if (by('product').length > comps.length / 2) {
+      addInsight('info', 'Most components are products.', 'Off-the-shelf solutions exist for most of the map, so the difference has to come from how you combine them or from the few components that are not products yet.');
+    }
+    if (!insights.children.length) {
+      addInsight('ok', '', 'Nothing stands out as a warning. Mark which components are moving and decide what you will do when each reaches the next stage.');
+    }
+  }
+
+  function addFromForm() {
+    const name = nameInput.value.trim();
+    const stage = stageSelect.value;
+    const vis = visSelect.value;
+    nameInput.setAttribute('aria-invalid', String(!name));
+    stageSelect.setAttribute('aria-invalid', String(!stage));
+    visSelect.setAttribute('aria-invalid', String(!vis));
+    if (!name || !stage || !vis) {
+      const missing = [!name && 'a name', !stage && 'an evolution stage', !vis && 'a visibility'].filter(Boolean);
+      setHint(`Add ${joinNames(missing)} first`, true);
+      (!name ? nameInput : !stage ? stageSelect : visSelect).focus();
+      return;
+    }
+    if (list.children.length >= MAX) {
+      setHint(`A map of ${MAX} components is plenty to start with. Remove one to add another.`, true);
+      return;
+    }
+    addRow(name, stage, vis);
+    setHint(HINT, false);
+    nameInput.value = '';
+    nameInput.focus();
+    render();
+  }
+
+  function loadSample() {
+    list.replaceChildren();
+    SAMPLE.forEach(([name, stage, vis]) => addRow(name, stage, vis));
+    setHint(HINT, false);
+    render();
+  }
+
+  tool.querySelector('#wm-add').addEventListener('click', addFromForm);
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); addFromForm(); }
+  });
+  [nameInput, stageSelect, visSelect].forEach(el => {
+    el.addEventListener(el === nameInput ? 'input' : 'change', () => {
+      el.setAttribute('aria-invalid', 'false');
+      if (help.classList.contains('is-error')) setHint(HINT, false);
+    });
+  });
+  tool.querySelector('#wm-sample').addEventListener('click', loadSample);
+  tool.querySelector('#wm-clear').addEventListener('click', () => {
+    list.replaceChildren();
+    setHint(HINT, false);
+    render();
+    nameInput.focus();
+  });
+
+  // Switch each drawing to its portrait cut while its frame is too narrow for
+  // the wide one (the threshold sits on the frame as data-narrow-below).
+  const frames = [...root.querySelectorAll('.wm-frame')];
+  const fitFrames = () => frames.forEach(f => {
+    f.dataset.cut = f.clientWidth < Number(f.dataset.narrowBelow) ? 'narrow' : 'wide';
+  });
+  fitFrames();
+  if (typeof ResizeObserver === 'function') {
+    const observer = new ResizeObserver(fitFrames);
+    frames.forEach(f => observer.observe(f));
+    api.onCleanup(() => observer.disconnect());
+  }
+
+  loadSample();
+</script>

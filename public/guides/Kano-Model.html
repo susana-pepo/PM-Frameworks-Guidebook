@@ -1,0 +1,904 @@
+<article class="guide" data-guide="kano">
+
+  <header class="guide-intro">
+    <p class="lede">The Kano model sorts features by how their presence, or their absence, affects customer satisfaction. Use it to separate what customers simply expect from what sets you apart, before you decide where to invest.</p>
+
+    <figure class="figure" data-hero>
+      <div class="kano-plot">
+        <p class="kano-end">Delighted</p>
+        <svg viewBox="0 0 390 300" role="img" aria-label="Kano curve: satisfaction plotted against how well a feature is implemented, with one line for each of the five categories">
+          <line class="kano-axis" x1="20" y1="292" x2="20" y2="14"/>
+          <polygon class="kano-arrow" points="14,20 20,6 26,20"/>
+          <line class="kano-neutral" x1="20" y1="150" x2="350" y2="150"/>
+          <path class="kano-line kano-line--dotted" data-series="7" d="M20,150 L350,150"/>
+          <path class="kano-line kano-line--dashed" data-series="6" d="M20,112 C130,140 240,190 350,246"/>
+          <path class="kano-line kano-line--dashdot" data-series="1" d="M20,284 C60,205 140,184 350,176"/>
+          <path class="kano-line kano-line--long" data-series="4" d="M20,255 L350,45"/>
+          <path class="kano-line" data-series="5" d="M20,150 C190,149 280,118 350,18"/>
+          <text class="kano-label" data-series="5" x="358" y="24">D</text>
+          <text class="kano-label" data-series="4" x="358" y="50">P</text>
+          <text class="kano-label" data-series="7" x="358" y="150">I</text>
+          <text class="kano-label" data-series="1" x="358" y="182">M</text>
+          <text class="kano-label" data-series="6" x="358" y="250">R</text>
+        </svg>
+        <p class="kano-end">Dissatisfied</p>
+        <p class="kano-xaxis"><span>Absent</span><span>How well it is implemented</span><span>Fully provided</span></p>
+      </div>
+      <ul class="kano-legend" aria-label="Curve key">
+        <li data-series="1"><svg class="kano-swatch kano-swatch--dashdot" viewBox="0 0 28 4" width="28" height="4" aria-hidden="true"><path class="kano-line kano-line--dashdot" d="M0,2 H28"/></svg><strong>M</strong> Must-have</li>
+        <li data-series="4"><span class="kano-swatch kano-swatch--long"></span><strong>P</strong> Performance</li>
+        <li data-series="5"><span class="kano-swatch"></span><strong>D</strong> Delighter</li>
+        <li data-series="7"><span class="kano-swatch kano-swatch--dotted"></span><strong>I</strong> Indifferent</li>
+        <li data-series="6"><span class="kano-swatch kano-swatch--dashed"></span><strong>R</strong> Reverse</li>
+      </ul>
+      <figcaption>Each category draws its own line as a feature goes from absent to fully provided. The Indifferent line marks neutral satisfaction: above it users are satisfied, below it they are not.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Ask customers two questions about each feature: how they would feel if it were there, and how they would feel if it were not. The pair of answers puts the feature in one of five categories. Fix the Must-haves first, invest in Performance features, add a few Delighters, and cut what nobody notices or wants.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Five ways a feature affects satisfaction</h2>
+      <p class="chapter-dek">Each category reacts differently when the feature is there and when it is missing</p>
+    </header>
+
+    <p>Noriaki Kano and his colleagues described these categories in 1984, in a paper titled “Attractive quality and must-be quality.” Each card below gives the name this guide uses, with Kano’s own term underneath.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="1">M</span>
+        <h3 class="card-title">Must-have</h3>
+        <p class="card-q">Expected, and noticed only when missing</p>
+        <p>Features users take for granted. Having them does not raise satisfaction, but lacking them makes people angry. You get no credit for providing them and a heavy penalty for leaving them out.</p>
+        <p><strong>Hotel:</strong> clean towels, working wifi. <strong>App:</strong> login works, pages load fast.</p>
+        <p class="card-meta">Kano’s term: must-be quality</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">P</span>
+        <h3 class="card-title">Performance</h3>
+        <p class="card-q">More is better, and satisfaction scales with it</p>
+        <p>Features where more means better: battery life, storage space, delivery speed. Satisfaction rises in proportion to how well you deliver them. These are the features users consciously compare between products.</p>
+        <p><strong>Hotel:</strong> room size, breakfast quality. <strong>App:</strong> storage, search accuracy.</p>
+        <p class="card-meta">Kano’s term: one-dimensional quality</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="5">D</span>
+        <h3 class="card-title">Delighter</h3>
+        <p class="card-q">Unexpected, and a pleasant surprise when present</p>
+        <p>Things users did not know they wanted. Their absence causes no dissatisfaction, because nobody expected them, but their presence earns a response out of proportion to the effort.</p>
+        <p><strong>Hotel:</strong> a handwritten welcome note. <strong>App:</strong> smart autocomplete, playful animations.</p>
+        <p class="card-meta">Kano’s term: attractive quality</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="7">I</span>
+        <h3 class="card-title">Indifferent</h3>
+        <p class="card-q">Nobody notices either way</p>
+        <p>Features that change nothing whether they are there or not. They take effort without changing how customers feel, so cut them or keep them cheap. Survey only what customers actually meet: internal work they never see is not a Kano question.</p>
+        <p><strong>Hotel:</strong> the brand of the soap dispenser. <strong>App:</strong> a detailed version-history screen.</p>
+        <p class="card-meta">Kano’s term: indifferent quality</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="6">R</span>
+        <h3 class="card-title">Reverse</h3>
+        <p class="card-q">Some users would rather not have it</p>
+        <p>Features a segment of users actively does not want. Adding them lowers satisfaction for that group. They often appear in trade-offs between simplicity and power.</p>
+        <p><strong>Hotel:</strong> loud background music. <strong>App:</strong> forced social features, gamification.</p>
+        <p class="card-meta">Kano’s term: reverse quality</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">A hotel stay in five features</p>
+      <p><strong>Must-have:</strong> a clean room, because a dirty one ruins the stay. <strong>Performance:</strong> room size, where bigger is better. <strong>Delighter:</strong> a bottle of champagne waiting on arrival. <strong>Indifferent:</strong> the brand of the hangers. <strong>Reverse:</strong> loud music in the lobby.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="curve" data-nav="The curve">
+    <header class="chapter-head">
+      <h2>How satisfaction moves in each category</h2>
+      <p class="chapter-dek">Five shapes on one chart, and why the shapes change over time</p>
+    </header>
+
+    <p>The curve at the top of this guide plots satisfaction, from dissatisfied at the bottom to delighted at the top, with neutral in the middle, against how well a feature is implemented, from absent on the left to fully provided on the right. The horizontal axis measures how fully the need is met, not the money spent: an expensive feature can still be barely there from the user’s point of view.</p>
+
+    <dl class="facts">
+      <div><dt>Must-have (M)</dt><dd>Starts deep in dissatisfaction while absent and rises toward neutral as you provide it, but never above. A Must-have cannot delight anyone; providing it only stops the disappointment.</dd></div>
+      <div><dt>Performance (P)</dt><dd>A straight line through the center. Each step of improvement adds a proportional amount of satisfaction, which is where products compete.</dd></div>
+      <div><dt>Delighter (D)</dt><dd>Sits on neutral while absent, because nobody expects it, then climbs steeply once provided. It never drops below neutral. A small investment can produce an outsized response.</dd></div>
+      <div><dt>Indifferent (I)</dt><dd>Runs flat along the neutral line, however much you provide.</dd></div>
+      <div><dt>Reverse (R)</dt><dd>Slopes downward: the more you provide, the less satisfied this group of users becomes.</dd></div>
+    </dl>
+
+    <h3>Categories drift over time</h3>
+    <p>What delights today tends to be expected tomorrow. As customers get used to a feature, it usually moves from Delighter to Performance to Must-have. Features such as built-in GPS on phones moved from Delighter to Must-have within a few years: first a surprise, then something people compared between products, then something they noticed only when it was missing.</p>
+
+    <ol class="chain">
+      <li><span class="chain-name">Delighter</span><span class="chain-note">A surprise nobody asked for</span></li>
+      <li><span class="chain-name">Performance</span><span class="chain-note">Compared, and wanted in larger amounts</span></li>
+      <li><span class="chain-name">Must-have</span><span class="chain-note">Expected, and missed when absent</span></li>
+    </ol>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Re-run the survey every year</p>
+      <p>A category you measured last year may already have moved. Do not wait the full year when a competitor launches the same feature or it becomes standard across your market: those are the moments a Delighter turns into an expectation.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="survey" data-nav="The survey">
+    <header class="chapter-head">
+      <h2>Two questions for every feature</h2>
+      <p class="chapter-dek">Ask about having the feature and about not having it, then cross the answers</p>
+    </header>
+
+    <p>For each feature, ask users a pair of questions: one about having it and one about not having it. Both questions offer the same five answers, in the same order.</p>
+
+    <div class="contrast">
+      <div class="contrast-col">
+        <p class="contrast-label">Functional question: the feature is present</p>
+        <p>“How would you feel if the product had this feature?”</p>
+        <ul>
+          <li>I like it</li>
+          <li>I expect it</li>
+          <li>I am neutral</li>
+          <li>I can tolerate it</li>
+          <li>I dislike it</li>
+        </ul>
+      </div>
+      <div class="contrast-col">
+        <p class="contrast-label">Dysfunctional question: the feature is absent</p>
+        <p>“How would you feel if the product did not have this feature?”</p>
+        <ul>
+          <li>I like it</li>
+          <li>I expect it</li>
+          <li>I am neutral</li>
+          <li>I can tolerate it</li>
+          <li>I dislike it</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The evaluation table</h3>
+    <p>Cross the two answers to classify the feature. Find the row for the answer to the functional question and the column for the answer to the dysfunctional one.</p>
+
+    <div class="table-wrap">
+      <table class="table" id="kano-eval">
+        <caption>Kano evaluation table: rows give the answer if present, columns the answer if absent</caption>
+        <thead>
+          <tr>
+            <th scope="col">Present / absent</th>
+            <th scope="col" data-answer="like">Like</th>
+            <th scope="col" data-answer="expect">Expect</th>
+            <th scope="col" data-answer="neutral">Neutral</th>
+            <th scope="col" data-answer="tolerate">Tolerate</th>
+            <th scope="col" data-answer="dislike">Dislike</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-answer="like"><th scope="row">Like</th><td data-kano="Q" data-series="2">Q</td><td data-kano="D" data-series="5">D</td><td data-kano="D" data-series="5">D</td><td data-kano="D" data-series="5">D</td><td data-kano="P" data-series="4">P</td></tr>
+          <tr data-answer="expect"><th scope="row">Expect</th><td data-kano="R" data-series="6">R</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="M" data-series="1">M</td></tr>
+          <tr data-answer="neutral"><th scope="row">Neutral</th><td data-kano="R" data-series="6">R</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="M" data-series="1">M</td></tr>
+          <tr data-answer="tolerate"><th scope="row">Tolerate</th><td data-kano="R" data-series="6">R</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="I" data-series="7">I</td><td data-kano="M" data-series="1">M</td></tr>
+          <tr data-answer="dislike"><th scope="row">Dislike</th><td data-kano="R" data-series="6">R</td><td data-kano="R" data-series="6">R</td><td data-kano="R" data-series="6">R</td><td data-kano="R" data-series="6">R</td><td data-kano="Q" data-series="2">Q</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>M</strong> Must-have, <strong>P</strong> Performance, <strong>D</strong> Delighter, <strong>I</strong> Indifferent, <strong>R</strong> Reverse, <strong>Q</strong> Questionable: the two answers contradict each other, which usually means the respondent misread a question. Research papers often write A (attractive) for D and O (one-dimensional) for P.</p>
+
+    <div class="callout">
+      <p class="callout-title">Three patterns worth knowing by heart</p>
+      <ul>
+        <li><strong>Must-have:</strong> the user dislikes its absence and merely expects its presence.</li>
+        <li><strong>Performance:</strong> the user likes its presence and dislikes its absence.</li>
+        <li><strong>Delighter:</strong> the user likes its presence and is neutral about its absence.</li>
+      </ul>
+    </div>
+
+    <h3>From many answers to one category</h3>
+    <ol class="steps">
+      <li><h4 class="step-title">Classify each response</h4><p>Look up every respondent’s pair of answers in the evaluation table.</p></li>
+      <li><h4 class="step-title">Count by category</h4><p>Tally the M, P, D, I, R and Q results for each feature.</p></li>
+      <li><h4 class="step-title">Take the most frequent category</h4><p>The category with the most responses is the feature’s category, even when it falls short of half. Report the percentages alongside the label.</p></li>
+      <li><h4 class="step-title">Check Better and Worse</h4><p>When two categories are close, the two coefficients below show which way the feature leans.</p></li>
+    </ol>
+
+    <p>The Better and Worse coefficients, also called customer satisfaction coefficients, come from Charles Berger and colleagues (1993). They summarize how much a feature can raise satisfaction and how much its absence can lower it. Reverse and Questionable responses are left out of both.</p>
+
+    <p class="formula" role="img" aria-label="Better equals Delighter plus Performance, divided by Delighter plus Performance plus Must-have plus Indifferent">
+      <span class="formula-result">Better</span>
+      <span class="formula-term"><span class="op">=</span> ( <var data-series="5">D</var> <span class="op">+</span> <var data-series="4">P</var> )</span>
+      <span class="formula-term"><span class="op">÷</span> ( <var data-series="5">D</var> <span class="op">+</span> <var data-series="4">P</var> <span class="op">+</span> <var data-series="1">M</var> <span class="op">+</span> <var data-series="7">I</var> )</span>
+    </p>
+    <p class="formula" role="img" aria-label="Worse equals minus Performance plus Must-have, divided by Delighter plus Performance plus Must-have plus Indifferent">
+      <span class="formula-result">Worse</span>
+      <span class="formula-term"><span class="op">=</span> −( <var data-series="4">P</var> <span class="op">+</span> <var data-series="1">M</var> )</span>
+      <span class="formula-term"><span class="op">÷</span> ( <var data-series="5">D</var> <span class="op">+</span> <var data-series="4">P</var> <span class="op">+</span> <var data-series="1">M</var> <span class="op">+</span> <var data-series="7">I</var> )</span>
+    </p>
+
+    <p>Say 120 users of a hotel app answered the pair for an AR room preview: 54 Delighter, 18 Performance, 6 Must-have, 36 Indifferent, 4 Reverse and 2 Questionable. Delighter is the most frequent category, at 45%. Better is (54 + 18) ÷ 114 = 0.63 and Worse is −(18 + 6) ÷ 114 = −0.21: providing the preview lifts satisfaction a good deal, and leaving it out costs little.</p>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Reading Better and Worse together</p>
+      <p>Better runs from 0 to 1 and Worse from 0 to −1. A common reading treats 0.5 as the dividing line: a high Better with a low Worse behaves like a Delighter, both high like Performance, a low Better with a high Worse like a Must-have, and both low like Indifferent.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Classifying eight features for a hotel booking app</h2>
+      <p class="chapter-dek">The category decides what to fix, what to invest in and what to cut</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>Secure payment, AR room preview and six more</h3>
+      <div class="table-wrap">
+        <table class="table table--stack">
+          <caption>Eight hotel app features and their Kano categories</caption>
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Category</th>
+              <th scope="col">Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Secure payment</th><td><span class="key-dot" data-series="1"></span>Must-have</td><td>Users abandon the booking if payment fails. Nobody praises a card that simply works.</td></tr>
+            <tr><th scope="row">Fast page load</th><td><span class="key-dot" data-series="1"></span>Must-have</td><td>When pages are slow, users leave before they book. Pages that load in an acceptable time earn no praise, because that is expected.</td></tr>
+            <tr><th scope="row">More hotel photos</th><td><span class="key-dot" data-series="4"></span>Performance</td><td>5 photos are good, 20 are better, 50 with video are best. Satisfaction scales with the number.</td></tr>
+            <tr><th scope="row">Price comparison</th><td><span class="key-dot" data-series="4"></span>Performance</td><td>More sources compared means more trust and higher satisfaction.</td></tr>
+            <tr><th scope="row">AR room preview</th><td><span class="key-dot" data-series="5"></span>Delighter</td><td>Nobody expects it. Seeing the room in AR before booking is a memorable surprise.</td></tr>
+            <tr><th scope="row">AI trip planner</th><td><span class="key-dot" data-series="5"></span>Delighter</td><td>“Plan my weekend in Paris” is a pleasant surprise, and nobody misses it when it is absent.</td></tr>
+            <tr><th scope="row">Change the app icon</th><td><span class="key-dot" data-series="7"></span>Indifferent</td><td>Most users do not care about customizing the icon, so it is development time with no return.</td></tr>
+            <tr><th scope="row">Mandatory reviews</th><td><span class="key-dot" data-series="6"></span>Reverse</td><td>Forcing a review after every stay annoys people.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-reading">
+        <h4>What the categories tell us</h4>
+        <p><strong>Work through the categories in this order.</strong></p>
+        <ol>
+          <li>Fix any broken Must-haves first. Secure payment and fast page load are not negotiable.</li>
+          <li>Invest in the Performance features, more photos and price comparison, because that is where you compete.</li>
+          <li>Add one or two Delighters, such as the AR room preview, to stand apart.</li>
+          <li>Cut the Indifferent and Reverse features: the icon picker and mandatory reviews.</li>
+        </ol>
+        <p><strong>Speed is a Must-have up to a threshold and Performance beyond it.</strong> Until pages load in an acceptable time, users are annoyed and leave; past that point, further gains can add satisfaction the way a Performance feature does. The decision here is whether pages reach an acceptable load time, so the table keeps fast page load as a Must-have. Ask about an attribute at the level you are actually deciding on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Classify features of your own</h2>
+      <p class="chapter-dek">Answer the two questions for each feature, or tally a whole survey</p>
+    </header>
+
+    <div class="tool" data-tool="kano-classifier">
+      <div class="tool-head">
+        <h3 class="tool-title">Feature classifier</h3>
+        <p class="tool-hint">Add three to five features your team is debating. For each, choose one pair of answers: a single respondent’s, or the pair your team expects users to give, as a hypothesis to test. The category comes from the evaluation table. To classify a feature from a whole survey, use the Survey tally below.</p>
+      </div>
+      <div class="kano-add">
+        <div class="field">
+          <label for="kano-name">Feature name</label>
+          <input id="kano-name" type="text" maxlength="80" autocomplete="off" placeholder="For example, offline mode" aria-describedby="kano-name-help">
+        </div>
+        <button type="button" class="btn btn--primary" id="kano-add">Add feature</button>
+      </div>
+      <p class="field-help" id="kano-name-help">Press Enter or select Add feature</p>
+      <ol class="kano-list" id="kano-list" aria-label="Features to classify"></ol>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Features classified</p>
+        <output class="tool-result" id="kano-count"></output>
+        <p class="tool-output-note" id="kano-breakdown">Add a feature to begin</p>
+        <p id="kano-order"></p>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="kano-clear" hidden>Clear all</button>
+      </div>
+    </div>
+
+    <div class="tool" data-tool="kano-tally">
+      <div class="tool-head">
+        <h3 class="tool-title">Survey tally</h3>
+        <p class="tool-hint">Enter how many responses fell into each category for one feature. The defaults are the AR room preview survey from the previous section.</p>
+      </div>
+      <div class="fields" data-cols="3" data-compact>
+        <div class="field">
+          <label for="kano-t-m"><span class="card-key card-key--sm" data-series="1">M</span>Must-have</label>
+          <input id="kano-t-m" type="number" min="0" step="1" value="6" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+        <div class="field">
+          <label for="kano-t-p"><span class="card-key card-key--sm" data-series="4">P</span>Performance</label>
+          <input id="kano-t-p" type="number" min="0" step="1" value="18" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+        <div class="field">
+          <label for="kano-t-d"><span class="card-key card-key--sm" data-series="5">D</span>Delighter</label>
+          <input id="kano-t-d" type="number" min="0" step="1" value="54" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+        <div class="field">
+          <label for="kano-t-i"><span class="card-key card-key--sm" data-series="7">I</span>Indifferent</label>
+          <input id="kano-t-i" type="number" min="0" step="1" value="36" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+        <div class="field">
+          <label for="kano-t-r"><span class="card-key card-key--sm" data-series="6">R</span>Reverse</label>
+          <input id="kano-t-r" type="number" min="0" step="1" value="4" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+        <div class="field">
+          <label for="kano-t-q"><span class="card-key card-key--sm" data-series="2">Q</span>Questionable</label>
+          <input id="kano-t-q" type="number" min="0" step="1" value="2" inputmode="numeric" aria-describedby="kano-t-help">
+        </div>
+      </div>
+      <p class="field-help" id="kano-t-help">Number of responses, whole numbers of 0 or more</p>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Most frequent category</p>
+        <output class="tool-result" id="kano-t-result" for="kano-t-m kano-t-p kano-t-d kano-t-i kano-t-r kano-t-q">Delighter</output>
+        <p class="tool-output-note" id="kano-t-share">54 of 120 responses (45%)</p>
+        <p class="tool-output-note" id="kano-t-coef">Better 0.63, Worse −0.21</p>
+        <p id="kano-t-reading">Better and Worse agree: it behaves like a Delighter.</p>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="kano-t-reset">Reset to the example</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When Kano fits, and when it does not</h2>
+      <p class="chapter-dek">Useful for product strategy, too slow for sprint planning</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are setting product strategy and choosing what type of features to invest in</li>
+          <li>You can survey 30 or more real users, enough for a directional result</li>
+          <li>You need to separate table stakes from differentiators</li>
+          <li>You are building a new product and mapping its feature landscape</li>
+          <li>You are analyzing competitors and where they invest</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You need to rank 15 features for the next sprint. Use <a data-guide-link="rice">RICE</a> instead, or <a data-guide-link="ice">ICE</a> if you have no usage data.</li>
+          <li>You have no access to real users to survey</li>
+          <li>The decision cannot wait: a Kano survey takes 1–2 weeks</li>
+          <li>It is internal tooling and your own team is the user</li>
+          <li>It is a very early MVP: ship it and learn from real usage</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Kano classifies, RICE ranks</p>
+      <p>Kano tells you how each feature affects satisfaction: which ones are Must-haves, which are Performance features and which are Delighters. It does not rank them. A first pass with <a data-guide-link="ice">ICE</a> or <a data-guide-link="value-effort">Value vs Effort</a> cuts 30 ideas to about 10, and <a data-guide-link="rice">RICE</a> ranks that shortlist. Kano is not a step between them: it runs alongside, when you need to know how a feature affects satisfaction.</p>
+      <p>RICE is the most rigorous way to rank, because Reach comes from usage data. Kano gathers the most direct evidence from users but classifies rather than ranks. From fastest to slowest the four run ICE, Value vs Effort, RICE, Kano. <a data-guide-link="compare-prioritization">Choosing a prioritization framework</a> sets them side by side.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways a Kano study goes wrong</h2>
+      <p class="chapter-dek">The categories are simple; collecting honest answers is the hard part</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Skipping the survey and guessing</h3>
+        <p>PMs often classify features on gut feel, but the PM is not the user. Your Delighter might be your users’ Indifferent.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> run the paired survey with 30 or more users. The point of Kano is user data, not PM intuition.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating categories as permanent</h3>
+        <p>Features drift from Delighter toward Must-have, as <a href="#curve" data-section-link>the curve section</a> shows. A category measured once goes stale.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> repeat the survey on a fixed schedule and compare each feature with its last result. A feature that has moved category needs a new plan.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Neglecting Must-haves because they are dull</h3>
+        <p>Teams enjoy building Delighters. But if the Must-haves are broken, Delighters will not save you: users leave anyway.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> audit the Must-haves first, and invest in Delighters only once the Must-haves are solid.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Writing confusing survey questions</h3>
+        <p>Users find the dysfunctional question, how they would feel if the feature were absent, hard to parse. A confusing survey produces bad data and the wrong categories.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use plain language and test the survey on three people first. Consider phrasing it as “Imagine this feature did not exist.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Collecting too few responses</h3>
+        <p>With 5 responses, one outlier changes the category. You need enough data for the results to hold.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> as a rule of thumb, collect at least 30 responses for a directional result and 100 or more for confidence. Segment by user type if you can.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Using Kano to rank</h3>
+        <p>Kano tells you the type, not the order. Knowing that two features are both Must-haves does not tell you which to build first.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> classify with Kano, then rank within each category with <a data-guide-link="rice">RICE</a> or <a data-guide-link="value-effort">Value vs Effort</a>.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running a Kano study</h2>
+      <p class="chapter-dek">An async survey over 1–2 weeks, then a 60-minute workshop</p>
+    </header>
+
+    <h3>Phase 1: the survey, async over 1–2 weeks</h3>
+    <p>Write the questionnaire: two questions for each of 8–12 features. Send it to 30–100 users through any online form or survey tool. Classify every response with the evaluation table, then work out each feature’s most frequent category and its Better and Worse coefficients.</p>
+    <div class="callout callout--tip">
+      <p class="callout-title">12 features at most</p>
+      <p>Keep the survey to 8–12 features. Beyond that, survey fatigue lowers your completion rate.</p>
+    </div>
+
+    <h3>Phase 2: a 60-minute workshop</h3>
+    <dl class="facts">
+      <div><dt>Must attend</dt><dd>PM, design lead, engineering lead, and whoever ran the survey</dd></div>
+      <div><dt>Useful to have</dt><dd>UX researcher, product marketing, customer support lead</dd></div>
+      <div><dt>Prepare</dt><dd>Each feature’s category with its raw percentages and its Better and Worse scores</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–10 min</span><div><p class="agenda-title">Present the results</p><p>Show the category for each feature with the raw numbers: “72% of answers classify it as a Must-have, 18% as Performance.”</p></div></li>
+      <li><span class="agenda-time">10–25 min</span><div><p class="agenda-title">Discuss surprises</p><p>Focus on features where the team assumed one category and users said another. These are your blind spots.</p></div></li>
+      <li><span class="agenda-time">25–40 min</span><div><p class="agenda-title">Audit the Must-haves</p><p>Are any broken or missing? They are not negotiable: fix them before touching anything else, and write down the action items.</p></div></li>
+      <li><span class="agenda-time">40–50 min</span><div><p class="agenda-title">Plan Performance investments</p><p>Which Performance features will set you apart, and how much should you invest in each? These are your competitive levers.</p></div></li>
+      <li><span class="agenda-time">50–60 min</span><div><p class="agenda-title">Pick Delighter bets</p><p>Choose one or two Delighters to prototype. They are high risk and high reward, so validate them cheaply before committing.</p></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Keep the workshop on evidence</p>
+      <ul>
+        <li><strong>Show raw percentages.</strong> “72% Must-have” persuades more than “we classified this as a Must-have.” It also moves the debate from opinion to evidence.</li>
+        <li><strong>Focus on disagreements.</strong> When the survey says Delighter and the PM assumed Must-have, the team learns the most.</li>
+        <li><strong>Do not rank in this session.</strong> Kano categorizes. Hold a separate <a data-guide-link="rice">RICE</a> session to rank within categories.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Seven questions on the categories, the survey and what to do with the results</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Users expect a feature but never praise it; they notice it only when it is missing. Which category is it?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Must-have</button></li>
+          <li><button type="button">Performance</button></li>
+          <li><button type="button">Delighter</button></li>
+        </ul>
+        <div class="quiz-why"><p>Must-haves are expected, invisible when present and infuriating when absent, like hot water in a hotel.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">A user answers “I like it” if the feature is present and “I am neutral” if it is absent. Which category?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Must-have</button></li>
+          <li><button type="button">Delighter</button></li>
+          <li><button type="button">Performance</button></li>
+        </ul>
+        <div class="quiz-why"><p>Liking it when present and feeling neutral when it is absent is the Delighter pattern: users enjoy it but do not miss it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Your team wants to build a flashy new feature, but login fails 10% of the time. What comes first?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Do both in parallel</button></li>
+          <li><button type="button">Build the flashy feature, a Delighter</button></li>
+          <li><button type="button">Fix login, a Must-have</button></li>
+        </ul>
+        <div class="quiz-why"><p>Broken Must-haves come first. A Delighter cannot make up for a login that fails, because users leave before they ever see the new feature. Splitting the team between the two delays the login fix, and users keep failing to log in and leaving until it is done.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">What happens to Kano categories over time?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They stay fixed once measured</button></li>
+          <li><button type="button">Delighters drift toward Must-haves</button></li>
+          <li><button type="button">Must-haves become Delighters</button></li>
+        </ul>
+        <div class="quiz-why"><p>As users get used to a feature, it tends to move from Delighter to Performance to Must-have. Today’s surprise becomes tomorrow’s expectation, which is why a category measured once goes stale.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Your team has 12 survey responses for a feature and wants to act on its category. By this guide’s rule of thumb, how many responses does a directional result need?</p>
+        <ul class="quiz-options">
+          <li><button type="button">10 are enough</button></li>
+          <li><button type="button">At least 100</button></li>
+          <li><button type="button">At least 30</button></li>
+        </ul>
+        <div class="quiz-why"><p>About 30 responses give a directional result, and 100 or more give confidence. With only a dozen, one outlier can change the category, so collect more before acting.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Kano gives you the category but not the order. What do you use to rank features within a category?</p>
+        <ul class="quiz-options">
+          <li><button type="button">RICE or Value vs Effort</button></li>
+          <li><button type="button">Run Kano again</button></li>
+          <li><button type="button">Follow the category order: Must-have, Performance, Delighter</button></li>
+        </ul>
+        <div class="quiz-why"><p>Kano classifies and RICE ranks. The category order says which type of feature to deal with first, but not which of two Must-haves comes first, and running Kano again only returns the same categories. RICE or Value vs Effort compares the features within a type.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A feature has a Better coefficient of 0.2 and a Worse coefficient of −0.8. How does it behave?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Like a Delighter</button></li>
+          <li><button type="button">Like an Indifferent feature</button></li>
+          <li><button type="button">Like a Must-have</button></li>
+        </ul>
+        <div class="quiz-why"><p>Providing it adds little satisfaction (a low Better), while leaving it out causes a lot of dissatisfaction (a high Worse). That is the Must-have pattern.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the Kano curve */
+  .guide[data-guide="kano"] .kano-plot { max-width: 520px; margin: 0 auto; }
+  .guide[data-guide="kano"] .kano-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .guide[data-guide="kano"] .kano-end,
+  .guide[data-guide="kano"] .kano-xaxis {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.4;
+    color: var(--ink-3);
+  }
+  .guide[data-guide="kano"] .kano-end { margin: var(--s-1) 0; }
+  .guide[data-guide="kano"] .kano-xaxis {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-3);
+    margin-top: var(--s-2);
+    padding-top: var(--s-2);
+    border-top: 1px solid var(--rule-strong);
+  }
+  .guide[data-guide="kano"] .kano-xaxis span:nth-child(2) { color: var(--ink-2); font-weight: var(--w-medium); text-align: center; }
+  .guide[data-guide="kano"] .kano-xaxis span:last-child { text-align: right; }
+  .guide[data-guide="kano"] .kano-axis { stroke: var(--ink-3); stroke-width: 1.5; }
+  .guide[data-guide="kano"] .kano-arrow { fill: var(--ink-3); }
+  .guide[data-guide="kano"] .kano-neutral { stroke: var(--rule-strong); stroke-width: 1.5; stroke-dasharray: 5 5; }
+  .guide[data-guide="kano"] .kano-line { fill: none; stroke: var(--series); stroke-width: 3.5; stroke-linecap: round; }
+  .guide[data-guide="kano"] .kano-line--long { stroke-dasharray: 14 8; stroke-linecap: butt; }
+  .guide[data-guide="kano"] .kano-line--dashed { stroke-dasharray: 7 7; stroke-linecap: butt; }
+  .guide[data-guide="kano"] .kano-line--dotted { stroke-dasharray: 0.5 8; }
+  .guide[data-guide="kano"] .kano-line--dashdot { stroke-dasharray: 16 5 3 5; stroke-linecap: butt; }
+  .guide[data-guide="kano"] .kano-label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-20);
+    font-weight: var(--w-semibold);
+    dominant-baseline: middle;
+    fill: var(--series-ink);
+  }
+
+  /* Curve key: each line style beside its letter */
+  .guide[data-guide="kano"] .kano-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--s-2) var(--s-5);
+  }
+  .guide[data-guide="kano"] .kano-legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="kano"] .kano-legend strong { color: var(--series-ink); }
+  .guide[data-guide="kano"] .kano-swatch { flex: none; width: 28px; border-top: 3px solid var(--series); }
+  .guide[data-guide="kano"] .kano-swatch--long,
+  .guide[data-guide="kano"] .kano-swatch--dashed { border-top-style: dashed; }
+  .guide[data-guide="kano"] .kano-swatch--dotted { border-top-style: dotted; border-top-width: 4px; }
+  .guide[data-guide="kano"] .kano-swatch--dashdot { height: 4px; border-top: 0; overflow: visible; }
+  .guide[data-guide="kano"] .kano-swatch--dashdot .kano-line { stroke-width: 3; }
+
+  /* Evaluation table: each cell is filled with its category's colour */
+  .guide[data-guide="kano"] #kano-eval td { text-align: center; }
+  .guide[data-guide="kano"] #kano-eval td[data-series] {
+    background: var(--series-wash);
+    color: var(--series-ink);
+    font-weight: var(--w-semibold);
+  }
+  /* Example table: a one-word category never parts from its key dot */
+  .guide[data-guide="kano"] .table td:has(> .key-dot) { white-space: nowrap; }
+  /* Phones: five single-letter answer columns fit the screen, so the table
+     fits rather than scrolls and the Dislike column stays in view. */
+  @media (max-width: 600px) {
+    .guide[data-guide="kano"] #kano-eval { table-layout: fixed; }
+    .guide[data-guide="kano"] #kano-eval th:first-child { width: 5.5rem; min-width: 0; padding: var(--s-2); }
+    .guide[data-guide="kano"] #kano-eval thead th {
+      overflow-wrap: anywhere;
+      font-size: var(--fs-12);
+      padding: var(--s-2) 2px;
+      text-align: center;
+    }
+    .guide[data-guide="kano"] #kano-eval thead th:first-child { text-align: left; padding-left: var(--s-2); }
+    .guide[data-guide="kano"] #kano-eval td { padding: var(--s-2) 0; }
+  }
+
+  /* Classifier: the add row and one record per feature */
+  .guide[data-guide="kano"] .kano-add { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-3); }
+  .guide[data-guide="kano"] .kano-add .field { flex: 1 1 240px; }
+  .guide[data-guide="kano"] .kano-add + .field-help { margin-top: var(--s-2); }
+  .guide[data-guide="kano"] .kano-list { display: grid; gap: var(--s-3); }
+  .guide[data-guide="kano"] .kano-list:empty { display: none; }
+  .guide[data-guide="kano"] .kano-row {
+    padding: var(--s-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="kano"] .kano-row > * + * { margin-top: var(--s-3); }
+  .guide[data-guide="kano"] .kano-row-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
+  .guide[data-guide="kano"] .kano-row-name { font-size: var(--fs-18); line-height: var(--lh-snug); overflow-wrap: anywhere; }
+  .guide[data-guide="kano"] .kano-verdict { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); }
+  .guide[data-guide="kano"] .kano-chip { margin: 0; }
+  .guide[data-guide="kano"] .kano-chip:not([data-series]) { background: var(--paper-sunk); color: var(--ink-2); }
+  .guide[data-guide="kano"] .kano-advice { font-size: var(--fs-14); color: var(--ink-2); }
+
+  /* Questionable (series 2, yellow) needs more ink to pass AA as text */
+  .guide[data-guide="kano"] #kano-eval td[data-series="2"],
+  .guide[data-guide="kano"] .kano-chip[data-series="2"],
+  .guide[data-guide="kano"] .card-key[data-series="2"] { color: color-mix(in oklab, var(--series) 62%, var(--ink)); }
+</style>
+
+<script data-guide-script>
+  const CATS = {
+    M: { name: 'Must-have', series: '1', advice: 'Make sure it works every time. It wins no praise, but its absence drives people away.' },
+    P: { name: 'Performance', series: '4', advice: 'Invest in proportion: each improvement adds satisfaction. Compare it with competitors.' },
+    D: { name: 'Delighter', series: '5', advice: 'A way to stand apart. Prototype it cheaply before committing.' },
+    I: { name: 'Indifferent', series: '7', advice: 'Users do not care either way. Cut it or keep it cheap.' },
+    R: { name: 'Reverse', series: '6', advice: 'Some users would rather not have it. Leave it out or make it optional.' },
+    Q: { name: 'Questionable', series: '2', advice: 'The two answers contradict each other. Check the wording of the questions.' },
+  };
+  const ANSWERS = [
+    ['like', 'I like it'],
+    ['expect', 'I expect it'],
+    ['neutral', 'I am neutral'],
+    ['tolerate', 'I can tolerate it'],
+    ['dislike', 'I dislike it'],
+  ];
+  const fmt2 = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const listNames = (names) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+
+  // One source of truth: the evaluation table in the survey section.
+  const evalTable = root.querySelector('#kano-eval');
+  const cols = [...evalTable.querySelectorAll('thead th[data-answer]')].map(th => th.dataset.answer);
+  const lookup = {};
+  evalTable.querySelectorAll('tbody tr[data-answer]').forEach(tr => {
+    tr.querySelectorAll('td[data-kano]').forEach((td, i) => { lookup[`${tr.dataset.answer}|${cols[i]}`] = td.dataset.kano; });
+  });
+
+  // ---- Feature classifier ----
+  const nameInput = root.querySelector('#kano-name');
+  const nameHelp = root.querySelector('#kano-name-help');
+  const addBtn = root.querySelector('#kano-add');
+  const list = root.querySelector('#kano-list');
+  const countOut = root.querySelector('#kano-count');
+  const breakdown = root.querySelector('#kano-breakdown');
+  const clearBtn = root.querySelector('#kano-clear');
+  const order = root.querySelector('#kano-order');
+  const MAX_FEATURES = 12;
+  const NAME_HINT = 'Press Enter or select Add feature';
+  let nextId = 1;
+
+  function setNameHint(text, isError) {
+    nameHelp.textContent = text;
+    nameHelp.classList.toggle('is-error', isError);
+    nameInput.setAttribute('aria-invalid', String(isError));
+  }
+
+  function makeSelect(id, labelText) {
+    const field = document.createElement('div');
+    field.className = 'field';
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText;
+    const select = document.createElement('select');
+    select.id = id;
+    const blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = 'Choose an answer';
+    select.append(blank);
+    ANSWERS.forEach(([value, text]) => {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = text;
+      select.append(opt);
+    });
+    select.addEventListener('change', summarize);
+    field.append(label, select);
+    return { field, select };
+  }
+
+  function classify(row) {
+    const f = row.querySelector('[data-role="present"]').value;
+    const d = row.querySelector('[data-role="absent"]').value;
+    return f && d ? lookup[`${f}|${d}`] : null;
+  }
+
+  function renderVerdict(row) {
+    const chip = row.querySelector('.kano-chip');
+    const advice = row.querySelector('.kano-advice');
+    const code = classify(row);
+    if (!code) {
+      chip.removeAttribute('data-series');
+      chip.textContent = 'Not classified yet';
+      advice.textContent = 'Choose both answers to see the category.';
+      return null;
+    }
+    chip.setAttribute('data-series', CATS[code].series);
+    chip.textContent = CATS[code].name;
+    advice.textContent = CATS[code].advice;
+    return code;
+  }
+
+  function summarize() {
+    const rows = [...list.querySelectorAll('.kano-row')];
+    const groups = { M: [], P: [], D: [], I: [], R: [], Q: [] };
+    let done = 0;
+    rows.forEach(row => {
+      const code = renderVerdict(row);
+      if (code) { done += 1; groups[code].push(row.dataset.name); }
+    });
+    clearBtn.hidden = !rows.length;
+    if (!rows.length) {
+      countOut.textContent = '';
+      breakdown.textContent = 'Add a feature to begin';
+      order.textContent = '';
+      return;
+    }
+    countOut.textContent = `${done} of ${rows.length}`;
+    const parts = Object.keys(groups).filter(k => groups[k].length).map(k => `${CATS[k].name} ${groups[k].length}`);
+    breakdown.textContent = parts.length ? parts.join(', ') : 'Answer both questions for a feature to classify it';
+    const lines = [];
+    const build = ['M', 'P', 'D'].flatMap(k => groups[k].map(n => `${n} (${CATS[k].name})`));
+    if (build.length) lines.push(`Work through by category: ${build.join(', ')}. Rank within each category with RICE.`);
+    const cut = ['I', 'R'].flatMap(k => groups[k]);
+    if (cut.length) lines.push(`Cut or keep cheap: ${listNames(cut)}.`);
+    if (groups.Q.length) lines.push(`Recheck the answers for ${listNames(groups.Q)}.`);
+    order.textContent = lines.join(' ');
+  }
+
+  function addFeature() {
+    const name = nameInput.value.trim();
+    if (!name) { setNameHint('Type a feature name first', true); nameInput.focus(); return; }
+    if (list.children.length >= MAX_FEATURES) { setNameHint(`Kano works best with ${MAX_FEATURES} features or fewer. Remove one to add another.`, true); return; }
+    setNameHint(NAME_HINT, false);
+    const id = nextId++;
+    const row = document.createElement('li');
+    row.className = 'kano-row';
+    row.dataset.name = name;
+
+    const head = document.createElement('div');
+    head.className = 'kano-row-head';
+    const title = document.createElement('h4');
+    title.className = 'kano-row-name';
+    title.textContent = name;
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'btn btn--quiet';
+    remove.textContent = 'Remove';
+    remove.setAttribute('aria-label', `Remove ${name}`);
+    remove.addEventListener('click', () => { row.remove(); summarize(); nameInput.focus(); });
+    head.append(title, remove);
+
+    const fields = document.createElement('div');
+    fields.className = 'fields';
+    fields.dataset.cols = '2';
+    const present = makeSelect(`kano-f-${id}`, 'If it is there, the user feels');
+    const absent = makeSelect(`kano-d-${id}`, 'If it is missing, the user feels');
+    present.select.dataset.role = 'present';
+    absent.select.dataset.role = 'absent';
+    fields.append(present.field, absent.field);
+
+    const verdict = document.createElement('p');
+    verdict.className = 'kano-verdict';
+    const chip = document.createElement('span');
+    chip.className = 'kano-chip card-key card-key--tag';
+    const advice = document.createElement('span');
+    advice.className = 'kano-advice';
+    verdict.append(chip, advice);
+
+    row.append(head, fields, verdict);
+    list.append(row);
+    nameInput.value = '';
+    summarize();
+    present.select.focus();
+  }
+
+  addBtn.addEventListener('click', addFeature);
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); addFeature(); }
+  });
+  nameInput.addEventListener('input', () => {
+    if (nameInput.value.trim()) setNameHint(NAME_HINT, false);
+  });
+  clearBtn.addEventListener('click', () => {
+    list.replaceChildren();
+    setNameHint(NAME_HINT, false);
+    summarize();
+    nameInput.focus();
+  });
+  summarize();
+
+  // ---- Survey tally ----
+  const KEYS = ['M', 'P', 'D', 'I', 'R', 'Q'];
+  const DEFAULTS = { M: 6, P: 18, D: 54, I: 36, R: 4, Q: 2 };
+  const inputs = Object.fromEntries(KEYS.map(k => [k, root.querySelector(`#kano-t-${k.toLowerCase()}`)]));
+  const tHelp = root.querySelector('#kano-t-help');
+  const tResult = root.querySelector('#kano-t-result');
+  const tShare = root.querySelector('#kano-t-share');
+  const tCoef = root.querySelector('#kano-t-coef');
+  const tReading = root.querySelector('#kano-t-reading');
+  const T_HINT = 'Number of responses, whole numbers of 0 or more';
+
+  function tFail(message) {
+    tHelp.textContent = message;
+    tHelp.classList.add('is-error');
+    tResult.textContent = '–';
+    tShare.textContent = '';
+    tCoef.textContent = '';
+    tReading.textContent = '';
+  }
+
+  function tally() {
+    const n = {};
+    let valid = true;
+    KEYS.forEach(k => {
+      const raw = inputs[k].value.trim();
+      const v = Number(raw);
+      const ok = raw !== '' && Number.isInteger(v) && v >= 0;
+      inputs[k].setAttribute('aria-invalid', String(!ok));
+      if (ok) n[k] = v; else valid = false;
+    });
+    if (!valid) { tFail('Enter a whole number of 0 or more in every field'); return; }
+    const base = n.D + n.P + n.M + n.I;
+    const total = base + n.R + n.Q;
+    if (total === 0) { tFail('Enter at least one response'); return; }
+    tHelp.textContent = T_HINT;
+    tHelp.classList.remove('is-error');
+
+    const top = Math.max(...KEYS.map(k => n[k]));
+    const leaders = KEYS.filter(k => n[k] === top);
+    const article = (k) => (k === 'I' ? 'an' : 'a');
+    let lean = null;
+    if (base > 0) {
+      const better = (n.D + n.P) / base;
+      const worse = -(n.P + n.M) / base;
+      lean = better >= 0.5 ? (Math.abs(worse) >= 0.5 ? 'P' : 'D') : (Math.abs(worse) >= 0.5 ? 'M' : 'I');
+      tCoef.textContent = `Better ${fmt2(better)}, Worse ${worse < 0 ? '−' : ''}${fmt2(Math.abs(worse))}`;
+    } else {
+      tCoef.textContent = 'No Better or Worse: every response is Reverse or Questionable, and both coefficients leave those out';
+    }
+
+    const share = Math.round((top / total) * 100);
+
+    if (leaders.length > 1) {
+      tResult.textContent = 'Tie';
+      tShare.textContent = `${listNames(leaders.map(k => CATS[k].name))}, ${top.toLocaleString('en-US')} of ${total.toLocaleString('en-US')} responses each`;
+      tReading.textContent = lean
+        ? `No single most frequent category. Better and Worse suggest it behaves like ${article(lean)} ${CATS[lean].name}.`
+        : 'No single most frequent category. Check whether one segment rejects it and whether the questions were misread.';
+      return;
+    }
+    const code = leaders[0];
+    tResult.textContent = CATS[code].name;
+    tShare.textContent = `${top.toLocaleString('en-US')} of ${total.toLocaleString('en-US')} responses (${share}%)`;
+    if (code === 'R') tReading.textContent = 'Many respondents would rather not have it. Check whether one segment drives this before cutting it for everyone.';
+    else if (code === 'Q') tReading.textContent = 'Many answers contradict each other, so the questions were probably misread. Reword them and survey again.';
+    else if (code === lean) tReading.textContent = `Better and Worse agree: it behaves like ${article(code)} ${CATS[code].name}.`;
+    else tReading.textContent = `Better and Worse suggest it behaves more like ${article(lean)} ${CATS[lean].name}. Look at how the answers split before you decide.`;
+  }
+
+  KEYS.forEach(k => inputs[k].addEventListener('input', tally));
+  root.querySelector('#kano-t-reset').addEventListener('click', () => {
+    KEYS.forEach(k => { inputs[k].value = String(DEFAULTS[k]); });
+    tally();
+  });
+  tally();
+</script>

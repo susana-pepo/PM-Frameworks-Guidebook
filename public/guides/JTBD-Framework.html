@@ -1,0 +1,908 @@
+<article class="guide" data-guide="jtbd">
+
+  <header class="guide-intro">
+    <p class="lede">Jobs to Be Done looks at a product through the progress its customers are trying to make in a particular situation. It shows you what people are really hiring your product for, and what else they could hire instead.</p>
+
+    <figure class="figure" data-hero>
+      <ol class="jt-story" aria-label="The three parts of a job story">
+        <li data-series="1"><span class="jt-phrase">When I…</span><span class="jt-part">Situation</span><span class="jt-note">The moment or trigger that creates the need: where they are and what just happened</span></li>
+        <li data-series="2"><span class="jt-phrase">I want to…</span><span class="jt-part">Motivation</span><span class="jt-note">The progress they are trying to make, with no solution in it</span></li>
+        <li data-series="3"><span class="jt-phrase">so I can…</span><span class="jt-part">Outcome</span><span class="jt-note">The end state they are after, whether functional, emotional or social</span></li>
+      </ol>
+      <figcaption>Read in order, the three parts make one sentence with no product in it</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>People hire a product to make progress in a particular situation, and fire it when something else serves them better. Write the job as a story (When I…, I want to…, so I can…) with no product in it, and find the real job by interviewing people who recently switched. The job shows you who you actually compete with and what is worth building.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>People hire products to make progress</h2>
+      <p class="chapter-dek">Start from the progress the customer wants, not from the product</p>
+    </header>
+
+    <p>When someone buys a product, they are hiring it to get a job done in a particular situation. When something does that job better, they fire your product and hire the other thing. The useful question changes from “what features should we add?” to <strong>“what job is the user hiring this product to do?”</strong></p>
+    <p>The idea has an old shorthand, usually credited to the marketing professor Theodore Levitt, who in turn credited Leo McGinneva: people don’t want a quarter-inch drill, they want a quarter-inch hole. The drill is hired for the hole. If something else made the hole more easily, people would fire the drill and switch to it.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Product thinking asks</p>
+        <ul>
+          <li>What features does our product have?</li>
+          <li>What do users do in our app?</li>
+          <li>How can we improve our product?</li>
+        </ul>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Jobs thinking asks</p>
+        <ul>
+          <li>What progress is the user trying to make?</li>
+          <li>What did they fire to hire us?</li>
+          <li>Why would they switch away?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The milkshake study</h3>
+    <p>Clayton Christensen and his colleagues studied why people bought milkshakes from a fast-food chain in the morning, a case they describe in their book Competing Against Luck (2016). Demographics were no help: the buyers had nothing in common. Their job was the same, though. They faced a long, boring commute and wanted something that lasted about 20 minutes, could be consumed with one hand, made the drive less dull and kept them full until lunch.</p>
+    <p>Seen that way, the milkshake’s competitors were <strong>bananas, bagels, boredom and Snickers bars</strong>. Once you see the job, you see the real competition, and it is often not who you think.</p>
+
+    <h3>Three dimensions of every job</h3>
+    <p>A job is rarely only a task. People also want to feel a certain way and to be seen a certain way while they get it done.</p>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <span class="card-key" data-series="4">F</span>
+        <h4 class="card-title">Functional</h4>
+        <p class="card-q">What practical task needs doing?</p>
+        <p>“Get from A to B.” “Learn a song.”</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="5">E</span>
+        <h4 class="card-title">Emotional</h4>
+        <p class="card-q">How do they want to feel?</p>
+        <p>“Feel confident.” “Reduce anxiety.”</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="6">S</span>
+        <h4 class="card-title">Social</h4>
+        <p class="card-q">How do they want to be seen?</p>
+        <p>“Look like a good parent.” “Seem professional.”</p>
+      </div>
+    </div>
+    <div class="callout callout--tip">
+      <p class="callout-title">Emotional and social jobs often decide the purchase</p>
+      <p>It is easy to stop at the functional job. The emotional and social jobs often weigh more in the decision to buy than the functional one does.</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Your product is the current best candidate</p>
+      <p>Users don’t want your product. They want the progress it makes possible, and your product is simply the best candidate they have found for the job so far. If something better shows up, they will fire you and hire that instead.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="story" data-nav="The job story">
+    <header class="chapter-head">
+      <h2>Write the job as a story</h2>
+      <p class="chapter-dek">Situation, motivation and outcome, with no solution in any of them</p>
+    </header>
+
+    <p>A <dfn>job story</dfn> is a one-sentence description of a job in the three parts drawn at the top of this page: “When [situation], I want to [motivation], so I can [expected outcome].” The format came from Paul Adams and the product team at Intercom as an alternative to persona-based user stories, and Alan Klement later developed it further.</p>
+
+    <h3>Three job stories</h3>
+    <figure class="figure">
+      <ul class="jt-examples">
+        <li><span class="jt-k" data-series="1">When I</span> have a long, boring commute, <span class="jt-k" data-series="2">I want to</span> consume something satisfying with one hand, <span class="jt-k" data-series="3">so I can</span> make the drive less tedious and stay full until lunch.</li>
+        <li><span class="jt-k" data-series="1">When I</span> decide to learn an instrument as an adult, <span class="jt-k" data-series="2">I want to</span> play recognizable songs quickly, <span class="jt-k" data-series="3">so I can</span> feel a sense of accomplishment and impress my family.</li>
+        <li><span class="jt-k" data-series="1">When I</span> arrive in a new city for work, <span class="jt-k" data-series="2">I want to</span> get to my hotel without confusion, <span class="jt-k" data-series="3">so I can</span> feel in control and arrive relaxed before my meeting.</li>
+      </ul>
+      <figcaption>The milkshake commute, an adult learner and a business traveler, each written as a job story</figcaption>
+    </figure>
+
+    <h3>Four rules for a good job story</h3>
+    <ol>
+      <li><strong>Solution-free.</strong> No product names, no features, no UI elements.</li>
+      <li><strong>Longer-lived than your product.</strong> The underlying job is stable over long periods; it existed before your product and will exist after it. What changes is the situation people meet it in and the ways they get it done, so revisit your job stories when that context changes (for example once a quarter), not because the job itself has changed.</li>
+      <li><strong>Grounded in a situation.</strong> “When I…” ties the job to a real moment.</li>
+      <li><strong>Open to emotional and social outcomes.</strong> “so I can feel confident” is as valid as “so I can save 10 minutes.”</li>
+    </ol>
+
+    <div class="callout callout--caution">
+      <p class="callout-title">A feature dressed as a job</p>
+      <p>A common mistake is writing “When I open the app, I want to see a dashboard, so I can track my progress.” That describes a feature. The job underneath it might be: “When I’m trying to build a new habit, I want to see evidence that I’m improving, so I can stay motivated.”</p>
+    </div>
+
+    <h3>Job stories and job statements</h3>
+    <p>You will also meet the <dfn>job statement</dfn> from Tony Ulwick’s Outcome-Driven Innovation. It has a different shape: a verb, an object and a contextual clarifier, such as “listen to music while commuting” or “get to a hotel in an unfamiliar city,” with no When, I want to or so I can. A job story and a job statement can describe the same job; the statement is terser and suits quantitative research, while the story keeps the situation and the feeling. The two names are not interchangeable, and this guide uses job stories throughout.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Six products and the jobs behind them</h2>
+      <p class="chapter-dek">What a team might assume, the job underneath, and the competition it reveals</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>Product thinking compared with jobs thinking</h3>
+      <p>The first card is Larkwell, a fictional piano-learning app for adults. The other five are illustrative job stories for familiar products, not findings from each company’s research. Each card starts with the assumption product thinking tends to make.</p>
+      <div class="cards" data-cols="2">
+        <div class="card">
+          <span class="card-key">Music learning</span>
+          <h4 class="card-title">Larkwell (piano learning)</h4>
+          <p>Assumption: users want more lessons and better content.</p>
+          <p class="card-q">When I have 15 free minutes, I want to feel like I made progress on an instrument, so I can feel accomplished and creative.</p>
+          <p class="card-meta">Also competes with: YouTube, books, Netflix (for the free time)</p>
+        </div>
+        <div class="card">
+          <span class="card-key">Ride-sharing</span>
+          <h4 class="card-title">Uber</h4>
+          <p>Assumption: users want cheaper rides and more drivers.</p>
+          <p class="card-q">When I need to get somewhere and don’t want to deal with parking, I want reliable transport, so I can arrive stress-free and on time.</p>
+          <p class="card-meta">Also competes with: their own car, the subway, walking, canceling the trip</p>
+        </div>
+        <div class="card">
+          <span class="card-key">Job search</span>
+          <h4 class="card-title">LinkedIn</h4>
+          <p>Assumption: users want more connections and a better profile.</p>
+          <p class="card-q">When I’m considering a career change, I want to understand what’s out there, so I can make a confident move at the right time.</p>
+          <p class="card-meta">Also competes with: recruiters, word of mouth, staying put</p>
+        </div>
+        <div class="card">
+          <span class="card-key">E-commerce</span>
+          <h4 class="card-title">Amazon</h4>
+          <p>Assumption: users want more products and faster shipping.</p>
+          <p class="card-q">When I realize I need something, I want to sort it out immediately without leaving the house, so I can get back to what I was doing.</p>
+          <p class="card-meta">Also competes with: the local store, borrowing, doing without</p>
+        </div>
+        <div class="card">
+          <span class="card-key">Social</span>
+          <h4 class="card-title">Instagram</h4>
+          <p>Assumption: users want filters and more followers.</p>
+          <p class="card-q">When something interesting happens, I want to share a curated version of it, so I can feel seen and connected.</p>
+          <p class="card-meta">Also competes with: texting, calling, doing nothing</p>
+        </div>
+        <div class="card">
+          <span class="card-key">Coffee</span>
+          <h4 class="card-title">Starbucks</h4>
+          <p>Assumption: users want better coffee and more variety.</p>
+          <p class="card-q">When I need a mental break between tasks, I want a ritual that feels like a reward, so I can reset and face the next thing.</p>
+          <p class="card-meta">Also competes with: a glass of water, a walk, scrolling the phone, a nap</p>
+        </div>
+      </div>
+      <div class="example-reading">
+        <h4>The competition is wider than the category</h4>
+        <p>In every example, the real competition is not what you would expect from the product category. Larkwell competes with other piano apps, and also with whatever else fills 15 free minutes. Starbucks competes with other coffee shops, and also with anything else that gives a person a mental reset.</p>
+        <p>The assumptions describe the product; the job stories describe the person, which is where new ideas and real competitors come from.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Write a job story of your own</h2>
+      <p class="chapter-dek">Fill in the three parts and check the result against the rules</p>
+    </header>
+
+    <div class="tool" data-tool="job-story-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">Job story builder</h3>
+        <p class="tool-hint">The checks look for common words, so treat them as prompts rather than verdicts. Press Enter in any field to save a finished story.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="jt-when"><span class="key-dot" data-series="1"></span>When I… (situation)</label>
+          <input id="jt-when" type="text" autocomplete="off" placeholder="e.g. get home late with nothing planned for dinner" aria-describedby="jt-when-help">
+          <p class="field-help" id="jt-when-help">The moment that creates the need</p>
+        </div>
+        <div class="field">
+          <label for="jt-want"><span class="key-dot" data-series="2"></span>I want to… (motivation)</label>
+          <input id="jt-want" type="text" autocomplete="off" placeholder="e.g. put a decent meal on the table in 20 minutes" aria-describedby="jt-want-help">
+          <p class="field-help" id="jt-want-help">The progress, with no product or feature in it</p>
+        </div>
+        <div class="field">
+          <label for="jt-so"><span class="key-dot" data-series="3"></span>so I can… (outcome)</label>
+          <input id="jt-so" type="text" autocomplete="off" placeholder="e.g. eat well without the evening turning into a chore" aria-describedby="jt-so-help">
+          <p class="field-help" id="jt-so-help">The end state: functional, emotional or social</p>
+        </div>
+      </div>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Your job story</p>
+        <output class="jt-preview" id="jt-preview" for="jt-when jt-want jt-so" aria-live="off"></output>
+        <p class="tool-output-label">Dimensions found</p>
+        <ul class="jt-dims" id="jt-dims">
+          <li data-dim="functional"><span class="jt-dim-name"><span class="key-dot" data-series="4"></span>Functional</span><span class="jt-dim-state">Not yet</span></li>
+          <li data-dim="emotional"><span class="jt-dim-name"><span class="key-dot" data-series="5"></span>Emotional</span><span class="jt-dim-state">Not yet</span></li>
+          <li data-dim="social"><span class="jt-dim-name"><span class="key-dot" data-series="6"></span>Social</span><span class="jt-dim-state">Not yet</span></li>
+        </ul>
+        <p class="tool-output-label">Quality checks</p>
+        <ul class="checks" id="jt-checks"></ul>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="jt-save">Save job story</button>
+        <button type="button" class="btn" id="jt-clear">Clear fields</button>
+      </div>
+      <p class="field-help" id="jt-save-help" aria-live="polite">Save a story to collect it below.</p>
+
+      <div class="jt-collection">
+        <p class="tool-output-label" id="jt-saved-label">Saved job stories</p>
+        <p class="jt-empty" id="jt-empty">None yet. Build several stories for the same product and compare them.</p>
+        <ol class="jt-saved" id="jt-saved" aria-labelledby="jt-saved-label"></ol>
+        <div class="tool-actions">
+          <button type="button" class="btn" id="jt-download" disabled>Download saved stories</button>
+        </div>
+        <p class="field-help">Saved stories last only while this page is open. Download them to keep a copy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When Jobs to Be Done fits, and when it does not</h2>
+      <p class="chapter-dek">Reach for it when you are discovering, not when you are optimizing</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are defining product strategy and asking what business you are really in.</li>
+          <li>Users are churning and you don’t know why.</li>
+          <li>You are entering a new market and need to know who the real competitors are.</li>
+          <li>You are building messaging or positioning around the progress users care about.</li>
+          <li>You are evaluating an acquisition or partnership.</li>
+          <li>A PM interview asks “How would you improve X?” Frame the job first, then structure the rest of the answer with the <a data-guide-link="circles">CIRCLES Method</a>.</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You need to prioritize a known backlog. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead, scoring the features against the job. The <a data-guide-link="kano">Kano model</a> can classify the features that serve a job by how they affect satisfaction, but it does not rank them.</li>
+          <li>You need specific UI decisions. Run user testing instead.</li>
+          <li>You are short of time. Sprint planning is not the moment for JTBD research.</li>
+          <li>The job is obvious and the whole team already understands it.</li>
+          <li>You are optimizing rather than discovering. Run an A/B test instead.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways JTBD work goes wrong</h2>
+      <p class="chapter-dek">Most of them come from drifting back toward the product or the persona</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Writing solutions instead of jobs</h3>
+        <p>“When I open the app, I want to see my dashboard” is a feature request phrased as a job. The job exists independently of your product.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> remove all product and feature language, then test the job story: would it have made sense decades ago? If so, it describes a real job.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Staying too abstract</h3>
+        <p>“I want to live a better life” is true but useless for product decisions. A job story needs a specific situation.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> always include “When I…”. The situation makes the job actionable: “When I get home exhausted” is far more useful than “I want to relax.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Ignoring emotional and social jobs</h3>
+        <p>Focusing only on the functional task. “Get from A to B” cannot explain why someone chooses a BMW over a Toyota.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> for every functional job, ask how the user wants to feel and how they want to be seen. Those answers often drive the decision.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Defining the job by who the customer is</h3>
+        <p>“Millennials want…” or “Enterprise users need…” describes the person doing the job (in Ulwick’s terms, the job executor), not the job. The same person hires different products for different jobs in different contexts.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> define jobs by situations, not personas. A CEO and a student can share a job: “When I’m stuck on a problem, I want a quick second opinion.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Missing the competing hires</h3>
+        <p>Looking only at direct competitors. A music-learning app competes with other music apps, and also with Netflix, YouTube and going for a walk.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> ask what the user was doing before they hired your product, and what else they could hire instead. Map the whole set of alternatives.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating JTBD as a one-time exercise</h3>
+        <p>One session, one poster, then nothing. The underlying job is stable over long periods, but the situations people meet it in, the alternatives and how well you serve it keep moving.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> revisit your job stories when the context changes (for example once a quarter) and use them as a lens in every product review. Has the situation changed? Have the alternatives changed? Are we still serving the job well?</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running switch interviews to find the job</h2>
+      <p class="chapter-dek">Reconstruct one real decision, from first doubt to commitment</p>
+    </header>
+
+    <p>The <dfn>switch interview</dfn>, developed by Bob Moesta and Chris Spiek, is a core JTBD research technique. You talk to people who recently switched, either to your product or away from it, and rebuild the timeline of their decision step by step: what pushed them away from the old solution, what pulled them toward the new one, and what anxieties and habits almost stopped them.</p>
+
+    <h3>Four forces decide whether people switch</h3>
+    <p>Moesta and Spiek also described the forces of progress, and the interview is built to listen for them. Two forces move people toward a new solution and two hold them where they are; every decision to switch, whether to your product or away from it, comes down to these four.</p>
+
+    <figure class="figure">
+      <div class="jt-forces">
+        <div class="jt-side" data-side="for">
+          <p class="jt-side-head">For change</p>
+          <p class="jt-side-dir">Move people toward the new solution</p>
+          <div class="jt-force">
+            <p class="jt-force-name">Push</p>
+            <p class="jt-force-def">Frustration with the current situation</p>
+            <p class="jt-force-quote">“I’m so tired of how slow this is.”</p>
+          </div>
+          <div class="jt-force">
+            <p class="jt-force-name">Pull</p>
+            <p class="jt-force-def">The attraction of the new solution</p>
+            <p class="jt-force-quote">“That looks so much easier.”</p>
+          </div>
+        </div>
+        <div class="jt-side" data-side="against">
+          <p class="jt-side-head">Against change</p>
+          <p class="jt-side-dir">Hold people where they are</p>
+          <div class="jt-force">
+            <p class="jt-force-name">Anxiety</p>
+            <p class="jt-force-def">Worry about the new solution</p>
+            <p class="jt-force-quote">“What if it’s worse? What if I lose my data?”</p>
+          </div>
+          <div class="jt-force">
+            <p class="jt-force-name">Habit</p>
+            <p class="jt-force-def">Comfort with the present way of doing things</p>
+            <p class="jt-force-quote">“I know how this works. It’s fine.”</p>
+          </div>
+        </div>
+      </div>
+      <figcaption>Push and Pull work for a switch; Anxiety and Habit work against it</figcaption>
+    </figure>
+
+    <p class="formula" role="img" aria-label="A switch happens when push plus pull is greater than anxiety plus habit">
+      <span class="formula-term"><var>Push</var><span class="op">+</span><var>Pull</var></span>
+      <span class="formula-term"><span class="op">&gt;</span><var>Anxiety</var><span class="op">+</span><var>Habit</var></span>
+    </p>
+
+    <div class="callout">
+      <p class="callout-title">What a product team can change</p>
+      <p>Your product can increase Pull and reduce Anxiety, for example by making the benefit obvious and making it safe to try. You cannot create Push or remove Habit, so you need to understand all four to know where your effort will count.</p>
+    </div>
+
+    <h3>Planning the interviews</h3>
+    <dl class="facts">
+      <div><dt>Who to interview</dt><dd>People who switched recently, ideally in the last 3 months, to your product or away from it. Memory fades fast, and you want specific moments rather than tidy summaries.</dd></div>
+      <div><dt>How many</dt><dd>For a full study, 8–12 switch interviews is a common practitioner guideline. For a quick read, 5–6 conversations are a starting point, not a conclusion. Stop when new interviews stop turning up new forces.</dd></div>
+      <div><dt>Length</dt><dd>About 45 minutes, in five phases</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–5 min</span><div><p class="agenda-title">Set the scene</p><p>“I’d love to understand your experience choosing [product]. There are no right or wrong answers. I’m interested in the full story.”</p></div></li>
+      <li><span class="agenda-time">5–15 min</span><div><p class="agenda-title">First thought: the push</p><p>“Tell me about the first time you thought about switching. What was happening? What were you frustrated with?” Dig into the specific moment: where they were and what triggered it.</p></div></li>
+      <li><span class="agenda-time">15–25 min</span><div><p class="agenda-title">Looking around: the pull</p><p>“What did you look at? Who did you talk to? What was appealing about the alternatives?” Map every option they considered, including doing nothing.</p></div></li>
+      <li><span class="agenda-time">25–35 min</span><div><p class="agenda-title">Anxiety and habit</p><p>“What almost stopped you? What worried you about switching? Was there anything you’d miss from the old way?” This shows the barriers you need to reduce.</p></div></li>
+      <li><span class="agenda-time">35–45 min</span><div><p class="agenda-title">The decision and after</p><p>“What was the final tipping point? Has it met your expectations? Would you go back?” Capture the moment of commitment and whether the job is being done well.</p></div></li>
+    </ol>
+
+    <h3>Questions for each force</h3>
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h4 class="card-title">To find the push</h4>
+        <ul>
+          <li>“What was the hardest part about how you were doing it before?”</li>
+          <li>“When did you first feel frustrated enough to look for something else?”</li>
+          <li>“Can you walk me through that specific moment?”</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 class="card-title">To find the pull</h4>
+        <ul>
+          <li>“What caught your attention about the alternative?”</li>
+          <li>“What did you imagine your life would be like after switching?”</li>
+          <li>“What made you decide this was the one?”</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 class="card-title">To find the anxiety</h4>
+        <ul>
+          <li>“What almost stopped you from switching?”</li>
+          <li>“Were you worried about losing anything?”</li>
+          <li>“Did anyone try to talk you out of it?”</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 class="card-title">To find the habit</h4>
+        <ul>
+          <li>“What did you like about the old way?”</li>
+          <li>“Was there anything comforting about how you used to do it?”</li>
+          <li>“Did you ever think ‘this is good enough, why bother’?”</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Ask about moments, not opinions</p>
+      <p>“Why did you switch?” gets you a rationalized summary. “Where were you when you first thought about it?” gets you the situation, and the situation is the first part of the job story.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Ten questions on jobs, job stories, the forces and switch interviews</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">“People don’t want a quarter-inch drill. They want a…”</p>
+        <ul class="quiz-options">
+          <li><button type="button">Drill with a stronger motor</button></li>
+          <li><button type="button">Quarter-inch hole</button></li>
+          <li><button type="button">Cheaper drill</button></li>
+        </ul>
+        <div class="quiz-why"><p>The drill is hired to do a job: make a hole. If something else made the hole more easily, people would switch to it. A stronger or cheaper drill is still the same solution to the same job.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Which of these is a well-formed job story?</p>
+        <ul class="quiz-options">
+          <li><button type="button">When I open the recipe app, I want a faster search bar with filters and tags, so I can find any saved recipe in fewer taps</button></li>
+          <li><button type="button">Busy millennials who cook at home want an intuitive recipe app with a modern design and fast search</button></li>
+          <li><button type="button">When I’m looking for a specific recipe, I want to find it quickly, so I can start cooking before I lose motivation</button></li>
+        </ul>
+        <div class="quiz-why"><p>A good job story is solution-free, grounded in a situation and ends in an outcome. The search-bar story describes a feature, and the millennials sentence describes a persona.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">What are the three dimensions of a job?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Functional, emotional, social</button></li>
+          <li><button type="button">Speed, quality, cost and convenience</button></li>
+          <li><button type="button">User, business, technical</button></li>
+        </ul>
+        <div class="quiz-why"><p>Every job has a functional task (get from A to B), an emotional side (feel safe) and a social side (look like I have my life together). Speed, quality, cost and convenience describe a solution, not the job.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">In the milkshake study, what was the real competition?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Other milkshake brands in the same stores</button></li>
+          <li><button type="button">Ice-cream and smoothie shops in the same neighborhood</button></li>
+          <li><button type="button">Bananas, bagels, boredom and Snickers bars</button></li>
+        </ul>
+        <div class="quiz-why"><p>The job was to make a boring commute less boring and stay full until lunch. Anything that does that job competes for it, whatever its product category.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Which four forces decide whether someone switches?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Push, pull, anxiety, habit</button></li>
+          <li><button type="button">Awareness, interest, desire, action</button></li>
+          <li><button type="button">Need, search, compare, buy</button></li>
+        </ul>
+        <div class="quiz-why"><p>Push and Pull drive change; Anxiety and Habit resist it. For someone to switch, Push and Pull together must outweigh Anxiety and Habit. Awareness, interest, desire and action is a marketing funnel, not the forces of progress.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">In switch interviews, several new subscribers to Larkwell, the fictional piano-learning app from the example, say they had been learning from free video tutorials and gave up because they could never tell whether they were playing the right notes. Which force is that?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Pull of the new solution</button></li>
+          <li><button type="button">Push of the current situation</button></li>
+          <li><button type="button">Anxiety about the new solution</button></li>
+          <li><button type="button">Habit of the present</button></li>
+        </ul>
+        <div class="quiz-why"><p>The frustration comes from the old way of learning, so it pushes people away from it. Pull would be the attraction of the new app itself, such as hearing feedback on every note. Anxiety and habit are the forces that hold people back from switching.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Your team wants to understand why subscribers cancel in their first months. Whom should you recruit for switch interviews first?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Long-time subscribers who use the product every week</button></li>
+          <li><button type="button">People who canceled within the last few months</button></li>
+          <li><button type="button">People who match your target persona but have never tried the product</button></li>
+        </ul>
+        <div class="quiz-why"><p>A switch interview reconstructs a real decision, so you need people who made the one you care about, and recently enough to remember the specific moments. Loyal subscribers have not made that decision, and people who never tried the product can only speculate about it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Halfway through a switch interview, the person says, “I switched because it was just better.” What is the most useful next question?</p>
+        <ul class="quiz-options">
+          <li><button type="button">“Which of the new product’s features did you like most?”</button></li>
+          <li><button type="button">“On a scale of 1 to 10, how much better is the new one?”</button></li>
+          <li><button type="button">“Where were you when you first thought about switching?”</button></li>
+        </ul>
+        <div class="quiz-why"><p>“It was just better” is a rationalized summary. Asking about a specific moment brings back the situation, and with it the push behind the switch. A feature question steers the person toward the solution, and a rating adds a number without explaining the decision.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">How many switch interviews is a common guideline for a full JTBD study?</p>
+        <ul class="quiz-options">
+          <li><button type="button">2–3</button></li>
+          <li><button type="button">8–12</button></li>
+          <li><button type="button">30 or more</button></li>
+        </ul>
+        <div class="quiz-why"><p>8–12 interviews is a common practitioner guideline for a full study, and 5–6 conversations can give a quick first read. Two or three is too few to see which forces repeat, and 30 or more is survey territory; interviews are about depth, not volume.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">JTBD has found the job, and the team has a list of features that might serve it. What can the Kano model add?</p>
+        <ul class="quiz-options">
+          <li><button type="button">A score for each feature, so the list can be ranked from first to last</button></li>
+          <li><button type="button">A classification of each feature by how it affects satisfaction</button></li>
+          <li><button type="button">A release plan that covers every step of the job from end to end</button></li>
+        </ul>
+        <div class="quiz-why"><p>The Kano model sorts features by how their presence or absence affects satisfaction, for example into must-haves, performance features and delighters. It can classify the features that serve a job, but it does not rank them; to rank them, score them with RICE or ICE. A release plan that covers the whole journey is what a story map produces.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the three parts of a job story */
+  .guide[data-guide="jtbd"] .jt-story {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-8);
+  }
+  .guide[data-guide="jtbd"] .jt-story > li {
+    position: relative;
+    display: grid;
+    gap: var(--s-1);
+    align-content: start;
+    padding: var(--s-5);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-md);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="jtbd"] .jt-story > li + li::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--s-8) + 8px);
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    background: var(--ink-3);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .guide[data-guide="jtbd"] .jt-phrase {
+    font-family:var(--font-serif);
+    font-size: var(--fs-24);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="jtbd"] .jt-part {
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="jtbd"] .jt-note {
+    margin-top: var(--s-2);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  /* Example job stories, keyed to the same three colors */
+  .guide[data-guide="jtbd"] .jt-examples { display: grid; gap: var(--s-3); }
+  .guide[data-guide="jtbd"] .jt-examples > li {
+    padding: var(--s-4) var(--s-5);
+    border-radius: var(--r-md);
+    background: var(--paper-sunk);
+    font-family:var(--font-serif);
+    font-size: var(--fs-18);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .guide[data-guide="jtbd"] .jt-k {
+    font-family:var(--font-sans);
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+    white-space: nowrap;
+  }
+
+  /* Four forces */
+  .guide[data-guide="jtbd"] .jt-forces {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-4);
+  }
+  .guide[data-guide="jtbd"] .jt-side {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+    padding: var(--s-5);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="jtbd"] .jt-side[data-side="for"] { background: var(--cat-wash); border-color: transparent; }
+  .guide[data-guide="jtbd"] .jt-side[data-side="against"] { background: var(--paper-sunk); border-color: transparent; }
+  .guide[data-guide="jtbd"] .jt-side-head { font-size: var(--fs-16); font-weight: var(--w-semibold); color: var(--ink); }
+  .guide[data-guide="jtbd"] .jt-side[data-side="for"] .jt-side-head { color: var(--cat-ink); }
+  .guide[data-guide="jtbd"] .jt-side-dir { margin-top: calc(-1 * var(--s-2)); font-size: var(--fs-14); color: var(--ink-3); }
+  .guide[data-guide="jtbd"] .jt-force {
+    display: grid;
+    gap: var(--s-1);
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--rule);
+  }
+  .guide[data-guide="jtbd"] .jt-force-name { font-family:var(--font-serif); font-size: var(--fs-20); color: var(--ink); }
+  .guide[data-guide="jtbd"] .jt-force-def { font-size: var(--fs-16); color: var(--ink-2); line-height: 1.5; }
+  .guide[data-guide="jtbd"] .jt-force-quote { font-size: var(--fs-14); color: var(--ink-3); line-height: 1.5; }
+
+  /* Builder: field keys use the shared .key-dot, feedback the shared .checks */
+  .guide[data-guide="jtbd"] .jt-preview {
+    display: block;
+    font-family:var(--font-serif);
+    font-size: var(--fs-20);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .guide[data-guide="jtbd"] .jt-gap { color: var(--ink-3); }
+  .guide[data-guide="jtbd"] .jt-dims {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-2);
+  }
+  .guide[data-guide="jtbd"] .tool .jt-dims > li {
+    display: grid;
+    gap: 2px;
+    padding: var(--s-2) var(--s-3);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    font-size: var(--fs-14);
+    line-height: 1.4;
+  }
+  .guide[data-guide="jtbd"] .jt-dim-name { font-weight: var(--w-semibold); color: var(--ink); }
+  .guide[data-guide="jtbd"] .jt-dim-state { color: var(--ink-3); }
+  .guide[data-guide="jtbd"] .jt-dims > li[data-state="found"] .jt-dim-state { color: var(--good); }
+  .guide[data-guide="jtbd"] .jt-collection {
+    display: grid;
+    gap: var(--s-3);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--rule);
+  }
+  .guide[data-guide="jtbd"] .tool .jt-empty { font-size: var(--fs-14); color: var(--ink-3); }
+  .guide[data-guide="jtbd"] .jt-saved { display: grid; gap: var(--s-2); }
+  .guide[data-guide="jtbd"] .jt-saved:empty { display: none; }
+  .guide[data-guide="jtbd"] .tool .jt-saved > li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="jtbd"] .tool .jt-saved-text { font-family:var(--font-serif); font-size: var(--fs-16); color: var(--ink); line-height: 1.5; }
+
+  @media (max-width: 640px) {
+    .guide[data-guide="jtbd"] .jt-story { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
+    .guide[data-guide="jtbd"] .jt-story > li + li::before {
+      left: 50%;
+      top: calc(-1 * var(--s-6) + 4px);
+      margin: 0 0 0 -8px;
+      transform: rotate(90deg);
+    }
+    .guide[data-guide="jtbd"] .jt-forces { grid-template-columns: minmax(0, 1fr); }
+    .guide[data-guide="jtbd"] .jt-dims { grid-template-columns: minmax(0, 1fr); }
+    .guide[data-guide="jtbd"] .tool .jt-saved > li { flex-direction: column; }
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="job-story-builder"]');
+  const doc = root.ownerDocument;
+  const fields = {
+    when: tool.querySelector('#jt-when'),
+    want: tool.querySelector('#jt-want'),
+    so: tool.querySelector('#jt-so'),
+  };
+  const preview = tool.querySelector('#jt-preview');
+  const checksList = tool.querySelector('#jt-checks');
+  const dimItems = [...tool.querySelectorAll('#jt-dims > li')];
+  const saveBtn = tool.querySelector('#jt-save');
+  const clearBtn = tool.querySelector('#jt-clear');
+  const downloadBtn = tool.querySelector('#jt-download');
+  const saveHelp = tool.querySelector('#jt-save-help');
+  const savedList = tool.querySelector('#jt-saved');
+  const savedEmpty = tool.querySelector('#jt-empty');
+
+  // Each part: field key, the words that open it, what goes in the gap, its color.
+  // `prefix` strips the opening words when the reader types them too; it only
+  // matches when a space, comma or the end follows, so "When I'm" is not cut
+  // to "'m". `contraction` handles those cases: it keeps the contracted words
+  // in the text and shortens the lead, so "When I'm busy" reads "When I'm busy".
+  const SLOTS = [
+    {
+      key: 'when', lead: 'When I', gap: 'situation', series: '1',
+      prefix: /^\s*when\s+i(?=[\s,]|$)[\s,]*/i,
+      contraction: { re: /^\s*(?:when\s+)?(?=i['’])/i, lead: 'When' },
+    },
+    {
+      key: 'want', lead: 'I want to', gap: 'motivation', series: '2',
+      prefix: /^\s*i\s+want\s+to(?=[\s,]|$)[\s,]*/i,
+    },
+    {
+      key: 'so', lead: 'so I can', gap: 'outcome', series: '3',
+      prefix: /^\s*so\s+(?:that\s+)?i\s+can(?=[\s,]|$)[\s,]*/i,
+      contraction: { re: /^\s*(?:so\s+(?:that\s+)?)?(?=i\s+can['’]t)/i, lead: 'so' },
+    },
+  ];
+
+  // Whole-word matching, so "building" does not count as "ui" and "happy" not as "app".
+  const PRODUCT_WORDS = /\b(apps?|buttons?|features?|dashboards?|pages?|screens?|clicks?|taps?|notifications?|ui|ux|api|website|menus?|log ?in|settings|widgets?)\b/gi;
+  const DIMENSIONS = {
+    functional: /\b(save|find|get|complete|finish|organi[sz]e|track|manage|reduce|increase|deliver|build|create|learn|make|put|eat|cook|arrive|fix|plan|book|buy|pay|reach|sort out)\b/gi,
+    emotional: /\b(feel|feeling|confident|relax(ed)?|happy|stress(ed|ful)?|anxi(ous|ety)|proud|calm|motivated|satisfied|accomplished|safe|comfortable|enjoy|peace|worr(y|ied)|unwind|bored|tedious|chore)\b/gi,
+    social: /\b(seen|impress|reputation|professional|credible|status|respect(ed)?|admired?|prove|peers|colleagues|connected|belong|look (like|good|smart)|show off)\b/gi,
+  };
+
+  const saved = [];
+  let nextId = 1;
+
+  // Returns the text of one part and the words that should lead it.
+  function part(slot) {
+    const raw = fields[slot.key].value;
+    let lead = slot.lead;
+    let text;
+    if (slot.contraction && slot.contraction.re.test(raw)) {
+      lead = slot.contraction.lead;
+      text = raw.replace(slot.contraction.re, '').replace(/^i(?=\s|['’])/, 'I');
+    } else {
+      text = raw.replace(slot.prefix, '');
+    }
+    return { lead, text: text.trim().replace(/[\s.,;:]+$/, '') };
+  }
+
+  function matches(re, text) {
+    return [...new Set((text.match(re) || []).map(w => w.toLowerCase()))];
+  }
+
+  function span(cls, text, series) {
+    const el = doc.createElement('span');
+    el.className = cls;
+    el.textContent = text;
+    if (series) el.dataset.series = series;
+    return el;
+  }
+
+  function sentence(values, leads) {
+    return `${leads.when} ${values.when}, ${leads.want} ${values.want}, ${leads.so} ${values.so}.`;
+  }
+
+  let leads = {};
+
+  function render() {
+    const values = {};
+    leads = {};
+    SLOTS.forEach(s => {
+      const p = part(s);
+      values[s.key] = p.text;
+      leads[s.key] = p.lead;
+    });
+    const all = SLOTS.map(s => values[s.key]).filter(Boolean).join(' ');
+    const hasText = all.length > 0;
+
+    // Live preview, with a visible gap for each missing part.
+    preview.replaceChildren();
+    SLOTS.forEach((s, i) => {
+      if (i > 0) preview.append(', ');
+      preview.append(span('jt-k', leads[s.key], s.series), ' ');
+      preview.append(values[s.key] ? values[s.key] : span('jt-gap', `[${s.gap}]`));
+    });
+    preview.append('.');
+
+    // Dimensions
+    dimItems.forEach(li => {
+      const found = matches(DIMENSIONS[li.dataset.dim], all);
+      const state = !hasText ? 'pending' : found.length ? 'found' : 'missing';
+      li.dataset.state = state;
+      li.querySelector('.jt-dim-state').textContent =
+        state === 'pending' ? 'Not yet' : state === 'found' ? `Found: ${found.slice(0, 3).join(', ')}` : 'Not found';
+    });
+
+    // Quality checks
+    const productHits = matches(PRODUCT_WORDS, all);
+    // Shared .checks states: ok (Yes), revise (No), missing (Not yet, once
+    // the reader has started). Before any text, the rows stay neutral.
+    const gap = hasText ? 'missing' : '';
+    const checks = [
+      { state: values.when ? 'ok' : gap, text: 'Names a situation (When I…)' },
+      { state: values.want ? 'ok' : gap, text: 'Names the progress wanted (I want to…)' },
+      { state: values.so ? 'ok' : gap, text: 'Names an outcome (so I can…)' },
+      {
+        state: !hasText ? '' : productHits.length ? 'revise' : 'ok',
+        text: productHits.length
+          ? `Solution-free: remove product words (${productHits.join(', ')})`
+          : 'Solution-free: no product or feature words',
+      },
+    ];
+    checksList.replaceChildren(...checks.map(c => {
+      const li = doc.createElement('li');
+      if (c.state) li.dataset.state = c.state;
+      li.append(span('check-state', c.state === 'ok' ? 'Yes' : c.state === 'revise' ? 'No' : 'Not yet'), span('jt-check-text', c.text));
+      return li;
+    }));
+
+    return values;
+  }
+
+  function setHelp(text, isError) {
+    saveHelp.textContent = text;
+    saveHelp.classList.toggle('is-error', Boolean(isError));
+  }
+
+  function renderSaved() {
+    savedList.replaceChildren(...saved.map((item, i) => {
+      const li = doc.createElement('li');
+      const text = doc.createElement('p');
+      text.className = 'jt-saved-text';
+      text.textContent = item.text;
+      const remove = doc.createElement('button');
+      remove.type = 'button';
+      remove.className = 'btn btn--quiet';
+      remove.textContent = 'Remove';
+      remove.setAttribute('aria-label', `Remove job story ${i + 1}`);
+      remove.addEventListener('click', () => {
+        const at = saved.findIndex(s => s.id === item.id);
+        if (at === -1) return;
+        saved.splice(at, 1);
+        renderSaved();
+        setHelp(saved.length ? `Removed. ${saved.length} saved.` : 'Removed. Nothing saved yet.');
+        const next = savedList.querySelectorAll('button')[Math.min(at, saved.length - 1)];
+        (next || fields.when).focus();
+      });
+      li.append(text, remove);
+      return li;
+    }));
+    savedEmpty.hidden = saved.length > 0;
+    downloadBtn.disabled = saved.length === 0;
+  }
+
+  function save() {
+    const values = render();
+    const missing = SLOTS.filter(s => !values[s.key]);
+    SLOTS.forEach(s => fields[s.key].setAttribute('aria-invalid', String(!values[s.key])));
+    if (missing.length) {
+      setHelp(`Fill in all three parts before saving. Missing: ${missing.map(s => s.gap).join(', ')}.`, true);
+      fields[missing[0].key].focus();
+      return;
+    }
+    saved.push({ id: nextId++, text: sentence(values, leads) });
+    renderSaved();
+    SLOTS.forEach(s => { fields[s.key].value = ''; fields[s.key].removeAttribute('aria-invalid'); });
+    render();
+    setHelp(`Saved. ${saved.length} job ${saved.length === 1 ? 'story' : 'stories'} so far.`);
+    fields.when.focus();
+  }
+
+  SLOTS.forEach(s => {
+    const input = fields[s.key];
+    input.addEventListener('input', () => {
+      if (input.value.trim()) input.removeAttribute('aria-invalid');
+      const values = render();
+      if (saveHelp.classList.contains('is-error') && SLOTS.every(x => values[x.key])) setHelp('Ready to save.');
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); save(); }
+    });
+  });
+
+  saveBtn.addEventListener('click', save);
+
+  clearBtn.addEventListener('click', () => {
+    SLOTS.forEach(s => { fields[s.key].value = ''; fields[s.key].removeAttribute('aria-invalid'); });
+    render();
+    setHelp('Fields cleared. Saved stories are kept.');
+    fields.when.focus();
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!saved.length) return;
+    const lines = ['Job stories', '', ...saved.map((s, i) => `${i + 1}. ${s.text}`)];
+    const url = URL.createObjectURL(new Blob([lines.join('\n') + '\n'], { type: 'text/plain' }));
+    const a = doc.createElement('a');
+    a.href = url;
+    a.download = 'job-stories.txt';
+    a.click();
+    const timer = setTimeout(() => URL.revokeObjectURL(url), 1000);
+    api.onCleanup(() => clearTimeout(timer));
+  });
+
+  render();
+  renderSaved();
+</script>

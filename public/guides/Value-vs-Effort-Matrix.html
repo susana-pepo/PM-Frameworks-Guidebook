@@ -1,0 +1,944 @@
+<article class="guide" data-guide="value-effort">
+
+  <header class="guide-intro">
+    <p class="lede">The Value vs Effort matrix sorts a backlog by two judgments: how much each idea matters and how hard it is to build. On a 2×2 grid the ideas fall into four groups, and each group comes with a default next move.</p>
+
+    <figure class="figure" data-hero>
+      <div class="vem-hero">
+        <p class="vem-yaxis" aria-hidden="true"><span>High</span><span class="vem-axis-title">Value</span><span>Low</span></p>
+        <div class="vem-quads">
+          <div class="vem-quad" data-series="3">
+            <p class="vem-quad-name">Quick wins</p>
+            <p class="vem-quad-axes">High value, low effort</p>
+            <p class="vem-quad-move">Do first</p>
+          </div>
+          <div class="vem-quad" data-series="4">
+            <p class="vem-quad-name">Big bets</p>
+            <p class="vem-quad-axes">High value, high effort</p>
+            <p class="vem-quad-move">Plan and phase</p>
+          </div>
+          <div class="vem-quad" data-series="2">
+            <p class="vem-quad-name">Fill-ins</p>
+            <p class="vem-quad-axes">Low value, low effort</p>
+            <p class="vem-quad-move">Only with spare capacity</p>
+          </div>
+          <div class="vem-quad" data-series="1">
+            <p class="vem-quad-name">Avoid</p>
+            <p class="vem-quad-axes">Low value, high effort</p>
+            <p class="vem-quad-move">Say no</p>
+          </div>
+        </div>
+        <p class="vem-xaxis" aria-hidden="true"><span>Low</span><span class="vem-axis-title">Effort</span><span>High</span></p>
+      </div>
+      <figcaption>Value runs up the grid and effort runs across it, so high-value, low-effort ideas sit top-left and low-value, high-effort ideas sit bottom-right</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Rate each idea from 1 to 5 for value and for effort, plot it on the 2×2 and read the quadrant. Quick wins usually go first, Big bets get planned in phases, Fill-ins wait for spare capacity and Avoid items get a no. It is a fast first pass, not a precise ranking.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Four quadrants, four default moves</h2>
+      <p class="chapter-dek">Where an idea lands suggests what to do with it</p>
+    </header>
+
+    <p>Every idea gets two scores. <dfn>Value</dfn> is how much it matters to users and the business. <dfn>Effort</dfn> is how much work it takes to ship. Crossing the two splits the backlog into four quadrants, numbered here in the order you would normally work through them.</p>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="3">1</span>
+        <h3 class="card-title">Quick wins</h3>
+        <p class="card-q">High value, low effort</p>
+        <p>A large benefit for little work. Doing these first builds momentum and shows stakeholders results early.</p>
+        <p class="card-meta">Default move: build now, in the next sprint</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="4">2</span>
+        <h3 class="card-title">Big bets</h3>
+        <p class="card-q">High value, high effort</p>
+        <p>Worth doing but expensive. Break them into phases, test the riskiest assumptions first and staff them properly.</p>
+        <p class="card-meta">Default move: plan and phase; put it on the roadmap without rushing</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">3</span>
+        <h3 class="card-title">Fill-ins</h3>
+        <p class="card-q">Low value, low effort</p>
+        <p>Easy nice-to-haves that will not shift your key metrics. Do them when there is spare capacity, for example between larger projects, in a hackathon or as a starter task for a new teammate. Do not plan around them.</p>
+        <p class="card-meta">Default move: do it only when there is spare capacity</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="1">4</span>
+        <h3 class="card-title">Avoid</h3>
+        <p class="card-q">Low value, high effort</p>
+        <p>The trap. Complexity can make these look important, but they consume a lot of capacity and return little. Some teams call them money pits or time sinks.</p>
+        <p class="card-meta">Default move: say no early, or revisit the assumptions behind the scores</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Read the grid as a default order</p>
+      <p>Quick wins usually come first, then Big bets, then Fill-ins, with Avoid last. The quadrant suggests a next move, not a verdict: strategy, dependencies and deadlines can override it.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="score" data-nav="How to score">
+    <header class="chapter-head">
+      <h2>Scoring value and effort from 1 to 5</h2>
+      <p class="chapter-dek">Two short scales, agreed before anyone starts scoring</p>
+    </header>
+
+    <h3>Value: how much does this matter?</h3>
+    <p>Fold user impact, business impact and strategic fit into one judgment. Before anyone scores, agree what value means for this round, such as retention, revenue or activation, so everyone scores against the same thing.</p>
+    <ol class="scale" aria-label="Value scale">
+      <li><span class="scale-value">5</span><span class="scale-label">Critical</span><span class="scale-note">Unblocks a key goal or changes a core metric</span></li>
+      <li><span class="scale-value">4</span><span class="scale-label">High</span><span class="scale-note">Moves a key metric</span></li>
+      <li><span class="scale-value">3</span><span class="scale-label">Medium</span><span class="scale-note">A clear improvement</span></li>
+      <li><span class="scale-value">2</span><span class="scale-label">Low</span><span class="scale-note">Some users care</span></li>
+      <li><span class="scale-value">1</span><span class="scale-label">Minimal</span><span class="scale-note">Nice to have, but nobody asked for it</span></li>
+    </ol>
+    <div class="callout callout--tip">
+      <p class="callout-title">The do-nothing test</p>
+      <p>Ask what happens if you do not build it. If the honest answer is “nothing much,” the idea is a 1 or a 2.</p>
+    </div>
+
+    <h3>Effort: how hard is this to build?</h3>
+    <p>Count design, engineering, QA and any dependencies on other teams, not only engineering time.</p>
+    <ol class="scale" aria-label="Effort scale">
+      <li><span class="scale-value">5</span><span class="scale-label">Massive</span><span class="scale-note">Months, across several teams</span></li>
+      <li><span class="scale-value">4</span><span class="scale-label">Large</span><span class="scale-note">Several weeks to a month</span></li>
+      <li><span class="scale-value">3</span><span class="scale-label">Medium</span><span class="scale-note">1–2 weeks</span></li>
+      <li><span class="scale-value">2</span><span class="scale-label">Small</span><span class="scale-note">A few days</span></li>
+      <li><span class="scale-value">1</span><span class="scale-label">Tiny</span><span class="scale-note">A few hours</span></li>
+    </ol>
+    <p>The effort scale is deliberately non-linear, while the value scale is linear: each effort step is several times the size of the one before. That suits a quick sort: people can reliably tell a day from a week, but not a seven-week job from an eight-week one. If your typical item is larger, shift the anchors, and agree them before scoring. They are for sorting, not costing, so they do not convert into the person-months that <a data-guide-link="rice">RICE</a> uses.</p>
+    <p>The two scales point opposite ways. On value a high score is good; on effort a low score is. That is why Quick wins sit top-left.</p>
+
+    <h3>Where the midline falls</h3>
+    <p>A 4 or 5 counts as high and a 1 or 2 counts as low. A 3 sits on the midline, so the grid cannot place it for you: treat it as a border item and settle it in discussion. This also means a Quick win has to earn its place, with a Value of 4 or 5 and an Effort of 1 or 2.</p>
+
+    <div class="callout">
+      <p class="callout-title">Relative scores, not measurements</p>
+      <p>RICE asks for estimates in real units where it can, such as a Reach of 10,000 users per quarter or an Effort of 2 person-months. Value vs Effort uses relative 1–5 scores for both axes. That makes it faster and less rigorous: well suited to aligning a team quickly, not to detailed quarterly planning.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Plotting six ideas for an online store</h2>
+      <p class="chapter-dek">Two Quick wins, two Big bets, one Fill-in and one to drop</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>An e-commerce startup with six candidate ideas</h3>
+      <p>The product team at an e-commerce startup has six ideas for next quarter. The team has scored each one 1–5 for value and for effort.</p>
+
+      <div class="table-wrap">
+        <table class="table">
+          <caption>Six ideas scored for value and effort</caption>
+          <thead>
+            <tr>
+              <th scope="col">Idea</th>
+              <th scope="col" class="num">Value</th>
+              <th scope="col" class="num">Effort</th>
+              <th scope="col">Quadrant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-top"><th scope="row">A. One-click checkout</th><td class="num">5</td><td class="num">2</td><td>Quick win</td></tr>
+            <tr><th scope="row">B. Smart search</th><td class="num">4</td><td class="num">2</td><td>Quick win</td></tr>
+            <tr><th scope="row">C. Personalized recommendations</th><td class="num">5</td><td class="num">5</td><td>Big bet</td></tr>
+            <tr><th scope="row">D. Dark mode</th><td class="num">2</td><td class="num">1</td><td>Fill-in</td></tr>
+            <tr><th scope="row">E. Voice shopping assistant</th><td class="num">1</td><td class="num">5</td><td>Avoid</td></tr>
+            <tr><th scope="row">F. Mobile app rebuild</th><td class="num">4</td><td class="num">4</td><td>Big bet</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="figure">
+        <div class="vem-plot" role="img" aria-label="The six ideas on a five-by-five grid: A and B in Quick wins, C and F in Big bets, D in Fill-ins and E in Avoid">
+          <p class="vem-plot-y"><span class="vem-axis-title">Value</span></p>
+          <div class="vem-grid">
+          <span class="vem-corner"></span><span class="vem-qname" data-series="3">Quick wins</span><span class="vem-gap"></span><span class="vem-qname vem-qname--end" data-series="4">Big bets</span>
+          <span class="vem-tick">5</span><div class="vem-cell" data-series="3"></div><div class="vem-cell" data-series="3"><span class="vem-chip">A</span></div><div class="vem-cell"></div><div class="vem-cell" data-series="4"></div><div class="vem-cell" data-series="4"><span class="vem-chip">C</span></div>
+          <span class="vem-tick">4</span><div class="vem-cell" data-series="3"></div><div class="vem-cell" data-series="3"><span class="vem-chip">B</span></div><div class="vem-cell"></div><div class="vem-cell" data-series="4"><span class="vem-chip">F</span></div><div class="vem-cell" data-series="4"></div>
+          <span class="vem-tick">3</span><div class="vem-cell"></div><div class="vem-cell"></div><div class="vem-cell"></div><div class="vem-cell"></div><div class="vem-cell"></div>
+          <span class="vem-tick">2</span><div class="vem-cell" data-series="2"><span class="vem-chip">D</span></div><div class="vem-cell" data-series="2"></div><div class="vem-cell"></div><div class="vem-cell" data-series="1"></div><div class="vem-cell" data-series="1"></div>
+          <span class="vem-tick">1</span><div class="vem-cell" data-series="2"></div><div class="vem-cell" data-series="2"></div><div class="vem-cell"></div><div class="vem-cell" data-series="1"></div><div class="vem-cell" data-series="1"><span class="vem-chip">E</span></div>
+          <span class="vem-corner"></span><span class="vem-qname vem-qname--low" data-series="2">Fill-ins</span><span class="vem-gap"></span><span class="vem-qname vem-qname--low vem-qname--end" data-series="1">Avoid</span>
+          <span class="vem-corner"></span><span class="vem-tick">1</span><span class="vem-tick">2</span><span class="vem-tick">3</span><span class="vem-tick">4</span><span class="vem-tick">5</span>
+          </div>
+          <p class="vem-plot-x"><span class="vem-axis-title">Effort</span></p>
+        </div>
+        <figcaption>Each square is one pair of scores. The plain middle row and column are the midline, where an item scoring 3 waits for discussion.</figcaption>
+      </figure>
+
+      <div class="example-reading">
+        <h4>Two to build now, two to plan, one for spare time, one to drop</h4>
+        <p><strong>A and B are Quick wins.</strong> High value for little effort, so they go into the next sprint. One-click checkout comes first, with the highest value at the same low effort.</p>
+        <p><strong>C and F are Big bets.</strong> Both are worth doing but need planning. Personalized recommendations is the biggest bet, with Value 5 and Effort 5, so phase it and validate the first slice before committing the rest.</p>
+        <p><strong>D is a Fill-in.</strong> Dark mode is easy but will not change the store’s metrics. It suits a hackathon or a quiet week.</p>
+        <p><strong>E belongs in Avoid.</strong> A voice shopping assistant is a trend-driven idea: months of work across teams for a feature few of this store’s customers would use. Say no, and record why.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Plot your own backlog</h2>
+      <p class="chapter-dek">Add ideas, place them on the grid and read the quadrant summary</p>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <h3 class="step-title">Add every candidate</h3>
+        <p>Type a name, give it a first value and effort score, and add it. Up to 20 ideas fit on the grid.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Place each idea</h3>
+        <p>Drag a marker to another square, select it and use the arrow keys, or change its scores in the list. Up means more value; right means more effort.</p>
+      </li>
+      <li>
+        <h3 class="step-title">Read the summary</h3>
+        <p>Quick wins go first. Anything on the midline is a border item to discuss before you decide.</p>
+      </li>
+    </ol>
+
+    <div class="tool" data-tool="value-effort-plotter">
+      <div class="tool-head">
+        <h3 class="tool-title">Value vs Effort plotter</h3>
+        <p class="tool-hint" id="vem-move-hint">Drag a marker, or select it and use the arrow keys: up and down change value, left and right change effort.</p>
+      </div>
+
+      <div class="fields" data-cols="3">
+        <div class="field">
+          <label for="vem-name">Idea</label>
+          <input id="vem-name" type="text" maxlength="40" placeholder="For example, saved carts" autocomplete="off" aria-describedby="vem-name-help">
+          <p class="field-help" id="vem-name-help">Up to 40 characters</p>
+        </div>
+        <div class="field">
+          <label for="vem-value">Value</label>
+          <select id="vem-value">
+            <option value="5">5 Critical</option>
+            <option value="4">4 High</option>
+            <option value="3" selected>3 Medium</option>
+            <option value="2">2 Low</option>
+            <option value="1">1 Minimal</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="vem-effort">Effort</label>
+          <select id="vem-effort">
+            <option value="1">1 Tiny</option>
+            <option value="2">2 Small</option>
+            <option value="3" selected>3 Medium</option>
+            <option value="4">4 Large</option>
+            <option value="5">5 Massive</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="vem-add">Add idea</button>
+        <button type="button" class="btn" id="vem-sample">Load the example</button>
+        <button type="button" class="btn" id="vem-clear">Clear all</button>
+      </div>
+
+      <div class="vem-plot" role="group" aria-label="Value vs Effort grid">
+        <p class="vem-plot-y" aria-hidden="true"><span class="vem-axis-title">Value</span></p>
+        <div class="vem-grid">
+          <span class="vem-corner"></span><span class="vem-qname" data-series="3">Quick wins</span><span class="vem-gap"></span><span class="vem-qname vem-qname--end" data-series="4">Big bets</span>
+          <span class="vem-tick">5</span><div class="vem-cell" data-v="5" data-e="1" data-series="3"></div><div class="vem-cell" data-v="5" data-e="2" data-series="3"></div><div class="vem-cell" data-v="5" data-e="3"></div><div class="vem-cell" data-v="5" data-e="4" data-series="4"></div><div class="vem-cell" data-v="5" data-e="5" data-series="4"></div>
+          <span class="vem-tick">4</span><div class="vem-cell" data-v="4" data-e="1" data-series="3"></div><div class="vem-cell" data-v="4" data-e="2" data-series="3"></div><div class="vem-cell" data-v="4" data-e="3"></div><div class="vem-cell" data-v="4" data-e="4" data-series="4"></div><div class="vem-cell" data-v="4" data-e="5" data-series="4"></div>
+          <span class="vem-tick">3</span><div class="vem-cell" data-v="3" data-e="1"></div><div class="vem-cell" data-v="3" data-e="2"></div><div class="vem-cell" data-v="3" data-e="3"></div><div class="vem-cell" data-v="3" data-e="4"></div><div class="vem-cell" data-v="3" data-e="5"></div>
+          <span class="vem-tick">2</span><div class="vem-cell" data-v="2" data-e="1" data-series="2"></div><div class="vem-cell" data-v="2" data-e="2" data-series="2"></div><div class="vem-cell" data-v="2" data-e="3"></div><div class="vem-cell" data-v="2" data-e="4" data-series="1"></div><div class="vem-cell" data-v="2" data-e="5" data-series="1"></div>
+          <span class="vem-tick">1</span><div class="vem-cell" data-v="1" data-e="1" data-series="2"></div><div class="vem-cell" data-v="1" data-e="2" data-series="2"></div><div class="vem-cell" data-v="1" data-e="3"></div><div class="vem-cell" data-v="1" data-e="4" data-series="1"></div><div class="vem-cell" data-v="1" data-e="5" data-series="1"></div>
+          <span class="vem-corner"></span><span class="vem-qname vem-qname--low" data-series="2">Fill-ins</span><span class="vem-gap"></span><span class="vem-qname vem-qname--low vem-qname--end" data-series="1">Avoid</span>
+          <span class="vem-corner"></span><span class="vem-tick">1</span><span class="vem-tick">2</span><span class="vem-tick">3</span><span class="vem-tick">4</span><span class="vem-tick">5</span>
+        </div>
+        <p class="vem-plot-x" aria-hidden="true"><span class="vem-axis-title">Effort</span></p>
+      </div>
+
+      <ol class="vem-list" id="vem-list" aria-label="Ideas on the grid"></ol>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Quadrant summary</p>
+        <div class="vem-live" aria-live="polite">
+          <output class="tool-result" id="vem-result" for="vem-name vem-value vem-effort"></output>
+          <p class="tool-output-note" id="vem-note">Add an idea, or load the example, to see where each one lands.</p>
+        </div>
+        <dl class="facts vem-summary" id="vem-summary" hidden></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When Value vs Effort fits, and when it does not</h2>
+      <p class="chapter-dek">A quick 2×2 is fast and visual, but too coarse for some decisions</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You need to align a team in under an hour</li>
+          <li>You are grooming a backlog and want a quick sort of up to about 30 items</li>
+          <li>Stakeholders want a visual they can read at a glance</li>
+          <li>The product is early and has little data</li>
+          <li>You want a first pass before deeper analysis, such as <a data-guide-link="rice">RICE</a></li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You need precise, data-backed rankings. Use <a data-guide-link="rice">RICE</a> instead.</li>
+          <li>You are comparing many more than 30 items: the grid gets crowded, so cut the list with <a data-guide-link="ice">ICE</a> first</li>
+          <li>You must show the evidence behind each rank, for example to justify budget: a 1–5 score records a judgment, not the data behind it</li>
+          <li>Effort estimates vary widely between team members; settle those first</li>
+          <li>The items are fundamentally different kinds of work, such as infrastructure against features</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">A first pass before RICE</p>
+      <p>Use Value vs Effort, or <a data-guide-link="ice">ICE</a>, for the first pass: cut 30 ideas to about 10 strong candidates. Then rank that shortlist with <a data-guide-link="rice">RICE</a> and take the top 3. The matrix does the quick cut; RICE does the careful ordering.</p>
+      <p>Run the <a data-guide-link="kano">Kano model</a> alongside when you need to know how a feature affects satisfaction; it is not a step between the first pass and RICE. At the end, the same grid is a clear way to present the result. <a data-guide-link="compare-prioritization">Choosing a prioritization framework</a> sets the four side by side.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways the grid misleads</h2>
+      <p class="chapter-dek">A simple method with subtle traps</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Everything lands in Quick wins</h3>
+        <p>If most of the backlog scores high value and low effort, the scoring is not honest. Value is being inflated, effort underestimated, or both.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> calibrate. Agree on one anchor item for value 1, 3 and 5 and for effort 1, 3 and 5, and score against them. Check effort with the people who will build it.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Confusing value with novelty</h3>
+        <p>An idea can be exciting and new and still deliver little to users or the business. Being interesting to build is not the same as being valuable.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> define value before scoring, as user impact, revenue impact and strategic fit, and score against that definition rather than against excitement.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Counting only engineering effort</h3>
+        <p>Design, QA, documentation, data migration, training and support are all effort. Leaving them out makes every idea look cheaper than it is.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> ask who has to do work for this to ship, and count all of their time.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Anchoring on the HiPPO</h3>
+        <p>The highest-paid person’s opinion goes first and everyone else agrees. That is anchoring bias, and it turns a team exercise into one person’s ranking.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> score silently first. Everyone writes their value and effort scores on a sticky note, then all reveal at the same time.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Using it for detailed planning</h3>
+        <p>The matrix sorts; it does not plan. It tells you what to focus on, not how to build it or exactly when.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use it to decide what, then switch to <a data-guide-link="rice">RICE</a> to rank the shortlist or to a <a data-guide-link="user-story-mapping">story map</a> to plan how and when it ships.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating the quadrant as a verdict</h3>
+        <p>The grid sees only two scores. A Big bet that a key customer depends on this quarter, or a Fill-in that unblocks another team, can matter more than its position suggests.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> read the quadrant as the default move, then check strategy, dependencies and deadlines before you commit, and write down why when you override it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running a 45-minute sorting session</h2>
+      <p class="chapter-dek">Who to invite, what to prepare and how to spend the time</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Must attend</dt><dd>Product manager (facilitates), engineering lead, design lead</dd></div>
+      <div><dt>Useful to have</dt><dd>A stakeholder, a data analyst, anyone who will build the work</dd></div>
+      <div><dt>Prepare</dt><dd>A whiteboard or a digital board such as Miro or FigJam with the 2×2 drawn, sticky notes, and a list of 8–15 candidate items written up in advance, one per sticky. Bring no more than 20, or the session drags.</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–5 min</span><div><p class="agenda-title">Set the context</p><p>Explain the matrix. Define what value means for this session, such as user impact, revenue or retention, agree what effort covers and name the anchor items for 1, 3 and 5 on each scale.</p></div></li>
+      <li><span class="agenda-time">5–15 min</span><div><p class="agenda-title">Score silently</p><p>Everyone scores each item on their own sticky notes, value 1–5 and effort 1–5. No discussion yet.</p></div></li>
+      <li><span class="agenda-time">15–25 min</span><div><p class="agenda-title">Reveal and plot</p><p>Go item by item. Everyone reveals their scores; average them or discuss the outliers, then place the sticky on the grid.</p></div></li>
+      <li><span class="agenda-time">25–35 min</span><div><p class="agenda-title">Debate the edges</p><p>Focus on items on or near the midline, where placement changes the decision. Timebox each one to 2 minutes.</p></div></li>
+      <li><span class="agenda-time">35–45 min</span><div><p class="agenda-title">Decide and commit</p><p>Quick wins go into the next sprint, Big bets get a roadmap slot, Fill-ins go to the backlog and Avoid items are archived or dropped. Photograph the board.</p></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Three facilitation habits</p>
+      <ul>
+        <li><strong>Define value up front.</strong> If you do not, everyone scores against different criteria and the grid means nothing.</li>
+        <li><strong>Spend the debate on the edges.</strong> Items clearly inside a quadrant need no discussion; items on the border do.</li>
+        <li><strong>Photograph the result.</strong> Keep a picture of the board or an export of the digital one; you will refer to it for weeks.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Six questions on the quadrants, the scores and the session</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">A feature with high value and low effort goes in which quadrant?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Big bets</button></li>
+          <li><button type="button">Quick wins</button></li>
+          <li><button type="button">Fill-ins</button></li>
+        </ul>
+        <div class="quiz-why"><p>Quick wins pair high value with low effort, the best return on the work, so they go first. Big bets are high value but high effort; Fill-ins are low on both.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Your team scored 12 of 15 features as Quick wins. What should you do before acting on the grid?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Agree on anchor items for each scale, then rescore</button></li>
+          <li><button type="button">Build all 12, starting with the highest value</button></li>
+          <li><button type="button">Move the midline so fewer items count as Quick wins</button></li>
+        </ul>
+        <div class="quiz-why"><p>When most items land in Quick wins, value is being inflated or effort underestimated. Anchor items for 1, 3 and 5 give every score the same meaning, and checking effort with the people who will build it catches optimistic estimates. Moving the midline hides the inflation instead of fixing it, and building all 12 trusts scores that are probably wrong.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Personalized recommendations scores Value 5 and Effort 5. What should the team do with it?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Plan it carefully: phase the work and validate first</button></li>
+          <li><button type="button">Build it right after the Quick wins, in one release</button></li>
+          <li><button type="button">Drop it: the high effort makes it too risky to fund</button></li>
+        </ul>
+        <div class="quiz-why"><p>Value 5 and Effort 5 is a Big bet: worth doing but expensive. Break it into phases, validate the riskiest assumptions with the first slice and staff it well. Building it in one release puts months of work at risk before anything is learned; dropping it gives up an idea with the highest possible value score.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What is the best way to prevent HiPPO bias in a scoring session?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Have the most senior person review the scores at the end</button></li>
+          <li><button type="button">Discuss each idea openly, then average everyone’s scores</button></li>
+          <li><button type="button">Silent scoring: everyone writes scores before the reveal</button></li>
+        </ul>
+        <div class="quiz-why"><p>Silent scoring prevents anchoring. Everyone commits to their value and effort scores independently, then all reveal together. Discussing first lets the loudest or most senior voice set everyone else’s scores, and a senior review at the end lets one opinion override the team’s.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">An idea scores Value 3 and Effort 2. Where does it go?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Quick wins, because the effort is low</button></li>
+          <li><button type="button">On the midline, so the team discusses it</button></li>
+          <li><button type="button">Fill-ins, because the value is not high</button></li>
+        </ul>
+        <div class="quiz-why"><p>A 3 sits on the midline, between Quick wins and Fill-ins here. A Quick win needs a Value of 4 or 5, so this is a border item to settle in discussion.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Value vs Effort is best used as…</p>
+        <ul class="quiz-options">
+          <li><button type="button">A fast first sort before deeper analysis</button></li>
+          <li><button type="button">A replacement for RICE on large backlogs</button></li>
+          <li><button type="button">A detailed method for quarterly planning</button></li>
+        </ul>
+        <div class="quiz-why"><p>Its job is the first pass: cut about 30 ideas to about 10, then rank that shortlist with RICE. Relative 1–5 scores are too coarse to replace RICE on a large backlog or to plan a quarter in detail.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: the four quadrants with their axes */
+  .guide[data-guide="value-effort"] .vem-hero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--s-3);
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  .guide[data-guide="value-effort"] .vem-yaxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="value-effort"] .vem-xaxis {
+    grid-column: 2;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="value-effort"] .vem-axis-title {
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="value-effort"] .vem-yaxis .vem-axis-title,
+  .guide[data-guide="value-effort"] .vem-plot-y .vem-axis-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  .guide[data-guide="value-effort"] .vem-quads {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-2);
+  }
+  .guide[data-guide="value-effort"] .vem-quad {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-1);
+    min-height: 132px;
+    padding: var(--s-4);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-md);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="value-effort"] .vem-quad-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: color-mix(in oklab, var(--series) 70%, var(--ink));
+  }
+  .guide[data-guide="value-effort"] .vem-quad-axes {
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="value-effort"] .vem-quad-move {
+    margin-top: auto;
+    padding-top: var(--s-2);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+
+  /* Plot: a five-by-five grid of scores with the midline left plain */
+  .guide[data-guide="value-effort"] .vem-plot {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--s-2);
+    max-width: 560px;
+    margin-inline: auto;
+  }
+  .guide[data-guide="value-effort"] .vem-plot-y {
+    display: flex;
+    align-items: center;
+    font-size: var(--fs-14);
+  }
+  .guide[data-guide="value-effort"] .vem-plot-x {
+    grid-column: 2;
+    padding-left: var(--s-6);
+    text-align: center;
+    font-size: var(--fs-14);
+  }
+  .guide[data-guide="value-effort"] .vem-grid {
+    display: grid;
+    grid-template-columns: var(--s-5) repeat(5, minmax(0, 1fr));
+    grid-template-rows: auto repeat(5, minmax(48px, auto)) auto auto;
+    gap: var(--s-1);
+  }
+  .guide[data-guide="value-effort"] .vem-qname {
+    grid-column: span 2;
+    padding-bottom: var(--s-1);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    line-height: var(--lh-snug);
+    color: color-mix(in oklab, var(--series) 70%, var(--ink));
+  }
+  .guide[data-guide="value-effort"] .vem-qname--low { padding: var(--s-1) 0 0; }
+  .guide[data-guide="value-effort"] .vem-qname--end { text-align: right; }
+  .guide[data-guide="value-effort"] .vem-tick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="value-effort"] .vem-cell {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: var(--s-1);
+    min-width: 0;
+    padding: var(--s-1);
+    border-radius: var(--r-sm);
+    background: color-mix(in oklab, var(--series) 13%, transparent);
+    /* A dark raised surface needs a stronger wash for the four quadrants to
+       stay apart; light-dark() follows the theme's color-scheme. */
+    background: light-dark(
+      color-mix(in oklab, var(--series) 13%, transparent),
+      color-mix(in oklab, var(--series) 24%, transparent)
+    );
+  }
+  /* Midline cells are gaps between the quadrants, not wells: no fill, only
+     the dashed outline, so they recede in both themes. */
+  .guide[data-guide="value-effort"] .vem-cell:not([data-series]) {
+    --series: var(--ink-3);
+    background: transparent;
+    outline: 1px dashed var(--rule-strong);
+    outline-offset: -1px;
+  }
+  .guide[data-guide="value-effort"] .vem-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 var(--s-1);
+    border: 1px solid color-mix(in oklab, var(--series) 60%, transparent);
+    border-radius: var(--r-sm);
+    background: var(--paper-raised);
+    color: color-mix(in oklab, var(--series) 65%, var(--ink));
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="value-effort"] button.vem-chip {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .guide[data-guide="value-effort"] button.vem-chip:focus-visible {
+    outline: 2px solid var(--cat);
+    outline-offset: 2px;
+  }
+  .guide[data-guide="value-effort"] button.vem-chip.is-dragging {
+    cursor: grabbing;
+    box-shadow: var(--shadow-2);
+  }
+
+  /* Plotter: the list of ideas under the grid */
+  .guide[data-guide="value-effort"] .vem-list { border-top: 1px solid var(--rule); }
+  .guide[data-guide="value-effort"] .vem-list:empty { display: none; }
+  .guide[data-guide="value-effort"] .vem-list > li {
+    display: grid;
+    grid-template-columns: var(--s-8) minmax(0, 1fr) 88px 88px auto;
+    gap: var(--s-3);
+    align-items: end;
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .guide[data-guide="value-effort"] .vem-list-num {
+    align-self: center;
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="value-effort"] .vem-list-name {
+    align-self: center;
+    font-size: var(--fs-16);
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+  .guide[data-guide="value-effort"] .vem-mini {
+    display: grid;
+    gap: 2px;
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+  }
+
+  /* Plotter: the summary by quadrant uses the shared facts list; the
+     midline row keeps a neutral key dot. */
+  .guide[data-guide="value-effort"] .vem-live > * + * { margin-top: var(--s-2); }
+  .guide[data-guide="value-effort"] .vem-summary[hidden] { display: none; }
+  .guide[data-guide="value-effort"] .vem-summary > div:not([data-series]) { --series: var(--ink-3); }
+  .guide[data-guide="value-effort"] .vem-summary dd { overflow-wrap: break-word; }
+
+  @media (max-width: 600px) {
+    .guide[data-guide="value-effort"] .vem-quad { min-height: 0; padding: var(--s-3); }
+    .guide[data-guide="value-effort"] .vem-quad-name { font-size: var(--fs-18); }
+    .guide[data-guide="value-effort"] .vem-grid { grid-template-rows: auto repeat(5, minmax(40px, auto)) auto auto; }
+    .guide[data-guide="value-effort"] .vem-list > li {
+      grid-template-columns: var(--s-6) minmax(0, 1fr) minmax(0, 1fr) auto;
+      grid-template-areas: "num name name name" "num value effort remove";
+      row-gap: var(--s-2);
+    }
+    .guide[data-guide="value-effort"] .vem-list-num { grid-area: num; align-self: start; }
+    .guide[data-guide="value-effort"] .vem-list-name { grid-area: name; }
+    .guide[data-guide="value-effort"] .vem-mini--value { grid-area: value; }
+    .guide[data-guide="value-effort"] .vem-mini--effort { grid-area: effort; }
+    .guide[data-guide="value-effort"] .vem-list > li > .btn { grid-area: remove; padding: 0 var(--s-2); }
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="value-effort-plotter"]');
+  const nameInput = tool.querySelector('#vem-name');
+  const nameHelp = tool.querySelector('#vem-name-help');
+  const valueSelect = tool.querySelector('#vem-value');
+  const effortSelect = tool.querySelector('#vem-effort');
+  const grid = tool.querySelector('.vem-grid');
+  const list = tool.querySelector('#vem-list');
+  const result = tool.querySelector('#vem-result');
+  const note = tool.querySelector('#vem-note');
+  const summary = tool.querySelector('#vem-summary');
+
+  const MAX_ITEMS = 20;
+  const NAME_HELP = 'Up to 40 characters';
+  const ZONES = {
+    qw: { name: 'Quick wins', one: 'a Quick win', series: '3' },
+    bb: { name: 'Big bets', one: 'a Big bet', series: '4' },
+    fi: { name: 'Fill-ins', one: 'a Fill-in', series: '2' },
+    av: { name: 'Avoid', one: 'in Avoid', series: '1' },
+    line: { name: 'On the midline', one: 'on the midline', series: null },
+  };
+  const ORDER = ['qw', 'bb', 'fi', 'av', 'line'];
+  const EXAMPLE = [
+    ['One-click checkout', 5, 2],
+    ['Smart search', 4, 2],
+    ['Personalized recommendations', 5, 5],
+    ['Dark mode', 2, 1],
+    ['Voice shopping assistant', 1, 5],
+    ['Mobile app rebuild', 4, 4],
+  ];
+
+  let items = [];
+  let nextId = 1;
+  let dragId = null;
+
+  // A 3 on either axis is on the midline; otherwise 4–5 is high and 1–2 is low.
+  const zoneOf = (v, e) => (v === 3 || e === 3) ? 'line' : v > 3 ? (e < 3 ? 'qw' : 'bb') : (e < 3 ? 'fi' : 'av');
+  const clamp = (n) => Math.min(5, Math.max(1, n));
+  const isScore = (n) => Number.isInteger(n) && n >= 1 && n <= 5;
+  const findItem = (id) => items.find(it => it.id === id);
+  const cellFor = (v, e) => grid.querySelector(`.vem-cell[data-v="${v}"][data-e="${e}"]`);
+  const plural = (n, one, many) => `${n.toLocaleString('en-US')} ${n === 1 ? one : many}`;
+
+  function setNameError(message) {
+    nameHelp.textContent = message || NAME_HELP;
+    nameHelp.classList.toggle('is-error', Boolean(message));
+    nameInput.setAttribute('aria-invalid', String(Boolean(message)));
+  }
+
+  function scoreSelect(labelText, itemName, value, onChange) {
+    const wrap = document.createElement('label');
+    wrap.className = `vem-mini vem-mini--${labelText.toLowerCase()}`;
+    const text = document.createElement('span');
+    text.textContent = labelText;
+    const select = document.createElement('select');
+    select.setAttribute('aria-label', `${labelText} for ${itemName}`);
+    for (let s = 1; s <= 5; s++) {
+      const option = document.createElement('option');
+      option.value = String(s);
+      option.textContent = String(s);
+      select.append(option);
+    }
+    select.value = String(value);
+    select.addEventListener('change', () => onChange(Number(select.value)));
+    wrap.append(text, select);
+    return { wrap, select };
+  }
+
+  function place(item) {
+    const cell = cellFor(item.v, item.e);
+    if (cell && item.chip.parentElement !== cell) cell.append(item.chip);
+    item.valueSelect.value = String(item.v);
+    item.effortSelect.value = String(item.e);
+  }
+
+  function addItem(name, v, e) {
+    const item = { id: nextId++, name, v, e };
+
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'vem-chip';
+    chip.dataset.id = String(item.id);
+    chip.setAttribute('aria-describedby', 'vem-move-hint');
+    chip.addEventListener('keydown', (event) => onChipKey(event, item.id));
+
+    const row = document.createElement('li');
+    const num = document.createElement('span');
+    num.className = 'vem-list-num';
+    const label = document.createElement('span');
+    label.className = 'vem-list-name';
+    label.textContent = name;
+    const value = scoreSelect('Value', name, v, (n) => moveItem(item.id, n, item.e));
+    const effort = scoreSelect('Effort', name, e, (n) => moveItem(item.id, item.v, n));
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'btn btn--quiet';
+    remove.textContent = 'Remove';
+    remove.setAttribute('aria-label', `Remove ${name}`);
+    remove.addEventListener('click', () => removeItem(item.id));
+    row.append(num, label, value.wrap, effort.wrap, remove);
+
+    Object.assign(item, { chip, row, num, valueSelect: value.select, effortSelect: effort.select });
+    items.push(item);
+    list.append(row);
+    place(item);
+    return item;
+  }
+
+  function moveItem(id, v, e, keepFocus) {
+    const item = findItem(id);
+    if (!item) return;
+    item.v = clamp(v);
+    item.e = clamp(e);
+    place(item);
+    if (keepFocus) item.chip.focus();
+    refresh();
+  }
+
+  function removeItem(id) {
+    const index = items.findIndex(it => it.id === id);
+    if (index < 0) return;
+    const [item] = items.splice(index, 1);
+    item.chip.remove();
+    item.row.remove();
+    refresh();
+    const next = items[index] || items[index - 1];
+    (next ? next.row.querySelector('button') : nameInput).focus();
+  }
+
+  function clearAll() {
+    items.forEach(it => { it.chip.remove(); it.row.remove(); });
+    items = [];
+  }
+
+  function refresh() {
+    const groups = { qw: [], bb: [], fi: [], av: [], line: [] };
+    items.forEach((it, i) => {
+      const zone = zoneOf(it.v, it.e);
+      groups[zone].push(it);
+      it.chip.textContent = String(i + 1);
+      it.num.textContent = String(i + 1);
+      it.chip.setAttribute('aria-label', `${i + 1}. ${it.name}: value ${it.v}, effort ${it.e}, ${ZONES[zone].one}`);
+    });
+
+    summary.replaceChildren();
+    if (!items.length) {
+      result.textContent = '';
+      note.textContent = 'Add an idea, or load the example, to see where each one lands.';
+      summary.hidden = true;
+      return;
+    }
+
+    ORDER.forEach(key => {
+      const row = document.createElement('div');
+      if (ZONES[key].series) row.dataset.series = ZONES[key].series;
+      const dt = document.createElement('dt');
+      const dot = document.createElement('span');
+      dot.className = 'key-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      dt.append(dot, `${ZONES[key].name} (${groups[key].length})`);
+      const dd = document.createElement('dd');
+      dd.textContent = groups[key].length ? groups[key].map(it => it.name).join(', ') : 'None';
+      row.append(dt, dd);
+      summary.append(row);
+    });
+    summary.hidden = false;
+
+    const wins = groups.qw.slice().sort((a, b) => b.v - a.v || a.e - b.e);
+    result.textContent = wins.length ? `Start with ${wins[0].name}` : 'No Quick wins yet';
+
+    const n = items.length;
+    const notes = [`${plural(n, 'idea', 'ideas')} on the grid.`];
+    if (!wins.length && groups.bb.length) notes.push('Plan the Big bets in phases.');
+    if (groups.line.length) notes.push(`${plural(groups.line.length, 'idea sits', 'ideas sit')} on the midline: settle ${groups.line.length === 1 ? 'it' : 'them'} in discussion.`);
+    if (n >= 4 && wins.length / n > 0.5) notes.push('More than half are Quick wins. Check the scores against your anchors: value may be inflated or effort underestimated.');
+    if (n >= MAX_ITEMS) notes.push('The grid is full. Cut the list first, with a quick ICE pass or a second round on the grid, then rank the shortlist with RICE.');
+    note.textContent = notes.join(' ');
+  }
+
+  function onAdd() {
+    const name = nameInput.value.trim().replace(/\s+/g, ' ').slice(0, 40);
+    const v = Number(valueSelect.value);
+    const e = Number(effortSelect.value);
+    if (!name) {
+      setNameError('Enter a name for the idea');
+      nameInput.focus();
+      return;
+    }
+    if (!isScore(v) || !isScore(e)) {
+      setNameError('Choose a value and an effort score from 1 to 5');
+      return;
+    }
+    if (items.length >= MAX_ITEMS) {
+      setNameError('The grid holds 20 ideas. Remove one first.');
+      return;
+    }
+    setNameError('');
+    addItem(name, v, e);
+    refresh();
+    nameInput.value = '';
+    nameInput.focus();
+  }
+
+  function onChipKey(event, id) {
+    const item = findItem(id);
+    const step = { ArrowUp: [1, 0], ArrowDown: [-1, 0], ArrowRight: [0, 1], ArrowLeft: [0, -1] }[event.key];
+    if (!item || !step) return;
+    event.preventDefault();
+    moveItem(id, item.v + step[0], item.e + step[1], true);
+  }
+
+  function cellAt(x, y) {
+    return [...grid.querySelectorAll('.vem-cell')].find(cell => {
+      const r = cell.getBoundingClientRect();
+      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    });
+  }
+
+  function endDrag() {
+    if (dragId === null) return;
+    const item = findItem(dragId);
+    dragId = null;
+    if (item) {
+      item.chip.classList.remove('is-dragging');
+      item.chip.focus();
+    }
+  }
+
+  // Pointer capture sits on the grid, so moving a marker between squares keeps the drag alive.
+  grid.addEventListener('pointerdown', (event) => {
+    const chip = event.target.closest && event.target.closest('.vem-chip');
+    if (!chip || event.button > 0) return;
+    event.preventDefault();
+    dragId = Number(chip.dataset.id);
+    chip.classList.add('is-dragging');
+    if (grid.setPointerCapture) {
+      try { grid.setPointerCapture(event.pointerId); } catch (err) { /* capture is optional */ }
+    }
+  });
+  grid.addEventListener('pointermove', (event) => {
+    if (dragId === null) return;
+    const item = findItem(dragId);
+    const cell = cellAt(event.clientX, event.clientY);
+    if (!item || !cell) return;
+    const v = Number(cell.dataset.v);
+    const e = Number(cell.dataset.e);
+    if (v !== item.v || e !== item.e) moveItem(item.id, v, e);
+  });
+  grid.addEventListener('pointerup', endDrag);
+  grid.addEventListener('pointercancel', endDrag);
+  grid.addEventListener('lostpointercapture', endDrag);
+
+  nameInput.addEventListener('input', () => { if (nameInput.getAttribute('aria-invalid') === 'true') setNameError(''); });
+  nameInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      onAdd();
+    }
+  });
+  tool.querySelector('#vem-add').addEventListener('click', onAdd);
+  tool.querySelector('#vem-sample').addEventListener('click', () => {
+    clearAll();
+    EXAMPLE.forEach(([name, v, e]) => addItem(name, v, e));
+    setNameError('');
+    refresh();
+  });
+  tool.querySelector('#vem-clear').addEventListener('click', () => {
+    clearAll();
+    setNameError('');
+    refresh();
+    nameInput.focus();
+  });
+
+  refresh();
+</script>

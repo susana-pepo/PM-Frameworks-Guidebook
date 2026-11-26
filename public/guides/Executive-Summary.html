@@ -1,0 +1,872 @@
+<article class="guide" data-guide="exec-summary">
+
+  <header class="guide-intro">
+    <p class="lede">An executive summary is a short, decision-ready brief for leadership. It opens with the recommendation, then gives only the context, data, options, risks and request needed to make the decision. It is written last and read first, and it is often the only page that gets read.</p>
+
+    <figure class="figure" data-hero>
+      <div class="es-page" role="img" aria-label="A one-page executive summary in six sections: recommendation across the top, context and key data side by side, options and risks side by side, and the ask across the bottom">
+        <p class="es-page-title">Executive summary: Larkwell Practice Mode</p>
+        <div class="es-block" data-part="rec" data-series="1">
+          <p class="es-label">Recommendation <span class="es-budget">2–3 sentences</span></p>
+          <p class="es-text">Build the Practice Mode MVP in one six-week cycle to raise D30 retention from 9% to 11%.</p>
+        </div>
+        <div class="es-block" data-part="ctx" data-series="2">
+          <p class="es-label">Context <span class="es-budget">1–2 sentences</span></p>
+          <p class="es-text">70% of learners who finish a lesson never return to practice it.</p>
+        </div>
+        <div class="es-block" data-part="data" data-series="3">
+          <p class="es-label">Key data <span class="es-budget">3–5 points</span></p>
+          <p class="es-text">Beta: practice sessions tripled. D30 is 9% against an 11% target.</p>
+        </div>
+        <div class="es-block" data-part="options" data-series="4">
+          <p class="es-label">Options considered <span class="es-budget">2–3 options</span></p>
+          <p class="es-text">A: full suite, 12 weeks. B: MVP, 6 weeks (recommended). C: do nothing.</p>
+        </div>
+        <div class="es-block" data-part="risks" data-series="5">
+          <p class="es-label">Risks and mitigations <span class="es-budget">2–3 risks</span></p>
+          <p class="es-text">Audio sync under tempo changes. Mitigation: the prototype works on the current engine.</p>
+        </div>
+        <div class="es-block" data-part="ask" data-series="6">
+          <p class="es-label">Ask and next steps <span class="es-budget">1–2 sentences</span></p>
+          <p class="es-text">One designer and two engineers for the next cycle. Decision needed by Friday.</p>
+        </div>
+      </div>
+      <figcaption>One page, six sections: the recommendation on top, the ask at the bottom and the evidence between them (Larkwell is a fictional company)</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Put the recommendation in the first sentence, back it with 3–5 decisive numbers, show the options you weighed and the risks you see, and end with a specific ask and a deadline. Write it after the analysis is done, keep it to one page, and cut context first when it runs long.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>The decision comes first, the support follows</h2>
+      <p class="chapter-dek">Leaders scan the first page and decide from it</p>
+    </header>
+
+    <p>Leaders read many documents, and they rarely read one from start to finish: they read the first page. A summary that leads with the decision respects that. If the page is clear and makes its case, the reader approves it or asks questions; if it is unclear, it gets put aside or sent back.</p>
+    <p>That makes the executive summary the most important page of anything you send upward. It turns weeks of research into a one-page decision document, and the full analysis moves to an appendix for anyone who wants the depth.</p>
+    <p>The habit has a name in US military writing: <dfn>BLUF</dfn>, bottom line up front. The conclusion and the request come first, and everything after them is support. It is the <a data-guide-link="pyramid">Pyramid Principle</a>’s “start with the answer” applied to a whole document.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">The information dump</p>
+        <p>Ten pages. The conclusion is on page 8 and there is no clear recommendation. The leader has to read everything to work out what you are asking for, so the document slides down the list.</p>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">The executive summary</p>
+        <p>One page. The recommendation is in the first sentence, followed by the key data, the options, the risks and a clear ask. The leader can decide in about three minutes.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Why Amazon writes memos instead of slides</p>
+      <p>Amazon replaced slide decks in its senior meetings with six-page narrative memos that everyone reads in silence at the start of the meeting, and its new-product proposals use the PR/FAQ, a document that opens with a mock press release (Bryar and Carr, <cite>Working Backwards</cite>, 2021). Neither is an executive summary. In his 2017 letter to shareholders, Jeff Bezos described great memos as written, rewritten, shared with colleagues for comment and edited again days later. Your one-pager will rarely get a silent reading slot, but the discipline carries over: compressing your thinking onto a page forces you to make it clear.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="sections" data-nav="The six sections">
+    <header class="chapter-head">
+      <h2>Six sections, in a fixed order</h2>
+      <p class="chapter-dek">Each one has a job and a length budget</p>
+    </header>
+
+    <p>The examples below come from one proposal: Practice Mode at Larkwell, a fictional piano-learning app, which aims to raise day-30 (D30) retention, the share of new accounts still active 30 days after sign-up. The <a href="#example" data-section-link>worked example</a> sets out the finished page.</p>
+
+    <ol class="steps">
+      <li>
+        <h3 class="step-title">Recommendation</h3>
+        <p>What you propose and why, in the first sentence of the first paragraph. If the reader reads nothing else, they have the answer.</p>
+        <p class="step-note">Budget: 2–3 sentences</p>
+        <p>Example: “I recommend we build the Practice Mode MVP in one six-week cycle to raise D30 retention from 9% to 11%.”</p>
+      </li>
+      <li>
+        <h3 class="step-title">Context</h3>
+        <p>Why this matters now: the problem or opportunity, in just enough detail for someone who has not been following the project. Think of it as the Situation and Complication from <a data-guide-link="pyramid" data-guide-section="scqa">SCQA</a>, compressed to one or two sentences. The Question is implied, and the Answer is already above in the Recommendation, so Context only explains why a decision is needed.</p>
+        <p class="step-note">Budget: 1–2 sentences</p>
+      </li>
+      <li>
+        <h3 class="step-title">Key data</h3>
+        <p>The evidence behind the recommendation. Not all the data you have: the decisive data, the points that would change the decision if they were different.</p>
+        <p class="step-note">Budget: 3–5 data points</p>
+        <p>Example: “D30 retention: 9%, against an 11% target. Beta test (n = 50): practice sessions per learner tripled. Each point of monthly churn is about 600 subscribers, or $5,400 of monthly recurring revenue (MRR).”</p>
+      </li>
+      <li>
+        <h3 class="step-title">Options considered</h3>
+        <p>Show that you weighed alternatives, including doing nothing, and mark the one you recommend. Leaders want to see that you thought broadly before you chose.</p>
+        <p class="step-note">Budget: 2–3 options</p>
+        <p>Example: “A: full practice suite (12 weeks, $180,000). B: Practice Mode MVP (6 weeks, $80,000), recommended. C: do nothing (churn stays at 7%, about $37,800 of MRR lost each month).”</p>
+      </li>
+      <li>
+        <h3 class="step-title">Risks and mitigations</h3>
+        <p>What could go wrong and how you would handle it. Acknowledging risks yourself builds trust in the rest of the page.</p>
+        <p class="step-note">Budget: 2–3 risks, each with a mitigation</p>
+        <p>Example: “Risk: the audio engine may not handle tempo changes. Mitigation: a prototype runs on the existing engine, and the fallback is fixed-speed practice.”</p>
+      </li>
+      <li>
+        <h3 class="step-title">Ask and next steps</h3>
+        <p>What you need from the reader, stated precisely: who must decide, what resources you need, when the work starts and when you need the decision. Never leave the ask open.</p>
+        <p class="step-note">Budget: 1–2 sentences</p>
+        <p>Example: “Requesting the CPO’s approval for one designer and two engineers for the next six-week cycle. Decision needed by Friday.”</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="writing" data-nav="Writing it">
+    <header class="chapter-head">
+      <h2>Four rules for getting it onto one page</h2>
+      <p class="chapter-dek">The structure is easy; the compression is the work</p>
+    </header>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key">1</span>
+        <h3 class="card-title">Write it last, place it first</h3>
+        <p>Do all the analysis first, then compress it onto one page. The summary is the distillation, not the starting point: you cannot summarize what you have not fully thought through.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">2</span>
+        <h3 class="card-title">Hold the one-page limit</h3>
+        <p>If it spills onto a second page, you have not compressed enough. Cut context first, because leaders know more than you think. Then cut redundant data and remove qualifiers until every sentence is doing a job.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">3</span>
+        <h3 class="card-title">Apply the “So what?” test</h3>
+        <p>For every sentence, ask why the reader should care. If a data point does not drive toward the recommendation, cut it. “Our NPS is 42” invites the question. “Our NPS dropped from 58 to 42 after the redesign” answers it.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">4</span>
+        <h3 class="card-title">Bold the scannable path</h3>
+        <p>Someone who reads only the bold text should get the core message in about 30 seconds. Bold the recommendation, the key numbers, the option names and the ask.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>A one-pager for Larkwell’s Practice Mode</h2>
+      <p class="chapter-dek">A piano-learning app asks its CPO for one six-week cycle</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>Six weeks to lift D30 retention</h3>
+      <p>Larkwell, a fictional piano-learning app, has 60,000 paying subscribers, and all its figures here are illustrative. Its Practice team has a 20-page analysis of why learners leave. This is the page that goes on top of it.</p>
+
+      <figure class="figure">
+        <div class="es-page" data-layout="full">
+          <p class="es-page-title">Executive summary: Larkwell Practice Mode</p>
+          <div class="es-block" data-series="1">
+            <p class="es-label">Recommendation</p>
+            <p class="es-text"><strong>Build the Practice Mode MVP</strong> (tempo control, section looping and a mistake heatmap) in one six-week cycle to raise <strong>D30 retention from 9% to 11%</strong>. Every point of churn we remove keeps about $5,400 of MRR a month; the A/B test will show how much Practice Mode moves.</p>
+          </div>
+          <div class="es-block" data-series="2">
+            <p class="es-label">Context</p>
+            <p class="es-text">Larkwell’s D30 retention is 9% against an 11% target this quarter, and about 4,200 subscribers cancel each month. 70% of learners who finish a lesson never return to practice it, because the Practice button only replays the lesson, so they stall around week three.</p>
+          </div>
+          <div class="es-block" data-series="3">
+            <p class="es-label">Key data</p>
+            <ul class="es-list">
+              <li>D30 retention: <strong>9%</strong>, against an 11% target.</li>
+              <li>Learners who finish a lesson but never return to practice it: <strong>70%</strong>.</li>
+              <li>Beta test (n = 50): practice sessions per learner <strong>tripled</strong>, from 0.4 to 1.2 a week.</li>
+              <li>Each point of monthly churn: about <strong>600 subscribers</strong>, or $5,400 of MRR.</li>
+            </ul>
+          </div>
+          <div class="es-block" data-series="4">
+            <p class="es-label">Options considered</p>
+            <div class="table-wrap">
+              <table class="table table--stack">
+                <caption>Three options for improving practice</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Option</th>
+                    <th scope="col" class="num">Time</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Verdict</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">A. Full practice suite</th><td class="num">12 weeks</td><td>$180,000</td><td>Too broad for a first iteration</td></tr>
+                  <tr class="is-top"><th scope="row">B. Practice Mode MVP</th><td class="num">6 weeks</td><td>$80,000</td><td><strong>Recommended:</strong> tests the idea and is fastest to impact</td></tr>
+                  <tr><th scope="row">C. Do nothing</th><td class="num">–</td><td>$37,800 of MRR lost each month</td><td>Churn stays at 7%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="es-block" data-series="5">
+            <p class="es-label">Risks and mitigations</p>
+            <ol class="es-list es-list--num">
+              <li>Tempo changes may cause audio sync issues. Mitigation: a prototype has already run on the existing engine.</li>
+              <li>Few learners may adopt practice. Mitigation: progressive onboarding and in-app prompts are planned.</li>
+              <li>Retention may not move enough. Mitigation: an A/B test runs from day one.</li>
+            </ol>
+          </div>
+          <div class="es-block" data-series="6">
+            <p class="es-label">Ask and next steps</p>
+            <p class="es-text"><strong>Approve one designer and two engineers</strong> for the next six-week cycle. <strong>Decision needed by Friday.</strong> The full analysis is in the appendix.</p>
+          </div>
+        </div>
+        <figcaption>The finished page, with the bold text forming the scannable path</figcaption>
+      </figure>
+
+      <div class="example-reading">
+        <h4>Everything a CPO needs to decide in three minutes</h4>
+        <p>A CPO can read this in about three minutes and has everything needed to decide: the recommendation, the evidence, the options, the risks and the specific ask. There is no need to open the 20-page analysis; it sits in the appendix for anyone who wants to go deeper.</p>
+        <p>Each key number comes with a comparison (9% against an 11% target, practice sessions up from 0.4 to 1.2 a week in the beta, each point of churn priced at $5,400 of MRR), so each one passes the “So what?” test. The page also claims only what it can defend: it prices a point of churn and lets the A/B test show how many points Practice Mode removes. Reading only the bold text gives the decision in about 30 seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Draft your own one-pager</h2>
+      <p class="chapter-dek">Write each section, then check it against the rules</p>
+    </header>
+
+    <div class="tool" data-tool="exec-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">One-pager builder</h3>
+        <p class="tool-hint">Write each of the six sections and the preview fills in as you type. Press Review for feedback. What you type stays on this page.</p>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="exec-rec"><span class="card-key card-key--sm" data-series="1" aria-hidden="true">1</span>Recommendation</label>
+          <textarea id="exec-rec" rows="2" placeholder="I recommend we… to… because…" aria-describedby="exec-rec-help"></textarea>
+          <p class="field-help" id="exec-rec-help">What you recommend and why, in 2–3 sentences. Lead with the position.</p>
+        </div>
+        <div class="field">
+          <label for="exec-ctx"><span class="card-key card-key--sm" data-series="2" aria-hidden="true">2</span>Context</label>
+          <textarea id="exec-ctx" rows="3" placeholder="Why this matters now: the situation, then what changed" aria-describedby="exec-ctx-help"></textarea>
+          <p class="field-help" id="exec-ctx-help">1–2 sentences, for someone who has not followed the project.</p>
+        </div>
+        <div class="field">
+          <label for="exec-data"><span class="card-key card-key--sm" data-series="3" aria-hidden="true">3</span>Key data</label>
+          <textarea id="exec-data" rows="4" placeholder="One data point per line, each with a number and a comparison" aria-describedby="exec-data-help"></textarea>
+          <p class="field-help" id="exec-data-help">3–5 decisive data points. One per line works best.</p>
+        </div>
+        <div class="field">
+          <label for="exec-options"><span class="card-key card-key--sm" data-series="4" aria-hidden="true">4</span>Options considered</label>
+          <textarea id="exec-options" rows="3" placeholder="A: … B: … (recommended) C: do nothing" aria-describedby="exec-options-help"></textarea>
+          <p class="field-help" id="exec-options-help">2–3 options, one per line, with the recommended one marked.</p>
+        </div>
+        <div class="field">
+          <label for="exec-risks"><span class="card-key card-key--sm" data-series="5" aria-hidden="true">5</span>Risks and mitigations</label>
+          <textarea id="exec-risks" rows="3" placeholder="Risk: … Mitigation: …" aria-describedby="exec-risks-help"></textarea>
+          <p class="field-help" id="exec-risks-help">2–3 risks, each with how you would handle it.</p>
+        </div>
+        <div class="field">
+          <label for="exec-ask"><span class="card-key card-key--sm" data-series="6" aria-hidden="true">6</span>Ask and next steps</label>
+          <textarea id="exec-ask" rows="2" placeholder="Requesting… starting… Decision needed by…" aria-describedby="exec-ask-help"></textarea>
+          <p class="field-help" id="exec-ask-help">1–2 sentences: what you need, from whom, by when.</p>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="exec-review">Review my summary</button>
+        <button type="button" class="btn" id="exec-copy">Copy as plain text</button>
+        <button type="button" class="btn" id="exec-clear">Clear</button>
+        <button type="button" class="btn" id="exec-example">Load the Larkwell example</button>
+      </div>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Sections that pass</p>
+        <output class="tool-result" id="exec-result" for="exec-rec exec-ctx exec-data exec-options exec-risks exec-ask" aria-live="off"></output>
+        <p class="tool-output-note" id="exec-words">Write the sections, then press Review.</p>
+        <ul class="checks" id="exec-feedback"></ul>
+        <p class="tool-output-note" id="exec-status" role="status"></p>
+      </div>
+
+      <div class="es-preview">
+        <p class="es-preview-label">Preview</p>
+        <div class="es-page" data-layout="full" id="exec-preview">
+          <p class="es-page-title">Executive summary</p>
+          <div class="es-block" data-part="rec" data-series="1"><p class="es-label">Recommendation</p><p class="es-text is-empty">Not written yet</p></div>
+          <div class="es-block" data-part="ctx" data-series="2"><p class="es-label">Context</p><p class="es-text is-empty">Not written yet</p></div>
+          <div class="es-block" data-part="data" data-series="3"><p class="es-label">Key data</p><p class="es-text is-empty">Not written yet</p></div>
+          <div class="es-block" data-part="options" data-series="4"><p class="es-label">Options considered</p><p class="es-text is-empty">Not written yet</p></div>
+          <div class="es-block" data-part="risks" data-series="5"><p class="es-label">Risks and mitigations</p><p class="es-text is-empty">Not written yet</p></div>
+          <div class="es-block" data-part="ask" data-series="6"><p class="es-label">Ask and next steps</p><p class="es-text is-empty">Not written yet</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Executive summary template</p>
+      <pre>Executive summary: [project name]
+
+Recommendation (2–3 sentences)
+I recommend we [action] to [outcome], because [main reason].
+
+Context (1–2 sentences)
+Why this matters now: the situation and what changed, written for someone who has not followed the project.
+
+Key data (3–5 points)
+- [Metric]: [value], against [benchmark or target]
+- [Metric]: [value], against [benchmark or target]
+- [Metric]: [value], against [benchmark or target]
+
+Options considered (2–3)
+A. [Option]: [time], [cost]. [Why not]
+B. [Option]: [time], [cost]. Recommended: [why]
+C. Do nothing: [cost of not acting]
+
+Risks and mitigations (2–3)
+- Risk: [what could go wrong]. Mitigation: [how you will handle it]
+- Risk: [what could go wrong]. Mitigation: [how you will handle it]
+
+Ask and next steps (1–2 sentences)
+Requesting [resources] for [period] starting [date]. Decision needed by [date].</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When an executive summary fits, and when it does not</h2>
+      <p class="chapter-dek">Proposals, reviews and reports that leadership will read</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>A product proposal needs leadership approval</li>
+          <li>You are preparing a quarterly business review</li>
+          <li>You are writing a PRD, as its first page</li>
+          <li>You are reporting a post-mortem or retrospective</li>
+          <li>Any document will be shared upward in the organization</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>It is a quick Slack update. Lead with the answer using the <a data-guide-link="pyramid">Pyramid Principle</a> directly.</li>
+          <li>You are answering a behavioral interview question. Use the <a data-guide-link="star">STAR Method</a>.</li>
+          <li>You are presenting to a room that needs persuading. Use the <a data-guide-link="narrative-arc">narrative arc</a>, then send the one-pager afterward. If the audience just wants the answer, lead with it using the <a data-guide-link="pyramid">Pyramid Principle</a>.</li>
+          <li>It is an internal team document that will not go to leadership</li>
+          <li>You are brainstorming or exploring, and there is no recommendation yet</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>To choose between the four communication frameworks, see <a data-guide-link="compare-communication">Choosing a communication framework</a>, which sets them side by side.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways a one-pager fails</h2>
+      <p class="chapter-dek">Most of them hide the decision from the reader</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Burying the recommendation</h3>
+        <p>Opening with background makes the leader hunt through the page for your position, and many will stop before they find it.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> open with the recommendation in the first sentence, before any context.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Including all the data</h3>
+        <p>Every extra number dilutes the ones that decide the question, and the page spills onto a second sheet.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> keep only the 3–5 points that drive the decision, run each through the “So what?” test, and link the rest in the appendix.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">No clear ask</h3>
+        <p>“Thoughts?” is not an ask. Without a named decision and a date, the page gets read and nothing happens.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> say who must decide what, by when, and what it costs: “CPO: approve one designer and two engineers for the next cycle, about $80,000, by Friday.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Hedging language</h3>
+        <p>“We might want to consider…” weakens the recommendation: it tells the reader you are unsure, so they will be too.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write “I recommend we…”, and put your doubts in Risks, where they can be handled.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Offering no alternatives</h3>
+        <p>A single option looks like a decision already made, and a page with no risks looks unexamined. Leaders want to see that you thought broadly and know what could go wrong.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> show 2–3 options, including doing nothing, each with its cost, and pair each risk with a mitigation.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Writing it first</h3>
+        <p>A summary drafted before the analysis is finished drifts away from where the analysis ends up, and the page argues for a conclusion the appendix no longer supports.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write it last, once the recommendation is settled, then check every number against the analysis.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the structure and the writing</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">When should you write the executive summary?</p>
+        <ul class="quiz-options">
+          <li><button type="button">First, to frame the analysis you are about to do</button></li>
+          <li><button type="button">Last, once the analysis is complete</button></li>
+          <li><button type="button">Midway, as soon as the first data comes in</button></li>
+          <li><button type="button">Only when a manager asks for one</button></li>
+        </ul>
+        <div class="quiz-why"><p>It is written last and read first. The summary compresses finished thinking, and you cannot summarize what you have not yet worked out.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">BLUF, bottom line up front, is a US military writing convention. What does it put at the top of an executive summary?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The key data behind the recommendation</button></li>
+          <li><button type="button">The background a new reader needs first</button></li>
+          <li><button type="button">The question the document sets out to answer</button></li>
+          <li><button type="button">The conclusion and what you are asking for</button></li>
+        </ul>
+        <div class="quiz-why"><p>BLUF puts the conclusion and the request first and treats everything after them as support. In an executive summary that means the recommendation in the first sentence, so a reader who stops there still has your answer, and an ask that the rest of the page backs up. It is the Pyramid Principle’s “start with the answer” applied to a whole document.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">How many data points should the Key data section include?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The 3–5 that drive the decision</button></li>
+          <li><button type="button">Every number you have, for completeness</button></li>
+          <li><button type="button">As many as fit on the rest of the page</button></li>
+          <li><button type="button">One headline metric and nothing else</button></li>
+        </ul>
+        <div class="quiz-why"><p>Keep the 3–5 decisive points. Each should pass the “So what?” test: would the reader decide differently without it?</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">You need a staffing decision from your VP. Which ask is strongest?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Let me know your thoughts on the plan by Friday</button></li>
+          <li><button type="button">Please approve one designer and two engineers soon</button></li>
+          <li><button type="button">Approve one designer and two engineers by Friday</button></li>
+          <li><button type="button">We will need more engineers next quarter</button></li>
+        </ul>
+        <div class="quiz-why"><p>It names the decision, the resources and the deadline, so the VP can say yes or no by a set date. “Let me know your thoughts” has a date but no decision, “approve… soon” has a decision but no date, and “we will need” asks for nothing.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Why include the options you considered?</p>
+        <ul class="quiz-options">
+          <li><button type="button">It makes the document look thorough and complete</button></li>
+          <li><button type="button">It hands the final choice back to the leader</button></li>
+          <li><button type="button">It shows you weighed alternatives before choosing</button></li>
+          <li><button type="button">It is optional, since the recommendation is enough</button></li>
+        </ul>
+        <div class="quiz-why"><p>Alternatives show that you thought broadly, and the recommended option looks stronger next to the ones you rejected and the reasons why. You still make the recommendation; the options do not hand the decision back.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Your draft runs onto a second page. What do you cut first?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Options: the recommendation speaks for itself</button></li>
+          <li><button type="button">Context: leaders usually know the background</button></li>
+          <li><button type="button">Risks: they make the plan look less certain</button></li>
+          <li><button type="button">Key data: the appendix already holds it</button></li>
+        </ul>
+        <div class="quiz-why"><p>Cut Context first, then trim Key data to the most decisive points. Options and Risks show that the recommendation was examined, so cutting them makes it look weaker, and the recommendation and the ask are never cut.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Which line passes the “So what?” test?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Our NPS fell from 58 to 42 after the redesign</button></li>
+          <li><button type="button">Our NPS is 42, measured in the May customer survey</button></li>
+          <li><button type="button">NPS remains one of our most important metrics</button></li>
+          <li><button type="button">Our NPS is 42, based on 1,200 responses</button></li>
+        </ul>
+        <div class="quiz-why"><p>A change with a cause tells the reader why to act. A single number with no comparison, however well sourced, leaves them asking “so what?”</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A colleague drafts the Context section as a full SCQA introduction that ends with the answer. The recommendation already opens the page. What should Context become?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The full SCQA, so the reader meets the answer twice</button></li>
+          <li><button type="button">The Question alone, with Key data as its answer</button></li>
+          <li><button type="button">A compressed Situation and Complication</button></li>
+          <li><button type="button">The Answer restated with more detail</button></li>
+        </ul>
+        <div class="quiz-why"><p>Because the recommendation comes first, the Answer is already on the page and the Question is implied. Context keeps only what the reader needs to see why a decision is due: the situation, compressed, and what changed.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* The one-page document: hero anatomy, worked example and builder preview */
+  .guide[data-guide="exec-summary"] .es-page {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-2);
+    max-width: 560px;
+    margin: 0 auto;
+    padding: var(--s-5);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    box-shadow: var(--shadow-1);
+  }
+  .guide[data-guide="exec-summary"] .es-page[data-layout="full"] {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 680px;
+    gap: var(--s-3);
+  }
+  .guide[data-guide="exec-summary"] .es-page-title {
+    grid-column: 1 / -1;
+    padding-bottom: var(--s-3);
+    margin-bottom: var(--s-1);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-serif);
+    font-size: var(--fs-18);
+    line-height: 1.3;
+    color: var(--ink);
+    text-align: center;
+  }
+  .guide[data-guide="exec-summary"] .es-block {
+    display: grid;
+    gap: var(--s-1);
+    align-content: start;
+    min-width: 0;
+    padding: var(--s-3);
+    border-radius: var(--r-sm);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="exec-summary"] .es-block[data-part="rec"],
+  .guide[data-guide="exec-summary"] .es-block[data-part="ask"] { grid-column: 1 / -1; }
+  .guide[data-guide="exec-summary"] .es-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--s-2);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="exec-summary"] .es-budget {
+    font-size: var(--fs-12);
+    font-weight: var(--w-regular);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="exec-summary"] .es-text,
+  .guide[data-guide="exec-summary"] .es-list li {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="exec-summary"] .es-page[data-layout="full"] .es-text,
+  .guide[data-guide="exec-summary"] .es-page[data-layout="full"] .es-list li { font-size: var(--fs-16); }
+  .guide[data-guide="exec-summary"] .es-text { white-space: pre-line; overflow-wrap: anywhere; }
+  .guide[data-guide="exec-summary"] .es-text.is-empty {
+    min-height: 1.5em;
+    padding: var(--s-1) var(--s-2);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--r-sm);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="exec-summary"] .es-list {
+    display: grid;
+    gap: var(--s-1);
+    padding-left: var(--s-5);
+    list-style: disc;
+  }
+  .guide[data-guide="exec-summary"] .es-list--num { list-style: decimal; }
+  .guide[data-guide="exec-summary"] .es-list li::marker { color: var(--ink-3); }
+  @media (max-width: 600px) {
+    .guide[data-guide="exec-summary"] .es-page { grid-template-columns: minmax(0, 1fr); padding: var(--s-3); }
+    /* Inside the worked example the page sits flat on the example's paper,
+       so the nested frames do not squeeze the text */
+    .guide[data-guide="exec-summary"] .example .es-page { padding: 0; border: 0; box-shadow: none; background: none; }
+  }
+
+  /* Builder: the word-count note turns red past one page, and the preview */
+  .guide[data-guide="exec-summary"] .tool .tool-output-note.is-error { color: var(--bad); }
+  .guide[data-guide="exec-summary"] .es-preview { display: grid; gap: var(--s-3); }
+  .guide[data-guide="exec-summary"] .es-preview .es-page { width: 100%; justify-self: center; }
+  .guide[data-guide="exec-summary"] .es-preview-label {
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="exec-builder"]');
+  const exampleBtn = tool.querySelector('#exec-example');
+  const reviewBtn = tool.querySelector('#exec-review');
+  const copyBtn = tool.querySelector('#exec-copy');
+  const clearBtn = tool.querySelector('#exec-clear');
+  const result = tool.querySelector('#exec-result');
+  const wordsNote = tool.querySelector('#exec-words');
+  const feedback = tool.querySelector('#exec-feedback');
+  const status = tool.querySelector('#exec-status');
+  const preview = tool.querySelector('#exec-preview');
+
+  const sections = [
+    { key: 'rec', name: 'Recommendation' },
+    { key: 'ctx', name: 'Context' },
+    { key: 'data', name: 'Key data' },
+    { key: 'options', name: 'Options considered' },
+    { key: 'risks', name: 'Risks and mitigations' },
+    { key: 'ask', name: 'Ask and next steps' },
+  ].map(s => ({
+    ...s,
+    el: tool.querySelector(`#exec-${s.key}`),
+    out: preview.querySelector(`[data-part="${s.key}"] .es-text`),
+  }));
+  const byKey = Object.fromEntries(sections.map(s => [s.key, s]));
+  const val = key => byKey[key].el.value.trim();
+
+  const EXAMPLE = {
+    rec: 'I recommend we build the Practice Mode MVP (tempo control, section looping and a mistake heatmap) in one six-week cycle to raise D30 retention from 9% to 11%. Every point of churn we remove keeps about $5,400 of MRR a month; the A/B test will show how much Practice Mode moves.',
+    ctx: 'Larkwell’s D30 retention is 9% against an 11% target this quarter, and about 4,200 subscribers cancel each month. 70% of learners who finish a lesson never return to practice it, because the Practice button only replays the lesson, so they stall around week three.',
+    data: 'D30 retention: 9%, against an 11% target\nLearners who finish a lesson but never return to practice it: 70%\nBeta test (n = 50): practice sessions per learner tripled, from 0.4 to 1.2 a week\nEach point of monthly churn: about 600 subscribers, or $5,400 of MRR',
+    options: 'A. Full practice suite: 12 weeks, $180,000. Too broad for a first iteration.\nB. Practice Mode MVP: 6 weeks, $80,000. Recommended: tests the idea and is fastest to impact.\nC. Do nothing: churn stays at 7%, about $37,800 of MRR lost each month.',
+    risks: 'Risk: tempo changes may cause audio sync issues. Mitigation: a prototype has already run on the existing engine.\nRisk: few learners may adopt practice. Mitigation: progressive onboarding and in-app prompts are planned.\nRisk: retention may not move enough. Mitigation: an A/B test runs from day one.',
+    ask: 'Approve one designer and two engineers for the next six-week cycle. Decision needed by Friday.',
+  };
+
+  // Text helpers
+  // Abbreviations such as “vs.” and “e.g.” are protected so they do not end a sentence,
+  // and a sentence only ends where the next word does not start in lowercase.
+  const ABBR = /\b(?:vs|e\.g|i\.e|approx|n\.b|cf|incl|est)\./gi;
+  const HOLD = '․';
+  function sentences(t) {
+    if (!t) return [];
+    const safe = t.replace(ABBR, m => m.replace(/\./g, HOLD));
+    return safe.split(/(?<=[.?!])\s+(?=[^a-z])/)
+      .map(s => s.split(HOLD).join('.').trim())
+      .filter(Boolean);
+  }
+  const BULLET = /^\s*(?:[-*•]|\d+[.)]|[A-Ca-c][.):])\s*/;
+  // Points: one per line or per semicolon; a single paragraph falls back to sentences.
+  function points(t) {
+    const parts = t.split(/\n+|;\s*/).map(s => s.replace(BULLET, '').trim()).filter(Boolean);
+    return parts.length > 1 ? parts : sentences(t);
+  }
+  const countWords = t => (t ? t.split(/\s+/).filter(Boolean).length : 0);
+  const plural = (n, one, many) => `${n.toLocaleString('en-US')} ${n === 1 ? one : many}`;
+
+  const HEDGE = /\b(might|maybe|perhaps|possibly|potentially|consider|explore|exploring|think about|look into|may want|it may be worth|hopefully|somewhat|we could)\b/i;
+  const BACKGROUND = /^(background|context|as you (?:know|may know)|over the (?:last|past)|for the (?:last|past)|last (?:quarter|year|month)|in (?:q[1-4]|20\d\d)|our team has been|historically|this (?:document|memo|doc|page))\b/i;
+  const ACTION = /\b(recommend\w*|propose\w*|should|request\w*|approve|launch|build|invest|ship|fund|hire|cut|stop|pause|move|adopt|choose|prioriti[sz]e|start|switch|replace|expand|retire|sunset|delay|accept|reject|need)\b/i;
+  const COMPARISON = /\b(from|vs\.?|versus|against|benchmark|target|compared|up|down|rose|fell|dropped|grew|higher|lower|than|half|double[sd]?|tripled)\b|×|→/i;
+  // A mitigation has to be named outright, not implied by a stray “if” or “plan”.
+  const MITIGATION = /\b(mitigat\w*|fallback|fall back|contingency|we will|we['’]ll)\b|→|->/i;
+  const MITIGATION_ALL = new RegExp(MITIGATION.source, 'gi');
+  const RISK_MARK = /\brisk\s*\d*\s*:/i;
+  const VAGUE_ASK = /\b(thoughts|let me know|feedback|when (?:you have time|convenient)|at your convenience|any input|have a look|take a look)\b/i;
+  const DECISION = /\b(approv\w*|decid\w*|decision|fund\w*|sign[- ]off|green-?light\w*|allocat\w*|commit\w*|confirm\w*|choose|go-ahead|request\w*)\b/i;
+  // Dates count as deadlines; a duration such as “ship in 6 weeks” does not, and a quarter
+  // or a number of days counts only when it is when the decision is due.
+  const DEADLINE = [
+    /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{1,2}\b/i,
+    /\b\d{1,2}(?:st|nd|rd|th)?\s+(?:of\s+)?(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b/i,
+    /\b(?:mon|tues|wednes|thurs|fri|satur|sun)day\b/i,
+    /\b\d{1,2}\/\d{1,2}(?:\/\d{2,4})?\b|\b\d{4}-\d{2}-\d{2}\b/,
+    /\b(?:today|tomorrow|tonight|by (?:the )?end of (?:the )?(?:day|week|month|quarter|sprint)|eod|eow|eom)\b/i,
+    /\b(?:by|before|due)\s+(?:the\s+)?(?:end of\s+)?(?:this week|next week|q[1-4])\b/i,
+    /\b(?:decision|approval|answer|sign[- ]off|go-ahead)\b[^.]*\b(?:within|in)\s+\d+\s+(?:business\s+)?days?\b/i,
+  ];
+
+  function reviewChecks() {
+    const checks = [];
+    const add = (state, section, msg) => checks.push({ state, section, msg });
+
+    // 1. Recommendation
+    const rec = val('rec');
+    const recS = sentences(rec);
+    const first = recS[0] || '';
+    const hedge = first.match(HEDGE);
+    if (hedge) add('missing', 'Recommendation', `“${hedge[0]}” hedges the first sentence. State your position: “I recommend we…”, or open with the action itself.`);
+    else if (BACKGROUND.test(first)) add('missing', 'Recommendation', 'The first sentence opens with background. Move it to Context and lead with what you recommend.');
+    else if (!ACTION.test(first)) add('revise', 'Recommendation', 'The first sentence does not say what you want to happen. Lead with the action: “I recommend we…”, “Launch…”, “Approve…”.');
+    else if (recS.length > 3) add('revise', 'Recommendation', `${plural(recS.length, 'sentence', 'sentences')}. Keep it to 2–3 and move the detail to Context or Key data.`);
+    else add('ok', 'Recommendation', 'Your position is clear from the first sentence.');
+
+    // 2. Context
+    const ctxS = sentences(val('ctx'));
+    if (!ctxS.length) add('revise', 'Context', 'Add 1–2 sentences on why the decision is needed now, for someone who has not followed the project.');
+    else if (ctxS.length > 2) add('revise', 'Context', `${plural(ctxS.length, 'sentence', 'sentences')}. Keep Context to 1–2: the situation and what changed. Leaders usually know more background than you expect.`);
+    else add('ok', 'Context', `${plural(ctxS.length, 'sentence', 'sentences')}, within the 1–2 budget.`);
+
+    // 3. Key data
+    const data = val('data');
+    const numbered = points(data).filter(p => /\d/.test(p));
+    if (!numbered.length) add('missing', 'Key data', 'Add numbers. Give 3–5 decisive data points, each with a specific figure.');
+    else if (numbered.length > 5) add('revise', 'Key data', `${plural(numbered.length, 'data point', 'data points')}. Keep the 3–5 that drive the decision.`);
+    else if (numbered.length < 3) add('revise', 'Key data', `Only ${plural(numbered.length, 'data point', 'data points')} with a number. Aim for 3–5.`);
+    else if (!numbered.some(p => COMPARISON.test(p))) add('revise', 'Key data', 'Give the numbers a comparison. “Fell from 58 to 42” says more than “is 42”.');
+    else add('ok', 'Key data', `${plural(numbered.length, 'data point', 'data points')} with numbers and comparisons.`);
+
+    // 4. Options
+    const options = val('options');
+    const markers = Math.max(
+      (options.match(/\boption\s+[a-z0-9]\b/gi) || []).length,
+      (options.match(/(?:^|[\s(])[A-C][.):](?=\s)/gm) || []).length,
+    );
+    const optionCount = markers >= 2 ? markers : points(options).length;
+    // “Recommended” counts as a pick only when it is not negated (“not recommended”).
+    const picked = /(?<!\bnot\s)(?<!n[’']t\s)\brecommend(?:ed|s)?\b/i.test(options);
+    const OPT = byKey.options.name;
+    if (!options) add('revise', OPT, 'List 2–3 options, including doing nothing, and mark the one you recommend.');
+    else if (optionCount < 2) add('revise', OPT, 'Only one option. Show at least one alternative, such as doing nothing.');
+    else if (optionCount > 3) add('revise', OPT, `${plural(optionCount, 'option', 'options')}. Keep the 2–3 a leader would seriously weigh.`);
+    else if (!picked) add('revise', OPT, 'Mark which option you recommend.');
+    else add('ok', OPT, `${plural(optionCount, 'option', 'options')}, with your pick marked.`);
+
+    // 5. Risks: count them the way options are counted, then check each has a mitigation.
+    const risks = val('risks');
+    const RISK = byKey.risks.name;
+    const units = (RISK_MARK.test(risks) ? risks.split(/(?=\brisk\s*\d*\s*:)/i) : risks.split(/\n+/))
+      .map(s => s.replace(BULLET, '').trim())
+      .filter(Boolean);
+    const riskCount = units.length === 1
+      ? Math.max(1, (units[0].match(MITIGATION_ALL) || []).length)
+      : units.length;
+    const bare = units.filter(u => !MITIGATION.test(u)).length;
+    if (!risks) add('revise', RISK, 'Name 2–3 risks and how you would handle each. Acknowledging risks builds trust.');
+    else if (bare) add('revise', RISK, `${bare === units.length ? 'No risk has a mitigation' : `${plural(bare, 'risk has', 'risks have')} no mitigation`}. Add “Mitigation:” and what you have tested, or what you will do if it happens.`);
+    else if (riskCount < 2) add('revise', RISK, 'Only one risk. Name 2–3, so the plan does not look unexamined.');
+    else if (riskCount > 3) add('revise', RISK, `${plural(riskCount, 'risk', 'risks')}. Keep the 2–3 that most threaten the plan.`);
+    else add('ok', RISK, `${plural(riskCount, 'risk', 'risks')}, each with a mitigation.`);
+
+    // 6. Ask
+    const ask = val('ask');
+    const ASK = byKey.ask.name;
+    const vague = DECISION.test(ask) ? null : ask.match(VAGUE_ASK);
+    if (!ask) add('missing', ASK, 'Missing the ask. Say what you need, from whom and by when.');
+    else if (vague) add('missing', ASK, `“${vague[0]}” is not an ask. Name the decision or resources you need and a date.`);
+    else if (!DEADLINE.some(re => re.test(ask))) add('revise', ASK, 'Add a date for the decision. “Decision needed by Friday” is better than “please review when convenient”.');
+    else add('ok', ASK, 'A specific ask with a deadline. A leader can act on this.');
+
+    return checks;
+  }
+
+  let reviewed = false;
+
+  function updatePreview() {
+    sections.forEach(s => {
+      const text = s.el.value.trim();
+      s.out.textContent = text || 'Not written yet';
+      s.out.classList.toggle('is-empty', !text);
+    });
+    // This note is not a live region, so it does not interrupt a screen reader on every keystroke.
+    const total = sections.reduce((n, s) => n + countWords(s.el.value.trim()), 0);
+    const allFilled = sections.every(s => s.el.value.trim() !== '');
+    const tooLong = total > 400;
+    wordsNote.classList.toggle('is-error', tooLong);
+    if (!total) wordsNote.textContent = 'Write the sections, then press Review.';
+    else if (tooLong) wordsNote.textContent = `About ${plural(total, 'word', 'words')}: too long for one page. Keep it under about 350, and cut context first.`;
+    else if (total > 350) wordsNote.textContent = `${plural(total, 'word', 'words')}: close to the one-page limit. Keep it under about 350.`;
+    else if (allFilled) wordsNote.textContent = `${plural(total, 'word', 'words')}. That fits on one page; keep it under about 350.`;
+    else wordsNote.textContent = `${plural(total, 'word', 'words')} so far. A full one-pager stays under about 350.`;
+  }
+
+  const setResult = text => { if (result.textContent !== text) result.textContent = text; };
+
+  function renderReview() {
+    feedback.replaceChildren();
+    if (!val('rec')) {
+      setResult('–');
+      const li = document.createElement('li');
+      li.dataset.state = 'missing';
+      const state = document.createElement('span');
+      state.className = 'check-state';
+      state.textContent = 'Start here';
+      const msg = document.createElement('span');
+      msg.textContent = 'Add your recommendation first. It is the one section a leader is sure to read.';
+      li.append(state, msg);
+      feedback.append(li);
+      return 'Add your recommendation first.';
+    }
+    const checks = reviewChecks();
+    const passed = checks.filter(c => c.state === 'ok').length;
+    setResult(`${passed} of ${checks.length}`);
+    const words = { ok: 'Good', revise: 'Consider', missing: 'Fix' };
+    checks.forEach(c => {
+      const li = document.createElement('li');
+      li.dataset.state = c.state;
+      const state = document.createElement('span');
+      state.className = 'check-state';
+      state.textContent = words[c.state];
+      const msg = document.createElement('span');
+      const name = document.createElement('strong');
+      name.textContent = `${c.section}: `;
+      msg.append(name, document.createTextNode(c.msg));
+      li.append(state, msg);
+      feedback.append(li);
+    });
+    return `${passed} of ${checks.length} sections pass. The feedback is listed above.`;
+  }
+
+  const hasText = () => sections.some(s => s.el.value.trim() !== '');
+
+  sections.forEach(s => s.el.addEventListener('input', () => {
+    updatePreview();
+    if (reviewed) renderReview();
+    disarmClear();
+  }));
+
+  // Only the Review button and the other actions announce, through the status line.
+  // Typing after a review refreshes the feedback quietly.
+  reviewBtn.addEventListener('click', () => {
+    reviewed = true;
+    status.textContent = `Reviewed: ${renderReview()}`;
+  });
+
+  exampleBtn.addEventListener('click', () => {
+    sections.forEach(s => { s.el.value = EXAMPLE[s.key]; });
+    disarmClear();
+    updatePreview();
+    if (reviewed) renderReview();
+    status.textContent = 'The Larkwell example is loaded. Edit it, or clear it and write your own.';
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    if (!hasText()) {
+      status.textContent = 'Write at least one section before copying.';
+      return;
+    }
+    const lines = ['Executive summary', ''];
+    sections.forEach(s => lines.push(s.name, s.el.value.trim() || '(not written yet)', ''));
+    try {
+      await navigator.clipboard.writeText(lines.join('\n').trim());
+      status.textContent = 'Your summary is copied as plain text.';
+    } catch (err) {
+      status.textContent = 'Copying is not available here. Select the text in each field and copy it by hand.';
+    }
+  });
+
+  // Clearing asks for a second press so a stray click does not wipe the draft.
+  let clearArmed = false;
+  let clearTimer = null;
+  function disarmClear() {
+    clearArmed = false;
+    if (clearTimer !== null) clearTimeout(clearTimer);
+    clearTimer = null;
+    clearBtn.textContent = 'Clear';
+  }
+
+  clearBtn.addEventListener('click', () => {
+    if (!hasText()) {
+      disarmClear();
+      status.textContent = 'There is nothing to clear.';
+      return;
+    }
+    if (!clearArmed) {
+      clearArmed = true;
+      clearBtn.textContent = 'Press again to clear';
+      status.textContent = 'Press Clear again within 5 seconds to erase all six sections.';
+      clearTimer = setTimeout(disarmClear, 5000);
+      return;
+    }
+    disarmClear();
+    sections.forEach(s => { s.el.value = ''; });
+    reviewed = false;
+    feedback.replaceChildren();
+    setResult('');
+    updatePreview();
+    status.textContent = 'All sections cleared.';
+    sections[0].el.focus();
+  });
+
+  updatePreview();
+  api.onCleanup(disarmClear);
+</script>

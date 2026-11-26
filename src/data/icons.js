@@ -211,17 +211,14 @@ const FRAMEWORK_ICONS = {
   ),
 };
 
-const emojiSpan = (emoji) =>
-  `<span class="glyph-emoji" aria-hidden="true">${emoji}</span>`;
-
-/** Glyph markup for a framework — its drawn icon, else its emoji. */
-export function frameworkGlyph(slug, emoji) {
-  return FRAMEWORK_ICONS[slug] || emojiSpan(emoji);
+/** Glyph markup for a framework (falls back to its category's glyph). */
+export function frameworkGlyph(slug, categoryId) {
+  return FRAMEWORK_ICONS[slug] || CATEGORY_ICONS[categoryId] || '';
 }
 
-/** Glyph markup for a category — its drawn icon, else its emoji. */
-export function categoryGlyph(id, emoji) {
-  return CATEGORY_ICONS[id] || emojiSpan(emoji);
+/** Glyph markup for a category. */
+export function categoryGlyph(id) {
+  return CATEGORY_ICONS[id] || '';
 }
 
 /** True once a framework/category has a drawn icon (handy for QA). */

@@ -1,0 +1,825 @@
+<article class="guide" data-guide="agile-scrum">
+
+  <header class="guide-intro">
+    <p class="lede">Agile is a set of values and principles for building products in small steps and changing course as you learn. Scrum is a lightweight framework that puts them into practice: a small team delivers a usable Increment every Sprint and inspects and adapts its product and its way of working at fixed events.</p>
+
+    <figure class="figure" data-hero>
+      <div class="as-cycle">
+        <div class="as-io">
+          <span class="as-kicker">Input</span>
+          <span class="as-name">Product Backlog</span>
+          <span class="as-note">Ordered toward the Product Goal</span>
+        </div>
+        <span class="as-down" aria-hidden="true"></span>
+        <div class="as-sprint">
+          <p class="as-sprint-label"><strong>The Sprint</strong> One month or less, often two weeks</p>
+          <ol class="chain">
+            <li data-series="1">
+              <span class="card-key">Start</span>
+              <span class="chain-name">Sprint Planning</span>
+              <span class="chain-note">Agree on the Sprint Goal and pick the work</span>
+            </li>
+            <li data-series="2">
+              <span class="card-key">Every working day</span>
+              <span class="chain-name">Daily Scrum</span>
+              <span class="chain-note">15 minutes to adjust the plan</span>
+            </li>
+            <li data-series="3">
+              <span class="card-key">End</span>
+              <span class="chain-name">Sprint Review</span>
+              <span class="chain-note">Inspect the result with stakeholders</span>
+            </li>
+            <li data-series="4">
+              <span class="card-key">Close</span>
+              <span class="chain-name">Sprint Retrospective</span>
+              <span class="chain-note">Choose how to work better</span>
+            </li>
+          </ol>
+        </div>
+        <span class="as-down" aria-hidden="true"></span>
+        <div class="as-io">
+          <span class="as-kicker">Output</span>
+          <span class="as-name">Increment</span>
+          <span class="as-note">Usable work that meets the Definition of Done</span>
+        </div>
+        <p class="as-loop">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v4a4 4 0 0 1-4 4H5"/><path d="M9 11l-4 4 4 4"/></svg>
+          <span>Repeat: what the review teaches goes back into the Product Backlog, and the next Sprint starts as soon as this one ends.</span>
+        </p>
+      </div>
+      <figcaption>The Sprint is the timebox that holds the other four events, and each Sprint ends with a usable Increment</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Scrum delivers work in Sprints of one month or less, often two weeks. A team of typically 10 or fewer, with a Product Owner, a Scrum Master and Developers, plans each Sprint around one goal, checks progress every day, reviews the result with stakeholders and improves its own way of working before the next Sprint starts.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Agile is the mindset; Scrum is one way to practice it</h2>
+      <p class="chapter-dek">The Agile Manifesto sets the values, and Scrum adds a fixed set of accountabilities, events and artifacts</p>
+    </header>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h3 class="card-title">Agile</h3>
+        <p class="card-q">How should we approach building software?</p>
+        <p>A philosophy: build iteratively, respond to change, put working software ahead of documentation and collaborate with customers. It was written down in the <cite>Manifesto for Agile Software Development</cite> (Beck et al., 2001), usually called the Agile Manifesto.</p>
+        <p class="card-meta">A set of values and principles</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Scrum</h3>
+        <p class="card-q">What exactly do we do each week?</p>
+        <p>One widely used framework for putting Agile into practice, defined in Ken Schwaber and Jeff Sutherland’s <cite>Scrum Guide</cite>. The Guide sets out three accountabilities (Product Owner, Scrum Master, Developers), five events (the Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective) and three artifacts (Product Backlog, Sprint Backlog, Increment).</p>
+        <p class="card-meta">A specific framework built on those values</p>
+      </div>
+    </div>
+
+    <p>If Agile is eating healthily, Scrum is one specific meal plan. Other methods follow the same values with different rules.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Waterfall, before Agile</p>
+        <p>Plan everything up front, then design, build all of it, test and launch. A release takes months. When requirements change, much of the plan has to be redone, and the team learns whether it built the right thing only at the end.</p>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Agile with Scrum</p>
+        <p>Plan a little, build a little, ship it, get feedback and adapt, every two weeks or so. Learning happens in every Sprint, and requirements can change between Sprints without throwing work away.</p>
+      </div>
+    </div>
+
+    <h3>The four Agile values</h3>
+    <div class="table-wrap">
+      <table class="table">
+        <caption>The values of the Agile Manifesto, 2001</caption>
+        <thead>
+          <tr><th scope="col">We value</th><th scope="col">over</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Individuals and interactions</th><td>Processes and tools</td></tr>
+          <tr><th scope="row">Working software</th><td>Comprehensive documentation</td></tr>
+          <tr><th scope="row">Customer collaboration</th><td>Contract negotiation</td></tr>
+          <tr><th scope="row">Responding to change</th><td>Following a plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The items on the right still have value. The Manifesto says the items on the left are valued more.</p>
+
+    <h3>This guide follows the 2020 Scrum Guide</h3>
+    <p>Schwaber and Sutherland revised the Scrum Guide in November 2020. Some of the terms you will hear come from the 2017 edition; others, such as ceremonies and the daily standup, were never in the Guide but are widely used. Both kinds turn up in job descriptions and interviews, so it helps to know what the 2020 Guide says instead.</p>
+    <div class="table-wrap">
+      <table class="table table--stack">
+        <caption>Terms you may hear, where they come from and the 2020 wording</caption>
+        <thead>
+          <tr><th scope="col">You may hear</th><th scope="col">Where it comes from</th><th scope="col">The 2020 Scrum Guide says</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Roles</th><td>2017 Scrum Guide</td><td>Accountabilities</td></tr>
+          <tr><th scope="row">Development Team</th><td>2017 Scrum Guide</td><td>Developers, part of one Scrum Team with no sub-teams</td></tr>
+          <tr><th scope="row">A Development Team of 3–9 people</th><td>2017 Scrum Guide</td><td>A Scrum Team of typically 10 or fewer people, including the Product Owner and Scrum Master</td></tr>
+          <tr><th scope="row">Three questions at the Daily Scrum</th><td>2017 Scrum Guide, as an example</td><td>Any format that helps the Developers plan the day</td></tr>
+          <tr><th scope="row">Servant-leader</th><td>2017 Scrum Guide</td><td>A true leader who serves the Scrum Team and the larger organization</td></tr>
+          <tr><th scope="row">The Sprint Goal as the only goal</th><td>2017 Scrum Guide</td><td>A Product Goal for the Product Backlog, as well as a Sprint Goal for each Sprint</td></tr>
+          <tr><th scope="row">Ceremonies</th><td>Informal usage, never in the Guide</td><td>Events</td></tr>
+          <tr><th scope="row">Daily standup</th><td>Informal usage, never in the Guide</td><td>Daily Scrum</td></tr>
+          <tr><th scope="row">Refinement meeting</th><td>Informal usage; never an event in the Guide</td><td>Product Backlog refinement, an ongoing activity</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="chapter" id="roles" data-nav="Accountabilities and events">
+    <header class="chapter-head">
+      <h2>Three accountabilities and five events</h2>
+      <p class="chapter-dek">One small team with no hierarchy, working to a fixed rhythm inside each Sprint</p>
+    </header>
+
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <span class="card-key" data-series="5">PO</span>
+        <h3 class="card-title">Product Owner</h3>
+        <p class="card-q">What should we build next, and why?</p>
+        <p>Accountable for maximizing the value of the product and for managing the Product Backlog. Sets the Product Goal, orders the Product Backlog, makes sure everyone understands the items and represents customers and stakeholders. The Product Owner often writes items or delegates the writing, but stays accountable for them and decides the order.</p>
+        <p class="card-meta">Owns the what and the why</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="6">SM</span>
+        <h3 class="card-title">Scrum Master</h3>
+        <p class="card-q">Is Scrum helping this team work well?</p>
+        <p>Accountable for the team’s effectiveness. Coaches the team in Scrum and self-management, removes impediments, makes sure the events happen and stay inside their timeboxes, and protects the team from interruptions. The Guide describes the role as a true leader who serves the Scrum Team and the larger organization; the Scrum Master assigns no tasks.</p>
+        <p class="card-meta">Owns the process</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="7">D</span>
+        <h3 class="card-title">Developers</h3>
+        <p class="card-q">How do we turn this into a usable Increment?</p>
+        <p>Everyone who does the work of each Sprint: engineers, designers, QA and anyone else the product needs. They are self-managing: they create the Sprint Backlog, decide how to deliver the Sprint Goal and hold each other to the Definition of Done.</p>
+        <p class="card-meta">Owns the how</p>
+      </div>
+    </div>
+
+    <p>The whole Scrum Team is typically <strong>10 or fewer people</strong>: small enough to stay nimble, large enough to finish meaningful work in a Sprint. A product that needs more people gets several Scrum Teams that share one Product Goal, one Product Backlog and one Product Owner.</p>
+
+    <div class="callout">
+      <p class="callout-title">Product manager and Product Owner are not the same job</p>
+      <p>Many product managers hold the Product Owner accountability, so the titles get used interchangeably. Product Owner is an accountability inside Scrum: the Product Goal and the Product Backlog. Product manager is a job, which also covers discovery, strategy, pricing and work with the rest of the business, and some organizations split the two.</p>
+    </div>
+
+    <h3>The five events</h3>
+    <p><strong>The Sprint</strong> is the container for the other four events. It has a fixed length of one month or less, often two weeks, and the next Sprint starts the moment one ends.</p>
+    <div class="table-wrap">
+      <table class="table table--stack">
+        <caption>The five Scrum events, with the Scrum Guide’s maximum timebox for a one-month Sprint</caption>
+        <thead>
+          <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">Who takes part</th>
+            <th scope="col" class="num">Maximum timebox</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">The Sprint</th><td>Turns backlog items into at least one usable Increment</td><td>The whole Scrum Team</td><td class="num">1 month</td></tr>
+          <tr><th scope="row">Sprint Planning</th><td>The Product Owner brings the priorities, the team agrees on a Sprint Goal, and the Developers pick the items and plan the work. Output: the Sprint Goal and the Sprint Backlog</td><td>The Scrum Team, plus anyone invited for advice</td><td class="num">8 hours</td></tr>
+          <tr><th scope="row">Daily Scrum</th><td>The Developers inspect progress toward the Sprint Goal and adjust the plan for the next day, in any format they choose</td><td>The Developers</td><td class="num">15 minutes</td></tr>
+          <tr><th scope="row">Sprint Review</th><td>A working session: stakeholders see the Increment and discuss progress toward the Product Goal and what to do next. Output: an adjusted Product Backlog</td><td>The Scrum Team and key stakeholders</td><td class="num">4 hours</td></tr>
+          <tr><th scope="row">Sprint Retrospective</th><td>Closes the Sprint. The team looks at its people, interactions, tools, process and Definition of Done, and picks the most helpful improvements to act on</td><td>The Scrum Team only</td><td class="num">3 hours</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The Guide sets only these maximums, for a one-month Sprint; for shorter Sprints the events are usually shorter. Sprint Planning, for example, takes up to 8 hours for a one-month Sprint and usually less for a two-week one. As a rule of thumb, not a Guide figure, many teams with two-week Sprints spend 2–4 hours on planning, 1–2 on the review and 1–1.5 on the retrospective. The Daily Scrum happens at the same time and place every working day, and the 2017 Guide’s three questions (what I did yesterday, what I will do today, what is blocking me) remain one option. The review accepts or rejects nothing: an item is done when it meets the Definition of Done.</p>
+
+    <h3>Refinement runs alongside the events</h3>
+    <p>In <dfn>backlog refinement</dfn>, the Product Owner and the Developers review upcoming items, clarify requirements, split large items and estimate them. It is an ongoing activity rather than one of the events; how much time it takes is up to the team. Well-refined items make Sprint Planning short and calm.</p>
+
+    <div class="callout callout--caution">
+      <p class="callout-title">Changing the plan during a Sprint</p>
+      <p>No changes are made that would endanger the Sprint Goal. Within that limit the Sprint Backlog is a living plan: as the team learns, the Developers and the Product Owner clarify and renegotiate scope, so new work that serves the goal can come in and the Sprint stays achievable. If the Sprint Goal stops making sense, only the Product Owner can cancel the Sprint.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="artifacts" data-nav="Artifacts">
+    <header class="chapter-head">
+      <h2>Three artifacts, each tied to a commitment</h2>
+      <p class="chapter-dek">The commitment is what the team measures each artifact against, and many teams add stories and points on top</p>
+    </header>
+
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <h3 class="card-title">Product Backlog</h3>
+        <p>The single ordered list of everything the product might need, owned by the Product Owner. Items near the top are refined: small and clear enough to finish in one Sprint. Items further down are vaguer and further out. The list changes constantly as the team learns.</p>
+        <p class="card-meta">Commitment: the Product Goal, the long-term objective the backlog works toward</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Sprint Backlog</h3>
+        <p>The items selected for this Sprint, plus the Sprint Goal and the plan for delivering them. It belongs to the Developers, who update it throughout the Sprint as they learn more.</p>
+        <p class="card-meta">Commitment: the Sprint Goal, the one objective for this Sprint</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Increment</h3>
+        <p>A usable step toward the Product Goal. Work becomes part of an Increment only when it meets the Definition of Done. Each Increment adds to the ones before it, a team can deliver several in one Sprint, and it can release them before the Sprint ends. The Sprint Review is where they are inspected, not a gate for releasing them.</p>
+        <p class="card-meta">Commitment: the Definition of Done, the quality bar every item must meet</p>
+      </div>
+    </div>
+
+    <h3>Writing and sizing backlog items</h3>
+    <p>Many Scrum teams write their items as user stories and size them in story points. Both are complementary practices; the Scrum Guide requires neither.</p>
+
+    <h4>User stories</h4>
+    <p>A common format for backlog items, written from the user’s point of view.</p>
+    <p class="formula" role="img" aria-label="As a user type, I want an action, so that I get a benefit">
+      <span class="formula-term"><span class="op">As a</span><var>user type</var></span>
+      <span class="formula-term"><span class="op">I want</span><var>action</var></span>
+      <span class="formula-term"><span class="op">so that</span><var>benefit</var></span>
+    </p>
+    <dl class="facts">
+      <div><dt>Story</dt><dd>“As a piano beginner, I want to see my progress after each lesson so that I feel motivated to keep practicing.”</dd></div>
+      <div><dt>Acceptance criteria</dt><dd>The progress bar updates when a lesson is completed. It shows the percentage complete for the current course. It includes a streak counter.</dd></div>
+    </dl>
+    <p><dfn>Acceptance criteria</dfn> are clear, testable conditions that define done for one story. They sit on top of the Definition of Done, which applies to every item.</p>
+
+    <h4>Story points</h4>
+    <p>Teams estimate with relative sizes rather than hours, often on the Fibonacci numbers 1, 2, 3, 5, 8 and 13. A point blends effort, complexity and uncertainty, so it measures <strong>size relative to other items</strong>, not time. An 8 is roughly twice a 5; the gaps widen as the numbers grow because larger items hide more unknowns.</p>
+    <ol class="scale" aria-label="Story point bands">
+      <li><span class="scale-value">13+</span><span class="scale-label">Too big</span><span class="scale-note">Many teams split it before it enters a Sprint</span></li>
+      <li><span class="scale-value">8</span><span class="scale-label">Large</span><span class="scale-note">Risky, with real unknowns</span></li>
+      <li><span class="scale-value">3–5</span><span class="scale-label">Medium</span><span class="scale-note">Some unknowns</span></li>
+      <li><span class="scale-value">1–2</span><span class="scale-label">Small</span><span class="scale-note">Clear and well understood</span></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Velocity counts only finished work</p>
+      <p><dfn>Velocity</dfn> is the total points of the items that met the Definition of Done in a Sprint. There is no partial credit: an unfinished item counts as zero, however close it is, and goes back to the Product Backlog, where the Product Owner orders it again and the Developers re-estimate what is left. After a few Sprints, the average becomes useful for planning. Use it to forecast the team’s own work. Using velocity to judge people leads teams to inflate estimates.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Larkwell’s Onboarding team runs one Sprint</h2>
+      <p class="chapter-dek">A two-week Sprint aimed at a faster first lesson, from planning to retrospective</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>Sprint 14: a faster first session</h3>
+      <p>Larkwell, a fictional piano-learning app, teaches adults to play through the phone’s microphone or a MIDI keyboard. All figures are illustrative. Its Onboarding team works in two-week Sprints. New users take a median of four minutes to play their first note, and only 45% of new accounts complete a first song lesson within 24 hours of signing up.</p>
+
+      <dl class="facts">
+        <div><dt>Team</dt><dd>The Onboarding team, seven people: a product manager as Product Owner, a Scrum Master and five Developers (three engineers, a product designer and a QA engineer)</dd></div>
+        <div><dt>Sprint Goal</dt><dd>Cut the median time to first note for new users from 4 minutes to under 90 seconds</dd></div>
+        <div><dt>Average velocity</dt><dd>27 points (26, 28 and 27 in the last three Sprints)</dd></div>
+      </dl>
+
+      <h4>Sprint Backlog and result</h4>
+      <div class="table-wrap">
+        <table class="table table--stack">
+          <caption>Six items planned for Sprint 14, and which ones met the Definition of Done</caption>
+          <thead>
+            <tr><th scope="col">Item</th><th scope="col" class="num">Points</th><th scope="col">At the end of the Sprint</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Skip instrument setup for the first lesson</th><td class="num">5</td><td>Done</td></tr>
+            <tr><th scope="row">Inline microphone and keyboard check, with no separate setup screen</th><td class="num">8</td><td>Not done, back to the Product Backlog</td></tr>
+            <tr><th scope="row">Auto-play demo of the first exercise</th><td class="num">5</td><td>Done</td></tr>
+            <tr><th scope="row">“First note” celebration</th><td class="num">2</td><td>Done</td></tr>
+            <tr><th scope="row">Analytics: track time to first note</th><td class="num">3</td><td>Done</td></tr>
+            <tr><th scope="row">Bug: audio latency on some Android devices</th><td class="num">5</td><td>Done</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th scope="row">Planned</th><td class="num">28</td><td>104% of average velocity</td></tr>
+            <tr><th scope="row">Finished (velocity)</th><td class="num">20</td><td>Only items that met the Definition of Done</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <h4>Sprint Review</h4>
+      <p>Stakeholders tried the new first session on real devices with the team. The median time to first note fell from 4 minutes to 1 minute 15 seconds, inside the goal, and the Android audio bug is fixed. Five items met the Definition of Done, worth 20 points. The inline microphone and keyboard check was mostly built but not done; it goes back to the Product Backlog, to be re-estimated for Sprint 15. The session ended with the Product Owner and stakeholders agreeing on what to do next, which kept the check near the top of the Product Backlog.</p>
+
+      <h4>Sprint Retrospective</h4>
+      <dl class="facts">
+        <div><dt>Went well</dt><dd>The clear Sprint Goal kept everyone focused. Pairing on the microphone check got it moving again when it stalled.</dd></div>
+        <div><dt>To improve</dt><dd>QA started too late, on day 8 instead of day 3.</dd></div>
+        <div><dt>Action</dt><dd>Add a QA handoff milestone in the middle of the Sprint.</dd></div>
+      </dl>
+
+      <div class="example-reading">
+        <h4>What the Sprint shows</h4>
+        <p><strong>The goal was met although one item was not.</strong> The Sprint Goal is the commitment; the list of items is the forecast of how to reach it.</p>
+        <p><strong>Velocity is 20, not 28.</strong> The microphone and keyboard check was mostly built but earns nothing until it is done. Recording 20 pulls the average down and keeps the next forecast honest.</p>
+        <p><strong>The plan was over capacity.</strong> 28 points against an average of 27 is 104%: more than the team usually finishes, with no room for bugs or surprises. About 22–24 points would have kept a buffer of 10–20%, a common rule of thumb.</p>
+        <p><strong>The largest item was also the riskiest.</strong> The 8-point check carried the most unknowns and is the one that slipped. Split during refinement into a microphone check and a keyboard check, at least one part could have finished.</p>
+        <p><strong>The retrospective produced one concrete change</strong>, which the next retrospective can check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Plan a Sprint of your own</h2>
+      <p class="chapter-dek">Write a goal, list the items with their points and check the load against your velocity</p>
+    </header>
+
+    <div class="tool" data-tool="sprint-planner">
+      <div class="tool-head">
+        <h3 class="tool-title">Sprint planner</h3>
+        <p class="tool-hint">Fill in the fields, or load the worked example, then review the plan.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="sp-goal">Sprint Goal</label>
+          <input id="sp-goal" type="text" maxlength="240" placeholder="What will be true at the end of this Sprint?" aria-describedby="sp-goal-help">
+          <p class="field-help" id="sp-goal-help">One sentence about one outcome</p>
+        </div>
+        <div class="field">
+          <label for="sp-items">Sprint Backlog items</label>
+          <textarea id="sp-items" rows="6" placeholder="As a [user], I want [action] so that [benefit] (5 pts)&#10;As a [user], I want [action] so that [benefit] (3 pts)" aria-describedby="sp-items-help"></textarea>
+          <p class="field-help" id="sp-items-help">One item per line. End each line with its points, such as “(5 pts)”.</p>
+        </div>
+        <div class="field">
+          <label for="sp-velocity">Average velocity</label>
+          <input id="sp-velocity" type="number" min="1" step="any" inputmode="decimal" placeholder="For example, 27" aria-describedby="sp-velocity-help">
+          <p class="field-help" id="sp-velocity-help">Points finished per Sprint, averaged over your last few Sprints. Optional.</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="sp-review">Review the plan</button>
+        <button type="button" class="btn" id="sp-example">Load the example</button>
+        <button type="button" class="btn" id="sp-clear">Clear</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Planned load</p>
+        <output class="tool-result" id="sp-result" for="sp-goal sp-items sp-velocity"></output>
+        <p class="tool-output-note" id="sp-status">Write a Sprint Goal and list the items, then review the plan.</p>
+        <ul class="checks" id="sp-notes"></ul>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>I’d run two-week Sprints, each with one Sprint Goal that moves us toward the Product Goal.
+Every Sprint ends with a review, where stakeholders use the working product and help reorder the backlog.
+Then the team holds a retrospective and picks the improvements it will act on in the next Sprint.</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When Scrum fits, and when it does not</h2>
+      <p class="chapter-dek">It suits small product teams building something whose requirements will change</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You have a cross-functional team of 10 or fewer people</li>
+          <li>Requirements are evolving or uncertain</li>
+          <li>You need regular feedback from stakeholders</li>
+          <li>The team needs structure but also room to adapt</li>
+          <li>You are building a software product</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>The team is only one or two people, where the events can cost more than they return</li>
+          <li>The work is mostly support or maintenance that arrives unpredictably; a flow-based method such as Kanban (not covered in this guide) fits better</li>
+          <li>Projects need weeks of uninterrupted focus on work shaped in advance; <a data-guide-link="shape-up">Shape Up</a> fixes a six-week cycle and lets the scope vary to fit it</li>
+          <li>You expect Scrum alone to decide what is worth building. It organizes delivery; to test ideas before the team builds them, add <a data-guide-link="dual-track">dual-track agile</a> alongside it</li>
+          <li>You build hardware or work in a regulated industry, where long lead times or required documentation mean Scrum alone may not be enough</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways Scrum goes wrong</h2>
+      <p class="chapter-dek">Most of them keep the events but lose what the events are for</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Using velocity to judge performance</h3>
+        <p>When velocity becomes a target, teams inflate estimates to look productive, and comparisons between teams make no sense because each team sizes points differently.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use velocity only for the team’s own planning, and never compare it across teams.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Turning the Daily Scrum into a status report</h3>
+        <p>People take turns reporting to the Scrum Master or a manager, the meeting becomes a review of the past, and nobody adjusts the plan.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> the Developers talk to each other about progress toward the Sprint Goal, adapt the plan for the next day, keep it to 15 minutes and take problem-solving to a follow-up conversation.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Running a Sprint with no Sprint Goal</h3>
+        <p>A list of unrelated items gives the team nothing to protect when trade-offs come, and the review has no single result to show.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> agree on one Sprint Goal at Sprint Planning and choose the items that serve it.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Giving partial credit</h3>
+        <p>Counting an item that is “mostly done” overstates velocity and hides the work that is still to come.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> count only items that meet the Definition of Done, and return the rest to the Product Backlog.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating the Sprint Review as a demo for sign-off</h3>
+        <p>The team presents slides, stakeholders nod and nothing about the backlog changes, so the main chance to learn is lost.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> invite the people who use or pay for the product, let them try the Increment, and run the review as a working session that ends with an updated Product Backlog.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Frozen or churning scope</h3>
+        <p>Some teams refuse every change once the Sprint starts, even after they learn the plan is wrong. Others let every urgent request in, nothing comes out, and they miss the Sprint Goal or quietly cut quality.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> check each change against the Sprint Goal with the Product Owner. Clarify and renegotiate scope as the team learns, and turn away only what would put the goal at risk.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the accountabilities, events and numbers</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What is the relationship between Agile and Scrum?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They are two names for one method, used interchangeably</button></li>
+          <li><button type="button">Scrum is the newer approach and has replaced Agile entirely</button></li>
+          <li><button type="button">Agile is the values; Scrum is one framework built on them</button></li>
+          <li><button type="button">Agile suits small teams, and Scrum suits large ones</button></li>
+        </ul>
+        <div class="quiz-why"><p>Agile is the mindset set out in the 2001 Manifesto. Scrum is one specific framework built on it, with defined accountabilities, events and artifacts. Other methods apply the same values with different rules.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Who is accountable for ordering the Product Backlog?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The Product Owner</button></li>
+          <li><button type="button">The Scrum Master</button></li>
+          <li><button type="button">The Developers</button></li>
+          <li><button type="button">The most senior stakeholder</button></li>
+        </ul>
+        <div class="quiz-why"><p>The Product Owner owns the what and the why: the Product Goal and the order of the backlog. Others can write items, but one person decides the order. The Developers own the how, and the Scrum Master owns the process.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">What is the Sprint Retrospective for?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Showing stakeholders the Increment and collecting their feedback</button></li>
+          <li><button type="button">Looking at how the team worked and choosing improvements</button></li>
+          <li><button type="button">Re-estimating the items that did not meet the Definition of Done</button></li>
+          <li><button type="button">Choosing the Sprint Goal and the items for the next Sprint</button></li>
+        </ul>
+        <div class="quiz-why"><p>The retrospective looks at the team’s own way of working: people, tools, process and the Definition of Done. Feedback on the product belongs in the Sprint Review, and the next Sprint’s work is chosen at Sprint Planning. The output is a short list of changes the team will act on.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">What does velocity measure, and what should it not be used for?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Hours logged per Sprint; not for setting deadlines</button></li>
+          <li><button type="button">Bugs closed per Sprint; not for comparing teams</button></li>
+          <li><button type="button">Items started per Sprint; not for planning ahead</button></li>
+          <li><button type="button">Points of Done items; not for judging people</button></li>
+        </ul>
+        <div class="quiz-why"><p>Velocity is the total points of items that met the Definition of Done in a Sprint. It helps the team forecast how much it can take on. Using velocity to judge people leads teams to inflate estimates, and points are not comparable across teams.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Halfway through a Sprint, the CEO asks for an urgent feature. What is the best response?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Add it to the Sprint at once, since the CEO has set the priority</button></li>
+          <li><button type="button">Take it to the Product Owner to weigh against the Sprint Goal</button></li>
+          <li><button type="button">Decline it: nothing may change until the next Sprint Planning</button></li>
+          <li><button type="button">Ask the Developers to work extra hours so that it still fits in</button></li>
+        </ul>
+        <div class="quiz-why"><p>The Sprint Goal is protected, but the Sprint Backlog is not frozen. The Product Owner weighs the request against the goal; if it can come in without endangering it, the Product Owner and the Developers renegotiate scope so the Sprint stays achievable. If the request makes the Sprint Goal obsolete, the Product Owner can cancel the Sprint. Extra hours hide the cost and tend to lower quality.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A Product Owner wants each backlog item to stay tied to who benefits and why. Which common format does that?</p>
+        <ul class="quiz-options">
+          <li><button type="button">As a [user type], I want [action] so that [benefit]</button></li>
+          <li><button type="button">Component name, inputs, outputs and technical tests</button></li>
+          <li><button type="button">Steps to reproduce, expected result and actual result</button></li>
+          <li><button type="button">Project brief: objective, scope, milestones and dates</button></li>
+        </ul>
+        <div class="quiz-why"><p>User stories keep each item tied to a user and the value they get, rather than to a technical task. The other options describe a component spec, a bug report and a project brief. The Scrum Guide does not require any format; stories with acceptance criteria are a complementary practice many teams use.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">A team plans 28 points and finishes every item except one 8-point item, which is mostly built. What is its velocity for the Sprint?</p>
+        <ul class="quiz-options">
+          <li><button type="button">28</button></li>
+          <li><button type="button">26</button></li>
+          <li><button type="button">20</button></li>
+          <li><button type="button">24</button></li>
+        </ul>
+        <div class="quiz-why"><p>Only items that meet the Definition of Done count, so the unfinished 8 points earn nothing: 28 − 8 = 20. The item goes back to the Product Backlog, and the Developers re-estimate what is left.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">At each Daily Scrum, every Developer reports yesterday’s work to the engineering manager, who then hands out today’s tasks. What is the problem?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Nothing: the Scrum Guide requires this three-question report</button></li>
+          <li><button type="button">The Product Owner should run the meeting instead</button></li>
+          <li><button type="button">It should be held weekly, so each report covers more</button></li>
+          <li><button type="button">The Developers should plan their own day toward the goal</button></li>
+        </ul>
+        <div class="quiz-why"><p>The Daily Scrum is for the Developers to inspect progress toward the Sprint Goal and adapt their own plan for the next day. The 2020 Scrum Guide prescribes no three questions and no report to a manager, and the Developers are self-managing, so nobody hands out their tasks. It is a 15-minute event held every working day.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: Product Backlog, then the Sprint and its four events, then the Increment */
+  .guide[data-guide="agile-scrum"] .as-cycle {
+    display: grid;
+    gap: var(--s-3);
+  }
+  .guide[data-guide="agile-scrum"] .as-io {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  .guide[data-guide="agile-scrum"] .as-kicker {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="agile-scrum"] .as-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-18);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .guide[data-guide="agile-scrum"] .as-note {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="agile-scrum"] .as-down {
+    display: block;
+    justify-self: center;
+    width: 20px;
+    height: 20px;
+    background: var(--ink-3);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M6 13l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M6 13l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .guide[data-guide="agile-scrum"] .as-sprint {
+    padding: var(--s-4);
+    border: 1px solid var(--cat);
+    border-radius: var(--r-lg);
+    background: var(--cat-wash);
+  }
+  .guide[data-guide="agile-scrum"] .as-sprint-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-3);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="agile-scrum"] .as-sprint-label strong {
+    font-family: var(--font-serif);
+    font-size: var(--fs-20);
+    font-weight: var(--w-medium);
+    color: var(--cat-ink);
+  }
+  .guide[data-guide="agile-scrum"] .as-sprint .chain { margin-top: var(--s-4); }
+  .guide[data-guide="agile-scrum"] .as-sprint .card-key { justify-self: start; }
+  .guide[data-guide="agile-scrum"] .as-loop {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s-2);
+    margin-top: var(--s-2);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="agile-scrum"] .as-loop svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--cat-ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Sprint planner feedback: user text may hold long unbroken words */
+  .guide[data-guide="agile-scrum"] #sp-notes:empty { display: none; }
+  .guide[data-guide="agile-scrum"] #sp-notes > li { overflow-wrap: anywhere; }
+</style>
+
+<script data-guide-script>
+  const goalEl = root.querySelector('#sp-goal');
+  const itemsEl = root.querySelector('#sp-items');
+  const velEl = root.querySelector('#sp-velocity');
+  const goalHelp = root.querySelector('#sp-goal-help');
+  const velHelp = root.querySelector('#sp-velocity-help');
+  const result = root.querySelector('#sp-result');
+  const status = root.querySelector('#sp-status');
+  const notes = root.querySelector('#sp-notes');
+
+  const FIBONACCI = [1, 2, 3, 5, 8, 13];
+  const MIN_VELOCITY = 1;
+  const GOAL_HINT = 'One sentence about one outcome';
+  const VEL_HINT = 'Points finished per Sprint, averaged over your last few Sprints. Optional.';
+  const START = 'Write a Sprint Goal and list the items, then review the plan.';
+  const TAGS = { good: 'Good', check: 'Check', note: 'Consider' };
+  const STATES = { good: 'ok', check: 'revise', note: 'info' };
+  const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
+
+  const EXAMPLE = {
+    goal: 'Cut the median time to first note for new users from 4 minutes to under 90 seconds',
+    items: [
+      'Skip instrument setup for the first lesson (5 pts)',
+      'Inline microphone and keyboard check, with no separate setup screen (8 pts)',
+      'Auto-play demo of the first exercise (5 pts)',
+      '“First note” celebration (2 pts)',
+      'Analytics: track time to first note (3 pts)',
+      'Bug: audio latency on some Android devices (5 pts)',
+    ],
+    velocity: '27',
+  };
+
+  // Points are read from the end of a line: "(5 pts)", "5 points", "5 SP", "(5 story points).", "– 5" or "[5]".
+  // A number glued to a decimal point or a digit ("0.5", "1,000") is never read as points.
+  const UNIT = '(?:pts?|points?|sp|story\\s+points?)';
+  const TAIL = '\\s*[)\\]]?\\s*\\.?\\s*$';
+  const WITH_UNIT = new RegExp('(?<![\\d.,])(\\d{1,3})\\s*' + UNIT + '\\.?' + TAIL, 'i');
+  const AFTER_MARK = new RegExp('(?<!\\d)(?:[(\\[]|[-–—:|,])\\s*(\\d{1,3})' + TAIL);
+  const FRACTION = new RegExp('\\d\\.\\d+\\s*(?:' + UNIT + ')?' + TAIL, 'i');
+
+  function parseLine(line) {
+    const text = line.replace(/^\s*(?:\d+[.)]|[-*•])\s+/, '').trim();
+    const m = text.match(WITH_UNIT) || text.match(AFTER_MARK);
+    if (m) return { text, points: Number(m[1]), fraction: false };
+    return { text, points: null, fraction: FRACTION.test(text) };
+  }
+
+  function setField(el, help, ok, hint, error) {
+    el.setAttribute('aria-invalid', String(!ok));
+    help.textContent = ok ? hint : error;
+    help.classList.toggle('is-error', !ok);
+  }
+
+  function resetField(el, help, hint) {
+    el.removeAttribute('aria-invalid');
+    help.textContent = hint;
+    help.classList.remove('is-error');
+  }
+
+  function addNote(kind, title, text) {
+    const li = document.createElement('li');
+    li.dataset.state = STATES[kind];
+    const tag = document.createElement('span');
+    tag.className = 'check-state';
+    tag.textContent = TAGS[kind];
+    const body = document.createElement('span');
+    const strong = document.createElement('strong');
+    strong.textContent = title;
+    body.append(strong, ' ' + text);
+    li.append(tag, body);
+    notes.append(li);
+  }
+
+  function listValues(values) {
+    if (values.length === 1) return String(values[0]);
+    return values.slice(0, -1).join(', ') + ' and ' + values[values.length - 1];
+  }
+
+  // Reads the velocity field: null when empty, NaN when the browser holds text it cannot parse.
+  function readVelocity() {
+    if (velEl.validity && velEl.validity.badInput) return NaN;
+    const raw = velEl.value.trim();
+    return raw === '' ? null : Number(raw);
+  }
+
+  const velocityOk = (v) => v === null || (Number.isFinite(v) && v >= MIN_VELOCITY);
+
+  function review() {
+    notes.replaceChildren();
+    const goal = goalEl.value.trim();
+    const lines = itemsEl.value.split('\n').map((l) => l.trim()).filter(Boolean);
+    const velocity = readVelocity();
+    const velOk = velocityOk(velocity);
+
+    setField(goalEl, goalHelp, goal.length > 0, GOAL_HINT, 'Add a Sprint Goal first: the plan is built around it');
+    setField(velEl, velHelp, velOk, VEL_HINT, `Enter a velocity of at least ${fmt(MIN_VELOCITY)} point, as a number, or leave it empty`);
+    if (!goal || !velOk) {
+      result.textContent = '–';
+      status.textContent = !goal ? 'Add a Sprint Goal to review the plan.' : 'Fix the velocity, or clear it, to review the plan.';
+      return;
+    }
+
+    // The goal
+    if (goal.length > 100) {
+      addNote('check', 'The goal may be too broad.', 'A Sprint Goal is one sentence about one outcome. “New users can play a note in under 90 seconds” is easier to aim at than a list of features.');
+    } else {
+      addNote('good', 'The goal is focused.', 'Check that the team could show it working at the Sprint Review.');
+    }
+
+    // The items
+    const items = lines.map(parseLine);
+    if (!items.length) {
+      result.textContent = '–';
+      status.textContent = 'Add the items you would pull into the Sprint, one per line.';
+      addNote('check', 'No items yet.', 'List the backlog items that serve the goal, one per line, each with its points.');
+      return;
+    }
+
+    const stories = items.filter((it) => /\bas an?\b.+\bi want\b/i.test(it.text)).length;
+    if (stories === items.length) {
+      addNote('good', 'Written as user stories.', `All ${fmt(items.length)} items name a user and a benefit.`);
+    } else if (stories > 0) {
+      addNote('note', `${fmt(stories)} of ${fmt(items.length)} items ${stories === 1 ? 'is a user story' : 'are user stories'}.`, 'Bugs and technical tasks can stay as plain tasks. For features, “As a [user type], I want [action] so that [benefit]” keeps the user in view.');
+    } else {
+      addNote('note', 'Try the user story format.', 'Rewrite features as “As a [user type], I want [action] so that [benefit].” It keeps each item tied to user value.');
+    }
+
+    const estimated = items.filter((it) => it.points !== null);
+    const fractions = items.filter((it) => it.fraction).length;
+    const missing = items.length - estimated.length - fractions;
+    if (fractions > 0) {
+      addNote('check', fractions === 1 ? '1 item uses a fraction of a point.' : `${fmt(fractions)} items use fractions of a point.`, 'Points are whole values on the scale 1, 2, 3, 5, 8, 13. Round each one to a value on the scale; those items are left out of the total until then.');
+    }
+    if (missing > 0) {
+      addNote('note', missing === 1 ? '1 item has no estimate.' : `${fmt(missing)} items have no estimate.`, 'End a line with its points, such as “(5 pts)”, so the plan can be checked against velocity.');
+    }
+    const tooBig = [...new Set(estimated.filter((it) => it.points >= 13).map((it) => it.points))];
+    if (tooBig.length) {
+      addNote('check', 'Split the large items.', `Many teams treat items of 13 points or more (${listValues(tooBig)}) as too big for one Sprint and split them during refinement.`);
+    }
+    const offScale = [...new Set(estimated.filter((it) => it.points < 13 && !FIBONACCI.includes(it.points)).map((it) => it.points))];
+    if (offScale.length) {
+      addNote('note', 'Use the Fibonacci scale.', `${listValues(offScale)} ${offScale.length === 1 ? 'is' : 'are'} not on the scale 1, 2, 3, 5, 8, 13. Round to the nearest value so estimates stay relative.`);
+    }
+
+    // Capacity
+    const total = estimated.reduce((sum, it) => sum + it.points, 0);
+    if (!estimated.length) {
+      result.textContent = items.length === 1 ? '1 item' : `${fmt(items.length)} items`;
+      status.textContent = 'Add points to each item to check the load.';
+      return;
+    }
+    if (velocity === null) {
+      result.textContent = `${fmt(total)} points`;
+      status.textContent = 'Add your average velocity to check the load.';
+      addNote('note', 'Add a velocity to check capacity.', 'Use the average points finished over your last few Sprints.');
+      return;
+    }
+
+    const share = total / velocity;
+    const rounded = Math.round(share * 100);
+    // Rounding must never hide which side of the velocity the plan is on.
+    let pct = `${fmt(rounded)}%`;
+    if (rounded === 100 && total > velocity) pct = 'just over 100%';
+    if (rounded === 100 && total < velocity) pct = 'just under 100%';
+    const partial = missing + fractions > 0;
+    const over = total - velocity;
+    result.textContent = `${fmt(total)} of ${fmt(velocity)} points`;
+    status.textContent = `${pct.charAt(0).toUpperCase() + pct.slice(1)} of average velocity${partial ? ', counting only the estimated items' : ''}.`;
+    if (over > 0) {
+      addNote('check', 'Over capacity.', `The plan holds ${fmt(total)} points against a velocity of ${fmt(velocity)}. Take out at least ${fmt(over)} ${over === 1 ? 'point' : 'points'}, starting from the bottom of the order.`);
+    } else if (share > 0.9) {
+      addNote('check', 'Almost no buffer.', `At ${pct} of velocity, one surprise will sink an item. Leave 10–20% free for bugs and unplanned work.`);
+    } else if (share >= 0.8) {
+      addNote('good', 'Room for the unexpected.', `At ${pct} of velocity, the plan keeps a buffer of 10–20%, a common rule of thumb.`);
+    } else {
+      addNote('note', 'Spare capacity.', `At ${pct} of velocity, the team could take on more. If it is confident, the Product Owner can offer one more item that serves the goal.`);
+    }
+  }
+
+  goalEl.addEventListener('input', () => {
+    if (goalEl.value.trim()) resetField(goalEl, goalHelp, GOAL_HINT);
+  });
+  velEl.addEventListener('input', () => {
+    if (velocityOk(readVelocity())) resetField(velEl, velHelp, VEL_HINT);
+  });
+
+  root.querySelector('#sp-review').addEventListener('click', review);
+  root.querySelector('#sp-example').addEventListener('click', () => {
+    goalEl.value = EXAMPLE.goal;
+    itemsEl.value = EXAMPLE.items.join('\n');
+    velEl.value = EXAMPLE.velocity;
+    review();
+  });
+  root.querySelector('#sp-clear').addEventListener('click', () => {
+    goalEl.value = '';
+    itemsEl.value = '';
+    velEl.value = '';
+    resetField(goalEl, goalHelp, GOAL_HINT);
+    resetField(velEl, velHelp, VEL_HINT);
+    result.textContent = '';
+    status.textContent = START;
+    notes.replaceChildren();
+  });
+</script>

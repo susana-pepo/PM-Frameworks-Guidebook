@@ -1,0 +1,815 @@
+<article class="guide" data-guide="design-thinking">
+
+  <header class="guide-intro">
+    <p class="lede">Design thinking is a human-centered way to solve a problem you do not fully understand yet. You learn from the people who have the problem, frame it in their terms, then make and test cheap versions of a solution until one holds up.</p>
+
+    <figure class="figure" data-hero>
+      <ol class="dt-modes" aria-label="The five modes of design thinking, in three groups">
+        <li class="dt-group">
+          <p class="dt-group-name">Understand the problem</p>
+          <ol class="dt-group-modes">
+            <li class="dt-mode" data-series="1"><span class="dt-mode-n">1</span><span class="dt-mode-name">Empathize</span><span class="dt-mode-q">Learn how people live with the problem</span></li>
+            <li class="dt-mode" data-series="2"><span class="dt-mode-n">2</span><span class="dt-mode-name">Define</span><span class="dt-mode-q">Frame the one problem worth solving</span></li>
+          </ol>
+        </li>
+        <li class="dt-group dt-group--one">
+          <p class="dt-group-name">Explore solutions</p>
+          <ol class="dt-group-modes">
+            <li class="dt-mode" data-series="3"><span class="dt-mode-n">3</span><span class="dt-mode-name">Ideate</span><span class="dt-mode-q">Generate many possible answers</span></li>
+          </ol>
+        </li>
+        <li class="dt-group">
+          <p class="dt-group-name">Make and learn</p>
+          <ol class="dt-group-modes">
+            <li class="dt-mode" data-series="4"><span class="dt-mode-n">4</span><span class="dt-mode-name">Prototype</span><span class="dt-mode-q">Make an idea tangible, cheaply</span></li>
+            <li class="dt-mode" data-series="5"><span class="dt-mode-n">5</span><span class="dt-mode-name">Test</span><span class="dt-mode-q">Watch real users try it</span></li>
+          </ol>
+        </li>
+      </ol>
+      <div class="dt-loop">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v4a4 4 0 0 1-4 4H5M9 11l-4 4 4 4"/></svg>
+        <p>What you learn in Test can send you back to Empathize, Define or Ideate. Plan for at least two loops.</p>
+      </div>
+      <figcaption>The Stanford d.school’s five modes in three groups, run as a loop rather than a straight line</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>The Stanford d.school’s model has five modes: Empathize with real users, Define the problem in one statement written from their point of view, Ideate many solutions, Prototype the most promising one cheaply and Test it with real users. Teams move back and forth between the modes rather than through them once. Use it when the problem is unclear, not when you already know what to build.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>Start with people, then loop until the answer holds up</h2>
+      <p class="chapter-dek">Settle the problem before you explore answers, and go back whenever the evidence says so</p>
+    </header>
+
+    <p>The practice is older than the model most teams use. Design researchers have studied how designers reason since the 1960s: Herbert Simon’s <cite>The Sciences of the Artificial</cite> (1969) described design as changing an existing situation into a preferred one, and Peter Rowe’s <cite>Design Thinking</cite> (1987) studied how architects and planners work through open problems. IDEO popularized the approach in business, and IDEO’s Tim Brown described it for a wide audience in <cite>Change by Design</cite> (2009). The five-mode model shown above is the Stanford d.school’s (the Hasso Plattner Institute of Design at Stanford).</p>
+    <p>The groups matter more than the mode names. Empathize and Define work in the <strong>problem space</strong>: they decide which problem is worth solving before anyone proposes an answer. Ideate, Prototype and Test work in the solution space. The usual failure is crossing that line too early: a team sketches screens before it can say whose problem it is solving and why.</p>
+
+    <div class="callout">
+      <p class="callout-title">A loop, not a waterfall</p>
+      <p>Any mode can send you back to an earlier one. Testing might send you back to Empathize, and writing the problem statement might show you need more research. That is the process working as intended: each loop makes the solution better.</p>
+    </div>
+
+    <h3>What each mode asks, and what it produces</h3>
+    <p>Each mode below has a guiding question, the methods teams use, the output to aim for and how long it usually takes.</p>
+
+    <ol class="steps">
+      <li>
+        <h4 class="step-title">Empathize</h4>
+        <p class="step-note">What is the user’s actual lived experience?</p>
+        <p>Immerse yourself in the user’s world. Instead of asking people what they want, watch what they do: the gap between what people say and what they actually do is where the useful insights are. Leave your assumptions out and listen.</p>
+        <p><a data-guide-link="jtbd">Jobs to Be Done</a> is one lens for making sense of what you hear: a job story (“When [situation], I want to [motivation], so I can [expected outcome]”) summarizes an interview finding compactly. Empathy research covers more than jobs, though, including emotions, workarounds and the setting people are in.</p>
+        <dl class="facts">
+          <div><dt>Methods</dt><dd>User interviews (5–8 people), contextual observation in the user’s own environment, journey mapping, empathy mapping (says, thinks, does, feels), shadowing</dd></div>
+          <div><dt>Output</dt><dd>Empathy maps, interview transcripts, observation notes, quotes, photos and videos</dd></div>
+          <div><dt>Time</dt><dd>1–2 weeks</dd></div>
+        </dl>
+      </li>
+      <li>
+        <h4 class="step-title">Define</h4>
+        <p class="step-note">What is the real problem we are solving?</p>
+        <p>Synthesize the research into one clear problem statement, called a <dfn>point of view</dfn> (POV): “[User] needs [need] because [surprising insight].” Then turn it into <dfn>How Might We</dfn> questions, each of which turns an insight into an invitation to generate ideas. The POV statement is the main output of Define, and everything after this mode depends on it. It is also a step teams often rush.</p>
+        <dl class="facts">
+          <div><dt>Methods</dt><dd>Affinity mapping (cluster sticky notes into themes), How Might We questions, POV statement writing, insight synthesis</dd></div>
+          <div><dt>Output</dt><dd>One POV statement and 3–5 How Might We questions to guide ideation</dd></div>
+          <div><dt>Time</dt><dd>2–4 hours</dd></div>
+        </dl>
+      </li>
+      <li>
+        <h4 class="step-title">Ideate</h4>
+        <p class="step-note">How many ways could we solve this?</p>
+        <p>Generate as many ideas as possible. The rules: no criticism, wild ideas welcome, build on other people’s ideas, go for quantity. Aim for 50–100 ideas rather than 5 “good” ones. The best ideas often come from combining unexpected concepts.</p>
+        <dl class="facts">
+          <div><dt>Methods</dt><dd>Brainstorming (timed, silent first), Crazy 8s (8 sketches in 8 minutes), SCAMPER (substitute, combine, adapt, modify, put to another use, eliminate, reverse), mind mapping, worst possible idea (then flip it)</dd></div>
+          <div><dt>Output</dt><dd>50–100 raw ideas, dot-voted down to 3–5 top concepts</dd></div>
+          <div><dt>Time</dt><dd>1–2 hours</dd></div>
+        </dl>
+      </li>
+      <li>
+        <h4 class="step-title">Prototype</h4>
+        <p class="step-note">How do we make it real enough to learn from?</p>
+        <p>Build the cheapest, fastest version that lets you test the core assumption. A prototype is a question made tangible. It should take hours, not weeks, and it should look rough: if it looks finished, you spent too long on it.</p>
+        <dl class="facts">
+          <div><dt>Methods</dt><dd>Paper prototypes, wireframes, clickable mockups in Figma, Wizard of Oz (a person fakes the backend), storyboards, a landing page test, role-playing</dd></div>
+          <div><dt>Output</dt><dd>A testable artifact built around 1–2 key assumptions</dd></div>
+          <div><dt>Time</dt><dd>A few hours, two days at most</dd></div>
+        </dl>
+      </li>
+      <li>
+        <h4 class="step-title">Test</h4>
+        <p class="step-note">Does this actually solve the problem for real users?</p>
+        <p>Put the prototype in front of 5–8 users. Do not explain how it works; watch whether they can figure it out. Listen more than you talk, because your job is to learn, not to sell. Every test produces insights that feed the next loop.</p>
+        <dl class="facts">
+          <div><dt>Methods</dt><dd>Usability testing, A/B testing, feedback interviews, task completion tracking, think-aloud protocol</dd></div>
+          <div><dt>Output</dt><dd>Assumptions confirmed or disproved, leading to a refined problem statement or an improved prototype, and the next loop</dd></div>
+          <div><dt>Time</dt><dd>1–2 weeks</dd></div>
+        </dl>
+      </li>
+    </ol>
+
+    <p>The modes are not equal in time. Empathize and Test take longest. Define is short, and often hard. Ideate should be fast and energetic, and Prototype should be scrappy. A full cycle through all five modes typically takes 2–6 weeks.</p>
+
+    <div class="callout">
+      <p class="callout-title">Why about five testers per round is usually enough</p>
+      <p>Testing with about five users finds most usability problems in a round of testing. The model comes from Jakob Nielsen and Tom Landauer (1993), and Nielsen popularized it in “Why You Only Need to Test with 5 Users” (2000). It is why several small rounds teach more than one large test. It holds for usability problems found by one group of similar users in a qualitative test, not for insight in general. If you have several distinct user groups, test 3–4 people from each.</p>
+    </div>
+
+    <h3>Diverge, then converge, twice</h3>
+    <p>The rhythm is easiest to see in the <dfn>Double Diamond</dfn>, a separate model introduced by the UK Design Council in 2005. Its four stages are Discover, Define, Develop and Deliver. The first diamond explores the problem and then narrows it to one; the second explores solutions and then narrows them to one.</p>
+
+    <figure class="figure">
+      <div class="dt-dd">
+        <div class="dt-dd-spaces" aria-hidden="true"><span>Problem space</span><span>Solution space</span></div>
+        <svg class="dt-dd-shape" viewBox="0 0 400 120" role="img" aria-label="Two diamonds side by side. Each widens and then narrows: the first over the problem, the second over the solution.">
+          <polygon data-series="1" points="0,60 100,4 100,116"/>
+          <polygon data-series="2" points="100,4 200,60 100,116"/>
+          <polygon data-series="3" points="200,60 300,4 300,116"/>
+          <polygon data-series="4" points="300,4 350,32 350,88 300,116"/>
+          <polygon data-series="5" points="350,32 400,60 350,88"/>
+        </svg>
+        <ol class="dt-dd-stages">
+          <li><span class="dt-dd-stage">Discover</span><span class="dt-dd-dir">Diverge</span><span class="dt-dd-map" data-series="1">Empathize</span></li>
+          <li><span class="dt-dd-stage">Define</span><span class="dt-dd-dir">Converge</span><span class="dt-dd-map" data-series="2">Define</span></li>
+          <li><span class="dt-dd-stage">Develop</span><span class="dt-dd-dir">Diverge</span><span class="dt-dd-map" data-series="3">Ideate</span></li>
+          <li><span class="dt-dd-stage">Deliver</span><span class="dt-dd-dir">Converge</span><span class="dt-dd-map"><span data-series="4">Prototype</span>, <span data-series="5">Test</span></span></li>
+        </ol>
+      </div>
+      <figcaption>An analogy, not a mapping: the Design Council’s four stages, with the d.school mode that plays a similar role under each</figcaption>
+    </figure>
+
+    <p>The d.school modes line up with it only roughly. Empathize is the first diverge and Define the first converge. Ideate is the second diverge, and Prototype and Test narrow the options down by evidence. The Double Diamond is not part of the d.school process, but its shape is a useful reminder of when to go wide and when to decide.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Redesigning onboarding at Larkwell</h2>
+      <p class="chapter-dek">One pass through all five modes, with the numbers from each</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>New learners quit before their first week is out</h3>
+      <p>Larkwell, a fictional piano-learning app for adults, loses most new learners early; all figures are illustrative. Only 45% of new accounts complete a first song lesson within 24 hours of signing up, and only 19% are still active on day 7. The onboarding team’s brief this quarter is to redesign onboarding and raise activation to 55%.</p>
+
+      <ol class="steps">
+        <li>
+          <h4 class="step-title">Empathize</h4>
+          <p>The team interviewed 8 learners who signed up but stopped within 7 days, watched 5 screen recordings of first sessions and ran an empathy-mapping workshop.</p>
+          <p><strong>Finding:</strong> new learners were overwhelmed rather than unmotivated. The app opened on a library of 320 lessons with no guidance, so they did not know where to start, felt they were doing it wrong and gave up. Their emotional job was to feel they were making progress, and the app failed at that on day one.</p>
+        </li>
+        <li>
+          <h4 class="step-title">Define</h4>
+          <p><strong>Point of view:</strong> “Adult beginners learning piano need to feel a sense of progress in their first 10 minutes because the initial overwhelm makes them believe they can’t learn, and they quit before they’ve actually tried.”</p>
+          <p><strong>How Might We</strong> questions:</p>
+          <ul>
+            <li>How might we make the first session feel like a win?</li>
+            <li>How might we reduce choice paralysis?</li>
+            <li>How might we create a hook moment in under 5 minutes?</li>
+          </ul>
+        </li>
+        <li>
+          <h4 class="step-title">Ideate</h4>
+          <p>A Crazy 8s session produced 67 ideas. A dot vote narrowed them to 3:</p>
+          <ul>
+            <li><strong>A.</strong> A guided “play your first song in five minutes” flow</li>
+            <li><strong>B.</strong> A personalized path quiz: 3 questions that lead to a tailored curriculum</li>
+            <li><strong>C.</strong> Social-proof onboarding that shows other beginners’ day-one recordings</li>
+          </ul>
+          <p><strong>Decision:</strong> concept A won the vote as the fastest path to the first “I did it” moment. The team combined it with a light version of B: one question, “What song do you want to play?”</p>
+        </li>
+        <li>
+          <h4 class="step-title">Prototype</h4>
+          <p>The team built a clickable Figma prototype in about 6 hours. It had 6 screens:</p>
+          <ol>
+            <li>Welcome</li>
+            <li>Pick a song, from 3 beginner-friendly options</li>
+            <li>A simplified lesson that uses only 4 notes</li>
+            <li>Play the song with real-time feedback on each note</li>
+            <li>A celebration screen with playback of the recording</li>
+            <li>A “Keep going?” prompt</li>
+          </ol>
+          <p>The celebration screen reads “You just played your first song in 4 minutes,” with a short confetti animation.</p>
+        </li>
+        <li>
+          <h4 class="step-title">Test</h4>
+          <p>The team ran moderated sessions with 6 new users and noted what each one did.</p>
+          <div class="table-wrap">
+            <table class="table">
+              <caption>Results from 6 moderated test sessions</caption>
+              <thead>
+                <tr><th scope="col">What the team observed</th><th scope="col" class="num">Users</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Completed the first song</th><td class="num">5 of 6</td></tr>
+                <tr><th scope="row">Smiled at the celebration screen</th><td class="num">6 of 6</td></tr>
+                <tr><th scope="row">Tapped “Keep going” straight away</th><td class="num">4 of 6</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The main feedback: “I didn’t know it could be this easy.”</p>
+          <p><strong>What they learned:</strong> the pick-a-song step needs more options, because one user could not find a song they knew. The 4-note simplification worked: it removed the fear of failing. <strong>Next loop:</strong> add more song options and test again with 5 more users.</p>
+        </li>
+      </ol>
+
+      <div class="example-reading">
+        <h4>Each mode narrowed the next one</h4>
+        <p>Each mode builds on the last. Empathy revealed the real problem: overwhelm, not the quality of the content. Define turned it into a clear target, and Ideate explored broadly before the vote narrowed it down.</p>
+        <p>Prototype made the idea testable in hours instead of months. Test confirmed the concept and showed what to refine in the next loop. Whether the redesign moves activation from 45% toward 55% is a question for the shipped version, not the prototype.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Work through a problem of your own</h2>
+      <p class="chapter-dek">Write a few lines for each mode; the checks point out what is still missing</p>
+    </header>
+
+    <div class="tool" data-tool="dt-worksheet">
+      <div class="tool-head">
+        <h3 class="tool-title">Design thinking worksheet</h3>
+        <p class="tool-hint">Use a real problem from your work, or start from a sample. What you type stays on this page until you download it.</p>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="dt-challenge">Your challenge</label>
+          <input id="dt-challenge" type="text" autocomplete="off" placeholder="e.g. Users aren’t completing their first lesson" aria-describedby="dt-challenge-help">
+          <p class="field-help" id="dt-challenge-help">One sentence: who is struggling, and with what</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="dt-sample">Use a sample challenge</button>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="dt-empathize"><span class="key-dot" data-series="1" aria-hidden="true"></span>Empathize: what do you know about the user?</label>
+          <textarea id="dt-empathize" rows="3" placeholder="What have you observed? What have users told you? What surprised you? Where do what they say and what they do differ?" aria-describedby="dt-empathize-help"></textarea>
+          <p class="field-help" id="dt-empathize-help">Think of real users you have talked to. Direct quotes are the most useful evidence.</p>
+        </div>
+        <div class="field">
+          <label for="dt-define"><span class="key-dot" data-series="2" aria-hidden="true"></span>Define: write a POV statement</label>
+          <textarea id="dt-define" rows="3" placeholder="[User] needs [need] because [surprising insight]" aria-describedby="dt-define-help"></textarea>
+          <p class="field-help" id="dt-define-help">The insight should be non-obvious. If everyone already knows it, dig deeper.</p>
+        </div>
+        <div class="field">
+          <label for="dt-ideate"><span class="key-dot" data-series="3" aria-hidden="true"></span>Ideate: brainstorm 5 or more solutions</label>
+          <textarea id="dt-ideate" rows="5" placeholder="Quick wins, ambitious ideas, wild ideas. One per line, no filter yet." aria-describedby="dt-ideate-help"></textarea>
+          <p class="field-help" id="dt-ideate-help">Set a 5-minute timer and write without stopping. Quantity over quality.</p>
+        </div>
+        <div class="field">
+          <label for="dt-prototype"><span class="key-dot" data-series="4" aria-hidden="true"></span>Prototype: what would you build first?</label>
+          <textarea id="dt-prototype" rows="3" placeholder="What is the simplest version you could test? A paper sketch, a Figma mockup, a fake landing page?" aria-describedby="dt-prototype-help"></textarea>
+          <p class="field-help" id="dt-prototype-help">Name the question it answers: will users [expected behavior]?</p>
+        </div>
+        <div class="field">
+          <label for="dt-test"><span class="key-dot" data-series="5" aria-hidden="true"></span>Test: how would you validate it?</label>
+          <textarea id="dt-test" rows="3" placeholder="Who would you test with, and how many? What would you watch for? What result counts as a pass?" aria-describedby="dt-test-help"></textarea>
+          <p class="field-help" id="dt-test-help">Set a pass mark before testing, for example: if 4 of 5 users do X, we proceed.</p>
+        </div>
+      </div>
+
+      <div class="tool-output">
+        <p class="tool-output-label">Progress</p>
+        <output class="tool-result" id="dt-progress" for="dt-empathize dt-define dt-ideate dt-prototype dt-test" aria-live="polite">0 of 5 modes</output>
+        <p class="tool-output-note" id="dt-next">Start with Empathize: what have you seen users do?</p>
+        <p class="tool-output-label">Checks</p>
+        <ul class="checks" id="dt-checks"></ul>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="dt-download">Download worksheet</button>
+        <button type="button" class="btn" id="dt-clear">Clear worksheet</button>
+      </div>
+      <p class="field-help" id="dt-action-help" aria-live="polite">Download a plain-text copy to share with your team.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Use a problem you actually have</p>
+      <p>A real problem from your own work teaches far more than a hypothetical one. Onboarding, retention and engagement problems suit the process well, because users can show you where they struggle.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When design thinking fits, and when it does not</h2>
+      <p class="chapter-dek">It is for problems you do not understand yet, not for work you already know how to do</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are not sure what the real problem is yet</li>
+          <li>You are building something new for an audience you do not fully understand</li>
+          <li>Existing solutions are not working and you do not know why</li>
+          <li>Stakeholders disagree about what to build and you need a shared understanding</li>
+          <li>You want to build the team’s empathy for users</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>The problem is well understood and you need execution speed</li>
+          <li>It is a bug fix or technical debt: just fix it</li>
+          <li>You need to prioritize features you already know about. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead; they are also how you rank the validated ideas a design thinking cycle produces.</li>
+          <li>A stakeholder has already mandated the solution, which is a question of politics, not process</li>
+          <li>You are optimizing a flow that already works. Run an A/B test instead.</li>
+          <li>You have no access to real users</li>
+          <li>You are answering a product design question in an interview. There are no users to research in the room, so structure the answer with the <a data-guide-link="circles">CIRCLES Method</a> and describe the research you would run in real work.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways design thinking goes wrong</h2>
+      <p class="chapter-dek">Most mistakes come from skipping the uncomfortable part of a mode</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Skipping Empathize because “we already know our users”</h3>
+        <p>A common and expensive mistake: teams jump straight to Ideate on the strength of internal opinion. The result is well-designed solutions to problems nobody has.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> talk to 5 real users before any ideation. Even 30-minute calls will challenge what the team believes. “We already know” usually means “we assume.”</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Writing a vague problem statement</h3>
+        <p>“Users need a better experience” is not a problem statement. If Define is fuzzy, everything downstream is a guess.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use the template: “[Specific user] needs [specific need] because [surprising insight from research].” If you cannot fill in the “because,” you have not done enough empathy work.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Judging ideas too early</h3>
+        <p>“That won’t work because…” stops ideas in Ideate. When people fear judgment, they only suggest safe, predictable ideas.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> enforce “Yes, and…” for the first 20 minutes. Have people write ideas silently on sticky notes before anyone discusses them, and keep generating ideas separate from evaluating them.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Over-investing in the prototype</h3>
+        <p>A team spends 3 weeks on a pixel-perfect Figma prototype. When testing reveals problems, nobody wants to throw it away.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> set a time limit of two days at most. Paper sketches are fine, and the rougher a prototype looks, the more honest the feedback it gets.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Testing to confirm, not to learn</h3>
+        <p>“See? They loved it.” Confirmation bias creeps in: leading questions, negative signals ignored and success declared too early.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write your test questions before the session. Ask “Show me how you would…” rather than “Do you like this?”, and watch what people do as well as what they say.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Treating it as a straight line</h3>
+        <p>The team goes through the five modes once, delivers the output and stops. Real design thinking is messy and iterative.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> budget for at least two loops. After every Test, ask what you learned that changes the Define statement. If it changed, loop back.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running a half-day workshop</h2>
+      <p class="chapter-dek">A 200-minute agenda that starts at Define, because the research happens first</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Before (1–2 weeks ahead)</dt><dd>Run the Empathize mode: user interviews, data, empathy maps. The workshop starts at Define. If you try to fit all five modes into one day, you rush the parts that matter most.</dd></div>
+      <div><dt>Who</dt><dd>4–8 people: PMs, designers, engineers and one customer-facing person. That size keeps the group varied and manageable.</dd></div>
+      <div><dt>Bring</dt><dd>The empathy research, sticky notes, voting dots, paper and a whiteboard, and Figma for anyone who prototypes faster on screen</dd></div>
+      <div><dt>After</dt><dd>Test with real users within a week, while the momentum is still there</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–20 min</span><div><p class="agenda-title">Share the empathy research</p><p>Present user quotes, empathy maps and key observations. Everyone reads silently for 5 minutes, then the group discusses. The goal is a shared understanding of the user’s world.</p></div></li>
+      <li><span class="agenda-time">20–50 min</span><div><p class="agenda-title">Define: affinity mapping</p><p>Everyone writes observations on sticky notes, one per note. Cluster them into themes in silence and name the clusters. Write 3–5 How Might We questions and vote on the most useful one.</p></div></li>
+      <li><span class="agenda-time">50–60 min</span><div><p class="agenda-title">Define: POV statement</p><p>Write the POV together: “[User] needs [need] because [insight].” Debate until there is one statement everyone agrees on. It is the reference point for the rest of the workshop.</p></div></li>
+      <li><span class="agenda-time">60–70 min</span><div><p class="agenda-title">Break</p><p>Give the problem time to settle. People often have their best ideas during the break.</p></div></li>
+      <li><span class="agenda-time">70–85 min</span><div><p class="agenda-title">Ideate: silent brainstorm</p><p>Everyone writes ideas silently, one per sticky note, against a 10-minute timer. Aim for 8–10 ideas per person, then put the notes on the wall.</p></div></li>
+      <li><span class="agenda-time">85–100 min</span><div><p class="agenda-title">Ideate: share and build</p><p>Each person presents their top 3 ideas in 30 seconds each. Others add “Yes, and…” builds. Cluster similar ideas.</p></div></li>
+      <li><span class="agenda-time">100–110 min</span><div><p class="agenda-title">Ideate: dot vote</p><p>Everyone gets 3 dots and may stack them on one idea. The top 2–3 ideas move to prototyping. If there is a tie, the PM decides.</p></div></li>
+      <li><span class="agenda-time">110–170 min</span><div><p class="agenda-title">Prototype: build in pairs</p><p>Each pair builds a rough prototype of one winning idea on paper, a whiteboard or in Figma, whichever is fastest. 60 minutes at most. It must be testable: someone can interact with it.</p></div></li>
+      <li><span class="agenda-time">170–190 min</span><div><p class="agenda-title">Test: internal demo</p><p>Each pair presents its prototype while the others role-play the target user and give feedback with the prompts below. Agree next steps for testing with real users.</p></div></li>
+      <li><span class="agenda-time">190–200 min</span><div><p class="agenda-title">Wrap-up and next steps</p><p>Capture the answers: What is our POV? Which prototype moves forward? Who tests it with real users, and when? Assign owners and deadlines.</p></div></li>
+    </ol>
+
+    <div class="template">
+      <p class="template-title">Feedback prompts for the internal demo</p>
+      <pre>I like…
+I wish…
+What if…</pre>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Half a day or a full day</p>
+      <p>This agenda is the half-day version: 200 minutes, or 3 hours 20 minutes. A full-day workshop of 6–7 hours gives Ideate and Prototype more time.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the modes, the rhythm and the common mistakes</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Which sequence is the Stanford d.school’s five-mode model?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Define, Empathize, Ideate, Test, Prototype</button></li>
+          <li><button type="button">Empathize, Ideate, Define, Prototype, Test</button></li>
+          <li><button type="button">Empathize, Define, Ideate, Prototype, Test</button></li>
+        </ul>
+        <div class="quiz-why"><p>Empathize, Define, Ideate, Prototype, Test, and then loop back as often as the evidence requires. Define comes before Ideate because the team frames the problem before it generates answers, and a prototype has to exist before anyone can test it.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">What does the Define mode produce?</p>
+        <ul class="quiz-options">
+          <li><button type="button">A POV statement: “[User] needs [need] because [insight]”</button></li>
+          <li><button type="button">A ranked shortlist of features for the next release</button></li>
+          <li><button type="button">A first prototype that 5 users can try in a session</button></li>
+        </ul>
+        <div class="quiz-why"><p>The POV statement is the main output of Define. It frames the exact problem to solve, and the How Might We questions built from it guide ideation. Features and prototypes come later.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">How many ideas should a team aim for in Ideate?</p>
+        <ul class="quiz-options">
+          <li><button type="button">5 well-considered solutions, each debated before the next</button></li>
+          <li><button type="button">50–100 raw ideas, narrowed down afterward</button></li>
+          <li><button type="button">One strong solution, refined by the whole team</button></li>
+        </ul>
+        <div class="quiz-why"><p>Ideate favors quantity, and wild ideas are welcome. The best solutions often come from combining unexpected concepts. Narrowing down comes after generating, usually with a dot vote.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">How long should a prototype take to build?</p>
+        <ul class="quiz-options">
+          <li><button type="button">2–3 weeks, so the fidelity is right</button></li>
+          <li><button type="button">Hours, at most two days</button></li>
+          <li><button type="button">As long as the design needs</button></li>
+        </ul>
+        <div class="quiz-why"><p>A prototype is a question made tangible. It exists to learn from, not to impress, so it should be cheap enough to throw away when the test says so.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Where does the Double Diamond come from?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The UK Design Council, as a model separate from the d.school’s</button></li>
+          <li><button type="button">The Stanford d.school, as a short form of its five modes</button></li>
+          <li><button type="button">IDEO, as the first published version of the five modes</button></li>
+        </ul>
+        <div class="quiz-why"><p>The UK Design Council introduced the Double Diamond in 2005. Its four stages, Discover, Define, Develop and Deliver, diverge and converge twice: first on the problem, then on the solution. It is not part of the d.school process; the d.school modes follow a similar rhythm, which is why the two are often shown side by side as an analogy.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">A team skips research because “we already know our users.” What is the likely result?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Too few ideas to choose from once the team reaches Ideate</button></li>
+          <li><button type="button">Well-designed solutions to problems users do not have</button></li>
+          <li><button type="button">Prototypes that take too long to build and test</button></li>
+        </ul>
+        <div class="quiz-why"><p>Without empathy work, the team solves assumed problems instead of real ones. “We already know” usually means “we assume,” and finding that out after building is expensive.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">During Empathize, the team writes each interview finding as a job story. A teammate concludes that Empathize is simply Jobs to Be Done research. What is more accurate?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They are the same activity, so a finished job story ends the Empathize mode</button></li>
+          <li><button type="button">Job stories belong in Define, so the team should stop writing them in Empathize</button></li>
+          <li><button type="button">Job stories are one lens; Empathize also covers emotions, workarounds and setting</button></li>
+        </ul>
+        <div class="quiz-why"><p>Jobs to Be Done is one lens for making sense of what users say, and a job story summarizes an interview finding compactly. Empathy research is broader: it also looks at emotions, workarounds and the setting people are in, so a job story is one output of Empathize rather than the whole of it. Job stories can feed the POV statement in Define, and writing them while the interviews are fresh is reasonable.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">In a test, 5 of 6 users finish the first song, but one cannot find a song they know. What should the team do next?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Treat the test as passed and move the flow onto the roadmap</button></li>
+          <li><button type="button">Add more song options and test again with a few more users</button></li>
+          <li><button type="button">Return to Empathize and repeat the full round of interviews</button></li>
+        </ul>
+        <div class="quiz-why"><p>Each test feeds the next loop. Here the problem statement still holds and the concept worked, so the team refines the prototype where it failed and tests it again. Going back to Empathize fits when a test shows the problem itself was framed wrongly, and a round that exposed a gap is not yet a pass.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: five modes in three groups, with the loop back */
+  /* Groups wrap by available width: one row when there is room, then two, then a list. */
+  .guide[data-guide="design-thinking"] .dt-modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5) var(--s-4);
+  }
+  .guide[data-guide="design-thinking"] .dt-group {
+    display: grid;
+    gap: var(--s-3);
+    grid-template-rows: auto 1fr;
+    flex: 2 1 284px;
+    min-width: 0;
+  }
+  .guide[data-guide="design-thinking"] .dt-group--one { flex: 1 1 136px; }
+  .guide[data-guide="design-thinking"] .dt-group-name {
+    padding-bottom: var(--s-2);
+    border-bottom: 2px solid var(--rule-strong);
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="design-thinking"] .dt-group-modes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
+    gap: var(--s-3);
+  }
+  .guide[data-guide="design-thinking"] .dt-mode {
+    display: grid;
+    gap: var(--s-1);
+    align-content: start;
+    padding: var(--s-4);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-md);
+    background: var(--series-wash);
+  }
+  .guide[data-guide="design-thinking"] .dt-mode-n {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="design-thinking"] .dt-mode-name {
+    font-family:var(--font-serif);
+    font-size: var(--fs-20);
+    font-weight: var(--w-medium);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .guide[data-guide="design-thinking"] .dt-mode-q {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="design-thinking"] .dt-loop {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--r-md);
+  }
+  .guide[data-guide="design-thinking"] .dt-loop svg {
+    flex: none;
+    width: var(--s-6);
+    height: var(--s-6);
+    fill: none;
+    stroke: var(--cat-ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .guide[data-guide="design-thinking"] .dt-loop p {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  /* Double Diamond */
+  .guide[data-guide="design-thinking"] .dt-dd { max-width: 640px; margin: 0 auto; display: grid; gap: var(--s-3); }
+  .guide[data-guide="design-thinking"] .dt-dd-spaces {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink-2);
+    text-align: center;
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-shape { display: block; width: 100%; height: auto; }
+  .guide[data-guide="design-thinking"] .dt-dd-shape polygon {
+    fill: color-mix(in oklab, var(--series) 20%, transparent);
+    stroke: var(--series);
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-stages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-2);
+    text-align: center;
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-stages > li { display: grid; gap: var(--s-1); align-content: start; }
+  .guide[data-guide="design-thinking"] .dt-dd-stage {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-dir {
+    font-family:var(--font-sans);
+    font-size: var(--fs-12);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-map {
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="design-thinking"] .dt-dd-map[data-series],
+  .guide[data-guide="design-thinking"] .dt-dd-map [data-series] {
+    font-weight: var(--w-semibold);
+    color: var(--series-ink);
+  }
+
+  @media (max-width: 480px) {
+    .guide[data-guide="design-thinking"] .dt-dd-stages { gap: var(--s-1); }
+    .guide[data-guide="design-thinking"] .dt-dd-stage,
+    .guide[data-guide="design-thinking"] .dt-dd-map { font-size: var(--fs-12); }
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="dt-worksheet"]');
+  const doc = root.ownerDocument;
+  const challenge = tool.querySelector('#dt-challenge');
+  const sampleBtn = tool.querySelector('#dt-sample');
+  const progress = tool.querySelector('#dt-progress');
+  const nextNote = tool.querySelector('#dt-next');
+  const checksList = tool.querySelector('#dt-checks');
+  const downloadBtn = tool.querySelector('#dt-download');
+  const clearBtn = tool.querySelector('#dt-clear');
+  const actionHelp = tool.querySelector('#dt-action-help');
+
+  const MODES = [
+    { key: 'empathize', name: 'Empathize', next: 'Start with Empathize: what have you seen users do?' },
+    { key: 'define', name: 'Define', next: 'Next, Define: turn what you learned into a POV statement.' },
+    { key: 'ideate', name: 'Ideate', next: 'Next, Ideate: list at least 5 possible solutions.' },
+    { key: 'prototype', name: 'Prototype', next: 'Next, Prototype: describe the simplest version you could test.' },
+    { key: 'test', name: 'Test', next: 'Next, Test: decide who you would test with and what counts as a pass.' },
+  ];
+  MODES.forEach(m => { m.el = tool.querySelector(`#dt-${m.key}`); });
+  const FIELDS = [challenge, ...MODES.map(m => m.el)];
+
+  const SAMPLES = [
+    'Users aren’t completing their first lesson',
+    'Trial users sign up but never invite their team',
+    'Customers abandon checkout on mobile',
+    'Support tickets about billing keep rising',
+  ];
+  let sampleAt = 0;
+
+  const HELP_DEFAULT = 'Download a plain-text copy to share with your team.';
+  const CLEAR_LABEL = 'Clear worksheet';
+  const UNDO_LABEL = 'Undo clear';
+  let undoValues = null;
+
+  const value = (el) => el.value.trim();
+  const ideaCount = (text) => text.split(/\n|;/).map(s => s.replace(/^[\s\-*\d.)]+/, '').trim()).filter(Boolean).length;
+
+  // A pass mark is a threshold, not just a number: "4 of 5", "4/5", "80%",
+  // or a number after a comparison ("at least 4", "under 2 minutes").
+  const NUM = '(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten)';
+  const PASS_MARK = [
+    new RegExp(`\\b${NUM}\\s*(?:of|out of|in|/)\\s*${NUM}\\b`, 'i'),
+    /\d\s*(?:%|percent\b)/i,
+    new RegExp(`\\b(?:at least|at most|more than|fewer than|less than|no more than|under|below|above)\\s+${NUM}\\b`, 'i'),
+  ];
+  const hasPassMark = (text) => PASS_MARK.some(re => re.test(text));
+
+  function setText(el, text) {
+    if (el.textContent !== text) el.textContent = text;
+  }
+
+  function setHelp(text, isError) {
+    setText(actionHelp, text);
+    actionHelp.classList.toggle('is-error', Boolean(isError));
+  }
+
+  function setUndo(values) {
+    undoValues = values;
+    setText(clearBtn, values ? UNDO_LABEL : CLEAR_LABEL);
+  }
+
+  // The check rows are built once and updated in place, so typing does not rebuild the list.
+  const checkRows = Array.from({ length: 4 }, () => {
+    const li = doc.createElement('li');
+    const state = doc.createElement('span');
+    state.className = 'check-state';
+    const text = doc.createElement('span');
+    li.append(state, text);
+    checksList.append(li);
+    return { li, state, text };
+  });
+  const STATE_LABEL = { yes: 'Yes', no: 'Not yet', pending: 'To do' };
+  // Map the worksheet's states onto the shared checks list: a passing check is ok,
+  // a draft that misses the form needs revising, and an empty field stays neutral.
+  const SHARED_STATE = { yes: 'ok', no: 'revise', pending: '' };
+
+  function render() {
+    const v = {};
+    MODES.forEach(m => { v[m.key] = value(m.el); });
+    const filled = MODES.filter(m => v[m.key]).length;
+    setText(progress, `${filled} of 5 modes`);
+    const firstEmpty = MODES.find(m => !v[m.key]);
+    setText(nextNote, firstEmpty
+      ? firstEmpty.next
+      : 'Every mode has a draft. Download it, then plan the first loop.');
+
+    const ideas = ideaCount(v.ideate);
+    const povOk = /\bneeds?\b/i.test(v.define) && /\bbecause\b/i.test(v.define);
+    const passOk = hasPassMark(v.test);
+    const checks = [
+      { state: value(challenge) ? 'yes' : 'pending', text: 'Names the challenge you are working on' },
+      {
+        state: !v.define ? 'pending' : povOk ? 'yes' : 'no',
+        text: !v.define || povOk
+          ? 'POV follows the form: [user] needs [need] because [insight]'
+          : 'POV is missing “needs” or “because”: say who needs what, and why',
+      },
+      {
+        state: !v.ideate ? 'pending' : ideas >= 5 ? 'yes' : 'no',
+        text: !v.ideate
+          ? 'At least 5 ideas, one per line'
+          : ideas >= 5 ? `${ideas} ideas listed` : `${ideas} ${ideas === 1 ? 'idea' : 'ideas'} so far: aim for 5 or more`,
+      },
+      {
+        state: !v.test ? 'pending' : passOk ? 'yes' : 'no',
+        text: !v.test || passOk
+          ? 'Test plan sets a pass mark you can count'
+          : 'Add a pass mark, such as “4 of 5 users finish the task”',
+      },
+    ];
+    checks.forEach((c, i) => {
+      const row = checkRows[i];
+      const shared = SHARED_STATE[c.state];
+      if (shared) { if (row.li.dataset.state !== shared) row.li.dataset.state = shared; }
+      else if (row.li.hasAttribute('data-state')) row.li.removeAttribute('data-state');
+      setText(row.state, STATE_LABEL[c.state]);
+      setText(row.text, c.text);
+    });
+    return { v, filled };
+  }
+
+  FIELDS.forEach(el => {
+    el.addEventListener('input', () => {
+      render();
+      if (undoValues) {
+        setUndo(null);
+        setHelp(HELP_DEFAULT);
+      } else if (actionHelp.classList.contains('is-error')) {
+        setHelp(HELP_DEFAULT);
+      }
+    });
+  });
+
+  sampleBtn.addEventListener('click', () => {
+    challenge.value = SAMPLES[sampleAt];
+    sampleAt = (sampleAt + 1) % SAMPLES.length;
+    if (undoValues) {
+      setUndo(null);
+      setHelp(HELP_DEFAULT);
+    }
+    render();
+    challenge.focus();
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const { v, filled } = render();
+    const name = value(challenge);
+    if (!filled && !name) {
+      setHelp('Write something in at least one mode before downloading.', true);
+      MODES[0].el.focus();
+      return;
+    }
+    const lines = ['Design thinking worksheet', '', `Challenge: ${name || '(not set)'}`];
+    MODES.forEach(m => { lines.push('', m.name, v[m.key] || '(empty)'); });
+    const url = URL.createObjectURL(new Blob([lines.join('\n') + '\n'], { type: 'text/plain' }));
+    const a = doc.createElement('a');
+    a.href = url;
+    a.download = 'design-thinking-worksheet.txt';
+    a.click();
+    const timer = setTimeout(() => URL.revokeObjectURL(url), 1000);
+    api.onCleanup(() => clearTimeout(timer));
+    setHelp(`Downloaded, with ${filled} of 5 modes filled in.`);
+  });
+
+  // Clearing keeps the previous text so one mis-click never loses the worksheet:
+  // the button turns into "Undo clear" until the reader types again.
+  clearBtn.addEventListener('click', () => {
+    if (undoValues) {
+      FIELDS.forEach((el, i) => { el.value = undoValues[i]; });
+      setUndo(null);
+      render();
+      setHelp('Worksheet restored.');
+      return;
+    }
+    const saved = FIELDS.map(el => el.value);
+    if (saved.every(s => !s.trim())) {
+      setHelp('The worksheet is already empty.');
+      return;
+    }
+    FIELDS.forEach(el => { el.value = ''; });
+    setUndo(saved);
+    render();
+    setHelp('Worksheet cleared. Select “Undo clear” to bring it back.');
+  });
+
+  render();
+</script>

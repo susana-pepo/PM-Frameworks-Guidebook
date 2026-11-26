@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PM Frameworks — A Field Guide</title>
-  <meta name="description" content="A field guide to 24 product-management frameworks across 6 categories. Look one up, practice it, or compare your options — the right tool for the job.">
-  <meta name="theme-color" content="#fcfaf4">
+  <title>PM Frameworks: a field guide</title>
+  <meta name="description" content="24 product management frameworks in 6 families, each explained with a worked example and a tool to try it, plus guides for choosing between them.">
+  <meta name="theme-color" content="#fbf9f4">
   <script>
     /* Set theme before first paint to avoid a flash. Honors a saved
        choice, else defaults to light (the "paper" field-guide look). */
     (function () {
       try {
-        var saved = localStorage.getItem('pmf-theme');
-        var theme = saved || 'light';
+        var saved = null;
+        try { saved = localStorage.getItem('pmf-theme'); } catch (e) {}
+        var theme = saved || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400..600;1,7..72,400..500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Literata:opsz,wght@7..72,400..600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to content</a>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
 </body>

@@ -1,0 +1,933 @@
+<article class="guide" data-guide="growth-loops">
+
+  <header class="guide-intro">
+    <p class="lede">A growth loop is a closed system in which the output of one cycle, such as a new user, an invite or a piece of content, becomes the input of the next. Use it to design growth that compounds, instead of growth you have to keep buying.</p>
+
+    <figure class="figure" data-hero>
+      <div class="gl-loop">
+        <div class="gl-node gl-node--1">
+          <span class="gl-node-n">1</span>
+          <span class="gl-tag" data-series="1">Input</span>
+          <span class="gl-node-label">New users arrive</span>
+        </div>
+        <div class="gl-node gl-node--2">
+          <span class="gl-node-n">2</span>
+          <span class="gl-tag gl-tag--neutral">Value</span>
+          <span class="gl-node-label">They get value from the product</span>
+        </div>
+        <div class="gl-node gl-node--3">
+          <span class="gl-node-n">3</span>
+          <span class="gl-tag" data-series="2">Action</span>
+          <span class="gl-node-label">They create content or invite others</span>
+        </div>
+        <div class="gl-node gl-node--4">
+          <span class="gl-node-n">4</span>
+          <span class="gl-tag" data-series="3">Output</span>
+          <span class="gl-node-label">Other people discover the product</span>
+        </div>
+        <p class="gl-hub"><strong>Repeats</strong> Step 4 feeds step 1</p>
+        <svg class="gl-arrow gl-arrow--1" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><path d="M2,10 Q46,10 46,54"/><path d="M40,46 L46,54 L52,46"/></svg>
+        <svg class="gl-arrow gl-arrow--2" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><path d="M46,2 Q46,46 2,46"/><path d="M10,40 L2,46 L10,52"/></svg>
+        <svg class="gl-arrow gl-arrow--3" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><path d="M54,46 Q10,46 10,2"/><path d="M4,10 L10,2 L16,10"/></svg>
+        <svg class="gl-arrow gl-arrow--4" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><path d="M10,54 Q10,10 54,10"/><path d="M46,4 L54,10 L46,16"/></svg>
+      </div>
+      <figcaption>Read clockwise from the top. Each turn starts from a larger base instead of from zero.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Funnels leak; loops feed themselves. Every loop has an input, an action that creates value for someone else, and an output that becomes new input. Measure how much each cycle returns and how long it takes, and fix retention before you amplify anything.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>A loop feeds itself; a funnel needs refilling</h2>
+      <p class="chapter-dek">A closed system with three parts: input, action and output</p>
+    </header>
+
+    <p><a data-guide-link="aarrr">AARRR (pirate metrics)</a> is a funnel: users enter at the top and some leak out at every stage. A funnel converts what you put in; it does not feed itself. It describes where you lose people, but it does not explain why some products grow faster the bigger they get.</p>
+    <p><dfn>A growth loop</dfn> is a closed system: new users take an action that produces an output, and that output brings in more new users. A funnel ends at its last stage; a loop feeds its output back in as input, so growth can compound. Brian Balfour, Casey Winters, Kevin Kwok and Andrew Chen set out the idea in “Growth Loops are the New Funnels” (Reforge, 2018). Each cycle can be bigger than the last: 10 users create content that attracts 15, who create content that attracts 22, and so on.</p>
+    <p>Funnels still have a job inside a loop. Each step of a loop is measured as a conversion, from the people at one step to the people who complete the next.</p>
+
+    <figure class="figure">
+      <div class="gl-compare">
+        <div class="gl-panel">
+          <p class="gl-panel-label">Funnel: linear</p>
+          <ol class="gl-bars" aria-label="Users left at each of five funnel stages">
+            <li><span class="gl-val">100</span><span class="gl-bar" style="--v: 1"></span></li>
+            <li><span class="gl-val">50</span><span class="gl-bar" style="--v: 0.5"></span></li>
+            <li><span class="gl-val">25</span><span class="gl-bar" style="--v: 0.25"></span></li>
+            <li><span class="gl-val">12</span><span class="gl-bar" style="--v: 0.12"></span></li>
+            <li><span class="gl-val">6</span><span class="gl-bar" style="--v: 0.06"></span></li>
+          </ol>
+          <p class="gl-panel-note">Each stage loses users. To grow, pour more in at the top.</p>
+        </div>
+        <div class="gl-panel gl-panel--loop">
+          <p class="gl-panel-label">Loop: compounding</p>
+          <ol class="gl-bars" aria-label="New users in each of five loop cycles">
+            <li><span class="gl-val">10</span><span class="gl-bar" style="--v: 0.2"></span></li>
+            <li><span class="gl-val">15</span><span class="gl-bar" style="--v: 0.3"></span></li>
+            <li><span class="gl-val">22</span><span class="gl-bar" style="--v: 0.44"></span></li>
+            <li><span class="gl-val">33</span><span class="gl-bar" style="--v: 0.66"></span></li>
+            <li><span class="gl-val">50</span><span class="gl-bar" style="--v: 1"></span></li>
+          </ol>
+          <p class="gl-panel-note">Each cycle starts from a bigger group, so growth reinforces itself.</p>
+        </div>
+      </div>
+      <figcaption>The funnel halves at every stage; the loop returns 1.5× its input every cycle. Few loops sustain 1.5×, but any loop gives something back for each user you add.</figcaption>
+    </figure>
+
+    <h3>Three parts of every loop</h3>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <span class="card-key" data-series="1">1</span>
+        <h4 class="card-title">Input</h4>
+        <p class="card-q">What enters the loop?</p>
+        <p>A new user, a new piece of content or new revenue. The first cycle has to be seeded from outside the loop: marketing, PR or the founders’ own effort.</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">2</span>
+        <h4 class="card-title">Action</h4>
+        <p class="card-q">What does the user do that creates value for others?</p>
+        <p>Something people do inside the product: share, create, invite, review or publish.</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="3">3</span>
+        <h4 class="card-title">Output becomes new input</h4>
+        <p class="card-q">How does the result bring in the next cycle?</p>
+        <p>New people discover the product, new content attracts visitors, or revenue funds more acquisition. This is the <dfn>feedback mechanism</dfn>, and without it you have a funnel.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">A waterfall and a flywheel</p>
+      <p>A funnel works like a waterfall: water flows one way, downhill. A loop works like a flywheel: each push makes the next one easier. A marketplace shows the idea: lower prices bring more customers, more customers attract more sellers, more sellers improve selection, and a bigger business can lower prices again.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="types" data-nav="Loop types">
+    <header class="chapter-head">
+      <h2>Three kinds of loop</h2>
+      <p class="chapter-dek">Viral, content and paid loops differ in what feeds the next cycle</p>
+    </header>
+
+    <h3>Viral loops</h3>
+    <p>Users invite or attract other users as a natural byproduct of using the product.</p>
+    <ol class="chain">
+      <li><span class="chain-name">A user signs up</span></li>
+      <li><span class="chain-name">They invite friends</span></li>
+      <li><span class="chain-name">Friends sign up</span></li>
+      <li><span class="chain-name">They invite their friends</span><span class="chain-note">Feeds step 1 again</span></li>
+    </ol>
+    <dl class="facts">
+      <div><dt>Examples</dt><dd>A messaging app that is only useful once your contacts are on it, a file-sharing service where sharing a file invites the recipient, a team chat tool you invite colleagues into so you can work together</dd></div>
+      <div><dt>Key metric</dt><dd><dfn>K-factor</dfn>: invitations sent per user × the share of invitations that convert, which is the number of new users each user brings in per cycle. Above 1, each cohort brings in more than itself, so growth is exponential while it lasts.</dd></div>
+      <div><dt>Limit</dt><dd>K above 1 is rare and usually temporary. Most viral loops run below 1 and still lower what each new user costs.</dd></div>
+    </dl>
+
+    <h3>Content loops</h3>
+    <p>Content gets indexed or shared, attracts new users, and those users lead to more content. Reforge separates two kinds. In a <dfn>user-generated</dfn> loop, the new users create the next round of content themselves. In a <dfn>company-generated</dfn> loop, your team writes the content, and the users it attracts fund or direct the next piece.</p>
+    <ol class="chain">
+      <li><span class="chain-name">A user creates content</span></li>
+      <li><span class="chain-name">Search or social feeds surface it</span></li>
+      <li><span class="chain-name">A new user discovers it</span></li>
+      <li><span class="chain-name">They sign up and create content</span><span class="chain-note">Feeds step 1 again</span></li>
+    </ol>
+    <dl class="facts">
+      <div><dt>Examples</dt><dd>User-generated: an image-pinning site whose boards search engines index, a question-and-answer site, a video platform. Company-generated: a team that publishes how-to pages that rank in search</dd></div>
+      <div><dt>Key metric</dt><dd>Content created per user, search impressions</dd></div>
+      <div><dt>Limit</dt><dd>Slow to build. The content has to rank or surface before the loop turns at all.</dd></div>
+    </dl>
+
+    <h3>Paid loops</h3>
+    <p>Revenue from users funds the acquisition of more users.</p>
+    <ol class="chain">
+      <li><span class="chain-name">Ads acquire a user</span></li>
+      <li><span class="chain-name">The user pays a subscription</span></li>
+      <li><span class="chain-name">Revenue funds more ads</span></li>
+      <li><span class="chain-name">More users arrive</span><span class="chain-note">Feeds step 1 again</span></li>
+    </ol>
+    <dl class="facts">
+      <div><dt>Examples</dt><dd>Consumer subscription apps and many SaaS businesses</dd></div>
+      <div><dt>Key metric</dt><dd>Lifetime value to customer acquisition cost (LTV:CAC) ratio and payback period</dd></div>
+      <div><dt>Limit</dt><dd>A paid loop compounds only if LTV exceeds CAC and the payback period is short enough to reinvest. CAC tends to rise at scale as the cheapest audiences run out.</dd></div>
+    </dl>
+
+    <h3>Each type trades cost against durability</h3>
+    <p>Viral loops cost little per user, but sustained K above 1 is rare. Content loops are durable but slow to build. Paid loops are the easiest to start, but they stop when spending stops, depend on LTV exceeding CAC and use audiences that competitors can buy too. A paid loop can still be a sound main engine when the unit economics hold. Invite mechanics are easy to copy too: a viral loop becomes hard to compete with only when it rests on a network effect, where each new user makes the product better for the others.</p>
+    <div class="table-wrap">
+      <table class="table table--compare">
+        <caption>How the three loop types compare</caption>
+        <thead>
+          <tr>
+            <th scope="col">Loop</th>
+            <th scope="col">What feeds the next cycle</th>
+            <th scope="col">Cost per new user</th>
+            <th scope="col">Defensibility</th>
+            <th scope="col">Stops when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Viral</th><td>Invites and shares</td><td>Low</td><td data-rating="mid">Medium</td><td>The product stops giving people a reason to bring others</td></tr>
+          <tr><th scope="row">Content</th><td>Content that search or feeds surface</td><td>Low</td><td data-rating="high">High</td><td>The content stops ranking or surfacing</td></tr>
+          <tr><th scope="row">Paid</th><td>Revenue spent on ads</td><td>High</td><td data-rating="low">Low</td><td>Spending stops, CAC rises to meet LTV, or payback grows too long to reinvest</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Loops can feed each other</p>
+      <p>Many products run more than one loop, and the loops can reinforce one another: content brings in users who invite friends, and the revenue they generate pays for ads that seed both.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="mechanics" data-nav="Mechanics">
+    <header class="chapter-head">
+      <h2>What makes a loop strong</h2>
+      <p class="chapter-dek">Four measures, two of which multiply into what each cycle returns</p>
+    </header>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h3 class="card-title">Amplitude</h3>
+        <p class="card-q">How much output does each input create?</p>
+        <p>The invites, shares or views each user produces in one cycle. If each user sends 3 invites on average, amplitude is 3. The word means size here; it has nothing to do with Amplitude, the analytics company behind the North Star Playbook.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Conversion rate</h3>
+        <p class="card-q">What share of that output becomes new input?</p>
+        <p>If 20% of invited people sign up, conversion is 20%. The higher it is, the more of each cycle’s output comes back.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Cycle time</h3>
+        <p class="card-q">How long does one full loop take?</p>
+        <p>A photo-sharing app can turn in minutes: post, seen, follow. A travel-booking marketplace turns in weeks: stay, review, new booking. The shorter the cycle, the faster the loop compounds.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Defensibility</h3>
+        <p class="card-q">Can competitors copy this loop?</p>
+        <p>Content loops build a search moat over time. Network effects build a user moat. Paid loops are the easiest to copy, although scale and better targeting data can give some edge.</p>
+      </div>
+    </div>
+
+    <h3>Amplitude times conversion is what each cycle returns</h3>
+    <p class="formula" role="img" aria-label="Amplitude times conversion rate equals K, the new users each user brings in per cycle">
+      <var data-series="5">Amplitude</var>
+      <span class="formula-term"><span class="op">×</span><var data-series="6">Conversion</var></span>
+      <span class="formula-term"><span class="op">=</span><span class="formula-result">K per cycle</span></span>
+    </p>
+    <p>For a viral loop this product is the K-factor: invitations sent per user × the share of invitations that convert. With 3 invites per user and 20% acceptance, K is 3 × 20% = 0.6: every user brings in 0.6 new users per cycle. Content loops work the same way: if 100 users’ posts bring in 30 new users, the loop returns 0.3 new users per user per cycle.</p>
+    <p>A K below 1 still matters. With K = 0.6, every 100 users you acquire bring in 60, who bring in 36, and so on, until the 100 have become about 250. That is why a small loop on top of paid acquisition lowers what each user costs: with K = 0.2, counting the invites of invited users too, effective CAC falls by 20%.</p>
+
+    <h3>Cycle time decides how fast it compounds</h3>
+    <p>K tells you what one cycle returns; cycle time tells you how many cycles you get. Take two loops with K = 1.2. One turns every 3 days and runs 10 cycles a month; the other turns every 15 days and runs 2. After a month, the fast loop’s newest group is 1.2<sup>10</sup>, about 6.2× the starting group. The slow loop’s is 1.2<sup>2</sup>, or 1.44×.</p>
+    <p>No published formula combines these measures into one loop-strength score, so treat them as this guide’s working heuristic: a loop gets stronger when more people take part, more of them convert and each turn is faster.</p>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Look at the clock before the invites</p>
+      <p>Teams often try to raise amplitude first: more invites, more shares. Shortening the cycle, for example by prompting a share at the first moment of value instead of a week later, is often the bigger improvement.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Mapping Larkwell’s three growth loops</h2>
+      <p class="chapter-dek">A paid loop carries the growth; a clip loop and a content loop are still to be tested</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>A piano-learning app that buys most of its new learners</h3>
+      <p>Larkwell, a fictional piano-learning app for adults, is the same company as in the <a data-guide-link="aarrr">AARRR</a> guide; all its figures are illustrative. It sells a monthly plan at $14.99 and an annual plan at $89.99, which averages $9.00 a month per subscriber (ARPPU). Each month it gets 100,000 installs: 60,000 from paid ads, 30,000 from organic app store search and 10,000 from referrals and shared clips. Organic search is its best channel per install: it costs nothing and brings learners with high intent, but it is not one of its loops.</p>
+
+      <h4>Running now: the paid loop</h4>
+      <ol class="chain">
+        <li><span class="chain-name">Learners pay for a subscription</span><span class="chain-note">$9.00 a month on average</span></li>
+        <li><span class="chain-name">Revenue funds app store and video ads</span><span class="chain-note">$150,000 a month, $2.50 per install</span></li>
+        <li><span class="chain-name">New people install</span><span class="chain-note">60,000 paid installs a month</span></li>
+        <li><span class="chain-name">Some of them subscribe</span><span class="chain-note">7.5% of new accounts; feeds step 1 again</span></li>
+      </ol>
+      <p><strong>Status: active, and it pays back.</strong> With a blended CAC of $30 ($180,000 of marketing ÷ 6,000 new subscribers), a 75% gross margin and 7% monthly churn, LTV is about $96 ($9.00 × 75% ÷ 7%). LTV:CAC is about 3.2:1, above the 3:1 that is a widely cited rule of thumb, and payback is about 4.4 months: $30 ÷ ($9.00 × 75%). That is short enough to reinvest, so the loop can keep compounding while those numbers hold. Blended CAC mixes paid subscribers with those from organic search and referrals, so check the paid channel’s own CAC before raising the ad budget. It still stops when spending stops, and costs can rise as more apps bid for the same beginners.</p>
+
+      <h4>Barely turning: the first-song clip loop</h4>
+      <ol class="chain">
+        <li><span class="chain-name">A learner plays a first song</span><span class="chain-note">A moment of pride</span></li>
+        <li><span class="chain-name">The app offers to share a 15-second clip</span><span class="chain-note">About 3% of activated learners share one today</span></li>
+        <li><span class="chain-name">Friends see the clip</span><span class="chain-note">And think “I could do that”</span></li>
+        <li><span class="chain-name">Some install</span><span class="chain-note">They reach their own first song, and the loop starts again</span></li>
+      </ol>
+      <p><strong>Status: potential, a viral loop.</strong> Shared clips and the “Give a friend 30 days free” referral offer together give Larkwell a K-factor of 0.10: 0.5 invites per new account × 20% acceptance. That is about 8,000 new accounts a month (80,000 × 0.10), which matches 10,000 referral and clip installs at an 80% sign-up rate. With only 3% sharing, the clip loop contributes little so far. A better share at the first-song moment would cost almost nothing per new learner and comes from a real moment of achievement, but it needs investment in the sharing experience.</p>
+
+      <h4>Not built yet: the song tutorial pages</h4>
+      <ol class="chain">
+        <li><span class="chain-name">Larkwell’s educators publish song pages</span><span class="chain-note">“How to play Für Elise on piano”</span></li>
+        <li><span class="chain-name">The pages bring in search traffic</span></li>
+        <li><span class="chain-name">Visitors install the app</span></li>
+        <li><span class="chain-name">Learners request songs</span><span class="chain-note">Their requests pick the next pages</span></li>
+      </ol>
+      <p><strong>Status: potential, slow but durable.</strong> This is a company-generated content loop: Larkwell’s content team writes the pages, and the learners the pages bring in close the loop by asking for the next song and paying for the work. It builds a search moat over time at a low cost per page.</p>
+
+      <div class="example-reading">
+        <h4>What the map shows</h4>
+        <p><strong>Larkwell relies on its paid loop.</strong> Most new learners are bought. The loop pays back today, but it stops when the budget does and gives rivals nothing they cannot buy too.</p>
+        <p><strong>Retention comes first.</strong> Larkwell’s funnel in the AARRR guide shows retention is its leakiest stage: 45% of new accounts activate, but only 9% are active on day 30, and four in five activated learners are gone within a month. A loop on a leaky product only burns through the market faster, so retention work comes before any new loop.</p>
+        <p><strong>The first-song clip loop is the largest untested opportunity.</strong> Once retention improves, this is where to look. Larkwell already has the moment of pride and a loop that turns at 3% sharing, so raising the share rate is likely the cheapest way to move growth from bought to earned.</p>
+        <p><strong>The song pages are the long-term base.</strong> They will not move numbers this quarter, but each page can keep bringing in beginners long after it is written.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Design a loop of your own</h2>
+      <p class="chapter-dek">Map it in words, then check what the numbers would do</p>
+    </header>
+
+    <div class="tool" data-tool="loop-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">Loop builder</h3>
+        <p class="tool-hint">Describe each part of the loop, then analyze it for gaps.</p>
+      </div>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="gl-type">Loop type</label>
+          <select id="gl-type">
+            <option value="">Choose a loop type</option>
+            <option value="viral">Viral: users invite users</option>
+            <option value="content">Content: users or your team create discoverable content</option>
+            <option value="paid">Paid: revenue funds acquisition</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="gl-input">Input</label>
+          <textarea id="gl-input" rows="2" placeholder="For example: a new user signs up through an app store" aria-describedby="gl-input-help"></textarea>
+          <p class="field-help" id="gl-input-help">What enters the loop</p>
+        </div>
+        <div class="field">
+          <label for="gl-action">Action</label>
+          <textarea id="gl-action" rows="2" placeholder="For example: records a progress video" aria-describedby="gl-action-help"></textarea>
+          <p class="field-help" id="gl-action-help">What the user does that creates value for others</p>
+        </div>
+        <div class="field">
+          <label for="gl-output">Output that becomes new input</label>
+          <textarea id="gl-output" rows="2" placeholder="For example: the video is shared on social media, friends discover the app and sign up" aria-describedby="gl-output-help"></textarea>
+          <p class="field-help" id="gl-output-help">How the result of the action brings new people into step 1</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="gl-analyze">Analyze the loop</button>
+        <button type="button" class="btn" id="gl-clear">Clear</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Your loop</p>
+        <output class="tool-result" id="gl-builder-result" for="gl-type gl-input gl-action gl-output"></output>
+        <p class="tool-output-note" id="gl-builder-status">Fill in all four fields, then analyze the loop.</p>
+        <ol class="chain gl-user-chain" id="gl-builder-chain" hidden></ol>
+        <ul class="checks" id="gl-builder-notes"></ul>
+      </div>
+    </div>
+
+    <div class="tool" data-tool="loop-calculator">
+      <div class="tool-head">
+        <h3 class="tool-title">Loop calculator</h3>
+        <p class="tool-hint">Estimate what one cycle returns and what a quarter of cycles adds up to. Change any value and the result updates.</p>
+      </div>
+      <div class="fields" data-cols="2" data-compact>
+        <div class="field">
+          <label for="gl-amp">Amplitude</label>
+          <input id="gl-amp" type="number" min="0" step="0.5" value="3" inputmode="decimal" aria-describedby="gl-amp-help">
+          <p class="field-help" id="gl-amp-help">Invites, shares or views per user per cycle</p>
+        </div>
+        <div class="field">
+          <label for="gl-conv">Conversion rate (%)</label>
+          <input id="gl-conv" type="number" min="0" max="100" step="1" value="20" inputmode="decimal" aria-describedby="gl-conv-help">
+          <p class="field-help" id="gl-conv-help">Share of that output that becomes a new user</p>
+        </div>
+        <div class="field">
+          <label for="gl-cycle">Cycle time (days)</label>
+          <input id="gl-cycle" type="number" min="0.1" step="0.1" value="7" inputmode="decimal" aria-describedby="gl-cycle-help">
+          <p class="field-help" id="gl-cycle-help">Time for one full loop</p>
+        </div>
+        <div class="field">
+          <label for="gl-seed">Users you seed</label>
+          <input id="gl-seed" type="number" min="1" step="1" value="100" inputmode="numeric" aria-describedby="gl-seed-help">
+          <p class="field-help" id="gl-seed-help">Users brought in from outside the loop</p>
+        </div>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">K, new users per user per cycle</p>
+        <output class="tool-result" id="gl-calc-result" for="gl-amp gl-conv gl-cycle gl-seed">0.6</output>
+        <p class="tool-output-note" id="gl-calc-equation">3 × 20% = 0.6</p>
+        <p id="gl-calc-reading">Within a quarter (12 cycles), 100 seeded users become about 250. Over time they approach 250, so your blended cost per user falls by about 60%.</p>
+      </div>
+    </div>
+
+    <div class="template">
+      <p class="template-title">Saying it in an interview</p>
+      <pre>Instead of thinking only in funnels, I would design a growth loop where [user action] naturally brings in new users.
+The loop is: [input] → [action] → [output that feeds back as new input].
+I would measure its cycle time and conversion rate, then work on whichever is weaker.</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When growth loops fit, and when they do not</h2>
+      <p class="chapter-dek">Loops amplify whatever the product already is, good or bad</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are designing a sustainable growth strategy</li>
+          <li>Growth depends too heavily on paid ads</li>
+          <li>The product has natural moments to share or invite</li>
+          <li>An interviewer asks how you would grow a product</li>
+          <li>You are building a growth model or financial projections</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>You have not found product-market fit. Loops amplify what exists, good or bad.</li>
+          <li>Retention is broken. A loop on a leaky product only burns through your market faster.</li>
+          <li>You need to find where growth is stuck. Use <a data-guide-link="aarrr">AARRR</a> first.</li>
+          <li>You sell enterprise B2B deals through a manual sales team</li>
+          <li>You need to prioritize features. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Loops are usually the last step of a growth plan, once the funnel’s leaks, the North Star Metric and its inputs are in place. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways loops underperform</h2>
+      <p class="chapter-dek">Some never close; others close but return too little or turn too slowly</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Calling a funnel a loop</h3>
+        <p>If no output of the last step becomes a new input, it is a funnel. The link from output back to input is the critical one, and “users love it and tell people” describes hope, not a mechanism.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> trace the output of each cycle back to the start of the next before you draw the loop. Write the link out in full: “…which causes [these new people] to [enter the loop this way].” If you cannot, the loop is not closed.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Assuming virality</h3>
+        <p>Growth plans often assume each user will bring in more than one more. A K-factor above 1 is rare and usually temporary, so a plan built on it overstates growth.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> measure invitations per user, acceptance and cycle time, and plan as if K is below 1. A K below 1 still lowers what each new user costs.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Scaling a paid loop without its unit economics</h3>
+        <p>Reinvesting revenue in ads only compounds when LTV exceeds CAC and the payback is short enough to reinvest. CAC usually rises as you scale and saturate the audience, and growth stops the day the budget does.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> compute LTV:CAC and payback before you scale a paid loop, and layer a viral or content loop on top. Even a small K lowers effective CAC, as <a href="#mechanics" data-section-link>Mechanics</a> shows.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Bolting on a share button</h3>
+        <p>A “share with friends” button added to the end of a flow is not a viral loop. The strongest viral loops happen when sharing is the product, as when you invite colleagues into a team chat tool to work together.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> find the action that is core to the experience and makes the product better when someone else joins.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mislabeling a content loop</h3>
+        <p>A loop where the company writes the content behaves differently from one where users do: the company pays for every piece, while users create theirs for free. Either way, a content loop only turns if the content is discoverable through search, social feeds or the platform’s own search. Content that stays behind a login brings no one in.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> name who creates the content and cost it accordingly, and check that each piece will rank or surface on its own. If your team writes it, check that new users give something back, such as revenue or demand data, that funds the next piece.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Tuning amplitude and ignoring cycle time</h3>
+        <p>Teams push for more invites per user and never measure how long one cycle takes. Two loops with the same K grow at very different speeds if one turns in a week and the other in a quarter.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> time one full loop, from a user’s arrival to the arrival of the users they bring, and look for the step that takes longest.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on loop types, loop math, timing and unit economics</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What is the key difference between a funnel and a growth loop?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Funnels suit consumer apps and loops suit B2B</button></li>
+          <li><button type="button">Funnels are an older name for the same idea</button></li>
+          <li><button type="button">Loops feed their output back in; funnels do not</button></li>
+          <li><button type="button">Funnels measure revenue and loops measure users</button></li>
+        </ul>
+        <div class="quiz-why"><p>A funnel is linear: users enter and some leak out at each stage, and it converts only what you put in. A loop is a closed system: its output becomes new input, so growth can compound. Each step of a loop is still measured as a conversion.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">What are the three types of acquisition loop?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Organic, inorganic and hybrid</button></li>
+          <li><button type="button">Acquisition, retention and referral</button></li>
+          <li><button type="button">Social, search and email</button></li>
+          <li><button type="button">Viral, content and paid</button></li>
+        </ul>
+        <div class="quiz-why"><p>Viral loops have users invite or expose other users, content loops use discoverable content (made by users or by the company) to attract users, and paid loops reinvest revenue in more acquisition. Acquisition, retention and referral are funnel stages from AARRR.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">What advantage does a viral loop have over a paid loop?</p>
+        <ul class="quiz-options">
+          <li><button type="button">It costs little per user and runs without ad spend</button></li>
+          <li><button type="button">It is cheaper to build because no product work is needed</button></li>
+          <li><button type="button">It always reaches a K-factor above 1, so growth is guaranteed</button></li>
+          <li><button type="button">Competitors find it harder to copy, whatever the product</button></li>
+        </ul>
+        <div class="quiz-why"><p>A paid loop depends on budget: turn off the ads and growth stops. A viral loop costs little per new user and keeps turning without spend, but sustained K above 1 is rare, and a good viral loop takes real product work. Invite mechanics alone are easy to copy; a viral loop becomes hard to compete with only when it rests on a network effect.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Each user sends 4 invites on average and 15% of invited people sign up. What is the loop’s K-factor?</p>
+        <ul class="quiz-options">
+          <li><button type="button">0.15</button></li>
+          <li><button type="button">0.6</button></li>
+          <li><button type="button">4</button></li>
+          <li><button type="button">19</button></li>
+        </ul>
+        <div class="quiz-why"><p>The K-factor is invitations sent per user × the share of invitations that convert: 4 × 15% = 0.6 new users per user per cycle.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Two loops both have K = 1.2. Loop A turns every 3 days and loop B every 15 days. What happens over a month?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They grow at the same rate, because K is the same</button></li>
+          <li><button type="button">Loop B grows faster, because long cycles convert better</button></li>
+          <li><button type="button">Loop A grows far faster, because it runs 10 cycles to B’s 2</button></li>
+          <li><button type="button">Neither grows much, because K has to be above 2 to compound</button></li>
+        </ul>
+        <div class="quiz-why"><p>K is what one cycle returns; cycle time sets how many cycles you get. Loop A compounds 1.2 ten times, about 6.2×, while loop B compounds it twice, 1.44×. Any K above 1 compounds.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">Why is it a mistake to run a growth loop on a product with poor retention?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The loop amplifies churn and burns through the market</button></li>
+          <li><button type="button">Loops only work once a product has a paid tier to fund them</button></li>
+          <li><button type="button">Retention and loops are unrelated, so it changes nothing</button></li>
+          <li><button type="button">Retention only matters for paid loops, not viral ones</button></li>
+        </ul>
+        <div class="quiz-why"><p>A loop amplifies the product as it is. If the product keeps 10% of users, a viral loop churns through the addressable market faster, whatever kind of loop it is. Fix retention first, then amplify.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">On an image-pinning site, users save pictures to public boards, search engines index the boards, and people who find them sign up and save more. What kind of loop is this?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Paid: ad revenue funds the acquisition of new users</button></li>
+          <li><button type="button">Viral: users invite their friends to join the site</button></li>
+          <li><button type="button">Company-generated content: the site writes the boards</button></li>
+          <li><button type="button">User-generated content: users make what search finds</button></li>
+        </ul>
+        <div class="quiz-why"><p>Users create the content, search makes it discoverable, and the people it brings in create more. That makes it a user-generated content loop. In a company-generated loop the company would write the content itself, and no one here is sending invites.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">Larkwell, a fictional piano-learning app, spends revenue on ads. Its LTV is about $96, its blended CAC is $30 and payback is about 4.4 months. What does this paid loop need to keep compounding?</p>
+        <ul class="quiz-options">
+          <li><button type="button">A K-factor above 1 from the learners the ads bring in</button></li>
+          <li><button type="button">LTV above CAC and a payback short enough to reinvest</button></li>
+          <li><button type="button">A defensible audience that competitors cannot bid on</button></li>
+          <li><button type="button">Ad spend that grows faster than revenue every month</button></li>
+        </ul>
+        <div class="quiz-why"><p>A paid loop compounds only if LTV exceeds CAC and the payback period is short enough to reinvest. Larkwell’s LTV:CAC of about 3.2:1 and 4.4-month payback meet that test today. A K-factor describes viral loops, and paid audiences are rarely defensible.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: four steps on a ring, read clockwise from the top */
+  .guide[data-guide="growth-loops"] .gl-loop {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas:
+      "a4 n1 a1"
+      "n4 hub n2"
+      "a3 n3 a2";
+    gap: var(--s-3);
+    align-items: center;
+    justify-items: center;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .guide[data-guide="growth-loops"] .gl-node {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--s-1);
+    width: 100%;
+    max-width: 210px;
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-md);
+    background: var(--paper);
+    text-align: center;
+  }
+  .guide[data-guide="growth-loops"] .gl-node--1 { grid-area: n1; }
+  .guide[data-guide="growth-loops"] .gl-node--2 { grid-area: n2; }
+  /* Side nodes share the middle row's height so the ring stays symmetric */
+  .guide[data-guide="growth-loops"] .gl-node--2,
+  .guide[data-guide="growth-loops"] .gl-node--4 { align-self: stretch; align-content: center; }
+  .guide[data-guide="growth-loops"] .gl-node--3 { grid-area: n3; }
+  .guide[data-guide="growth-loops"] .gl-node--4 { grid-area: n4; }
+  .guide[data-guide="growth-loops"] .gl-node-n {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="growth-loops"] .gl-tag {
+    padding: var(--s-1) var(--s-2);
+    border-radius: var(--r-sm);
+    background: var(--series-wash);
+    color: var(--series-ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    font-weight: var(--w-semibold);
+  }
+  .guide[data-guide="growth-loops"] .gl-tag--neutral {
+    background: var(--paper-sunk);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="growth-loops"] .gl-node-label {
+    font-family: var(--font-serif);
+    font-size: var(--fs-16);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .guide[data-guide="growth-loops"] .gl-hub {
+    grid-area: hub;
+    display: grid;
+    gap: var(--s-1);
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .guide[data-guide="growth-loops"] .gl-hub strong {
+    font-family: var(--font-serif);
+    font-size: var(--fs-18);
+    font-weight: var(--w-medium);
+    color: var(--cat-ink);
+  }
+  .guide[data-guide="growth-loops"] .gl-arrow {
+    width: 56px;
+    height: 56px;
+    fill: none;
+    stroke: var(--ink-3);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .guide[data-guide="growth-loops"] .gl-arrow--1 { grid-area: a1; justify-self: start; align-self: end; }
+  .guide[data-guide="growth-loops"] .gl-arrow--2 { grid-area: a2; justify-self: start; align-self: start; }
+  .guide[data-guide="growth-loops"] .gl-arrow--3 { grid-area: a3; justify-self: end; align-self: start; }
+  .guide[data-guide="growth-loops"] .gl-arrow--4 { grid-area: a4; justify-self: end; align-self: end; }
+
+  @media (max-width: 560px) {
+    .guide[data-guide="growth-loops"] .gl-loop {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "n1" "n2" "n3" "n4" "hub";
+      gap: var(--s-8);
+    }
+    .guide[data-guide="growth-loops"] .gl-node { max-width: none; }
+    .guide[data-guide="growth-loops"] .gl-arrow { display: none; }
+    .guide[data-guide="growth-loops"] .gl-node + .gl-node::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: calc(-1 * var(--s-6));
+      width: 16px;
+      height: 16px;
+      margin-left: -8px;
+      background: var(--ink-3);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M6 13l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M6 13l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    /* The ring is a list here, so the hub becomes the return arrow:
+       a quiet note under step 4 that turns back up to step 1. */
+    .guide[data-guide="growth-loops"] .gl-hub {
+      position: relative;
+      justify-self: stretch;
+      gap: 0;
+      margin-top: calc(-1 * var(--s-4));
+      padding-left: var(--s-6);
+      text-align: left;
+    }
+    .guide[data-guide="growth-loops"] .gl-hub::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 16px;
+      height: 16px;
+      background: var(--ink-3);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 9 9 4 4 9'/%3E%3Cpath d='M20 20h-7a4 4 0 0 1-4-4V4'/%3E%3C/svg%3E") center / contain no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 9 9 4 4 9'/%3E%3Cpath d='M20 20h-7a4 4 0 0 1-4-4V4'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .guide[data-guide="growth-loops"] .gl-hub strong {
+      font-family: var(--font-sans);
+      font-size: var(--fs-14);
+      font-weight: var(--w-semibold);
+      color: var(--ink);
+    }
+  }
+
+  /* Funnel against loop: two small bar rows */
+  .guide[data-guide="growth-loops"] .gl-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-8);
+  }
+  .guide[data-guide="growth-loops"] .gl-panel-label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-16);
+    font-weight: var(--w-semibold);
+    color: var(--ink);
+  }
+  .guide[data-guide="growth-loops"] .gl-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--s-2);
+    height: 128px;
+    margin-top: var(--s-3);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .guide[data-guide="growth-loops"] .gl-bars > li {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--s-1);
+    height: 100%;
+    min-width: 0;
+  }
+  .guide[data-guide="growth-loops"] .gl-val {
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="growth-loops"] .gl-bar {
+    display: block;
+    width: 100%;
+    height: calc(var(--v) * 92px);
+    min-height: 3px;
+    border-radius: var(--r-sm) var(--r-sm) 0 0;
+    background: var(--ink-3);
+  }
+  .guide[data-guide="growth-loops"] .gl-panel--loop .gl-bar { background: var(--cat); }
+  .guide[data-guide="growth-loops"] .gl-panel-note {
+    margin-top: var(--s-3);
+    font-family: var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  @media (max-width: 560px) {
+    .guide[data-guide="growth-loops"] .gl-compare { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
+  }
+
+  /* Builder output */
+  .guide[data-guide="growth-loops"] .gl-user-chain .chain-note { overflow-wrap: anywhere; }
+  .guide[data-guide="growth-loops"] .gl-user-chain[hidden] { display: none; }
+  .guide[data-guide="growth-loops"] .gl-user-chain + .checks { margin-top: var(--s-5); }
+</style>
+
+<script data-guide-script>
+  const fmt = (n, digits = 0) => n.toLocaleString('en-US', { maximumFractionDigits: digits });
+
+  /* ---- Loop builder ---- */
+  const typeSel = root.querySelector('#gl-type');
+  const inputEl = root.querySelector('#gl-input');
+  const actionEl = root.querySelector('#gl-action');
+  const outputEl = root.querySelector('#gl-output');
+  const builderResult = root.querySelector('#gl-builder-result');
+  const builderStatus = root.querySelector('#gl-builder-status');
+  const builderChain = root.querySelector('#gl-builder-chain');
+  const builderNotes = root.querySelector('#gl-builder-notes');
+
+  const TYPE_LABELS = { viral: 'Viral loop', content: 'Content loop', paid: 'Paid loop' };
+  const FIELDS = [
+    { el: typeSel, name: 'loop type' },
+    { el: inputEl, name: 'input' },
+    { el: actionEl, name: 'action' },
+    { el: outputEl, name: 'output' },
+  ];
+  // Words that show the output brings new people into the loop (stems, matched at word starts).
+  const NEW_INPUT = new RegExp('\\b(' + [
+    'sign(s|ed|ing)?[\\s-]?up', 'signup', 'registr', 'register', 'join', 'download', 'install',
+    'discover', 'find', 'finds', 'found', 'subscrib', 'visit', 'arriv', 'tr(y|ies|ied)\\b', 'buy', 'book',
+    'acquir', 'attract', 'enter(s|ed|ing)?\\b',
+    'bring(s|ing)?\\s+(in|on|back|more|new)\\b', 'brought\\s+(in|on)\\b',
+    'gets?\\s+the\\s+app', 'creat(e|es|ed|ing)\\s+(an?\\s+)?accounts?',
+    'becomes?\\s+(paying\\s+)?(users?|customers?|members?|subscribers?|learners?)',
+    '(new|more)\\s+(users?|customers?|members?|visitors?|learners?|players?|people|readers?|subscribers?)',
+  ].join('|') + ')', 'i');
+  const SHARE_ACTION = /\b(invit|shar|send|sent|post|refer|tag|recommend|collaborat|forward)/i;
+
+  const START_STATUS = 'Fill in all four fields, then analyze the loop.';
+
+  // Feedback rows use the shared .checks list: a state word, then the note.
+  const STATE_WORDS = { ok: 'Clear', revise: 'Revise', info: 'Note' };
+
+  function addNote(state, title, text) {
+    const li = document.createElement('li');
+    li.dataset.state = state;
+    const word = document.createElement('span');
+    word.className = 'check-state';
+    word.textContent = STATE_WORDS[state];
+    const body = document.createElement('span');
+    const strong = document.createElement('strong');
+    strong.textContent = title;
+    body.append(strong, ' ' + text);
+    li.append(word, body);
+    builderNotes.append(li);
+  }
+
+  function chainStep(label, text) {
+    const li = document.createElement('li');
+    const name = document.createElement('span');
+    name.className = 'chain-name';
+    name.textContent = label;
+    const note = document.createElement('span');
+    note.className = 'chain-note';
+    note.textContent = text;
+    li.append(name, note);
+    return li;
+  }
+
+  function resetBuilderOutput(status) {
+    builderResult.textContent = '';
+    builderStatus.textContent = status;
+    builderChain.replaceChildren();
+    builderChain.hidden = true;
+    builderNotes.replaceChildren();
+  }
+
+  function listNames(names) {
+    if (names.length === 1) return names[0];
+    return names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1];
+  }
+
+  function analyzeLoop() {
+    const missing = FIELDS.filter(f => !f.el.value.trim());
+    FIELDS.forEach(f => f.el.setAttribute('aria-invalid', String(!f.el.value.trim())));
+    if (missing.length) {
+      resetBuilderOutput(`Fill in the ${listNames(missing.map(f => f.name))} to get feedback.`);
+      return;
+    }
+
+    const type = typeSel.value;
+    const input = inputEl.value.trim();
+    const action = actionEl.value.trim();
+    const output = outputEl.value.trim();
+
+    resetBuilderOutput('Mapped as a loop. Read the notes below.');
+    builderResult.textContent = TYPE_LABELS[type];
+    builderChain.append(
+      chainStep('Input', input),
+      chainStep('Action', action),
+      chainStep('Output', output),
+      chainStep('Back to input', 'The output becomes new input and the loop repeats'),
+    );
+    builderChain.hidden = false;
+
+    if (NEW_INPUT.test(output)) {
+      addNote('ok', 'The feedback link is named.', 'Your output says how new people enter, which is the link most loops leave out.');
+    } else {
+      addNote('revise', 'Check the feedback link.', 'Does the output clearly bring new people into the loop? Make the connection explicit: “…which causes [new users] to [enter the loop].”');
+    }
+    if (type === 'paid') {
+      addNote('info', 'Paid loops have a ceiling.', 'CAC usually rises as you scale and saturate the audience. Could you layer a viral or content loop on top?');
+    }
+    if (type === 'viral' && !SHARE_ACTION.test(action)) {
+      addNote('revise', 'Is the viral action part of the product?', 'The strongest viral loops happen when sharing is the product, as with inviting colleagues into a team chat tool to work together, not when it is an added “share with friends” button.');
+    }
+    if (type === 'content') {
+      addNote('info', 'Content loops need distribution.', 'What gets created must be discoverable through search, social feeds or platform search. If your team writes it, check that new users give something back, such as revenue or demand data, that funds the next piece.');
+    }
+    addNote('info', 'Next step:', 'estimate the cycle time and conversion rate in the loop calculator below, then look for ways to shorten the cycle or raise conversion.');
+  }
+
+  FIELDS.forEach(f => {
+    const evt = f.el.tagName === 'SELECT' ? 'change' : 'input';
+    f.el.addEventListener(evt, () => {
+      if (f.el.value.trim()) f.el.setAttribute('aria-invalid', 'false');
+    });
+  });
+  root.querySelector('#gl-analyze').addEventListener('click', analyzeLoop);
+  root.querySelector('#gl-clear').addEventListener('click', () => {
+    FIELDS.forEach(f => { f.el.value = ''; f.el.removeAttribute('aria-invalid'); });
+    resetBuilderOutput(START_STATUS);
+  });
+
+  /* ---- Loop calculator ---- */
+  const calc = {
+    amp: { el: root.querySelector('#gl-amp'), help: root.querySelector('#gl-amp-help'), ok: v => v >= 0, hint: 'Invites, shares or views per user per cycle', err: 'Enter a number, 0 or more' },
+    conv: { el: root.querySelector('#gl-conv'), help: root.querySelector('#gl-conv-help'), ok: v => v >= 0 && v <= 100, hint: 'Share of that output that becomes a new user', err: 'Enter a percentage from 0 to 100' },
+    cycle: { el: root.querySelector('#gl-cycle'), help: root.querySelector('#gl-cycle-help'), ok: v => v >= 0.1, hint: 'Time for one full loop', err: 'Enter a cycle time of 0.1 days or more' },
+    seed: { el: root.querySelector('#gl-seed'), help: root.querySelector('#gl-seed-help'), ok: v => v >= 1, hint: 'Users brought in from outside the loop', err: 'Enter at least 1 user' },
+  };
+  const calcResult = root.querySelector('#gl-calc-result');
+  const calcEquation = root.querySelector('#gl-calc-equation');
+  const calcReading = root.querySelector('#gl-calc-reading');
+  const QUARTER_DAYS = 90;
+  const CAP = 1e9;
+
+  function updateCalc() {
+    const values = {};
+    let allOk = true;
+    Object.entries(calc).forEach(([key, f]) => {
+      const raw = f.el.value.trim();
+      const v = raw === '' ? NaN : Number(raw);
+      const ok = Number.isFinite(v) && f.ok(v);
+      f.el.setAttribute('aria-invalid', String(!ok));
+      f.help.textContent = ok ? f.hint : f.err;
+      f.help.classList.toggle('is-error', !ok);
+      values[key] = v;
+      if (!ok) allOk = false;
+    });
+
+    if (!allOk) {
+      calcResult.textContent = '–';
+      calcEquation.textContent = 'Check the highlighted values to see the result';
+      calcReading.textContent = '';
+      return;
+    }
+
+    const { amp, conv, cycle, seed } = values;
+    const k = amp * conv / 100;
+    const cycles = Math.floor(QUARTER_DAYS / cycle);
+
+    // Users after a quarter: the seed plus every generation it brings in.
+    let total = seed;
+    let generation = seed;
+    // The 0.1-day minimum caps this at 900 cycles.
+    for (let i = 0; i < cycles && total <= CAP; i++) {
+      generation *= k;
+      total += generation;
+    }
+    const totalText = total > CAP ? 'more than 1 billion' : `about ${fmt(total)}`;
+    const cyclesText = cycles === 1 ? '1 cycle' : `${fmt(cycles)} cycles`;
+
+    calcResult.textContent = fmt(k, 2);
+    calcEquation.textContent = `${fmt(amp, 2)} × ${fmt(conv, 1)}% = ${fmt(k, 2)}`;
+
+    if (cycles === 0) {
+      calcReading.textContent = 'One cycle takes longer than a quarter, so the loop adds nothing within 90 days. Look for ways to shorten it.';
+    } else if (k === 0) {
+      calcReading.textContent = 'With no conversions, nothing comes back: this is a funnel, not a loop.';
+    } else if (k < 1) {
+      const longRun = seed / (1 - k);
+      const saving = k > 0.95 ? 'more than 95%' : `about ${fmt(k * 100)}%`;
+      calcReading.textContent = `Within a quarter (${cyclesText}), ${fmt(seed)} seeded users become ${totalText}. Over time they approach ${fmt(longRun)}, so your blended cost per user falls by ${saving}.`;
+    } else {
+      calcReading.textContent = `K of 1 or more means each cycle’s group is at least as large as the last, so the loop grows on its own while K holds. Within a quarter (${cyclesText}), ${fmt(seed)} seeded users become ${totalText}. Treat this as a hypothesis to test: K above 1 is rare and usually fades as the loop reaches the edge of its market.`;
+    }
+  }
+
+  Object.values(calc).forEach(f => f.el.addEventListener('input', updateCalc));
+  updateCalc();
+</script>

@@ -1,0 +1,1213 @@
+<article class="guide" data-guide="user-story-mapping">
+
+  <header class="guide-intro">
+    <p class="lede">A user story map lays the user’s journey left to right and the possible stories for each step top to bottom, in priority order. Lines drawn across the map cut it into releases, so every release covers the whole journey.</p>
+
+    <figure class="figure" data-hero>
+      <div class="figure-scroll" tabindex="0" role="region" aria-label="Example story map for a music-lesson app">
+        <div class="usm-map usm-map--hero">
+          <p class="usm-axis">The user’s journey, left to right →</p>
+
+          <p class="usm-rowlabel">Goal</p>
+          <p class="usm-card usm-goal" data-series="5">Learn to play an instrument online</p>
+
+          <p class="usm-rowlabel">Activities</p>
+          <p class="usm-card usm-act" data-series="1">Discover</p>
+          <p class="usm-card usm-act" data-series="1">Sign up</p>
+          <p class="usm-card usm-act" data-series="1">Take a lesson</p>
+          <p class="usm-card usm-act" data-series="1">Track progress</p>
+          <p class="usm-card usm-act" data-series="1">Subscribe</p>
+
+          <p class="usm-rowlabel">User steps</p>
+          <p class="usm-card" data-series="2">Search the app store</p>
+          <p class="usm-card" data-series="2">Enter email</p>
+          <p class="usm-card" data-series="2">Play the first song</p>
+          <p class="usm-card" data-series="2">See results</p>
+          <p class="usm-card" data-series="2">Start a free trial</p>
+
+          <p class="usm-divider">Backbone above, body below: stories in priority order ↓</p>
+
+          <p class="usm-rowlabel">Release 1 <span class="usm-rowsub">walking skeleton</span></p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 1, Search the app store: </span>App store listing</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 1, Enter email: </span>Email and password</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 1, Play the first song: </span>Play-along lesson</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 1, See results: </span>Show completion percentage</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 1, Start a free trial: </span>Basic trial checkout</p>
+
+          <p class="usm-divider usm-divider--slice">Release line</p>
+
+          <p class="usm-rowlabel">Release 2 <span class="usm-rowsub">lovable</span></p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 2, Search the app store: </span>Read reviews</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 2, Enter email: </span>Google sign-in</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 2, Play the first song: </span>Feedback on playing</p>
+          <p class="usm-blank" aria-hidden="true"></p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 2, Start a free trial: </span>In-app payment</p>
+
+          <p class="usm-divider usm-divider--slice">Release line</p>
+
+          <p class="usm-rowlabel">Release 3 <span class="usm-rowsub">delightful</span></p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 3, Search the app store: </span>Video ads and previews</p>
+          <p class="usm-blank" aria-hidden="true"></p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 3, Play the first song: </span>Challenges</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 3, See results: </span>Streak counter and badges</p>
+          <p class="usm-card" data-series="3"><span class="visually-hidden">Release 3, Start a free trial: </span>Annual and family plans</p>
+        </div>
+      </div>
+      <figcaption>Activities and user steps form the backbone across the top. Release 1 has a story under every step; later releases add stories only to the steps they improve, so the product stays usable end to end after each one.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>Write the steps a user takes across the top of the map, hang the possible stories for each step underneath, and order every column by priority. Then draw lines across the map: everything above the first line is Release 1, a thin version of the whole journey that works end to end.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>A map instead of a list</h2>
+      <p class="chapter-dek">A flat backlog says what comes next; a map shows the journey each story serves</p>
+    </header>
+
+    <p>A traditional backlog is a prioritized list: item 1, item 2, item 3, all the way down to item 200. It tells you what to build next, but it loses <strong>why</strong> you are building it and <strong>how the user experiences it</strong>. Jeff Patton, who popularized story mapping, describes it in <cite>User Story Mapping</cite> (with Peter Economy, 2014) as an alternative to the flat backlog: a flat backlog loses the story of what the user is doing, and a map keeps it.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Flat backlog</p>
+        <ol>
+          <li>Email login</li>
+          <li>Lesson player</li>
+          <li>Progress tracker</li>
+          <li>Payment flow</li>
+          <li>Google sign-in</li>
+          <li>Streak counter</li>
+          <li>Family plan</li>
+        </ol>
+        <p>…down to item 200. What journey does this create? There is no way to tell, because every story stands alone.</p>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Story map</p>
+        <p>Left to right: the user’s journey. Top to bottom: priority.</p>
+        <p>You can see that Release 1 gives users a <strong>complete journey</strong> from sign-up to first lesson, thin but end to end.</p>
+        <p>After every release, users have a usable version of the whole experience.</p>
+      </div>
+    </div>
+
+    <h3>Across is the story, down is the plan</h3>
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key">↔</span>
+        <h4 class="card-title">Horizontal: the story</h4>
+        <p>The user’s journey from left to right, with time flowing across the top. Read it as a sentence: first they do this, then that. This axis is the <strong>narrative</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-key">↕</span>
+        <h4 class="card-title">Vertical: the priority</h4>
+        <p>The most important version of each step sits at the top and less essential ones sit lower. This axis is the <strong>plan</strong>.</p>
+      </div>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Read across, slice down</p>
+      <p>Walk the map left to right to tell the story. Slice it from top to bottom to plan the releases.</p>
+    </div>
+
+    <h3>Release 1 is a walking skeleton</h3>
+    <p>The <dfn>walking skeleton</dfn> is Release 1: the thinnest version of the whole journey that works end to end. <strong>Every step is done minimally</strong>, so a user can walk the entire path even if each step is basic. The term comes from Alistair Cockburn (<cite>Crystal Clear</cite>, 2004); Patton uses it for the first slice of the map.</p>
+    <p>Each cut across the map is a <dfn>release slice</dfn>: a horizontal line drawn across every column, with everything above it shipping in that release. Agile teams often call this a vertical slice, because it cuts through every layer of the system, from interface to database; on the map it is drawn as a horizontal band. What to avoid is one feature done completely before the rest of the journey exists, such as perfecting login while every later step stays empty.</p>
+  </section>
+
+  <section class="chapter" id="anatomy" data-nav="Anatomy">
+    <header class="chapter-head">
+      <h2>Four layers, from goal to stories</h2>
+      <p class="chapter-dek">The goal frames the map, activities and user steps form the backbone, and everything below is the body</p>
+    </header>
+
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <span class="card-key" data-series="5">1</span>
+        <h3 class="card-title">Goal</h3>
+        <p class="card-q">What does the user want to achieve?</p>
+        <p>The big outcome the user is after. It sits at the very top and frames everything below it, like the title of a film: the whole story in one line.</p>
+        <p>Examples: “Learn to play piano online”, “Find and book a vacation rental”, “Manage my team’s sprint work”.</p>
+        <p class="card-meta">One per map</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="1">2</span>
+        <h3 class="card-title">Activities</h3>
+        <p class="card-q">What are the big phases of the journey?</p>
+        <p>The big things the user does, grouping the steps below them. Think of them as the chapter headings of the user’s story.</p>
+        <p>Examples: Discover, Onboard, Learn, Practice, Share. Each one holds several specific steps.</p>
+        <p class="card-meta">3–7 per map, as a rule of thumb · top row of the backbone</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="2">3</span>
+        <h3 class="card-title">User steps</h3>
+        <p class="card-q">What does the user do in each phase?</p>
+        <p>The specific things the user does within each activity, sometimes called user tasks, written from the <strong>user’s perspective</strong>, not the system’s. Read left to right in narrative order, they tell the user’s story.</p>
+        <p>Example, under Sign up: Enter email → Choose instrument → Set goal → Pick level.</p>
+        <p class="card-meta">8–15 per map, as a rule of thumb · second row of the backbone</p>
+      </div>
+      <div class="card">
+        <span class="card-key" data-series="3">4</span>
+        <h3 class="card-title">Body</h3>
+        <p class="card-q">Which stories deliver each step, and in what order?</p>
+        <p>The user stories that hang below each step: the details, options and alternatives for doing it, arranged <strong>top to bottom by priority</strong>. Drawing a horizontal line across the body creates a release slice: the top slice is Release 1, the walking skeleton, the next is Release 2, and so on.</p>
+        <p>Example, under Enter email: email and password login in Release 1 and Google sign-in in Release 2. Apple sign-in or a one-time email link could come in a later slice.</p>
+        <p class="card-meta">Below the backbone · sliced into releases</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">What counts as the backbone</p>
+      <p>Activities and the user steps under them together form the <dfn>backbone</dfn>: the top two rows, the spine the rest of the map hangs from. Activities sit at the top of the backbone, not above it. The backbone is ordered by the journey, never by priority. Only the body is sorted by priority: if you score stories with a framework such as <a data-guide-link="rice">RICE</a>, the scores order the stories within each column and never reorder the backbone.</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Release 1 covers every step</p>
+      <p>Release 1 needs a story under every user step, so a user can walk from discovery to value. Each later slice builds on it and adds stories only to the steps it improves. An empty cell in Release 2 or 3 is normal: the earlier release already covers that step, and the product stays usable end to end after every release. Release 1 is not the same as every must-have feature: it takes the thinnest story under each step, which usually includes some must-haves and leaves others for later slices.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Mapping Larkwell’s piano onboarding</h2>
+      <p class="chapter-dek">From a list of user steps to three release slices, each with its own success metric</p>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>A new learner’s first session with Larkwell</h3>
+      <p>Larkwell, a fictional piano-learning app, listens through the phone’s microphone or a MIDI keyboard and gives feedback on each note. Today 45% of new accounts activate, meaning they complete a first song lesson within 24 hours of signing up, and 19% are still active on day 7. The onboarding team maps a new learner’s first session to decide what to ship first. The team is rebuilding the first session as a new flow (the “first song in five minutes” redesign), so it maps that flow from scratch: even parts Larkwell already has, such as its store listing and note feedback, go in the slice where the new flow first uses them. All figures are illustrative.</p>
+
+      <dl class="facts">
+        <div><dt>Goal</dt><dd>“Start learning piano with Larkwell and play a first song in the first session”</dd></div>
+        <div><dt>Persona</dt><dd>An adult beginner, 35, curious, with no music background, who downloaded the app after seeing a social media ad</dd></div>
+      </dl>
+
+      <ol class="steps">
+        <li>
+          <h4 class="step-title">List the user steps</h4>
+          <p>Walk through the journey one step at a time. What does the user do, from first touch to the first moment of value?</p>
+          <p class="step-note">Download app → Open app → Create account → Set up instrument → Take placement quiz → Start first lesson → Complete first song → See results</p>
+        </li>
+        <li>
+          <h4 class="step-title">Group them into activities</h4>
+          <p>Cluster the eight steps into four activities. Together the two rows are the backbone.</p>
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <caption>Four activities and the user steps inside them</caption>
+              <thead><tr><th scope="col">Activity</th><th scope="col">User steps</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Discover</th><td>Download app</td></tr>
+                <tr><th scope="row">Onboard</th><td>Open app → Create account → Set up instrument → Take placement quiz</td></tr>
+                <tr><th scope="row">First lesson</th><td>Start first lesson → Complete first song</td></tr>
+                <tr><th scope="row">Review</th><td>See results</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+        <li>
+          <h4 class="step-title">Fill the body</h4>
+          <p>Under each step, brainstorm every way it could be implemented, from simplest to most sophisticated.</p>
+          <p>Under “Create account”:</p>
+          <ul>
+            <li>Email and password (simplest)</li>
+            <li>Google sign-in</li>
+            <li>Apple sign-in</li>
+            <li>Skip sign-up, so people can try before committing</li>
+          </ul>
+          <p>Under “Set up instrument”:</p>
+          <ul>
+            <li>Choose microphone or MIDI keyboard (simplest)</li>
+            <li>An instrument check that confirms the app can hear the keys</li>
+          </ul>
+          <p>Under “Start first lesson”:</p>
+          <ul>
+            <li>Play-along with visual cues (simplest)</li>
+            <li>Real-time feedback on each note</li>
+            <li>A video demonstration before each section</li>
+            <li>AI tempo adjustment</li>
+          </ul>
+        </li>
+        <li>
+          <h4 class="step-title">Slice into releases</h4>
+          <p>Draw horizontal lines to create release slices. Release 1 covers the whole journey, each later slice enriches it, and each gets a metric that says whether it worked.</p>
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <caption>Three release slices for Larkwell’s onboarding</caption>
+              <thead>
+                <tr><th scope="col">Release</th><th scope="col" class="num">Build time</th><th scope="col">What the user gets, left to right</th><th scope="col">Success metric</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Release 1: walking skeleton</th><td class="num">4 weeks</td><td>App store listing, a simple welcome, email sign-up, a choice of microphone or MIDI keyboard, quiz skipped, one guided play-along lesson, a “Lesson complete” screen</td><td>A new user can sign up and finish one lesson</td></tr>
+                <tr><th scope="row">Release 2: lovable</th><td class="num">6 weeks</td><td>App store screenshots and preview, animated onboarding, Google sign-in, an instrument check, three-question quiz, five starter lessons with real-time note feedback, progress dashboard</td><td>Activation of at least 50% and D7 retention of at least 21%</td></tr>
+                <tr><th scope="row">Release 3: delightful</th><td class="num">8 weeks</td><td>Referral sharing, Apple sign-in, an option to skip sign-up, detailed quiz, AI tempo adjustment, video demos, streaks and achievements, social sharing</td><td>Activation of 55% and D7 retention of 24%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ol>
+
+      <div class="example-reading">
+        <h4>What the slices show</h4>
+        <p>Release 1 gives the user a <strong>basic version of every step</strong>, from the app store to a finished lesson. Instrument setup is a single choice between microphone and MIDI keyboard and the quiz is skipped, but neither step is missing.</p>
+        <p>Release 2 and Release 3 add an instrument check, note feedback in the new lessons, a three-question quiz and streaks to steps that already work, so no release ships a dead end.</p>
+        <p>The metrics follow the same logic. Release 1 only has to prove that the journey works. Release 2 has to move activation from 45% to at least 50% and D7 retention from 19% to at least 21%, and Release 3 aims for 55% and 24%, the onboarding team’s targets for the quarter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Build a story map of your own</h2>
+      <p class="chapter-dek">Name the goal and activities, list the steps, then add stories and draw release lines</p>
+    </header>
+
+    <div class="tool" data-tool="usm-builder">
+      <div class="tool-head">
+        <h3 class="tool-title">Story map builder</h3>
+        <p class="tool-hint">Fill in the goal and at least two activities with their user steps, then generate the map. Select any step in the map to add a story under it.</p>
+      </div>
+
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <label for="usm-goal">Goal</label>
+          <input id="usm-goal" type="text" placeholder="e.g. Play a first song in the first session" aria-describedby="usm-goal-help">
+          <p class="field-help" id="usm-goal-help">What is the user trying to accomplish? One per map.</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="field-label">Activities and their user steps</p>
+        <p class="field-help">Most maps have 3–7 activities. List 2–4 user steps for each, separated by commas.</p>
+      </div>
+      <div class="usm-acts" id="usm-activities">
+        <div class="usm-act-row">
+          <div class="field">
+            <label for="usm-act-1">Activity 1</label>
+            <input id="usm-act-1" class="usm-act-name" type="text" placeholder="e.g. Discover">
+          </div>
+          <div class="field">
+            <label for="usm-steps-1">User steps for activity 1</label>
+            <input id="usm-steps-1" class="usm-act-steps" type="text" placeholder="e.g. Search the app store, Read reviews, Download">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 1">Remove</button>
+        </div>
+        <div class="usm-act-row">
+          <div class="field">
+            <label for="usm-act-2">Activity 2</label>
+            <input id="usm-act-2" class="usm-act-name" type="text" placeholder="e.g. Onboard">
+          </div>
+          <div class="field">
+            <label for="usm-steps-2">User steps for activity 2</label>
+            <input id="usm-steps-2" class="usm-act-steps" type="text" placeholder="e.g. Create account, Set up instrument">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 2">Remove</button>
+        </div>
+        <div class="usm-act-row">
+          <div class="field">
+            <label for="usm-act-3">Activity 3</label>
+            <input id="usm-act-3" class="usm-act-name" type="text" placeholder="e.g. Learn">
+          </div>
+          <div class="field">
+            <label for="usm-steps-3">User steps for activity 3</label>
+            <input id="usm-steps-3" class="usm-act-steps" type="text" placeholder="e.g. Start a lesson, Finish a song">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 3">Remove</button>
+        </div>
+        <div class="usm-act-row">
+          <div class="field">
+            <label for="usm-act-4">Activity 4</label>
+            <input id="usm-act-4" class="usm-act-name" type="text" placeholder="e.g. Practice">
+          </div>
+          <div class="field">
+            <label for="usm-steps-4">User steps for activity 4</label>
+            <input id="usm-steps-4" class="usm-act-steps" type="text" placeholder="e.g. Pick a section, Loop it, Slow it down">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 4">Remove</button>
+        </div>
+        <div class="usm-act-row" hidden>
+          <div class="field">
+            <label for="usm-act-5">Activity 5</label>
+            <input id="usm-act-5" class="usm-act-name" type="text" placeholder="e.g. Share">
+          </div>
+          <div class="field">
+            <label for="usm-steps-5">User steps for activity 5</label>
+            <input id="usm-steps-5" class="usm-act-steps" type="text" placeholder="e.g. Record a clip, Send it to a friend">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 5">Remove</button>
+        </div>
+        <div class="usm-act-row" hidden>
+          <div class="field">
+            <label for="usm-act-6">Activity 6</label>
+            <input id="usm-act-6" class="usm-act-name" type="text" placeholder="e.g. Review">
+          </div>
+          <div class="field">
+            <label for="usm-steps-6">User steps for activity 6</label>
+            <input id="usm-steps-6" class="usm-act-steps" type="text" placeholder="e.g. See results, Check streak">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 6">Remove</button>
+        </div>
+        <div class="usm-act-row" hidden>
+          <div class="field">
+            <label for="usm-act-7">Activity 7</label>
+            <input id="usm-act-7" class="usm-act-name" type="text" placeholder="e.g. Renew">
+          </div>
+          <div class="field">
+            <label for="usm-steps-7">User steps for activity 7</label>
+            <input id="usm-steps-7" class="usm-act-steps" type="text" placeholder="e.g. Choose a plan, Renew subscription">
+          </div>
+          <button type="button" class="btn btn--quiet usm-remove-act" aria-label="Remove activity 7">Remove</button>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="usm-add-activity">Add activity</button>
+        <button type="button" class="btn" id="usm-load-example">Load the Larkwell example</button>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn--primary" id="usm-generate">Generate map</button>
+        <button type="button" class="btn" id="usm-slice">Add release line</button>
+        <button type="button" class="btn" id="usm-unslice">Remove release line</button>
+        <button type="button" class="btn btn--quiet" id="usm-clear">Clear all</button>
+      </div>
+      <p class="field-help" id="usm-status" role="status"></p>
+
+      <div class="usm-canvas figure-scroll" id="usm-canvas" tabindex="0" role="region" aria-label="Your story map"></div>
+
+      <div class="fields" data-cols="2">
+        <div class="field">
+          <label for="usm-story-step">Under step</label>
+          <select id="usm-story-step"></select>
+        </div>
+        <div class="field">
+          <label for="usm-story-text">Story</label>
+          <input id="usm-story-text" type="text" placeholder="e.g. Email and password login" aria-describedby="usm-story-help">
+          <p class="field-help" id="usm-story-help">New stories go to the bottom of their column. Use Up to raise their priority.</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="usm-add-story">Add story</button>
+      </div>
+
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Release 1 check</p>
+        <output class="tool-result" id="usm-result"></output>
+        <p class="tool-output-note" id="usm-note">Generate a map to check whether Release 1 covers the whole journey.</p>
+      </div>
+    </div>
+
+    <div class="callout callout--tip">
+      <p class="callout-title">Read it back before you slice</p>
+      <p>Once the map is generated, read the user steps aloud from left to right and check that they tell a sensible story. Put the simplest story for each step in the top row, then add a release line under it. If the check shows an empty step in Release 1, that is where a user would get stuck.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>When to map, and when a list will do</h2>
+      <p class="chapter-dek">It pays off when a journey has several steps and a team needs to agree on what ships first</p>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>You are planning a new product or feature and need to see the full journey before cutting scope</li>
+          <li>Your backlog has lost its story: the team ships features but cannot explain the user journey</li>
+          <li>You are planning releases and need to decide what goes in Release 1, 2 and 3</li>
+          <li>You are aligning a cross-functional team, so designers, engineers and PMs see the same picture</li>
+          <li>You are in a PM interview and want to show structured product thinking when asked to plan a feature</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>It is a quick bug fix. A broken button does not need a map.</li>
+          <li>The work is a single feature that is small and isolated</li>
+          <li>You are optimizing, such as A/B testing within an existing flow rather than redesigning it</li>
+          <li>You do not understand the user yet. Research with <a data-guide-link="jtbd">Jobs to Be Done</a> or <a data-guide-link="design-thinking">design thinking</a> first, then map. Five or six quick JTBD conversations on the riskiest assumption are a reasonable starting point and give the map a user to follow.</li>
+          <li>You are a team of one. The value of a map is the shared understanding built while making it; working alone, a simple list may be enough.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Six ways a story map goes wrong</h2>
+      <p class="chapter-dek">Most of them come from losing the user’s point of view or the team’s conversation</p>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">Mapping features instead of user steps</h3>
+        <p>The backbone should describe <strong>what the user does</strong>, not what the system does. “User authentication module” is the system’s view; “Create account” is the user’s step.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> start every user-step card with a verb from the user’s perspective: “Search for…”, “Choose a…”, “Review my…”.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Too many user steps</h3>
+        <p>If the backbone has 25 or more user steps, you are at the wrong level of detail and the map becomes unreadable. Aim for about 8–15 across the backbone.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> group related steps under activities, and merge steps that are really one. If “Enter email” and “Confirm password” are separate cards, combine them into “Create account”.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Release 1 goes deep on one step</h3>
+        <p>Release 1 becomes “perfect login” instead of “a thin path from discovery to value”: one feature done completely before the rest of the journey exists. Users can finish that step and then have nowhere to go next.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> read the top slice from left to right. Can a real user get from the start to value? If any column is empty in Release 1, that is a dead end.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mapping alone</h3>
+        <p>Story mapping is a <strong>team activity</strong>. A PM who builds the map alone and then presents it defeats the purpose. Patton’s point is that the shared understanding built while making the map matters more than the map itself.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> always build the map with at least one designer and one engineer in the room.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Mapping it once and forgetting it</h3>
+        <p>The map is made in a workshop, photographed and never touched again. Two sprints later the backlog has drifted and the map is out of date.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> keep the map in a digital tool such as Miro, FigJam or Notion. Refer to it in sprint planning (“Where does this story sit on the map?”) and update it as you learn.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">No metric for each release</h3>
+        <p>Every release slice needs a <strong>success metric</strong>. Without one, you cannot tell whether the release delivered value to users.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> write a hypothesis for each slice. In the Larkwell example: “Release 2 validates that a smoother setup and real-time note feedback get more new learners to a first song. Metric: activation of at least 50% and D7 retention of at least 21%.”</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="session" data-nav="Run a session">
+    <header class="chapter-head">
+      <h2>Running a two-hour mapping workshop</h2>
+      <p class="chapter-dek">Who to invite, what to bring and how to spend the time</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>People (4–8)</dt><dd>PM, designer, 1–2 engineers and a customer-facing person from support or sales</dd></div>
+      <div><dt>Materials</dt><dd>A large wall or a Miro board, sticky notes in four colors, markers and a timer</dd></div>
+      <div><dt>Prepare</dt><dd>Bring user research: interviews, data and JTBD insights. Share a context document 24 hours before.</dd></div>
+      <div><dt>Mindset</dt><dd>This is collaborative storytelling, not backlog grooming</dd></div>
+    </dl>
+
+    <ol class="agenda">
+      <li><span class="agenda-time">0–10 min</span><div><p class="agenda-title">Frame the goal</p><p>State the user goal and persona and write them on a large card at the top of the board, so everyone agrees who you are mapping for and what they want. “Today we’re mapping the journey of [persona] trying to [goal].”</p></div></li>
+      <li><span class="agenda-time">10–30 min</span><div><p class="agenda-title">Lay out the user steps</p><p>Walk the journey step by step. Everyone writes steps on sticky notes; arrange them left to right, debate the order and merge duplicates. Aim for 8–15 steps, the rule of thumb, then read them aloud: “First they…, then they…”. Does it tell a complete story?</p></div></li>
+      <li><span class="agenda-time">30–40 min</span><div><p class="agenda-title">Group into activities</p><p>Cluster the steps into activities, usually 3–7 as a rule of thumb, and place the activity cards in a row above them, like chapter headings, to complete the backbone. Consider splitting a cluster with six or more steps, and merging a single-step cluster into its neighbor unless it is a distinct phase of the journey.</p></div></li>
+      <li><span class="agenda-time">40–70 min</span><div><p class="agenda-title">Fill the body</p><p>10 minutes of silent writing: everyone writes stories for the different ways each step could be built, from simplest to most ambitious, and sticks them under the right step. Then 20 minutes of discussion, column by column: read, clarify, cluster duplicates and order each column by priority, with the simplest, most essential story at the top.</p></div></li>
+      <li><span class="agenda-time">70–80 min</span><div><p class="agenda-title">Break</p><p>Let it settle and photograph the current state. People often have new ideas during the break.</p></div></li>
+      <li><span class="agenda-time">80–100 min</span><div><p class="agenda-title">Slice releases</p><p>Draw a horizontal line under the top row of stories: this is Release 1, the walking skeleton. Read it left to right. Can a user complete the whole journey? If a column is empty, move the simplest story for that step up into Release 1. Repeat for Release 2 and Release 3.</p></div></li>
+      <li><span class="agenda-time">100–115 min</span><div><p class="agenda-title">Add metrics and hypotheses</p><p>For each slice, write “Release 1 validates that [assumption]. Success metric: [specific number].” and attach it to the release line, so each slice carries a hypothesis the team can test.</p></div></li>
+      <li><span class="agenda-time">115–120 min</span><div><p class="agenda-title">Wrap up</p><p>Photograph the map and assign an owner to digitize it in Miro or FigJam. Agree on the next step (“We’ll use this map in sprint planning from [date]”) and schedule a follow-up in two weeks to review and update it.</p></div></li>
+    </ol>
+
+    <div class="callout">
+      <p class="callout-title">Keep the room moving</p>
+      <p>Give any single card a two-minute timebox. If it is still unresolved, move it to a parking lot and carry on. The map is a living document, and you will come back to it.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Check your understanding</h2>
+      <p class="chapter-dek">Eight questions on the layers, the slices and the session</p>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">What do the two axes of a story map represent?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Horizontal is the feature set, vertical is complexity</button></li>
+          <li><button type="button">Horizontal is the timeline, vertical is team size</button></li>
+          <li><button type="button">Horizontal is the journey, vertical is priority</button></li>
+          <li><button type="button">Horizontal is the cost, vertical is the effort</button></li>
+        </ul>
+        <div class="quiz-why"><p>Left to right is the user’s journey, the narrative. Top to bottom is priority, the plan.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">What is the walking skeleton?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The most complex feature, built first</button></li>
+          <li><button type="button">The thinnest journey that works end to end</button></li>
+          <li><button type="button">A wireframe prototype of the first screens</button></li>
+          <li><button type="button">The backbone of the map before any stories are added</button></li>
+        </ul>
+        <div class="quiz-why"><p>The walking skeleton is Release 1: the thinnest version of the whole journey that works end to end. Every step is basic, but none is missing. The term comes from Alistair Cockburn.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">As a rule of thumb, how many activities does a story map have?</p>
+        <ul class="quiz-options">
+          <li><button type="button">1–2</button></li>
+          <li><button type="button">3–7</button></li>
+          <li><button type="button">10–15</button></li>
+          <li><button type="button">20 or more</button></li>
+        </ul>
+        <div class="quiz-why"><p>Activities are the big things the user does, the chapter headings of the journey. Most maps have 3–7: enough to tell the story and few enough to remember. The user steps under them usually number 8–15 across the backbone.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0">
+        <p class="quiz-q">A team’s Release 1 plan has email, Google and Apple sign-in plus a password reset flow, and nothing yet under the lesson and results steps. What is wrong with it?</p>
+        <ul class="quiz-options">
+          <li><button type="button">It goes deep on one step and leaves the rest of the journey empty</button></li>
+          <li><button type="button">It has too few activities in the backbone to tell the story</button></li>
+          <li><button type="button">Sign-in options belong in the backbone, not in the body</button></li>
+          <li><button type="button">Release 1 should be planned team by team, not across the journey</button></li>
+        </ul>
+        <div class="quiz-why"><p>Release 1 should be a thin slice across every step. Here users can sign up in several ways and then have nowhere to go. Move the simplest story for each empty step into Release 1 and leave the extra sign-in options for later slices.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Your first draft of a backbone has 27 user steps, and nobody in the room can read it as one story. What should you do?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Draw the first release line now so the map gets smaller</button></li>
+          <li><button type="button">Split the journey into two separate maps</button></li>
+          <li><button type="button">Group steps under activities and merge duplicates</button></li>
+          <li><button type="button">Move half of the steps into the body as stories</button></li>
+        </ul>
+        <div class="quiz-why"><p>Twenty-five or more steps means the backbone is at the wrong level of detail. Grouping steps under activities and merging duplicates, such as “Enter email” and “Confirm password” into “Create account”, brings it back toward 8–15 steps. Steps are things the user does, so turning them into body stories hides part of the journey.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2">
+        <p class="quiz-q">Who should attend a story mapping session?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Only the PM, who then presents the finished map</button></li>
+          <li><button type="button">The PM and a designer, to keep the group small</button></li>
+          <li><button type="button">PM, designer, engineers and a customer-facing person</button></li>
+          <li><button type="button">Every stakeholder who will read the roadmap</button></li>
+        </ul>
+        <div class="quiz-why"><p>The session works best with 4–8 people who mix product, design, engineering and customer-facing roles. The shared understanding built while making the map matters more than the map itself, so the people building and supporting the product need to be in the room.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3">
+        <p class="quiz-q">After the workshop, a team scores every story in the body with RICE. How should the scores change the map?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They reorder the activities so the highest scores come first</button></li>
+          <li><button type="button">They replace the release lines with a single ranked list</button></li>
+          <li><button type="button">They decide which user steps to drop from the backbone</button></li>
+          <li><button type="button">They order the stories within each column</button></li>
+        </ul>
+        <div class="quiz-why"><p>The backbone stays in journey order; only the body is sorted by priority. Scores help decide which story sits highest under each step, and the release lines still cut across every column.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1">
+        <p class="quiz-q">What sits at the top of the backbone?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The goal</button></li>
+          <li><button type="button">Activities</button></li>
+          <li><button type="button">User steps</button></li>
+          <li><button type="button">Release lines</button></li>
+        </ul>
+        <div class="quiz-why"><p>The backbone is the top two rows: activities, such as Discover, Onboard and Learn, with the user steps directly under them. The goal frames the map from above the backbone, and release lines cut across the body below it.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Story map grid: a label column, then one column per user step. The grid
+     is at least as wide as its columns, so sticky row labels hold while the
+     map scrolls sideways on a phone. */
+  .guide[data-guide="user-story-mapping"] .usm-map {
+    display: grid;
+    min-width: min-content;
+    grid-template-columns: minmax(6.5rem, max-content) repeat(var(--cols, 5), minmax(7.5rem, 1fr));
+    gap: var(--s-2);
+    align-items: stretch;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-axis {
+    grid-column: 2 / -1;
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+    text-align: center;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-rowlabel {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--paper-raised);
+    padding-right: var(--s-2);
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-rowsub {
+    display: block;
+    font-size: var(--fs-12);
+    font-weight: var(--w-regular);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-card {
+    margin: 0;
+    padding: var(--s-2) var(--s-3);
+    border: 1px solid var(--series-line);
+    border-radius: var(--r-sm);
+    background: var(--series-wash);
+    color: var(--ink);
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    line-height: 1.35;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-blank {
+    margin: 0;
+    min-height: var(--s-10);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--r-sm);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-goal {
+    grid-column: 2 / -1;
+    text-align: center;
+    font-weight: var(--w-semibold);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-goal.is-missing {
+    border-style: dashed;
+    color: var(--ink-3);
+    font-weight: var(--w-regular);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-act {
+    grid-column: span var(--span, 1);
+    font-weight: var(--w-semibold);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    margin: var(--s-1) 0;
+    font-size: var(--fs-12);
+    font-weight: var(--w-medium);
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 2px solid var(--rule-ink);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-divider--slice { color: var(--cat-ink); }
+  .guide[data-guide="user-story-mapping"] .usm-divider--slice::after { border-top: 2px dashed var(--cat); }
+
+  /* Builder */
+  .guide[data-guide="user-story-mapping"] .usm-acts { display: grid; gap: var(--s-4); }
+  .guide[data-guide="user-story-mapping"] .usm-act-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+    gap: var(--s-3) var(--s-4);
+    align-items: end;
+    padding-bottom: var(--s-4);
+    border-bottom: 1px solid var(--rule);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-act-row[hidden] { display: none; }
+  .guide[data-guide="user-story-mapping"] .usm-canvas {
+    min-height: 120px;
+    padding: var(--s-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--paper);
+  }
+  /* The app's scroll hint after the canvas: inside a tool, the tool's
+     paragraph size and spacing would otherwise win over the shared hint. */
+  .guide[data-guide="user-story-mapping"] .tool .usm-canvas + .scroll-hint {
+    margin-top: var(--s-2);
+    font-size: var(--fs-12);
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-canvas .usm-map { grid-template-columns: minmax(6.5rem, max-content) repeat(var(--cols, 1), minmax(8rem, 1fr)); }
+  .guide[data-guide="user-story-mapping"] .usm-canvas .usm-goal { text-align: left; }
+  /* The canvas is padded: the sticky label reaches back over that padding so
+     no card shows to its left while the map scrolls. */
+  .guide[data-guide="user-story-mapping"] .usm-canvas .usm-rowlabel {
+    left: calc(-1 * var(--s-4));
+    margin-left: calc(-1 * var(--s-4));
+    padding-left: var(--s-4);
+    background: var(--paper);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-empty {
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-hint {
+    grid-column: 2 / -1;
+    font-size: var(--fs-14);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="user-story-mapping"] button.usm-card { cursor: pointer; }
+  .guide[data-guide="user-story-mapping"] button.usm-card:hover { border-color: var(--series); }
+  .guide[data-guide="user-story-mapping"] .usm-story {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .guide[data-guide="user-story-mapping"] .usm-story-actions { display: flex; flex-wrap: wrap; gap: var(--s-1); }
+  .guide[data-guide="user-story-mapping"] .usm-mini {
+    min-height: 28px;
+    padding: 0 var(--s-2);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-sm);
+    background: var(--paper-raised);
+    color: var(--ink-2);
+    font-family:var(--font-sans);
+    font-size: var(--fs-12);
+    cursor: pointer;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-mini:hover { color: var(--ink); border-color: var(--rule-ink); }
+  .guide[data-guide="user-story-mapping"] .usm-add {
+    min-height: 40px;
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--r-sm);
+    background: transparent;
+    color: var(--ink-3);
+    font-family:var(--font-sans);
+    font-size: var(--fs-14);
+    cursor: pointer;
+  }
+  .guide[data-guide="user-story-mapping"] .usm-add:hover { color: var(--ink); border-color: var(--rule-ink); }
+  .guide[data-guide="user-story-mapping"] button.usm-card:focus-visible,
+  .guide[data-guide="user-story-mapping"] .usm-mini:focus-visible,
+  .guide[data-guide="user-story-mapping"] .usm-add:focus-visible { outline: 2px solid var(--cat); outline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .guide[data-guide="user-story-mapping"] .usm-act-row { grid-template-columns: minmax(0, 1fr); }
+    .guide[data-guide="user-story-mapping"] .usm-remove-act { justify-self: start; }
+    /* The map scrolls sideways here: start the goal and the axis label at the
+       left so they are on screen, and keep the axis label in view. */
+    .guide[data-guide="user-story-mapping"] .usm-goal,
+    .guide[data-guide="user-story-mapping"] .usm-axis { text-align: left; }
+    .guide[data-guide="user-story-mapping"] .usm-axis { position: sticky; left: 0; justify-self: start; }
+  }
+</style>
+
+<script data-guide-script>
+  const tool = root.querySelector('[data-tool="usm-builder"]');
+  const goalIn = tool.querySelector('#usm-goal');
+  const actList = tool.querySelector('#usm-activities');
+  const addActBtn = tool.querySelector('#usm-add-activity');
+  const exampleBtn = tool.querySelector('#usm-load-example');
+  const generateBtn = tool.querySelector('#usm-generate');
+  const sliceBtn = tool.querySelector('#usm-slice');
+  const unsliceBtn = tool.querySelector('#usm-unslice');
+  const clearBtn = tool.querySelector('#usm-clear');
+  const status = tool.querySelector('#usm-status');
+  const canvas = tool.querySelector('#usm-canvas');
+  const stepSel = tool.querySelector('#usm-story-step');
+  const storyIn = tool.querySelector('#usm-story-text');
+  const addStoryBtn = tool.querySelector('#usm-add-story');
+  const result = tool.querySelector('#usm-result');
+  const note = tool.querySelector('#usm-note');
+
+  const MAX_ACTS = 7;
+  const MIN_ROWS = 2;
+  const EXAMPLE = {
+    goal: 'Start learning piano with Larkwell and play a first song in the first session',
+    activities: [
+      ['Discover', 'Download app'],
+      ['Onboard', 'Open app, Create account, Set up instrument, Take placement quiz'],
+      ['First lesson', 'Start first lesson, Complete first song'],
+      ['Review', 'See results'],
+    ],
+  };
+
+  let seq = 0;
+  const nextId = () => `usm-${++seq}`;
+  let map = null;   // { goal, activities: [{ id, name, steps: [{ id, name, stories: [{ id, text }] }] }] }
+  let cuts = [];    // sorted body-row indexes with a release line drawn under them
+
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : (many || one + 's')}`;
+
+  function el(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function say(message, isError) {
+    status.textContent = message;
+    status.classList.toggle('is-error', !!isError);
+  }
+
+  // ---- Activity rows -------------------------------------------------------
+  // Seven fixed activity slots; the first `count` are shown.
+  const slots = [...actList.querySelectorAll('.usm-act-row')];
+  let count = 4;
+  function rows() { return slots.slice(0, count); }
+  const nameOf = row => row.querySelector('.usm-act-name');
+  const stepsOf = row => row.querySelector('.usm-act-steps');
+
+  function setCount(n) {
+    count = n;
+    slots.forEach((row, i) => { row.hidden = i >= n; });
+    slots.forEach(row => { row.querySelector('.usm-remove-act').disabled = n <= MIN_ROWS; });
+    addActBtn.disabled = n >= MAX_ACTS;
+  }
+
+  function fillSlot(row, name, steps) {
+    nameOf(row).value = name || '';
+    stepsOf(row).value = steps || '';
+    nameOf(row).removeAttribute('aria-invalid');
+    stepsOf(row).removeAttribute('aria-invalid');
+  }
+
+  function resetRows(list) {
+    slots.forEach((row, i) => fillSlot(row, ...(list[i] || ['', ''])));
+    setCount(list.length);
+  }
+
+  slots.forEach((row, i) => {
+    [nameOf(row), stepsOf(row)].forEach(input => input.addEventListener('input', () => input.removeAttribute('aria-invalid')));
+    row.querySelector('.usm-remove-act').addEventListener('click', () => {
+      if (i >= count || count <= MIN_ROWS) return;
+      // Shift the later activities up one slot, then hide the last one.
+      for (let j = i; j < count - 1; j++) fillSlot(slots[j], nameOf(slots[j + 1]).value, stepsOf(slots[j + 1]).value);
+      fillSlot(slots[count - 1], '', '');
+      setCount(count - 1);
+      say('Activity removed. Generate the map again to update it.', false);
+      if (i < count) nameOf(slots[i]).focus();
+      else addActBtn.focus();
+    });
+  });
+
+  // ---- Reading and generating ---------------------------------------------
+  function readInputs() {
+    const errors = [];
+    const activities = [];
+    rows().forEach((row, i) => {
+      const nameIn = row.querySelector('.usm-act-name');
+      const stepsIn = row.querySelector('.usm-act-steps');
+      const name = nameIn.value.trim();
+      const steps = stepsIn.value.split(',').map(s => s.trim()).filter(Boolean);
+      nameIn.removeAttribute('aria-invalid');
+      stepsIn.removeAttribute('aria-invalid');
+      if (!name && !steps.length) return;
+      if (!name) {
+        nameIn.setAttribute('aria-invalid', 'true');
+        errors.push(`Give activity ${i + 1} a name, or clear its steps.`);
+        return;
+      }
+      if (!steps.length) {
+        stepsIn.setAttribute('aria-invalid', 'true');
+        errors.push(`Add at least one user step for “${name}”.`);
+        return;
+      }
+      activities.push({ name, steps });
+    });
+    if (!errors.length && activities.length < 2) errors.push('Add at least two activities, each with its user steps.');
+    return { goal: goalIn.value.trim(), activities, errors };
+  }
+
+  function generate() {
+    const input = readInputs();
+    if (input.errors.length) { say(input.errors[0], true); return; }
+
+    // Keep stories for steps that survive a regeneration (same activity and step name).
+    const kept = new Map();
+    if (map) map.activities.forEach(a => a.steps.forEach(s => {
+      const key = `${a.name}␟${s.name}`;
+      if (!kept.has(key)) kept.set(key, s.stories);
+    }));
+
+    const linesBefore = cuts.length;
+    map = {
+      goal: input.goal,
+      activities: input.activities.map(a => ({
+        id: nextId(),
+        name: a.name,
+        steps: a.steps.map(name => {
+          const key = `${a.name}␟${name}`;
+          const stories = kept.get(key) || [];
+          kept.delete(key);
+          return { id: nextId(), name, stories };
+        }),
+      })),
+    };
+    render();
+    const stepCount = allSteps().length;
+    const count = map.activities.length;
+    let message = `Map generated: ${plural(count, 'activity', 'activities')}, ${plural(stepCount, 'user step')}.`;
+    if (count < 3) message += ' Most maps have 3–7 activities.';
+    if (!input.goal) message += ' Add a goal to frame the map.';
+    if (cuts.length < linesBefore) message += ' Release lines below the remaining stories were removed.';
+    say(message, false);
+  }
+
+  function allSteps() {
+    return map ? map.activities.flatMap(a => a.steps) : [];
+  }
+
+  function findStep(id) {
+    return allSteps().find(s => s.id === id) || null;
+  }
+
+  function depth() {
+    return allSteps().reduce((max, s) => Math.max(max, s.stories.length), 0);
+  }
+
+  function rowLabel(r) {
+    if (!cuts.length) return `Row ${r + 1}`;
+    const band = cuts.filter(c => c < r).length;
+    return band < cuts.length ? `Release ${band + 1}` : 'Later';
+  }
+
+  // ---- Rendering -----------------------------------------------------------
+  function render() {
+    const maxDepth = depth();
+    cuts = cuts.filter(c => c < maxDepth);
+    canvas.replaceChildren();
+
+    if (!map) {
+      canvas.append(el('p', 'usm-empty', 'Your story map will appear here. Fill in at least two activities with their user steps, then select Generate map.'));
+      updateSelect();
+      updateOutput();
+      return;
+    }
+
+    const steps = allSteps();
+    const grid = el('div', 'usm-map');
+    grid.style.setProperty('--cols', String(steps.length));
+
+    grid.append(el('p', 'usm-rowlabel', 'Goal'));
+    const goal = el('p', 'usm-card usm-goal', map.goal || 'No goal yet: add one above and generate again');
+    goal.dataset.series = '5';
+    if (!map.goal) goal.classList.add('is-missing');
+    grid.append(goal);
+
+    grid.append(el('p', 'usm-rowlabel', 'Activities'));
+    map.activities.forEach(a => {
+      const card = el('p', 'usm-card usm-act', a.name);
+      card.dataset.series = '1';
+      card.style.setProperty('--span', String(a.steps.length));
+      grid.append(card);
+    });
+
+    grid.append(el('p', 'usm-rowlabel', 'User steps'));
+    steps.forEach(s => {
+      const btn = el('button', 'usm-card usm-step', s.name);
+      btn.type = 'button';
+      btn.dataset.series = '2';
+      btn.dataset.step = s.id;
+      btn.setAttribute('aria-label', `${s.name}: add a story under this step`);
+      btn.addEventListener('click', () => pickStep(s.id));
+      grid.append(btn);
+    });
+
+    grid.append(el('p', 'usm-divider', 'Backbone above, body below: stories in priority order ↓'));
+
+    if (!maxDepth) {
+      grid.append(el('p', 'usm-rowlabel', 'Body'));
+      grid.append(el('p', 'usm-hint', 'No stories yet. Select a user step above, or use the form below, to add the first one.'));
+    }
+
+    for (let r = 0; r < maxDepth; r++) {
+      grid.append(el('p', 'usm-rowlabel', rowLabel(r)));
+      steps.forEach(s => {
+        const story = s.stories[r];
+        if (!story) {
+          const add = el('button', 'usm-add', 'Add');
+          add.type = 'button';
+          add.setAttribute('aria-label', `Add a story under ${s.name}`);
+          add.addEventListener('click', () => pickStep(s.id));
+          grid.append(add);
+          return;
+        }
+        const card = el('div', 'usm-card usm-story');
+        card.dataset.series = '3';
+        card.dataset.story = story.id;
+        const text = el('span');
+        text.append(el('span', 'visually-hidden', `${rowLabel(r)}, ${s.name}: `), story.text);
+        card.append(text);
+        const actions = el('div', 'usm-story-actions');
+        if (r > 0) {
+          const up = el('button', 'usm-mini usm-up', 'Up');
+          up.type = 'button';
+          up.setAttribute('aria-label', `Move “${story.text}” up`);
+          up.addEventListener('click', () => moveUp(s.id, story.id));
+          actions.append(up);
+        }
+        const remove = el('button', 'usm-mini usm-del', 'Remove');
+        remove.type = 'button';
+        remove.setAttribute('aria-label', `Remove “${story.text}”`);
+        remove.addEventListener('click', () => removeStory(s.id, story.id));
+        actions.append(remove);
+        card.append(actions);
+        grid.append(card);
+      });
+      const cutIndex = cuts.indexOf(r);
+      if (cutIndex !== -1) grid.append(el('p', 'usm-divider usm-divider--slice', `End of release ${cutIndex + 1}`));
+    }
+
+    canvas.append(grid);
+    updateSelect();
+    updateOutput();
+  }
+
+  function updateSelect() {
+    const previous = stepSel.value;
+    stepSel.replaceChildren();
+    if (!map) {
+      const opt = el('option', null, 'Generate the map first');
+      opt.value = '';
+      stepSel.append(opt);
+      stepSel.disabled = true;
+      return;
+    }
+    stepSel.disabled = false;
+    map.activities.forEach(a => {
+      const group = el('optgroup');
+      group.label = a.name;
+      a.steps.forEach(s => {
+        const opt = el('option', null, s.name);
+        opt.value = s.id;
+        group.append(opt);
+      });
+      stepSel.append(group);
+    });
+    if (previous && findStep(previous)) stepSel.value = previous;
+  }
+
+  function updateOutput() {
+    if (!map) {
+      result.textContent = '';
+      note.textContent = 'Generate a map to check whether Release 1 covers the whole journey.';
+      return;
+    }
+    const steps = allSteps();
+    const stories = steps.reduce((sum, s) => sum + s.stories.length, 0);
+    if (!cuts.length) {
+      result.textContent = `${plural(steps.length, 'step')} · ${plural(stories, 'story', 'stories')}`;
+      note.textContent = stories
+        ? 'Put the simplest story for each step in the top row, then add a release line to mark Release 1.'
+        : 'Add stories under each step, simplest at the top.';
+      return;
+    }
+    // Columns have no gaps, so a step is covered by Release 1 exactly when it has a story.
+    const empty = steps.filter(s => !s.stories.length);
+    result.textContent = `Release 1 covers ${steps.length - empty.length} of ${plural(steps.length, 'step')}`;
+    note.textContent = empty.length
+      ? `Empty in Release 1: ${empty.map(s => s.name).join(', ')}. A user would hit a dead end there; add the simplest possible story for each to the top row.`
+      : 'Every step has a story in Release 1, so a user can walk the whole journey.';
+  }
+
+  // ---- Story actions ------------------------------------------------------
+  function pickStep(id) {
+    stepSel.value = id;
+    storyIn.focus();
+    const step = findStep(id);
+    if (step) say(`Adding a story under “${step.name}”. Type it and select Add story.`, false);
+  }
+
+  function focusStep(id) {
+    const btn = canvas.querySelector(`[data-step="${id}"]`);
+    if (btn) btn.focus();
+  }
+
+  // Focus a story's Up button (or Remove, when it has no Up) after it moves.
+  function focusStory(id, preferUp) {
+    const card = canvas.querySelector(`[data-story="${id}"]`);
+    if (!card) return false;
+    const btn = (preferUp && card.querySelector('.usm-up')) || card.querySelector('.usm-del');
+    if (btn) btn.focus();
+    return !!btn;
+  }
+
+  function addStory() {
+    if (!map) { say('Generate the map first, then add stories.', true); return; }
+    const step = findStep(stepSel.value);
+    const text = storyIn.value.trim();
+    if (!step) { say('Choose the step this story belongs under.', true); return; }
+    if (!text) {
+      storyIn.setAttribute('aria-invalid', 'true');
+      say('Type a story before adding it.', true);
+      storyIn.focus();
+      return;
+    }
+    storyIn.removeAttribute('aria-invalid');
+    step.stories.push({ id: nextId(), text });
+    storyIn.value = '';
+    render();
+    say(`Added “${text}” under “${step.name}”.`, false);
+    storyIn.focus();
+  }
+
+  function moveUp(stepId, storyId) {
+    const step = findStep(stepId);
+    if (!step) return;
+    const i = step.stories.findIndex(s => s.id === storyId);
+    if (i < 1) return;
+    [step.stories[i - 1], step.stories[i]] = [step.stories[i], step.stories[i - 1]];
+    render();
+    say(`Moved “${step.stories[i - 1].text}” up.`, false);
+    focusStory(storyId, true);
+  }
+
+  function removeStory(stepId, storyId) {
+    const step = findStep(stepId);
+    if (!step) return;
+    const i = step.stories.findIndex(s => s.id === storyId);
+    if (i < 0) return;
+    const [gone] = step.stories.splice(i, 1);
+    const linesBefore = cuts.length;
+    render();
+    let message = `Removed “${gone.text}”.`;
+    if (cuts.length < linesBefore) message += ' The release line under that row was removed.';
+    say(message, false);
+    const neighbor = step.stories[i] || step.stories[i - 1];
+    if (!neighbor || !focusStory(neighbor.id, false)) focusStep(stepId);
+  }
+
+  // ---- Release lines ------------------------------------------------------
+  function addReleaseLine() {
+    if (!map) { say('Generate the map first.', true); return; }
+    const maxDepth = depth();
+    if (!maxDepth) { say('Add at least one story before drawing a release line.', true); return; }
+    const row = cuts.length ? cuts[cuts.length - 1] + 1 : 0;
+    if (row >= maxDepth) { say('Every row is already inside a release. Add more stories to slice again.', true); return; }
+    cuts.push(row);
+    render();
+    say(`Release ${cuts.length} line drawn under row ${row + 1}.`, false);
+  }
+
+  function removeReleaseLine() {
+    if (!cuts.length) { say('There is no release line to remove.', true); return; }
+    cuts.pop();
+    render();
+    say('Last release line removed.', false);
+  }
+
+  function clearAll() {
+    map = null;
+    cuts = [];
+    goalIn.value = '';
+    storyIn.value = '';
+    storyIn.removeAttribute('aria-invalid');
+    resetRows([['', ''], ['', ''], ['', ''], ['', '']]);
+    render();
+    say('Cleared. Start again with a goal and your activities.', false);
+  }
+
+  function loadExample() {
+    map = null;
+    cuts = [];
+    goalIn.value = EXAMPLE.goal;
+    resetRows(EXAMPLE.activities);
+    generate();
+  }
+
+  // ---- Wiring ------------------------------------------------------------
+  addActBtn.addEventListener('click', () => {
+    if (rows().length >= MAX_ACTS) { say(`A map works best with at most ${MAX_ACTS} activities.`, true); return; }
+    fillSlot(slots[count], '', '');
+    setCount(count + 1);
+    nameOf(slots[count - 1]).focus();
+  });
+  exampleBtn.addEventListener('click', loadExample);
+  generateBtn.addEventListener('click', generate);
+  sliceBtn.addEventListener('click', addReleaseLine);
+  unsliceBtn.addEventListener('click', removeReleaseLine);
+  clearBtn.addEventListener('click', clearAll);
+  addStoryBtn.addEventListener('click', addStory);
+  storyIn.addEventListener('input', () => storyIn.removeAttribute('aria-invalid'));
+  storyIn.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addStory(); }
+  });
+
+  resetRows([['', ''], ['', ''], ['', ''], ['', '']]);
+  render();
+</script>
