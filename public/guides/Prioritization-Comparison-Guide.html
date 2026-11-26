@@ -1,7 +1,7 @@
 <article class="guide" data-guide="compare-prioritization">
 
   <header class="guide-intro">
-    <p class="lede">RICE, Value vs Effort, the Kano model and ICE all help you decide what to build next, but each answers a different question and asks for different evidence. This guide sets them side by side so you can pick the one that fits your data, your time and the decision in front of you.</p>
+    <p class="lede">RICE and ICE give each idea a score and rank the list, Value vs Effort places ideas on a 2×2 grid of value against effort, and Kano asks users how they would feel about each feature and sorts the features into types. Which one fits depends on the answer you need and the evidence you can gather in the time you have.</p>
 
     <figure class="figure" data-hero>
       <div class="spectrum">
@@ -34,70 +34,40 @@
           </li>
         </ol>
       </div>
-      <figcaption>The four frameworks from fastest to slowest. ICE and Value vs Effort run on the team’s judgment, RICE adds analytics for Reach and Kano adds a user survey.</figcaption>
+      <figcaption>Ordered from fastest to slowest, left to right (top to bottom on a phone). Each entry gives the time a session takes, the evidence it runs on and what it produces.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Pick by the evidence you have and the answer you need. ICE and Value vs Effort run on the team’s judgment and take under an hour; RICE needs usage data and gives the most rigorous ranking; Kano needs a user survey and tells you what kind of feature each idea is. Most decisions need one or two of them, not all four.</p>
+      <p>For a quarterly plan with 30 ideas or more, cut the list to about 10 with ICE or Value vs Effort, then rank the shortlist with RICE and take the top 3. RICE earns its 90 minutes only when you have usage data to estimate Reach; without it, ICE gets you a ranking in a third of the time. Kano answers a separate question, which features users expect and which would delight them, and it needs 30 or more survey responses collected over 1–2 weeks.</p>
     </div>
   </header>
 
   <section class="chapter" id="overview" data-nav="At a glance">
     <header class="chapter-head">
-      <h2>Four frameworks for four different questions</h2>
-      <p class="chapter-dek">Two rank ideas, one sorts them into a grid and one sorts them by type</p>
+      <h2>ICE and Value vs Effort run on judgment; RICE adds usage data and Kano asks users</h2>
     </header>
 
-    <div class="cards" data-cols="2">
-      <div class="card">
-        <span class="card-key" data-series="4">R × I × C ÷ E</span>
-        <h3 class="card-title"><a data-guide-link="rice">RICE Score</a></h3>
-        <p class="card-q">Which features give the most impact for the effort?</p>
-        <p>The most rigorous way to rank, because Reach comes from real usage data rather than a guess.</p>
-        <p>Best for quarterly roadmap planning with 10 or more features, on a mature product with analytics.</p>
-        <p class="card-meta">Speed: slow · Rigor: high</p>
+    <dl class="facts">
+      <div>
+        <dt><a data-guide-link="rice">RICE Score</a></dt>
+        <dd><strong>Which features give the most impact for the effort?</strong> Each idea scores Reach × Impact × Confidence ÷ Effort. Reach comes from real usage data, so the ranking rests on more than a guess. It suits a quarterly roadmap of 10 or more features on a mature product with analytics.</dd>
       </div>
-      <div class="card">
-        <span class="card-key" data-series="3">2×2 grid</span>
-        <h3 class="card-title"><a data-guide-link="value-effort">Value vs Effort</a></h3>
-        <p class="card-q">Which ideas are quick wins and which should we avoid?</p>
-        <p>The most visual: rate each idea for value and effort and plot it on a 2×2. Its quadrant (Quick wins, Big bets, Fill-ins or Avoid) suggests a next move, not a verdict.</p>
-        <p>Best for aligning a team in about 45 minutes, backlog grooming and stakeholder workshops.</p>
-        <p class="card-meta">Speed: fast · Rigor: low</p>
+      <div>
+        <dt><a data-guide-link="value-effort">Value vs Effort</a></dt>
+        <dd><strong>Which ideas are quick wins and which should we avoid?</strong> Rate each idea for value and effort and plot it on a 2×2. Its quadrant (Quick wins, Big bets, Fill-ins or Avoid) suggests a next move rather than a verdict. It’s the most visual of the four, which makes it a good fit for backlog grooming, stakeholder workshops and getting a team to agree in about 45 minutes.</dd>
       </div>
-      <div class="card">
-        <span class="card-key" data-series="5">Survey, then sort</span>
-        <h3 class="card-title"><a data-guide-link="kano">Kano model</a></h3>
-        <p class="card-q">Which features are expected, which delight, and which nobody notices?</p>
-        <p>The most user-centered: instead of the team scoring ideas, users answer a survey about each one.</p>
-        <p>The answers sort each feature into one of five types: Must-have (Kano: must-be quality), Performance (one-dimensional quality), Delighter (attractive quality), Indifferent or Reverse.</p>
-        <p>Best for product strategy, when you need to know what type of feature to invest in.</p>
-        <p class="card-meta">Speed: slowest · Rigor: high</p>
+      <div>
+        <dt><a data-guide-link="kano">Kano model</a></dt>
+        <dd><strong>Which features are expected, which delight, and which does nobody notice?</strong> Users answer a survey about each feature instead of the team scoring it. Their answers sort each one into Must-have (Kano: must-be quality), Performance (one-dimensional quality), Delighter (attractive quality), Indifferent or Reverse. It earns its place in product strategy, where the question is what type of feature to invest in.</dd>
       </div>
-      <div class="card">
-        <span class="card-key" data-series="1">I × C × E</span>
-        <h3 class="card-title"><a data-guide-link="ice">ICE Score</a></h3>
-        <p class="card-q">Which experiment should we run first?</p>
-        <p>One of the fastest ways to score: rate Impact, Confidence and Ease from 1 to 10 on the team’s judgment, multiply the three ratings and sort. Some teams average them instead; the ranking is often the same.</p>
-        <p>Best for growth experiments, rapid triage of 20 or more ideas and early-stage products with no data.</p>
-        <p class="card-meta">Speed: fastest · Rigor: lowest</p>
+      <div>
+        <dt><a data-guide-link="ice">ICE Score</a></dt>
+        <dd><strong>Which experiment should we run first?</strong> Rate Impact, Confidence and Ease from 1 to 10 on the team’s judgment, multiply the three ratings and sort. Some teams average them instead; the ranking is often the same. Growth teams use it to choose experiments and to triage 20 or more ideas, and it works on an early-stage product that has no data at all.</dd>
       </div>
-    </div>
+    </dl>
 
-    <div class="callout">
-      <p class="callout-title">Pick by what you need most</p>
-      <p>Use <strong>ICE</strong> when you need speed, <strong>Value vs Effort</strong> when you need a visual, <strong>RICE</strong> when you need precision and <strong>Kano</strong> when you need to understand users.</p>
-    </div>
-  </section>
-
-  <section class="chapter" id="compare" data-nav="Side by side">
-    <header class="chapter-head">
-      <h2>Twelve ways the four differ</h2>
-      <p class="chapter-dek">What each one needs, what it produces and how long it takes</p>
-    </header>
-
-    <p>Three rows are rated. In those rows a fuller bar is better: more objective, better suited to executives, easier to learn.</p>
+    <p>Three rows of the table are rated. In those rows a fuller bar is better: more objective, better suited to executives, easier to learn.</p>
 
     <div class="table-wrap">
       <table class="table table--compare">
@@ -128,70 +98,104 @@
       </table>
     </div>
 
-    <p>RICE rates medium on objectivity, not high. Reach comes from analytics, but Impact, Confidence and Effort are still the team’s estimates. Kano rates high because users, not the team, supply the answers.</p>
+    <p>RICE is the most rigorous way to rank, yet it rates only medium on objectivity. Reach comes from analytics, but Impact, Confidence and Effort are still the team’s estimates. Kano rates high because users supply the answers, though it sorts features into types and never puts them in order.</p>
 
     <p>Each framework uses its own scale for effort, and the scales do not convert into one another. An effort of 3 on a Value vs Effort grid is not 3 person-months in RICE or an Ease of 3 in ICE, so compare scores only within one framework.</p>
-
-    <div class="callout">
-      <p class="callout-title">Speed falls as evidence rises</p>
-      <p>From fastest to slowest the order is <strong>ICE</strong>, <strong>Value vs Effort</strong>, <strong>RICE</strong>, <strong>Kano</strong>. ICE and Value vs Effort run on judgment, RICE needs analytics and Kano needs answers from users. RICE is the most rigorous way to rank; Kano gathers the most direct user evidence, but it sorts features into types instead of ranking them. Match the framework to the stakes of the decision.</p>
-    </div>
   </section>
 
-  <section class="chapter" id="decide" data-nav="How to decide">
+  <section class="chapter" id="picker" data-nav="Choose">
     <header class="chapter-head">
-      <h2>Start from the question you need answered</h2>
-      <p class="chapter-dek">Follow the path until it names a framework</p>
+      <h2>Your time, your data and your goal decide it</h2>
     </header>
 
-    <ol class="decision" data-picker>
-      <li>
-        <p class="decision-q">Do you need to know what type of feature each idea is, rather than which to build first?</p>
-        <ul>
-          <li><span class="decision-if">Yes</span><span>Go to question 2</span></li>
-          <li><span class="decision-if">No</span><span>Go to question 3</span></li>
-        </ul>
-      </li>
-      <li>
-        <p class="decision-q">Can you survey at least 30 users and wait 1–2 weeks for their answers?</p>
-        <ul>
-          <li><span class="decision-if">Yes</span><span><a data-guide-link="kano">Use Kano</a>. It separates Must-haves, Performance features and Delighters. Hold a 60-minute workshop once the answers are in.</span></li>
-          <li><span class="decision-if">No</span><span><a data-guide-link="value-effort">Use Value vs Effort</a> for now, and send the Kano survey so the answers are ready for the next planning cycle.</span></li>
-        </ul>
-      </li>
-      <li>
-        <p class="decision-q">Do you need a picture that stakeholders can agree on in the room?</p>
-        <ul>
-          <li><span class="decision-if">Yes</span><span><a data-guide-link="value-effort">Use Value vs Effort</a>. Anyone can read a 2×2 grid, and a session takes about 45 minutes. If you have Reach data, rank the strongest candidates with <a data-guide-link="rice">RICE</a> afterwards.</span></li>
-          <li><span class="decision-if">No</span><span>Go to question 4</span></li>
-        </ul>
-      </li>
-      <li>
-        <p class="decision-q">Do you need an order today, or are you choosing this week’s experiments?</p>
-        <ul>
-          <li><span class="decision-if">Yes</span><span><a data-guide-link="ice">Use ICE</a>. Three numbers, multiplied: about 20 ideas in a 30-minute session. If you have Reach data, rank the top 10 with <a data-guide-link="rice">RICE</a> afterwards.</span></li>
-          <li><span class="decision-if">No</span><span>Go to question 5</span></li>
-        </ul>
-      </li>
-      <li>
-        <p class="decision-q">Do you have analytics data to estimate Reach for each idea?</p>
-        <ul>
-          <li><span class="decision-if">Yes</span><span><a data-guide-link="rice">Use RICE</a>. It is the most rigorous ranking because it uses real user numbers. Plan a 90-minute session.</span></li>
-          <li><span class="decision-if">No</span><span><a data-guide-link="ice">Use ICE</a>. Without data, Reach would be a guess, so RICE loses its advantage. ICE ranks on judgment and its Confidence score marks the guesses.</span></li>
-        </ul>
-      </li>
-    </ol>
-
-    <div class="callout callout--tip">
-      <p class="callout-title">When the path does not fit</p>
-      <p>Look for a situation like yours in the <a href="#scenarios" data-section-link>scenarios</a>, or answer three questions in the <a href="#picker" data-section-link>picker</a>. The picker follows the same rules as this path.</p>
+    <div class="tool" data-tool="framework-picker">
+      <div class="tool-head">
+        <h3 class="tool-title">Framework picker</h3>
+      </div>
+      <p class="visually-hidden" id="pk-hint">Choose one answer to each question. Use the arrow keys to move between answers.</p>
+      <div class="fields" data-cols="1">
+        <div class="field">
+          <p class="field-label" id="pk-time-label">1. How much time do you have?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-time-label" aria-describedby="pk-hint" data-question="time">
+            <button type="button" class="choice" aria-pressed="false" data-value="fast">Under 30 minutes</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="medium">30–90 minutes</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="slow">1–2 weeks, and we can survey users</button>
+          </div>
+        </div>
+        <div class="field">
+          <p class="field-label" id="pk-data-label">2. Do you have analytics data?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-data-label" aria-describedby="pk-hint" data-question="data">
+            <button type="button" class="choice" aria-pressed="false" data-value="yes">Yes, we can estimate Reach</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="no">No, only the team’s judgment</button>
+          </div>
+        </div>
+        <div class="field">
+          <p class="field-label" id="pk-goal-label">3. What is the main goal?</p>
+          <div class="choices" data-stack role="group" aria-labelledby="pk-goal-label" aria-describedby="pk-hint" data-question="goal">
+            <button type="button" class="choice" aria-pressed="false" data-value="rank">Rank features numerically</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="visual">Align the team visually</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="type">Understand feature types</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="triage">Triage many ideas fast</button>
+          </div>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="pk-reset">Start over</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Recommendation</p>
+        <output class="tool-result" id="pk-result"></output>
+        <p class="tool-output-note" id="pk-reason">Answer all three questions to see a recommendation.</p>
+        <p class="pk-links" id="pk-links"></p>
+      </div>
     </div>
+
+    <details class="more">
+      <summary>The rules behind the picker</summary>
+      <p>The picker runs your three answers through these five questions in order and stops at the first answer that names a framework. It checks the goal before the data, and no path leads to RICE without data to estimate Reach.</p>
+      <ol class="decision" data-picker>
+        <li>
+          <p class="decision-q">Do you need to know what type of feature each idea is, rather than which to build first?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span>Go to question 2</span></li>
+            <li><span class="decision-if">No</span><span>Go to question 3</span></li>
+          </ul>
+        </li>
+        <li>
+          <p class="decision-q">Can you survey at least 30 users and wait 1–2 weeks for their answers?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="kano">Use Kano</a>. It separates Must-haves, Performance features and Delighters. Hold a 60-minute workshop once the answers are in.</span></li>
+            <li><span class="decision-if">No</span><span><a data-guide-link="value-effort">Use Value vs Effort</a> for now, and send the Kano survey so the answers are ready for the next planning cycle.</span></li>
+          </ul>
+        </li>
+        <li>
+          <p class="decision-q">Do you need a picture that stakeholders can agree on in the room?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="value-effort">Use Value vs Effort</a>. Anyone can read a 2×2 grid, and a session takes about 45 minutes. If you have Reach data, rank the strongest candidates with <a data-guide-link="rice">RICE</a> afterwards.</span></li>
+            <li><span class="decision-if">No</span><span>Go to question 4</span></li>
+          </ul>
+        </li>
+        <li>
+          <p class="decision-q">Do you need an order today, or are you choosing this week’s experiments?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="ice">Use ICE</a>. Three numbers, multiplied: about 20 ideas in a 30-minute session, and keep the top 10 or so. If you have Reach data, rank those with <a data-guide-link="rice">RICE</a> afterwards.</span></li>
+            <li><span class="decision-if">No</span><span>Go to question 5</span></li>
+          </ul>
+        </li>
+        <li>
+          <p class="decision-q">Do you have analytics data to estimate Reach for each idea?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="rice">Use RICE</a>. It is the most rigorous ranking because it uses real user numbers. Plan a 90-minute session.</span></li>
+            <li><span class="decision-if">No</span><span><a data-guide-link="ice">Use ICE</a>. Without data, Reach would be a guess, so RICE loses its advantage. ICE ranks on judgment and its Confidence score marks the guesses.</span></li>
+          </ul>
+        </li>
+      </ol>
+    </details>
   </section>
 
   <section class="chapter" id="scenarios" data-nav="Scenarios">
     <header class="chapter-head">
-      <h2>Eight situations and the framework for each</h2>
-      <p class="chapter-dek">Find the one closest to yours</p>
+      <h2>Usage data points to RICE, and a room to align points to Value vs Effort</h2>
     </header>
 
     <ul class="scenarios">
@@ -221,7 +225,7 @@
       </li>
       <li>
         <p class="scenario-q">“Quick backlog grooming with the team: 20 minutes at most.”</p>
-        <p class="scenario-a"><a data-guide-link="value-effort">Value vs Effort</a>: a quick, visual method. Put sticky notes on a grid and read the quadrants; a rough sort fits in 20 minutes, while a full session with discussion takes about 45.</p>
+        <p class="scenario-a"><a data-guide-link="value-effort">Value vs Effort</a>: put sticky notes on the grid and read the quadrants. A rough sort fits in 20 minutes; a full session with discussion takes about 45.</p>
       </li>
       <li>
         <p class="scenario-q">“Users are churning, and we don’t know whether we’re missing basics or lacking features that impress.”</p>
@@ -233,11 +237,12 @@
   <section class="chapter" id="combine" data-nav="Using them together">
     <header class="chapter-head">
       <h2>Chain them only when the stakes are high</h2>
-      <p class="chapter-dek">A first pass narrows the list, then RICE puts it in order</p>
     </header>
 
+    <p>Most decisions need one or two of the four, and running all of them every time costs more than it returns. Save the full sequence for a high-stakes, high-ambiguity decision such as a quarterly plan with a long list. Choosing what to build this sprint doesn’t need it.</p>
+
     <h3>A pipeline for big planning decisions</h3>
-    <p>For an important decision, such as a quarterly plan with a long list and a lot of uncertainty, run the frameworks in sequence. The first pass hands RICE a shorter list, and the grid can show the result.</p>
+    <p>The first pass hands RICE a shorter list, and the grid can present the result at the end.</p>
 
     <ol class="chain">
       <li><span class="chain-name">ICE or Value vs Effort</span><span class="chain-note">First pass: cut 30 ideas to about 10, by score or on the grid</span></li>
@@ -264,60 +269,6 @@
       <div class="card">
         <h4 class="card-title">Kano, then Value vs Effort</h4>
         <p>Kano sorts features by type. Plot the Performance features on a Value vs Effort grid and take the Quick wins into the sprint.</p>
-      </div>
-    </div>
-
-    <div class="callout callout--caution">
-      <p class="callout-title">One or two is usually enough</p>
-      <p>Running all four for every decision costs more than it returns. Most situations need <strong>one or two</strong>. Save the full pipeline for high-stakes, high-ambiguity quarterly planning, not for choosing what to build this sprint.</p>
-    </div>
-  </section>
-
-  <section class="chapter" id="picker" data-nav="Picker">
-    <header class="chapter-head">
-      <h2>Get a recommendation for your situation</h2>
-      <p class="chapter-dek">Three questions, and the same rules as the decision path</p>
-    </header>
-
-    <div class="tool" data-tool="framework-picker">
-      <div class="tool-head">
-        <h3 class="tool-title">Framework picker</h3>
-        <p class="tool-hint">Choose one answer to each question. Use the arrow keys to move between answers.</p>
-      </div>
-      <div class="fields" data-cols="1">
-        <div class="field">
-          <p class="field-label" id="pk-time-label">1. How much time do you have?</p>
-          <div class="choices" data-stack role="group" aria-labelledby="pk-time-label" data-question="time">
-            <button type="button" class="choice" aria-pressed="false" data-value="fast">Under 30 minutes</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="medium">30–90 minutes</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="slow">1–2 weeks, and we can survey users</button>
-          </div>
-        </div>
-        <div class="field">
-          <p class="field-label" id="pk-data-label">2. Do you have analytics data?</p>
-          <div class="choices" data-stack role="group" aria-labelledby="pk-data-label" data-question="data">
-            <button type="button" class="choice" aria-pressed="false" data-value="yes">Yes, we can estimate Reach</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="no">No, only the team’s judgment</button>
-          </div>
-        </div>
-        <div class="field">
-          <p class="field-label" id="pk-goal-label">3. What is the main goal?</p>
-          <div class="choices" data-stack role="group" aria-labelledby="pk-goal-label" data-question="goal">
-            <button type="button" class="choice" aria-pressed="false" data-value="rank">Rank features numerically</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="visual">Align the team visually</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="type">Understand feature types</button>
-            <button type="button" class="choice" aria-pressed="false" data-value="triage">Triage many ideas fast</button>
-          </div>
-        </div>
-      </div>
-      <div class="tool-actions">
-        <button type="button" class="btn" id="pk-reset">Start over</button>
-      </div>
-      <div class="tool-output" aria-live="polite">
-        <p class="tool-output-label">Recommendation</p>
-        <output class="tool-result" id="pk-result"></output>
-        <p class="tool-output-note" id="pk-reason">Answer all three questions to see a recommendation.</p>
-        <p class="pk-links" id="pk-links"></p>
       </div>
     </div>
   </section>
@@ -453,8 +404,8 @@
     { // Path 4: triage many ideas fast
       when: a => a.goal === 'triage',
       rec: a => ({ title: 'ICE Score', slugs: withRice(a, ['ice']),
-        text: 'ICE is built for rapid triage: score 20 or more ideas in about 30 minutes with three 1–10 numbers.'
-          + (a.data === 'yes' ? ' Then rank the top 10 with RICE, using your Reach data.' : '') }) },
+        text: 'Cut the list to about 10 with ICE: it scores 20 or more ideas in about 30 minutes with three 1–10 numbers. A Value vs Effort grid makes the same cut if the room needs to see it.'
+          + (a.data === 'yes' ? ' Then rank the shortlist with RICE, using your Reach data, and take the top 3 into the plan.' : '') }) },
     { // Path 4: an order is needed today, and Reach data exists
       when: a => a.data === 'yes' && a.time === 'fast',
       rec: () => ({ title: 'ICE now, RICE next', slugs: ['ice', 'rice'],

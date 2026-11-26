@@ -26,10 +26,31 @@
 .toc-toggle { display: none; }
 .toc-title {
   margin-bottom: var(--s-3);
-  font-size: var(--fs-14);
-  font-weight: var(--w-semibold);
+  font-family: var(--font-serif);
+  font-size: var(--fs-18);
+  line-height: var(--lh-snug);
   color: var(--ink);
 }
+/* The family and its comparison guide, under the sections */
+.toc-foot {
+  display: grid;
+  gap: 2px;
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+.toc-foot-link {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 6px var(--s-2);
+  margin: 0 calc(-1 * var(--s-2));
+  border-radius: var(--r-sm);
+  font-size: var(--fs-14);
+  color: var(--ink-2);
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.toc-foot-link:hover { color: var(--ink); background: var(--paper-hover); }
 .toc-list { display: grid; gap: 2px; }
 .toc-link {
   display: grid;
@@ -78,17 +99,17 @@
     color: var(--ink-2);
     text-align: left;
   }
-  .toc-toggle-label { font-weight: var(--w-semibold); color: var(--ink); }
+  .toc-toggle-label { flex: none; max-width: 45%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: var(--w-semibold); color: var(--ink); }
   .toc-toggle-current { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-3); }
   .toc-toggle svg { width: 18px; height: 18px; flex: none; transition: transform var(--t-base) var(--ease); }
   .toc.is-open .toc-toggle svg { transform: rotate(180deg); }
-  .toc-list {
+  .toc-sheet {
     display: none;
-    max-height: 60dvh;
+    max-height: 70dvh;
     overflow-y: auto;
     padding: var(--s-2) 0 var(--s-4);
   }
-  .toc.is-open .toc-list { display: grid; }
+  .toc.is-open .toc-sheet { display: block; }
   .toc.is-open { box-shadow: 0 12px 24px -16px oklch(0.24 0.02 60 / 0.35); }
   .toc-link { padding: 10px var(--s-2); font-size: var(--fs-16); }
   .guide-main { order: 1; padding-top: var(--s-6); }
@@ -99,19 +120,6 @@
 
 /* ---- Guide header ------------------------------------------------------- */
 .guide-head { padding-bottom: var(--s-8); border-bottom: 1px solid var(--rule); }
-.guide-kicker {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--s-2);
-  margin-bottom: var(--s-4);
-  font-size: var(--fs-14);
-  color: var(--ink-3);
-}
-.guide-kicker a { color: var(--cat-ink); font-weight: var(--w-medium); }
-.guide-kicker a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.guide-glyph { display: inline-flex; color: var(--ink-3); }
-.guide-glyph svg { width: 20px; height: 20px; }
 .guide-title { max-width: 18ch; }
 .guide-question {
   max-width: 40ch;
@@ -121,20 +129,11 @@
   line-height: 1.4;
   color: var(--ink-2);
 }
-.guide-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-3) var(--s-10);
-  margin-top: var(--s-8);
-}
-.guide-meta dt { font-size: var(--fs-12); color: var(--ink-3); }
-.guide-meta dd { font-size: var(--fs-14); color: var(--ink); font-weight: var(--w-medium); }
-
+.guide-origin { margin-top: var(--s-6); font-size: var(--fs-14); color: var(--ink-2); }
+.guide-origin-k { color: var(--ink-3); margin-right: var(--s-1); }
 @media (max-width: 760px) {
   .guide-question { font-size: var(--fs-20); }
-  .guide-meta { gap: var(--s-3) var(--s-6); margin-top: var(--s-6); }
-  /* Origin always takes its own line; the short facts share the next one. */
-  .guide-meta-origin { flex-basis: 100%; }
+  .guide-origin { margin-top: var(--s-4); }
 }
 
 /* ---- Intro -------------------------------------------------------------- */
@@ -181,6 +180,12 @@
 }
 
 .chapter-head { margin-bottom: var(--s-8); }
+/* The rail and the Contents bar already say which section this is, so on
+   screen the number is for screen readers only; print shows it. */
+.guide-page[data-paged] .chapter-num {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 .chapter-num {
   margin-bottom: var(--s-3);
   font-size: var(--fs-14);
@@ -198,10 +203,12 @@
 }
 
 /* Vertical rhythm inside a chapter: siblings separated by one step. Large
-   blocks (components) get more room than consecutive paragraphs. */
+   blocks (components) get more room than consecutive paragraphs. The hero
+   figure keeps its inner spacing wherever a chapter repeats it. */
 .chapter > * + *,
 .example > * + *,
-.guide-intro .figure > * + * { margin-top: var(--s-5); }
+.guide-intro .figure > * + *,
+.figure[data-hero] > * + * { margin-top: var(--s-5); }
 .chapter > :is(.cards, .steps, .scale, .table-wrap, .fit, .contrast, .pitfalls, .example, .figure, .tool, .quiz, .facts, .agenda, .template, .chain, .decision, .scenarios, .callout, .formula) { margin-top: var(--s-8); }
 .chapter > :is(.cards, .steps, .scale, .table-wrap, .fit, .contrast, .pitfalls, .example, .figure, .tool, .quiz, .facts, .agenda, .template, .chain, .decision, .scenarios, .callout, .formula) + * { margin-top: var(--s-8); }
 .chapter > .chapter-head + * { margin-top: 0; }
@@ -264,11 +271,11 @@
 .guide dfn { font-style: normal; font-weight: var(--w-semibold); }
 .guide .num { font-variant-numeric: tabular-nums; }
 .guide a[href]:not([class]) {
-  color: var(--cat-ink);
+  color: var(--ink);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: color-mix(in oklab, var(--cat-ink) 40%, transparent);
+  text-decoration-color: var(--rule-strong);
   transition: text-decoration-color var(--t-fast) var(--ease);
 }
 .guide a[href]:not([class]):hover { text-decoration-color: currentColor; }
@@ -326,7 +333,7 @@
   font-weight: var(--w-semibold);
   color: var(--ink);
 }
-.callout--tip { background: var(--cat-wash); }
+
 /* A caution must not depend on hue to differ from a tip (the Execution
    wash and the warn wash are both gold): it also has a rule and a mark. */
 .callout--caution {
@@ -448,7 +455,7 @@
 /* Sans text inside components stops at the same edge as reading prose. */
 .steps > li > :is(p, ul, ol),
 .pitfalls > li > :is(p, ul, ol),
-.example-reading > :is(p, ul, ol, h4),
+.example-reading > :is(p, ul, ol, h3, h4),
 .agenda > li > div,
 .scenarios > li > :is(p, ul, ol) { max-width: var(--measure-box); }
 
@@ -457,7 +464,7 @@
   /* Rows share one set of columns (subgrid), so the value column is as wide
      as the widest value and never breaks a range like "0.6–0.9". */
   display: grid;
-  grid-template-columns: max-content minmax(120px, 0.7fr) minmax(0, 2fr);
+  grid-template-columns: minmax(6rem, max-content) minmax(120px, 0.7fr) minmax(0, 2fr);
   column-gap: var(--s-4);
   border: 1px solid var(--rule);
   border-radius: var(--r-md);
@@ -777,13 +784,18 @@
   background: var(--paper);
 }
 .example-label { font-size: var(--fs-14); font-weight: var(--w-medium); color: var(--cat-ink); }
+/* When the example is the whole chapter, the chapter heading already says
+   so: no frame and no "Worked example" label around it. */
+.guide .chapter#example > .example { padding: 0; border: 0; border-radius: 0; background: none; }
+.guide .chapter#example > .example > .example-label { display: none; }
+.guide .chapter#example > .example > .example-label + * { margin-top: 0; }
 .example-reading {
   padding-top: var(--s-5);
   border-top: 1px solid var(--rule);
 }
 .example-reading > * + * { margin-top: var(--s-3); }
-.guide .example-reading h4 { margin-top: 0; font-family: var(--font-sans); font-size: var(--fs-16); font-weight: var(--w-semibold); }
-.guide .example-reading > * + h4 { margin-top: var(--s-6); }
+.guide .example-reading :is(h3, h4) { margin-top: 0; font-family: var(--font-sans); font-size: var(--fs-16); font-weight: var(--w-semibold); }
+.guide .example-reading > * + :is(h3, h4) { margin-top: var(--s-6); }
 .facts + .example-reading { border-top: 0; padding-top: var(--s-2); }
 .guide .example-reading > p { font-size: var(--fs-16); font-family: var(--font-sans); color: var(--ink-2); }
 @media (max-width: 760px) {
@@ -806,7 +818,11 @@
   color: var(--ink-3);
 }
 .figure[data-hero] { padding: var(--s-8); }
-@media (max-width: 760px) { .figure, .figure[data-hero] { padding: var(--s-4); } }
+@media (max-width: 760px) {
+  .figure { padding: var(--s-4); }
+  /* On phones the hero sits on the page, not in a second frame */
+  .figure[data-hero] { --paper-raised: var(--paper); padding: 0; border: 0; border-radius: 0; background: none; }
+}
 /* Inside an example the figure is not a second frame: it sits flat on the
    example's paper. Raised surfaces inside it (cards, label halos drawn in
    --paper-raised) follow the paper they now sit on. */
@@ -912,7 +928,7 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .chain-name { font-family: var(--font-serif); font-size: var(--fs-18); font-weight: var(--w-medium); color: var(--ink); }
-.chain-note { font-size: var(--fs-14); color: var(--ink-2); line-height: 1.5; }
+.chain-note { font-size: var(--fs-16); color: var(--ink-2); line-height: 1.5; }
 @media (max-width: 760px) {
   .chain { grid-auto-flow: row; gap: var(--s-6); }
   .chain > li + li::before { left: 50%; top: calc(-1 * var(--s-6) + 4px); transform: translateX(-50%) rotate(90deg); }
@@ -1179,15 +1195,70 @@
 }
 .quiz-score[hidden],
 .guide [hidden] { display: none; }
+.quiz-revisit { margin-top: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
 .quiz-score-text { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink); }
 @media (max-width: 760px) { .quiz-item { padding: var(--s-4); } }
+
+/* ---- More: a collapsed block ------------------------------------------ */
+.more { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.more > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 48px;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--fs-16);
+  font-weight: var(--w-medium);
+  color: var(--ink);
+}
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
+  transform: rotate(-45deg);
+  transition: transform var(--t-base) var(--ease);
+}
+.more[open] > summary::before { transform: rotate(45deg); }
+.more > summary:hover { color: var(--cat-ink); }
+.more[open] { padding-bottom: var(--s-6); }
+.more > :not(summary) + * { margin-top: var(--s-5); }
 
 /* ---- One section at a time -------------------------------------------
    A guide shows one panel (the introduction or one chapter) at a time; the
    contents rail moves between them. The guide header belongs to the
    introduction, and "Where next" to the last section. */
 .guide-page[data-paged] .guide > .panel:not(.is-current) { display: none; }
-.guide-page[data-paged][data-panel="chapter"] .guide-head { display: none; }
+.guide-page[data-paged][data-panel="chapter"] .guide-head {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+/* Phones and tablets: the introduction lists the sections (the rail is a
+   collapsed bar there); wide screens have the rail beside it instead. */
+.intro-contents { display: none; }
+@media (max-width: 1000px) {
+  .intro-contents { display: block; margin-top: var(--s-10); padding-top: var(--s-6); border-top: 1px solid var(--rule); }
+  .intro-contents-title { margin-bottom: var(--s-2); font-size: var(--fs-14); font-weight: var(--w-semibold); color: var(--ink); }
+  .guide .intro-contents-list { display: grid; padding: 0; list-style: none; }
+  .guide .intro-contents-list > li { padding: 0; }
+  .guide .intro-contents-list > li::before { content: none; }
+  .intro-contents-link {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: var(--s-2);
+    align-items: baseline;
+    min-height: 44px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-serif);
+    font-size: var(--fs-18);
+    color: var(--ink);
+  }
+  .intro-contents .toc-num { font-family: var(--font-sans); font-size: var(--fs-14); }
+  .guide-intro > .panel-pager { display: none; }
+}
 .guide-page[data-paged]:not([data-last]) .guide-foot { display: none; }
 .guide-page[data-paged] .chapter { margin-top: 0; padding-top: 0; border-top: 0; }
 .guide-page[data-paged] .panel.is-current { animation: fade-in var(--t-base) var(--ease); }
@@ -1222,7 +1293,6 @@
 @media (max-width: 640px) {
   .panel-pager { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: var(--s-12); }
   .panel-pager-link--next { grid-column: 1; grid-row: 1; }
-  .panel-pager-link--prev + .panel-pager-link--next { border-bottom: 1px solid var(--rule); border-radius: 0; }
   .panel-pager-title { font-size: var(--fs-16); }
 }
 

@@ -1,7 +1,7 @@
 <article class="guide" data-guide="ice">
 
   <header class="guide-intro">
-    <p class="lede">The ICE Score ranks a list of ideas, most often growth experiments, by rating each one from 1 to 10 on Impact, Confidence and Ease. It is one of the fastest ways to score, because it trades precision for speed: a small team can score 20 ideas in about 30 minutes.</p>
+    <p class="lede">Growth teams reach for ICE when the backlog is long and there’s no usage data or time for anything heavier. It trades precision for speed: a small team can score 20 ideas in about 30 minutes.</p>
 
     <figure class="figure" data-hero>
       <p class="formula" role="img" aria-label="ICE score equals impact times confidence times ease">
@@ -10,19 +10,19 @@
         <span class="formula-term"><span class="op">×</span><var data-series="3">Ease</var></span>
         <span class="formula-term"><span class="op">=</span><span class="formula-result">Score</span></span>
       </p>
-      <figcaption>Three ratings from 1 to 10, all multiplied, so a score runs from 1 to 1,000</figcaption>
+      <figcaption>Read left to right: each colored term is a 1–10 rating, and the cards and sliders use the same colors. Their product, the score, runs from 1 to 1,000.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Rate each idea from 1 to 10 on how much it would move your key metric, how sure you are of that, and how easy it is to ship, then multiply the three. Run the highest scores first. ICE is for fast triage; when it matters how many users an idea reaches, move up to RICE.</p>
+      <p>Rate each idea from 1 to 10 on Impact (how much it would move your key metric), Confidence (how sure you are of that) and Ease (how little work it takes to ship), then multiply the three and run the highest scores first. Treat the order as triage, good enough to pick this week’s experiments. Once it matters how many users an idea reaches, switch to RICE.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
-      <h2>Three ratings, all multiplied</h2>
-      <p class="chapter-dek">Each factor is a 1–10 judgment the team makes together</p>
+      <h2>Higher is better on all three ratings</h2>
+      <p class="chapter-dek">Each one is a judgment the team makes together; none comes from usage data</p>
     </header>
 
     <div class="cards" data-cols="3">
@@ -50,12 +50,12 @@
     </div>
 
     <div class="callout">
-      <p class="callout-title">Every factor points the same way</p>
-      <p>Because Ease replaces Effort, all three ratings read “higher is better” and the score is a plain product. ICE also has <strong>no Reach factor</strong>: it asks how much impact an idea has, not how many users it touches. That makes it faster than <a data-guide-link="rice">RICE</a> and less precise.</p>
+      <p class="callout-title">No Reach factor</p>
+      <p>Impact is the size of the effect on your metric. ICE keeps no separate count of the users who would feel it, which is what makes it faster than <a data-guide-link="rice">RICE</a> and less precise.</p>
     </div>
 
     <h3>Multiply or average</h3>
-    <p>ICE comes from Sean Ellis and the growth community around GrowthHackers, and it appears in <cite>Hacking Growth</cite> (Ellis and Morgan Brown, 2017). This guide multiplies the three ratings, because a product punishes one weak rating much harder. Some teams average them instead, and the ranking is often the same. The two forms part ways on lopsided ideas: ratings of 9, 9 and 1 average 6.3 and beat 5, 5 and 5 (an average of 5), but multiplied they score 81 against 125. Pick one form and use it for every idea in the batch.</p>
+    <p>ICE grew out of Sean Ellis’s growth work and is described in <cite>Hacking Growth</cite> (Ellis and Morgan Brown, 2017). This guide multiplies the three ratings, because a product punishes one weak rating much harder. Some teams average them instead, and the ranking is often the same. The two forms part ways on lopsided ideas: ratings of 9, 9 and 1 average 6.3 and beat 5, 5 and 5 (an average of 5), but multiplied they score 81 against 125. Pick one form and use it for every idea in the batch.</p>
   </section>
 
   <section class="chapter" id="score" data-nav="Scoring">
@@ -64,7 +64,7 @@
       <p class="chapter-dek">Anchor each band so a 7 means the same thing to everyone in the room</p>
     </header>
 
-    <p>All three factors use the same ten points. The bands below give each point a meaning. Agree on them before you score, and write anchors specific to your product where these are too general.</p>
+    <p>Agree on these bands before anyone scores, and swap in anchors specific to your product where they’re too general.</p>
 
     <h3>Impact</h3>
     <p>How much will this move your key metric?</p>
@@ -111,12 +111,10 @@
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Ranking five growth experiments</h2>
-      <p class="chapter-dek">Easy ideas with good evidence rise to the top</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
-      <h3>A growth team chooses which experiment to run first</h3>
       <div class="table-wrap">
         <table class="table">
           <caption>Five experiment ideas ranked by ICE score</caption>
@@ -139,9 +137,9 @@
         </table>
       </div>
       <div class="example-reading">
-        <h4>What the scores tell us</h4>
+        <h3>Easy ideas with good evidence beat the biggest Impact</h3>
         <p><strong>Simplifying the signup form wins, at 576.</strong> It has high impact, strong evidence from analytics and little work: a Quick win, in <a data-guide-link="value-effort">Value vs Effort</a> terms.</p>
-        <p><strong>Social proof badges come second, at 441.</strong> They are also easy to ship and backed by good qualitative data, which makes them a good second experiment.</p>
+        <p><strong>Social proof badges come second, at 441.</strong> They’re even easier to ship, and good qualitative data backs them.</p>
         <p><strong>Personalized onboarding has the highest Impact but ranks third, at 216.</strong> A Confidence of 6 (good data, but qualitative) and an Ease of 4 (weeks of work) pull it down. Because the ratings multiply, one weak factor drags down the whole score.</p>
         <p><strong>The referral program scores 160.</strong> Its Impact is high, but its Confidence of 4 rests on a few anecdotes. A few customer interviews that confirmed the demand would raise Confidence to 7, good data, and lift it to 280.</p>
         <p><strong>The AI chatbot scores 36.</strong> It is hard to build, nobody is sure it works and its impact is moderate. Park it.</p>
@@ -153,28 +151,27 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Score an idea of your own</h2>
-      <p class="chapter-dek">Move a slider and the score updates</p>
     </header>
 
     <div class="tool" data-tool="ice-calculator">
       <div class="tool-head">
         <h3 class="tool-title">ICE calculator</h3>
-        <p class="tool-hint">Drag a slider or use the arrow keys. Each factor runs from 1 to 10.</p>
+        <p class="visually-hidden" id="ice-keys-help">Each slider runs from 1 to 10; the arrow keys move it one point.</p>
       </div>
       <div class="fields" data-cols="3">
         <div class="field">
           <label for="ice-impact">Impact</label>
-          <input id="ice-impact" class="ice-range" data-series="1" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-impact-help">
+          <input id="ice-impact" class="ice-range" data-series="1" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-impact-help ice-keys-help">
           <p class="field-help" id="ice-impact-help">5 of 10: Medium</p>
         </div>
         <div class="field">
           <label for="ice-confidence">Confidence</label>
-          <input id="ice-confidence" class="ice-range" data-series="5" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-confidence-help">
+          <input id="ice-confidence" class="ice-range" data-series="5" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-confidence-help ice-keys-help">
           <p class="field-help" id="ice-confidence-help">5 of 10: Some signals</p>
         </div>
         <div class="field">
           <label for="ice-ease">Ease</label>
-          <input id="ice-ease" class="ice-range" data-series="3" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-ease-help">
+          <input id="ice-ease" class="ice-range" data-series="3" type="range" min="1" max="10" step="1" value="5" aria-describedby="ice-ease-help ice-keys-help">
           <p class="field-help" id="ice-ease-help">5 of 10: About a week</p>
         </div>
       </div>
@@ -199,15 +196,14 @@
       <ol>
         <li>Set Confidence to 1. With 5 for Impact and Ease the score falls to 25: low confidence sinks an idea.</li>
         <li>Set all three to 10. The score reaches 1,000, the maximum. Very few ideas deserve it.</li>
-        <li>Compare 9 × 3 × 3, a big idea that is unproven and hard, with 5 × 8 × 8, a smaller one that is proven and easy. The second scores 320 against 81, almost 4× as much.</li>
+        <li>Press the two presets. The big idea that is unproven and hard (9 × 3 × 3) scores 81; the smaller one that is proven and easy (5 × 8 × 8) scores 320, almost 4× as much.</li>
       </ol>
     </div>
   </section>
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When ICE fits, and when it does not</h2>
-      <p class="chapter-dek">Built for fast triage, not for final decisions</p>
+      <h2>ICE is for fast triage, where roughly right is good enough</h2>
     </header>
 
     <div class="fit">
@@ -233,53 +229,13 @@
       </div>
     </div>
 
-    <h3>ICE for speed, RICE for precision</h3>
-    <p>Both rank ideas by expected value and by how sure you are, but they suit different moments.</p>
-    <div class="table-wrap">
-      <table class="table table--compare">
-        <caption>ICE and RICE compared</caption>
-        <thead>
-          <tr><th scope="col">Dimension</th><th scope="col">ICE</th><th scope="col">RICE</th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row">Formula</th><td>I × C × E</td><td>R × I × C ÷ E</td></tr>
-          <tr><th scope="row">Factors</th><td>3, all multiplied</td><td>4, one of which divides</td></tr>
-          <tr><th scope="row">Scale</th><td>1–10 for each factor</td><td>Mixed: users, a multiplier, a percentage, person-months</td></tr>
-          <tr><th scope="row">Reach</th><td>Not measured</td><td>A separate factor</td></tr>
-          <tr><th scope="row">Speed</th><td data-rating="high">Fast: minutes per idea</td><td data-rating="mid">Slower: Reach and Effort need estimates</td></tr>
-          <tr><th scope="row">Objectivity</th><td data-rating="low">Lower</td><td data-rating="high">Higher</td></tr>
-          <tr><th scope="row">Source of scores</th><td>All three are judgments</td><td>Reach comes from usage data</td></tr>
-          <tr><th scope="row">Best for</th><td>Growth experiments, early-stage products</td><td>Quarterly roadmaps, mature products</td></tr>
-          <tr><th scope="row">Score range</th><td>1–1,000 (10 × 10 × 10)</td><td>No fixed ceiling; it grows with Reach</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="contrast">
-      <div class="contrast-col">
-        <p class="contrast-label">Choose ICE for speed</p>
-        <p>You need a rough order for a long list in one short meeting, and roughly right is good enough.</p>
-      </div>
-      <div class="contrast-col">
-        <p class="contrast-label">Choose RICE for precision</p>
-        <p>The decision has to stand up to scrutiny, and you have usage data to estimate Reach.</p>
-      </div>
-    </div>
-
-    <h3>Use both: ICE to filter, RICE to rank</h3>
-    <p>The two work well in sequence. ICE makes a fast first pass over a long list, and <a data-guide-link="rice">RICE</a> ranks the shortlist with more care.</p>
-    <ol class="chain">
-      <li><span class="chain-name">Long list</span><span class="chain-note">About 30 ideas</span></li>
-      <li><span class="chain-name">ICE</span><span class="chain-note">The first pass cuts it to about 10</span></li>
-      <li><span class="chain-name">RICE</span><span class="chain-note">Scoring the shortlist picks the top 3</span></li>
-    </ol>
-    <p><a data-guide-link="value-effort">Value vs Effort</a> can make the same first pass when the team wants to see the trade-offs on a grid, and the grid is useful again at the end to present the result. The <a data-guide-link="kano">Kano model</a> is not a step in this sequence: it runs alongside when you need to know how a feature affects satisfaction, and it classifies features rather than ranking them. <a data-guide-link="compare-prioritization">Choosing a prioritization framework</a> sets all four side by side.</p>
+    <h3>Where ICE and RICE part ways</h3>
+    <p>ICE multiplies three 1–10 ratings, so every score falls between 1 and 1,000; <a data-guide-link="rice">RICE</a> adds Reach from usage data and divides by Effort, so its scores have no ceiling. On a long list, ICE makes the first cut and RICE ranks the shortlist. <a data-guide-link="compare-prioritization">Compare all four</a> prioritization frameworks.</p>
   </section>
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
       <h2>Five ways ICE goes wrong</h2>
-      <p class="chapter-dek">The method is simple, so its mistakes are easy to miss</p>
     </header>
 
     <ol class="pitfalls">
@@ -296,7 +252,7 @@
       <li>
         <h3 class="pitfall-title">Inflating Confidence</h3>
         <p>Everyone gives their favorite idea a Confidence of 8. Real confidence comes from evidence, not enthusiasm.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> hold every rating to the <a href="#score" data-section-link>Confidence bands</a>: 1–3 gut feel, 4–5 some signals such as anecdotes, 6–7 good data such as qualitative research or consistent feedback, 8–9 strong evidence such as quantitative data or a test elsewhere, and 10 proven, only for an A/B test or a measured launch in this product.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> ask what evidence sits behind each Confidence rating and hold it to the <a href="#score" data-section-link>Confidence bands</a>. Without research or data an idea stays at 5 or below, and a 10 needs an A/B test or a measured launch in this product.</p>
       </li>
       <li>
         <h3 class="pitfall-title">Clustering every rating at 5–7</h3>
@@ -305,8 +261,8 @@
       </li>
       <li>
         <h3 class="pitfall-title">Using ICE for high-stakes decisions</h3>
-        <p>ICE is a triage method, not a planning method. A quarterly roadmap built on three quick judgments per idea rests on very little.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> use ICE for the first pass and <a data-guide-link="rice">RICE</a> for the final decisions. Move to the more rigorous framework when the stakes rise.</p>
+        <p>ICE is built for triage. A quarterly roadmap built on three quick judgments per idea rests on very little.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> use ICE for the first pass and <a data-guide-link="rice">RICE</a> for the final decisions, and move to RICE sooner as the stakes rise.</p>
       </li>
     </ol>
   </section>
@@ -314,7 +270,6 @@
   <section class="chapter" id="session" data-nav="Run a session">
     <header class="chapter-head">
       <h2>Running a 30-minute scoring session</h2>
-      <p class="chapter-dek">Score silently, reveal, average, then sort</p>
     </header>
 
     <dl class="facts">
@@ -331,64 +286,63 @@
     </ol>
 
     <div class="callout">
-      <p class="callout-title">Keep it to 30 minutes</p>
-      <p>The session is short because the method is. Speed is the point, so do not let the meeting stretch to an hour. If the debate on one idea runs past two minutes, that idea probably needs RICE instead.</p>
+      <p class="callout-title">The two-minute rule</p>
+      <p>Don’t let the meeting stretch to an hour; the speed is what you came for. If the debate on one idea runs past two minutes, that idea probably needs RICE.</p>
     </div>
   </section>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Six questions on the factors, the arithmetic and when to use ICE</p>
+      <h2>Test yourself on ICE</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="understand">
         <p class="quiz-q">What does the E in ICE stand for?</p>
         <ul class="quiz-options">
           <li><button type="button">Effort, the work required</button></li>
           <li><button type="button">Ease, how simple it is to build</button></li>
           <li><button type="button">Evidence, the quality of the data</button></li>
         </ul>
-        <div class="quiz-why"><p>E is Ease, the inverse of Effort: the easier the idea, the higher the score. RICE divides by Effort; ICE multiplies by Ease.</p></div>
+        <div class="quiz-why"><p>It’s Ease, so a 10 means very little work and pushes the score up. Effort belongs to RICE, which divides by it, so more work pulls the score down.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">Impact 8 × Confidence 3 × Ease 7 = ?</p>
         <ul class="quiz-options">
           <li><button type="button">168</button></li>
           <li><button type="button">560</button></li>
           <li><button type="button">18</button></li>
         </ul>
-        <div class="quiz-why"><p>8 × 3 × 7 = 168. With a Confidence of 10 the same idea would score 560, so a rating of 3, gut feel, cut the score by more than two thirds.</p></div>
+        <div class="quiz-why"><p>Multiplying gives 8 × 3 × 7 = 168; 18 is what you get by adding. 560 is what the idea would score with a Confidence of 10, which a gut-feel 3 hasn’t earned.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">What is the main thing ICE leaves out compared with RICE?</p>
         <ul class="quiz-options">
           <li><button type="button">Reach, how many users are affected</button></li>
           <li><button type="button">Confidence, how sure you are</button></li>
           <li><button type="button">Effort, the work an idea needs</button></li>
         </ul>
-        <div class="quiz-why"><p>ICE has no Reach factor, so unless Impact is defined to include breadth, it cannot tell an idea for 100 users from one for 100,000. Confidence is in both frameworks, and the work an idea needs is still counted: ICE rates it as Ease, the inverse of Effort. If the number of users matters, use RICE.</p></div>
+        <div class="quiz-why"><p>ICE never counts the people an idea touches; RICE does, through Reach. Effort only looks missing: ICE flips it into Ease, and both frameworks ask for Confidence.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="when">
         <p class="quiz-q">A growth team picks new experiments every week. This week it has 25 ideas, each cheap to test, and one 30-minute meeting to choose the first few to run. What fits best?</p>
         <ul class="quiz-options">
           <li><button type="button">Score them with ICE and run the top few</button></li>
           <li><button type="button">Score them with RICE in a full scoring session</button></li>
           <li><button type="button">Run a Kano survey to classify each idea first</button></li>
         </ul>
-        <div class="quiz-why"><p>ICE is built for this: a long list, a short meeting and ideas that are cheap to test, where roughly right is good enough and each test corrects the guess. A RICE session takes about 90 minutes and needs usage data to estimate Reach. A Kano survey takes 1–2 weeks, and it classifies features by their effect on satisfaction rather than ranking experiments.</p></div>
+        <div class="quiz-why"><p>Cheap tests correct a rough guess within days, so a fast ICE pass is all this batch needs. RICE needs usage data for Reach and about 90 minutes, three times the meeting you have, and a Kano survey takes 1–2 weeks and classifies features rather than ranking them.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="pitfalls">
         <p class="quiz-q">Everyone on your team rated every idea between 5 and 7. What is the problem?</p>
         <ul class="quiz-options">
           <li><button type="button">Nothing; moderate ratings show the team is being realistic</button></li>
           <li><button type="button">Near-ties let small gaps decide the order</button></li>
           <li><button type="button">The 1–10 scale is too wide, so the team must switch to RICE</button></li>
         </ul>
-        <div class="quiz-why"><p>When all ratings sit between 5 and 7, the gaps between ideas are often no larger than the disagreement between scorers, and near-ties are common, so the order says little. Switching to RICE does not fix it on its own. Ask the team to use the full range: some ideas really are a 2 or a 9.</p></div>
+        <div class="quiz-why"><p>With every rating between 5 and 7, the gap between two ideas is often smaller than the gap between two scorers rating the same idea, so the order is mostly noise. Moderate isn’t the same as realistic: some ideas deserve a 2, others a 9. RICE won’t fix it either, because its Impact and Confidence are judgments too.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="score">
         <p class="quiz-q">Five customer interviews all describe the problem an idea would solve. There is no analytics data or test yet. Which Confidence rating fits the bands in this guide?</p>
         <ul class="quiz-options">
           <li><button type="button">2, gut feel</button></li>
@@ -396,7 +350,7 @@
           <li><button type="button">9, strong evidence</button></li>
           <li><button type="button">10, proven</button></li>
         </ul>
-        <div class="quiz-why"><p>Consistent qualitative research, such as a set of interviews that agree, is good data: a 6 or 7. It is more than an opinion, so it is above gut feel. Strong evidence (8–9) needs quantitative data or a test elsewhere, and 10 is reserved for an A/B test or a measured launch in this product.</p></div>
+        <div class="quiz-why"><p>Interviews that agree count as qualitative research, which the bands put at 6–7. A 9 would take numbers, from analytics, a large survey or a test somewhere else, and five conversations don’t supply them, let alone the A/B test or measured launch a 10 needs.</p></div>
       </li>
     </ol>
   </section>

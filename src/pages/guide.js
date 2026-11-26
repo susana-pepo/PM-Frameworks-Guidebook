@@ -16,9 +16,8 @@
  */
 import {
   getFramework, getCategory, getComparisonBySlug, getComparisonGuide,
-  getSiblings, getFrameworksByCategory,
+  getFrameworksByCategory,
 } from '../data/frameworks.js';
-import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
 import { setPageMeta } from '../utils/page-meta.js';
 import { renderNotFound } from './not-found.js';
 
@@ -132,44 +131,43 @@ function mount(container, info, parsed, route) {
   const { cat, kind, slug } = info;
   const isFw = kind === 'framework';
 
+  const guide = isFw ? getComparisonGuide(cat.id) : null;
   container.innerHTML = `
     <div class="page guide-page" data-cat="${cat.id}" data-kind="${kind}">
-      <nav class="crumbs" aria-label="Breadcrumb">
-        <ol>
-          <li><a href="#/">Index</a></li>
-          <li><a href="#/category/${cat.id}">${cat.name}</a></li>
-          <li><a href="${hrefFor(kind, slug)}" aria-current="page">${isFw ? info.title : 'How to choose'}</a></li>
-        </ol>
-      </nav>
       <div class="guide-layout">
         <aside class="guide-rail" aria-label="Contents">
-          <nav class="toc">
-            <button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-list">
-              <span class="toc-toggle-label">Contents</span>
+          <nav class="toc" aria-labelledby="toc-title">
+            <button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-sheet">
+              <span class="toc-toggle-label"></span>
               <span class="toc-toggle-current"></span>
               ${CHEVRON}
             </button>
-            <p class="toc-title" id="toc-title">Contents</p>
-            <ol class="toc-list" id="toc-list" aria-labelledby="toc-title"></ol>
+            <div class="toc-sheet" id="toc-sheet">
+              <p class="toc-title" id="toc-title"></p>
+              <ol class="toc-list" id="toc-list"></ol>
+              <ul class="toc-foot">
+                <li><a class="toc-foot-link" href="#/category/${cat.id}"><span class="thumb thumb--sm" aria-hidden="true"></span>${cat.name}<span class="visually-hidden"> frameworks</span></a></li>
+                ${guide ? `<li><a class="toc-foot-link" href="${hrefFor('compare', guide.slug)}">How to choose<span class="visually-hidden"> a ${cat.name.toLowerCase()} framework</span></a></li>` : ''}
+              </ul>
+            </div>
           </nav>
         </aside>
         <div class="guide-main">
           <header class="guide-head">
-            <p class="guide-kicker">
-              <span class="guide-glyph" aria-hidden="true">${isFw ? frameworkGlyph(slug, cat.id) : categoryGlyph(cat.id)}</span>
-              <a href="#/category/${cat.id}">${cat.name}</a>
-              <span aria-hidden="true">·</span>
-              <span>${isFw ? 'Framework' : 'Comparison guide'}</span>
-            </p>
-            <h1 class="guide-title">${info.title}</h1>
-            ${isFw ? `<p class="guide-question">${info.meta.question}</p>` : `<p class="guide-question">${info.meta.description}</p>`}
-            <dl class="guide-meta"></dl>
+            <h1 class="guide-title"></h1>
+            <p class="guide-question"></p>
+            ${isFw ? `<p class="guide-origin"><span class="guide-origin-k">Origin</span> <span class="guide-origin-v"></span></p>` : ''}
           </header>
           <div class="guide-body"></div>
           <footer class="guide-foot"></footer>
         </div>
       </div>
     </div>`;
+  container.querySelector('.guide-title').textContent = info.title;
+  container.querySelector('.guide-question').textContent = isFw ? info.meta.question : cat.when;
+  container.querySelector('.toc-title').textContent = info.title;
+  container.querySelector('.toc-toggle-label').textContent = isFw ? info.title : 'How to choose';
+  if (isFw) container.querySelector('.guide-origin-v').textContent = info.meta.origin;
 
   const page = container.querySelector('.guide-page');
   const body = page.querySelector('.guide-body');
@@ -178,7 +176,7 @@ function mount(container, info, parsed, route) {
   root.dataset.cat = cat.id;
 
   const cleanup = [];
-  current = { key: `${kind}:${slug}`, kind, slug, root, page, cleanup, chapters: [] };
+  current = { key: `${kind}:${slug}`, kind, slug, title: info.title, root, page, cleanup, chapters: [] };
 
   if (parsed.style) {
     const el = document.createElement('style');
@@ -193,8 +191,8 @@ function mount(container, info, parsed, route) {
   current.panels = panels;
 
   decorateChapters(chapters);
-  buildMeta(page, info, root);
   buildToc(page, panels, kind, slug);
+  buildIntroContents(panels, kind, slug);
   buildPagers(panels, kind, slug);
   buildFooter(page, info);
   page.dataset.paged = '';
@@ -215,6 +213,17 @@ function mount(container, info, parsed, route) {
 
 /* ---- Panels: the introduction and each chapter ----------------------- */
 function buildPanels(root, chapters) {
+  // A section that reads the hero figure gets its own copy of it
+  // (<div data-hero-ref></div>), since the introduction is not on screen.
+  const hero = root.querySelector('figure[data-hero]');
+  root.querySelectorAll('[data-hero-ref]').forEach(slot => {
+    if (!hero) { slot.remove(); return; }
+    const copy = hero.cloneNode(true);
+    copy.removeAttribute('id');
+    copy.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    copy.querySelectorAll('[aria-labelledby], [aria-describedby]').forEach(el => { el.removeAttribute('aria-labelledby'); el.removeAttribute('aria-describedby'); });
+    slot.replaceWith(copy);
+  });
   let intro = root.querySelector(':scope > .guide-intro');
   if (!intro) {
     // A guide with no intro block still gets an Introduction panel: the header.
@@ -262,7 +271,7 @@ function buildPagers(panels, kind, slug) {
       a.innerHTML = dir === 'prev'
         ? `${ARROW_L}<span class="panel-pager-text"><span class="panel-pager-dir">Previous</span><span class="panel-pager-title"></span></span>`
         : `<span class="panel-pager-text"><span class="panel-pager-dir">${prev ? 'Next' : 'Start reading'}</span><span class="panel-pager-title"></span></span>${ARROW_R}`;
-      a.querySelector('.panel-pager-title').textContent = target.num ? `${target.num}. ${target.label}` : target.label;
+      a.querySelector('.panel-pager-title').textContent = target.num ? `${target.num} · ${target.label}` : target.label;
       return a;
     };
     if (prev) nav.appendChild(link(prev, 'prev'));
@@ -271,19 +280,17 @@ function buildPagers(panels, kind, slug) {
   });
 }
 
-function buildMeta(page, info, root) {
-  const dl = page.querySelector('.guide-meta');
-  const words = (root.textContent || '').trim().split(/\s+/).length;
-  const minutes = Math.max(3, Math.round(words / 230));
-  const rows = [];
-  if (info.kind === 'framework') rows.push(['Origin', info.meta.origin, 'guide-meta-origin']);
-  rows.push(['Reading time', `${minutes} min`]);
-  const hasTool = !!root.querySelector('.tool');
-  const hasQuiz = !!root.querySelector('.quiz');
-  const extras = [hasTool && (info.kind === 'framework' ? 'Interactive tool' : 'Picker'), hasQuiz && 'Quiz'].filter(Boolean);
-  if (extras.length) rows.push(['Includes', extras.join(', ')]);
-  dl.innerHTML = rows.map(([k, , cls]) => `<div${cls ? ` class="${cls}"` : ''}><dt>${k}</dt><dd></dd></div>`).join('');
-  [...dl.querySelectorAll('dd')].forEach((dd, i) => { dd.textContent = rows[i][1]; });
+/* On narrow screens the contents live in a collapsed bar, so the
+   introduction lists the sections itself (hidden where the rail shows). */
+function buildIntroContents(panels, kind, slug) {
+  const intro = panels[0].el;
+  const nav = document.createElement('nav');
+  nav.className = 'intro-contents';
+  nav.setAttribute('aria-label', 'Sections');
+  nav.innerHTML = `<p class="intro-contents-title">In this guide</p><ol class="intro-contents-list">${panels.slice(1).map(p => `
+    <li><a class="intro-contents-link" href="${hrefFor(kind, slug, p.id)}"><span class="toc-num" aria-hidden="true">${p.num}</span><span class="intro-contents-label"></span></a></li>`).join('')}</ol>`;
+  [...nav.querySelectorAll('.intro-contents-label')].forEach((el, i) => { el.textContent = panels[i + 1].label; });
+  intro.appendChild(nav);
 }
 
 /* ---- Contents rail: the way between sections -------------------------- */
@@ -305,7 +312,7 @@ function buildToc(page, panels, kind, slug) {
     toggle.setAttribute('aria-expanded', String(open));
   };
   toggle.addEventListener('click', () => setOpen(!toc.classList.contains('is-open')));
-  list.addEventListener('click', () => setOpen(false));
+  toc.querySelector('.toc-sheet').addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
 
   const links = [...list.querySelectorAll('.toc-link')];
   current.setActive = (id) => {
@@ -316,6 +323,7 @@ function buildToc(page, panels, kind, slug) {
     });
     const p = panels.find(x => x.id === id);
     currentLabel.textContent = !p ? '' : p.num ? `${p.num} of ${chapterCount} · ${p.label}` : p.label;
+    toggle.setAttribute('aria-label', `Contents. ${p && p.num ? `Section ${p.num} of ${chapterCount}, ${p.label}` : 'Introduction'}`);
     setOpen(false);
   };
 }
@@ -332,6 +340,7 @@ function showPanel(id, { anchor = null, focus = true } = {}) {
   if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
   current.panelId = panel.id;
   current.setActive?.(panel.id);
+  setPageMeta({ title: panel.id === INTRO_ID ? current.title : `${panel.label} · ${current.title}`, focus: false });
   // Widgets that size themselves to their container re-measure now that
   // their panel has a width.
   window.dispatchEvent(new Event('resize'));
@@ -374,51 +383,52 @@ function goToRoute(route) {
 }
 
 /* ---- Footer: where next ----------------------------------------------
-   One ruled list: previous and next in the family, the family's comparison
-   guide, then related frameworks. A related framework that is already the
-   previous or next guide is not listed twice; its "why" moves to that row. */
+   Closes the last section. On a framework guide: the other frameworks in
+   the family, then related frameworks from other families, each with a line
+   on how it connects. On a comparison guide: the four frameworks it compares.
+   The comparison guide itself is in the contents rail, so it is not repeated. */
 function buildFooter(page, info) {
   const foot = page.querySelector('.guide-foot');
   const cat = info.cat;
   const rows = [];
-  const row = ({ href, kind, title, desc, cat: rowCat }) => `
-    <li><a class="where-row" href="${href}"${rowCat ? ` data-cat="${rowCat}"` : ''}>
+  const row = ({ href, title, desc, cat: rowCat }) => `
+    <li><a class="where-row" href="${href}"${rowCat ? ` data-cat="${rowCat.id}"` : ''}>
       <span class="where-text">
-        ${kind ? `<span class="where-kind">${kind}</span>` : ''}
+        ${rowCat ? `<span class="where-kind"><span class="thumb thumb--sm" aria-hidden="true"></span>${rowCat.name}</span>` : ''}
         <span class="where-title">${title}</span>
         ${desc ? `<span class="where-desc">${desc}</span>` : ''}
       </span>${ARROW_ROW}
     </a></li>`;
 
   if (info.kind === 'framework') {
-    const { prev, next } = getSiblings(info.slug);
-    // related entries are slugs or { slug, why }; "why" says how the two connect
     const related = (info.meta.related || [])
       .map(r => (typeof r === 'string' ? { slug: r } : r))
       .map(r => ({ fw: getFramework(r.slug), why: r.why }))
       .filter(r => r.fw);
     const whyFor = (fw) => related.find(r => r.fw.slug === fw.slug)?.why;
-    const pager = new Set([prev?.slug, next?.slug].filter(Boolean));
-
-    if (prev) rows.push(row({ href: hrefFor('framework', prev.slug), kind: `Previous in ${cat.name}`, title: prev.name, desc: whyFor(prev) || prev.question }));
-    if (next) rows.push(row({ href: hrefFor('framework', next.slug), kind: `Next in ${cat.name}`, title: next.name, desc: whyFor(next) || next.question }));
-    const guide = getComparisonGuide(cat.id);
-    if (guide) rows.push(row({ href: hrefFor('compare', guide.slug), kind: '<span class="thumb thumb--sm" aria-hidden="true"></span>Comparison guide', title: guide.name, desc: guide.description }));
-    related.filter(r => !pager.has(r.fw.slug)).forEach(({ fw, why }) => {
-      rows.push(row({
-        href: hrefFor('framework', fw.slug),
-        kind: `<span class="thumb thumb--sm" aria-hidden="true"></span>${getCategory(fw.category).name}`,
-        title: fw.name, desc: why || fw.question, cat: fw.category,
-      }));
+    // Same family first, in family order; no family label, the reader is in it.
+    getFrameworksByCategory(cat.id).filter(fw => fw.slug !== info.slug).forEach(fw => {
+      rows.push(row({ href: hrefFor('framework', fw.slug), title: fw.name, desc: whyFor(fw) || fw.question }));
+    });
+    related.filter(r => r.fw.category !== cat.id).forEach(({ fw, why }) => {
+      rows.push(row({ href: hrefFor('framework', fw.slug), title: fw.name, desc: why || fw.question, cat: getCategory(fw.category) }));
     });
   } else {
-    // All four share this family, so the rows need no kicker.
     getFrameworksByCategory(cat.id).forEach(r => {
       rows.push(row({ href: hrefFor('framework', r.slug), title: r.name, desc: r.question }));
     });
   }
   foot.innerHTML = `<h2 class="guide-foot-title" id="where-next-title">Where next</h2>
     <nav aria-labelledby="where-next-title"><ul class="where-list">${rows.join('')}</ul></nav>`;
+}
+
+/* For the search palette: the sections of the guide on screen. */
+export function getGuideOutline() {
+  if (!current) return null;
+  return {
+    title: current.title,
+    sections: current.panels.map(p => ({ label: p.label, num: p.num, href: hrefFor(current.kind, current.slug, p.id === INTRO_ID ? null : p.id) })),
+  };
 }
 
 /* ---- Shared behaviours ----------------------------------------------- */
@@ -466,6 +476,17 @@ function wireQuizzes(root) {
       const buttons = [...item.querySelectorAll('.quiz-options button')];
       const why = item.querySelector('.quiz-why');
       if (why) why.hidden = true;
+      // data-section names the section that teaches this question.
+      const teach = item.dataset.section && root.querySelector(`section.chapter#${CSS.escape(item.dataset.section)}`);
+      if (why && teach && !why.querySelector('.quiz-revisit')) {
+        const p = document.createElement('p');
+        p.className = 'quiz-revisit';
+        const link = document.createElement('a');
+        link.href = hrefFor(current.kind, current.slug, teach.id);
+        link.textContent = teach.dataset.nav || teach.querySelector('h2')?.textContent || '';
+        p.append('Revisit: ', link);
+        why.appendChild(p);
+      }
       const verdict = document.createElement('p');
       verdict.className = 'quiz-verdict';
       verdict.hidden = true;
@@ -612,7 +633,9 @@ function wireTables(root, cleanup) {
     scroll.appendChild(table);
 
     let more = null;
-    if (cap) {
+    // A caption marked visually-hidden (because the heading above already
+    // names the table) stays for screen readers and gets no visible title.
+    if (cap && !cap.classList.contains('visually-hidden')) {
       cap.classList.add('visually-hidden');
       const title = document.createElement('p');
       title.className = 'table-title';

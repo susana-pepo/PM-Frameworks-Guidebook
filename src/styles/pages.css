@@ -83,11 +83,12 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   font-size: var(--fs-18);
   color: var(--ink);
 }
-.start-row dd { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-4); }
+.start-row dd { display: flex; flex-wrap: wrap; gap: 0 var(--s-4); }
 .start-link {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
+  min-height: 40px;
   font-size: var(--fs-14);
   color: var(--ink-2);
   transition: color var(--t-fast) var(--ease);
@@ -120,7 +121,7 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   gap: var(--s-3);
   transition: color var(--t-fast) var(--ease);
 }
-.family-name a:hover { color: var(--cat-ink); }
+.family-name a:hover, .family-name a:focus-visible { color: var(--cat-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
 .family-when {
   margin-top: var(--s-3);
   font-size: var(--fs-16);
@@ -189,7 +190,8 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   max-width: 760px;
   margin: var(--s-8) 0 var(--s-10);
 }
-.family-page-head .thumb { margin-bottom: var(--s-4); }
+.family-page-head h1 { display: flex; align-items: center; gap: var(--s-4); }
+.family-page-choose { margin-top: var(--s-5); font-size: var(--fs-16); color: var(--ink-2); }
 .family-page-lede {
   margin-top: var(--s-4);
   font-family: var(--font-serif);

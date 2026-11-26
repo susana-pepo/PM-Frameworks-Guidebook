@@ -53,22 +53,23 @@
           <p class="usm-card" data-series="3"><span class="visually-hidden">Release 3, Start a free trial: </span>Annual and family plans</p>
         </div>
       </div>
-      <figcaption>Activities and user steps form the backbone across the top. Release 1 has a story under every step; later releases add stories only to the steps they improve, so the product stays usable end to end after each one.</figcaption>
+      <figcaption>Read across for the journey and down for priority. The activities and user steps above the solid line are the backbone, and the goal sits over them. Each dashed release line marks where a release ends, and an empty cell means that release adds nothing to that step.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Write the steps a user takes across the top of the map, hang the possible stories for each step underneath, and order every column by priority. Then draw lines across the map: everything above the first line is Release 1, a thin version of the whole journey that works end to end.</p>
+      <p>Release 1, the walking skeleton, puts the simplest story under every user step, so a new user can get from the first screen to value. As rules of thumb, a map has 3⁠–⁠7 activities and 8⁠–⁠15 user steps across the backbone, and every release gets its own success metric. Priority orders the stories within a column; the backbone always stays in journey order.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
       <h2>A map instead of a list</h2>
-      <p class="chapter-dek">A flat backlog says what comes next; a map shows the journey each story serves</p>
     </header>
 
     <p>A traditional backlog is a prioritized list: item 1, item 2, item 3, all the way down to item 200. It tells you what to build next, but it loses <strong>why</strong> you are building it and <strong>how the user experiences it</strong>. Jeff Patton, who popularized story mapping, describes it in <cite>User Story Mapping</cite> (with Peter Economy, 2014) as an alternative to the flat backlog: a flat backlog loses the story of what the user is doing, and a map keeps it.</p>
+
+    <div data-hero-ref></div>
 
     <div class="contrast">
       <div class="contrast-col" data-tone="weak">
@@ -86,41 +87,38 @@
       </div>
       <div class="contrast-col" data-tone="strong">
         <p class="contrast-label">Story map</p>
-        <p>Left to right: the user’s journey. Top to bottom: priority.</p>
-        <p>You can see that Release 1 gives users a <strong>complete journey</strong> from sign-up to first lesson, thin but end to end.</p>
-        <p>After every release, users have a usable version of the whole experience.</p>
+        <p>The same stories, each hung under the user step it serves: email login under Enter email, the streak counter under See results, the family plan under Start a free trial.</p>
+        <p>Take the top story in every column and you have a <strong>complete journey</strong>, from the store listing to a trial checkout, thin but usable.</p>
       </div>
     </div>
 
     <h3>Across is the story, down is the plan</h3>
+
     <div class="cards" data-cols="2">
       <div class="card">
         <span class="card-key">↔</span>
         <h4 class="card-title">Horizontal: the story</h4>
-        <p>The user’s journey from left to right, with time flowing across the top. Read it as a sentence: first they do this, then that. This axis is the <strong>narrative</strong>.</p>
+        <p>Time runs left to right, so the top rows read as a sentence: the learner discovers the app, signs up, takes a lesson, tracks progress and subscribes. This axis is the <strong>narrative</strong>.</p>
       </div>
       <div class="card">
         <span class="card-key">↕</span>
         <h4 class="card-title">Vertical: the priority</h4>
-        <p>The most important version of each step sits at the top and less essential ones sit lower. This axis is the <strong>plan</strong>.</p>
+        <p>Each column runs from the story a step can’t do without to the extras. Under Play the first song, the play-along lesson comes first, feedback on playing next and challenges last. This axis is the <strong>plan</strong>.</p>
       </div>
     </div>
 
-    <div class="callout callout--tip">
-      <p class="callout-title">Read across, slice down</p>
-      <p>Walk the map left to right to tell the story. Slice it from top to bottom to plan the releases.</p>
-    </div>
-
     <h3>Release 1 is a walking skeleton</h3>
-    <p>The <dfn>walking skeleton</dfn> is Release 1: the thinnest version of the whole journey that works end to end. <strong>Every step is done minimally</strong>, so a user can walk the entire path even if each step is basic. The term comes from Alistair Cockburn (<cite>Crystal Clear</cite>, 2004); Patton uses it for the first slice of the map.</p>
-    <p>Each cut across the map is a <dfn>release slice</dfn>: a horizontal line drawn across every column, with everything above it shipping in that release. Agile teams often call this a vertical slice, because it cuts through every layer of the system, from interface to database; on the map it is drawn as a horizontal band. What to avoid is one feature done completely before the rest of the journey exists, such as perfecting login while every later step stays empty.</p>
+    <p>The <dfn>walking skeleton</dfn> is Release 1: the thinnest version of the whole journey that works end to end. Each step gets its most basic story, but <strong>no step is skipped</strong>, so a user can walk the whole path. The term comes from Alistair Cockburn (<cite>Crystal Clear</cite>, 2004); Patton uses it for the first slice of the map.</p>
+    <p>Each cut across the map is a <dfn>release slice</dfn>: a horizontal line drawn across every column, with everything above it shipping in that release. Agile teams often call this a vertical slice, because it cuts through every layer of the system, from interface to database; on the map it is drawn as a horizontal band. What to avoid is a release that runs down one column instead of across all of them, such as perfecting login while every later step stays empty.</p>
+    <p>Later slices build on Release 1 and add stories only to the steps they improve. That’s why the map has blank cells in Releases 2 and 3: an earlier release already covers the step, and the product stays usable after every release. Release 1 also isn’t the list of must-have features. It takes the thinnest story under each step, which usually includes some must-haves and leaves others for later.</p>
   </section>
 
   <section class="chapter" id="anatomy" data-nav="Anatomy">
     <header class="chapter-head">
       <h2>Four layers, from goal to stories</h2>
-      <p class="chapter-dek">The goal frames the map, activities and user steps form the backbone, and everything below is the body</p>
     </header>
+
+    <div data-hero-ref></div>
 
     <div class="cards" data-cols="2">
       <div class="card">
@@ -128,7 +126,7 @@
         <h3 class="card-title">Goal</h3>
         <p class="card-q">What does the user want to achieve?</p>
         <p>The big outcome the user is after. It sits at the very top and frames everything below it, like the title of a film: the whole story in one line.</p>
-        <p>Examples: “Learn to play piano online”, “Find and book a vacation rental”, “Manage my team’s sprint work”.</p>
+        <p>The map’s goal is “Learn to play an instrument online”. Others: “Find and book a vacation rental”, “Manage my team’s sprint work”.</p>
         <p class="card-meta">One per map</p>
       </div>
       <div class="card">
@@ -136,7 +134,7 @@
         <h3 class="card-title">Activities</h3>
         <p class="card-q">What are the big phases of the journey?</p>
         <p>The big things the user does, grouping the steps below them. Think of them as the chapter headings of the user’s story.</p>
-        <p>Examples: Discover, Onboard, Learn, Practice, Share. Each one holds several specific steps.</p>
+        <p>The map has five, from Discover to Subscribe. Other maps use Onboard, Learn, Practice or Share. Each one holds several specific steps.</p>
         <p class="card-meta">3–7 per map, as a rule of thumb · top row of the backbone</p>
       </div>
       <div class="card">
@@ -151,20 +149,15 @@
         <span class="card-key" data-series="3">4</span>
         <h3 class="card-title">Body</h3>
         <p class="card-q">Which stories deliver each step, and in what order?</p>
-        <p>The user stories that hang below each step: the details, options and alternatives for doing it, arranged <strong>top to bottom by priority</strong>. Drawing a horizontal line across the body creates a release slice: the top slice is Release 1, the walking skeleton, the next is Release 2, and so on.</p>
-        <p>Example, under Enter email: email and password login in Release 1 and Google sign-in in Release 2. Apple sign-in or a one-time email link could come in a later slice.</p>
+        <p>The user stories that hang below each step: the details, options and alternatives for doing it, arranged <strong>top to bottom by priority</strong>. Lines across the body cut it into <a href="#understand" data-section-link>release slices</a>.</p>
+        <p>In the map, Enter email gets email and password login in Release 1 and Google sign-in in Release 2. Apple sign-in or a one-time email link could come in a later slice.</p>
         <p class="card-meta">Below the backbone · sliced into releases</p>
       </div>
     </div>
 
     <div class="callout">
       <p class="callout-title">What counts as the backbone</p>
-      <p>Activities and the user steps under them together form the <dfn>backbone</dfn>: the top two rows, the spine the rest of the map hangs from. Activities sit at the top of the backbone, not above it. The backbone is ordered by the journey, never by priority. Only the body is sorted by priority: if you score stories with a framework such as <a data-guide-link="rice">RICE</a>, the scores order the stories within each column and never reorder the backbone.</p>
-    </div>
-
-    <div class="callout">
-      <p class="callout-title">Release 1 covers every step</p>
-      <p>Release 1 needs a story under every user step, so a user can walk from discovery to value. Each later slice builds on it and adds stories only to the steps it improves. An empty cell in Release 2 or 3 is normal: the earlier release already covers that step, and the product stays usable end to end after every release. Release 1 is not the same as every must-have feature: it takes the thinnest story under each step, which usually includes some must-haves and leaves others for later slices.</p>
+      <p>Activities and the user steps under them together form the <dfn>backbone</dfn>: the top two rows, the spine the rest of the map hangs from. Activities sit at the top of the backbone, not above it. The backbone runs in journey order and priority sorts only the body. If you score stories with a framework such as <a data-guide-link="rice">RICE</a>, the scores order the stories within each column and leave the backbone alone.</p>
     </div>
   </section>
 
@@ -177,7 +170,7 @@
     <div class="example">
       <p class="example-label">Worked example</p>
       <h3>A new learner’s first session with Larkwell</h3>
-      <p>Larkwell, a fictional piano-learning app, listens through the phone’s microphone or a MIDI keyboard and gives feedback on each note. Today 45% of new accounts activate, meaning they complete a first song lesson within 24 hours of signing up, and 19% are still active on day 7. The onboarding team maps a new learner’s first session to decide what to ship first. The team is rebuilding the first session as a new flow (the “first song in five minutes” redesign), so it maps that flow from scratch: even parts Larkwell already has, such as its store listing and note feedback, go in the slice where the new flow first uses them. All figures are illustrative.</p>
+      <p>Larkwell, a fictional piano-learning app for adults (figures are illustrative), listens through the phone’s microphone or a MIDI keyboard and gives feedback on each note. Today 45% of new accounts activate, meaning they complete a first song lesson within 24 hours of signing up, and 19% are still active on day 7. The onboarding team is rebuilding the first session as a new flow, the “first song in five minutes” redesign, and maps it from scratch to decide what ships first. Even parts Larkwell already has, such as its store listing and note feedback, go in the slice where the new flow first uses them.</p>
 
       <dl class="facts">
         <div><dt>Goal</dt><dd>“Start learning piano with Larkwell and play a first song in the first session”</dd></div>
@@ -231,7 +224,7 @@
         </li>
         <li>
           <h4 class="step-title">Slice into releases</h4>
-          <p>Draw horizontal lines to create release slices. Release 1 covers the whole journey, each later slice enriches it, and each gets a metric that says whether it worked.</p>
+          <p>Draw three lines across the body, one under each release, and give every slice a metric that says whether it worked.</p>
           <div class="table-wrap">
             <table class="table table--stack">
               <caption>Three release slices for Larkwell’s onboarding</caption>
@@ -249,10 +242,10 @@
       </ol>
 
       <div class="example-reading">
-        <h4>What the slices show</h4>
-        <p>Release 1 gives the user a <strong>basic version of every step</strong>, from the app store to a finished lesson. Instrument setup is a single choice between microphone and MIDI keyboard and the quiz is skipped, but neither step is missing.</p>
-        <p>Release 2 and Release 3 add an instrument check, note feedback in the new lessons, a three-question quiz and streaks to steps that already work, so no release ships a dead end.</p>
-        <p>The metrics follow the same logic. Release 1 only has to prove that the journey works. Release 2 has to move activation from 45% to at least 50% and D7 retention from 19% to at least 21%, and Release 3 aims for 55% and 24%, the onboarding team’s targets for the quarter.</p>
+        <h4>Release 1 proves the journey works; Releases 2 and 3 move activation and retention</h4>
+        <p>After four weeks a new learner can get from the app store to a finished lesson. Instrument setup is a single choice between microphone and MIDI keyboard and the placement quiz is skipped, which is as thin as those steps can get, but <strong>neither step is missing</strong>.</p>
+        <p>The next two releases add an instrument check, note feedback in the new lessons, a three-question quiz and streaks to steps that already work, so no release ships a dead end.</p>
+        <p>Only then do the numbers have to move. Release 2 needs activation to go from 45% to at least 50% and D7 retention from 19% to at least 21%. Release 3 aims for 55% and 24%, the onboarding team’s targets for the quarter.</p>
       </div>
     </div>
   </section>
@@ -260,7 +253,6 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Build a story map of your own</h2>
-      <p class="chapter-dek">Name the goal and activities, list the steps, then add stories and draw release lines</p>
     </header>
 
     <div class="tool" data-tool="usm-builder">
@@ -279,7 +271,7 @@
 
       <div>
         <p class="field-label">Activities and their user steps</p>
-        <p class="field-help">Most maps have 3–7 activities. List 2–4 user steps for each, separated by commas.</p>
+        <p class="field-help">Up to 7 activities. List 2–4 user steps for each, separated by commas.</p>
       </div>
       <div class="usm-acts" id="usm-activities">
         <div class="usm-act-row">
@@ -396,17 +388,11 @@
         <p class="tool-output-note" id="usm-note">Generate a map to check whether Release 1 covers the whole journey.</p>
       </div>
     </div>
-
-    <div class="callout callout--tip">
-      <p class="callout-title">Read it back before you slice</p>
-      <p>Once the map is generated, read the user steps aloud from left to right and check that they tell a sensible story. Put the simplest story for each step in the top row, then add a release line under it. If the check shows an empty step in Release 1, that is where a user would get stuck.</p>
-    </div>
   </section>
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When to map, and when a list will do</h2>
-      <p class="chapter-dek">It pays off when a journey has several steps and a team needs to agree on what ships first</p>
+      <h2>A map pays off for multi-step journeys a team must agree on</h2>
     </header>
 
     <div class="fit">
@@ -427,7 +413,7 @@
           <li>The work is a single feature that is small and isolated</li>
           <li>You are optimizing, such as A/B testing within an existing flow rather than redesigning it</li>
           <li>You do not understand the user yet. Research with <a data-guide-link="jtbd">Jobs to Be Done</a> or <a data-guide-link="design-thinking">design thinking</a> first, then map. Five or six quick JTBD conversations on the riskiest assumption are a reasonable starting point and give the map a user to follow.</li>
-          <li>You are a team of one. The value of a map is the shared understanding built while making it; working alone, a simple list may be enough.</li>
+          <li>You are a team of one. Most of a map’s value is the shared picture the team builds while making it; working alone, a simple list may be enough.</li>
         </ul>
       </div>
     </div>
@@ -476,7 +462,6 @@
   <section class="chapter" id="session" data-nav="Run a session">
     <header class="chapter-head">
       <h2>Running a two-hour mapping workshop</h2>
-      <p class="chapter-dek">Who to invite, what to bring and how to spend the time</p>
     </header>
 
     <dl class="facts">
@@ -488,11 +473,11 @@
 
     <ol class="agenda">
       <li><span class="agenda-time">0–10 min</span><div><p class="agenda-title">Frame the goal</p><p>State the user goal and persona and write them on a large card at the top of the board, so everyone agrees who you are mapping for and what they want. “Today we’re mapping the journey of [persona] trying to [goal].”</p></div></li>
-      <li><span class="agenda-time">10–30 min</span><div><p class="agenda-title">Lay out the user steps</p><p>Walk the journey step by step. Everyone writes steps on sticky notes; arrange them left to right, debate the order and merge duplicates. Aim for 8–15 steps, the rule of thumb, then read them aloud: “First they…, then they…”. Does it tell a complete story?</p></div></li>
-      <li><span class="agenda-time">30–40 min</span><div><p class="agenda-title">Group into activities</p><p>Cluster the steps into activities, usually 3–7 as a rule of thumb, and place the activity cards in a row above them, like chapter headings, to complete the backbone. Consider splitting a cluster with six or more steps, and merging a single-step cluster into its neighbor unless it is a distinct phase of the journey.</p></div></li>
+      <li><span class="agenda-time">10–30 min</span><div><p class="agenda-title">Lay out the user steps</p><p>Walk the journey step by step. Everyone writes steps on sticky notes; arrange them left to right, debate the order and merge duplicates. Then read the row aloud, “First they…, then they…”, and keep adjusting until it tells a complete story.</p></div></li>
+      <li><span class="agenda-time">30–40 min</span><div><p class="agenda-title">Group into activities</p><p>Cluster the steps into activities and place the activity cards in a row above them, like chapter headings, to complete the backbone. Consider splitting a cluster with six or more steps, and merging a single-step cluster into its neighbor unless it is a distinct phase of the journey.</p></div></li>
       <li><span class="agenda-time">40–70 min</span><div><p class="agenda-title">Fill the body</p><p>10 minutes of silent writing: everyone writes stories for the different ways each step could be built, from simplest to most ambitious, and sticks them under the right step. Then 20 minutes of discussion, column by column: read, clarify, cluster duplicates and order each column by priority, with the simplest, most essential story at the top.</p></div></li>
       <li><span class="agenda-time">70–80 min</span><div><p class="agenda-title">Break</p><p>Let it settle and photograph the current state. People often have new ideas during the break.</p></div></li>
-      <li><span class="agenda-time">80–100 min</span><div><p class="agenda-title">Slice releases</p><p>Draw a horizontal line under the top row of stories: this is Release 1, the walking skeleton. Read it left to right. Can a user complete the whole journey? If a column is empty, move the simplest story for that step up into Release 1. Repeat for Release 2 and Release 3.</p></div></li>
+      <li><span class="agenda-time">80–100 min</span><div><p class="agenda-title">Slice releases</p><p>Draw a horizontal line under the top row of stories to mark Release 1, the walking skeleton. Where a column has nothing above the line, move the simplest story for that step up. Repeat for Release 2 and Release 3.</p></div></li>
       <li><span class="agenda-time">100–115 min</span><div><p class="agenda-title">Add metrics and hypotheses</p><p>For each slice, write “Release 1 validates that [assumption]. Success metric: [specific number].” and attach it to the release line, so each slice carries a hypothesis the team can test.</p></div></li>
       <li><span class="agenda-time">115–120 min</span><div><p class="agenda-title">Wrap up</p><p>Photograph the map and assign an owner to digitize it in Miro or FigJam. Agree on the next step (“We’ll use this map in sprint planning from [date]”) and schedule a follow-up in two weeks to review and update it.</p></div></li>
     </ol>
@@ -505,12 +490,11 @@
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Eight questions on the layers, the slices and the session</p>
+      <h2>Test yourself on story mapping</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">What do the two axes of a story map represent?</p>
         <ul class="quiz-options">
           <li><button type="button">Horizontal is the feature set, vertical is complexity</button></li>
@@ -518,9 +502,9 @@
           <li><button type="button">Horizontal is the journey, vertical is priority</button></li>
           <li><button type="button">Horizontal is the cost, vertical is the effort</button></li>
         </ul>
-        <div class="quiz-why"><p>Left to right is the user’s journey, the narrative. Top to bottom is priority, the plan.</p></div>
+        <div class="quiz-why"><p>Reading across follows what the user does, in order; reading down goes from the most essential version of each step to the ones that can wait. Time does flow left to right, but as the order of the user’s actions rather than a schedule, and team size appears nowhere on the map.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="understand">
         <p class="quiz-q">What is the walking skeleton?</p>
         <ul class="quiz-options">
           <li><button type="button">The most complex feature, built first</button></li>
@@ -528,9 +512,9 @@
           <li><button type="button">A wireframe prototype of the first screens</button></li>
           <li><button type="button">The backbone of the map before any stories are added</button></li>
         </ul>
-        <div class="quiz-why"><p>The walking skeleton is Release 1: the thinnest version of the whole journey that works end to end. Every step is basic, but none is missing. The term comes from Alistair Cockburn.</p></div>
+        <div class="quiz-why"><p>Release 1 gives every step its simplest story, so a user can get from the start to value even though nothing is polished. A bare backbone isn’t it: with no stories under the steps, there is nothing to ship.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="anatomy">
         <p class="quiz-q">As a rule of thumb, how many activities does a story map have?</p>
         <ul class="quiz-options">
           <li><button type="button">1–2</button></li>
@@ -538,9 +522,9 @@
           <li><button type="button">10–15</button></li>
           <li><button type="button">20 or more</button></li>
         </ul>
-        <div class="quiz-why"><p>Activities are the big things the user does, the chapter headings of the journey. Most maps have 3–7: enough to tell the story and few enough to remember. The user steps under them usually number 8–15 across the backbone.</p></div>
+        <div class="quiz-why"><p>Three to seven activities is enough to tell the journey as a handful of chapters and few enough to keep in your head. Ten to fifteen is closer to the count for the row beneath them: 8–15 user steps.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="pitfalls">
         <p class="quiz-q">A team’s Release 1 plan has email, Google and Apple sign-in plus a password reset flow, and nothing yet under the lesson and results steps. What is wrong with it?</p>
         <ul class="quiz-options">
           <li><button type="button">It goes deep on one step and leaves the rest of the journey empty</button></li>
@@ -548,9 +532,9 @@
           <li><button type="button">Sign-in options belong in the backbone, not in the body</button></li>
           <li><button type="button">Release 1 should be planned team by team, not across the journey</button></li>
         </ul>
-        <div class="quiz-why"><p>Release 1 should be a thin slice across every step. Here users can sign up in several ways and then have nowhere to go. Move the simplest story for each empty step into Release 1 and leave the extra sign-in options for later slices.</p></div>
+        <div class="quiz-why"><p>Every sign-in option sits under one step, so the plan is deep in one column and empty in the others, and a new user hits a dead end right after signing up. The backbone may be fine; the fault is in how the first slice was cut.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="pitfalls">
         <p class="quiz-q">Your first draft of a backbone has 27 user steps, and nobody in the room can read it as one story. What should you do?</p>
         <ul class="quiz-options">
           <li><button type="button">Draw the first release line now so the map gets smaller</button></li>
@@ -558,9 +542,9 @@
           <li><button type="button">Group steps under activities and merge duplicates</button></li>
           <li><button type="button">Move half of the steps into the body as stories</button></li>
         </ul>
-        <div class="quiz-why"><p>Twenty-five or more steps means the backbone is at the wrong level of detail. Grouping steps under activities and merging duplicates, such as “Enter email” and “Confirm password” into “Create account”, brings it back toward 8–15 steps. Steps are things the user does, so turning them into body stories hides part of the journey.</p></div>
+        <div class="quiz-why"><p>At 27 steps the backbone is too detailed, and clustering steps under activities, or merging pairs like “Enter email” and “Confirm password”, brings it back to a row people can read. Moving steps into the body would bury things the user actually does, which is what the backbone is there to show.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="session">
         <p class="quiz-q">Who should attend a story mapping session?</p>
         <ul class="quiz-options">
           <li><button type="button">Only the PM, who then presents the finished map</button></li>
@@ -568,9 +552,9 @@
           <li><button type="button">PM, designer, engineers and a customer-facing person</button></li>
           <li><button type="button">Every stakeholder who will read the roadmap</button></li>
         </ul>
-        <div class="quiz-why"><p>The session works best with 4–8 people who mix product, design, engineering and customer-facing roles. The shared understanding built while making the map matters more than the map itself, so the people building and supporting the product need to be in the room.</p></div>
+        <div class="quiz-why"><p>A group of four to eight drawn from product, design, engineering and support or sales spots gaps in the journey that any one role would miss. A PM presenting a finished map skips the conversation that gives the team a shared picture of the journey.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="anatomy">
         <p class="quiz-q">After the workshop, a team scores every story in the body with RICE. How should the scores change the map?</p>
         <ul class="quiz-options">
           <li><button type="button">They reorder the activities so the highest scores come first</button></li>
@@ -578,9 +562,9 @@
           <li><button type="button">They decide which user steps to drop from the backbone</button></li>
           <li><button type="button">They order the stories within each column</button></li>
         </ul>
-        <div class="quiz-why"><p>The backbone stays in journey order; only the body is sorted by priority. Scores help decide which story sits highest under each step, and the release lines still cut across every column.</p></div>
+        <div class="quiz-why"><p>RICE can rank the stories under a step, so its scores decide which one sits highest in each column. Reordering the activities by score would scramble the journey order the backbone exists to keep.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="anatomy">
         <p class="quiz-q">What sits at the top of the backbone?</p>
         <ul class="quiz-options">
           <li><button type="button">The goal</button></li>
@@ -588,7 +572,7 @@
           <li><button type="button">User steps</button></li>
           <li><button type="button">Release lines</button></li>
         </ul>
-        <div class="quiz-why"><p>The backbone is the top two rows: activities, such as Discover, Onboard and Learn, with the user steps directly under them. The goal frames the map from above the backbone, and release lines cut across the body below it.</p></div>
+        <div class="quiz-why"><p>The backbone is the two rows of activities and the user steps beneath them, so activities form its top edge. The goal frames the backbone from above and isn’t part of it.</p></div>
       </li>
     </ol>
   </section>
@@ -953,7 +937,7 @@
     canvas.replaceChildren();
 
     if (!map) {
-      canvas.append(el('p', 'usm-empty', 'Your story map will appear here. Fill in at least two activities with their user steps, then select Generate map.'));
+      canvas.append(el('p', 'usm-empty', 'Your story map will appear here.'));
       updateSelect();
       updateOutput();
       return;

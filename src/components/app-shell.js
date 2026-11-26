@@ -25,7 +25,6 @@ export function renderApp() {
       <div class="bar-inner">
         <a href="#/" class="brand" aria-label="PM Frameworks, home">
           <span class="brand-name">PM Frameworks</span>
-          <span class="brand-sub">A field guide</span>
         </a>
 
         <nav class="bar-nav" aria-label="Primary">
@@ -42,9 +41,6 @@ export function renderApp() {
           </button>
           <button class="btn btn--quiet btn--icon" id="theme-toggle" type="button" aria-label="Switch to dark theme">
             <span class="theme-sun">${ICON.sun}</span><span class="theme-moon">${ICON.moon}</span>
-          </button>
-          <button class="btn btn--quiet btn--icon bar-menu" id="menu-trigger" type="button" aria-label="Open index" aria-expanded="false" aria-controls="index-panel">
-            ${ICON.index}
           </button>
         </div>
       </div>
@@ -69,7 +65,6 @@ export function renderApp() {
 
     <footer class="foot">
       <div class="foot-inner">
-        <p class="foot-line">24 frameworks and 6 comparison guides for product managers.</p>
         <p class="foot-line">Made by <a class="link" href="https://susana-pepo.github.io/susana-pepo-pm-portfolio/" target="_blank" rel="noopener">Susana</a> with Claude</p>
       </div>
     </footer>
@@ -78,7 +73,9 @@ export function renderApp() {
   // The skip link must not change the hash (the router owns it).
   document.getElementById('skip-link').addEventListener('click', (e) => {
     e.preventDefault();
-    const target = document.querySelector('#page-content h1') || document.getElementById('main-content');
+    // On a guide section the header is hidden, so land on the section heading.
+    const target = document.querySelector('.guide-page[data-panel="chapter"] .panel.is-current h2')
+      || document.querySelector('#page-content h1') || document.getElementById('main-content');
     target.setAttribute('tabindex', '-1');
     target.focus();
   });
@@ -104,7 +101,7 @@ function renderIndexColumn(cat) {
         ${list.map(fw => `
           <li><a class="index-link" href="#/framework/${fw.slug}" data-slug="${fw.slug}">${fw.name}</a></li>
         `).join('')}
-        ${guide ? `<li><a class="index-link index-link--compare" href="#/compare/${guide.slug}" data-slug="${guide.slug}">Compare the four</a></li>` : ''}
+        ${guide ? `<li><a class="index-link index-link--compare" href="#/compare/${guide.slug}" data-slug="${guide.slug}">How to choose<span class="visually-hidden"> a ${cat.name.toLowerCase()} framework</span></a></li>` : ''}
       </ul>
     </section>
   `;
@@ -114,7 +111,7 @@ function renderIndexColumn(cat) {
 function bindIndexPanel() {
   const panel = document.getElementById('index-panel');
   const scrim = document.getElementById('index-scrim');
-  const triggers = [document.getElementById('index-trigger'), document.getElementById('menu-trigger')];
+  const triggers = [document.getElementById('index-trigger')];
   let lastTrigger = null;
 
   const setOpen = (open, trigger) => {

@@ -33,10 +33,6 @@
   letter-spacing: -0.01em;
   color: var(--ink);
 }
-.brand-sub {
-  font-size: var(--fs-14);
-  color: var(--ink-3);
-}
 
 .bar-nav { display: flex; align-items: center; gap: var(--s-1); }
 .bar-link {
@@ -88,15 +84,12 @@
 :root[data-theme="dark"] .theme-moon,
 :root:not([data-theme="dark"]) .theme-sun { display: none; }
 
-.bar-menu { display: none; }
-
 @media (max-width: 760px) {
   .bar-inner { gap: var(--s-3); padding: 0 var(--s-4); }
-  .brand-sub, .bar-nav { display: none; }
+  .bar-nav { margin-left: calc(-1 * var(--s-2)); }
   .search-trigger { width: 40px; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
   .search-trigger-label, .search-trigger-keys { display: none; }
   .search-trigger > svg { width: 18px; height: 18px; }
-  .bar-menu { display: inline-flex; }
 }
 
 /* ---- Index panel -------------------------------------------------------- */

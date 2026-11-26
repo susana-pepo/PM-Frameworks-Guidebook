@@ -1,7 +1,7 @@
 <article class="guide" data-guide="shape-up">
 
   <header class="guide-intro">
-    <p class="lede">Shape Up fixes the time and lets the scope vary. Senior people shape a problem into a rough, bounded pitch with an appetite, a betting table chooses which pitches get a 6-week cycle, and a small team builds each one, cutting scope as needed to ship on time.</p>
+    <p class="lede">Shape Up fixes the time and lets the scope vary. Senior people shape a problem into a pitch, a rough but bounded solution sized to an appetite: the time the problem is worth. A betting table picks which pitches get the next 6-week cycle, and a small team builds each one, cutting scope as it goes so the work ships on time.</p>
 
     <figure class="figure" data-hero>
       <ol class="su-phases" aria-label="The three phases of Shape Up">
@@ -43,37 +43,30 @@
           <span class="su-weeks"><span class="su-bar su-bar--build" data-series="3">Build</span><span class="su-bar su-bar--cool" data-series="4">Cooldown</span></span>
         </div>
       </div>
-      <figcaption>Shape, bet and build, laid over one 8-week stretch: 6 weeks of building, then 2 weeks of cooldown while the next bets are placed</figcaption>
+      <figcaption>The three cards say who does each phase and what comes out of it. Below them, read the 8 weeks left to right. The dashed bar is shaping, which never stops. The team builds in weeks 1–6 and cools down in weeks 7–8, and the bet falls at the end of week 8.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Decide how much time a problem is worth, shape a rough but bounded solution that fits that time, and bet one 6-week cycle on it. The team owns the whole project and cuts scope to ship on time; if it does not ship, the project stops instead of running over. Two weeks of cooldown follow, and the next bets are placed during them.</p>
+      <p>A cycle is 6 weeks of building, then 2 weeks of cooldown, unscheduled time in which the betting table meets. A big batch takes the whole cycle and a small batch 1–2 weeks, and each team is one designer and one or two programmers. Work that hasn’t shipped by the end of week 6 stops; Shape Up calls this the circuit breaker. So when time runs short, the team cuts nice-to-haves and keeps both the deadline and the testing.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
       <h2>Fix the time, let the scope give way</h2>
-      <p class="chapter-dek">The appetite sets how long; the team decides how much fits</p>
     </header>
 
-    <p>Shape Up is a way of working developed at Basecamp (now 37signals) and published in 2019, when Ryan Singer described it in his book <cite>Shape Up: Stop Running in Circles and Ship Work that Matters</cite>. The book is <a href="https://basecamp.com/shapeup">free to read online</a>. The <a href="#phases" data-section-link>next chapter</a> walks through shaping, betting and building; the chapter after it covers the <a href="#concepts" data-section-link>key ideas</a> that keep a cycle on time.</p>
+    <p>Shape Up is a way of working developed at Basecamp (now 37signals) and published in 2019, when Ryan Singer described it in his book <cite>Shape Up: Stop Running in Circles and Ship Work that Matters</cite>. The book is <a href="https://basecamp.com/shapeup">free to read online</a>.</p>
 
-    <p>The idea that holds it together is <dfn>fixed time, variable scope</dfn>. Before any work starts, the business decides how much time a problem deserves. That time does not move. What moves is the scope: inside the boundaries the pitch sets, the team decides which parts are essential and cuts the rest so the core ships on time.</p>
+    <p>Its core principle is <dfn>fixed time, variable scope</dfn>, and the variable part is narrower than it sounds. The appetite caps the time and the pitch caps the ambition, so scope can shrink but never grow. Quality isn’t variable at all. When time runs short, a Shape Up team drops nice-to-haves and simplifies the solution; it doesn’t ship the core work half-tested or half-finished.</p>
 
-    <div class="callout">
-      <p class="callout-title">Scope gives way, quality does not</p>
-      <p>When time runs short, a Shape Up team drops nice-to-haves and simplifies the solution. It does not ship the core work half-tested or half-finished. The appetite caps the time, the pitch caps the ambition, and the team chooses what to leave out.</p>
-    </div>
-
-    <h3>The problems it was designed to solve</h3>
-    <p>The method answers four problems that many product teams will recognize.</p>
+    <h3>Four problems it was built to solve</h3>
     <div class="cards" data-cols="2">
       <div class="card">
         <h4 class="card-title">The backlog only grows</h4>
         <p>Ideas pile up faster than any team can build them, and the list turns into an obligation nobody can meet.</p>
-        <p><strong>Shape Up:</strong> there is no central backlog. An idea that is not pitched and bet on is let go. Good ideas come back.</p>
+        <p><strong>Shape Up:</strong> there is no central backlog. An idea that isn’t pitched and bet on is let go.</p>
       </div>
       <div class="card">
         <h4 class="card-title">Short iterations leave little room for meaningful work</h4>
@@ -83,7 +76,7 @@
       <div class="card">
         <h4 class="card-title">Estimates start from the scope</h4>
         <p>Asking how long a piece of work will take fixes the scope first and lets the time follow, so the schedule moves every time the scope grows.</p>
-        <p><strong>Shape Up:</strong> an appetite replaces the estimate. Instead of asking how long it will take, it asks how much time the problem is worth: “We are willing to spend 6 weeks on this, no more.”</p>
+        <p><strong>Shape Up:</strong> an appetite replaces the estimate. The business says up front, “We are willing to spend 6 weeks on this, no more.”</p>
       </div>
       <div class="card">
         <h4 class="card-title">Refining work that may never ship</h4>
@@ -92,8 +85,8 @@
       </div>
     </div>
 
-    <h3>Scrum Sprints and Shape Up cycles side by side</h3>
-    <p>Shape Up is often compared with Scrum. They are alternative ways to organize delivery, and a team usually picks one.</p>
+    <h3>Where it differs from Scrum</h3>
+    <p>Teams choosing how to organize delivery often weigh Shape Up against <a data-guide-link="agile-scrum">Scrum</a>. They are alternatives, and a team usually picks one.</p>
     <div class="table-wrap">
       <table class="table table--compare">
         <caption>How a typical Scrum team and a Shape Up team organize the same work</caption>
@@ -116,8 +109,11 @@
   <section class="chapter" id="phases" data-nav="Phases">
     <header class="chapter-head">
       <h2>An idea becomes a pitch, a bet, then a shipped project</h2>
-      <p class="chapter-dek">Shaping runs alongside the cycle, betting happens in cooldown, building fills the next 6 weeks</p>
     </header>
+
+    <div data-hero-ref></div>
+
+    <p>The phases overlap. While a team builds this cycle’s bet, the shapers are already preparing pitches for the next one, so when the betting table meets at the end of cooldown it has finished pitches to choose from, and the team starts the new cycle without waiting.</p>
 
     <h3>Shaping turns a raw idea into a pitch</h3>
     <p>Shaping is done by one or two senior people, often a product manager or designer who also understands the technical side. It runs on its own track while teams build, so it has no fixed duration: a pitch is ready when it is shaped well enough to bet on. The result is a <dfn>pitch</dfn>, not a spec. It is specific enough for a team to build and rough enough to leave the team room to make design decisions.</p>
@@ -148,7 +144,7 @@
       </li>
       <li>
         <h4 class="step-title">Rough out the elements</h4>
-        <p>Sketch a solution at the right level of detail with breadboards and fat-marker sketches, described under key ideas.</p>
+        <p>Sketch a solution at the right level of detail with <a href="#concepts" data-section-link>breadboards and fat-marker sketches</a>.</p>
       </li>
       <li>
         <h4 class="step-title">Address risks and rabbit holes</h4>
@@ -182,8 +178,8 @@
     <h3>Unpicked pitches are let go</h3>
     <p>Pitches that are not chosen do not go into a central backlog. Anyone can keep their own notes and bring an idea back, and important ideas tend to return on their own. Each betting table starts from what matters now instead of from a long list that needs grooming.</p>
 
-    <h3>The team gets a whole project, not a list of tasks</h3>
-    <p>A build team is small: one designer and one or two programmers. It receives the pitch and the full cycle, and it has <strong>full autonomy</strong> over how to execute. Nobody hands down tasks from above and there are no daily status meetings with managers. The team discovers the detailed design and the implementation as it builds: the tasks it imagined at the start are only part of the tasks it finds along the way.</p>
+    <h3>The team owns the whole project</h3>
+    <p>A build team is small: one designer and one or two programmers. It receives the pitch and the full cycle rather than a list of tasks, and it has <strong>full autonomy</strong> over how to execute. Nobody hands down tasks from above and there are no daily status meetings with managers. The team discovers the detailed design and the implementation as it builds: the tasks it imagined at the start are only part of the tasks it finds along the way.</p>
 
     <ol class="steps">
       <li>
@@ -213,7 +209,6 @@
   <section class="chapter" id="concepts" data-nav="Key ideas">
     <header class="chapter-head">
       <h2>Five ideas that keep a cycle on time</h2>
-      <p class="chapter-dek">Appetite, rough sketches, the circuit breaker, cooldown and the hill chart</p>
     </header>
 
     <h3>Appetite instead of an estimate</h3>
@@ -224,37 +219,12 @@
     </ol>
 
     <h3>Two ways to sketch without designing</h3>
-    <p>A <dfn>breadboard</dfn> uses words instead of pictures. It names the <strong>places</strong> a user can go (screens, dialogs), the <strong>affordances</strong> on each place (buttons, fields, controls), and lines showing where each affordance leads. It settles the flow without drawing an interface.</p>
-
-    <figure class="figure">
-      <ol class="su-bb" aria-label="Breadboard for Larkwell's Practice Mode">
-        <li class="su-bb-place">
-          <p class="su-bb-name">Finished lesson</p>
-          <ul class="su-bb-aff">
-            <li>Practice <span class="su-bb-to"><span aria-hidden="true">→</span><span class="visually-hidden">leads to</span> Practice screen</span></li>
-            <li>Next lesson</li>
-          </ul>
-        </li>
-        <li class="su-bb-place">
-          <p class="su-bb-name">Practice screen</p>
-          <ul class="su-bb-aff">
-            <li>Tempo slider, 50%–150%</li>
-            <li>Loop markers: tap start and end</li>
-            <li>Mistake overlay, on or off</li>
-            <li>Done <span class="su-bb-to"><span aria-hidden="true">→</span><span class="visually-hidden">leads to</span> Finished lesson</span></li>
-          </ul>
-        </li>
-      </ol>
-      <figcaption>A breadboard for Practice Mode in the worked example. Each underlined heading is a place, the items under it are affordances, and an arrow shows where an affordance leads.</figcaption>
-    </figure>
+    <p>A <dfn>breadboard</dfn> uses words instead of pictures. It names the <strong>places</strong> a user can go (screens, dialogs), the <strong>affordances</strong> on each place (buttons, fields, controls), and lines showing where each affordance leads. It settles the flow without drawing an interface. The <a href="#example" data-section-link>worked example</a> includes one.</p>
 
     <p>A <dfn>fat-marker sketch</dfn> is a drawing made with a pen so thick that no fine detail is possible. It shows how the elements sit on a screen without specifying pixels, spacing or copy. Use it when the idea is visual and a breadboard cannot capture it. Leaving the detail out is deliberate.</p>
 
     <h3>The circuit breaker caps every bet</h3>
-    <div class="callout callout--caution">
-      <p class="callout-title">No extensions by default</p>
-      <p>If a project does not ship within its cycle, it stops. There is no “just one more week.” If the idea is still worth doing, someone reshapes it and pitches it for a future cycle, starting fresh. This keeps shapers realistic about the appetite and pushes teams to make hard scope decisions early.</p>
-    </div>
+    <p>Under the <dfn>circuit breaker</dfn>, a project that doesn’t ship within its cycle stops. There is no “just one more week.” If the idea is still worth doing, someone reshapes it and pitches it for a future cycle, starting fresh. Because overruns aren’t an option, shapers stay realistic about the appetite and teams make the hard scope decisions early.</p>
     <p>The book allows rare exceptions for work that is very close to done: if every remaining task is known execution work (the project is all downhill) and the remaining items are true must-haves, the betting table may give it a little of the cooldown. That is a deliberate decision by leadership, never the default.</p>
 
     <h3>Uninterrupted time, then cooldown</h3>
@@ -262,61 +232,82 @@
     <p><dfn>Cooldown</dfn> is the 2 weeks after each cycle. It gives the team unscheduled time for bugs and small ideas, and gives leadership time to decide the next bets. Nothing is due at the end of it: people tidy up what they shipped or explore ideas, which often feed the next round of shaping, while the betting table meets to choose what comes next.</p>
 
     <h3>Reading a hill chart</h3>
-    <p>A <dfn>hill chart</dfn> replaces percent complete. The left slope is <strong>figuring it out</strong>: the team still has unknowns and does not yet know exactly how to do the work. The top of the hill is the moment the approach is settled. The right slope is <strong>making it happen</strong>: only known execution work remains.</p>
-
-    <figure class="figure">
-      <svg class="su-hill" viewBox="0 0 600 236" role="img" aria-label="A hill chart 3 weeks into the Practice Mode project. Practice entry point is at the bottom of the downhill side, nearly done. Tempo control is on the downhill side. Loop markers is at the top. Mistake overlay is low on the uphill side and has not moved for a week.">
-        <line class="su-hill-base" x1="20" y1="180" x2="580" y2="180"/>
-        <line class="su-hill-mid" x1="300" y1="30" x2="300" y2="180"/>
-        <path class="su-hill-line" d="M30,179.8 L45,179.6 L60,179.2 L75,178.6 L90,177.4 L105,175.6 L120,172.6 L135,168.2 L150,161.8 L165,153.2 L180,142.1 L195,128.5 L210,112.8 L225,95.9 L240,79.0 L255,63.5 L270,51.0 L285,42.8 L300,40.0 L315,42.8 L330,51.0 L345,63.5 L360,79.0 L375,95.9 L390,112.8 L405,128.5 L420,142.1 L435,153.2 L450,161.8 L465,168.2 L480,172.6 L495,175.6 L510,177.4 L525,178.6 L540,179.2 L555,179.6 L570,179.8"/>
-        <g class="su-hill-dot is-flagged"><circle cx="165" cy="153.2" r="16"/><text x="165" y="153.2">4</text></g>
-        <g class="su-hill-dot"><circle cx="305" cy="40.3" r="16"/><text x="305" y="40.3">3</text></g>
-        <g class="su-hill-dot"><circle cx="460" cy="166.3" r="16"/><text x="460" y="166.3">2</text></g>
-        <g class="su-hill-dot"><circle cx="545" cy="179.4" r="16"/><text x="545" y="179.4">1</text></g>
-        <text class="su-hill-side" x="160" y="216">Figuring it out</text>
-        <text class="su-hill-side" x="440" y="216">Making it happen</text>
-      </svg>
-      <ol class="su-hill-key" aria-label="Scopes on the hill">
-        <li><span class="su-hill-n">1</span><span><strong>Practice entry point</strong>: nearly done</span></li>
-        <li><span class="su-hill-n">2</span><span><strong>Tempo control</strong>: downhill, only known work left</span></li>
-        <li><span class="su-hill-n">3</span><span><strong>Loop markers</strong>: at the top, the approach is settled</span></li>
-        <li><span class="su-hill-n su-hill-n--flag">4</span><span><strong>Mistake overlay</strong>: uphill and unmoved for a week, a raised flag</span></li>
-      </ol>
-      <figcaption>The Practice Mode project from the worked example at week 3. Dots move right as the work progresses: up the hill as unknowns are solved, down it as the known work gets done.</figcaption>
-    </figure>
+    <p>A <dfn>hill chart</dfn> replaces percent complete. The left slope is <strong>figuring it out</strong>: the team still has unknowns and does not yet know exactly how to do the work. The top of the hill is the moment the approach is settled. The right slope is <strong>making it happen</strong>: only known execution work remains. Each scope is a dot: it climbs as its unknowns are solved and descends as the known work gets done. The <a href="#example" data-section-link>worked example</a> reads one at week 3.</p>
 
     <div class="callout callout--tip">
       <p class="callout-title">Push the unknowns uphill first</p>
-      <p>Work on the riskiest scopes early, while there is time to change course. A scope that stays on the uphill side is the real risk to the cycle: the team has not yet found a way to do it. Moving dots show progress honestly in a way a percentage cannot.</p>
+      <p>Work on the riskiest scopes early, while there is time to change course. A scope that stays on the uphill side is the real risk to the cycle: the team hasn’t yet found a way to do it.</p>
     </div>
   </section>
 
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Larkwell’s pitch for Practice Mode</h2>
-      <p class="chapter-dek">One big-batch pitch, written to be bet on</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
-      <h3>A piano-learning app that wants learners to practice</h3>
-      <p>Larkwell, a fictional piano-learning app for adults, runs its Practice team in 6-week cycles with 2-week cooldowns. Each bet gets one designer and two programmers. All figures are illustrative. Here is the pitch Larkwell’s shapers took to the betting table.</p>
+      <h3>Most learners never come back to practice a lesson</h3>
+      <p>Larkwell, a fictional piano-learning app for adults (figures are illustrative), runs its Practice team in 6-week cycles with 2-week cooldowns, and each bet gets one designer and two programmers. Its shapers took this big-batch pitch to the betting table.</p>
 
       <dl class="facts">
         <div><dt>Problem</dt><dd>70% of learners who finish a lesson never return to practice it. The current Practice button only replays the lesson. Learners need a dedicated way to practice, with tempo control, looped sections and a view of their mistakes. A beta with 50 learners, run before the bet, tripled practice sessions per learner from 0.4 to 1.2 a week.</dd></div>
         <div><dt>Appetite</dt><dd>Big batch, 6 weeks, for one designer and two programmers. Practice is core to retention and worth a full cycle, but not a full practice suite. The pitch is a focused first version: a tempo slider, section looping and basic mistake highlighting.</dd></div>
-        <div><dt>Solution</dt><dd>A new Practice screen, opened from any finished lesson, with three elements: a tempo slider (50%–150%), tap-to-set loop markers, and a mistake heatmap, built from existing lesson data, that shows where the learner struggled. One screen; the <a href="#concepts" data-section-link>breadboard</a> under key ideas shows the flow.</dd></div>
+        <div><dt>Solution</dt><dd>A new Practice screen, opened from any finished lesson, with three elements: a tempo slider (50%–150%), tap-to-set loop markers, and a mistake heatmap, built from existing lesson data, that shows where the learner struggled. The breadboard after this list shows how a learner gets in and out of it.</dd></div>
         <div><dt>Rabbit holes</dt><dd>Do not build real-time audio analysis to detect mistakes. Use the lesson data the app already records to show where errors happened.</dd></div>
         <div><dt>No-gos</dt><dd>No recording, no sharing, no custom practice playlists. Each could be a future pitch if this one works.</dd></div>
       </dl>
 
+      <figure class="figure">
+        <ol class="su-bb" aria-label="Breadboard for Larkwell's Practice Mode">
+          <li class="su-bb-place">
+            <p class="su-bb-name">Finished lesson</p>
+            <ul class="su-bb-aff">
+              <li>Practice <span class="su-bb-to"><span aria-hidden="true">→</span><span class="visually-hidden">leads to</span> Practice screen</span></li>
+              <li>Next lesson</li>
+            </ul>
+          </li>
+          <li class="su-bb-place">
+            <p class="su-bb-name">Practice screen</p>
+            <ul class="su-bb-aff">
+              <li>Tempo slider, 50%–150%</li>
+              <li>Loop markers: tap start and end</li>
+              <li>Mistake overlay, on or off</li>
+              <li>Done <span class="su-bb-to"><span aria-hidden="true">→</span><span class="visually-hidden">leads to</span> Finished lesson</span></li>
+            </ul>
+          </li>
+        </ol>
+        <figcaption>Each underlined heading is a place, the items under it are affordances, and an arrow shows where an affordance leads</figcaption>
+      </figure>
+
       <div class="example-reading">
-        <h4>Why the pitch is ready for the betting table</h4>
+        <h4>Bounded, rough and solved, so the pitch is safe to bet on</h4>
         <p><strong>It is bounded.</strong> The appetite caps the time at 6 weeks and the no-gos say plainly what is out.</p>
         <p><strong>It is rough.</strong> It names three elements and the flow between two places, and leaves the exact interface to the team.</p>
         <p><strong>It is solved.</strong> The riskiest part, finding mistakes, already has an answer. Calling out the audio rabbit hole keeps the team from losing weeks to audio processing.</p>
-        <h4>How the cycle went</h4>
-        <p>The team mapped four scopes. At week 3, the hill chart under key ideas showed the mistake overlay stuck uphill: a per-note heatmap was harder than expected. The team hammered it to highlighting the bars with the most errors, marked the heatmap as a nice-to-have, and shipped all four scopes in week 6. The bet’s target is the company’s key result, D30 retention from 9% to 11%, and an A/B test running from the first day of release measures whether Practice Mode moves it.</p>
+        <h4>The mistake overlay stalled uphill, so the team hammered it</h4>
+        <p>The team mapped four scopes, and by week 3 this hill chart showed where each one stood.</p>
+        <figure class="figure">
+          <svg class="su-hill" viewBox="0 0 600 236" role="img" aria-label="A hill chart 3 weeks into the Practice Mode project. Practice entry point is at the bottom of the downhill side, nearly done. Tempo control is on the downhill side. Loop markers is at the top. Mistake overlay is low on the uphill side and has not moved for a week.">
+            <line class="su-hill-base" x1="20" y1="180" x2="580" y2="180"/>
+            <line class="su-hill-mid" x1="300" y1="30" x2="300" y2="180"/>
+            <path class="su-hill-line" d="M30,179.8 L45,179.6 L60,179.2 L75,178.6 L90,177.4 L105,175.6 L120,172.6 L135,168.2 L150,161.8 L165,153.2 L180,142.1 L195,128.5 L210,112.8 L225,95.9 L240,79.0 L255,63.5 L270,51.0 L285,42.8 L300,40.0 L315,42.8 L330,51.0 L345,63.5 L360,79.0 L375,95.9 L390,112.8 L405,128.5 L420,142.1 L435,153.2 L450,161.8 L465,168.2 L480,172.6 L495,175.6 L510,177.4 L525,178.6 L540,179.2 L555,179.6 L570,179.8"/>
+            <g class="su-hill-dot is-flagged"><circle cx="165" cy="153.2" r="16"/><text x="165" y="153.2">4</text></g>
+            <g class="su-hill-dot"><circle cx="305" cy="40.3" r="16"/><text x="305" y="40.3">3</text></g>
+            <g class="su-hill-dot"><circle cx="460" cy="166.3" r="16"/><text x="460" y="166.3">2</text></g>
+            <g class="su-hill-dot"><circle cx="545" cy="179.4" r="16"/><text x="545" y="179.4">1</text></g>
+            <text class="su-hill-side" x="160" y="216">Figuring it out</text>
+            <text class="su-hill-side" x="440" y="216">Making it happen</text>
+          </svg>
+          <ol class="su-hill-key" aria-label="Scopes on the hill">
+            <li><span class="su-hill-n">1</span><span><strong>Practice entry point</strong>: nearly done</span></li>
+            <li><span class="su-hill-n">2</span><span><strong>Tempo control</strong>: downhill, only known work left</span></li>
+            <li><span class="su-hill-n">3</span><span><strong>Loop markers</strong>: at the top, the approach is settled</span></li>
+            <li><span class="su-hill-n su-hill-n--flag">4</span><span><strong>Mistake overlay</strong>: uphill and unmoved for a week, a raised flag</span></li>
+          </ol>
+          <figcaption>Practice Mode at week 3. Each numbered dot is a scope; it climbs as its unknowns are solved and descends as the known work gets done.</figcaption>
+        </figure>
+        <p>Three scopes were at the top of the hill or past it. The mistake overlay was stuck because a per-note heatmap turned out harder than expected. The team cut it down to highlighting the bars with the most errors, marked the full heatmap as a nice-to-have, and shipped all four scopes in week 6. The bet’s target is the company’s key result, D30 retention from 9% to 11%, and an A/B test running from the first day of release measures whether Practice Mode moves it.</p>
       </div>
     </div>
   </section>
@@ -324,13 +315,12 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Shape a pitch of your own</h2>
-      <p class="chapter-dek">Write the five parts, then review it before the betting table</p>
     </header>
 
     <div class="tool" data-tool="pitch-builder">
       <div class="tool-head">
         <h3 class="tool-title">Pitch builder</h3>
-        <p class="tool-hint">Problem, Appetite and Solution are required. Rabbit holes and No-gos are what make a pitch safe to bet on.</p>
+        <p class="tool-hint">Problem, Appetite and Solution are required. Rabbit holes and No-gos are optional here, but the review flags them when they’re missing.</p>
       </div>
 
       <div class="fields" data-cols="1">
@@ -386,8 +376,7 @@
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When Shape Up fits, and when it does not</h2>
-      <p class="chapter-dek">It assumes small, senior teams, people with time to shape, and projects measured in weeks</p>
+      <h2>Shape Up needs small senior teams, time to shape and work sized in weeks</h2>
     </header>
 
     <div class="fit">
@@ -416,8 +405,7 @@
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
-      <h2>Six ways Shape Up goes wrong</h2>
-      <p class="chapter-dek">Most of them quietly bring back the habits the method removes</p>
+      <h2>Six ways old habits creep back into Shape Up</h2>
     </header>
 
     <ol class="pitfalls">
@@ -449,19 +437,18 @@
       <li>
         <h3 class="pitfall-title">Filling cooldown with scheduled work</h3>
         <p>Planned work in cooldown leaves teams no time for bugs or exploration, and leaves the betting table no room to think.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> protect the 2 weeks as unscheduled time. Let people choose what to work on, and leave the betting table time to decide the next bets.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> protect the 2 weeks as unscheduled time. Let people choose what to work on, and give the betting table room to weigh the pitches.</p>
       </li>
     </ol>
   </section>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Eight questions on shaping, betting and building</p>
+      <h2>Test yourself on Shape Up</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="phases">
         <p class="quiz-q">What are the three phases of Shape Up?</p>
         <ul class="quiz-options">
           <li><button type="button">Plan, build, test</button></li>
@@ -469,9 +456,9 @@
           <li><button type="button">Shape, bet, build</button></li>
           <li><button type="button">Refine, plan, review</button></li>
         </ul>
-        <div class="quiz-why"><p>Senior people shape ideas into pitches, the betting table bets on some of them, and a small team builds each bet within a 6-week cycle. Two weeks of cooldown follow.</p></div>
+        <div class="quiz-why"><p>Ideas are shaped into pitches first, a few of those win a cycle, and a team of two or three builds each winner. Discover, define, deliver sounds close, but it has no bet, the moment leadership commits a team’s time and lets the other pitches go.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="concepts">
         <p class="quiz-q">What is an appetite in Shape Up?</p>
         <ul class="quiz-options">
           <li><button type="button">The time the business decides a problem is worth</button></li>
@@ -479,9 +466,9 @@
           <li><button type="button">The number of pitches a team can take on in one cycle</button></li>
           <li><button type="button">The team’s average velocity over past cycles</button></li>
         </ul>
-        <div class="quiz-why"><p>Appetite reverses estimation. Instead of asking how long something will take, you decide how much time it deserves, then shape a solution that fits. It is a business decision, not an engineering guess.</p></div>
+        <div class="quiz-why"><p>It’s a budget the business sets before anyone designs a solution: what the problem deserves, in weeks. The team’s estimate is the tempting answer, but an estimate starts from a scope and works out the time, which is the order Shape Up reverses.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="concepts">
         <p class="quiz-q">A project reaches the end of its cycle without shipping. What happens by default?</p>
         <ul class="quiz-options">
           <li><button type="button">The team gets one more week to finish</button></li>
@@ -489,9 +476,9 @@
           <li><button type="button">It goes to the top of the backlog</button></li>
           <li><button type="button">It stops, and can be reshaped and pitched again</button></li>
         </ul>
-        <div class="quiz-why"><p>The circuit breaker stops unfinished projects at the end of the cycle, which caps the cost of every bet. If the idea is still worth it, someone reshapes it for a future cycle and it starts fresh. Extending is a rare, deliberate exception for work that is all downhill.</p></div>
+        <div class="quiz-why"><p>The end of the cycle is a hard stop, so no bet can cost more than the time it was given. An extra week sounds harmless, but as a default it would stretch every appetite; extending is a rare call for work that’s all downhill.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="concepts">
         <p class="quiz-q">On a hill chart, a scope has sat low on the left slope for 2 weeks. What does that tell you?</p>
         <ul class="quiz-options">
           <li><button type="button">The team is working steadily through known tasks</button></li>
@@ -499,9 +486,9 @@
           <li><button type="button">The scope is finished and waiting for review</button></li>
           <li><button type="button">The scope was cut during scope hammering</button></li>
         </ul>
-        <div class="quiz-why"><p>The left slope is for figuring out how to do the work; the right slope is for doing it. A dot that stays uphill shows a problem the team has not yet solved, which is the real risk to the cycle and a reason to talk.</p></div>
+        <div class="quiz-why"><p>Sitting low on the left means the team still hasn’t worked out how to build that scope, and 2 weeks without movement means it’s stuck. Steady work through known tasks happens on the right slope, after the top.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="phases">
         <p class="quiz-q">Why does Shape Up have no central backlog?</p>
         <ul class="quiz-options">
           <li><button type="button">Leadership keeps a private backlog and shares it only at the betting table</button></li>
@@ -509,9 +496,9 @@
           <li><button type="button">Old ideas pile up and need upkeep, and ideas that matter come back</button></li>
           <li><button type="button">Cooldown is long enough to clear every leftover idea, so none pile up</button></li>
         </ul>
-        <div class="quiz-why"><p>Pitches that are not picked are let go rather than stored. Anyone can keep their own notes and re-pitch an idea later. Each betting table starts from what matters now, and nobody spends time grooming a list of stale items.</p></div>
+        <div class="quiz-why"><p>A stored list of old ideas needs grooming and turns into a debt, while an idea that matters comes back to the table on its own. Leadership keeps no private list either; only individuals keep notes, and they re-pitch from them.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">Which statement describes Shape Up’s core tradeoff?</p>
         <ul class="quiz-options">
           <li><button type="button">Fixed time, with scope that flexes inside the pitch’s boundaries</button></li>
@@ -519,9 +506,9 @@
           <li><button type="button">Flexible time, with scope fixed by the pitch</button></li>
           <li><button type="button">Fixed scope, with the team estimating the time</button></li>
         </ul>
-        <div class="quiz-why"><p>The appetite fixes the time. The pitch sets the boundaries, and inside them the team hammers scope, cutting nice-to-haves to protect the core. Quality is not what gives way.</p></div>
+        <div class="quiz-why"><p>The appetite holds the time steady, and the team trims scope inside the pitch’s boundaries until the work fits. Fixed scope with quality as the variable is the common misreading: Shape Up trims features and leaves testing alone.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="concepts">
         <p class="quiz-q">What does a breadboard show?</p>
         <ul class="quiz-options">
           <li><button type="button">The layout of each screen, down to the pixel</button></li>
@@ -529,9 +516,9 @@
           <li><button type="button">How long each part of the work will take</button></li>
           <li><button type="button">Places, the affordances on them, and where each one leads</button></li>
         </ul>
-        <div class="quiz-why"><p>A breadboard uses words, not pictures: places such as screens, the things a user can act on there, and lines showing where each action goes. It settles the flow without designing the interface.</p></div>
+        <div class="quiz-why"><p>It’s a sketch in words: screens and dialogs as places, the buttons and fields on each, and lines for where they go. It says nothing about layout or pixels, which the building team decides.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="phases">
         <p class="quiz-q">At week 4 a team sees it cannot finish everything in the pitch. What should it cut first?</p>
         <ul class="quiz-options">
           <li><button type="button">Testing, so the core feature still ships on time</button></li>
@@ -539,7 +526,7 @@
           <li><button type="button">The hardest must-have, to save the most time</button></li>
           <li><button type="button">Nothing: it asks the betting table for 2 more weeks</button></li>
         </ul>
-        <div class="quiz-why"><p>Scope hammering cuts nice-to-haves so the must-haves ship within the cycle. Teams compare against the baseline, what users have today, rather than an ideal version. Testing and quality are not what gets cut, and the cycle does not get longer.</p></div>
+        <div class="quiz-why"><p>Nice-to-haves go first, weighed against what users can do today. Skipping tests looks like a shortcut, but it ships a worse product on time, a trade Shape Up rules out. Asking for 2 more weeks fails too, because the circuit breaker ends any project that runs past its cycle.</p></div>
       </li>
     </ol>
   </section>

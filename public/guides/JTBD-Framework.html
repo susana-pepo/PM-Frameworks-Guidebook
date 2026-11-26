@@ -1,7 +1,7 @@
 <article class="guide" data-guide="jtbd">
 
   <header class="guide-intro">
-    <p class="lede">Jobs to Be Done looks at a product through the progress its customers are trying to make in a particular situation. It shows you what people are really hiring your product for, and what else they could hire instead.</p>
+    <p class="lede">Jobs to Be Done treats a purchase as a hire: people bring in a product to make progress in a particular situation, and fire it when something else serves them better. Your real competition is everything else they could hire for that job, including doing nothing.</p>
 
     <figure class="figure" data-hero>
       <ol class="jt-story" aria-label="The three parts of a job story">
@@ -9,23 +9,22 @@
         <li data-series="2"><span class="jt-phrase">I want to…</span><span class="jt-part">Motivation</span><span class="jt-note">The progress they are trying to make, with no solution in it</span></li>
         <li data-series="3"><span class="jt-phrase">so I can…</span><span class="jt-part">Outcome</span><span class="jt-note">The end state they are after, whether functional, emotional or social</span></li>
       </ol>
-      <figcaption>Read in order, the three parts make one sentence with no product in it</figcaption>
+      <figcaption>The colored words open each clause of a job story; read in order, the three clauses make one sentence</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>People hire a product to make progress in a particular situation, and fire it when something else serves them better. Write the job as a story (When I…, I want to…, so I can…) with no product in it, and find the real job by interviewing people who recently switched. The job shows you who you actually compete with and what is worth building.</p>
+      <p>Keep every product and feature out of the job story. A quick test: if the sentence would have made sense decades ago, it describes a real job. To find that job, interview 8–12 people who switched recently and listen for the four forces, since people switch only when frustration with the old way (Push) and the draw of the new one (Pull) outweigh their worries (Anxiety) and their comfort with the present (Habit).</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
       <h2>People hire products to make progress</h2>
-      <p class="chapter-dek">Start from the progress the customer wants, not from the product</p>
     </header>
 
-    <p>When someone buys a product, they are hiring it to get a job done in a particular situation. When something does that job better, they fire your product and hire the other thing. The useful question changes from “what features should we add?” to <strong>“what job is the user hiring this product to do?”</strong></p>
-    <p>The idea has an old shorthand, usually credited to the marketing professor Theodore Levitt, who in turn credited Leo McGinneva: people don’t want a quarter-inch drill, they want a quarter-inch hole. The drill is hired for the hole. If something else made the hole more easily, people would fire the drill and switch to it.</p>
+    <p>For a product team, the useful question changes from “what features should we add?” to <strong>“what job is the user hiring this product to do?”</strong></p>
+    <p>The idea has an old shorthand, usually credited to the marketing professor Theodore Levitt, who in turn credited Leo McGinneva: people don’t want a quarter-inch drill, they want a quarter-inch hole. The drill is hired for the hole, and if something else made the hole more easily, people would fire the drill and switch. Your product is in the same position: users want the progress, and you’re only the best candidate they’ve found so far.</p>
 
     <div class="contrast">
       <div class="contrast-col" data-tone="weak">
@@ -51,45 +50,36 @@
     <p>Seen that way, the milkshake’s competitors were <strong>bananas, bagels, boredom and Snickers bars</strong>. Once you see the job, you see the real competition, and it is often not who you think.</p>
 
     <h3>Three dimensions of every job</h3>
-    <p>A job is rarely only a task. People also want to feel a certain way and to be seen a certain way while they get it done.</p>
+    <p>A job is rarely only a task. People also want to feel a certain way and to be seen a certain way while they get it done, and those two sides often weigh more in the decision to buy than the task does.</p>
     <div class="cards" data-cols="3">
       <div class="card">
-        <span class="card-key" data-series="4">F</span>
         <h4 class="card-title">Functional</h4>
         <p class="card-q">What practical task needs doing?</p>
         <p>“Get from A to B.” “Learn a song.”</p>
       </div>
       <div class="card">
-        <span class="card-key" data-series="5">E</span>
         <h4 class="card-title">Emotional</h4>
         <p class="card-q">How do they want to feel?</p>
         <p>“Feel confident.” “Reduce anxiety.”</p>
       </div>
       <div class="card">
-        <span class="card-key" data-series="6">S</span>
         <h4 class="card-title">Social</h4>
         <p class="card-q">How do they want to be seen?</p>
         <p>“Look like a good parent.” “Seem professional.”</p>
       </div>
-    </div>
-    <div class="callout callout--tip">
-      <p class="callout-title">Emotional and social jobs often decide the purchase</p>
-      <p>It is easy to stop at the functional job. The emotional and social jobs often weigh more in the decision to buy than the functional one does.</p>
-    </div>
-
-    <div class="callout">
-      <p class="callout-title">Your product is the current best candidate</p>
-      <p>Users don’t want your product. They want the progress it makes possible, and your product is simply the best candidate they have found for the job so far. If something better shows up, they will fire you and hire that instead.</p>
     </div>
   </section>
 
   <section class="chapter" id="story" data-nav="The job story">
     <header class="chapter-head">
       <h2>Write the job as a story</h2>
-      <p class="chapter-dek">Situation, motivation and outcome, with no solution in any of them</p>
     </header>
 
-    <p>A <dfn>job story</dfn> is a one-sentence description of a job in the three parts drawn at the top of this page: “When [situation], I want to [motivation], so I can [expected outcome].” The format came from Paul Adams and the product team at Intercom as an alternative to persona-based user stories, and Alan Klement later developed it further.</p>
+    <p>A <dfn>job story</dfn> fits a job into one sentence: “When [situation], I want to [motivation], so I can [expected outcome].” The opening words of each clause are fixed, and the rest is yours to fill in.</p>
+
+    <div data-hero-ref></div>
+
+    <p>The format came from Paul Adams and the product team at Intercom as an alternative to persona-based user stories, and Alan Klement later developed it further.</p>
 
     <h3>Three job stories</h3>
     <figure class="figure">
@@ -98,36 +88,30 @@
         <li><span class="jt-k" data-series="1">When I</span> decide to learn an instrument as an adult, <span class="jt-k" data-series="2">I want to</span> play recognizable songs quickly, <span class="jt-k" data-series="3">so I can</span> feel a sense of accomplishment and impress my family.</li>
         <li><span class="jt-k" data-series="1">When I</span> arrive in a new city for work, <span class="jt-k" data-series="2">I want to</span> get to my hotel without confusion, <span class="jt-k" data-series="3">so I can</span> feel in control and arrive relaxed before my meeting.</li>
       </ul>
-      <figcaption>The milkshake commute, an adult learner and a business traveler, each written as a job story</figcaption>
+      <figcaption>The milkshake commute, an adult learner and a business traveler</figcaption>
     </figure>
 
     <h3>Four rules for a good job story</h3>
     <ol>
       <li><strong>Solution-free.</strong> No product names, no features, no UI elements.</li>
-      <li><strong>Longer-lived than your product.</strong> The underlying job is stable over long periods; it existed before your product and will exist after it. What changes is the situation people meet it in and the ways they get it done, so revisit your job stories when that context changes (for example once a quarter), not because the job itself has changed.</li>
+      <li><strong>Longer-lived than your product.</strong> The underlying job is stable over long periods; it existed before your product and will exist after it. What changes is the situation people meet it in and the ways they get it done.</li>
       <li><strong>Grounded in a situation.</strong> “When I…” ties the job to a real moment.</li>
       <li><strong>Open to emotional and social outcomes.</strong> “so I can feel confident” is as valid as “so I can save 10 minutes.”</li>
     </ol>
 
-    <div class="callout callout--caution">
-      <p class="callout-title">A feature dressed as a job</p>
-      <p>A common mistake is writing “When I open the app, I want to see a dashboard, so I can track my progress.” That describes a feature. The job underneath it might be: “When I’m trying to build a new habit, I want to see evidence that I’m improving, so I can stay motivated.”</p>
-    </div>
-
     <h3>Job stories and job statements</h3>
-    <p>You will also meet the <dfn>job statement</dfn> from Tony Ulwick’s Outcome-Driven Innovation. It has a different shape: a verb, an object and a contextual clarifier, such as “listen to music while commuting” or “get to a hotel in an unfamiliar city,” with no When, I want to or so I can. A job story and a job statement can describe the same job; the statement is terser and suits quantitative research, while the story keeps the situation and the feeling. The two names are not interchangeable, and this guide uses job stories throughout.</p>
+    <p>You will also meet the <dfn>job statement</dfn> from Tony Ulwick’s Outcome-Driven Innovation. It has a different shape: a verb, an object and a contextual clarifier, such as “listen to music while commuting” or “get to a hotel in an unfamiliar city,” with no When, I want to or so I can. A job story and a job statement can describe the same job; the statement is terser and suits quantitative research, while the story keeps the situation and the feeling. The two names aren’t interchangeable. The examples and the builder here use job stories.</p>
   </section>
 
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Six products and the jobs behind them</h2>
-      <p class="chapter-dek">What a team might assume, the job underneath, and the competition it reveals</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
       <h3>Product thinking compared with jobs thinking</h3>
-      <p>The first card is Larkwell, a fictional piano-learning app for adults. The other five are illustrative job stories for familiar products, not findings from each company’s research. Each card starts with the assumption product thinking tends to make.</p>
+      <p>The first card is Larkwell, a fictional piano-learning app for adults (figures are illustrative). The other five are familiar products, and their job stories are illustrative too, not taken from each company’s research. Each card starts with the assumption product thinking tends to make, then gives the job and the other things competing for it.</p>
       <div class="cards" data-cols="2">
         <div class="card">
           <span class="card-key">Music learning</span>
@@ -174,7 +158,7 @@
       </div>
       <div class="example-reading">
         <h4>The competition is wider than the category</h4>
-        <p>In every example, the real competition is not what you would expect from the product category. Larkwell competes with other piano apps, and also with whatever else fills 15 free minutes. Starbucks competes with other coffee shops, and also with anything else that gives a person a mental reset.</p>
+        <p>Larkwell competes with other piano apps, and also with whatever else fills 15 free minutes. Starbucks is up against a walk or a nap as much as the café across the street.</p>
         <p>The assumptions describe the product; the job stories describe the person, which is where new ideas and real competitors come from.</p>
       </div>
     </div>
@@ -183,7 +167,6 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Write a job story of your own</h2>
-      <p class="chapter-dek">Fill in the three parts and check the result against the rules</p>
     </header>
 
     <div class="tool" data-tool="job-story-builder">
@@ -200,7 +183,7 @@
         <div class="field">
           <label for="jt-want"><span class="key-dot" data-series="2"></span>I want to… (motivation)</label>
           <input id="jt-want" type="text" autocomplete="off" placeholder="e.g. put a decent meal on the table in 20 minutes" aria-describedby="jt-want-help">
-          <p class="field-help" id="jt-want-help">The progress, with no product or feature in it</p>
+          <p class="field-help" id="jt-want-help">The progress they are trying to make</p>
         </div>
         <div class="field">
           <label for="jt-so"><span class="key-dot" data-series="3"></span>so I can… (outcome)</label>
@@ -242,8 +225,7 @@
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When Jobs to Be Done fits, and when it does not</h2>
-      <p class="chapter-dek">Reach for it when you are discovering, not when you are optimizing</p>
+      <h2>Jobs to Be Done is a discovery tool</h2>
     </header>
 
     <div class="fit">
@@ -280,7 +262,7 @@
     <ol class="pitfalls">
       <li>
         <h3 class="pitfall-title">Writing solutions instead of jobs</h3>
-        <p>“When I open the app, I want to see my dashboard” is a feature request phrased as a job. The job exists independently of your product.</p>
+        <p>“When I open the app, I want to see my dashboard, so I can track my progress” is a feature request phrased as a job. The job underneath it might be “When I’m trying to build a new habit, I want to see evidence that I’m improving, so I can stay motivated,” which exists whether or not your app does.</p>
         <p class="pitfall-fix"><strong>Fix:</strong> remove all product and feature language, then test the job story: would it have made sense decades ago? If so, it describes a real job.</p>
       </li>
       <li>
@@ -305,7 +287,7 @@
       </li>
       <li>
         <h3 class="pitfall-title">Treating JTBD as a one-time exercise</h3>
-        <p>One session, one poster, then nothing. The underlying job is stable over long periods, but the situations people meet it in, the alternatives and how well you serve it keep moving.</p>
+        <p>One session, one poster, then nothing. The job itself holds steady for years, while the situations people meet it in, their alternatives and how well you serve it keep shifting.</p>
         <p class="pitfall-fix"><strong>Fix:</strong> revisit your job stories when the context changes (for example once a quarter) and use them as a lens in every product review. Has the situation changed? Have the alternatives changed? Are we still serving the job well?</p>
       </li>
     </ol>
@@ -320,7 +302,7 @@
     <p>The <dfn>switch interview</dfn>, developed by Bob Moesta and Chris Spiek, is a core JTBD research technique. You talk to people who recently switched, either to your product or away from it, and rebuild the timeline of their decision step by step: what pushed them away from the old solution, what pulled them toward the new one, and what anxieties and habits almost stopped them.</p>
 
     <h3>Four forces decide whether people switch</h3>
-    <p>Moesta and Spiek also described the forces of progress, and the interview is built to listen for them. Two forces move people toward a new solution and two hold them where they are; every decision to switch, whether to your product or away from it, comes down to these four.</p>
+    <p>Moesta and Spiek also described the forces of progress, and the interview is built to listen for them. Every decision to switch, whether to your product or away from it, is a contest between these four.</p>
 
     <figure class="figure">
       <div class="jt-forces">
@@ -353,7 +335,7 @@
           </div>
         </div>
       </div>
-      <figcaption>Push and Pull work for a switch; Anxiety and Habit work against it</figcaption>
+      <figcaption>Each force has a short definition and a line you might hear from someone in an interview</figcaption>
     </figure>
 
     <p class="formula" role="img" aria-label="A switch happens when push plus pull is greater than anxiety plus habit">
@@ -425,101 +407,100 @@
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Ten questions on jobs, job stories, the forces and switch interviews</p>
+      <h2>Test yourself on JTBD</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="understand">
         <p class="quiz-q">“People don’t want a quarter-inch drill. They want a…”</p>
         <ul class="quiz-options">
           <li><button type="button">Drill with a stronger motor</button></li>
           <li><button type="button">Quarter-inch hole</button></li>
           <li><button type="button">Cheaper drill</button></li>
         </ul>
-        <div class="quiz-why"><p>The drill is hired to do a job: make a hole. If something else made the hole more easily, people would switch to it. A stronger or cheaper drill is still the same solution to the same job.</p></div>
+        <div class="quiz-why"><p>The hole is the outcome the buyer is after, and the drill is only today’s way of getting it. A stronger or cheaper drill is tempting, but it improves the current solution without telling you anything about the job.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="story">
         <p class="quiz-q">Which of these is a well-formed job story?</p>
         <ul class="quiz-options">
           <li><button type="button">When I open the recipe app, I want a faster search bar with filters and tags, so I can find any saved recipe in fewer taps</button></li>
           <li><button type="button">Busy millennials who cook at home want an intuitive recipe app with a modern design and fast search</button></li>
           <li><button type="button">When I’m looking for a specific recipe, I want to find it quickly, so I can start cooking before I lose motivation</button></li>
         </ul>
-        <div class="quiz-why"><p>A good job story is solution-free, grounded in a situation and ends in an outcome. The search-bar story describes a feature, and the millennials sentence describes a persona.</p></div>
+        <div class="quiz-why"><p>The story about finding a specific recipe names a moment, the progress wanted and why it matters, and none of it depends on an app. The search-bar story has the right shape, but filters and tags are features, so it describes a solution.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">What are the three dimensions of a job?</p>
         <ul class="quiz-options">
           <li><button type="button">Functional, emotional, social</button></li>
           <li><button type="button">Speed, quality, cost and convenience</button></li>
           <li><button type="button">User, business, technical</button></li>
         </ul>
-        <div class="quiz-why"><p>Every job has a functional task (get from A to B), an emotional side (feel safe) and a social side (look like I have my life together). Speed, quality, cost and convenience describe a solution, not the job.</p></div>
+        <div class="quiz-why"><p>A job is the practical task plus how people want to feel and be seen while doing it. Speed, quality, cost and convenience sound like needs, but they are ways to judge a solution.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">In the milkshake study, what was the real competition?</p>
         <ul class="quiz-options">
           <li><button type="button">Other milkshake brands in the same stores</button></li>
           <li><button type="button">Ice-cream and smoothie shops in the same neighborhood</button></li>
           <li><button type="button">Bananas, bagels, boredom and Snickers bars</button></li>
         </ul>
-        <div class="quiz-why"><p>The job was to make a boring commute less boring and stay full until lunch. Anything that does that job competes for it, whatever its product category.</p></div>
+        <div class="quiz-why"><p>The commuters wanted something filling and slow to finish for a dull drive, and a banana or a bagel can do that too. Other milkshake brands are the obvious answer, but they are only the rivals you would list by product category.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="session">
         <p class="quiz-q">Which four forces decide whether someone switches?</p>
         <ul class="quiz-options">
           <li><button type="button">Push, pull, anxiety, habit</button></li>
           <li><button type="button">Awareness, interest, desire, action</button></li>
           <li><button type="button">Need, search, compare, buy</button></li>
         </ul>
-        <div class="quiz-why"><p>Push and Pull drive change; Anxiety and Habit resist it. For someone to switch, Push and Pull together must outweigh Anxiety and Habit. Awareness, interest, desire and action is a marketing funnel, not the forces of progress.</p></div>
+        <div class="quiz-why"><p>Push and Pull draw people toward a new way of doing things, while Anxiety and Habit hold them back. Awareness, interest, desire and action also describes a decision, but it is a marketing funnel for moving people toward a purchase.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
-        <p class="quiz-q">In switch interviews, several new subscribers to Larkwell, the fictional piano-learning app from the example, say they had been learning from free video tutorials and gave up because they could never tell whether they were playing the right notes. Which force is that?</p>
+      <li class="quiz-item" data-answer="1" data-section="session">
+        <p class="quiz-q">In switch interviews, several new Larkwell subscribers say they had been learning from free video tutorials and gave up because they could never tell whether they were playing the right notes. Which force is that?</p>
         <ul class="quiz-options">
           <li><button type="button">Pull of the new solution</button></li>
           <li><button type="button">Push of the current situation</button></li>
           <li><button type="button">Anxiety about the new solution</button></li>
           <li><button type="button">Habit of the present</button></li>
         </ul>
-        <div class="quiz-why"><p>The frustration comes from the old way of learning, so it pushes people away from it. Pull would be the attraction of the new app itself, such as hearing feedback on every note. Anxiety and habit are the forces that hold people back from switching.</p></div>
+        <div class="quiz-why"><p>The complaint is about the free tutorials they were leaving, so it pushes them away from the old way. It can sound like pull because Larkwell fixes the problem, but pull is something attractive about Larkwell itself, such as feedback on every note.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="session">
         <p class="quiz-q">Your team wants to understand why subscribers cancel in their first months. Whom should you recruit for switch interviews first?</p>
         <ul class="quiz-options">
           <li><button type="button">Long-time subscribers who use the product every week</button></li>
           <li><button type="button">People who canceled within the last few months</button></li>
           <li><button type="button">People who match your target persona but have never tried the product</button></li>
         </ul>
-        <div class="quiz-why"><p>A switch interview reconstructs a real decision, so you need people who made the one you care about, and recently enough to remember the specific moments. Loyal subscribers have not made that decision, and people who never tried the product can only speculate about it.</p></div>
+        <div class="quiz-why"><p>Recent cancelers made the very decision you want to understand and can still recall the moments around it. Loyal weekly users are easier to reach, but they have never decided to leave, so they can only guess why others do.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="session">
         <p class="quiz-q">Halfway through a switch interview, the person says, “I switched because it was just better.” What is the most useful next question?</p>
         <ul class="quiz-options">
           <li><button type="button">“Which of the new product’s features did you like most?”</button></li>
           <li><button type="button">“On a scale of 1 to 10, how much better is the new one?”</button></li>
           <li><button type="button">“Where were you when you first thought about switching?”</button></li>
         </ul>
-        <div class="quiz-why"><p>“It was just better” is a rationalized summary. Asking about a specific moment brings back the situation, and with it the push behind the switch. A feature question steers the person toward the solution, and a rating adds a number without explaining the decision.</p></div>
+        <div class="quiz-why"><p>Asking where they were sends the person back to the real situation, which is where the push lives. A question about favorite features feels natural, but it steers the talk toward the solution and away from the decision.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="session">
         <p class="quiz-q">How many switch interviews is a common guideline for a full JTBD study?</p>
         <ul class="quiz-options">
           <li><button type="button">2–3</button></li>
           <li><button type="button">8–12</button></li>
           <li><button type="button">30 or more</button></li>
         </ul>
-        <div class="quiz-why"><p>8–12 interviews is a common practitioner guideline for a full study, and 5–6 conversations can give a quick first read. Two or three is too few to see which forces repeat, and 30 or more is survey territory; interviews are about depth, not volume.</p></div>
+        <div class="quiz-why"><p>8–12 conversations usually show which forces keep coming back, and a quick read can start with 5–6. Thirty or more sounds more rigorous, but these interviews trade volume for depth, and that many is survey territory.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="when">
         <p class="quiz-q">JTBD has found the job, and the team has a list of features that might serve it. What can the Kano model add?</p>
         <ul class="quiz-options">
           <li><button type="button">A score for each feature, so the list can be ranked from first to last</button></li>
           <li><button type="button">A classification of each feature by how it affects satisfaction</button></li>
           <li><button type="button">A release plan that covers every step of the job from end to end</button></li>
         </ul>
-        <div class="quiz-why"><p>The Kano model sorts features by how their presence or absence affects satisfaction, for example into must-haves, performance features and delighters. It can classify the features that serve a job, but it does not rank them; to rank them, score them with RICE or ICE. A release plan that covers the whole journey is what a story map produces.</p></div>
+        <div class="quiz-why"><p>Kano sorts a feature into a category such as Must-have, Performance or Delighter, which is a classification. Ranking the list from first to last is the tempting answer, but that takes a scoring method such as RICE or ICE. A release plan covering the whole job is what a story map produces.</p></div>
       </li>
     </ol>
   </section>

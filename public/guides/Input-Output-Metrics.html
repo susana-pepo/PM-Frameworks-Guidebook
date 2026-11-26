@@ -1,7 +1,7 @@
 <article class="guide" data-guide="input-output">
 
   <header class="guide-intro">
-    <p class="lede">Input and Output Metrics separate the numbers a team can move directly from the business results it is trying to achieve. Use the split to give every team a lever it controls and a visible line from that lever to the result.</p>
+    <p class="lede">The model sorts a company’s numbers into two kinds. <dfn>Output metrics</dfn> are the results the business wants, such as revenue or retention. <dfn>Input metrics</dfn> are the controllable, customer-facing measures a team’s own work moves directly, and that push the outputs up when they rise.</p>
 
     <figure class="figure" data-hero>
       <div class="io-flow">
@@ -19,23 +19,22 @@
           <p class="io-node io-node--out" data-series="4">Weekly Active Learners</p>
         </div>
       </div>
-      <figcaption>Three input metrics at Larkwell, a fictional piano-learning app, and the output they drive: teams spend their effort on the inputs and measure success by the output</figcaption>
+      <figcaption>Follow the arrow from inputs to output. The three inputs belong to a piano-learning app’s content and onboarding teams and the growth team’s lifecycle work, in that order, and all of them feed the one output.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Output metrics are the results you want, such as revenue or retention. Input metrics are the controllable, customer-facing measures a team can move directly and that, when they rise, push the outputs up. Give each team an input to work on, pair any input that can be gamed with a counter-metric, and judge progress by the output.</p>
+      <p>Give every input one team that owns it, usually three to five inputs per output, and check that each is controllable, predictive and fast enough to move within a week. Pair any input that can be gamed with a <dfn>counter-metric</dfn>, a number that gets worse when the input is pushed too far. Review the inputs weekly and judge progress by the output.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
       <h2>Inputs you control, outputs you measure</h2>
-      <p class="chapter-dek">Retention is a result, so no team can work on it directly</p>
     </header>
 
-    <p>Larkwell, a fictional piano-learning app, has a company key result that reads “D30 retention of new accounts from 9% to 11%.” It is a clear goal, but it does not tell any team what to work on this week. Retention is an <strong>output</strong>: no team can change it directly, only the things that influence it.</p>
-    <p>The model separates what a team controls (inputs) from what it is trying to achieve (outputs). When the link between the two is written down, each team knows which number its daily work should move. Separating leading measures from lagging ones is an old management idea: Andy Grove wrote about leading indicators, and about pairing each one with a guard against its side effects, in High Output Management (1983). The version product teams usually cite comes from Amazon, whose leaders review a set of controllable input metrics every week in the Weekly Business Review (WBR), next to the financial results they lead to. Colin Bryar and Bill Carr describe the practice in their book Working Backwards (2021).</p>
+    <p>Larkwell, a fictional piano-learning app for adults (figures are illustrative), has a company key result that reads “D30 retention of new accounts from 9% to 11%.” It’s a clear goal, yet it doesn’t tell any team what to work on this week. Retention is an <strong>output</strong>: no team can change it directly, only the things that influence it.</p>
+    <p>Splitting leading measures from lagging ones is an old management idea. Andy Grove wrote about leading indicators, and about pairing each one with a guard against its side effects, in High Output Management (1983). The version product teams usually cite comes from Amazon, whose leaders review a set of controllable input metrics every week in the Weekly Business Review (WBR), next to the financial results they lead to. Colin Bryar and Bill Carr describe the practice in Working Backwards (2021).</p>
 
     <div class="contrast">
       <div class="contrast-col">
@@ -44,11 +43,11 @@
       </div>
       <div class="contrast-col">
         <p class="contrast-label">Output metrics: they follow the inputs</p>
-        <p>The business results you <strong>want to achieve</strong>: retention, revenue, NPS, growth rate. Many inputs and outside factors shape them, so no team can change them directly. They lag the inputs that drive them.</p>
+        <p>The business results you <strong>want to achieve</strong>: retention, revenue, NPS, growth rate. Many inputs and outside factors shape them, so they move weeks or months after the inputs that drive them.</p>
       </div>
     </div>
 
-    <p>No one can “do retention.” A team can only do things that cause it, and the input metric is how it checks that the work is landing. Retention stays an output even inside a metric tree: it can sit between the inputs and the North Star Metric as an intermediate output, but no team owns it as an input.</p>
+    <p>No one can “do retention.” A team can only do the things that cause it, and its input metric is how it checks that the work is landing.</p>
 
     <h3>Activities are not input metrics</h3>
     <p>Redesigning onboarding is something a team does. Median time to first note is the number that work should move. In the same way, publishing 8 new beginner song lessons is an activity; quality-reviewed beginner lessons available is the input metric it moves. Track the number, and treat each project as one way of moving it.</p>
@@ -67,7 +66,6 @@
   <section class="chapter" id="model" data-nav="The model">
     <header class="chapter-head">
       <h2>Three layers, from team work to business results</h2>
-      <p class="chapter-dek">Each layer drives the next one, and each has its own owner</p>
     </header>
 
     <figure class="figure">
@@ -88,10 +86,10 @@
           <p class="io-layer-owner">Owner: the CEO and leadership team</p>
         </li>
       </ol>
-      <figcaption>Team inputs drive the product output, and the product output drives the business outcome</figcaption>
+      <figcaption>Read top to bottom: each layer drives the one under it, and the last line of each box names who owns that layer</figcaption>
     </figure>
 
-    <p>Retention, where a team tracks it, sits between the first two layers as an intermediate output: the inputs move it, and it moves the North Star Metric.</p>
+    <p>Retention, where a company tracks it, sits between the first two layers as an intermediate output. The inputs move it and it moves the North Star Metric, but it stays an output: no team owns it as its input.</p>
 
     <h3>Three tests for an input metric</h3>
     <div class="cards" data-cols="3">
@@ -105,7 +103,7 @@
         <span class="card-key">2</span>
         <h4 class="card-title">Predictive</h4>
         <p class="card-q">When it rises, does the output follow?</p>
-        <p>The output should follow, with some lag. Validate the link with data: more push notifications do not always mean more retention.</p>
+        <p>Expect some lag, and check the link with data before you rely on it: more push notifications don’t always mean more retention.</p>
       </div>
       <div class="card">
         <span class="card-key">3</span>
@@ -117,19 +115,18 @@
 
     <div class="callout callout--tip">
       <p class="callout-title">Inputs get sharper over time</p>
-      <p>In Bryar and Carr’s account, Amazon’s retail team first tracked how many new product pages it created, then how often those pages were viewed, and finally the share of views where the item was in stock and ready to ship. Each change moved the input closer to what customers experienced. Larkwell’s content team makes the same move: rather than count the lessons it publishes, it tracks the quality-reviewed beginner lessons available to learners. Expect to revise your inputs once you see how well they predict the output.</p>
+      <p>In Bryar and Carr’s account, Amazon’s retail team first tracked how many new product pages it created, then how often those pages were viewed, and finally the share of views where the item was in stock and ready to ship. Each change moved the input closer to what customers experienced. Expect to revise your own inputs once you see how well they predict the output.</p>
     </div>
   </section>
 
-  <section class="chapter" id="counter" data-nav="Counter-metrics and trees">
+  <section class="chapter" id="counter" data-nav="Counters and trees">
     <header class="chapter-head">
       <h2>Guard each input, then trace it to revenue</h2>
-      <p class="chapter-dek">A counter-metric catches over-optimization; a metric tree shows which lever moves which result</p>
     </header>
 
     <h3>Counter-metrics catch over-optimization</h3>
-    <p>Many inputs can be gamed or pushed too far. If the input is the day-3 reminder return rate, a team can lift it by sending reminders every few hours: good for the input, bad for the people receiving them. A <dfn>counter-metric</dfn> is a metric that gets worse when that happens. Pair any input that can be gamed with one, track it next to the input, and read the two together.</p>
-    <p>A counter-metric must pull against the metric it guards, not move with it. Subscriber churn is not a counter-metric for Weekly Active Learners: it tends to rise when the North Star Metric falls, so it moves with it and cannot warn that the North Star Metric is being pushed in a harmful way.</p>
+    <p>Many inputs can be gamed or pushed too far. If the input is the day-3 reminder return rate, a team can lift it by sending reminders every few hours: good for the input, bad for the people receiving them. The counter-metric is the number that gets worse when that happens, here the notification opt-out rate. Any input that can be gamed needs one, tracked next to it so the two are always read together.</p>
+    <p>A counter-metric has to pull against the metric it guards. Subscriber churn fails that test for Weekly Active Learners. Churn worsens when active learners fall and improves when they rise, so it reports the same health from the other side and can’t warn you that the North Star Metric is being pushed up in a harmful way.</p>
 
     <div class="table-wrap">
       <table class="table table--stack">
@@ -156,7 +153,7 @@
     </div>
 
     <h3>A metric tree breaks an output into its levers</h3>
-    <p>A metric tree decomposes an output into the inputs that produce it. Each branch is a different lever, and often a different team’s focus. Monthly recurring revenue, for a subscription product, splits into how many people pay and how much each of them pays. At Larkwell that is 60,000 paying subscribers × $9.00 ARPPU = $540,000 of MRR.</p>
+    <p>Each branch of the tree is a different lever, and often a different team’s focus. For a subscription product, monthly recurring revenue splits into how many people pay and how much each of them pays. At Larkwell that is 60,000 paying subscribers × $9.00 ARPPU = $540,000 of MRR.</p>
 
     <figure class="figure">
       <div class="io-tree">
@@ -181,11 +178,11 @@
           </div>
         </div>
       </div>
-      <figcaption>MRR equals paying subscribers × ARPPU. Each branch is a lever on MRR; some, such as retained subscribers, are outputs that teams move through their own input metrics.</figcaption>
+      <figcaption>Read from the top down: MRR splits into two branches that multiply, and the boxes under each branch drive it. Some of those, such as retained subscribers, are outputs in turn, moved through their own input metrics.</figcaption>
     </figure>
 
     <h3>Decompose with arithmetic</h3>
-    <p>Any output can be broken into factors with a formula. Each factor is a branch that a team can work on through its own input metrics.</p>
+    <p>Writing the tree as a formula checks that the branches really multiply back to the output, and it shows which factor a single team could take on.</p>
     <p class="formula" role="img" aria-label="Monthly recurring revenue equals monthly active users times paid share times average revenue per paying user">
       <var>MAU</var>
       <span class="formula-term"><span class="op">×</span><var>Paid share</var></span>
@@ -203,16 +200,15 @@
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Building Larkwell’s metric stack, from MRR to each team’s lever</h2>
-      <p class="chapter-dek">Two outputs and four team inputs, each with a counter-metric</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
       <h3>One owner and one counter-metric for every metric</h3>
-      <p>Larkwell, a fictional piano-learning app for adults, has 400,000 monthly active users and 60,000 paying subscribers; all its figures are illustrative. Its North Star Metric is Weekly Active Learners, learners who complete at least 3 lessons in a calendar week. Four inputs sit below it, each with an owner.</p>
+      <p>Larkwell has 400,000 monthly active users and 60,000 paying subscribers. Its North Star Metric is Weekly Active Learners, learners who complete at least 3 lessons in a calendar week. Four inputs sit below it, each with an owner.</p>
       <div class="table-wrap">
         <table class="table">
-          <caption>Larkwell’s metric stack, with an owner and a counter-metric for each metric</caption>
+          <caption>Larkwell’s metric stack: two outputs and the four team inputs that drive them</caption>
           <thead>
             <tr>
               <th scope="col">Metric</th>
@@ -233,7 +229,7 @@
         </table>
       </div>
       <div class="example-reading">
-        <h4>How the stack connects</h4>
+        <h4>Every input has an owner and a line to MRR</h4>
         <ol>
           <li>The growth team brings in new learners and gets them to complete a first song lesson within 24 hours (about 8,300 a week).</li>
           <li>The onboarding team cuts the time to first note, so the first session feels like progress.</li>
@@ -241,9 +237,9 @@
           <li>The growth team’s lifecycle work brings back learners who lapse, measured by the day-3 reminder return rate.</li>
           <li>Together, these lift retention, an intermediate output no team owns, and Weekly Active Learners, which drives MRR.</li>
         </ol>
-        <p>Each team has one number it can move this week and a clear line from that number to the business result. The counters pull against what they guard: Weekly Active Learners is read against the average lesson rating, which falls if the team splits lessons into shorter, thinner ones to reach three a week, and MRR against the refund rate.</p>
-        <h4>What the counter-metric caught</h4>
-        <p>This quarter the content team publishes 8 new beginner song lessons, taking quality-reviewed beginner lessons available from 120 to 128, so its input rises. The completion rate of new lessons, its counter-metric, drops. The likely cause is that the new lessons are too hard. Without the counter, the team would celebrate the input and miss that it was hurting the output.</p>
+        <p>Each team’s number traces up to MRR through the North Star, and the two outputs have counters of their own. Weekly Active Learners is read against the average lesson rating, which would fall if the team split lessons into shorter, thinner ones to reach three a week. MRR is read against the refund rate.</p>
+        <h4>Lessons available rose to 128 while completion of the new ones fell</h4>
+        <p>This quarter the content team publishes 8 new beginner song lessons, taking quality-reviewed beginner lessons available from 120 to 128. The completion rate of new lessons, its counter-metric, drops at the same time. The likely cause is that the new lessons are too hard. Read alone, the input would have looked like a win while it was hurting the output.</p>
       </div>
     </div>
 
@@ -263,7 +259,6 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Map your own metric stack</h2>
-      <p class="chapter-dek">Name the output, add the inputs that drive it and pair each with a counter-metric</p>
     </header>
 
     <div class="tool" data-tool="io-builder">
@@ -331,7 +326,7 @@
         <output class="tool-result io-result" id="io-result" for="io-output"></output>
         <p class="tool-output-note" id="io-note">Name your output, add the inputs with their counter-metrics, then check the stack.</p>
         <ul class="checks" id="io-feedback" aria-label="Notes on your stack" hidden></ul>
-        <p class="io-validate" id="io-validate" hidden><strong>Validation step:</strong> for each input, ask whether doubling it would move the output. If you cannot answer yes with data, run an experiment before you commit a team to it.</p>
+        <p class="io-validate" id="io-validate" hidden><strong>Before you commit a team:</strong> make sure each input is <a href="#model" data-section-link>predictive</a>. If it doubled, would the output move? Answer with data or an experiment.</p>
       </div>
     </div>
 
@@ -343,8 +338,7 @@
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When the model fits, and when it does not</h2>
-      <p class="chapter-dek">It turns a chosen goal into team levers, so it comes after the goal is set</p>
+      <h2>The model turns a goal that is already set into levers for each team</h2>
     </header>
 
     <div class="fit">
@@ -371,13 +365,12 @@
       </div>
     </div>
 
-    <p>In a growth plan, inputs and outputs usually come third, once the North Star Metric is chosen. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together, from diagnosing the funnel to designing loops.</p>
+    <p>In a growth plan, input and output metrics usually come after AARRR, which finds the stage that leaks, and the North Star Framework, which picks the output this model breaks down. They come before <a data-guide-link="growth-loops">Growth Loops</a>, which feeds a loop’s output back in as input so growth compounds. <a data-guide-link="compare-growth">Choosing a growth framework</a> compares all four, from diagnosing the funnel to designing loops.</p>
   </section>
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
       <h2>Six ways a metric stack goes wrong</h2>
-      <p class="chapter-dek">Most failures come from a weak link between an input, its counter and the output</p>
     </header>
 
     <ol class="pitfalls">
@@ -394,34 +387,33 @@
       <li>
         <h3 class="pitfall-title">Choosing inputs the team cannot move</h3>
         <p>An App Store ranking or a market-wide trend responds to too many outside factors. The team cannot tell whether its work made the difference.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> apply the three tests. Keep inputs the team controls, that predict the output and that give a weekly signal.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> run each candidate through the <a href="#model" data-section-link>three tests</a>, and drop any the team can’t move with its own work.</p>
       </li>
       <li>
         <h3 class="pitfall-title">Reading an input without its counter</h3>
-        <p>A team can push an input up in ways that hurt users, such as sending more reminders, and an input on its own always looks like progress when it rises. Larkwell’s content team would have celebrated 8 new lessons while the completion rate of new lessons fell.</p>
+        <p>A team can push an input up in ways that hurt users, such as sending more reminders, and an input on its own always looks like progress when it rises. At Larkwell, 8 new lessons lifted the content team’s input while completion of those lessons fell, and only the counter showed it.</p>
         <p class="pitfall-fix"><strong>Fix:</strong> pair each input that can be gamed with a counter-metric, put the two side by side on the same dashboard and review them together.</p>
       </li>
       <li>
-        <h3 class="pitfall-title">A counter-metric that moves with the input</h3>
-        <p>A metric that rises and falls with the one it guards cannot warn you. Subscriber churn tends to rise when Weekly Active Learners falls, so it says nothing about how the number was reached.</p>
+        <h3 class="pitfall-title">A counter-metric that moves with what it guards</h3>
+        <p>A metric that tracks the same health as the one it guards can’t warn you. Subscriber churn gets worse whenever Weekly Active Learners falls, so it says nothing about how the number was reached.</p>
         <p class="pitfall-fix"><strong>Fix:</strong> pick a metric that gets worse when the input is pushed too far, such as the average lesson rating for Weekly Active Learners.</p>
       </li>
       <li>
         <h3 class="pitfall-title">Reviewing only outputs</h3>
         <p>Weekly reviews of revenue and retention show results too late to act on, and they do not say which lever to pull.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> review controllable inputs every week, as Amazon’s Weekly Business Review does (Bryar and Carr, 2021), and read the outputs next to them as results to explain, not as levers to pull.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> review controllable inputs every week, as Amazon’s Weekly Business Review does (Bryar and Carr, 2021), with the outputs alongside as the results the inputs should explain.</p>
       </li>
     </ol>
   </section>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Seven questions on inputs, outputs, counter-metrics and OKRs</p>
+      <h2>Test yourself on input and output metrics</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">What separates an input metric from an output metric?</p>
         <ul class="quiz-options">
           <li><button type="button">Inputs are reported to teams, outputs to executives</button></li>
@@ -429,18 +421,18 @@
           <li><button type="button">Teams move inputs directly; outputs follow them</button></li>
           <li><button type="button">Inputs are raw counts, outputs are percentages</button></li>
         </ul>
-        <div class="quiz-why"><p>An input is a controllable, customer-facing measure the team’s own work moves, such as median time to first note. An output, such as retention or revenue, results from many inputs and cannot be changed directly. Both can be counts or rates, and both go to teams and executives.</p></div>
+        <div class="quiz-why"><p>The dividing line is control. A team’s own work changes an input such as time to first note, while retention or revenue moves through its inputs and outside factors, never directly. Either kind can be a count or a rate, and executives and teams look at both.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">A team’s only goal is “D30 retention of new accounts from 9% to 11%.” What is missing?</p>
         <ul class="quiz-options">
           <li><button type="button">Inputs the team can move to raise it</button></li>
           <li><button type="button">A stretch target, such as 15% retention</button></li>
           <li><button type="button">A revenue target set for the same quarter</button></li>
         </ul>
-        <div class="quiz-why"><p>Retention is an output: it lags the inputs that drive it. The goal says what should happen but not what the team should work on. Inputs give the team levers and an earlier signal of whether its work is landing. A higher target or a second output would not change that.</p></div>
+        <div class="quiz-why"><p>The goal names a result and gives the team nothing to work on this week, and it shows progress only weeks later. A stretch target of 15% leaves the same gap, because a bigger output is still an output.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="counter">
         <p class="quiz-q">What does a counter-metric do?</p>
         <ul class="quiz-options">
           <li><button type="button">It tracks the inverse of the North Star Metric</button></li>
@@ -448,9 +440,9 @@
           <li><button type="button">It replaces an input that has stopped working</button></li>
           <li><button type="button">It shows when pushing an input starts to do harm</button></li>
         </ul>
-        <div class="quiz-why"><p>A counter-metric is a guardrail that gets worse when an input is pushed too far. A day-3 reminder return rate read without the notification opt-out rate can hide a team sending so many reminders that learners switch notifications off.</p></div>
+        <div class="quiz-why"><p>It is the number that worsens when an input is pushed too hard, like opt-outs climbing as reminders multiply. A mirror of the North Star only restates the target, so it can’t flag harm in how the target was reached.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="model">
         <p class="quiz-q">Which makes the best input metric?</p>
         <ul class="quiz-options">
           <li><button type="button">The one that is easiest to measure and report</button></li>
@@ -458,9 +450,9 @@
           <li><button type="button">The one that grows fastest in absolute terms</button></li>
           <li><button type="button">One that matches the company’s revenue target</button></li>
         </ul>
-        <div class="quiz-why"><p>A good input passes three tests: the team can move it (controllable), the output follows when it rises (predictive), and it gives a weekly or daily signal (timely). Ease of reporting, raw growth and a link to the revenue target say nothing about whether the team can move it.</p></div>
+        <div class="quiz-why"><p>Those three properties make an input worth handing to a team: the team can change it, the output follows, and the signal arrives within days. A metric that is easy to report can still be one no team controls or one the output ignores.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="example">
         <p class="quiz-q">Larkwell’s onboarding team drafts an OKR. Objective: “Median time to first note under 90 seconds.” Key result: “Ship the Sprint 14 onboarding changes.” How should it be rewritten?</p>
         <ul class="quiz-options">
           <li><button type="button">Qualitative objective; time to first note as a key result; Sprint 14 as an initiative</button></li>
@@ -468,9 +460,9 @@
           <li><button type="button">Qualitative objective; shipping Sprint 14 on time as the key result, with no input metric</button></li>
           <li><button type="button">Keep the draft, since a numeric objective and a shipping key result are both measurable</button></li>
         </ul>
-        <div class="quiz-why"><p>An objective is qualitative, such as “make a new learner’s first week feel like progress.” The input metric becomes the key result, median time to first note from 4 minutes to under 90 seconds, with week-1 setup errors as its guardrail. The Sprint 14 changes are the initiative that should move it: shipping them measures the work, not its effect. The North Star Metric is never the objective either; Weekly Active Learners from 40,000 to 50,000 is a company key result.</p></div>
+        <div class="quiz-why"><p>The objective says in words what should change, the input metric measures it, and the Sprint 14 work is how the team gets there, so it belongs among the initiatives. Putting Weekly Active Learners in the objective swaps one number for another, and the North Star belongs in the company’s key results anyway.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="example">
         <p class="quiz-q">Larkwell’s content team publishes 8 new beginner song lessons, so quality-reviewed beginner lessons available rises from 120 to 128, but the completion rate of new lessons drops. What is the most likely reading?</p>
         <ul class="quiz-options">
           <li><button type="button">The completion data must be wrong or delayed</button></li>
@@ -478,9 +470,9 @@
           <li><button type="button">The new lessons are too hard or too long</button></li>
           <li><button type="button">Completion rate does not matter to the content team</button></li>
         </ul>
-        <div class="quiz-why"><p>This is the case counter-metrics exist for. The input looks healthy, but the counter shows the new content is hurting the learning experience. Nothing in the numbers points to bad data, and a larger library does not lower completion by itself. Without the counter, the team would celebrate while learners struggled.</p></div>
+        <div class="quiz-why"><p>When an input rises and its counter falls, the counter is pointing at the work itself: the new lessons are probably harder or longer than learners can finish. Nothing points to bad data, and a bigger library doesn’t push completion down on its own.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="counter">
         <p class="quiz-q">A product manager proposes subscriber churn as the counter-metric for Weekly Active Learners. What is the problem?</p>
         <ul class="quiz-options">
           <li><button type="button">Churn moves with active learners, so it cannot catch gaming</button></li>
@@ -488,7 +480,7 @@
           <li><button type="button">Churn is a business metric, so only the CEO can act on it</button></li>
           <li><button type="button">Only input metrics need counter-metrics, never output metrics</button></li>
         </ul>
-        <div class="quiz-why"><p>A counter-metric must pull against the metric it guards. Churn rises when active learners fall, so it tells the team what the North Star Metric already shows. If the team reached three lessons a week by splitting lessons into thinner ones, churn would not catch it; the average lesson rating would. Churn is an output, and outputs such as the North Star Metric can have counters too. Who can act on churn is beside the point; what matters is whether the metric pulls against the one it guards.</p></div>
+        <div class="quiz-why"><p>Churn and Weekly Active Learners report the same health from two sides, so if the team inflated active learners with thinner lessons, churn would look fine too, while the average lesson rating would drop. Calling churn an input is the tempting slip: it’s an output, and outputs can have counter-metrics as well. Who can act on churn doesn’t decide whether it’s a good counter.</p></div>
       </li>
     </ol>
   </section>

@@ -1,7 +1,7 @@
 <article class="guide" data-guide="north-star">
 
   <header class="guide-intro">
-    <p class="lede">The North Star Framework pairs one metric, the North Star Metric, with 3–5 input metrics that teams can influence directly. The North Star Metric is the single metric that best captures the core value customers get from the product, so it gives every team the same number to aim at.</p>
+    <p class="lede">The North Star Framework gives every team the same number to aim at: one North Star Metric, with 3–5 input metrics underneath it that teams can move directly.</p>
 
     <figure class="figure" data-hero>
       <div class="ns-tree">
@@ -13,32 +13,25 @@
           <li data-series="3"><span class="ns-kind"><span class="key-dot" aria-hidden="true"></span>Frequency</span><span class="ns-kind-q">How often they come back for it</span></li>
           <li data-series="4"><span class="ns-kind"><span class="key-dot" aria-hidden="true"></span>Efficiency</span><span class="ns-kind-q">How quickly they reach it</span></li>
         </ul>
-        <p class="ns-flow">Move the inputs, the North Star Metric moves, and the business follows</p>
       </div>
-      <figcaption>A North Star Metric sits on top of a few input metrics, which usually measure breadth, depth, frequency or efficiency</figcaption>
+      <figcaption>Read from the bottom up: each box is one kind of input metric, and the arrow shows the inputs driving the single metric at the top</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Pick one metric that counts the value customers get from your product within a time window, such as Weekly Active Learners: learners who complete at least 3 lessons in a calendar week. Break it into 3–5 input metrics, each owned by a team. When the inputs improve, the North Star Metric rises, and revenue follows.</p>
+      <p>The <dfn>North Star Metric</dfn> is the one metric that best captures the core value customers get, counted within a time window, such as Weekly Active Learners: learners who complete at least 3 lessons in a calendar week. Revenue and sign-up counts fail that test, because both can rise while customers get nothing more. Each team owns one or two inputs and sets its goals on them; when the inputs rise, the metric follows, and revenue after it. Review the choice every 6–12 months.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
       <h2>One number for the value customers get</h2>
-      <p class="chapter-dek">A North Star Metric, plus the inputs that teams pull to move it</p>
     </header>
 
     <p>Most teams track dozens of metrics: DAU, MAU, revenue, NPS, conversion rate, session time, churn, activation rate. When every number is a priority, teams pull in different directions. Engineering improves page speed, marketing maximizes sign-ups, product chases engagement, and nobody is working toward the same result.</p>
-    <p>The <dfn>North Star Metric</dfn> (NSM) fixes this with <strong>one number that captures the value you deliver to customers</strong>. When it goes up, the business is healthy. When it goes down, you have a problem. Everyone knows it, and every team can say how its work moves it.</p>
+    <p>A North Star Metric (NSM) puts <strong>one number above that list</strong>, the one everyone steers by, the way sailors oriented themselves by one fixed star rather than fifty. When it rises, customers are getting more value and the business is healthy; when it falls, something is wrong. Everyone knows the number, and every team can say how its own work moves it.</p>
 
-    <div class="callout">
-      <p class="callout-title">One fixed point to steer by</p>
-      <p>Sailors did not steer by fifty stars; they needed one fixed point to orient everything else. The NSM is the one point the whole team navigates by.</p>
-    </div>
-
-    <p>Growth advisor Sean Ellis popularized the term, including in Hacking Growth, the 2017 book he wrote with Morgan Brown. Amplitude later turned it into a working method in its <a href="https://amplitude.com/books/north-star">North Star Playbook</a>, written by John Cutler and colleagues, which adds the input metrics, the standard criteria for a good metric and the three “games” covered in the next section.</p>
+    <p>Growth advisor Sean Ellis popularized the term, including in Hacking Growth, the 2017 book he wrote with Morgan Brown. Amplitude later turned it into a working method in its <a href="https://amplitude.com/books/north-star">North Star Playbook</a>, written by John Cutler and colleagues, which adds the input metrics, the standard criteria for a good metric and the three <a href="#anatomy" data-section-link>“games”</a> that sort products by the kind of value they deliver.</p>
 
     <div class="contrast">
       <div class="contrast-col" data-tone="weak">
@@ -56,26 +49,22 @@
 
     <div class="cards" data-cols="2">
       <div class="card">
-        <span class="card-key" data-series="1">1</span>
-        <h4 class="card-title">Breadth</h4>
+        <h4 class="card-title"><span class="key-dot" data-series="1" aria-hidden="true"></span>Breadth</h4>
         <p class="card-q">How many customers reach the value?</p>
         <p>New users who reach the value moment for the first time, or the share of accounts using a key feature.</p>
       </div>
       <div class="card">
-        <span class="card-key" data-series="2">2</span>
-        <h4 class="card-title">Depth</h4>
+        <h4 class="card-title"><span class="key-dot" data-series="2" aria-hidden="true"></span>Depth</h4>
         <p class="card-q">How much value does each one get?</p>
         <p>How far customers go once they arrive: more content used, more features adopted, more of the job done in your product.</p>
       </div>
       <div class="card">
-        <span class="card-key" data-series="3">3</span>
-        <h4 class="card-title">Frequency</h4>
+        <h4 class="card-title"><span class="key-dot" data-series="3" aria-hidden="true"></span>Frequency</h4>
         <p class="card-q">How often do they come back for it?</p>
         <p>Days active per week, sessions per month, repeat purchases. Frequency is how a habit shows up in the data.</p>
       </div>
       <div class="card">
-        <span class="card-key" data-series="4">4</span>
-        <h4 class="card-title">Efficiency</h4>
+        <h4 class="card-title"><span class="key-dot" data-series="4" aria-hidden="true"></span>Efficiency</h4>
         <p class="card-q">How quickly and smoothly do they get it?</p>
         <p>Time to first value, load time, or the share of started tasks that are finished. Friction lowers every other input.</p>
       </div>
@@ -90,15 +79,14 @@
   <section class="chapter" id="anatomy" data-nav="Anatomy">
     <header class="chapter-head">
       <h2>What makes a good North Star Metric</h2>
-      <p class="chapter-dek">Seven criteria, three kinds of value and some commonly cited examples</p>
     </header>
 
     <h3>Seven criteria from the playbook</h3>
-    <p>Amplitude’s playbook lists seven properties a North Star Metric should have. These are the standard criteria. A candidate that fails one of them will mislead the team sooner or later.</p>
+    <p>Amplitude’s North Star Playbook treats these as the standard. A candidate that fails even one will mislead the team sooner or later.</p>
     <dl class="facts">
       <div><dt>Expresses customer value</dt><dd>It measures value delivered to customers, not value captured from them. “Lessons completed” is value delivered; “subscription revenue” is value captured.</dd></div>
       <div><dt>Represents vision and strategy</dt><dd>It reflects the product you are trying to build and the customers you have chosen to serve, so improving it means moving toward the vision.</dd></div>
-      <div><dt>Leading indicator of business results</dt><dd>When it goes up, revenue and other business results eventually follow. A metric with no link to business results cannot tell you whether the business will follow, however good it looks.</dd></div>
+      <div><dt>Leading indicator of business results</dt><dd>When it goes up, revenue and other business results eventually follow. If it can climb for months while revenue stays flat, it is the wrong metric.</dd></div>
       <div><dt>Actionable</dt><dd>Teams can influence it through 3–5 input metrics they control. If you cannot break it into levers, nobody can move it.</dd></div>
       <div><dt>Understandable</dt><dd>Anyone in the company can explain it in one sentence, including what counts and what does not.</dd></div>
       <div><dt>Measurable</dt><dd>You can track it every week. “User happiness” is not measurable; “learners who complete at least 3 lessons in a calendar week” is.</dd></div>
@@ -144,24 +132,23 @@
         </tbody>
       </table>
     </div>
-    <p>Commonly cited examples; not official company statements. They come from talks and articles, and companies revise their metrics over time. Treat them as illustrations of the idea, not as targets to copy.</p>
+    <p>None of these are official company statements. They come from talks and articles, and companies revise their metrics over time, so read them as illustrations of the idea rather than targets to copy.</p>
   </section>
 
   <section class="chapter" id="find" data-nav="Finding yours">
     <header class="chapter-head">
       <h2>Finding your North Star Metric in three steps</h2>
-      <p class="chapter-dek">Start from the moment a customer gets value, then count it</p>
     </header>
 
     <ol class="steps">
       <li>
         <h3 class="step-title">Define the core value</h3>
-        <p>Find the moment a customer gets what they came for. For Larkwell, the fictional piano-learning app in the <a href="#example" data-section-link>worked example</a>, it is playing a recognizable song. For a ride-hailing app, it is arriving at your destination. For a project-management tool, it is getting a project organized. This is the <dfn>value moment</dfn>.</p>
+        <p>Find the moment a customer gets what they came for. For Larkwell, a fictional piano-learning app for adults (figures are illustrative), it is playing a recognizable song. For a ride-hailing app, it is arriving at your destination. For a project-management tool, it is getting a project organized. This is the <dfn>value moment</dfn>.</p>
         <p class="step-note">Ask: what moment makes a customer say “this is worth it”?</p>
       </li>
       <li>
         <h3 class="step-title">Make it measurable</h3>
-        <p>Turn the value moment into something you can count, with a time window. Larkwell’s first draft is “songs completed per week”, not just “songs completed”: the window turns a running total into a trend you can track and react to each week. It is still a first draft, because a few heavy users could carry the number. The worked example sharpens it into a count of learners: Weekly Active Learners, learners who complete at least 3 lessons in a calendar week.</p>
+        <p>Turn the value moment into something you can count, with a time window. Larkwell’s first draft is “songs completed per week”, not just “songs completed”: the window turns a running total into a trend you can track and react to each week. It is still a first draft, because a few heavy users could carry the number. The <a href="#example" data-section-link>Example</a> sharpens it into a count of learners: Weekly Active Learners, learners who complete at least 3 lessons in a calendar week.</p>
       </li>
       <li>
         <h3 class="step-title">Identify 3–5 input metrics</h3>
@@ -170,7 +157,7 @@
     </ol>
 
     <h3>Test the candidate with four questions</h3>
-    <p>The four questions below are this guide’s shortcut for testing a candidate in the room, not part of the playbook. They compress the seven criteria; use the full list before you commit. If any answer is no, keep looking.</p>
+    <p>These four questions are this guide’s shortcut for testing a candidate in the room; they are not part of the playbook. They compress the <a href="#anatomy" data-section-link>seven criteria</a>, so run the full list before you commit. If any answer is no, keep looking.</p>
     <div class="cards" data-cols="2">
       <div class="card">
         <h4 class="card-title">Value</h4>
@@ -183,7 +170,6 @@
       <div class="card">
         <h4 class="card-title">Gaming</h4>
         <p class="card-q">Is it hard to inflate without delivering value?</p>
-        <p>Total pageviews are easy to game. Learners who complete at least 3 lessons a week are hard to game.</p>
       </div>
       <div class="card">
         <h4 class="card-title">Levers</h4>
@@ -192,15 +178,15 @@
     </div>
 
     <h3>The right metric changes as the product matures</h3>
-    <p>The right metric depends on what the business most needs to prove. Expect to change it, and review it every 6–12 months.</p>
+    <p>What the metric should count depends on what the business most needs to prove at each stage, so expect to change it and review it every 6–12 months.</p>
     <ol class="chain">
-      <li><span class="chain-name">Before and just after product-market fit</span><span class="chain-note">Activation as a provisional focus metric, such as new users who complete a first lesson</span></li>
+      <li><span class="chain-name">Before and just after product-market fit</span><span class="chain-note">Activation, such as new users who complete a first lesson</span></li>
       <li><span class="chain-name">Growth stage</span><span class="chain-note">Engagement, such as Weekly Active Learners</span></li>
       <li><span class="chain-name">Mature</span><span class="chain-note">Value metrics tied more closely to retention and monetization</span></li>
     </ol>
     <div class="callout callout--tip">
-      <p class="callout-title">Before product-market fit, the metric will move</p>
-      <p>Until you have product-market fit, the value moment itself is still changing, so the NSM is likely to change with it. A team can use activation as a provisional focus metric, labeled as provisional, watch retention as the sign of fit, and set the NSM once it knows what customers keep coming back for.</p>
+      <p class="callout-title">Before product-market fit, label it provisional</p>
+      <p>Until you have product-market fit, the value moment itself is still moving, and any NSM would move with it. Use activation as the focus metric, call it provisional and watch retention for the sign of fit. Set the NSM once you know what customers keep coming back for.</p>
     </div>
   </section>
 
@@ -212,9 +198,9 @@
 
     <div class="example">
       <p class="example-label">Worked example</p>
-      <h3>A North Star Metric for a piano-learning app</h3>
-      <p>Larkwell, a fictional piano-learning app for adults, defines its NSM as <strong>Weekly Active Learners (WAL): learners who complete at least 3 lessons in a calendar week</strong>. Larkwell is a fictional company; all figures are illustrative. Today 40,000 learners meet that bar.</p>
-      <p>Completing at least 3 lessons a week means a learner is getting value (learning happens), building a habit and progressing, and it predicts renewal. Counting learners who cross that line, rather than total lessons, stops a few heavy users from carrying the number. It passes the four questions: value (learning happens), revenue (learners who keep practicing renew), gaming (it takes real lessons to move it) and levers (it breaks into the five inputs below).</p>
+      <h3>Weekly Active Learners, with 40,000 today</h3>
+      <p>Larkwell defines its NSM as <strong>Weekly Active Learners (WAL): learners who complete at least 3 lessons in a calendar week</strong>. Today 40,000 learners meet that bar.</p>
+      <p>A learner who finishes three lessons in a week is learning, building a habit and progressing, and that predicts renewal. Counting learners who cross the line, rather than total lessons, stops a few heavy users from carrying the number. It also passes the <a href="#find" data-section-link>four questions</a>: value (customers get more when it rises), revenue (learners who keep practicing renew), gaming (only real lessons move it) and levers (it breaks into the five inputs below, each with an owner).</p>
 
       <div class="table-wrap">
         <table class="table table--stack">
@@ -234,11 +220,11 @@
 
       <div class="callout">
         <p class="callout-title">Why D7 retention is not an input</p>
-        <p>Teams often list D7 retention, the share of a sign-up cohort that is active on day 7, as an input. Retention is an output metric: no team can change it directly, only by moving the inputs. In the tree it sits between the inputs and the NSM as an intermediate output, and no team owns it as an input. Track it beside the NSM, and put the behavior that drives it, practice sessions, in the tree.</p>
+        <p>Teams often list D7 retention, the share of a sign-up cohort that is active on day 7, as an input. Retention is an output metric: no team can change it directly, only by moving the inputs. In the tree it sits between the inputs and the NSM as an intermediate output, which no team owns as an input. Track it beside the NSM, and put the behavior that drives it, practice sessions, in the tree.</p>
       </div>
 
       <h4>Turning it into OKRs</h4>
-      <p>The NSM is a long-lived metric; OKRs are set each quarter. The Objective stays qualitative. The NSM, or one of its inputs, appears as a key result, written from a starting value to a target. The NSM is never the Objective, and the projects that move it are never key results. Larkwell’s company OKR for Q3 shows the pattern.</p>
+      <p>The NSM is a long-lived metric; OKRs are set each quarter. The Objective stays qualitative. The NSM, or one of its inputs, appears as a key result, written from a starting value to a target. The NSM is never the Objective, and the projects that move it are never key results. Here is Larkwell’s company OKR for Q3.</p>
       <dl class="facts">
         <div><dt>Objective</dt><dd>Make Larkwell the app adult beginners keep playing with</dd></div>
         <div><dt>Key result 1</dt><dd>Weekly Active Learners from 40,000 to 50,000 (aspirational)</dd></div>
@@ -249,7 +235,7 @@
       </dl>
 
       <div class="example-reading">
-        <h4>How the inputs add up</h4>
+        <h4>Five owned inputs add up to more Weekly Active Learners</h4>
         <p>More activated learners (breadth) who reach a first note quickly and finish the lessons they start (efficiency), find a steady supply of quality beginner lessons (depth) and come back to practice (frequency) produce more Weekly Active Learners. Each team has one clear lever, and every team can see how its lever moves the shared number.</p>
       </div>
     </div>
@@ -258,13 +244,12 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Build and test your own North Star Metric</h2>
-      <p class="chapter-dek">Name the metric, add the inputs and their owners, then check it</p>
     </header>
 
     <div class="tool" data-tool="ns-builder">
       <div class="tool-head">
         <h3 class="tool-title">North Star builder</h3>
-        <p class="tool-hint">The review flags common traps in the wording. It cannot judge your product, so treat it as a checklist, not a verdict.</p>
+        <p class="tool-hint">The review flags common traps in the wording. It can’t judge your product, so read it as a checklist.</p>
       </div>
 
       <div class="fields" data-cols="1">
@@ -360,7 +345,7 @@ Inputs and owners:
 Passes: value, revenue, gaming, levers
 Review again on: [a date 6–12 months from now]</pre>
     </div>
-    <p>The same structure answers the interview question “how would you measure success?”. Walk through it in order: the value moment, the metric with its time window, then the inputs that drive it and who would own them.</p>
+    <p>The same pieces answer the interview question “How would you measure success?”, told in a different order: start from the value moment, then the metric and its time window, then the inputs and who owns them.</p>
     <div class="template">
       <p class="template-title">Saying it in an interview</p>
       <pre>Value moment: [the moment a customer gets what they came for]
@@ -372,8 +357,7 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When a North Star Metric helps, and when it does not</h2>
-      <p class="chapter-dek">It aligns teams over the long term; it does not diagnose problems or rank features</p>
+      <h2>A North Star Metric aligns teams once the value moment is settled</h2>
     </header>
 
     <div class="fit">
@@ -390,29 +374,28 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
       <div class="fit-col" data-fit="skip">
         <h3>Skip it when</h3>
         <ul>
-          <li>You have not reached product-market fit, and the value moment is still changing. Use activation as a provisional focus metric, labeled as provisional, instead.</li>
+          <li>You have not reached product-market fit, so the value moment is still changing. Work to a provisional activation metric until it settles.</li>
           <li>You need to find where growth is stuck. Use <a data-guide-link="aarrr">AARRR (pirate metrics)</a> instead.</li>
           <li>You are prioritizing features. Use <a data-guide-link="rice">RICE</a> or <a data-guide-link="ice">ICE</a> instead.</li>
           <li>You run several products with different value propositions. Set one NSM per product instead of forcing a shared one.</li>
-          <li>You are making a short-term project decision. The NSM is a long-term measure.</li>
+          <li>You are making a short-term project decision. The NSM measures the long run.</li>
         </ul>
       </div>
     </div>
 
-    <p>In a growth plan, the North Star Metric usually comes second: AARRR finds the leak, and the NSM gives every team the number that fixing it should move. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together.</p>
+    <p>In a growth plan, the North Star Metric usually comes second: AARRR finds the leak, and the NSM gives every team the number that fixing it should move. <a data-guide-link="compare-growth">Choosing a growth framework</a> covers how all four growth frameworks fit together.</p>
   </section>
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
       <h2>Six ways a North Star Metric goes wrong</h2>
-      <p class="chapter-dek">Most of them count activity or outcomes that can rise without customers getting more value</p>
     </header>
 
     <ol class="pitfalls">
       <li>
         <h3 class="pitfall-title">Revenue or MRR as the NSM</h3>
         <p>Revenue measures value captured, not value delivered. You can raise prices without delivering more value, and the number goes up anyway.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> choose a metric of value delivered, such as lessons completed by active learners, and let revenue follow as the business result it predicts.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> choose a metric of value delivered, such as Weekly Active Learners, and let revenue follow as the business result it predicts.</p>
       </li>
       <li>
         <h3 class="pitfall-title">A vanity count such as total sign-ups</h3>
@@ -437,19 +420,18 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
       <li>
         <h3 class="pitfall-title">Making the NSM the Objective</h3>
         <p>An OKR Objective with a number in it is really a key result. Writing “Grow Weekly Active Learners to 50,000” as the Objective leaves nothing qualitative to explain why the number matters.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> keep the Objective qualitative and use the NSM, or one of its inputs, as one of its key results.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> say in words why the work matters, and put the number underneath it: “Weekly Active Learners from 40,000 to 50,000” is a key result.</p>
       </li>
     </ol>
   </section>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Eight questions on choosing and using a North Star Metric</p>
+      <h2>Test yourself on North Star</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">What is a North Star Metric?</p>
         <ul class="quiz-options">
           <li><button type="button">The revenue target the company commits to for the year</button></li>
@@ -457,18 +439,18 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
           <li><button type="button">The one metric that best captures the value customers get</button></li>
           <li><button type="button">The KPI that leadership marked most important last quarter</button></li>
         </ul>
-        <div class="quiz-why"><p>The NSM counts value delivered to customers, not revenue, sign-ups or whichever KPI was in focus last quarter. When it goes up, customers are getting more value and the business is healthy.</p></div>
+        <div class="quiz-why"><p>A North Star Metric is defined by what it counts: value that reaches customers. A revenue target or the KPI leadership favored last quarter can matter a great deal and still say nothing about whether customers are better off.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">Why is revenue a weak North Star Metric?</p>
         <ul class="quiz-options">
           <li><button type="button">It can rise with price increases while customers get no more value</button></li>
           <li><button type="button">It moves too slowly and is too hard to measure accurately each week</button></li>
           <li><button type="button">It belongs to the finance team, so product teams cannot influence it</button></li>
         </ul>
-        <div class="quiz-why"><p>Revenue measures value captured from customers. Raising prices or making cancellation harder can lift it while customers get nothing more. The NSM should measure value delivered, which leads revenue.</p></div>
+        <div class="quiz-why"><p>Revenue measures what the company takes in, so a price rise or a harder cancellation flow can lift it while customers get nothing extra. It is easy to read every week, which rules out the slow-and-hard option.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="understand">
         <p class="quiz-q">What are input metrics?</p>
         <ul class="quiz-options">
           <li><button type="button">The company’s top-level financial KPIs, reported to the board</button></li>
@@ -476,18 +458,18 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
           <li><button type="button">The projects each team commits to shipping during the quarter</button></li>
           <li><button type="button">The five AARRR funnel stages that every new user passes through</button></li>
         </ul>
-        <div class="quiz-why"><p>Input metrics are the levers: controllable, customer-facing metrics, never tasks or projects. Each team owns one or two, and when the inputs improve, the NSM moves.</p></div>
+        <div class="quiz-why"><p>Inputs are metrics a team can move directly, and together they push the North Star Metric up. Projects are the tempting answer, but a project is work done to move an input, not a measure of one.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="example">
         <p class="quiz-q">A growth team proposes D7 retention as one of the input metrics under its NSM, with itself as the owner. What is the problem?</p>
         <ul class="quiz-options">
           <li><button type="button">Retention is an output, so the tree should hold the behavior that drives it</button></li>
           <li><button type="button">D7 is too short a window, so the input should be D30 retention instead</button></li>
           <li><button type="button">Retention is a vanity metric, so it should not be tracked beside the NSM</button></li>
         </ul>
-        <div class="quiz-why"><p>Retention cannot be changed directly by any team; it moves when inputs such as practice sessions or lesson completion improve. It sits between the inputs and the NSM as an intermediate output and is worth tracking, but no team owns it as an input. A longer window does not change that.</p></div>
+        <div class="quiz-why"><p>Retention can’t be changed directly by any team: it rises when behaviors such as practice sessions rise, so the tree holds that behavior and retention is tracked alongside it. Switching to D30 keeps the same problem, because a longer window is still an output.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="anatomy">
         <p class="quiz-q">Spotify’s commonly cited NSM is time spent listening. Why does it work?</p>
         <ul class="quiz-options">
           <li><button type="button">It tracks the ad impressions Spotify can sell to advertisers each month</button></li>
@@ -495,18 +477,18 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
           <li><button type="button">It is the easiest number for the data team to pull from the warehouse</button></li>
           <li><button type="button">More listening means more value, which supports retention and revenue</button></li>
         </ul>
-        <div class="quiz-why"><p>Listening is the value customers get from Spotify, and listeners who get more value stay subscribed. The metric expresses customer value and is a leading indicator of business results, two of the playbook’s criteria.</p></div>
+        <div class="quiz-why"><p>Listening is what Spotify subscribers pay for, so more of it means more value and more reason to keep paying. Ad impressions do follow listening on the free tier, but they count what advertisers buy, which says nothing about whether listeners are better off.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="anatomy">
         <p class="quiz-q">A learning app’s candidate metric, app opens per week, doubles after a push-notification campaign, but learners complete no more lessons. Which criterion has it failed?</p>
         <ul class="quiz-options">
           <li><button type="button">Expresses customer value: learners are not getting more value</button></li>
           <li><button type="button">Actionable: no single team can move it through direct levers</button></li>
           <li><button type="button">Measurable: it has no time window that teams can track</button></li>
         </ul>
-        <div class="quiz-why"><p>The number rose without any more learning, so it fails the customer-value criterion, and the ease of inflating it makes it a vanity metric too. A team moved it with one campaign, and it has a weekly window, so actionable and measurable do not explain the problem.</p></div>
+        <div class="quiz-why"><p>Opens doubled while learning stayed flat, so the metric moved without customers getting anything more. It fails the customer-value criterion, and that ease of inflation also marks it as vanity. It isn’t an actionability problem, since a single campaign moved it easily, and it is counted per week, so it is measurable too.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="example">
         <p class="quiz-q">How does a North Star Metric connect to OKRs?</p>
         <ul class="quiz-options">
           <li><button type="button">The NSM is the Objective, and each input metric becomes one of its key results</button></li>
@@ -514,16 +496,16 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
           <li><button type="button">The Objective stays qualitative; WAL from 40,000 to 50,000 is a key result</button></li>
           <li><button type="button">They are separate systems, so key results should never use the NSM or its inputs</button></li>
         </ul>
-        <div class="quiz-why"><p>An Objective describes the goal in words, such as “make Larkwell the app adult beginners keep playing with”. The NSM, or one of its inputs, gives a measurable key result, such as Weekly Active Learners (WAL) from 40,000 to 50,000. Projects, like the onboarding changes that cut time to first note, are initiatives, not key results.</p></div>
+        <div class="quiz-why"><p>The Objective says in words why the quarter matters, and a target for Weekly Active Learners, 50,000 by quarter’s end, measures progress toward it. Making the NSM itself the Objective is the common slip, because it turns the goal into a metric and leaves no statement of purpose above the key results.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="anatomy">
         <p class="quiz-q">Airbnb’s commonly cited NSM is nights booked. Which game does that put it in?</p>
         <ul class="quiz-options">
           <li><button type="button">Attention</button></li>
           <li><button type="button">Transaction</button></li>
           <li><button type="button">Productivity</button></li>
         </ul>
-        <div class="quiz-why"><p>Airbnb delivers value each time a stay is booked, so it plays the transaction game. Attention products count time spent; productivity products count work done.</p></div>
+        <div class="quiz-why"><p>Each booked night is a completed exchange between a host and a guest, which is the transaction game. Attention would fit only if value grew with time spent browsing, and guests come to book a stay.</p></div>
       </li>
     </ol>
   </section>
@@ -630,12 +612,6 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
     font-family:var(--font-sans);
     font-size: var(--fs-14);
     line-height: 1.45;
-    color: var(--ink-2);
-  }
-  .guide[data-guide="north-star"] .ns-flow {
-    margin-top: var(--s-5);
-    font-family:var(--font-sans);
-    font-size: var(--fs-14);
     color: var(--ink-2);
   }
   @media (max-width: 640px) {
@@ -763,10 +739,10 @@ Check: [how it passes value, revenue, gaming and levers]</pre>
     const good = text => items.push({ state: 'ok', text });
 
     // The metric itself
-    if (REVENUE.test(m)) fix('This looks like a revenue metric. Revenue measures value captured from customers, not value delivered. Ask which customer action leads to revenue, and count that.');
-    if (ACQUISITION.test(m)) fix('This looks like an acquisition metric. Sign-ups and downloads are vanity metrics: 1,000,000 sign-ups with 5% retention means 950,000 people who left. Count what happens after sign-up, the value moment.');
-    if (SURVEY.test(m)) fix('This looks like a survey score. NPS and similar scores are survey-based, lag behavior and are too noisy week to week to steer by. Keep it as a supporting metric and choose a behavior instead.');
-    if (VAGUE_ACTIVE.test(m)) fix('Active users on their own are vague unless attention is your product. Count active users who reach the value moment, such as learners who complete at least 3 lessons in a calendar week.');
+    if (REVENUE.test(m)) fix('This looks like a revenue metric, which can rise without customers getting any more value. Ask which customer action leads to revenue, and count that.');
+    if (ACQUISITION.test(m)) fix('This looks like an acquisition metric. Sign-ups and downloads keep climbing while users leave. Count what happens after sign-up: the value moment.');
+    if (SURVEY.test(m)) fix('This looks like a survey score. Scores like NPS trail behind what customers do and jump around from week to week. Keep it as a supporting metric and count a behavior instead.');
+    if (VAGUE_ACTIVE.test(m)) fix('Active users on their own are vague unless attention is your product. Count only the active users who reach the value moment.');
     if (WINDOW.some(re => re.test(m))) good('It has a time window, so you can track it as a weekly or monthly trend.');
     else if (CUMULATIVE.test(m)) fix('A running total only ever goes up, so it cannot tell you when things get worse. Count it within a time window, such as “per week”.');
     else missing('Add a time window, such as “per week” or “per month”. “Songs completed per week” tells you more than “songs completed”.');

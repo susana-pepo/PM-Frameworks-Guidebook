@@ -1,7 +1,7 @@
 <article class="guide" data-guide="dual-track">
 
   <header class="guide-intro">
-    <p class="lede">Dual-track agile runs discovery and delivery side by side in the same team: discovery tests ideas cheaply to find out what is worth building, and delivery builds and ships what discovery has de-risked. It keeps a team from spending engineering time on ideas nobody has checked.</p>
+    <p class="lede">Dual-track agile gives one team two continuous kinds of work. Discovery tests ideas cheaply to find out what is worth building, and delivery builds and ships what discovery has de-risked, so less engineering time goes into ideas that do not work.</p>
 
     <figure class="figure" data-hero>
       <div class="dta-tracks">
@@ -41,25 +41,23 @@
           <p>Back to discovery: what ships is measured with real users, and the results raise the next questions</p>
         </div>
 
-        <p class="dta-team">One team, every week: the product manager, designer and tech lead run discovery, and everyone builds and ships.</p>
+        <p class="dta-team">One team, every week: the product trio of product manager, designer and tech lead runs discovery, and everyone builds and ships.</p>
       </div>
-      <figcaption>Both tracks run all the time in one team, and ideas move between them when they are ready</figcaption>
+      <figcaption>Each lane lists one track’s activities in order; the arrows show how ideas and results move between the tracks</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Every week, the product trio of product manager, designer and tech lead runs small experiments on upcoming ideas while the whole team builds and ships ideas that have already been tested. An idea moves into delivery when evidence answers its value, usability, feasibility and viability risks, not after a fixed lag. Less engineering time goes into ideas that do not work.</p>
+      <p>An idea is ready for delivery once tests have answered its four risks: value, usability, feasibility and business viability. Each test should take hours or days, and a usability round needs only about 5 users to find most of the problems.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
-      <h2>Learning and building at the same time</h2>
-      <p class="chapter-dek">Running discovery and delivery in sequence is what turns a team into a feature factory</p>
+      <h2>Run in sequence, discovery and delivery make a feature factory</h2>
     </header>
 
     <p>In many teams, the Product Owner writes stories, engineers build them, and nobody checks whether users need them. The result is a <dfn>feature factory</dfn>: a team that ships feature after feature without moving the metrics those features were meant to move.</p>
-    <p>The root cause is that <strong>discovery and delivery happen in sequence</strong>. First the team researches for weeks, then it builds for weeks, then it learns the idea was wrong. Dual-track agile runs the two kinds of work in parallel instead.</p>
 
     <div class="contrast">
       <div class="contrast-col" data-tone="weak">
@@ -74,17 +72,16 @@
 
     <div class="callout">
       <p class="callout-title">Not a relay between two teams</p>
-      <p>Discovery is not a separate group passing work across a wall, and it does not run a fixed number of Sprints ahead. The people who test an idea are the people who build it, and they move between both kinds of work during the week.</p>
+      <p>The people who test an idea are the people who build it, and they move between both kinds of work during the week. Discovery is never a separate group passing finished research across a wall.</p>
     </div>
 
-    <p>Desirée Sy described parallel design and development tracks at Autodesk in 2007, with designers working a cycle ahead of developers. Jeff Patton and Marty Cagan later popularized the name “dual-track” and stressed that the two tracks are continuous and run by one team. That later version is the one this guide teaches.</p>
-    <p>Dual-track agile is not a delivery method of its own. A team keeps the way it already delivers, Scrum Sprints or Shape Up cycles, and adds continuous discovery alongside it, done by the same people.</p>
+    <p>Desirée Sy described parallel design and development tracks at Autodesk in 2007, with designers working a cycle ahead of developers. Jeff Patton and Marty Cagan later popularized the name “dual-track” and stressed that the two tracks are continuous and run by one team. This guide follows the later version.</p>
+    <p>Dual-track agile is not a delivery method of its own. A team keeps the way it already delivers, Scrum Sprints or Shape Up cycles, and adds continuous discovery alongside it.</p>
   </section>
 
   <section class="chapter" id="tracks" data-nav="The tracks">
     <header class="chapter-head">
       <h2>What each track does</h2>
-      <p class="chapter-dek">Discovery decides what is worth building; delivery builds it well</p>
     </header>
 
     <div class="table-wrap">
@@ -97,7 +94,7 @@
           <tr><th scope="row">Question</th><td>Should we build this?</td><td>Can we build and ship it reliably?</td></tr>
           <tr><th scope="row">Who</th><td>The product trio: product manager, designer and tech lead. Other engineers join as needed.</td><td>The whole team: engineers, designer and QA, with the product manager</td></tr>
           <tr><th scope="row">Goal</th><td>Answer the four risks before building: is it valuable, usable, feasible and viable?</td><td>Build, test and ship de-risked items reliably</td></tr>
-          <tr><th scope="row">Cadence</th><td>Continuous, with several experiments a week. Fast, cheap and disposable.</td><td>Whatever the team already uses: Scrum Sprints of one month or less (Larkwell’s are two weeks), Shape Up cycles, or continuous flow</td></tr>
+          <tr><th scope="row">Cadence</th><td>Continuous, with several experiments a week. Fast, cheap and disposable.</td><td>Whatever the team already uses: Scrum Sprints of one month or less, Shape Up cycles, or continuous flow</td></tr>
           <tr><th scope="row">Takes in</th><td>Ideas, open questions and results from what has already shipped</td><td>Ideas that discovery has de-risked</td></tr>
           <tr><th scope="row">Produces</th><td>Evidence, and backlog items ready to build</td><td>Working product in users’ hands, and data from real use</td></tr>
         </tbody>
@@ -106,42 +103,37 @@
 
     <div class="callout">
       <p class="callout-title">When an idea crosses over</p>
-      <p>An idea moves into delivery when experiments have answered its four risks well enough to bet on it. It is not a handoff: the tech lead who ran the feasibility spike is in the room when the team plans the build. Keep only a small stock of ready items, enough that delivery always has work but not so much that the evidence goes stale before anyone builds it.</p>
+      <p>An idea moves into delivery when experiments have answered its four risks well enough to bet on it. There is no fixed gap: discovery does not run a set number of Sprints ahead. Nor is there a handoff, because the tech lead who ran the feasibility spike is in the room when the team plans the build. Keep only a small stock of ready items, enough that delivery always has work but not so much that the evidence goes stale before anyone builds it.</p>
     </div>
   </section>
 
   <section class="chapter" id="discovery" data-nav="Discovery">
     <header class="chapter-head">
-      <h2>Four risks, tested in hours or days</h2>
-      <p class="chapter-dek">Find the riskiest question about an idea and answer it with the cheapest test</p>
+      <h2>Four risks decide whether an idea is worth building</h2>
     </header>
 
     <p>Marty Cagan groups everything that can go wrong with a product idea into four risks. Discovery exists to reduce them before delivery spends real effort. Start with the risk that worries you most.</p>
 
     <div class="cards" data-cols="2">
       <div class="card" data-risk="value">
-        <span class="card-key" data-series="1">V</span>
         <h3 class="card-title">Value risk</h3>
         <p class="card-q">Will users want this?</p>
         <p>Whether customers will choose it, use it or pay for it.</p>
         <p class="card-meta" data-risk-tests>Ways to test: user interviews, fake door tests or a landing page MVP</p>
       </div>
       <div class="card" data-risk="usability">
-        <span class="card-key" data-series="2">U</span>
         <h3 class="card-title">Usability risk</h3>
         <p class="card-q">Can users figure it out?</p>
         <p>Whether people can work out how to use it without help.</p>
         <p class="card-meta" data-risk-tests>Ways to test: prototype usability tests with about 5 users, or a Wizard of Oz test</p>
       </div>
       <div class="card" data-risk="feasibility">
-        <span class="card-key" data-series="5">F</span>
         <h3 class="card-title">Feasibility risk</h3>
         <p class="card-q">Can we build this?</p>
         <p>Whether the team can build it with the time, skills and technology it has.</p>
         <p class="card-meta" data-risk-tests>Ways to test: a technical spike of 1–2 days on the hard part, or an architecture review</p>
       </div>
       <div class="card" data-risk="viability">
-        <span class="card-key" data-series="6">B</span>
         <h3 class="card-title">Business viability risk</h3>
         <p class="card-q">Does it work for the business?</p>
         <p>Whether it fits the business model, the law, sales, support and the company’s budget.</p>
@@ -157,8 +149,8 @@
       <span class="formula-term"><span class="op">because</span><var>reason</var></span>
     </p>
 
-    <h3>Keep each experiment small</h3>
-    <p>Each experiment should take <strong>hours to days, not weeks</strong>. A rough prototype tested with a handful of users often shows whether an idea works before any engineering starts. Testing with about 5 users is a common rule of thumb for finding most usability problems in one round of testing (Jakob Nielsen and Tom Landauer, 1993; Nielsen, 2000). It applies to usability problems, not to every question discovery asks.</p>
+    <h3>Keep each experiment to hours or days</h3>
+    <p>A rough prototype tested with a handful of users often shows whether an idea works before any engineering starts. Testing with about 5 users is a common rule of thumb for finding most usability problems in one round of testing (Jakob Nielsen and Tom Landauer, 1993; Nielsen, 2000). It applies to usability problems, not to every question discovery asks.</p>
 
     <div class="table-wrap">
       <table class="table">
@@ -178,20 +170,18 @@
 
     <div class="callout callout--tip">
       <p class="callout-title">Enough evidence to bet, not certainty</p>
-      <p>You do not need to remove all risk, only enough to make a confident bet. If usability was the open risk and 4 of 5 users complete the task in your prototype, that is enough to build it, measure it and iterate. Discovery reduces risk; delivery confirms the result at scale.</p>
+      <p>You do not need to remove all risk, only enough to make a confident bet. If usability was the open risk and the prototype meets the pass mark you set before testing, say 4 of 5 users completing the task, build it, measure it and iterate. Discovery reduces risk; delivery confirms the result at scale.</p>
     </div>
   </section>
 
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Larkwell tests Play Along while it ships onboarding</h2>
-      <p class="chapter-dek">Two Sprints in which one team runs discovery and delivery side by side</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
-      <h3>The Onboarding team in Sprints 15 and 16</h3>
-      <p>Larkwell, a fictional piano-learning app, has an Onboarding team that works in 2-week Sprints. All figures are illustrative. In Sprints 15 and 16 the team built and shipped its redesigned onboarding, cut from 7 steps to 3, and finished the inline microphone and keyboard check carried over from Sprint 14. In the same two Sprints the trio ran discovery on the next idea, Play Along: should early lessons let learners play along with a backing track?</p>
+      <p>Larkwell, a fictional piano-learning app for adults (figures are illustrative), has an Onboarding team that works in two-week Sprints. In Sprints 15 and 16 the team built and shipped its redesigned onboarding, cut from 7 steps to 3, and finished the inline microphone and keyboard check carried over from Sprint 14. In the same two Sprints the trio ran discovery on the next idea, Play Along: should early lessons let learners play along with a backing track?</p>
 
       <div class="table-wrap">
         <table class="table table--stack">
@@ -220,11 +210,10 @@
       </div>
 
       <div class="example-reading">
-        <h4>What the two tracks show</h4>
-        <p><strong>One team did both.</strong> The tech lead’s spike was discovery work, done by someone who was building the onboarding flow that same week.</p>
-        <p><strong>Discovery shrank the idea before anyone built it.</strong> The interviews and the spike turned a vague request into a version the team can build in 3–4 weeks, and dropped one that would have taken 6 months or more.</p>
-        <p><strong>Ideas cross over when the evidence is in.</strong> Play Along joins the Product Backlog because its tests passed, not because a Sprint was fixed for it in advance. How long an idea waits before the build depends on the idea and on what else is ready; there is no set gap.</p>
-        <p><strong>Delivery still checks the result at scale.</strong> The new onboarding ships as an A/B test, because a prototype test with 5 people cannot show the effect on activation, which stands at 45% of new accounts against a target of 55%.</p>
+        <h3>Discovery swapped a 6+ month build for a 3–4 week one before engineering started</h3>
+        <p>The interviews showed that “with someone” meant two different products, and the tech lead’s spike put a price on each. That spike was discovery work, done in the same week the tech lead was building the new onboarding, so one team ran both tracks.</p>
+        <p>Play Along went into the Product Backlog in Sprint 16 because the prototype cleared its pass mark. No Sprint had been reserved for it, and when it gets built depends on what else is ready.</p>
+        <p>The onboarding work shows the other half: delivery still checks results at scale. The 3-step flow ships as an A/B test, because a prototype test with 5 people cannot show the effect on activation, which stands at 45% of new accounts against a target of 55%.</p>
       </div>
     </div>
   </section>
@@ -232,13 +221,12 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Plan a discovery experiment</h2>
-      <p class="chapter-dek">Name the hypothesis, the biggest risk, the test and what counts as passing</p>
     </header>
 
     <div class="tool" data-tool="discovery-planner">
       <div class="tool-head">
         <h3 class="tool-title">Discovery planner</h3>
-        <p class="tool-hint">Fill in at least the hypothesis and the biggest risk, then review the plan. The checks update as you edit.</p>
+        <p class="tool-hint">Review the plan once to see the checks; after that they update as you edit.</p>
       </div>
 
       <div class="fields" data-cols="1">
@@ -292,8 +280,7 @@
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When dual-track agile fits, and when it does not</h2>
-      <p class="chapter-dek">It pays off when building the wrong thing is expensive and users are easy to reach</p>
+      <h2>Dual-track pays off when building the wrong thing is expensive and users are easy to reach</h2>
     </header>
 
     <div class="fit">
@@ -319,13 +306,12 @@
       </div>
     </div>
 
-    <p>To compare dual-track agile with Scrum, Shape Up and OKRs, see <a data-guide-link="compare-execution">Choosing an execution framework</a>.</p>
+    <p><a data-guide-link="compare-execution">Choosing an execution framework</a> sets dual-track agile beside Scrum, Shape Up and OKRs.</p>
   </section>
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
       <h2>Five ways dual-track goes wrong</h2>
-      <p class="chapter-dek">Most of them turn the two tracks back into a sequence</p>
     </header>
 
     <ol class="pitfalls">
@@ -352,19 +338,18 @@
       <li>
         <h3 class="pitfall-title">Big-batch discovery</h3>
         <p>Weeks of research before the first test delay learning, and the team ends up back in a single track.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> keep each experiment to hours or days.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> run a first test within days, and let its result decide what to research next.</p>
       </li>
     </ol>
   </section>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Nine questions on the two tracks, the four risks and running discovery</p>
+      <h2>Test yourself on dual-track agile</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">What problem does dual-track agile solve?</p>
         <ul class="quiz-options">
           <li><button type="button">Slow deployment pipelines that delay every release</button></li>
@@ -372,9 +357,9 @@
           <li><button type="button">Discovery and delivery run one after the other</button></li>
           <li><button type="button">Sprints that do not have enough planning events</button></li>
         </ul>
-        <div class="quiz-why"><p>Run in sequence, a team either researches while engineers wait or builds without research. Running both tracks continuously de-risks future work while current work ships.</p></div>
+        <div class="quiz-why"><p>The problem is sequencing: when learning and building take turns, engineers either wait for research or build ideas nobody has checked. Slow pipelines and escaped bugs are delivery problems, and dual-track leaves the delivery method as it is.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="discovery">
         <p class="quiz-q">Which four risks does discovery test?</p>
         <ul class="quiz-options">
           <li><button type="button">Value, usability, feasibility and business viability</button></li>
@@ -382,9 +367,9 @@
           <li><button type="button">Acquisition, activation, retention and referral</button></li>
           <li><button type="button">Reach, impact, confidence and effort for each idea</button></li>
         </ul>
-        <div class="quiz-why"><p>These are Marty Cagan’s four product risks: will users want it, can they use it, can we build it, and does it work for the business. Address the biggest one first.</p></div>
+        <div class="quiz-why"><p>Cagan’s four risks ask whether users want the idea, can use it, whether the team can build it and whether the business can back it. Reach, impact, confidence and effort are RICE’s factors, which rank ideas instead of testing them.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="tracks">
         <p class="quiz-q">How far ahead of delivery should discovery run?</p>
         <ul class="quiz-options">
           <li><button type="button">3–6 months, so the roadmap is settled in advance</button></li>
@@ -392,9 +377,9 @@
           <li><button type="button">Not at all: both tracks always work on the same item</button></li>
           <li><button type="button">No fixed distance: ideas cross when they are ready</button></li>
         </ul>
-        <div class="quiz-why"><p>Dual-track is two continuous kinds of work in one team, not a schedule. Fixing a set gap as a rule turns discovery into a handoff. Keep a small stock of ready items so delivery has work and the evidence stays fresh.</p></div>
+        <div class="quiz-why"><p>An idea moves when its own tests are done, so the gap differs from one idea to the next. Holding discovery exactly one Sprint ahead sounds tidy, but it brings back the scheduled handoff that dual-track removes.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="tracks">
         <p class="quiz-q">When is an idea ready to move into delivery?</p>
         <ul class="quiz-options">
           <li><button type="button">When the team has estimated it in story points</button></li>
@@ -402,9 +387,9 @@
           <li><button type="button">When a senior stakeholder has signed off on it</button></li>
           <li><button type="button">When it has a ticket in the backlog tool</button></li>
         </ul>
-        <div class="quiz-why"><p>Readiness comes from evidence that the idea is valuable, usable, feasible and viable, well enough to bet on, not from estimates, approval or paperwork.</p></div>
+        <div class="quiz-why"><p>Evidence on all four risks is what makes an idea safe to bet on. A story-point estimate says what the build costs, which tells you nothing about whether users want the result.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="understand">
         <p class="quiz-q">A product manager skips discovery and sends ideas straight to engineering. What is the likely result?</p>
         <ul class="quiz-options">
           <li><button type="button">Faster learning, because building is the most realistic test</button></li>
@@ -412,9 +397,9 @@
           <li><button type="button">A feature factory: features ship, but many do not move their metrics</button></li>
           <li><button type="button">Engineers push back, and the ideas improve during the Sprint</button></li>
         </ul>
-        <div class="quiz-why"><p>Many ideas do not move the metric they were meant to move, so testing an idea cheaply before building it saves engineering time. Building is a realistic test, but it is the most expensive one, and experience does not replace evidence.</p></div>
+        <div class="quiz-why"><p>Without cheap tests first, the team learns an idea was wrong only after paying to build it, and many shipped features leave their metric where it was. Building is the most realistic test, but also the most expensive way to learn what a prototype could have shown.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="pitfalls">
         <p class="quiz-q">A trio’s discovery has approved every idea it tested this quarter. What is the most likely problem?</p>
         <ul class="quiz-options">
           <li><button type="button">Its tests had no pass or fail criteria set in advance</button></li>
@@ -422,9 +407,9 @@
           <li><button type="button">Its experiments were too short to give reliable answers</button></li>
           <li><button type="button">Delivery shipped too slowly to feed results back to it</button></li>
         </ul>
-        <div class="quiz-why"><p>Discovery that never kills an idea is confirming, not testing. Without a result written down before each test that would stop the idea, any outcome can be read as a success. Short, frequent experiments are what discovery is meant to run.</p></div>
+        <div class="quiz-why"><p>If nobody wrote down beforehand which result would stop an idea, any result can pass, so a perfect approval rate says more about the tests than the ideas. Lots of short experiments are the intended pattern, not the fault.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="discovery">
         <p class="quiz-q">A prototype test meets its criteria: 4 of 5 learners complete the flow, and the tech lead’s spike puts the build at 3–4 weeks. What should happen next?</p>
         <ul class="quiz-options">
           <li><button type="button">Keep testing until all 5 learners complete the flow</button></li>
@@ -432,9 +417,9 @@
           <li><button type="button">Add it to the backlog and measure it with real users</button></li>
           <li><button type="button">Pass a validated spec to a separate delivery team</button></li>
         </ul>
-        <div class="quiz-why"><p>Discovery needs enough evidence to bet, not certainty. Once the criteria set in advance are met, the idea goes into the Product Backlog, and the same team builds it and measures the result at scale. A fixed waiting period or a handoff to another team turns the two tracks back into a sequence.</p></div>
+        <div class="quiz-why"><p>The test cleared the bar the team set before running it, so the idea is a reasonable bet, and real use will show what a 5-person test cannot. Holding out for 5 of 5 chases a certainty discovery never offers. A fixed wait or a handoff to another team would turn the two tracks back into a sequence.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="tracks">
         <p class="quiz-q">Who leads discovery in dual-track agile?</p>
         <ul class="quiz-options">
           <li><button type="button">The product manager alone, who then briefs the designer</button></li>
@@ -442,9 +427,9 @@
           <li><button type="button">A separate research team that hands results to delivery</button></li>
           <li><button type="button">The designer, with engineers joining once an idea is validated</button></li>
         </ul>
-        <div class="quiz-why"><p>The tech lead is a full member of discovery, so feasibility is tested early. Other engineers join as needed, and the people who learned from the tests also build the result.</p></div>
+        <div class="quiz-why"><p>With the tech lead in the trio from the start, technical surprises show up before the build instead of during it. A separate research team would pass its findings to builders who never saw the evidence.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="understand">
         <p class="quiz-q">How does dual-track agile relate to Scrum?</p>
         <ul class="quiz-options">
           <li><button type="button">Dual-track replaces Scrum entirely, Sprints included</button></li>
@@ -452,7 +437,7 @@
           <li><button type="button">Dual-track works only with continuous flow, not Sprints</button></li>
           <li><button type="button">Scrum can run delivery, with discovery alongside it</button></li>
         </ul>
-        <div class="quiz-why"><p>Scrum provides a way to deliver; dual-track adds continuous discovery next to it, worked by the same people. The two are complementary.</p></div>
+        <div class="quiz-why"><p>They don’t compete: Scrum says how to deliver, and dual-track adds discovery beside whatever delivery method a team uses. A Scrum team keeps its Sprints and events, and the same people run weekly discovery alongside them.</p></div>
       </li>
     </ol>
   </section>
@@ -677,19 +662,19 @@
     if (method) checks.push({ state: 'info', text: `For ${method.name.toLowerCase()}, try ${method.tests}.` });
 
     if (!v.exp) {
-      checks.push({ state: 'missing', text: 'No experiment yet. What is the cheapest, fastest test of this risk? It should take hours or days, not weeks.' });
+      checks.push({ state: 'missing', text: 'No experiment yet. Name the cheapest, fastest test of this risk.' });
     } else if (soundsLong(v.exp)) {
       checks.push({ state: 'revise', text: 'The experiment sounds long. Cut it down to something you can run in hours or days.' });
     } else {
-      checks.push({ state: 'ok', text: 'Experiment planned. Keep it to hours or days.' });
+      checks.push({ state: 'ok', text: 'Experiment planned, and it sounds short enough to run this week.' });
     }
 
     if (!v.crit) {
-      checks.push({ state: 'missing', text: 'No success criteria. Decide now what result means “build it”, for example “4 of 5 users complete the task”.' });
+      checks.push({ state: 'missing', text: 'No success criteria yet. Name the result that means “build it”, for example “4 of 5 users complete the task”.' });
     } else if (!hasNumber(v.crit)) {
-      checks.push({ state: 'revise', text: 'Make the criteria countable, for example “4 of 5 users complete the task” or “20% of visitors click”, so the result cannot be argued away.' });
+      checks.push({ state: 'revise', text: 'Make the criteria countable, for example “4 of 5 users complete the task” or “20% of visitors click”.' });
     } else {
-      checks.push({ state: 'ok', text: 'Success criteria set before the test, which stops the result being explained away afterward.' });
+      checks.push({ state: 'ok', text: 'Success criteria are countable, so the result will be clear either way.' });
     }
 
     const graded = checks.filter(c => c.state !== 'info');

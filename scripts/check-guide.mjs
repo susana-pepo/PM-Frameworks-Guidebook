@@ -22,7 +22,7 @@ const SLUG_FILES = new Map([...meta.matchAll(/slug:\s*'([^']+)',[^}]*?file:\s*'(
 const SLUGS = new Set([...meta.matchAll(/slug:\s*'([^']+)'/g)].map(m => m[1]));
 const FILE_TO_SLUG = Object.fromEntries([...meta.matchAll(/slug:\s*'([^']+)'[^}]*?file:\s*'([^']+)'/gs)].map(m => [m[2], m[1]]));
 
-const COMPONENT_CLASSES = new Set(`guide guide-intro lede summary summary-title chapter chapter-head chapter-dek
+const COMPONENT_CLASSES = new Set(`guide guide-intro lede summary summary-title more chapter chapter-head chapter-dek
 callout callout--tip callout--caution callout-title cards card card-key card-title card-q card-meta
 steps step-title step-note scale scale-value scale-label scale-note formula op formula-result
 table-wrap table table--compare is-top num fit fit-col contrast contrast-col contrast-label
@@ -163,6 +163,30 @@ function check(file) {
     const why = q.querySelector('.quiz-why')?.textContent.trim() || '';
     if (/^(correct|right|wrong|incorrect|yes|no)\b/i.test(why)) errors.push(`quiz item ${i + 1}: explanation starts with a verdict ("${why.slice(0, 20)}")`);
     if (!why) warns.push(`quiz item ${i + 1}: no explanation`);
+    if (q.dataset.section && !chapters.some(c => c.id === q.dataset.section)) errors.push(`quiz item ${i + 1}: data-section="${q.dataset.section}" is not a chapter id`);
+    // An explanation that pastes a sentence from the guide teaches nothing new.
+    if (why && bodyRuns(article, q).some(run => why.toLowerCase().includes(run))) warns.push(`quiz item ${i + 1}: explanation repeats a 7-word run from the guide`);
+  });
+
+  // Each section is shown on its own, so text must not point at another
+  // section by position. Link it by name with data-section-link instead.
+  const visible = article.textContent;
+  const positional = visible.match(/\b(at the top of this (guide|page)|(the )?(previous|next|last) (chapter|section)|the chapter (before|after) (this|it)|earlier in this guide|later in this guide)\b/i);
+  if (positional) errors.push(`points at another section by position: "${positional[0]}" (name it and use data-section-link)`);
+  const above = [...article.querySelectorAll('p, li, figcaption, dd')].map(el => el.textContent).find(t => /\b(shown above|see above|figure above|map above|chart above|diagram above|curve above|canvas above)\b/i.test(t));
+  if (above) warns.push(`"above" may point at a figure in another section: "${above.slice(0, 70)}"`);
+
+  if (article.querySelector('[data-hero-ref]') && !article.querySelector('figure[data-hero]')) errors.push('data-hero-ref without a hero figure');
+  // Two callouts in a row read as one box after another; fold one into prose.
+  article.querySelectorAll('.callout + .callout').forEach(c => warns.push(`two callouts in a row: "${c.textContent.trim().slice(0, 40)}"`));
+  // A dek should add a fact its heading lacks.
+  chapters.forEach(ch => {
+    const h = ch.querySelector('h2')?.textContent || '';
+    const dek = ch.querySelector('.chapter-dek')?.textContent || '';
+    if (!dek) return;
+    const words = (t) => new Set(t.toLowerCase().match(/[a-z]{4,}/g) || []);
+    const hw = words(h); const shared = [...words(dek)].filter(w => hw.has(w));
+    if (shared.length >= 3) warns.push(`#${ch.id} dek repeats its heading (${shared.join(', ')})`);
   });
 
   // Copy rules on visible text (excluding script/style)
@@ -309,4 +333,19 @@ function splitTop(sel) {
   }
   out.push(cur);
   return out;
+}
+
+// 7-word runs of guide text outside the quiz, for spotting pasted explanations.
+function bodyRuns(article, quizItem) {
+  if (!article._runs) {
+    const body = [...article.querySelectorAll('p, li, dd, td')].filter(el => !el.closest('.quiz, script, style')).map(el => el.textContent.toLowerCase()).join(' \n ');
+    const words = body.split(/\s+/);
+    const runs = new Set();
+    for (let i = 0; i + 7 <= words.length; i++) {
+      const run = words.slice(i, i + 7).join(' ');
+      if (!run.includes('\n')) runs.add(run);
+    }
+    article._runs = [...runs];
+  }
+  return article._runs;
 }

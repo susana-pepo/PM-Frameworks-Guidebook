@@ -4,7 +4,6 @@ import { openSearch } from '../components/search.js';
 import { setPageMeta } from '../utils/page-meta.js';
 
 const ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
 export function renderHub(container) {
   setPageMeta({ title: null, focus: false });
@@ -18,7 +17,6 @@ export function renderHub(container) {
           <button class="home-search" type="button" id="home-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
             <span>Search by name or problem</span>
-            <span class="home-search-keys" aria-hidden="true"><kbd>${isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd></span>
           </button>
         </div>
 
@@ -58,7 +56,7 @@ function renderFamily(cat, i) {
           <a href="#/category/${cat.id}"><span class="thumb" aria-hidden="true"></span>${cat.name}</a>
         </h3>
         <p class="family-when">${cat.when}</p>
-        ${guide ? `<a class="family-compare link" href="#/compare/${guide.slug}">How to choose between them</a>` : ''}
+        ${guide ? `<a class="family-compare link" href="#/compare/${guide.slug}">How to choose<span class="visually-hidden"> a ${cat.name.toLowerCase()} framework</span></a>` : ''}
       </header>
       <ol class="family-list">
         ${list.map(fw => `

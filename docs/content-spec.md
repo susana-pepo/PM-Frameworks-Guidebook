@@ -89,21 +89,20 @@ sentence case). The `<h2>` is the fuller section title.
 | `when` | When to use | Use it when / skip it when |
 | `pitfalls` | Pitfalls | Common mistakes and their fixes |
 | `session` | Run a session | Who, prep, agenda, facilitation tips (optional) |
-| `quiz` | Quiz | Check your understanding |
+| `quiz` | Quiz | Five or more questions; h2 "Test yourself on <name>" |
 
 ### Comparison guides
 
-| id | data-nav |
-|---|---|
-| `overview` | At a glance |
-| `compare` | Side by side |
-| `decide` | How to decide |
-| `scenarios` | Scenarios |
-| `combine` | Using them together |
-| `picker` | Picker |
+| id | data-nav | Holds |
+|---|---|---|
+| `overview` | At a glance | The four in one line each, then the side-by-side table |
+| `picker` | Choose | The picker tool; the static decision path sits under it in a `<details>` ("The rules behind the picker") so it is never on screen twice |
+| `scenarios` | Scenarios | Situations and the framework each one calls for |
+| `combine` | Using them together | How the four hand off to each other |
 
-Keep the sections the source has; drop a row from this table only when the
-source has nothing for it.
+The header question of a comparison guide is the family's "when" line, so
+the lede states how the four differ, never "this guide sets them side by
+side".
 
 ## 3. Components
 
@@ -220,6 +219,9 @@ the colour already marks the slot.
   each row becomes a record with its column names as small labels. Keep
   numeric and comparison tables as tables.
 - A table must not be used for layout.
+- When the heading right above already names the table, keep the caption for
+  screen readers with `<caption class="visually-hidden">`; the app then
+  shows no title above the table.
 
 ### Fit (use it when / skip it when)
 ```html
@@ -278,7 +280,9 @@ one to avoid or the one to copy.
 </figure>
 ```
 `data-hero` marks the one figure that opens the guide (in `guide-intro`).
-A figure appears once; do not repeat the hero inside a section.
+A section that reads the hero figure shows it again: put
+`<div data-hero-ref></div>` where the figure should appear and the app
+places a copy there (ids removed). Do not hand-copy the figure.
 
 Inside an `.example` a figure sits flat on the example's paper (no second
 frame). A wide diagram keeps its `min-width` and scrolls: either the
@@ -409,10 +413,26 @@ The app adds the copy button.
 </ol>
 ```
 - `data-answer` is the zero-based index of the correct option.
-- `quiz-why` is shown after any answer, so write it neutrally: explain the
-  right answer, never start with "Correct" or "Wrong". The app adds the
-  verdict line.
+- `data-section="<chapter id>"` names the section that teaches the
+  question; the app adds a "Revisit" link under the explanation.
+- `quiz-why` is shown after any answer, so write it neutrally, never
+  starting with "Correct" or "Wrong" (the app adds the verdict line). In
+  one or two sentences, say why the right answer is right in new words, and
+  why the most tempting wrong option is wrong. Do not paste a sentence from
+  the guide; the Revisit link is there for rereading.
+- The quiz h2 names the guide ("Test yourself on RICE"); no dek.
 - No script needed; the app runs every quiz.
+
+### More (a collapsed block)
+```html
+<details class="more">
+  <summary>The rules behind the picker</summary>
+  … components …
+</details>
+```
+For material a reader opens on purpose, such as the static decision path
+under a comparison guide's picker. Never for teaching content a reader
+needs to follow the section.
 
 ### Links
 - To another guide: `<a data-guide-link="ice">ICE Score</a>`; to a chapter of
@@ -500,6 +520,41 @@ items onto, the Kano curve, a Wardley map, a loop diagram.
   changing every select and clicking every button.
 
 ## 7. Writing
+
+### One section at a time, said once
+
+Readers see one section at a time and arrive at any section by link, so:
+- Never point at another section by position ("above", "the previous
+  chapter", "at the top of this guide", "the next section covers").
+  Name it and link it: `<a href="#score" data-section-link>Scoring</a>`.
+  Do not announce what the next section covers; the contents and the pager
+  do that.
+- Say each thing once in its natural home. The introduction defines; the
+  sections teach. Chapter 1 does not re-open with the lede.
+- The hero caption tells the reader how to read the figure (axes,
+  direction, what the colours mean). It does not restate the thesis.
+- The lede does not paraphrase the header question; "In short" adds what
+  the lede leaves out (the rule of thumb, the numbers to remember).
+- A dek is optional and must add a fact the h2 lacks (a number, a limit,
+  an audience). Delete deks that paraphrase their heading. A heading that
+  needs a dek to make its point should become that point ("RICE needs data
+  and a list long enough to be worth the setup", not "When RICE fits, and
+  when it does not" plus a dek).
+- No headings that only list what follows ("Smart Shuffle, Social
+  Playlists and Lyrics Display" above a table of those three). The
+  reading of an example is headed by its finding ("Low confidence, not low
+  impact, held back Social Playlists"), not "What the scores tell us".
+- No callout that repeats the paragraph or cards next to it, and never two
+  callouts in a row.
+- Larkwell is introduced once per guide, at its first mention: "Larkwell, a
+  fictional piano-learning app for adults (figures are illustrative)".
+  After that it is just Larkwell. Hero captions do not repeat it.
+- A rule may appear in its teaching section, in Pitfalls and in the quiz;
+  not in every tool hint and step as well.
+- At most one "X, not Y" construction across a guide's deks and callout
+  titles.
+- Card keys (`.card-key`) spell something (R, I, C, E; the CIRCLES
+  letters). Do not put a lone initial on a card whose title starts with it.
 
 Voice: a knowledgeable colleague explaining clearly. Calm, concrete,
 specific. American spelling ("prioritize", "behavior"), to match the

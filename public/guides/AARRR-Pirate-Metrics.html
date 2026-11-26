@@ -1,7 +1,7 @@
 <article class="guide" data-guide="aarrr">
 
   <header class="guide-intro">
-    <p class="lede">AARRR (pirate metrics) splits the customer lifecycle into five stages and gives each one a metric: Acquisition, Activation, Retention, Referral and Revenue. It shows where in the journey people drop out, and so where to work first.</p>
+    <p class="lede">AARRR, or pirate metrics, gives each of five lifecycle stages one metric: Acquisition, Activation, Retention, Referral and Revenue. Startups and growth teams use it to choose the stage to work on next, and it is a common structure for growth questions in PM interviews.</p>
 
     <figure class="figure" data-hero>
       <ol class="af-funnel" aria-label="The five AARRR stages, from Acquisition to Revenue">
@@ -11,35 +11,33 @@
         <li data-series="4"><span class="af-num">4</span><span class="af-text"><span class="af-name">Referral</span><span class="af-q">Do they tell others?</span></span></li>
         <li data-series="5"><span class="af-num">5</span><span class="af-text"><span class="af-name">Revenue</span><span class="af-q">Do they pay?</span></span></li>
       </ol>
-      <figcaption>Acquisition, Activation and Retention each keep fewer people than the stage before; Referral and Revenue measure what users bring back, in new users and in payment. The step that keeps the smallest share of its users is the first place to look.</figcaption>
+      <figcaption>Read top to bottom, in McClure’s order. Each band is a stage and the question its metric answers. The first three bands narrow because each stage keeps only part of the one before; Referral and Revenue count what users bring back, in new users and in payment.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Track five numbers: how people find you, whether they reach the moment the product proves its value, whether they come back, whether they bring others and whether they pay. Fix activation and retention before you pay for more acquisition, because more traffic will not fix a funnel that leaks in the middle. Your own cohort numbers show which stage keeps the smallest share of the users who reach it.</p>
+      <p>Follow one cohort through the stages: the step that keeps the smallest share of the users who reach it is where to start. Fix activation and retention before you pay for more acquisition, because more traffic will not fix a funnel that leaks in the middle. On the money side, an LTV:CAC ratio of 3:1 or better is the usual sign that acquisition is worth paying for.</p>
     </div>
   </header>
 
   <section class="chapter" id="understand" data-nav="How it works">
     <header class="chapter-head">
-      <h2>A funnel that shows where people drop out</h2>
-      <p class="chapter-dek">Your product is a leaky bucket; the funnel shows where the holes are</p>
+      <h2>Compare the share each step keeps</h2>
     </header>
 
-    <p>Many teams report totals that only grow, such as sign-ups or downloads, and those say nothing about whether anyone stays. AARRR looks at the <strong>full user lifecycle</strong> and asks where people drop out, so the work goes into fixing leaks and more of the people you already attract make it through.</p>
+    <p>Many teams report totals that only grow, such as sign-ups or downloads, and those say nothing about whether anyone stays. AARRR replaces them with one rate per stage across the <strong>full user lifecycle</strong>, so the work goes into the leaks and more of the people you already attract make it through.</p>
     <p>Dave McClure introduced the model in 2007, in a talk called “Startup Metrics for Pirates: AARRR!”, to give startups a simple way to think about growth that is more than “get more traffic”. Read the initials aloud and you get a pirate’s “AARRR”, hence pirate metrics. His talk lists the stages as Acquisition, Activation, Retention, Referral and Revenue, the order this guide uses. Many later write-ups put Revenue before Referral. The letters are the same either way, and measuring both stages matters more than their order.</p>
-    <p>Each stage gets one number, measured on a <dfn>cohort</dfn>: a group of users who share a start event in the same period, such as everyone who signed up in one month. Following one cohort from stage to stage shows the share each step keeps, and the step that keeps the smallest share is the first candidate to fix.</p>
+    <p>Each stage gets one number, measured on a <dfn>cohort</dfn>: a group of users who share a start event in the same period, such as everyone who signed up in one month. Tracking a single cohort means every rate describes the same people. Raw counts would mislead, because the early stages hold the most users and so lose the most people even when they keep a healthy share of them.</p>
 
     <div class="callout callout--tip">
-      <p class="callout-title">Fix activation and retention before buying acquisition</p>
-      <p>People often read AARRR top-down and start with acquisition. A better default is to fix activation and retention before you pay for more acquisition, because acquired users who never activate or never return are wasted spend. Before product-market fit, retention is the signal that matters; the full funnel becomes more useful after it. No stage is the most important in general. Treat this as a heuristic, and let your own numbers decide which stage to start with.</p>
+      <p class="callout-title">Start in the middle of the funnel</p>
+      <p>People often read AARRR top-down and start with acquisition. Users who never activate or never come back are wasted spend, so activation and retention come first and paid acquisition waits until users stay. No stage matters most in general: treat this as a heuristic, and let your own step comparison pick the stage.</p>
     </div>
   </section>
 
   <section class="chapter" id="stages" data-nav="The stages">
     <header class="chapter-head">
       <h2>Five stages, each one a place to lose people</h2>
-      <p class="chapter-dek">One question per stage, and the metric that answers it</p>
     </header>
 
     <ol class="steps">
@@ -47,19 +45,19 @@
         <h3 class="step-title">Acquisition</h3>
         <p class="step-note">How do users find your product?</p>
         <p>Channels include SEO, paid ads, social media, the app store, partnerships, word of mouth and content marketing. Measure the cost of each new user by channel, not only as one total.</p>
-        <p>Aim for the channels whose users go on to activate and stay, not the most volume.</p>
+        <p>Rank channels by how many of their users activate and stay; volume alone flatters cheap sources.</p>
       </li>
       <li>
         <h3 class="step-title">Activation</h3>
         <p class="step-note">Do users have a great first experience?</p>
-        <p>Activation is the first time a new user experiences the product’s core value, the <dfn>aha moment</dfn>, defined as a specific event in a time window. For Larkwell, the fictional piano-learning app in this guide’s example, it is playing a first song with real-time feedback. For a team chat tool, it might be sending a first message and getting a reply. Users who never reach the aha moment rarely come back.</p>
+        <p>Activation is the first time a new user experiences the product’s core value, the <dfn>aha moment</dfn>, defined as a specific event in a time window. For Larkwell, a fictional piano-learning app for adults (figures are illustrative), it is playing a first song with real-time feedback. For a team chat tool, it might be sending a first message and getting a reply. Users who never reach the aha moment rarely come back.</p>
         <p>Define your aha moment, then remove every point of friction between sign-up and it.</p>
       </li>
       <li>
         <h3 class="step-title">Retention</h3>
         <p class="step-note">Do users come back?</p>
-        <p>If users do not return, acquisition spend is wasted and revenue cannot build. Measure D1, D7 and D30 retention: the share of a sign-up cohort that is active 1, 7 and 30 days after signing up. Retention is an output metric: a team moves it by changing what users do in the product, not directly.</p>
-        <p>Find out whether users stay before you scale acquisition.</p>
+        <p>Measure D1, D7 and D30 retention: the share of a sign-up cohort that is active 1, 7 and 30 days after signing up. Retention is an output metric: a team moves it by changing what users do in the product, not directly.</p>
+        <p>D1 and D7 give the earliest warning; D30 shows who has formed a habit.</p>
       </li>
       <li>
         <h3 class="step-title">Referral</h3>
@@ -78,8 +76,7 @@
 
   <section class="chapter" id="metrics" data-nav="Metrics">
     <header class="chapter-head">
-      <h2>What to measure at each stage</h2>
-      <p class="chapter-dek">One primary metric per stage, a few secondary ones, and the definitions that keep them apart</p>
+      <h2>One primary metric per stage, backed by a few secondary ones</h2>
     </header>
 
     <div class="table-wrap">
@@ -90,7 +87,7 @@
             <th scope="col">Stage</th>
             <th scope="col">Primary metric</th>
             <th scope="col">Secondary metrics</th>
-            <th scope="col">Larkwell (illustrative)</th>
+            <th scope="col">Larkwell</th>
           </tr>
         </thead>
         <tbody>
@@ -102,10 +99,10 @@
         </tbody>
       </table>
     </div>
-    <p>Larkwell is a fictional company, and all of its figures are illustrative. They are not industry benchmarks. Ranges that circulate among consumer app teams vary widely by category, platform and year and rarely name a source, so compare each stage with your own earlier cohorts first.</p>
+    <p>Larkwell’s figures are not industry benchmarks. Ranges that circulate among consumer app teams vary widely by category, platform and year and rarely name a source, so compare each stage with your own earlier cohorts first.</p>
 
     <h3>Terms that are easy to mix up</h3>
-    <p>Acquisition cost comes in three forms, each divided by something different. The rest of the lifecycle has its own shorthand. Where the case has the numbers, the Larkwell figures show how each one is calculated.</p>
+    <p>Acquisition cost comes in three forms, each dividing spend by something different. Where Larkwell has the numbers, an entry ends with its calculation.</p>
     <dl class="facts">
       <div><dt>CAC</dt><dd>Customer acquisition cost: total sales and marketing spend in a period divided by the new paying customers won in that period. Say whether it is blended (all channels) or per channel. Larkwell: $180,000 ÷ 6,000 = $30 blended.</dd></div>
       <div><dt>CPI</dt><dd>Cost per install: paid spend divided by installs from paid channels. Lower than CAC, because not every install becomes a customer. Larkwell: $150,000 ÷ 60,000 = $2.50.</dd></div>
@@ -119,7 +116,6 @@
     </dl>
 
     <h3>LTV:CAC, the check on whether growth pays</h3>
-    <p>Dividing LTV by CAC is a widely used test of whether acquisition is worth paying for.</p>
     <ol class="scale" aria-label="LTV to CAC ratio bands">
       <li><span class="scale-value">3:1+</span><span class="scale-label">Healthy</span><span class="scale-note">Each customer returns at least three times what it cost to win them. 3:1 or better is a widely cited rule of thumb for subscription businesses, for example in David Skok’s writing on SaaS metrics. There is room to invest more in acquisition.</span></li>
       <li><span class="scale-value">1–3:1</span><span class="scale-label">Hard to pay back</span><span class="scale-note">Customers earn back what they cost, but slowly and with little to spare. Below about 3:1, acquisition spending is hard to pay back, so improve retention or pricing before you scale spend.</span></li>
@@ -131,13 +127,11 @@
   <section class="chapter" id="example" data-nav="Example">
     <header class="chapter-head">
       <h2>Finding the leak in Larkwell’s piano funnel</h2>
-      <p class="chapter-dek">One month of new accounts, followed through all five stages</p>
     </header>
 
     <div class="example">
       <p class="example-label">Worked example</p>
-      <h3>A subscription app that teaches adults piano at home</h3>
-      <p>Larkwell, a fictional piano-learning app, listens through the phone’s microphone or a MIDI keyboard and gives real-time feedback on each note. All figures are illustrative, chosen to show the method. The table follows one month of new accounts in McClure’s order.</p>
+      <p>Larkwell is a subscription app that teaches adults piano at home. It listens through the phone’s microphone or a MIDI keyboard and gives real-time feedback on each note. The table follows one month of new accounts through all five stages, in McClure’s order.</p>
       <div class="table-wrap">
         <table class="table">
           <caption>One month of Larkwell’s new accounts, stage by stage</caption>
@@ -167,12 +161,11 @@
         <div><dt>Revenue</dt><dd>Model: a 7-day free trial, then $14.99 a month or $89.99 a year ($7.50 a month). 25% of new accounts start a trial and 30% of trials convert, so 6,000 new subscribers a month, 7.5% of new accounts. With 80% of subscribers on the annual plan, ARPPU is $9.00 a month. Lever: show the paywall after the aha moment, not before.</dd></div>
       </dl>
       <div class="example-reading">
-        <h4>Retention, not acquisition, is where Larkwell leaks</h4>
-        <p><strong>Retention is the leak.</strong> Compare the share each step keeps of the users who reach it: Activation keeps 45% of new accounts and Retention keeps 20% of activated learners. Retention keeps the smallest share, so four in five activated learners are gone within a month. Activation is the second-largest loss, with 55% of new accounts never completing a first lesson. It also loses more people in raw numbers (44,000 against 28,800), but only shares can be compared across stages of different sizes.</p>
-        <p><strong>Revenue is not the constraint.</strong> 30% of trial starts convert, and each subscriber is worth about $96 in gross profit against a $30 CAC. The problem is that too few learners stay long enough to matter.</p>
-        <p><strong>Industry ranges would not settle it.</strong> Figures that circulate for consumer apps vary by category, platform and year. The step comparison is what points at retention, and Larkwell’s own earlier cohorts are the better benchmark.</p>
-        <p><strong>More marketing would not help.</strong> Larkwell spends $150,000 a month on paid installs, which buys 60,000 installs and 48,000 new accounts. If those accounts retain like the rest, about 4,320 are still active on day 30: about $35 per retained learner. Raising D30 retention from 9% to 11% would keep 5,280 for the same spend, about $28 each.</p>
-        <p><strong>The fix is habit formation.</strong> Make progress visible and make practice feel rewarding rather than like homework, then measure D30 against the 11% target.</p>
+        <h3>Retention keeps only one in five activated learners</h3>
+        <p>Activation keeps 45% of new accounts and Retention keeps 20% of activated learners, the smallest share of any step. Activation is the second-largest loss, with 55% of new accounts never completing a first lesson. It also loses more people in raw numbers (44,000 against 28,800), but only shares can be compared across stages of different sizes.</p>
+        <p>Revenue is not the constraint: 30% of trial starts convert, and each subscriber is worth about $96 in gross profit against a $30 CAC. Too few learners stay long enough for that to matter. No industry range was needed to see it; the step comparison points at retention, and Larkwell’s own earlier cohorts are the benchmark to beat.</p>
+        <p>Larkwell spends $150,000 a month on paid installs, which buys 60,000 installs and 48,000 new accounts. If those accounts retain like the rest, about 4,320 are still active on day 30, at about $35 per retained learner. Raising D30 retention from 9% to 11% would keep 5,280 for the same spend, about $28 each.</p>
+        <p>The fix is habit formation: make progress visible and make practice feel rewarding rather than like homework, then measure D30 against the 11% target.</p>
       </div>
     </div>
   </section>
@@ -180,13 +173,12 @@
   <section class="chapter" id="try" data-nav="Try it">
     <header class="chapter-head">
       <h2>Find the leak in your own funnel</h2>
-      <p class="chapter-dek">Enter a cohort to see the weakest step, then map what happens at each stage</p>
     </header>
 
     <div class="tool" data-tool="leak-finder">
       <div class="tool-head">
         <h3 class="tool-title">Leak finder</h3>
-        <p class="tool-hint">It starts with Larkwell’s month from the example. Replace the numbers with one cohort of your own users. Activation and Retention are compared as steps; Referral and Revenue are shown as a share of new users, because not every paying or referring user passes through day 30.</p>
+        <p class="tool-hint">It starts with Larkwell’s month from the <a href="#example" data-section-link>Example</a>. Replace the numbers with one cohort of your own users. Activation and Retention are compared as steps; Referral and Revenue are shown as a share of new users, because not every paying or referring user passes through day 30.</p>
       </div>
       <div class="fields" data-cols="3" data-compact>
         <div class="field">
@@ -276,8 +268,7 @@ I’d focus on improving [metric] by [action].</pre>
 
   <section class="chapter" id="when" data-nav="When to use">
     <header class="chapter-head">
-      <h2>When AARRR fits, and when it does not</h2>
-      <p class="chapter-dek">It diagnoses a product that has users; it does not choose features or set strategy</p>
+      <h2>AARRR diagnoses growth in a product that already has users</h2>
     </header>
 
     <div class="fit">
@@ -303,20 +294,19 @@ I’d focus on improving [metric] by [action].</pre>
       </div>
     </div>
 
-    <p>AARRR is usually the first step of a growth plan: it finds the leak before the team chooses a North Star Metric. <a data-guide-link="compare-growth">Choosing a growth framework</a> shows how the four growth frameworks fit together.</p>
+    <p>AARRR usually comes first in a growth plan: it finds the leak before the team chooses a North Star Metric. <a data-guide-link="compare-growth">Compare the four growth frameworks</a>.</p>
   </section>
 
   <section class="chapter" id="pitfalls" data-nav="Pitfalls">
     <header class="chapter-head">
       <h2>Six ways to misread the funnel</h2>
-      <p class="chapter-dek">Most of them come from looking at the wrong stage or the wrong number</p>
     </header>
 
     <ol class="pitfalls">
       <li>
         <h3 class="pitfall-title">Buying users the funnel cannot keep</h3>
         <p>Spending on ads and marketing while activation or retention is broken is like pouring water into a bucket with a hole in the bottom. You pay for every user, including the ones who leave in the first week. A blended view makes it worse, because cheap volume from a weak channel can look like success.</p>
-        <p class="pitfall-fix"><strong>Fix:</strong> compute each stage’s conversion first and fix the largest relative loss before you raise acquisition spend. Judge each channel by how many of its users activate and stay, not by volume.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> compute each stage’s conversion first and fix the largest relative loss before you raise acquisition spend. Split the funnel by channel, so a cheap source whose users leave shows up as a leak instead of hiding in the blended total.</p>
       </li>
       <li>
         <h3 class="pitfall-title">Reporting vanity metrics</h3>
@@ -348,12 +338,11 @@ I’d focus on improving [metric] by [action].</pre>
 
   <section class="chapter" id="quiz" data-nav="Quiz">
     <header class="chapter-head">
-      <h2>Check your understanding</h2>
-      <p class="chapter-dek">Eight questions on the stages, the metrics and where to start</p>
+      <h2>Test yourself on AARRR</h2>
     </header>
 
     <ol class="quiz">
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="understand">
         <p class="quiz-q">Which five stages make up AARRR?</p>
         <ul class="quiz-options">
           <li><button type="button">Awareness, Adoption, Retention, Referral, Revenue</button></li>
@@ -361,9 +350,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">Attention, Activation, Retention, Referral, Renewal</button></li>
           <li><button type="button">Acquisition, Activation, Retention, Referral, Revenue</button></li>
         </ul>
-        <div class="quiz-why"><p>Acquisition, Activation, Retention, Referral and Revenue, in the order of McClure’s 2007 talk. Many later write-ups put Revenue before Referral; both orders circulate and the stages are the same. The order in which you fix them is a separate question.</p></div>
+        <div class="quiz-why"><p>The five are Acquisition, Activation, Retention, Referral and Revenue; McClure’s talk puts Referral fourth, and many later write-ups swap the last two. Awareness and Adoption are marketing-funnel stages, not AARRR’s.</p></div>
       </li>
-      <li class="quiz-item" data-answer="0">
+      <li class="quiz-item" data-answer="0" data-section="understand">
         <p class="quiz-q">A team sees 45% activation and 9% D30 retention, and the marketing lead wants to double the ad budget. What does the AARRR heuristic suggest?</p>
         <ul class="quiz-options">
           <li><button type="button">Fix activation and retention before buying more installs</button></li>
@@ -371,9 +360,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">Launch a referral program to bring acquisition costs down</button></li>
           <li><button type="button">Raise prices so that each new user is worth more</button></li>
         </ul>
-        <div class="quiz-why"><p>Acquired users who never activate or never return are wasted spend, so the heuristic is to fix activation and retention before paying for more acquisition. A referral program and a price rise both depend on users who stay. The team’s own step comparison then shows which of the two to start with.</p></div>
+        <div class="quiz-why"><p>Out of every 100 new users this team keeps 9 past day 30, so doubling the budget mostly doubles the number who leave. Acquisition does feed every later stage, but most of what it feeds in is gone by day 30; a referral program or a price rise hits the same leak, since both depend on users who stay.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="stages">
         <p class="quiz-q">What is the aha moment in Activation?</p>
         <ul class="quiz-options">
           <li><button type="button">When the user pays for the first time</button></li>
@@ -381,9 +370,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">When the user first gets the core value</button></li>
           <li><button type="button">When the user completes their profile</button></li>
         </ul>
-        <div class="quiz-why"><p>It is the first time a new user experiences the product’s core value, defined as a specific event in a time window: for Larkwell, playing a first song with real-time feedback; for a team chat tool, sending a first message and getting a reply. Everything in onboarding should lead to it.</p></div>
+        <div class="quiz-why"><p>It is the event where a new user first feels what the product is for, such as a Larkwell learner hearing live feedback on a first song. Completing a profile is a common onboarding step, but it gives the user nothing of value on its own, so it makes a poor activation event.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="metrics">
         <p class="quiz-q">Which LTV:CAC ratio is usually called healthy?</p>
         <ul class="quiz-options">
           <li><button type="button">Above 1:1</button></li>
@@ -391,9 +380,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">At least 10:1</button></li>
           <li><button type="button">Around 2:1</button></li>
         </ul>
-        <div class="quiz-why"><p>3:1 or better is a widely cited rule of thumb. Below about 3:1, acquisition spending is hard to pay back, and below 1:1 every new customer costs more than they bring in. Above 3:1 there is room to invest in acquisition.</p></div>
+        <div class="quiz-why"><p>Three dollars of lifetime value for every dollar spent winning a customer is the usual line for growth worth paying for. Anything above 1:1 does earn its cost back, but so slowly that little is left over to fund the next customer.</p></div>
       </li>
-      <li class="quiz-item" data-answer="3">
+      <li class="quiz-item" data-answer="3" data-section="pitfalls">
         <p class="quiz-q">Why is spending heavily on acquisition while retention is poor a mistake?</p>
         <ul class="quiz-options">
           <li><button type="button">Paid ads always cost more per user than organic channels</button></li>
@@ -403,7 +392,7 @@ I’d focus on improving [metric] by [action].</pre>
         </ul>
         <div class="quiz-why"><p>This is the leaky bucket. If only 9% of new accounts are active on day 30, most acquisition spend buys users who leave; raising retention makes every acquisition dollar return more.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="metrics">
         <p class="quiz-q">Larkwell pays $2.50 per paid install, yet its blended CAC is $30. What explains the gap?</p>
         <ul class="quiz-options">
           <li><button type="button">CPI leaves out the app store’s commission on each install</button></li>
@@ -411,9 +400,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">CAC also counts the cost of running the free trials</button></li>
           <li><button type="button">CPI counts organic installs as well as paid ones</button></li>
         </ul>
-        <div class="quiz-why"><p>CPI is paid spend divided by paid installs. CAC is total sales and marketing spend ($180,000) divided by new paying customers (6,000). Most installs never become paying customers, so the cost per customer is far higher than the cost per install.</p></div>
+        <div class="quiz-why"><p>The two divide by different things: $2.50 is spend per paid install, while $30 spreads all $180,000 of spend over the 6,000 people who end up paying. Store commissions come out of revenue, not acquisition spend, so they cannot explain the gap.</p></div>
       </li>
-      <li class="quiz-item" data-answer="1">
+      <li class="quiz-item" data-answer="1" data-section="when">
         <p class="quiz-q">How does AARRR relate to a North Star Metric?</p>
         <ul class="quiz-options">
           <li><button type="button">They are two names for the same set of growth metrics</button></li>
@@ -421,9 +410,9 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">A North Star Metric replaces AARRR once a product matures</button></li>
           <li><button type="button">The North Star Framework suits B2B, AARRR suits B2C</button></li>
         </ul>
-        <div class="quiz-why"><p>AARRR gives the full picture of the lifecycle. A North Star Metric is the single metric that best captures the core value customers get, and the whole team rallies around it; the funnel shows which stages feed it.</p></div>
+        <div class="quiz-why"><p>The funnel gives every lifecycle stage a metric, while a North Star Metric picks the one measure of customer value the whole team aims at; the funnel then shows which stages feed it. They work together, so a North Star does not retire the funnel as a product matures.</p></div>
       </li>
-      <li class="quiz-item" data-answer="2">
+      <li class="quiz-item" data-answer="2" data-section="example">
         <p class="quiz-q">An app keeps 50% of new users through Activation, 20% of activated users through Retention, and converts 40% of retained users to paid. Where is the biggest leak?</p>
         <ul class="quiz-options">
           <li><button type="button">Acquisition</button></li>
@@ -431,7 +420,7 @@ I’d focus on improving [metric] by [action].</pre>
           <li><button type="button">Retention</button></li>
           <li><button type="button">Revenue</button></li>
         </ul>
-        <div class="quiz-why"><p>Retention loses 80% of the users who reach it, more than Activation (50%) or Revenue (60%). That is where to look first.</p></div>
+        <div class="quiz-why"><p>Measured against the users who reach it, Activation loses 50%, Retention 80% and Revenue 60%. Revenue’s 40% conversion can look like the weak spot, but Retention lets go of a larger share.</p></div>
       </li>
     </ol>
   </section>
@@ -752,7 +741,7 @@ I’d focus on improving [metric] by [action].</pre>
     const retText = text.ret ? RETENTION_GOOD.reduce((t, re) => t.replace(re, ' '), lower('ret')) : '';
     if (retText && RETENTION_WEAK.test(retText)) {
       flags++;
-      addFeedback('revise', 'Retention may be weak', 'This may be the place to start: more acquisition will not make up for users who leave. Look at habit triggers, progress visibility and re-engagement.');
+      addFeedback('revise', 'Retention may be weak', 'Check it in the Leak finder. If retention is the smallest share, look at habit triggers, visible progress and re-engagement.');
     }
     if (text.act && !AHA.test(lower('act'))) {
       flags++;
@@ -760,14 +749,14 @@ I’d focus on improving [metric] by [action].</pre>
     }
     if (text.acq && !text.ret) {
       flags++;
-      addFeedback('revise', 'Acquisition without Retention', 'Spending on acquisition before you know whether users stay is a common funnel mistake. Define retention metrics first.');
+      addFeedback('revise', 'Acquisition without Retention', 'The map says how users arrive but not whether they stay. Add D1, D7 and D30 retention.');
     }
 
     const hasNumbers = filled.some((s) => HAS_NUMBER.test(text[s.key]));
     if (!hasNumbers) {
-      addFeedback('missing', 'Add numbers', 'What share of users moves from each stage to the next? Put the counts into the leak finder above: the step that keeps the smallest share of its users is usually where to start.');
+      addFeedback('missing', 'Add numbers', 'Add a count for each stage, then enter the counts in the Leak finder to see which step keeps the smallest share of its users.');
     } else if (!flags) {
-      addFeedback('info', '', 'Compare the conversion from each stage to the next. The step that keeps the smallest share of its users is usually where to start.');
+      addFeedback('info', '', 'No obvious gaps. Enter the counts in the Leak finder to see which step keeps the smallest share of its users; that step is usually where to start.');
     }
   }
 
