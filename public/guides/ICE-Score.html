@@ -367,13 +367,12 @@
   .guide[data-guide="ice"] .ice-meter-fill {
     display: block;
     height: 100%;
-    width: calc(var(--fill, 0.444) * 100%);
-    border-radius: var(--r-sm);
+    width: 100%;
     background: var(--cat);
-    transition: width var(--t-base) var(--ease);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .guide[data-guide="ice"] .ice-meter-fill { transition: none; }
+    /* Scaled, not resized: the fill moves without relayout */
+    transform: scaleX(var(--fill, 0.444));
+    transform-origin: left;
+    transition: transform var(--t-base) var(--ease);
   }
 </style>
 

@@ -47,10 +47,12 @@
   color: var(--ink-2);
   font-size: var(--fs-14);
   font-weight: var(--w-medium);
-  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-press) var(--ease);
 }
 .bar-link svg { width: 16px; height: 16px; transition: transform var(--t-base) var(--ease); }
-.bar-link:hover, .bar-link[aria-expanded="true"] { background: var(--paper-hover); color: var(--ink); }
+.bar-link[aria-expanded="true"] { background: var(--paper-hover); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .bar-link:hover { background: var(--paper-hover); color: var(--ink); } }
+.bar-link:active, .search-trigger:active { transform: scale(var(--press)); }
 .bar-link[aria-expanded="true"] svg { transform: rotate(180deg); }
 
 .bar-tools {
@@ -73,9 +75,9 @@
   color: var(--ink-3);
   font-size: var(--fs-14);
   text-align: left;
-  transition: border-color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
+  transition: border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-press) var(--ease);
 }
-.search-trigger:hover { border-color: var(--rule-ink); color: var(--ink-2); }
+@media (hover: hover) and (pointer: fine) { .search-trigger:hover { border-color: var(--rule-hover); color: var(--ink-2); } }
 .search-trigger > svg { width: 16px; height: 16px; flex: none; }
 .search-trigger-label { flex: 1; }
 .search-trigger-keys { display: inline-flex; gap: 2px; }
@@ -87,7 +89,10 @@
 @media (max-width: 760px) {
   .bar-inner { gap: var(--s-3); padding: 0 var(--s-4); }
   .bar-nav { margin-left: calc(-1 * var(--s-2)); }
-  .search-trigger { width: 40px; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
+  .search-trigger { width: 44px; height: 44px; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
+  .bar-link { height: 44px; }
+  .bar-tools .btn--icon, .index-panel-head .btn--icon { width: 44px; min-height: 44px; }
+  .index-link { display: flex; align-items: center; min-height: 44px; }
   .search-trigger-label, .search-trigger-keys { display: none; }
   .search-trigger > svg { width: 18px; height: 18px; }
 }
@@ -125,8 +130,9 @@
   font-size: var(--fs-14);
   font-weight: var(--w-semibold);
   color: var(--ink);
+  transition: color var(--t-fast) var(--ease);
 }
-.index-col-head:hover { color: var(--cat-ink); }
+@media (hover: hover) and (pointer: fine) { .index-col-head:hover { color: var(--cat-ink); } }
 .index-col-list { display: grid; gap: 2px; }
 .index-link {
   display: block;
@@ -137,7 +143,7 @@
   color: var(--ink-2);
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
-.index-link:hover { background: var(--paper-hover); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .index-link:hover { background: var(--paper-hover); color: var(--ink); } }
 .index-link[aria-current="page"] { color: var(--cat-ink); font-weight: var(--w-medium); }
 .index-link--compare { margin-top: var(--s-1); color: var(--ink-3); }
 
@@ -272,11 +278,6 @@ body.palette-open { overflow: hidden; }
   .page { padding: var(--s-8) var(--s-4) var(--s-16); }
 }
 
-.crumbs ol { display: flex; flex-wrap: wrap; gap: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
-.crumbs li + li::before { content: '/'; margin-right: var(--s-2); color: var(--rule-strong); }
-.crumbs a { color: var(--ink-2); transition: color var(--t-fast) var(--ease); }
-.crumbs a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.crumbs [aria-current] { color: var(--ink-3); }
 
 /* ---- Footer ------------------------------------------------------------- */
 .foot { border-top: 1px solid var(--rule); }
@@ -318,5 +319,9 @@ body.palette-open { overflow: hidden; }
 
 /* ---- Keyframes (one curve, short distances) ----------------------------- */
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes rise-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes drop-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(var(--rise)); } to { opacity: 1; transform: none; } }
+@keyframes drop-in { from { opacity: 0; transform: translateY(calc(-1 * var(--rise))); } to { opacity: 1; transform: none; } }
+
+/* Opened from the keyboard (⌘K, Ctrl+K, "/"), the palette appears at once:
+   it is used too often to wait for an animation. */
+.palette[data-instant] :is(.palette-scrim, .palette-box) { animation: none; }

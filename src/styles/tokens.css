@@ -46,7 +46,7 @@
   --w-semibold: 600;
 
   --measure: 68ch;     /* reading line length */
-  --measure-box: 42rem;/* the same edge as a fixed length, for sans text inside
+  --measure-box: 44.5rem;/* the same edge as a fixed length, for sans text inside
                           components and for callouts, whose ch would differ */
 
   /* ---- Spacing (4px grid) --------------------------------------------- */
@@ -81,6 +81,7 @@
 
   --rule: oklch(0.240 0.014 60 / 0.10);    /* hairline */
   --rule-strong: oklch(0.240 0.014 60 / 0.18);
+  --rule-hover: oklch(0.240 0.014 60 / 0.36);  /* a border under the pointer */
   --rule-ink: oklch(0.240 0.014 60 / 0.82);/* deliberate ruled line (tables, plates) */
 
   /* Chrome accent: a deep ink blue. Links, focus, the primary action.
@@ -144,11 +145,17 @@
   --shadow-2: 0 1px 2px oklch(0.24 0.02 60 / 0.05), 0 6px 16px oklch(0.24 0.02 60 / 0.07);
   --shadow-3: 0 2px 4px oklch(0.24 0.02 60 / 0.06), 0 16px 40px oklch(0.24 0.02 60 / 0.12);
 
-  /* ---- Motion: one curve, three durations ----------------------------- */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* ---- Motion: one strong ease-out, three durations --------------------
+     Enters and feedback start fast and settle. Nothing runs past 200ms and
+     nothing loops. Distances are small: things rise 4px, arrows nudge 3px,
+     a press scales to 0.98. */
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --t-press: 100ms;
   --t-fast: 120ms;
   --t-base: 200ms;
-  --t-slow: 320ms;
+  --rise: 4px;
+  --nudge: 3px;
+  --press: 0.98;
 
   /* ---- Layout ---------------------------------------------------------- */
   --bar-h: 56px;
@@ -188,6 +195,7 @@
 
   --rule: oklch(0.930 0.010 85 / 0.10);
   --rule-strong: oklch(0.930 0.010 85 / 0.18);
+  --rule-hover: oklch(0.930 0.010 85 / 0.34);
   --rule-ink: oklch(0.930 0.010 85 / 0.70);
 
   --accent: oklch(0.740 0.105 250);

@@ -9,7 +9,7 @@
   color: var(--ink-3);
   transition: transform var(--t-base) var(--ease), color var(--t-fast) var(--ease);
 }
-a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { a:hover > .arrow { transform: translateX(var(--nudge)); color: var(--ink); } }
 
 /* ---- Home: intro -------------------------------------------------------- */
 .home-intro {
@@ -50,16 +50,17 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   color: var(--ink-3);
   font-size: var(--fs-16);
   text-align: left;
-  transition: border-color var(--t-fast) var(--ease);
+  transition: border-color var(--t-fast) var(--ease), transform var(--t-press) var(--ease);
 }
-.home-search:hover { border-color: var(--rule-ink); }
+@media (hover: hover) and (pointer: fine) { .home-search:hover { border-color: var(--rule-hover); } }
+.home-search:active { transform: scale(0.99); }
 .home-search > svg { width: 20px; height: 20px; flex: none; }
 .home-search > span:nth-of-type(1) { flex: 1; }
 .home-search-keys { display: inline-flex; gap: 2px; }
 
 /* "Start from your situation" — a ruled list, like a book's quick-reference */
 .home-start {
-  padding: var(--s-6) var(--s-6) var(--s-4);
+  padding: var(--s-6);
   border: 1px solid var(--rule);
   border-radius: var(--r-lg);
   background: var(--paper-raised);
@@ -77,7 +78,9 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   border-top: 1px solid var(--rule);
 }
 .start-row:first-child { border-top: 0; }
+.start-row:last-child { padding-bottom: 0; }
 .start-row dt {
+  text-wrap: balance;
   margin-bottom: var(--s-2);
   font-family: var(--font-serif);
   font-size: var(--fs-18);
@@ -93,7 +96,8 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   color: var(--ink-2);
   transition: color var(--t-fast) var(--ease);
 }
-.start-link:hover { color: var(--cat-ink); text-decoration: underline; text-underline-offset: 3px; }
+.start-link { text-decoration: underline 1px transparent; text-underline-offset: 3px; transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease); }
+@media (hover: hover) and (pointer: fine) { .start-link:hover { color: var(--cat-ink); text-decoration-color: currentColor; } }
 
 /* ---- Home: the index ---------------------------------------------------- */
 .home-index { padding-top: var(--s-4); }
@@ -121,7 +125,9 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   gap: var(--s-3);
   transition: color var(--t-fast) var(--ease);
 }
-.family-name a:hover, .family-name a:focus-visible { color: var(--cat-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.family-name a { text-decoration: underline 1px transparent; text-underline-offset: 5px; transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease); }
+.family-name a:focus-visible { color: var(--cat-ink); text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) { .family-name a:hover { color: var(--cat-ink); text-decoration-color: currentColor; } }
 .family-when {
   margin-top: var(--s-3);
   font-size: var(--fs-16);
@@ -145,16 +151,14 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   gap: var(--s-4);
   align-items: start;
   height: 100%;
-  padding: var(--s-5) var(--s-2);
-  margin: 0 calc(-1 * var(--s-2));
-  border-radius: 0;
-  transition: background-color var(--t-fast) var(--ease);
+  padding: var(--s-5) 0;
 }
-/* The rule sits on the list item, so it stays on the text column while the
-   hover fill bleeds into the gutter. */
 .family-list li { border-top: 1px solid var(--rule); }
 .family-list li:nth-child(-n + 2) { border-top: 0; }
-.entry:hover { background: var(--paper-hover); border-radius: var(--r-md); }
+/* Rows sit flush on the column; the name answers the pointer, not a box */
+.entry-name { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color var(--t-fast) var(--ease); }
+@media (hover: hover) and (pointer: fine) { .entry:hover .entry-name { text-decoration-color: var(--rule-ink); } }
+.entry-question, .feature-question { text-wrap: pretty; }
 .entry-glyph { display: inline-flex; padding-top: 3px; color: var(--ink-3); }
 .entry-glyph svg { width: 22px; height: 22px; }
 .entry-text { display: grid; gap: var(--s-1); }
@@ -216,7 +220,7 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
   background: var(--paper-raised);
   transition: border-color var(--t-fast) var(--ease);
 }
-.feature:hover { border-color: var(--rule-strong); }
+@media (hover: hover) and (pointer: fine) { .feature:hover { border-color: var(--rule-hover); } }
 .feature-glyph { color: var(--ink-3); padding-top: 2px; }
 .feature-glyph svg { width: 26px; height: 26px; }
 .feature-body { display: grid; gap: var(--s-2); align-content: start; }
@@ -230,45 +234,6 @@ a:hover > .arrow { transform: translateX(3px); color: var(--ink); }
 .feature-desc { font-size: var(--fs-16); color: var(--ink-2); }
 .feature-origin { margin-top: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
 .feature .arrow { margin-top: 8px; }
-
-.choose {
-  display: flex;
-  align-items: center;
-  gap: var(--s-6);
-  margin-top: var(--s-4);
-  padding: var(--s-6);
-  border: 1px solid var(--rule);
-  border-radius: var(--r-lg);
-  background: var(--paper-sunk);
-  transition: border-color var(--t-fast) var(--ease);
-}
-.choose:hover { border-color: var(--rule-strong); }
-.choose-text { display: grid; gap: var(--s-1); flex: 1; }
-.choose-title { font-family: var(--font-serif); font-size: var(--fs-20); font-weight: var(--w-medium); }
-.choose-desc { font-size: var(--fs-16); color: var(--ink-2); }
-
-.other-families {
-  margin-top: var(--s-16);
-  padding-top: var(--s-6);
-  border-top: 1px solid var(--rule);
-}
-.other-families-title {
-  margin-bottom: var(--s-3);
-  font-family: var(--font-sans);
-  font-size: var(--fs-14);
-  font-weight: var(--w-semibold);
-  color: var(--ink-3);
-  letter-spacing: 0;
-}
-.other-families ul { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); }
-.other-families a {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  font-size: var(--fs-16);
-  color: var(--ink-2);
-}
-.other-families a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 760px) {
   .family-page-head { margin: var(--s-6) 0 var(--s-8); }

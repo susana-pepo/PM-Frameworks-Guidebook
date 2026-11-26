@@ -116,9 +116,10 @@ function go(n) {
   window.location.hash = it.href;
 }
 
-export function openSearch(initial = '') {
+export function openSearch(initial = '', { instant = false } = {}) {
   if (!root) initSearch();
   lastFocus = document.activeElement;
+  if (instant) root.dataset.instant = ''; else delete root.dataset.instant;
   root.hidden = false;
   document.body.classList.add('palette-open');
   input.value = initial;
@@ -182,10 +183,10 @@ export function initSearch() {
     const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '') || document.activeElement?.isContentEditable;
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      root.hidden ? openSearch() : closeSearch();
+      root.hidden ? openSearch('', { instant: true }) : closeSearch();
     } else if (e.key === '/' && !typing && root.hidden) {
       e.preventDefault();
-      openSearch();
+      openSearch('', { instant: true });
     }
   });
 }

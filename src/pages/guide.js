@@ -191,7 +191,7 @@ function mount(container, info, parsed, route) {
   current.panels = panels;
 
   decorateChapters(chapters);
-  buildToc(page, panels, kind, slug);
+  buildToc(page, panels, kind, slug, cleanup);
   buildIntroContents(panels, kind, slug);
   buildPagers(panels, kind, slug);
   buildFooter(page, info);
@@ -294,7 +294,7 @@ function buildIntroContents(panels, kind, slug) {
 }
 
 /* ---- Contents rail: the way between sections -------------------------- */
-function buildToc(page, panels, kind, slug) {
+function buildToc(page, panels, kind, slug, cleanup) {
   const list = page.querySelector('.toc-list');
   const toggle = page.querySelector('.toc-toggle');
   const currentLabel = page.querySelector('.toc-toggle-current');
@@ -313,6 +313,16 @@ function buildToc(page, panels, kind, slug) {
   };
   toggle.addEventListener('click', () => setOpen(!toc.classList.contains('is-open')));
   toc.querySelector('.toc-sheet').addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+  // The phone sheet floats over the page: Escape or a tap outside closes it.
+  const onKey = (e) => {
+    if (e.key === 'Escape' && toc.classList.contains('is-open')) { setOpen(false); toggle.focus(); }
+  };
+  const onDown = (e) => {
+    if (toc.classList.contains('is-open') && !toc.contains(e.target)) setOpen(false);
+  };
+  document.addEventListener('keydown', onKey);
+  document.addEventListener('pointerdown', onDown);
+  cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('pointerdown', onDown); });
 
   const links = [...list.querySelectorAll('.toc-link')];
   current.setActive = (id) => {
@@ -335,6 +345,7 @@ function showPanel(id, { anchor = null, focus = true } = {}) {
   const { panels, page } = current;
   const index = Math.max(0, panels.findIndex(p => p.id === id));
   const panel = panels[index];
+  const changed = current.panelId && current.panelId !== panel.id;
   panels.forEach(p => p.el.classList.toggle('is-current', p === panel));
   page.dataset.panel = panel.id === INTRO_ID ? 'intro' : 'chapter';
   if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
@@ -344,6 +355,7 @@ function showPanel(id, { anchor = null, focus = true } = {}) {
   // Widgets that size themselves to their container re-measure now that
   // their panel has a width.
   window.dispatchEvent(new Event('resize'));
+  if (changed) enterPanel(page.querySelector('.guide-main'));
 
   requestAnimationFrame(() => {
     if (anchor) {
@@ -360,6 +372,19 @@ function showPanel(id, { anchor = null, focus = true } = {}) {
     const h = panel.id === INTRO_ID ? page.querySelector('.guide-title') : panel.el.querySelector('h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   });
+}
+
+/* A new section settles in: a short fade and a 4px rise (no rise with
+   reduced motion). Web Animations, so a quick second click cancels the
+   first animation instead of restarting a keyframe from zero. */
+function enterPanel(el) {
+  if (!el?.animate) return;
+  el.getAnimations().forEach(a => a.cancel());
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.animate(
+    [{ opacity: 0, transform: `translateY(${still ? 0 : 4}px)` }, { opacity: 1, transform: 'none' }],
+    { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+  );
 }
 
 function goToRoute(route) {
@@ -572,6 +597,7 @@ function wireResults(root, cleanup) {
   const outs = root.querySelectorAll('.tool-result');
   if (!outs.length) return;
   const last = new WeakMap();
+  const lastTick = new WeakMap();
   outs.forEach(o => last.set(o, o.textContent));
   const obs = new MutationObserver(muts => {
     const seen = new Set();
@@ -581,9 +607,18 @@ function wireResults(root, cleanup) {
       seen.add(el);
       if (last.get(el) === el.textContent) return;
       last.set(el, el.textContent);
-      el.classList.remove('is-updated');
-      void el.offsetWidth;
-      el.classList.add('is-updated');
+      // A brief settle shows the number changed. While a value is being
+      // dragged (changes under 400ms apart) it stays still.
+      const now = performance.now();
+      const prev = lastTick.get(el) || 0;
+      lastTick.set(el, now);
+      if (now - prev < 400 || !el.animate) return;
+      el.getAnimations().forEach(a => a.cancel());
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.animate(
+        [{ opacity: 0.55, transform: `translateY(${still ? 0 : 2}px)` }, { opacity: 1, transform: 'none' }],
+        { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+      );
     });
   });
   outs.forEach(o => obs.observe(o, { childList: true, characterData: true, subtree: true }));

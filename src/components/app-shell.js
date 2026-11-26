@@ -65,7 +65,7 @@ export function renderApp() {
 
     <footer class="foot">
       <div class="foot-inner">
-        <p class="foot-line">Made by <a class="link" href="https://susana-pepo.github.io/susana-pepo-pm-portfolio/" target="_blank" rel="noopener">Susana</a> with Claude</p>
+        <p class="foot-line">Made by <a class="link" href="https://susanaperez.com" target="_blank" rel="noopener">Susana</a> with Claude</p>
       </div>
     </footer>
   `;
@@ -150,7 +150,11 @@ function bindTheme() {
   btn.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('pmf-theme', next); } catch (e) { /* storage unavailable */ }
+    // Swap every colour in one frame; see .theme-switching in base.css.
+    const root = document.documentElement;
+    root.classList.add('theme-switching');
     apply(next);
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
   });
 }
 
