@@ -5,17 +5,9 @@ import { renderCategoryPage } from '../pages/category.js';
 import { renderGuide, updateGuideInPlace, unmountGuide } from '../pages/guide.js';
 import { openSearch, initSearch } from './search.js';
 import { CREDIT } from './credit.js';
+import { UI_ICONS } from '../data/icons.js';
 
-const ICON = {
-  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>',
-  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>',
-  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
-  index: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
-  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
-  chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>',
-};
-
-const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
 export function renderApp() {
   const app = document.getElementById('app');
@@ -30,18 +22,18 @@ export function renderApp() {
 
         <nav class="bar-nav" aria-label="Primary">
           <button class="bar-link" id="index-trigger" type="button" aria-expanded="false" aria-controls="index-panel">
-            <span>Index</span>${ICON.chevron}
+            <span>Index</span>${UI_ICONS.chevron}
           </button>
         </nav>
 
         <div class="bar-tools">
           <button class="search-trigger" id="search-trigger" type="button" aria-label="Search frameworks">
-            ${ICON.search}
+            ${UI_ICONS.search}
             <span class="search-trigger-label">Search</span>
             <span class="search-trigger-keys" aria-hidden="true"><kbd>${isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd></span>
           </button>
           <button class="btn btn--quiet btn--icon" id="theme-toggle" type="button" aria-label="Switch to dark theme">
-            <span class="theme-sun">${ICON.sun}</span><span class="theme-moon">${ICON.moon}</span>
+            <span class="theme-sun">${UI_ICONS.sun}</span><span class="theme-moon">${UI_ICONS.moon}</span>
           </button>
         </div>
       </div>
@@ -50,7 +42,7 @@ export function renderApp() {
         <div class="index-panel-inner">
           <div class="index-panel-head">
             <p class="index-panel-title">Index</p>
-            <button class="btn btn--quiet btn--icon" type="button" data-close-index aria-label="Close index">${ICON.close}</button>
+            <button class="btn btn--quiet btn--icon" type="button" data-close-index aria-label="Close index">${UI_ICONS.close}</button>
           </div>
           <div class="index-grid">
             ${categories.map(renderIndexColumn).join('')}
@@ -66,7 +58,7 @@ export function renderApp() {
 
     <footer class="foot">
       <div class="foot-inner">
-        <p class="foot-line">${CREDIT}</p>
+        <p>${CREDIT}</p>
       </div>
     </footer>
   `;
@@ -93,7 +85,7 @@ function renderIndexColumn(cat) {
   const list = getFrameworksByCategory(cat.id);
   const guide = getComparisonGuide(cat.id);
   return `
-    <section class="index-col" data-cat="${cat.id}">
+    <section data-cat="${cat.id}">
       <a class="index-col-head" href="#/category/${cat.id}">
         <span class="thumb thumb--sm" aria-hidden="true"></span>
         <span>${cat.name}</span>
@@ -112,30 +104,28 @@ function renderIndexColumn(cat) {
 function bindIndexPanel() {
   const panel = document.getElementById('index-panel');
   const scrim = document.getElementById('index-scrim');
-  const triggers = [document.getElementById('index-trigger')];
-  let lastTrigger = null;
+  const trigger = document.getElementById('index-trigger');
 
-  const setOpen = (open, trigger) => {
+  const setOpen = (open) => {
     panel.hidden = !open;
     scrim.hidden = !open;
     document.body.classList.toggle('index-open', open);
-    triggers.forEach(t => t.setAttribute('aria-expanded', String(open)));
+    trigger.setAttribute('aria-expanded', String(open));
     if (open) {
-      lastTrigger = trigger || triggers[0];
-      panel.querySelector('.index-link')?.focus({ preventScroll: true });
-    } else if (lastTrigger && panel.contains(document.activeElement)) {
-      lastTrigger.focus();
+      panel.querySelector('.index-link').focus({ preventScroll: true });
+    } else if (panel.contains(document.activeElement)) {
+      trigger.focus();
     }
   };
 
-  triggers.forEach(t => t.addEventListener('click', () => setOpen(panel.hidden, t)));
+  trigger.addEventListener('click', () => setOpen(panel.hidden));
   scrim.addEventListener('click', () => setOpen(false));
   panel.querySelector('[data-close-index]').addEventListener('click', () => setOpen(false));
   panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !panel.hidden) setOpen(false);
   });
-  window.addEventListener('hashchange', () => { if (!panel.hidden) setOpen(false); });
+  onNavigate(() => { if (!panel.hidden) setOpen(false); });
 }
 
 /* ---- Theme ------------------------------------------------------------ */
@@ -147,7 +137,7 @@ function bindTheme() {
     btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#1c1a17' : '#fbf9f4');
   };
-  apply(document.documentElement.getAttribute('data-theme') || 'light');
+  apply(document.documentElement.dataset.theme);
   btn.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('pmf-theme', next); } catch (e) { /* storage unavailable */ }
@@ -162,9 +152,9 @@ function bindTheme() {
 /* ---- Routing ---------------------------------------------------------- */
 function handleRoute(route) {
   const content = document.getElementById('page-content');
-  const slug = route.params?.slug || null;
+  const slug = route.params.slug || null;
   // Guide pages carry the credit in their reading column instead of a footer.
-  document.body.dataset.page = route.page || 'home';
+  document.body.dataset.page = route.page;
 
   document.querySelectorAll('.index-link').forEach(a => {
     if (a.dataset.slug === slug) a.setAttribute('aria-current', 'page');

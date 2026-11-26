@@ -1,15 +1,7 @@
 /**
- * Monoline icon system — a bespoke, thin-stroke glyph per category and
- * framework, replacing the full-colour emoji "stickers" in the chrome.
- *
- * Each icon is a 24×24, `currentColor`-stroked SVG (1.5px, round caps/joins)
- * so it inherits the category accent from its tile and reads as one coherent
- * editorial family across light and dark.
- *
- * Drop-in + reversible: `frameworkGlyph(slug, emoji)` / `categoryGlyph(id, emoji)`
- * return the SVG when one is drawn, otherwise the original emoji in a span —
- * so render points can switch over wholesale and anything not yet drawn simply
- * keeps its emoji until the icon lands. Roll out by filling the registries.
+ * Monoline glyphs, one per category and per framework: 24×24, currentColor
+ * stroke at 1.5px, round caps and joins, so each takes its family's accent
+ * from the tile it sits on.
  */
 
 const SVG_OPEN =
@@ -217,9 +209,9 @@ const FRAMEWORK_ICONS = {
   ),
 };
 
-/** Glyph markup for a framework (falls back to its category's glyph). */
-export function frameworkGlyph(slug, categoryId) {
-  return FRAMEWORK_ICONS[slug] || CATEGORY_ICONS[categoryId] || '';
+/** Glyph markup for a framework. */
+export function frameworkGlyph(slug) {
+  return FRAMEWORK_ICONS[slug];
 }
 
 /** Glyph markup for a category. */
@@ -227,6 +219,13 @@ export function categoryGlyph(id) {
   return CATEGORY_ICONS[id] || '';
 }
 
-/** True once a framework/category has a drawn icon (handy for QA). */
-export const hasFrameworkIcon = (slug) => slug in FRAMEWORK_ICONS;
-export const hasCategoryIcon = (id) => id in CATEGORY_ICONS;
+/** Chrome icons: inline 24×24 strokes sized by the control they sit in. */
+export const UI_ICONS = {
+  arrow: '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>',
+  chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>',
+};

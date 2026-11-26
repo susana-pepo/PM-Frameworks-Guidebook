@@ -5,7 +5,7 @@
 
     <figure class="figure" data-hero>
       <div class="figure-scroll" tabindex="0" role="region" aria-label="Example story map for a music-lesson app">
-        <div class="usm-map usm-map--hero">
+        <div class="usm-map">
           <p class="usm-axis">The user’s journey, left to right →</p>
 
           <p class="usm-rowlabel">Goal</p>
@@ -714,7 +714,6 @@
     color: var(--ink-3);
   }
   .guide[data-guide="user-story-mapping"] button.usm-card { cursor: pointer; }
-  .guide[data-guide="user-story-mapping"] button.usm-card:hover { border-color: var(--series); }
   .guide[data-guide="user-story-mapping"] .usm-story {
     display: flex;
     flex-direction: column;
@@ -732,7 +731,6 @@
     font-size: var(--fs-12);
     cursor: pointer;
   }
-  .guide[data-guide="user-story-mapping"] .usm-mini:hover { color: var(--ink); border-color: var(--rule-ink); }
   .guide[data-guide="user-story-mapping"] .usm-add {
     min-height: 40px;
     border: 1px dashed var(--rule-strong);
@@ -743,7 +741,11 @@
     font-size: var(--fs-14);
     cursor: pointer;
   }
-  .guide[data-guide="user-story-mapping"] .usm-add:hover { color: var(--ink); border-color: var(--rule-ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .guide[data-guide="user-story-mapping"] button.usm-card:hover { border-color: var(--series); }
+    .guide[data-guide="user-story-mapping"] .usm-mini:hover { color: var(--ink); border-color: var(--rule-ink); }
+    .guide[data-guide="user-story-mapping"] .usm-add:hover { color: var(--ink); border-color: var(--rule-ink); }
+  }
   .guide[data-guide="user-story-mapping"] button.usm-card:focus-visible,
   .guide[data-guide="user-story-mapping"] .usm-mini:focus-visible,
   .guide[data-guide="user-story-mapping"] .usm-add:focus-visible { outline: 2px solid var(--cat); outline-offset: 2px; }
@@ -776,9 +778,11 @@
   const addStoryBtn = tool.querySelector('#usm-add-story');
   const result = tool.querySelector('#usm-result');
   const note = tool.querySelector('#usm-note');
+  const NOTE_DEFAULT = note.textContent;
 
   const MAX_ACTS = 7;
   const MIN_ROWS = 2;
+  const EMPTY_ROWS = [['', ''], ['', ''], ['', ''], ['', '']];
   const EXAMPLE = {
     goal: 'Start learning piano with Larkwell and play a first song in the first session',
     activities: [
@@ -811,7 +815,7 @@
   // ---- Activity rows -------------------------------------------------------
   // Seven fixed activity slots; the first `count` are shown.
   const slots = [...actList.querySelectorAll('.usm-act-row')];
-  let count = 4;
+  let count = 0;
   function rows() { return slots.slice(0, count); }
   const nameOf = row => row.querySelector('.usm-act-name');
   const stepsOf = row => row.querySelector('.usm-act-steps');
@@ -854,8 +858,8 @@
     const errors = [];
     const activities = [];
     rows().forEach((row, i) => {
-      const nameIn = row.querySelector('.usm-act-name');
-      const stepsIn = row.querySelector('.usm-act-steps');
+      const nameIn = nameOf(row);
+      const stepsIn = stepsOf(row);
       const name = nameIn.value.trim();
       const steps = stepsIn.value.split(',').map(s => s.trim()).filter(Boolean);
       nameIn.removeAttribute('aria-invalid');
@@ -904,9 +908,9 @@
     };
     render();
     const stepCount = allSteps().length;
-    const count = map.activities.length;
-    let message = `Map generated: ${plural(count, 'activity', 'activities')}, ${plural(stepCount, 'user step')}.`;
-    if (count < 3) message += ' Most maps have 3–7 activities.';
+    const activityCount = map.activities.length;
+    let message = `Map generated: ${plural(activityCount, 'activity', 'activities')}, ${plural(stepCount, 'user step')}.`;
+    if (activityCount < 3) message += ' Most maps have 3–7 activities.';
     if (!input.goal) message += ' Add a goal to frame the map.';
     if (cuts.length < linesBefore) message += ' Release lines below the remaining stories were removed.';
     say(message, false);
@@ -917,7 +921,7 @@
   }
 
   function findStep(id) {
-    return allSteps().find(s => s.id === id) || null;
+    return allSteps().find(s => s.id === id);
   }
 
   function depth() {
@@ -963,7 +967,7 @@
 
     grid.append(el('p', 'usm-rowlabel', 'User steps'));
     steps.forEach(s => {
-      const btn = el('button', 'usm-card usm-step', s.name);
+      const btn = el('button', 'usm-card', s.name);
       btn.type = 'button';
       btn.dataset.series = '2';
       btn.dataset.step = s.id;
@@ -1049,7 +1053,7 @@
   function updateOutput() {
     if (!map) {
       result.textContent = '';
-      note.textContent = 'Generate a map to check whether Release 1 covers the whole journey.';
+      note.textContent = NOTE_DEFAULT;
       return;
     }
     const steps = allSteps();
@@ -1161,7 +1165,7 @@
     goalIn.value = '';
     storyIn.value = '';
     storyIn.removeAttribute('aria-invalid');
-    resetRows([['', ''], ['', ''], ['', ''], ['', '']]);
+    resetRows(EMPTY_ROWS);
     render();
     say('Cleared. Start again with a goal and your activities.', false);
   }
@@ -1176,7 +1180,6 @@
 
   // ---- Wiring ------------------------------------------------------------
   addActBtn.addEventListener('click', () => {
-    if (rows().length >= MAX_ACTS) { say(`A map works best with at most ${MAX_ACTS} activities.`, true); return; }
     fillSlot(slots[count], '', '');
     setCount(count + 1);
     nameOf(slots[count - 1]).focus();
@@ -1192,6 +1195,6 @@
     if (e.key === 'Enter') { e.preventDefault(); addStory(); }
   });
 
-  resetRows([['', ''], ['', ''], ['', ''], ['', '']]);
+  resetRows(EMPTY_ROWS);
   render();
 </script>

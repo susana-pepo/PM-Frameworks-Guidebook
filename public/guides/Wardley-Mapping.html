@@ -799,7 +799,6 @@
     font-weight: var(--w-semibold);
     font-variant-numeric: tabular-nums;
   }
-  .guide[data-guide="wardley-mapping"] .wm-row:not([data-series]) .wm-row-num { --series: var(--ink-3); }
   .guide[data-guide="wardley-mapping"] .tool .wm-row-name {
     font-size: var(--fs-16);
     color: var(--ink);
@@ -892,7 +891,6 @@
     ['Cloud hosting', 'commodity', 'low'],
   ];
   const MAX = 12;
-  const HINT = 'Name the component and choose a stage and a visibility';
   const SVGNS = 'http://www.w3.org/2000/svg';
   // Plot geometry, matching the static axes in each of the mapper's two drawings:
   // the wide one, and the portrait one shown when the tool is narrow.
@@ -906,6 +904,7 @@
   const stageSelect = tool.querySelector('#wm-stage');
   const visSelect = tool.querySelector('#wm-vis');
   const help = tool.querySelector('#wm-add-help');
+  const HINT = help.textContent;
   const list = tool.querySelector('#wm-list');
   const plots = Object.entries(PLOT_GEO).map(([size, geo]) => ({
     geo,
@@ -1143,11 +1142,18 @@
   // the wide one (the threshold sits on the frame as data-narrow-below).
   const frames = [...root.querySelectorAll('.wm-frame')];
   const fitFrames = () => frames.forEach(f => {
-    f.dataset.cut = f.clientWidth < Number(f.dataset.narrowBelow) ? 'narrow' : 'wide';
+    const cut = f.clientWidth < Number(f.dataset.narrowBelow) ? 'narrow' : 'wide';
+    if (f.dataset.cut !== cut) f.dataset.cut = cut;
   });
   fitFrames();
   if (typeof ResizeObserver === 'function') {
-    const observer = new ResizeObserver(fitFrames);
+    // Re-cut on the next frame: changing the layout inside the observer
+    // callback would re-trigger it in the same frame.
+    let pending = 0;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(fitFrames);
+    });
     frames.forEach(f => observer.observe(f));
     api.onCleanup(() => observer.disconnect());
   }

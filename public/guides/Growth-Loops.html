@@ -51,7 +51,7 @@
 
     <figure class="figure">
       <div class="gl-compare">
-        <div class="gl-panel">
+        <div>
           <p class="gl-panel-label">Funnel: linear</p>
           <ol class="gl-bars" aria-label="Users left at each of five funnel stages">
             <li><span class="gl-val">100</span><span class="gl-bar" style="--v: 1"></span></li>
@@ -62,7 +62,7 @@
           </ol>
           <p class="gl-panel-note">Each stage loses users. To grow, pour more in at the top.</p>
         </div>
-        <div class="gl-panel gl-panel--loop">
+        <div class="gl-panel--loop">
           <p class="gl-panel-label">Loop: compounding</p>
           <ol class="gl-bars" aria-label="New users in each of five loop cycles">
             <li><span class="gl-val">10</span><span class="gl-bar" style="--v: 0.2"></span></li>
@@ -728,7 +728,6 @@ I would measure its cycle time and conversion rate, then work on whichever is we
 
   /* Builder output */
   .guide[data-guide="growth-loops"] .gl-user-chain .chain-note { overflow-wrap: anywhere; }
-  .guide[data-guide="growth-loops"] .gl-user-chain[hidden] { display: none; }
   .guide[data-guide="growth-loops"] .gl-user-chain + .checks { margin-top: var(--s-5); }
 </style>
 
@@ -913,7 +912,7 @@ I would measure its cycle time and conversion rate, then work on whichever is we
     calcEquation.textContent = `${fmt(amp, 2)} × ${fmt(conv, 1)}% = ${fmt(k, 2)}`;
 
     if (cycles === 0) {
-      calcReading.textContent = 'One cycle takes longer than a quarter, so the loop adds nothing within 90 days. Look for ways to shorten it.';
+      calcReading.textContent = `One cycle takes longer than a quarter, so the loop adds nothing within ${QUARTER_DAYS} days. Look for ways to shorten it.`;
     } else if (k === 0) {
       calcReading.textContent = 'With no conversions, nothing comes back: this is a funnel, not a loop.';
     } else if (k < 1) {

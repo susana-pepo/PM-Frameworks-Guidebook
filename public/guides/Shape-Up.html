@@ -606,7 +606,7 @@
   .guide[data-guide="shape-up"] .su-bar {
     display: block;
     min-width: 0;
-    padding: var(--s-2) var(--s-2);
+    padding: var(--s-2);
     border: 1px solid var(--series);
     border-radius: var(--r-sm);
     background: var(--series-wash);
@@ -748,14 +748,16 @@
   const note = tool.querySelector('#su-note');
   const checksList = tool.querySelector('#su-checks');
   const actionHelp = tool.querySelector('#su-action-help');
-  const ACTION_DEFAULT = 'Downloads a plain-text copy to share before the betting table.';
+  const ACTION_DEFAULT = actionHelp.textContent;
+  const NOTE_DEFAULT = note.textContent;
 
   const HELP = {
-    problem: { ok: 'Describe the situation, not the feature you want to build', error: 'Describe the problem before reviewing' },
-    appetite: { ok: 'How much time the problem is worth, decided before the solution', error: 'Choose an appetite before reviewing' },
-    solution: { ok: 'Places, affordances and flow. Leave layout and detail to the team.', error: 'Rough out a solution before reviewing' },
+    problem: 'Describe the problem before reviewing',
+    appetite: 'Choose an appetite before reviewing',
+    solution: 'Rough out a solution before reviewing',
   };
   const REQUIRED = ['problem', 'appetite', 'solution'];
+  const HELP_OK = Object.fromEntries(REQUIRED.map(k => [k, tool.querySelector(`#su-${k}-help`).textContent]));
 
   const SAMPLE = {
     problem: '70% of learners who finish a lesson never return to practice it. The Practice button only replays the lesson, so there is no real way to work on the hard parts. A 50-learner beta tripled practice sessions per learner, from 0.4 to 1.2 a week.',
@@ -777,7 +779,7 @@
     const el = fields[key];
     const help = tool.querySelector(`#su-${key}-help`);
     el.setAttribute('aria-invalid', String(isError));
-    help.textContent = isError ? HELP[key].error : HELP[key].ok;
+    help.textContent = isError ? HELP[key] : HELP_OK[key];
     help.classList.toggle('is-error', isError);
   }
 
@@ -851,7 +853,7 @@
   function resetOutput() {
     reviewed = false;
     setText(verdict, '');
-    setText(note, 'Fill in the pitch, then choose Review my pitch.');
+    setText(note, NOTE_DEFAULT);
     checksList.replaceChildren();
     REQUIRED.forEach(k => setFieldError(k, false));
   }
@@ -907,7 +909,7 @@
     a.download = 'shape-up-pitch.txt';
     a.click();
     const timer = setTimeout(() => URL.revokeObjectURL(url), 1000);
-    api.onCleanup(() => clearTimeout(timer));
+    api.onCleanup(() => { clearTimeout(timer); URL.revokeObjectURL(url); });
     setAction('Downloaded a plain-text copy of the pitch.');
   });
 </script>

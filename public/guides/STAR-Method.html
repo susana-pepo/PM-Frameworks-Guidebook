@@ -541,7 +541,7 @@ Rehearsed time: [seconds, out loud]</pre>
     const body = document.createElement('span');
     const strong = document.createElement('strong');
     strong.textContent = `${title}. `;
-    body.append(strong, document.createTextNode(text));
+    body.append(strong, text);
     li.append(label, body);
     checks.append(li);
   }

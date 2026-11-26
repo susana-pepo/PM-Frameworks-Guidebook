@@ -53,9 +53,9 @@
   transition: border-color var(--t-fast) var(--ease), transform var(--t-press) var(--ease);
 }
 @media (hover: hover) and (pointer: fine) { .home-search:hover { border-color: var(--rule-hover); } }
-.home-search:active { transform: scale(0.99); }
+.home-search:active { transform: scale(calc(1 - (1 - var(--press)) / 2)); }
 .home-search > svg { width: 20px; height: 20px; flex: none; }
-.home-search > span:nth-of-type(1) { flex: 1; }
+.home-search > span { flex: 1; }
 
 /* "Start from your situation" — a ruled list, like a book's quick-reference */
 .home-start {
@@ -93,9 +93,10 @@
   min-height: 40px;
   font-size: var(--fs-14);
   color: var(--ink-2);
-  transition: color var(--t-fast) var(--ease);
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 3px;
+  transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease);
 }
-.start-link { text-decoration: underline 1px transparent; text-underline-offset: 3px; transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease); }
 @media (hover: hover) and (pointer: fine) { .start-link:hover { color: var(--cat-ink); text-decoration-color: currentColor; } }
 
 /* ---- Home: the index ---------------------------------------------------- */
@@ -122,9 +123,10 @@
   display: inline-flex;
   align-items: center;
   gap: var(--s-3);
-  transition: color var(--t-fast) var(--ease);
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 5px;
+  transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease);
 }
-.family-name a { text-decoration: underline 1px transparent; text-underline-offset: 5px; transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease); }
 .family-name a:focus-visible { color: var(--cat-ink); text-decoration-color: currentColor; }
 @media (hover: hover) and (pointer: fine) { .family-name a:hover { color: var(--cat-ink); text-decoration-color: currentColor; } }
 .family-when {
@@ -155,7 +157,6 @@
 .family-list li { border-top: 1px solid var(--rule); }
 .family-list li:nth-child(-n + 2) { border-top: 0; }
 /* Rows sit flush on the column; the name answers the pointer, not a box */
-.entry-name { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color var(--t-fast) var(--ease); }
 @media (hover: hover) and (pointer: fine) { .entry:hover .entry-name { text-decoration-color: var(--rule-ink); } }
 .entry-question, .feature-question { text-wrap: pretty; }
 .entry-glyph { display: inline-flex; padding-top: 3px; color: var(--ink-3); }
@@ -167,6 +168,9 @@
   font-weight: var(--w-medium);
   color: var(--ink);
   line-height: var(--lh-snug);
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--t-fast) var(--ease);
 }
 .entry-question { font-size: var(--fs-16); color: var(--ink-2); line-height: var(--lh-ui); }
 .entry .arrow { margin-top: 5px; }
@@ -228,7 +232,7 @@
   font-weight: var(--w-medium);
   line-height: var(--lh-snug);
 }
-.feature-question { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink-2); line-height: 1.5; }
+.feature-question { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink-2); line-height: var(--lh-ui); }
 .feature .arrow { margin-top: 8px; }
 
 @media (max-width: 760px) {

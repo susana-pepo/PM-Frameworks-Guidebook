@@ -4,7 +4,7 @@
     <p class="lede">AARRR and the North Star Framework tell you where you stand: the first shows the stage of the user journey where people drop out, and the second names the one metric that reflects the value customers get. Input and Output Metrics then gives each team a lever on that metric, and growth loops turn each round of new users into the source of the next.</p>
 
     <figure class="figure" data-hero>
-      <ol class="chain gos" aria-label="The four growth frameworks in the order they are used">
+      <ol class="chain" aria-label="The four growth frameworks in the order they are used">
         <li data-series="1">
           <span class="gos-step">1 Diagnose</span>
           <span class="chain-name"><span class="key-dot" aria-hidden="true"></span>AARRR</span>
@@ -130,7 +130,7 @@
         <output class="tool-result" id="gp-result"></output>
         <p class="tool-output-note" id="gp-reason">Answer both questions to see a recommendation.</p>
         <p class="tool-output-note" id="gp-context"></p>
-        <p class="gp-links" id="gp-links"></p>
+        <p class="tool-links" id="gp-links"></p>
       </div>
     </div>
 
@@ -294,15 +294,7 @@ and design a growth loop so the product grows on its own momentum.</pre>
   /* The facts list closes the rules block, whose own bottom rule ends it. */
   .guide[data-guide="compare-growth"] .more > .facts:last-child > div:last-child { border-bottom: 0; }
 
-  /* Picker output: the links to the recommended guides sit in a row. */
-  .guide[data-guide="compare-growth"] .gp-links:empty,
   .guide[data-guide="compare-growth"] #gp-context:empty { display: none; }
-  .guide[data-guide="compare-growth"] .gp-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-5);
-  }
-  .guide[data-guide="compare-growth"] .gp-links a { font-weight: var(--w-semibold); }
 </style>
 
 <script data-guide-script>

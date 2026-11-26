@@ -157,7 +157,7 @@
         <p class="tool-output-label">Recommendation</p>
         <output class="tool-result" id="ep-result"></output>
         <p class="tool-output-note" id="ep-reason">Answer both questions to see a recommendation.</p>
-        <p class="ep-links" id="ep-links"></p>
+        <p class="tool-links" id="ep-links"></p>
       </div>
     </div>
 
@@ -373,13 +373,6 @@ Ideas join our one backlog when the evidence supports them, and we build them in
     .guide[data-guide="compare-execution"] .layer-opts { grid-template-columns: minmax(0, 1fr); }
     .guide[data-guide="compare-execution"] .layer-or { justify-self: center; }
   }
-  .guide[data-guide="compare-execution"] .ep-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-5);
-  }
-  .guide[data-guide="compare-execution"] .ep-links:empty { display: none; }
-  .guide[data-guide="compare-execution"] .ep-links a { font-weight: var(--w-semibold); }
 </style>
 
 <script data-guide-script>

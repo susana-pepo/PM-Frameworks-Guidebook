@@ -686,7 +686,7 @@ Then the team holds a retrospective and picks the improvements it will act on in
 
   // Reads the velocity field: null when empty, NaN when the browser holds text it cannot parse.
   function readVelocity() {
-    if (velEl.validity && velEl.validity.badInput) return NaN;
+    if (velEl.validity.badInput) return NaN;
     const raw = velEl.value.trim();
     return raw === '' ? null : Number(raw);
   }
@@ -737,7 +737,7 @@ Then the team holds a retrospective and picks the improvements it will act on in
     const fractions = items.filter((it) => it.fraction).length;
     const missing = items.length - estimated.length - fractions;
     if (fractions > 0) {
-      addNote('check', fractions === 1 ? '1 item uses a fraction of a point.' : `${fmt(fractions)} items use fractions of a point.`, 'Points are whole values on the scale 1, 2, 3, 5, 8, 13. Round each one to a value on the scale; those items are left out of the total until then.');
+      addNote('check', fractions === 1 ? '1 item uses a fraction of a point.' : `${fmt(fractions)} items use fractions of a point.`, `Points are whole values on the scale ${FIBONACCI.join(', ')}. Round each one to a value on the scale; those items are left out of the total until then.`);
     }
     if (missing > 0) {
       addNote('note', missing === 1 ? '1 item has no estimate.' : `${fmt(missing)} items have no estimate.`, 'End a line with its points, such as “(5 pts)”, so the plan can be checked against velocity.');
@@ -748,7 +748,7 @@ Then the team holds a retrospective and picks the improvements it will act on in
     }
     const offScale = [...new Set(estimated.filter((it) => it.points < 13 && !FIBONACCI.includes(it.points)).map((it) => it.points))];
     if (offScale.length) {
-      addNote('note', 'Use the Fibonacci scale.', `${listValues(offScale)} ${offScale.length === 1 ? 'is' : 'are'} not on the scale 1, 2, 3, 5, 8, 13. Round to the nearest value so estimates stay relative.`);
+      addNote('note', 'Use the Fibonacci scale.', `${listValues(offScale)} ${offScale.length === 1 ? 'is' : 'are'} not on the scale ${FIBONACCI.join(', ')}. Round to the nearest value so estimates stay relative.`);
     }
 
     // Capacity

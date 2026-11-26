@@ -1,6 +1,6 @@
 /* ==========================================================================
    Guide — the reading layout and the canonical content components.
-   Vocabulary and markup: docs/content-spec.md. Every value is a token.
+   Vocabulary and markup: docs/content-spec.md.
    ========================================================================== */
 
 /* ---- Layout ------------------------------------------------------------- */
@@ -16,7 +16,7 @@
   gap: var(--s-16);
   align-items: start;
 }
-.guide-main { min-width: 0; max-width: 880px; padding: var(--s-8) 0 var(--s-8); }
+.guide-main { min-width: 0; max-width: 880px; padding: var(--s-8) 0; }
 .guide-credit {
   margin-top: var(--s-16);
   padding-top: var(--s-5);
@@ -35,7 +35,7 @@
   scrollbar-width: thin;
   /* Room for the highlight and focus ring, which reach 8px past the text */
   margin-inline: calc(-1 * var(--s-2));
-  padding: var(--s-8) var(--s-2) var(--s-8);
+  padding: var(--s-8) var(--s-2);
 }
 .toc-toggle { display: none; }
 .toc-title {
@@ -93,7 +93,7 @@
   color: var(--ink-3);
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
-.toc-num { font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.toc-num { color: var(--ink-3); }
 .toc-link.is-active { color: var(--ink); font-weight: var(--w-medium); }
 /* Hover only darkens the text, so it never looks like the current section */
 @media (hover: hover) and (pointer: fine) {
@@ -108,10 +108,8 @@
 
 @media (max-width: 1000px) {
   .guide-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .guide-main { max-width: none; }
+  .guide-main { max-width: none; padding: var(--s-6) 0 var(--s-8); }
   .guide-rail {
-    position: sticky;
-    top: var(--bar-h);
     height: auto;
     overflow: visible;
     z-index: 30;
@@ -119,16 +117,14 @@
     padding: 0 var(--gutter);
     background: var(--paper);
     border-bottom: 1px solid var(--rule);
-    order: 0;
   }
-  .toc { position: static; max-height: none; overflow: visible; padding: 0; margin-inline: 0; }
   .toc-title { display: none; }
   .toc-toggle {
     display: flex;
     align-items: center;
     gap: var(--s-3);
     width: 100%;
-    height: 48px;
+    height: var(--toc-bar-h);
     border: 0;
     background: transparent;
     font-size: var(--fs-14);
@@ -163,7 +159,6 @@
   }
   .toc-foot-link { min-height: 44px; }
   .toc-link { padding: 10px var(--s-2); font-size: var(--fs-16); }
-  .guide-main { order: 1; padding: var(--s-6) 0 var(--s-8); }
 }
 @media (max-width: 760px) {
   .guide-rail { margin: 0 calc(-1 * var(--s-4)); padding: 0 var(--s-4); }
@@ -220,33 +215,31 @@
 .summary p + p:not(.summary-title) { margin-top: var(--s-2); }
 
 /* ---- Chapters ----------------------------------------------------------- */
-.chapter {
-  margin-top: var(--s-16);
-  padding-top: var(--s-12);
-  border-top: 1px solid var(--rule);
-  scroll-margin-top: calc(var(--bar-h) + var(--s-4));
-}
-/* Links into the middle of a section land clear of the sticky bars */
-.guide [id] { scroll-margin-top: calc(var(--bar-h) + var(--s-4)); }
+/* Links into the middle of a section land clear of the top bar through the
+   page's scroll-padding (base.css); on narrow screens they also clear the
+   Contents bar, which sticks under it. */
 @media (max-width: 1000px) {
-  .chapter, .guide [id] { scroll-margin-top: calc(var(--bar-h) + 48px + var(--s-4)); }
+  .guide [id] { scroll-margin-top: var(--toc-bar-h); }
 }
 
 .chapter-head { margin-bottom: var(--s-8); }
 /* The rail and the Contents bar already say which section this is, so on
-   screen the number is for screen readers only; print shows it. */
-.guide-page[data-paged] .chapter-num {
-  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+   screen the number is for screen readers only; print shows it. The guide
+   header goes the same way on a chapter: it belongs to the introduction. */
+@media screen {
+  .guide-page .chapter-num,
+  .guide-page[data-panel="chapter"] .guide-head {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 }
 .chapter-num {
   margin-bottom: var(--s-3);
   font-size: var(--fs-14);
   color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
 }
 .chapter-num .chapter-label { color: var(--cat-ink); font-weight: var(--w-medium); }
-.chapter-head h2 { max-width: 24ch; outline: none; }
+.chapter-head h2 { max-width: 24ch; }
 .chapter-dek {
   max-width: 56ch;
   margin-top: var(--s-3);
@@ -316,13 +309,11 @@
   content: counter(li) '.';
   position: absolute;
   left: 0;
-  font-variant-numeric: tabular-nums;
   color: var(--ink-3);
 }
 
-.guide strong { font-weight: var(--w-semibold); color: var(--ink); }
+.guide strong { color: var(--ink); }
 .guide dfn { font-style: normal; font-weight: var(--w-semibold); }
-.guide .num { font-variant-numeric: tabular-nums; }
 .guide a[href]:not([class]) {
   color: var(--ink);
   text-decoration: underline;
@@ -441,7 +432,6 @@
   font-family: var(--font-serif);
   font-size: var(--fs-16);
   font-weight: var(--w-semibold);
-  font-variant-numeric: tabular-nums;
 }
 /* A word-length key ("Music learning", "7 steps") is a label, not a mark:
    set in the interface face so it does not read as a second heading.
@@ -467,7 +457,7 @@
 }
 .guide .card-title { font-size: var(--fs-20); font-weight: var(--w-semibold); line-height: var(--lh-snug); }
 /* The guiding question is a dek under the title, not a second heading. */
-.guide .card .card-q { font-family: var(--font-serif); font-size: var(--fs-18); font-weight: var(--w-regular); color: var(--ink-2); line-height: 1.5; }
+.guide .card .card-q { font-family: var(--font-serif); font-size: var(--fs-18); font-weight: var(--w-regular); color: var(--ink-2); line-height: var(--lh-ui); }
 .guide .card .card-meta {
   margin-top: auto;
   padding-top: var(--s-3);
@@ -495,7 +485,6 @@
   font-size: var(--fs-24);
   line-height: 1.1;
   color: var(--cat-ink);
-  font-variant-numeric: tabular-nums;
 }
 .steps > li > * { grid-column: 2; }
 .steps > li > * + * { margin-top: var(--s-2); }
@@ -539,7 +528,6 @@
   font-size: var(--fs-20);
   font-weight: var(--w-medium);
   color: var(--cat-ink);
-  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 .scale-label { font-size: var(--fs-16); font-weight: var(--w-semibold); color: var(--ink); }
@@ -598,7 +586,6 @@
    so the caption never scrolls away, and marks data-overflow="more|end" on
    the frame while the table is wider than its scroller. */
 .table-wrap {
-  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow-x: auto;
@@ -606,7 +593,7 @@
   border-radius: var(--r-md);
   background: var(--paper-raised);
 }
-.table-wrap:focus-visible, .table-scroll:focus-visible { box-shadow: var(--focus-ring); }
+.table-scroll:focus-visible { box-shadow: var(--focus-ring); }
 .table-scroll { grid-area: 2 / 1; position: relative; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; }
 .table-title {
   grid-area: 1 / 1;
@@ -637,18 +624,8 @@
 }
 .table {
   width: 100%;
-  border-collapse: collapse;
   font-size: var(--fs-16);
   line-height: 1.45;
-}
-.table caption {
-  padding: var(--s-3) var(--s-4);
-  border-bottom: 1px solid var(--rule);
-  caption-side: top;
-  text-align: left;
-  font-size: var(--fs-14);
-  font-weight: var(--w-semibold);
-  color: var(--ink-2);
 }
 .table th, .table td {
   padding: var(--s-3) var(--s-4);
@@ -666,7 +643,7 @@
 }
 .table tbody th[scope="row"] { min-width: 8rem; font-weight: var(--w-medium); color: var(--ink); }
 .table td { color: var(--ink-2); }
-.table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.table .num { text-align: right; white-space: nowrap; }
 .table tr.is-top > * { background: var(--cat-wash); }
 .table tr.is-top th[scope="row"] { color: var(--cat-ink); }
 .table tfoot > tr > * { border-top: 1px solid var(--rule-strong); font-weight: var(--w-semibold); color: var(--ink); }
@@ -693,7 +670,6 @@
 .table td[data-rating="mid"] { --fill: 66%; }
 .table td[data-rating="low"] { --fill: 33%; }
 .table td > p + p { margin-top: var(--s-1); }
-.table caption.visually-hidden { padding: 0; border: 0; }
 .table .cell-label { display: none; }
 
 /* Comparison columns carry equal weight on wide screens. */
@@ -734,7 +710,7 @@
     display: block;
     margin-bottom: 2px;
     font-size: var(--fs-12);
-    line-height: 1.5;
+    line-height: var(--lh-ui);
     font-weight: var(--w-semibold);
     color: var(--ink-3);
   }
@@ -821,7 +797,6 @@
   font-size: var(--fs-14);
   line-height: 2;
   color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
 }
 .pitfalls > li > * { grid-column: 2; }
 .pitfalls > li > * + * { margin-top: var(--s-2); }
@@ -867,7 +842,7 @@
 .figure figcaption {
   margin-top: var(--s-4);
   font-size: var(--fs-14);
-  line-height: 1.5;
+  line-height: var(--lh-ui);
   color: var(--ink-3);
 }
 .figure[data-hero] { padding: var(--s-8); }
@@ -879,8 +854,7 @@
 /* Inside an example the figure is not a second frame: it sits flat on the
    example's paper. Raised surfaces inside it (cards, label halos drawn in
    --paper-raised) follow the paper they now sit on. */
-.example .figure,
-.example .figure[data-hero] {
+.example .figure {
   --paper-raised: var(--paper);
   padding: 0;
   border: 0;
@@ -897,7 +871,7 @@
   left: 0;
   margin: var(--s-3) 0 0;
   font-size: var(--fs-12);
-  line-height: 1.5;
+  line-height: var(--lh-ui);
   color: var(--ink-3);
 }
 .figure-scroll + .scroll-hint { margin-top: var(--s-2); }
@@ -924,7 +898,7 @@
   padding: var(--s-4) 0;
   border-bottom: 1px solid var(--rule);
 }
-.agenda-time { font-size: var(--fs-14); font-weight: var(--w-medium); color: var(--cat-ink); font-variant-numeric: tabular-nums; padding-top: 3px; }
+.agenda-time { font-size: var(--fs-14); font-weight: var(--w-medium); color: var(--cat-ink); padding-top: 3px; }
 .agenda > li > div > * + * { margin-top: var(--s-1); }
 .guide .agenda .agenda-title { font-weight: var(--w-semibold); color: var(--ink); }
 @media (max-width: 600px) { .agenda > li { grid-template-columns: 1fr; gap: var(--s-1); } }
@@ -982,7 +956,7 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .chain-name { font-family: var(--font-serif); font-size: var(--fs-18); font-weight: var(--w-medium); color: var(--ink); }
-.chain-note { font-size: var(--fs-16); color: var(--ink-2); line-height: 1.5; }
+.chain-note { font-size: var(--fs-16); color: var(--ink-2); line-height: var(--lh-ui); }
 @media (max-width: 760px) {
   .chain { grid-auto-flow: row; gap: var(--s-6); }
   .chain > li + li::before { left: 50%; top: calc(-1 * var(--s-6) + 4px); transform: translateX(-50%) rotate(90deg); }
@@ -1005,7 +979,6 @@
 .decision .decision-q::before {
   content: counter(dq) '. ';
   color: var(--cat-ink);
-  font-variant-numeric: tabular-nums;
 }
 .decision ul {
   display: grid;
@@ -1029,7 +1002,6 @@
 }
 .decision-if {
   justify-self: start;
-  flex: none;
   min-width: 44px;
   padding: 2px var(--s-2);
   border-radius: var(--r-sm);
@@ -1158,12 +1130,15 @@
   font-weight: var(--w-medium);
   line-height: 1.1;
   color: var(--cat-ink);
-  font-variant-numeric: tabular-nums;
-  transform-origin: left center;
 }
 .tool-result:empty { display: none; }
 
-.guide .tool .tool-output-note { font-size: var(--fs-14); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.guide .tool .tool-output-note { font-size: var(--fs-14); color: var(--ink-3); }
+.guide .tool .tool-output-note.is-error { color: var(--bad); }
+/* A row of links in a tool's result, such as the guides a picker recommends */
+.tool-links { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
+.tool-links:empty { display: none; }
+.guide .tool-links a { font-weight: var(--w-semibold); }
 .guide .tool .tool-output :is(p, li) { color: var(--ink-2); }
 .tool-output ul:not([class]) { margin-top: var(--s-2); }
 
@@ -1176,7 +1151,7 @@
   padding: var(--s-3) 0;
   border-top: 1px solid var(--rule);
   font-size: var(--fs-14);
-  line-height: 1.5;
+  line-height: var(--lh-ui);
 }
 .checks > li:first-child { border-top: 0; padding-top: 0; }
 .guide .checks .check-state { font-weight: var(--w-semibold); color: var(--ink-3); }
@@ -1248,22 +1223,10 @@
   border-radius: var(--r-md);
   background: var(--paper-sunk);
 }
-.quiz-score[hidden],
 .guide [hidden] { display: none; }
 .quiz-revisit { margin-top: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
 .quiz-score-text { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink); }
 @media (max-width: 760px) { .quiz-item { padding: var(--s-4); } }
-
-/* ---- Section change: crossfade the reading column ---------------------
-   Only the reading column is captured; the bar and the rail stay live, so
-   the rail highlight slides while the text crossfades. */
-:root { view-transition-name: none; }
-.guide-page[data-paged] .guide-main { view-transition-name: guide-main; }
-::view-transition-group(guide-main) { animation: none; }
-::view-transition-old(guide-main) { animation: section-out var(--t-fast) var(--ease) both; }
-::view-transition-new(guide-main) { animation: section-in var(--t-base) var(--ease) both; }
-@keyframes section-out { to { opacity: 0; } }
-@keyframes section-in { from { opacity: 0; transform: translateY(var(--rise)); } }
 
 /* ---- More: a collapsed block ------------------------------------------ */
 .more { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
@@ -1277,6 +1240,8 @@
   font-size: var(--fs-16);
   font-weight: var(--w-medium);
   color: var(--ink);
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast) var(--ease);
 }
 .more > summary::-webkit-details-marker { display: none; }
 .more > summary::before {
@@ -1288,7 +1253,6 @@
   transition: transform var(--t-base) var(--ease);
 }
 .more[open] > summary::before { transform: rotate(45deg); }
-.more > summary { border-radius: var(--r-sm); transition: color var(--t-fast) var(--ease); }
 @media (hover: hover) and (pointer: fine) { .more > summary:hover { color: var(--cat-ink); } }
 .more[open] { padding-bottom: var(--s-6); }
 .more > :not(summary) + * { margin-top: var(--s-5); }
@@ -1297,20 +1261,14 @@
    A guide shows one panel (the introduction or one chapter) at a time; the
    contents rail moves between them. The guide header belongs to the
    introduction, and "Where next" to the last section. */
-.guide-page[data-paged] .guide > .panel:not(.is-current) { display: none; }
-.guide-page[data-paged][data-panel="chapter"] .guide-head {
-  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
+.guide-page .guide > .panel:not(.is-current) { display: none; }
 /* Phones and tablets: the introduction lists the sections (the rail is a
    collapsed bar there); wide screens have the rail beside it instead. */
 .intro-contents { display: none; }
 @media (max-width: 1000px) {
   .intro-contents { display: block; margin-top: var(--s-10); padding-top: var(--s-6); border-top: 1px solid var(--rule); }
   .intro-contents-title { margin-bottom: var(--s-2); font-size: var(--fs-14); font-weight: var(--w-semibold); color: var(--ink); }
-  .guide .intro-contents-list { display: grid; padding: 0; list-style: none; }
-  .guide .intro-contents-list > li { padding: 0; }
-  .guide .intro-contents-list > li::before { content: none; }
+  .intro-contents-list { display: grid; }
   .intro-contents-link {
     display: grid;
     grid-template-columns: 22px minmax(0, 1fr);
@@ -1325,8 +1283,7 @@
   }
   .intro-contents .toc-num { font-family: var(--font-sans); font-size: var(--fs-14); }
 }
-.guide-page[data-paged]:not([data-last]) .guide-foot { display: none; }
-.guide-page[data-paged] .chapter { margin-top: 0; padding-top: 0; border-top: 0; }
+.guide-page:not([data-last]) .guide-foot { display: none; }
 
 /* ---- Guide footer: where next ------------------------------------------- */
 .guide-foot {
@@ -1344,20 +1301,21 @@
   align-items: center;
   padding: var(--s-4) 0;
 }
-.where-row .arrow { color: var(--ink-3); transition: transform var(--t-base) var(--ease), color var(--t-fast) var(--ease); }
 .where-title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-20);
+  color: var(--ink);
+  line-height: var(--lh-snug);
   text-decoration: underline 1px transparent;
   text-underline-offset: 4px;
   transition: text-decoration-color var(--t-fast) var(--ease);
 }
 @media (hover: hover) and (pointer: fine) {
   .where-row:hover .where-title { text-decoration-color: var(--rule-ink); }
-  .where-row:hover .arrow { transform: translateX(var(--nudge)); color: var(--ink); }
 }
 .where-text { display: grid; gap: 2px; }
 .where-kind { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
-.where-title { font-family: var(--font-serif); font-size: var(--fs-20); color: var(--ink); line-height: var(--lh-snug); }
-.where-desc { max-width: var(--measure-box); margin-top: 2px; font-size: var(--fs-14); color: var(--ink-2); line-height: 1.5; text-wrap: pretty; }
+.where-desc { max-width: var(--measure-box); margin-top: 2px; font-size: var(--fs-14); color: var(--ink-2); line-height: var(--lh-ui); text-wrap: pretty; }
 
 /* ---- Responsive component grids ---------------------------------------- */
 @media (max-width: 900px) {
@@ -1365,17 +1323,15 @@
 }
 @media (max-width: 640px) {
   .cards, .cards[data-cols="3"], .fit, .contrast { grid-template-columns: minmax(0, 1fr); }
-  .chapter { margin-top: var(--s-12); padding-top: var(--s-8); }
   .lede { font-size: var(--fs-18); }
 }
 
 /* ---- Print: the whole guide on paper ------------------------------------ */
 @media print {
   .bar, .foot, .guide-rail, .guide-credit, .guide-foot, .tool-actions, .template-copy, .scroll-hint, .table-more { display: none !important; }
-  .guide-page[data-paged] .guide > .panel, .guide-page[data-paged] .guide-head { display: block !important; }
-  .guide-page[data-paged] .chapter { margin-top: var(--s-12); padding-top: var(--s-8); border-top: 1px solid var(--rule); }
+  .guide-page .guide > .panel, .guide-page .guide-head { display: block !important; }
+  .guide-page .chapter { margin-top: var(--s-12); padding-top: var(--s-8); border-top: 1px solid var(--rule); }
   .guide-layout { display: block; }
-  .chapter { break-inside: auto; }
   .card, .figure, .table-wrap, .callout { break-inside: avoid; }
 }
 

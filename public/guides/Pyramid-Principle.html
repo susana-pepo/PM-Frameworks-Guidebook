@@ -647,8 +647,8 @@
   const note = tool.querySelector('#py-note');
   const checksList = tool.querySelector('#py-checks');
 
-  const ANSWER_HELP = 'One sentence: what should happen?';
-  const NOTE_DEFAULT = 'Write your answer and at least two reasons, then choose Review my pyramid.';
+  const ANSWER_HELP = answerHelp.textContent;
+  const NOTE_DEFAULT = note.textContent;
 
   const SAMPLE = {
     answer: 'We should add bridge lessons between lessons 3 and 5, aiming for at least 18% day-7 retention by the end of the quarter.',
@@ -759,12 +759,11 @@
     if (reasons.length >= 2) {
       // Overlaps (mutually exclusive).
       const overlaps = [];
+      const words = reasons.map(r => keywords(r.text));
       for (let i = 0; i < reasons.length; i++) {
         for (let j = i + 1; j < reasons.length; j++) {
-          const a1 = keywords(reasons[i].text);
-          const b1 = keywords(reasons[j].text);
-          const shared = [...a1].filter(w => b1.has(w)).length;
-          const smaller = Math.min(a1.size, b1.size);
+          const shared = [...words[i]].filter(w => words[j].has(w)).length;
+          const smaller = Math.min(words[i].size, words[j].size);
           const same = reasons[i].text.toLowerCase() === reasons[j].text.toLowerCase();
           if (same || (smaller >= 2 && shared / smaller >= 0.6)) overlaps.push(`${reasons[i].n} and ${reasons[j].n}`);
         }

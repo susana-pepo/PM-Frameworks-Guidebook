@@ -1,9 +1,7 @@
 import { getCategory, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
-import { frameworkGlyph } from '../data/icons.js';
+import { frameworkGlyph, UI_ICONS } from '../data/icons.js';
 import { setPageMeta } from '../utils/page-meta.js';
 import { renderNotFound } from './not-found.js';
-
-const ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 export function renderCategoryPage(container, categoryId) {
   const cat = getCategory(categoryId);
@@ -13,7 +11,7 @@ export function renderCategoryPage(container, categoryId) {
   const guide = getComparisonGuide(cat.id);
 
   container.innerHTML = `
-    <div class="page family-page" data-cat="${cat.id}">
+    <div class="page" data-cat="${cat.id}">
       <header class="family-page-head">
         <h1><span class="thumb thumb--lg" aria-hidden="true"></span>${cat.name}</h1>
         <p class="family-page-lede">${cat.description} Reach for them when ${lowerFirst(cat.when)}</p>
@@ -24,12 +22,12 @@ export function renderCategoryPage(container, categoryId) {
         ${list.map(fw => `
           <li>
             <a class="feature" href="#/framework/${fw.slug}">
-              <span class="feature-glyph" aria-hidden="true">${frameworkGlyph(fw.slug, cat.id)}</span>
+              <span class="feature-glyph" aria-hidden="true">${frameworkGlyph(fw.slug)}</span>
               <span class="feature-body">
                 <span class="feature-name">${fw.name}</span>
                 <span class="feature-question">${fw.question}</span>
               </span>
-              ${ARROW}
+              ${UI_ICONS.arrow}
             </a>
           </li>`).join('')}
       </ol>

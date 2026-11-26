@@ -5,8 +5,9 @@
  * aliases. Arrow keys move, Enter opens, Escape closes.
  */
 import { categories, frameworks, comparisonGuides, situations, getCategory, getFrameworksByCategory } from '../data/frameworks.js';
-import { frameworkGlyph, categoryGlyph } from '../data/icons.js';
+import { frameworkGlyph, categoryGlyph, UI_ICONS } from '../data/icons.js';
 import { getGuideOutline } from '../pages/guide.js';
+import { onNavigate } from '../router.js';
 
 // Situations a framework is suggested for on the home page also find it.
 const situationText = (slug) => situations.filter(s => s.slugs.includes(slug)).map(s => s.label).join(' ');
@@ -14,24 +15,30 @@ const situationText = (slug) => situations.filter(s => s.slugs.includes(slug)).m
 let root, input, list, items = [], active = 0, lastFocus = null;
 
 const INDEX = [
-  ...frameworks.map(fw => ({
-    kind: 'Framework',
-    title: fw.name,
-    detail: fw.question || fw.description,
-    cat: fw.category,
-    href: `#/framework/${fw.slug}`,
-    glyph: frameworkGlyph(fw.slug),
-    hay: [fw.name, fw.description, fw.question, ...(fw.aliases || []), getCategory(fw.category)?.name, getCategory(fw.category)?.when, situationText(fw.slug)].join(' ').toLowerCase(),
-  })),
-  ...comparisonGuides.map(cg => ({
-    kind: 'How to choose',
-    title: cg.name,
-    detail: cg.description,
-    cat: cg.category,
-    href: `#/compare/${cg.slug}`,
-    glyph: categoryGlyph(cg.category),
-    hay: [cg.name, cg.description, 'compare comparison choose pick which versus vs', getCategory(cg.category)?.name, getCategory(cg.category)?.when, ...getFrameworksByCategory(cg.category).map(f => f.name)].join(' ').toLowerCase(),
-  })),
+  ...frameworks.map(fw => {
+    const cat = getCategory(fw.category);
+    return {
+      kind: 'Framework',
+      title: fw.name,
+      detail: fw.question,
+      cat: fw.category,
+      href: `#/framework/${fw.slug}`,
+      glyph: frameworkGlyph(fw.slug),
+      hay: [fw.name, fw.description, fw.question, ...fw.aliases, cat.name, cat.when, situationText(fw.slug)].join(' ').toLowerCase(),
+    };
+  }),
+  ...comparisonGuides.map(cg => {
+    const cat = getCategory(cg.category);
+    return {
+      kind: 'How to choose',
+      title: cg.name,
+      detail: cg.description,
+      cat: cg.category,
+      href: `#/compare/${cg.slug}`,
+      glyph: categoryGlyph(cg.category),
+      hay: [cg.name, cg.description, 'compare comparison choose pick which versus vs', cat.name, cat.when, ...getFrameworksByCategory(cg.category).map(f => f.name)].join(' ').toLowerCase(),
+    };
+  }),
   ...categories.map(c => ({
     kind: 'Family',
     title: c.name,
@@ -82,7 +89,7 @@ function render() {
     input.setAttribute('aria-activedescendant', '');
     return;
   }
-  const group = items[0]?.section ? `In ${escapeHtml(getGuideOutline()?.title || 'this guide')}` : 'Families';
+  const group = items[0].section ? `In ${escapeHtml(getGuideOutline().title)}` : 'Families';
   list.innerHTML = (q.trim() ? '' : `<li class="palette-group" role="presentation">${group}</li>`) +
     items.map((it, n) => `
       <li role="option" id="pal-opt-${n}" class="palette-item${n === active ? ' is-active' : ''}" data-n="${n}" data-cat="${it.cat}" aria-selected="${n === active}">
@@ -116,19 +123,18 @@ function go(n) {
   window.location.hash = it.href;
 }
 
-export function openSearch(initial = '', { instant = false } = {}) {
-  if (!root) initSearch();
+export function openSearch({ instant = false } = {}) {
   lastFocus = document.activeElement;
   if (instant) root.dataset.instant = ''; else delete root.dataset.instant;
   root.hidden = false;
   document.body.classList.add('palette-open');
-  input.value = initial;
+  input.value = '';
   active = 0;
   render();
   requestAnimationFrame(() => { input.focus(); input.setSelectionRange(input.value.length, input.value.length); });
 }
 
-export function closeSearch() {
+function closeSearch() {
   if (!root || root.hidden) return;
   root.hidden = true;
   document.body.classList.remove('palette-open');
@@ -144,7 +150,7 @@ export function initSearch() {
     <div class="palette-scrim" data-close></div>
     <div class="palette-box" role="dialog" aria-modal="true" aria-label="Search frameworks">
       <div class="palette-field">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
+        ${UI_ICONS.search}
         <input type="text" class="palette-input" placeholder="Search by name or problem" autocomplete="off" spellcheck="false"
                role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list" />
         <kbd>Esc</kbd>
@@ -177,16 +183,16 @@ export function initSearch() {
   });
   root.addEventListener('click', (e) => { if (e.target.matches('[data-close]')) closeSearch(); });
   // Back and forward leave the palette behind otherwise.
-  window.addEventListener('hashchange', closeSearch);
+  onNavigate(closeSearch);
 
   document.addEventListener('keydown', (e) => {
     const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '') || document.activeElement?.isContentEditable;
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      root.hidden ? openSearch('', { instant: true }) : closeSearch();
+      root.hidden ? openSearch({ instant: true }) : closeSearch();
     } else if (e.key === '/' && !typing && root.hidden) {
       e.preventDefault();
-      openSearch('', { instant: true });
+      openSearch({ instant: true });
     }
   });
 }

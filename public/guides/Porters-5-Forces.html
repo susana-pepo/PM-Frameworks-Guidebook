@@ -519,12 +519,7 @@
   const WORDS = { 1: 'Low', 2: 'Medium', 3: 'High' };
   const DEFAULT = 2;
 
-  // Read each row's pressed choice. The markup presses Medium on every row, so null only
-  // appears if that markup changes; update() keeps a guard for that case.
-  const ratings = rows.map((row) => {
-    const pressed = row.querySelector('.choice[aria-pressed="true"]');
-    return pressed ? Number(pressed.dataset.value) : null;
-  });
+  const ratings = rows.map((row) => Number(row.querySelector('.choice[aria-pressed="true"]').dataset.value));
 
   const joinNames = (names) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 
@@ -537,14 +532,6 @@
 
   function update() {
     movesEl.textContent = '';
-    const missing = ratings.filter((r) => r === null).length;
-    if (missing) {
-      verdictEl.textContent = '–';
-      noteEl.textContent = `Rate ${missing} more ${missing === 1 ? 'force' : 'forces'} to see a verdict`;
-      adviceEl.textContent = '';
-      strongestEl.textContent = '';
-      return;
-    }
 
     // Compare totals rather than averages so the thresholds are exact: 1.5 × 5 = 7.5, 2.2 × 5 = 11.
     const total = ratings.reduce((sum, r) => sum + r, 0);
@@ -595,10 +582,9 @@
 
   tool.addEventListener('click', (event) => {
     const btn = event.target.closest('.choice');
-    if (!btn || !tool.contains(btn)) return;
+    if (!btn) return;
     const value = Number(btn.dataset.value);
     const i = rows.indexOf(btn.closest('.pf-row'));
-    if (i < 0 || !WORDS[value]) return;
     setRow(i, value);
     update();
   });

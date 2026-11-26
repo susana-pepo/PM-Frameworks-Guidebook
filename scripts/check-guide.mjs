@@ -12,17 +12,15 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM, VirtualConsole } from 'jsdom';
+import { frameworks, comparisonGuides } from '../src/data/frameworks.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const GUIDES = join(ROOT, 'public', 'guides');
 
-// Known guide slugs, read from the metadata file without importing it.
-const meta = readFileSync(join(ROOT, 'src/data/frameworks.js'), 'utf8');
-const SLUG_FILES = new Map([...meta.matchAll(/slug:\s*'([^']+)',[^}]*?file:\s*'([^']+)'/g)].map(m => [m[1], m[2]]));
-const SLUGS = new Set([...meta.matchAll(/slug:\s*'([^']+)'/g)].map(m => m[1]));
-const FILE_TO_SLUG = Object.fromEntries([...meta.matchAll(/slug:\s*'([^']+)'[^}]*?file:\s*'([^']+)'/gs)].map(m => [m[2], m[1]]));
+const SLUG_FILES = new Map([...frameworks, ...comparisonGuides].map(g => [g.slug, g.file]));
+const FILE_TO_SLUG = Object.fromEntries([...SLUG_FILES].map(([slug, file]) => [file, slug]));
 
-const COMPONENT_CLASSES = new Set(`guide guide-intro lede summary summary-title more chapter chapter-head chapter-dek
+const COMPONENT_CLASSES = new Set(`guide guide-intro lede summary summary-title more tool-links chapter chapter-head chapter-dek
 callout callout--tip callout--caution callout-title cards card card-key card-title card-q card-meta
 steps step-title step-note scale scale-value scale-label scale-note formula op formula-result
 table-wrap table table--compare is-top num fit fit-col contrast contrast-col contrast-label
@@ -41,6 +39,8 @@ const BANNED = [
   [/\bdelve\b/i, 'delve'], [/\bthe gold\b/i, 'the gold'], [/it'?s not just .{1,40}, it'?s/i, "it's not just X, it's Y"],
   [/\bpowerful\b/i, 'powerful'], [/\bgame plan\b/i, 'game plan'], [/\bleverage\b/i, 'leverage (verb)'],
 ];
+// Capitalised words that are names, not shouting. The check only sees words of four or more capitals.
+const ACRONYMS = /^(RICE|AARRR|CIRCLES|STAR|JTBD|OKRS?|SCQA|MECE|BLUF|ERRC|HEART|KPIS?|SAAS|ARPU|SWOT|PEST|DACI|RACI|SMART|HIPPO|HIPPOS|SLAS|IDEO|SKUS|ROAS|EBITDA|NASA|LEGO|IKEA|SLACK|NIKE|APPLE|HTML|JSON|HTTP|REST|MAUS|DAUS|ARPPU|GDPR|SCAMPER|MIDI|STARL|CARL|WALS?|KANO)$/;
 const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{1F000}-\u{1F2FF}\u{FE0F}]/u;
 
 function check(file) {
@@ -58,14 +58,14 @@ function check(file) {
   if (/\.html['"]/.test(src)) errors.push('links to a .html file (use data-guide-link)');
   if (/document\.getElementById|window\.(goTo|go)\b|location\.href/.test(src)) errors.push('script uses document.getElementById / window.goTo / location.href');
 
-  const dom = new JSDOM(`<!doctype html><body>${src}</body>`, { runScripts: 'outside-only', pretendToBeVisual: true });
+  const dom = new JSDOM(`<!doctype html><body>${src}</body>`);
   const { document } = dom.window;
   const article = document.querySelector('article.guide');
   if (!article) { errors.push('no <article class="guide">'); return { file, errors, warns }; }
   if (slugExpected && article.dataset.guide !== slugExpected) errors.push(`data-guide="${article.dataset.guide}" should be "${slugExpected}"`);
   const slug = article.dataset.guide;
 
-  // Inline styles: only --x / --y custom properties (and other custom props) allowed.
+  // Inline styles may only set custom properties (the spec uses them for --x/--y plot coordinates).
   article.querySelectorAll('[style]').forEach(el => {
     const decls = el.getAttribute('style').split(';').map(s => s.trim()).filter(Boolean);
     const bad = decls.filter(d => !d.startsWith('--'));
@@ -129,7 +129,7 @@ function check(file) {
 
   // Links
   article.querySelectorAll('a[data-guide-link]').forEach(a => {
-    if (!SLUGS.has(a.dataset.guideLink)) errors.push(`data-guide-link="${a.dataset.guideLink}" is not a known slug`);
+    if (!SLUG_FILES.has(a.dataset.guideLink)) errors.push(`data-guide-link="${a.dataset.guideLink}" is not a known slug`);
     const sec = a.dataset.guideSection;
     if (sec) {
       const target = SLUG_FILES.get(a.dataset.guideLink);
@@ -139,7 +139,7 @@ function check(file) {
   });
   article.querySelectorAll('a[data-section-link]').forEach(a => {
     const id = (a.getAttribute('href') || '').replace(/^#/, '');
-    if (!chapters.some(c => c.id === id) && !article.querySelector(`#${id}`)) errors.push(`section link to missing #${id}`);
+    if (!ids.has(id)) errors.push(`section link to missing #${id}`);
   });
   article.querySelectorAll('a:not([data-guide-link]):not([data-section-link])').forEach(a => {
     const h = a.getAttribute('href') || '';
@@ -155,7 +155,14 @@ function check(file) {
     if (b.getAttribute('type') !== 'button') errors.push(`button without type="button": "${b.textContent.trim().slice(0, 30)}"`);
   });
 
-  // Quiz
+  // Quiz. An explanation that pastes a sentence from the guide teaches
+  // nothing new, so collect the 7-word runs of the text outside the quiz.
+  const runs = new Set();
+  article.querySelectorAll('p, li, dd, td').forEach(el => {
+    if (el.closest('.quiz')) return;
+    const w = el.textContent.toLowerCase().split(/\s+/).filter(Boolean);
+    for (let i = 0; i + 7 <= w.length; i++) runs.add(w.slice(i, i + 7).join(' '));
+  });
   article.querySelectorAll('.quiz-item').forEach((q, i) => {
     const n = q.querySelectorAll('.quiz-options button').length;
     const a = Number(q.dataset.answer);
@@ -164,8 +171,7 @@ function check(file) {
     if (/^(correct|right|wrong|incorrect|yes|no)\b/i.test(why)) errors.push(`quiz item ${i + 1}: explanation starts with a verdict ("${why.slice(0, 20)}")`);
     if (!why) warns.push(`quiz item ${i + 1}: no explanation`);
     if (q.dataset.section && !chapters.some(c => c.id === q.dataset.section)) errors.push(`quiz item ${i + 1}: data-section="${q.dataset.section}" is not a chapter id`);
-    // An explanation that pastes a sentence from the guide teaches nothing new.
-    if (why && bodyRuns(article, q).some(run => why.toLowerCase().includes(run))) warns.push(`quiz item ${i + 1}: explanation repeats a 7-word run from the guide`);
+    if (why && [...runs].some(run => why.toLowerCase().includes(run))) warns.push(`quiz item ${i + 1}: explanation repeats a 7-word run from the guide`);
   });
 
   // Each section is shown on its own, so text must not point at another
@@ -180,12 +186,12 @@ function check(file) {
   // Two callouts in a row read as one box after another; fold one into prose.
   article.querySelectorAll('.callout + .callout').forEach(c => warns.push(`two callouts in a row: "${c.textContent.trim().slice(0, 40)}"`));
   // A dek should add a fact its heading lacks.
+  const wordSet = (t) => new Set(t.toLowerCase().match(/[a-z]{4,}/g) || []);
   chapters.forEach(ch => {
     const h = ch.querySelector('h2')?.textContent || '';
     const dek = ch.querySelector('.chapter-dek')?.textContent || '';
     if (!dek) return;
-    const words = (t) => new Set(t.toLowerCase().match(/[a-z]{4,}/g) || []);
-    const hw = words(h); const shared = [...words(dek)].filter(w => hw.has(w));
+    const hw = wordSet(h); const shared = [...wordSet(dek)].filter(w => hw.has(w));
     if (shared.length >= 3) warns.push(`#${ch.id} dek repeats its heading (${shared.join(', ')})`);
   });
 
@@ -197,7 +203,7 @@ function check(file) {
     const m = text.match(/[^.!?]{0,40}!(\s|$)/);
     errors.push(`exclamation mark: "${m ? m[0].trim() : '!'}"`);
   }
-  const caps = text.match(/\b[A-Z]{4,}\b/g)?.filter(w => !/^(RICE|AARRR|CIRCLES|STAR|JTBD|OKRS?|SCQA|MECE|BLUF|ERRC|HEART|NPS|CEO|CTO|CFO|MVP|ROI|KPIS?|SAAS|DAU|MAU|WAU|ARPU|LTV|CAC|USD|CSV|API|UX|UI|QA|PRD|FAQ|SWOT|PEST|ICE|TAM|SAM|SOM|AI|ML|DACI|RACI|SMART|B2B|B2C|GTM|ARR|MRR|NSM|HIPPO|HIPPOS|WIP|SLA|SLAS|URL|IDEO|AWS|IBM|SQL|PDF|USA|EU|UK|CRM|ERP|MOQ|DTC|SKU|SKUS|ACV|TCV|OKR|IPO|GPS|TV|PC|SMS|ETA|SEO|SEM|PPC|CPA|CPC|CPM|CTR|ROAS|AOV|GMV|NPV|IRR|EBITDA|YOY|QOQ|MOM|NASA|LEGO|IKEA|SLACK|NIKE|APPLE|HTML|CSS|JSON|XML|HTTP|REST|SDK|IOS|MAUS|DAUS|ARPPU|GDPR|SCAMPER|MIDI|STARL|CARL|WALS?|PST|ILC|KANO|NDA|CMO|COO|VP|HR|IT)$/.test(w)) || [];
+  const caps = text.match(/\b[A-Z]{4,}\b/g)?.filter(w => !ACRONYMS.test(w)) || [];
   if (caps.length) warns.push(`ALL-CAPS words (emphasis?): ${[...new Set(caps)].slice(0, 8).join(', ')}`);
   const paras = [...article.querySelectorAll('p, li')].filter(el => !el.closest('script, style'));
   const dashy = paras.filter(p => (p.textContent.match(/—/g) || []).length > 1);
@@ -238,7 +244,7 @@ function check(file) {
     noComments.replace(/@media[^{]*\{/g, '').replace(/@keyframes[^{]*\{(?:[^{}]*\{[^}]*\})*[^}]*\}/g, '')
       .replace(/([^{}]+)\{[^}]*\}/g, (_, sel) => { selectors.push(...splitTop(sel).map(s => s.trim()).filter(Boolean)); return ''; });
     const scope = `.guide[data-guide="${slug}"]`;
-    const unscoped = selectors.filter(s => !s.startsWith(scope) && !/^(from|to|\d+%)$/.test(s) && s !== '}');
+    const unscoped = selectors.filter(s => !s.startsWith(scope));
     if (unscoped.length) errors.push(`widget CSS selectors not scoped to ${scope}: ${unscoped.slice(0, 4).join(' | ')}`);
   }
 
@@ -256,7 +262,6 @@ function check(file) {
     w.URL.createObjectURL = () => 'blob:x';
     w.URL.revokeObjectURL = () => {};
     w.HTMLAnchorElement.prototype.click = function () {};
-    w.HTMLElement.prototype.scrollIntoView = function () {};
     w.navigator.clipboard = { writeText: async () => {} };
     const root = w.document.querySelector('article.guide');
     const baseline = new Set(Object.keys(w));
@@ -269,33 +274,29 @@ function check(file) {
       runtimeErrors.push(`script threw on load: ${e.message}`);
     }
     // Exercise controls: type into inputs, change selects, click buttons.
-    const fire = (el, type) => { try { el.dispatchEvent(new w.Event(type, { bubbles: true })); } catch (e) { runtimeErrors.push(`${type} on #${el.id || el.className}: ${e.message}`); } };
-    const textByType = { number: '3', range: null, text: 'Sample item', email: 'a@b.c', search: 'x' };
-    try {
-      root.querySelectorAll('input').forEach(el => {
-        if (el.type === 'checkbox' || el.type === 'radio') { el.click(); return; }
-        if (el.type === 'range') { el.value = el.max || '5'; fire(el, 'input'); fire(el, 'change'); return; }
-        el.value = textByType[el.type] ?? 'Sample item';
-        fire(el, 'input'); fire(el, 'change');
-        fire(el, 'keydown');
+    // jsdom reports listener errors through the virtual console, not by throwing.
+    const fire = (el, type) => el.dispatchEvent(new w.Event(type, { bubbles: true }));
+    root.querySelectorAll('input').forEach(el => {
+      if (el.type === 'checkbox' || el.type === 'radio') { el.click(); return; }
+      if (el.type === 'range') { el.value = el.max || '5'; fire(el, 'input'); fire(el, 'change'); return; }
+      el.value = el.type === 'number' ? '3' : 'Sample item';
+      fire(el, 'input'); fire(el, 'change');
+      fire(el, 'keydown');
+    });
+    root.querySelectorAll('textarea').forEach(el => { el.value = 'Sample text'; fire(el, 'input'); fire(el, 'change'); });
+    root.querySelectorAll('select').forEach(el => {
+      const opts = el.options.length;
+      if (opts > 1) { el.selectedIndex = opts - 1; fire(el, 'change'); fire(el, 'input'); }
+    });
+    // Click every non-quiz button twice (toggle-on, toggle-off) — includes added items.
+    for (let pass = 0; pass < 2; pass++) {
+      [...root.querySelectorAll('button')].forEach(b => {
+        if (b.closest('.quiz')) return;
+        b.click();
       });
-      root.querySelectorAll('textarea').forEach(el => { el.value = 'Sample text'; fire(el, 'input'); fire(el, 'change'); });
-      root.querySelectorAll('select').forEach(el => {
-        const opts = el.options.length;
-        if (opts > 1) { el.selectedIndex = opts - 1; fire(el, 'change'); fire(el, 'input'); }
-      });
-      // Click every non-quiz button twice (toggle-on, toggle-off) — includes added items.
-      for (let pass = 0; pass < 2; pass++) {
-        [...root.querySelectorAll('button, [role="button"], .choice')].forEach(b => {
-          if (b.closest('.quiz')) return;
-          try { b.click(); } catch (e) { runtimeErrors.push(`click "${b.textContent.trim().slice(0, 30)}": ${e.message}`); }
-        });
-      }
-      // Empty-value pass: clear numeric inputs to check validation does not throw.
-      root.querySelectorAll('input[type="number"]').forEach(el => { el.value = ''; fire(el, 'input'); });
-    } catch (e) {
-      runtimeErrors.push(`interaction failed: ${e.message}`);
     }
+    // Empty-value pass: clear numeric inputs to check validation does not throw.
+    root.querySelectorAll('input[type="number"]').forEach(el => { el.value = ''; fire(el, 'input'); });
     cleanups.forEach(f => { try { f(); } catch (e) { runtimeErrors.push(`cleanup threw: ${e.message}`); } });
     const leaked = Object.keys(w).filter(k => !baseline.has(k));
     if (leaked.length) errors.push(`script leaked globals: ${leaked.slice(0, 6).join(', ')}`);
@@ -305,7 +306,7 @@ function check(file) {
 
   return {
     file, errors, warns,
-    stats: { chapters: chapters.map(c => `${c.id}:${c.dataset.nav}`), words: text.split(/\s+/).length, tools: article.querySelectorAll('.tool').length, quiz: article.querySelectorAll('.quiz-item').length },
+    stats: { chapters: chapters.map(c => `${c.id}:${c.dataset.nav}`), words, tools: article.querySelectorAll('.tool').length, quiz: article.querySelectorAll('.quiz-item').length },
   };
 }
 
@@ -333,19 +334,4 @@ function splitTop(sel) {
   }
   out.push(cur);
   return out;
-}
-
-// 7-word runs of guide text outside the quiz, for spotting pasted explanations.
-function bodyRuns(article, quizItem) {
-  if (!article._runs) {
-    const body = [...article.querySelectorAll('p, li, dd, td')].filter(el => !el.closest('.quiz, script, style')).map(el => el.textContent.toLowerCase()).join(' \n ');
-    const words = body.split(/\s+/);
-    const runs = new Set();
-    for (let i = 0; i + 7 <= words.length; i++) {
-      const run = words.slice(i, i + 7).join(' ');
-      if (!run.includes('\n')) runs.add(run);
-    }
-    article._runs = [...runs];
-  }
-  return article._runs;
 }

@@ -1,28 +1,26 @@
 import { categories, frameworks, situations, getFramework, getFrameworksByCategory, getComparisonGuide } from '../data/frameworks.js';
-import { frameworkGlyph } from '../data/icons.js';
+import { frameworkGlyph, UI_ICONS } from '../data/icons.js';
 import { openSearch } from '../components/search.js';
 import { setPageMeta } from '../utils/page-meta.js';
-
-const ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 export function renderHub(container) {
   setPageMeta({ title: null, focus: false });
 
   container.innerHTML = `
-    <div class="page home">
+    <div class="page">
       <section class="home-intro">
-        <div class="home-intro-text">
+        <div>
           <h1 class="home-title">A field guide to product frameworks</h1>
           <p class="home-lede">${frameworks.length} frameworks in ${categories.length} families. Each guide explains the method, works through an example and lets you try it on your own problem.</p>
           <button class="home-search" type="button" id="home-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
+            ${UI_ICONS.search}
             <span>Search by name or problem</span>
           </button>
         </div>
 
         <aside class="home-start" aria-labelledby="start-title">
           <h2 class="home-start-title" id="start-title">Start from your situation</h2>
-          <dl class="start-list">
+          <dl>
             ${situations.map(s => `
               <div class="start-row">
                 <dt>${s.label}</dt>
@@ -62,12 +60,12 @@ function renderFamily(cat, i) {
         ${list.map(fw => `
           <li>
             <a class="entry" href="#/framework/${fw.slug}">
-              <span class="entry-glyph" aria-hidden="true">${frameworkGlyph(fw.slug, cat.id)}</span>
+              <span class="entry-glyph" aria-hidden="true">${frameworkGlyph(fw.slug)}</span>
               <span class="entry-text">
                 <span class="entry-name">${fw.name}</span>
                 <span class="entry-question">${fw.question}</span>
               </span>
-              ${ARROW}
+              ${UI_ICONS.arrow}
             </a>
           </li>`).join('')}
       </ol>

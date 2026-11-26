@@ -530,14 +530,14 @@ We would keep it on track with [the metric and process that reinforce it].</pre>
   .guide[data-guide="playing-to-win"] .ptw-num {
     grid-column: 1;
     grid-row: 1;
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-20);
     font-weight: var(--w-medium);
     color: var(--series-ink);
     font-variant-numeric: tabular-nums;
   }
   .guide[data-guide="playing-to-win"] .ptw-name {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-20);
     font-weight: var(--w-medium);
     line-height: var(--lh-snug);
@@ -559,13 +559,13 @@ We would keep it on track with [the metric and process that reinforce it].</pre>
   .guide[data-guide="playing-to-win"] .ptw-cascade p,
   .guide[data-guide="playing-to-win"] .ptw-list > li,
   .guide[data-guide="playing-to-win"] .ptw-pairs dd {
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-16);
     line-height: 1.6;
     color: var(--ink-2);
   }
   .guide[data-guide="playing-to-win"] .ptw-cascade .ptw-quote {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-18);
     color: var(--ink);
   }
@@ -727,6 +727,7 @@ We would keep it on track with [the metric and process that reinforce it].</pre>
     a.href = url;
     a.download = 'strategy-cascade.txt';
     a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const timer = setTimeout(() => URL.revokeObjectURL(url), 1000);
+    api.onCleanup(() => { clearTimeout(timer); URL.revokeObjectURL(url); });
   });
 </script>

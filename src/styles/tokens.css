@@ -5,7 +5,7 @@
    no legacy aliases, no per-file palettes.
 
    Direction
-   - Product    A study reference that teaches product managers 24 frameworks
+   - Product    A study reference that teaches product managers 25 frameworks
                 well enough to use them today, plus guides for choosing.
    - Character  Calm, exact, quietly warm.
    - World      A printed field guide: paper, ink, ruled tables, numbered
@@ -83,13 +83,15 @@
   --rule-hover: oklch(0.240 0.014 60 / 0.36);  /* a border under the pointer */
   --rule-ink: oklch(0.240 0.014 60 / 0.82);/* deliberate ruled line (tables, plates) */
 
-  /* Chrome accent: a deep ink blue. Links, focus, the primary action.
-     Inside a guide it is replaced by the category ink (see [data-cat]). */
-  --accent: oklch(0.455 0.120 255);
+  /* Chrome accent: a deep ink blue for links, focus and text selection. */
   --accent-ink: oklch(0.455 0.120 255);    /* accent as text on paper, ≥4.5:1 */
   --accent-wash: oklch(0.455 0.120 255 / 0.08);
 
   --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.455 0.120 255 / 0.55);
+
+  /* Scrims behind the index panel and the search palette */
+  --scrim: oklch(0.2 0.01 60 / 0.18);
+  --scrim-strong: oklch(0.2 0.01 60 / 0.32);
 
   /* ---- Semantic (toned to sit in the palette) ------------------------- */
   --good: oklch(0.520 0.110 155);
@@ -157,6 +159,7 @@
 
   /* ---- Layout ---------------------------------------------------------- */
   --bar-h: 56px;
+  --toc-bar-h: 48px;  /* the Contents bar on narrow screens */
   --shell-max: 1280px;
   --rail-w: 232px;
   --gutter: 24px;
@@ -168,7 +171,7 @@
   --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23857e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
 }
 
-/* Category context: any subtree with data-cat swaps the accent to its ink. */
+/* Category context: any subtree with data-cat gets that category's --cat, --cat-ink and --cat-wash. */
 [data-cat="prioritization"] { --cat: var(--cat-prioritization); --cat-ink: var(--cat-prioritization-ink); --cat-wash: var(--cat-prioritization-wash); }
 [data-cat="design"]         { --cat: var(--cat-design);         --cat-ink: var(--cat-design-ink);         --cat-wash: var(--cat-design-wash); }
 [data-cat="strategy"]       { --cat: var(--cat-strategy);       --cat-ink: var(--cat-strategy-ink);       --cat-wash: var(--cat-strategy-wash); }
@@ -196,7 +199,6 @@
   --rule-hover: oklch(0.930 0.010 85 / 0.34);
   --rule-ink: oklch(0.930 0.010 85 / 0.70);
 
-  --accent: oklch(0.740 0.105 250);
   --accent-ink: oklch(0.780 0.095 250);
   --accent-wash: oklch(0.740 0.105 250 / 0.12);
   --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.740 0.105 250 / 0.6);

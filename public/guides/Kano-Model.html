@@ -815,7 +815,6 @@ I dislike it</pre>
 
   // ---- Survey tally ----
   const KEYS = ['M', 'P', 'D', 'I', 'R', 'Q'];
-  const DEFAULTS = { M: 6, P: 18, D: 54, I: 36, R: 4, Q: 2 };
   const inputs = Object.fromEntries(KEYS.map(k => [k, root.querySelector(`#kano-t-${k.toLowerCase()}`)]));
   const tHelp = root.querySelector('#kano-t-help');
   const tResult = root.querySelector('#kano-t-result');
@@ -884,7 +883,7 @@ I dislike it</pre>
 
   KEYS.forEach(k => inputs[k].addEventListener('input', tally));
   root.querySelector('#kano-t-reset').addEventListener('click', () => {
-    KEYS.forEach(k => { inputs[k].value = String(DEFAULTS[k]); });
+    KEYS.forEach(k => { inputs[k].value = inputs[k].defaultValue; });
     tally();
   });
   tally();

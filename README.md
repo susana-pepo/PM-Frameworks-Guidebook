@@ -37,8 +37,8 @@ own URL), chapter numbers, the "Where next" footer, and the shared behaviour (qu
 copy buttons, links, result feedback, scrollable tables).
 
 **One design system.** `src/styles/tokens.css` holds every colour, size,
-space, radius, shadow and duration, in light and dark. `base.css`, `shell.css`,
-`pages.css` and `guide.css` are the only stylesheets; guide widgets may only
+space, radius, shadow and duration, in light and dark. `reset.css`, `base.css`,
+`shell.css`, `pages.css` and `guide.css` are the only other stylesheets; guide widgets may only
 use tokens. The design context is in `.impeccable.md`.
 
 **Metadata is data.** `src/data/frameworks.js` holds the families, the

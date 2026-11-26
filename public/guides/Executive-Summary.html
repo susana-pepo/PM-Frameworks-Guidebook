@@ -561,8 +561,7 @@ Requesting [resources] for [period] starting [date]. Decision needed by [date].<
     .guide[data-guide="exec-summary"] .example .es-page { padding: 0; border: 0; box-shadow: none; background: none; }
   }
 
-  /* Builder: the word-count note turns red past one page, and the preview */
-  .guide[data-guide="exec-summary"] .tool .tool-output-note.is-error { color: var(--bad); }
+  /* Builder: the preview */
   .guide[data-guide="exec-summary"] .es-preview { display: grid; gap: var(--s-3); }
   .guide[data-guide="exec-summary"] .es-preview .es-page { width: 100%; justify-self: center; }
   .guide[data-guide="exec-summary"] .es-preview-label {
@@ -690,16 +689,14 @@ Requesting [resources] for [period] starting [date]. Decision needed by [date].<
     const optionCount = markers >= 2 ? markers : points(options).length;
     // “Recommended” counts as a pick only when it is not negated (“not recommended”).
     const picked = /(?<!\bnot\s)(?<!n[’']t\s)\brecommend(?:ed|s)?\b/i.test(options);
-    const OPT = byKey.options.name;
-    if (!options) add('revise', OPT, 'List 2–3 options, including doing nothing, and mark the one you recommend.');
-    else if (optionCount < 2) add('revise', OPT, 'Only one option. Show at least one alternative, such as doing nothing.');
-    else if (optionCount > 3) add('revise', OPT, `${plural(optionCount, 'option', 'options')}. Keep the 2–3 a leader would seriously weigh.`);
-    else if (!picked) add('revise', OPT, 'Mark which option you recommend.');
-    else add('ok', OPT, `${plural(optionCount, 'option', 'options')}, with your pick marked.`);
+    if (!options) add('revise', 'Options considered', 'List 2–3 options, including doing nothing, and mark the one you recommend.');
+    else if (optionCount < 2) add('revise', 'Options considered', 'Only one option. Show at least one alternative, such as doing nothing.');
+    else if (optionCount > 3) add('revise', 'Options considered', `${plural(optionCount, 'option', 'options')}. Keep the 2–3 a leader would seriously weigh.`);
+    else if (!picked) add('revise', 'Options considered', 'Mark which option you recommend.');
+    else add('ok', 'Options considered', `${plural(optionCount, 'option', 'options')}, with your pick marked.`);
 
     // 5. Risks: count them the way options are counted, then check each has a mitigation.
     const risks = val('risks');
-    const RISK = byKey.risks.name;
     const units = (RISK_MARK.test(risks) ? risks.split(/(?=\brisk\s*\d*\s*:)/i) : risks.split(/\n+/))
       .map(s => s.replace(BULLET, '').trim())
       .filter(Boolean);
@@ -707,25 +704,27 @@ Requesting [resources] for [period] starting [date]. Decision needed by [date].<
       ? Math.max(1, (units[0].match(MITIGATION_ALL) || []).length)
       : units.length;
     const bare = units.filter(u => !MITIGATION.test(u)).length;
-    if (!risks) add('revise', RISK, 'Name 2–3 risks and how you would handle each.');
-    else if (bare) add('revise', RISK, `${bare === units.length ? 'No risk has a mitigation' : `${plural(bare, 'risk has', 'risks have')} no mitigation`}. Add “Mitigation:” and what you have tested, or what you will do if it happens.`);
-    else if (riskCount < 2) add('revise', RISK, 'Only one risk. Name 2–3, so the plan does not look unexamined.');
-    else if (riskCount > 3) add('revise', RISK, `${plural(riskCount, 'risk', 'risks')}. Keep the 2–3 that most threaten the plan.`);
-    else add('ok', RISK, `${plural(riskCount, 'risk', 'risks')}, each with a mitigation.`);
+    if (!risks) add('revise', 'Risks and mitigations', 'Name 2–3 risks and how you would handle each.');
+    else if (bare) add('revise', 'Risks and mitigations', `${bare === units.length ? 'No risk has a mitigation' : `${plural(bare, 'risk has', 'risks have')} no mitigation`}. Add “Mitigation:” and what you have tested, or what you will do if it happens.`);
+    else if (riskCount < 2) add('revise', 'Risks and mitigations', 'Only one risk. Name 2–3, so the plan does not look unexamined.');
+    else if (riskCount > 3) add('revise', 'Risks and mitigations', `${plural(riskCount, 'risk', 'risks')}. Keep the 2–3 that most threaten the plan.`);
+    else add('ok', 'Risks and mitigations', `${plural(riskCount, 'risk', 'risks')}, each with a mitigation.`);
 
     // 6. Ask
     const ask = val('ask');
-    const ASK = byKey.ask.name;
     const vague = DECISION.test(ask) ? null : ask.match(VAGUE_ASK);
-    if (!ask) add('missing', ASK, 'Missing the ask. Say what you need, from whom and by when.');
-    else if (vague) add('missing', ASK, `“${vague[0]}” is not an ask. Name the decision or resources you need and a date.`);
-    else if (!DEADLINE.some(re => re.test(ask))) add('revise', ASK, 'Add a date for the decision. “Decision needed by Friday” is better than “please review when convenient”.');
-    else add('ok', ASK, 'A specific ask with a deadline. A leader can act on this.');
+    if (!ask) add('missing', 'Ask and next steps', 'Missing the ask. Say what you need, from whom and by when.');
+    else if (vague) add('missing', 'Ask and next steps', `“${vague[0]}” is not an ask. Name the decision or resources you need and a date.`);
+    else if (!DEADLINE.some(re => re.test(ask))) add('revise', 'Ask and next steps', 'Add a date for the decision. “Decision needed by Friday” is better than “please review when convenient”.');
+    else add('ok', 'Ask and next steps', 'A specific ask with a deadline. A leader can act on this.');
 
     return checks;
   }
 
   let reviewed = false;
+
+  const PAGE_WORDS = 350;
+  const OVER_PAGE = 400;
 
   function updatePreview() {
     sections.forEach(s => {
@@ -736,49 +735,46 @@ Requesting [resources] for [period] starting [date]. Decision needed by [date].<
     // This note is not a live region, so it does not interrupt a screen reader on every keystroke.
     const total = sections.reduce((n, s) => n + countWords(s.el.value.trim()), 0);
     const allFilled = sections.every(s => s.el.value.trim() !== '');
-    const tooLong = total > 400;
+    const tooLong = total > OVER_PAGE;
     wordsNote.classList.toggle('is-error', tooLong);
     if (!total) wordsNote.textContent = 'Write the sections, then press Review.';
-    else if (tooLong) wordsNote.textContent = `About ${plural(total, 'word', 'words')}: too long for one page. Keep it under about 350, and trim Context first.`;
-    else if (total > 350) wordsNote.textContent = `${plural(total, 'word', 'words')}: close to the one-page limit. Keep it under about 350.`;
-    else if (allFilled) wordsNote.textContent = `${plural(total, 'word', 'words')}. That fits on one page; keep it under about 350.`;
-    else wordsNote.textContent = `${plural(total, 'word', 'words')} so far. A full one-pager stays under about 350.`;
+    else if (tooLong) wordsNote.textContent = `About ${plural(total, 'word', 'words')}: too long for one page. Keep it under about ${PAGE_WORDS}, and trim Context first.`;
+    else if (total > PAGE_WORDS) wordsNote.textContent = `${plural(total, 'word', 'words')}: close to the one-page limit. Keep it under about ${PAGE_WORDS}.`;
+    else if (allFilled) wordsNote.textContent = `${plural(total, 'word', 'words')}. That fits on one page; keep it under about ${PAGE_WORDS}.`;
+    else wordsNote.textContent = `${plural(total, 'word', 'words')} so far. A full one-pager stays under about ${PAGE_WORDS}.`;
   }
 
   const setResult = text => { if (result.textContent !== text) result.textContent = text; };
+
+  function addCheck(state, label, text, title) {
+    const li = document.createElement('li');
+    li.dataset.state = state;
+    const s = document.createElement('span');
+    s.className = 'check-state';
+    s.textContent = label;
+    const msg = document.createElement('span');
+    if (title) {
+      const name = document.createElement('strong');
+      name.textContent = `${title}: `;
+      msg.append(name);
+    }
+    msg.append(text);
+    li.append(s, msg);
+    feedback.append(li);
+  }
 
   function renderReview() {
     feedback.replaceChildren();
     if (!val('rec')) {
       setResult('–');
-      const li = document.createElement('li');
-      li.dataset.state = 'missing';
-      const state = document.createElement('span');
-      state.className = 'check-state';
-      state.textContent = 'Start here';
-      const msg = document.createElement('span');
-      msg.textContent = 'Add your recommendation first. It is the one section a leader is sure to read.';
-      li.append(state, msg);
-      feedback.append(li);
+      addCheck('missing', 'Start here', 'Add your recommendation first. It is the one section a leader is sure to read.');
       return 'Add your recommendation first.';
     }
     const checks = reviewChecks();
     const passed = checks.filter(c => c.state === 'ok').length;
     setResult(`${passed} of ${checks.length}`);
     const words = { ok: 'Good', revise: 'Consider', missing: 'Fix' };
-    checks.forEach(c => {
-      const li = document.createElement('li');
-      li.dataset.state = c.state;
-      const state = document.createElement('span');
-      state.className = 'check-state';
-      state.textContent = words[c.state];
-      const msg = document.createElement('span');
-      const name = document.createElement('strong');
-      name.textContent = `${c.section}: `;
-      msg.append(name, document.createTextNode(c.msg));
-      li.append(state, msg);
-      feedback.append(li);
-    });
+    checks.forEach(c => addCheck(c.state, words[c.state], c.msg, c.section));
     return `${passed} of ${checks.length} sections pass. Each section’s feedback is in the list.`;
   }
 
@@ -815,7 +811,7 @@ Requesting [resources] for [period] starting [date]. Decision needed by [date].<
     try {
       await navigator.clipboard.writeText(lines.join('\n').trim());
       status.textContent = 'Your summary is copied as plain text.';
-    } catch (err) {
+    } catch {
       status.textContent = 'Copying is not available here. Select the text in each field and copy it by hand.';
     }
   });

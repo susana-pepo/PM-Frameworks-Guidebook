@@ -559,13 +559,13 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     background: var(--series-wash);
   }
   .guide[data-guide="okrs"] .okr-tag {
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-14);
     font-weight: var(--w-semibold);
     color: var(--series-ink);
   }
   .guide[data-guide="okrs"] .okr-obj-text {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-20);
     line-height: var(--lh-snug);
     color: var(--ink);
@@ -573,7 +573,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
   .guide[data-guide="okrs"] .okr-measured {
     position: relative;
     padding: var(--s-6) 0 var(--s-4);
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-14);
     color: var(--ink-3);
   }
@@ -622,13 +622,13 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     border-left: 1px solid var(--rule-ink);
   }
   .guide[data-guide="okrs"] .okr-kr-name {
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-16);
     font-weight: var(--w-semibold);
     color: var(--ink);
   }
   .guide[data-guide="okrs"] .okr-kr-move {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-20);
     color: var(--ink);
   }
@@ -666,25 +666,25 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     border-left: 1px solid var(--rule-ink);
   }
   .guide[data-guide="okrs"] .okr-level {
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-14);
     font-weight: var(--w-semibold);
     color: var(--ink-3);
   }
   .guide[data-guide="okrs"] .okr-level-o {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-18);
     line-height: var(--lh-snug);
     color: var(--ink);
   }
   .guide[data-guide="okrs"] .okr-o-label {
     margin-right: var(--s-1);
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-14);
     font-weight: var(--w-semibold);
     color: var(--series-ink);
   }
-  .guide[data-guide="okrs"] .okr-level-krs {
+  .guide[data-guide="okrs"] :is(.okr-level-krs, .okr-out-krs) {
     display: grid;
     gap: var(--s-1);
     padding: var(--s-2) var(--s-3);
@@ -692,7 +692,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     background: color-mix(in oklab, var(--series) 10%, var(--paper));
   }
   .guide[data-guide="okrs"] .okr-level-krs > li {
-    font-family:var(--font-sans);
+    font-family: var(--font-sans);
     font-size: var(--fs-16);
     line-height: 1.5;
     color: var(--ink-2);
@@ -716,18 +716,11 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     background: var(--paper);
   }
   .guide[data-guide="okrs"] .tool .okr-out-sentence {
-    font-family:var(--font-serif);
+    font-family: var(--font-serif);
     font-size: var(--fs-18);
     line-height: var(--lh-snug);
     color: var(--ink);
     overflow-wrap: anywhere;
-  }
-  .guide[data-guide="okrs"] .okr-out-krs {
-    display: grid;
-    gap: var(--s-1);
-    padding: var(--s-2) var(--s-3);
-    border-radius: var(--r-sm);
-    background: color-mix(in oklab, var(--series) 10%, var(--paper));
   }
   .guide[data-guide="okrs"] .tool .okr-out-krs > li {
     font-size: var(--fs-14);
@@ -774,7 +767,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
   const objectiveHelp = builder.querySelector('#okr-objective-help');
   const okrType = builder.querySelector('#okr-type');
   const krFields = [1, 2, 3, 4, 5].map(n => builder.querySelector(`#okr-kr-${n}`));
-  const review = builder.querySelector('#okr-result');
+  const result = builder.querySelector('#okr-result');
   const reviewNote = builder.querySelector('#okr-note');
   const out = builder.querySelector('#okr-out');
   const feedback = builder.querySelector('#okr-feedback');
@@ -808,7 +801,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     return /\d/.test(stripped);
   }
 
-  function sentenceCase(text) {
+  function lowerFirst(text) {
     return /^[A-Z][a-z]/.test(text) ? text[0].toLowerCase() + text.slice(1) : text;
   }
 
@@ -820,7 +813,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     objectiveHelp.textContent = hasObj ? OBJ_HELP : 'Write your objective first';
     objectiveHelp.classList.toggle('is-error', !hasObj);
     if (!hasObj) {
-      review.textContent = '–';
+      result.textContent = '–';
       reviewNote.textContent = 'The test needs an objective.';
       out.replaceChildren();
       feedback.replaceChildren();
@@ -872,12 +865,12 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     else tip('Aspirational: expect an average score of about 0.7, and count that as success.');
 
     const toFix = items.filter(i => i.state === 'revise' || i.state === 'missing').length;
-    review.textContent = toFix === 0 ? 'Ready to share' : `${toFix} ${toFix === 1 ? 'thing' : 'things'} to fix`;
+    result.textContent = toFix === 0 ? 'Ready to share' : `${toFix} ${toFix === 1 ? 'thing' : 'things'} to fix`;
     reviewNote.textContent = toFix === 0
       ? 'Read it aloud as one sentence. If it sounds right, share it with the level above.'
       : 'Work through the points below, then test again.';
 
-    const sentence = el('p', 'okr-out-sentence', `I will ${sentenceCase(obj)} as measured by:`);
+    const sentence = el('p', 'okr-out-sentence', `I will ${lowerFirst(obj)} as measured by:`);
     const list = el('ul', 'okr-out-krs');
     list.dataset.series = '2';
     krs.forEach(k => list.append(el('li', null, k.text)));
@@ -898,7 +891,7 @@ Sentence check: I will [objective] as measured by [key results].</pre>
     objective.removeAttribute('aria-invalid');
     objectiveHelp.textContent = OBJ_HELP;
     objectiveHelp.classList.remove('is-error');
-    review.textContent = '';
+    result.textContent = '';
     reviewNote.textContent = INTRO;
     out.replaceChildren();
     feedback.replaceChildren();

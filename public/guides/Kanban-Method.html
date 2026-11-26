@@ -652,7 +652,6 @@ Review: when the team looks at these rules again</pre>
   const checks = root.querySelector('#kb-checks');
 
   const DAYS_PER_WEEK = 5;
-  const EXAMPLE = { wip: '12', tp: '4', limit: '8' };
   const HINTS = {
     wip: 'Items started, not finished',
     tp: 'Items finished per week',
@@ -664,7 +663,7 @@ Review: when the team looks at these rules again</pre>
 
   // null when empty, NaN when the browser holds text it cannot parse.
   function read(el) {
-    if (el.validity && el.validity.badInput) return NaN;
+    if (el.validity.badInput) return NaN;
     const raw = el.value.trim();
     return raw === '' ? null : Number(raw);
   }
@@ -726,9 +725,7 @@ Review: when the team looks at these rules again</pre>
 
   [wipEl, tpEl, limitEl].forEach((el) => el.addEventListener('input', update));
   root.querySelector('#kb-reset').addEventListener('click', () => {
-    wipEl.value = EXAMPLE.wip;
-    tpEl.value = EXAMPLE.tp;
-    limitEl.value = EXAMPLE.limit;
+    [wipEl, tpEl, limitEl].forEach((el) => { el.value = el.defaultValue; });
     update();
   });
   update();

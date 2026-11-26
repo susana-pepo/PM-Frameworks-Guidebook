@@ -485,7 +485,7 @@
     counter-increment: dta-step;
     font-family: var(--font-sans);
     font-size: var(--fs-14);
-    font-weight: 400;
+    font-weight: var(--w-regular);
     line-height: 1.35;
     color: var(--ink-2);
   }
@@ -553,7 +553,7 @@
       flex: none;
       min-width: 1.25em;
       color: var(--ink-3);
-      font-weight: 400;
+      font-weight: var(--w-regular);
       font-variant-numeric: tabular-nums;
     }
     .guide[data-guide="dual-track"] .dta-link { padding: 0 var(--s-2); }
@@ -578,9 +578,10 @@
   // The recommended experiments come from the four risk cards, so the two never disagree.
   const METHODS = {};
   root.querySelectorAll('[data-risk]').forEach(card => {
-    const tests = card.querySelector('[data-risk-tests]');
-    const name = card.querySelector('.card-title');
-    if (tests && name) METHODS[card.dataset.risk] = { name: name.textContent.trim(), tests: tests.textContent.trim().replace(/^Ways to test:\s*/, '') };
+    METHODS[card.dataset.risk] = {
+      name: card.querySelector('.card-title').textContent.trim(),
+      tests: card.querySelector('[data-risk-tests]').textContent.trim().replace(/^Ways to test:\s*/, ''),
+    };
   });
 
   const SAMPLE = {

@@ -696,7 +696,7 @@ What if…</pre>
     const v = {};
     MODES.forEach(m => { v[m.key] = value(m.el); });
     const filled = MODES.filter(m => v[m.key]).length;
-    setText(progress, `${filled} of 5 modes`);
+    setText(progress, `${filled} of ${MODES.length} modes`);
     const firstEmpty = MODES.find(m => !v[m.key]);
     setText(nextNote, firstEmpty
       ? firstEmpty.next
@@ -740,10 +740,8 @@ What if…</pre>
   FIELDS.forEach(el => {
     el.addEventListener('input', () => {
       render();
-      if (undoValues) {
+      if (undoValues || actionHelp.classList.contains('is-error')) {
         setUndo(null);
-        setHelp(HELP_DEFAULT);
-      } else if (actionHelp.classList.contains('is-error')) {
         setHelp(HELP_DEFAULT);
       }
     });
@@ -776,8 +774,8 @@ What if…</pre>
     a.download = 'design-thinking-worksheet.txt';
     a.click();
     const timer = setTimeout(() => URL.revokeObjectURL(url), 1000);
-    api.onCleanup(() => clearTimeout(timer));
-    setHelp(`Downloaded, with ${filled} of 5 modes filled in.`);
+    api.onCleanup(() => { clearTimeout(timer); URL.revokeObjectURL(url); });
+    setHelp(`Downloaded, with ${filled} of ${MODES.length} modes filled in.`);
   });
 
   // Clearing keeps the previous text so one mis-click never loses the worksheet:

@@ -6,7 +6,7 @@
     <figure class="figure" data-hero>
       <ol class="shapes" aria-label="The parts of each framework in order, with the part that carries the main point marked">
         <li class="shape" data-series="4">
-          <div class="shape-head">
+          <div>
             <p class="shape-name"><span class="key-dot" aria-hidden="true"></span>Pyramid Principle</p>
             <p class="shape-meta">Spoken or written, any length</p>
           </div>
@@ -17,7 +17,7 @@
           </ol>
         </li>
         <li class="shape" data-series="3">
-          <div class="shape-head">
+          <div>
             <p class="shape-name"><span class="key-dot" aria-hidden="true"></span>Executive Summary</p>
             <p class="shape-meta">Written, one page</p>
           </div>
@@ -31,7 +31,7 @@
           </ol>
         </li>
         <li class="shape" data-series="5">
-          <div class="shape-head">
+          <div>
             <p class="shape-name"><span class="key-dot" aria-hidden="true"></span>STAR Method</p>
             <p class="shape-meta">Spoken, 90 seconds to 2 minutes</p>
           </div>
@@ -43,7 +43,7 @@
           </ol>
         </li>
         <li class="shape" data-series="1">
-          <div class="shape-head">
+          <div>
             <p class="shape-name"><span class="key-dot" aria-hidden="true"></span>Narrative Arc</p>
             <p class="shape-meta">Spoken, 5–20 minutes</p>
           </div>
@@ -163,7 +163,7 @@
         <p class="tool-output-label">Recommendation</p>
         <output class="tool-result" id="cp-result"></output>
         <p class="tool-output-note" id="cp-reason">Choose what you are preparing to see a recommendation.</p>
-        <p class="cp-links" id="cp-links"></p>
+        <p class="tool-links" id="cp-links"></p>
       </div>
     </div>
 
@@ -342,14 +342,6 @@
     .guide[data-guide="compare-communication"] .shape { grid-template-columns: minmax(0, 1fr); }
   }
 
-  /* Picker output: the links to the recommended guides sit in a row. */
-  .guide[data-guide="compare-communication"] .cp-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-5);
-  }
-  .guide[data-guide="compare-communication"] .cp-links:empty { display: none; }
-  .guide[data-guide="compare-communication"] .cp-links a { font-weight: var(--w-semibold); }
 </style>
 
 <script data-guide-script>

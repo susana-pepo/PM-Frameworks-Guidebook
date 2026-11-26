@@ -669,16 +669,6 @@ If we weigh [X] more heavily, I would shift to [ ]</pre>
     padding-top: var(--s-1);
     border-top: 1px solid var(--rule-strong);
   }
-  /* Practice sheet: a wrapped label hangs after its letter key */
-  .guide[data-guide="circles"] .field > label {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-2);
-  }
-  .guide[data-guide="circles"] .field > label > .card-key--sm {
-    flex: none;
-    margin: 0;
-  }
 </style>
 
 <script data-guide-script>
@@ -795,6 +785,7 @@ If we weigh [X] more heavily, I would shift to [ ]</pre>
 
   // Timer: 20 minutes, with the step you should be on from the interview plan.
   const TOTAL = 20 * 60;
+  const TIME_UP = 'Time is up. Close with your summary.';
   let remaining = TOTAL;
   let timerId = null;
   let lastStep = -1;
@@ -819,9 +810,8 @@ If we weigh [X] more heavily, I would shift to [ ]</pre>
     timerOut.textContent = clock(Math.max(0, remaining));
     if (remaining <= 0) {
       stopTimer();
-      timerOut.textContent = clock(0);
-      timerStep.textContent = 'Time is up. Close with your summary.';
-      status.textContent = 'Time is up. Close with your summary.';
+      timerStep.textContent = TIME_UP;
+      status.textContent = TIME_UP;
       return;
     }
     const i = stepAt(TOTAL - remaining);

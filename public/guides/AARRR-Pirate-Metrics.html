@@ -588,9 +588,8 @@ I’d focus on improving [metric] by [action].</pre>
 
   function readCount(input) {
     const raw = input.value.trim();
-    if (raw === '') return { error: 'Enter a number of users, 0 or more' };
     const n = Number(raw);
-    if (!Number.isFinite(n) || n < 0) return { error: 'Enter a number of users, 0 or more' };
+    if (raw === '' || !Number.isFinite(n) || n < 0) return { error: 'Enter a number of users, 0 or more' };
     return { value: n };
   }
 
@@ -683,13 +682,7 @@ I’d focus on improving [metric] by [action].</pre>
 
   /* ---- Funnel map ---- */
   const map = root.querySelector('[data-tool="funnel-map"]');
-  const MAP_STAGES = [
-    { key: 'acq', name: 'Acquisition' },
-    { key: 'act', name: 'Activation' },
-    { key: 'ret', name: 'Retention' },
-    { key: 'ref', name: 'Referral' },
-    { key: 'rev', name: 'Revenue' },
-  ].map((s) => ({ ...s, field: map.querySelector(`#fm-${s.key}`) }));
+  const MAP_STAGES = [...STAGES, REFERRAL, REVENUE].map(({ key, name }) => ({ key, name, field: map.querySelector(`#fm-${key}`) }));
   const mapResult = map.querySelector('#fm-result');
   const mapNote = map.querySelector('#fm-note');
   const feedback = map.querySelector('#fm-feedback');

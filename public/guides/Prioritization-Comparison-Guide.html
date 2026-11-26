@@ -146,14 +146,14 @@
         <p class="tool-output-label">Recommendation</p>
         <output class="tool-result" id="pk-result"></output>
         <p class="tool-output-note" id="pk-reason">Answer all three questions to see a recommendation.</p>
-        <p class="pk-links" id="pk-links"></p>
+        <p class="tool-links" id="pk-links"></p>
       </div>
     </div>
 
     <details class="more">
       <summary>The rules behind the picker</summary>
       <p>The picker runs your three answers through these five questions in order and stops at the first answer that names a framework. It checks the goal before the data, and no path leads to RICE without data to estimate Reach.</p>
-      <ol class="decision" data-picker>
+      <ol class="decision">
         <li>
           <p class="decision-q">Do you need to know what type of feature each idea is, rather than which to build first?</p>
           <ul>
@@ -363,13 +363,6 @@
   @media (max-width: 480px) {
     .guide[data-guide="compare-prioritization"] .spectrum-list { grid-template-columns: minmax(0, 1fr); }
   }
-  .guide[data-guide="compare-prioritization"] .pk-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-5);
-  }
-  .guide[data-guide="compare-prioritization"] .pk-links:empty { display: none; }
-  .guide[data-guide="compare-prioritization"] .pk-links a { font-weight: var(--w-semibold); }
 </style>
 
 <script data-guide-script>
@@ -382,7 +375,7 @@
   const QUESTION_NAMES = { time: 'time', data: 'analytics data', goal: 'main goal' };
   const GUIDE_NAMES = { rice: 'RICE', 'value-effort': 'Value vs Effort', kano: 'Kano', ice: 'ICE' };
 
-  // One rules table that mirrors the static decision path (ol.decision[data-picker])
+  // One rules table that mirrors the static decision path (ol.decision)
   // question by question; the two are kept in step by hand. Rules are checked in
   // order and the first match wins: goal first (type, picture, triage, rank),
   // then analytics data for Reach. No rule recommends RICE without Reach data.
@@ -432,7 +425,7 @@
     const missing = Object.keys(QUESTION_NAMES).filter(k => !answers[k]);
     if (missing.length) {
       result.textContent = '';
-      reason.textContent = missing.length === 3
+      reason.textContent = missing.length === Object.keys(QUESTION_NAMES).length
         ? 'Answer all three questions to see a recommendation.'
         : `Still to answer: ${missing.map(k => QUESTION_NAMES[k]).join(' and ')}.`;
       return;

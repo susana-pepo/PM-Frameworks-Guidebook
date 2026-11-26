@@ -138,7 +138,7 @@
         <output class="tool-result" id="pk-result"></output>
         <p class="tool-output-note" id="pk-reason">Answer all three questions to see a recommendation.</p>
         <ul id="pk-notes"></ul>
-        <p class="pk-links" id="pk-links"></p>
+        <p class="tool-links" id="pk-links"></p>
       </div>
     </div>
 
@@ -291,16 +291,8 @@
 </article>
 
 <style data-guide-style>
-  /* Picker output: the context and time notes use the shared list; the
-     links to the recommended guides sit in a row. */
-  .guide[data-guide="compare-strategy"] #pk-notes:empty,
-  .guide[data-guide="compare-strategy"] .pk-links:empty { display: none; }
-  .guide[data-guide="compare-strategy"] .pk-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-5);
-  }
-  .guide[data-guide="compare-strategy"] .pk-links a { font-weight: var(--w-semibold); }
+  /* Picker output: the context and time notes use the shared list. */
+  .guide[data-guide="compare-strategy"] #pk-notes:empty { display: none; }
   /* The notes sit under the reason at the same note size. */
   .guide[data-guide="compare-strategy"] #pk-notes li { font-size: var(--fs-14); }
 
@@ -420,7 +412,7 @@
     const missing = QUESTIONS.filter(k => !answers[k]);
     if (missing.length) {
       result.textContent = '';
-      reason.textContent = missing.length === 3
+      reason.textContent = missing.length === QUESTIONS.length
         ? 'Answer all three questions to see a recommendation.'
         : `Still to answer: ${missing.join(' and ')}.`;
       return;

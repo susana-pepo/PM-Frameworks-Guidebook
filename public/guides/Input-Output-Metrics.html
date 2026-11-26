@@ -326,7 +326,7 @@
         <output class="tool-result io-result" id="io-result" for="io-output"></output>
         <p class="tool-output-note" id="io-note">Name your output, add the inputs with their counter-metrics, then check the stack.</p>
         <ul class="checks" id="io-feedback" aria-label="Notes on your stack" hidden></ul>
-        <p class="io-validate" id="io-validate" hidden><strong>Before you commit a team:</strong> make sure each input is <a href="#model" data-section-link>predictive</a>. If it doubled, would the output move? Answer with data or an experiment.</p>
+        <p id="io-validate" hidden><strong>Before you commit a team:</strong> make sure each input is <a href="#model" data-section-link>predictive</a>. If it doubled, would the output move? Answer with data or an experiment.</p>
       </div>
     </div>
 
@@ -728,11 +728,6 @@
     }
     .guide[data-guide="input-output"] .io-tree-leaves .io-tree-op { justify-self: start; padding-left: var(--s-4); }
   }
-  /* Long placeholders: smaller on phones, and an ellipsis if they still overflow. */
-  @media (max-width: 600px) {
-    .guide[data-guide="input-output"] .fields input { text-overflow: ellipsis; }
-    .guide[data-guide="input-output"] .fields input::placeholder { font-size: var(--fs-14); }
-  }
 
   /* Builder */
   .guide[data-guide="input-output"] .io-rows { display: grid; gap: var(--s-4); }
@@ -905,9 +900,8 @@
 
   function clearAll() {
     outputField.value = '';
+    setOutputError(false);
     outputField.removeAttribute('aria-invalid');
-    outputHelp.textContent = OUTPUT_HELP;
-    outputHelp.classList.remove('is-error');
     [...rowsEl.querySelectorAll('.io-row')].forEach((row, i) => {
       if (i >= MIN_ROWS) { row.remove(); return; }
       row.querySelectorAll('input').forEach(input => { input.value = ''; });
@@ -927,7 +921,6 @@
 
   addBtn.addEventListener('click', () => {
     const count = rowsEl.querySelectorAll('.io-row').length;
-    if (count >= MAX_ROWS) return;
     const row = makeRow(count + 1);
     rowsEl.append(row);
     row.querySelector('.io-in').focus();

@@ -638,7 +638,8 @@
   const summary = tool.querySelector('#vem-summary');
 
   const MAX_ITEMS = 20;
-  const NAME_HELP = 'Up to 40 characters';
+  const NAME_HELP = nameHelp.textContent;
+  const NOTE_DEFAULT = note.textContent;
   const ZONES = {
     qw: { name: 'Quick wins', one: 'a Quick win', series: '3' },
     bb: { name: 'Big bets', one: 'a Big bet', series: '4' },
@@ -663,7 +664,6 @@
   // A 3 on either axis is on the midline; otherwise 4–5 is high and 1–2 is low.
   const zoneOf = (v, e) => (v === 3 || e === 3) ? 'line' : v > 3 ? (e < 3 ? 'qw' : 'bb') : (e < 3 ? 'fi' : 'av');
   const clamp = (n) => Math.min(5, Math.max(1, n));
-  const isScore = (n) => Number.isInteger(n) && n >= 1 && n <= 5;
   const findItem = (id) => items.find(it => it.id === id);
   const cellFor = (v, e) => grid.querySelector(`.vem-cell[data-v="${v}"][data-e="${e}"]`);
   const plural = (n, one, many) => `${n.toLocaleString('en-US')} ${n === 1 ? one : many}`;
@@ -735,7 +735,6 @@
 
   function moveItem(id, v, e, keepFocus) {
     const item = findItem(id);
-    if (!item) return;
     item.v = clamp(v);
     item.e = clamp(e);
     place(item);
@@ -772,7 +771,7 @@
     summary.replaceChildren();
     if (!items.length) {
       result.textContent = '';
-      note.textContent = 'Add an idea, or load the example, to see where each one lands.';
+      note.textContent = NOTE_DEFAULT;
       summary.hidden = true;
       return;
     }
@@ -805,7 +804,7 @@
   }
 
   function onAdd() {
-    const name = nameInput.value.trim().replace(/\s+/g, ' ').slice(0, 40);
+    const name = nameInput.value.trim().replace(/\s+/g, ' ').slice(0, nameInput.maxLength);
     const v = Number(valueSelect.value);
     const e = Number(effortSelect.value);
     if (!name) {
@@ -813,12 +812,8 @@
       nameInput.focus();
       return;
     }
-    if (!isScore(v) || !isScore(e)) {
-      setNameError('Choose a value and an effort score from 1 to 5');
-      return;
-    }
     if (items.length >= MAX_ITEMS) {
-      setNameError('The grid holds 20 ideas. Remove one first.');
+      setNameError(`The grid holds ${MAX_ITEMS} ideas. Remove one first.`);
       return;
     }
     setNameError('');
@@ -831,7 +826,7 @@
   function onChipKey(event, id) {
     const item = findItem(id);
     const step = { ArrowUp: [1, 0], ArrowDown: [-1, 0], ArrowRight: [0, 1], ArrowLeft: [0, -1] }[event.key];
-    if (!item || !step) return;
+    if (!step) return;
     event.preventDefault();
     moveItem(id, item.v + step[0], item.e + step[1], true);
   }
@@ -855,14 +850,12 @@
 
   // Pointer capture sits on the grid, so moving a marker between squares keeps the drag alive.
   grid.addEventListener('pointerdown', (event) => {
-    const chip = event.target.closest && event.target.closest('.vem-chip');
+    const chip = event.target.closest('.vem-chip');
     if (!chip || event.button > 0) return;
     event.preventDefault();
     dragId = Number(chip.dataset.id);
     chip.classList.add('is-dragging');
-    if (grid.setPointerCapture) {
-      try { grid.setPointerCapture(event.pointerId); } catch (err) { /* capture is optional */ }
-    }
+    grid.setPointerCapture(event.pointerId);
   });
   grid.addEventListener('pointermove', (event) => {
     if (dragId === null) return;

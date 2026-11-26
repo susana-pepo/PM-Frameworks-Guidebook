@@ -571,7 +571,6 @@
   @media (max-width: 640px) {
     .guide[data-guide="narrative-arc"] .arc-beats { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: 0; }
     .guide[data-guide="narrative-arc"] .arc-beats li {
-      display: grid;
       grid-row: auto;
       grid-template-rows: none;
       justify-items: stretch;
@@ -579,7 +578,6 @@
       align-items: center;
       column-gap: var(--s-3);
       padding: var(--s-2) 0;
-      border-top: 1px solid var(--rule);
     }
     .guide[data-guide="narrative-arc"] .arc-beats li:first-child { border-top: 0; }
     .guide[data-guide="narrative-arc"] .arc-beat-key { margin: 0; }
@@ -609,7 +607,6 @@
     const help = tool.querySelector(`#arc-${b.id}-help`);
     return { ...b, el, help, defaultHelp: help.textContent };
   });
-  const beat = Object.fromEntries(beats.map(b => [b.id, b]));
 
   // Whole-word checks, so "button" does not count as "but".
   const CONTRAST = /\b(but|however|despite|although|yet)\b/i;
@@ -732,6 +729,6 @@
     clearOutput();
     note.textContent = NOTE_DEFAULT;
     status.textContent = '';
-    beat.sq.el.focus();
+    beats[0].el.focus();
   });
 </script>

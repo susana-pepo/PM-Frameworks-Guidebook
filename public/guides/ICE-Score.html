@@ -397,11 +397,7 @@
   };
   const bandFor = (key, v) => bands[key].find(([min]) => v >= min)[1];
 
-  // Read a rating; returns null if it is not a whole number from 1 to 10.
-  function read(key) {
-    const v = Number(inputs[key].value);
-    return Number.isInteger(v) && v >= 1 && v <= 10 ? v : null;
-  }
+  const read = (key) => Number(inputs[key].value);
 
   // Scores from the worked example, so a result can be read against other ideas.
   const exampleScores = [576, 441, 216, 160, 36];
@@ -425,33 +421,14 @@
 
   function update() {
     const values = {};
-    let valid = true;
     Object.keys(inputs).forEach((key) => {
       const v = read(key);
       const help = tool.querySelector(`#ice-${key}-help`);
-      if (v === null) {
-        valid = false;
-        help.textContent = 'Choose a whole number from 1 to 10';
-        help.classList.add('is-error');
-        inputs[key].setAttribute('aria-invalid', 'true');
-        return;
-      }
       values[key] = v;
       const label = bandFor(key, v);
       help.textContent = `${v} of 10: ${label}`;
-      help.classList.remove('is-error');
-      inputs[key].removeAttribute('aria-invalid');
       inputs[key].setAttribute('aria-valuetext', `${v}, ${label}`);
     });
-
-    if (!valid) {
-      result.textContent = '–';
-      equation.textContent = 'Set all three ratings to see a score';
-      band.textContent = '';
-      rank.textContent = '';
-      fill.style.setProperty('--fill', '0');
-      return;
-    }
 
     const { impact: i, confidence: c, ease: e } = values;
     const score = i * c * e;
@@ -466,10 +443,7 @@
     fill.style.setProperty('--fill', String((geoMean - 1) / 9));
   }
 
-  Object.values(inputs).forEach((el) => {
-    el.addEventListener('input', update);
-    el.addEventListener('change', update);
-  });
+  Object.values(inputs).forEach((el) => el.addEventListener('input', update));
 
   tool.querySelectorAll('[data-preset]').forEach((btn) => {
     btn.addEventListener('click', () => {

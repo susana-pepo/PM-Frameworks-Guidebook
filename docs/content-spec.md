@@ -398,6 +398,11 @@ The app adds the copy button.
   States are `ok`, `revise`, `missing` and `info`; the state word is shown,
   colour only supports it. Do not build a guide-specific feedback list.
 
+A tool that recommends other guides puts the links in
+`<p class="tool-links" id="…"></p>`; the app lays them out in a row and
+hides the row while it is empty. A note that reports a problem adds
+`is-error` to its `.tool-output-note`.
+
 ### Quiz
 ```html
 <ol class="quiz">

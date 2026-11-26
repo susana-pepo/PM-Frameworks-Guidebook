@@ -16,10 +16,6 @@ export function onNavigate(fn) {
   listeners.push(fn);
 }
 
-export function navigate(path) {
-  window.location.hash = path;
-}
-
 export function getRoute() {
   const hash = window.location.hash.slice(1) || '/';
   const parts = hash.split('/').filter(Boolean).map(decodeURIComponent);
@@ -44,11 +40,8 @@ export function getRoute() {
 }
 
 export function initRouter() {
-  let last = null;
   const handle = () => {
     const route = getRoute();
-    route.prev = last;
-    last = route;
     listeners.forEach(fn => fn(route));
   };
   window.addEventListener('hashchange', handle);

@@ -2,37 +2,32 @@
  * Guide renderer: framework guides and comparison guides.
  *
  * Content is a canonical fragment in public/guides/<file> (docs/content-spec.md).
- * This module supplies every piece of chrome around it: breadcrumb, header,
- * contents rail, section numbers, the footer with neighbouring guides, and
- * the shared behaviours (quiz, copy, links, live
- * results).
+ * This module adds the chrome around it (header, contents rail, section
+ * numbers, "Where next" footer) and the shared behaviours (links, quizzes,
+ * copy buttons, live results, scrolling tables and figures, card keys).
  *
- * A guide is read one section at a time. The introduction and each chapter
- * are panels; only the current one is shown, and the contents rail (a
- * "Contents" bar on narrow screens) is the only way between them. On wide
- * screens the rail runs the full height of the window and stays put while
- * the reading column scrolls. Each panel has its
- * own address, #/<kind>/<slug>/<section>, so back and forward step through
- * the sections a reader visited. A guide's own <script data-guide-script> runs scoped to the
- * guide with `root` and `api`, and is torn down when the guide unmounts.
+ * A guide shows one panel at a time: the introduction or one chapter. Each
+ * has its own address, #/<kind>/<slug>/<section>, so back and forward step
+ * through the sections a reader visited. A guide's <script data-guide-script>
+ * runs with `root` and `api` and is torn down on unmount.
  */
 import {
   getFramework, getCategory, getComparisonBySlug, getComparisonGuide,
   getFrameworksByCategory,
 } from '../data/frameworks.js';
+import { UI_ICONS } from '../data/icons.js';
 import { setPageMeta } from '../utils/page-meta.js';
 import { CREDIT } from '../components/credit.js';
 import { renderNotFound } from './not-found.js';
 
 const cache = new Map();
-let current = null;     // { key, kind, slug, title, root, page, cleanup[], panels[], panelId, transition }
-let navSeq = 0;         // increments on every section change; stale callbacks compare against it
+let current = null;     // { key, kind, slug, title, root, page, cleanup[], panels[], panelId, setActive }
 const INTRO_ID = 'intro';
 let renderToken = 0;
 
-const CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>';
-const ARROW_ROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>';
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
 
 /* ---- Resolve route → guide ------------------------------------------- */
 function resolve(route) {
@@ -68,14 +63,13 @@ export function updateGuideInPlace(route) {
 
 export function unmountGuide() {
   if (!current) return;
-  current.cleanup.forEach(fn => { try { fn(); } catch (e) { /* ignore */ } });
+  current.cleanup.forEach(fn => { try { fn(); } catch (err) { console.error(`[guide] cleanup error in ${current.key}:`, err); } });
   document.getElementById('guide-style')?.remove();
   current = null;
 }
 
 /* ---- Public: render -------------------------------------------------- */
 export async function renderGuide(container, route) {
-  unmountGuide();
   const info = resolve(route);
   if (!info) return renderNotFound(container, 'There is no guide at this address.');
 
@@ -115,13 +109,7 @@ async function load(file) {
   const doc = new DOMParser().parseFromString(`<body>${text}</body>`, 'text/html');
   const article = doc.querySelector('article.guide');
   if (!article) throw new Error('No guide article');
-  // Colour mixes run in OKLab: an OKLCH mix of a series with the warm
-  // neutrals (ink, paper, rule) rotates its hue the short way round the wheel,
-  // turning blue violet in light and teal in dark. OKLab has no hue channel.
-  // Guides should author `in oklab`; this keeps older guide CSS correct.
-  const style = [...doc.querySelectorAll('style[data-guide-style]')]
-    .map(s => s.textContent).join('\n')
-    .replace(/color-mix\(\s*in\s+oklch\s*,/g, 'color-mix(in oklab,');
+  const style = [...doc.querySelectorAll('style[data-guide-style]')].map(s => s.textContent).join('\n');
   const script = [...doc.querySelectorAll('script[data-guide-script]')].map(s => s.textContent).join('\n;\n');
   const parsed = { html: article.outerHTML, style, script };
   cache.set(file, parsed);
@@ -135,14 +123,14 @@ function mount(container, info, parsed, route) {
 
   const guide = isFw ? getComparisonGuide(cat.id) : null;
   container.innerHTML = `
-    <div class="page guide-page" data-cat="${cat.id}" data-kind="${kind}">
+    <div class="page guide-page" data-cat="${cat.id}">
       <div class="guide-layout">
         <aside class="guide-rail" aria-label="Contents">
           <nav class="toc" aria-labelledby="toc-title">
             <button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-sheet">
               <span class="toc-toggle-label"></span>
               <span class="toc-toggle-current"></span>
-              ${CHEVRON}
+              ${UI_ICONS.chevron}
             </button>
             <div class="toc-sheet" id="toc-sheet">
               <p class="toc-title" id="toc-title"></p>
@@ -179,7 +167,9 @@ function mount(container, info, parsed, route) {
   root.dataset.cat = cat.id;
 
   const cleanup = [];
-  current = { key: `${kind}:${slug}`, kind, slug, title: info.title, root, page, cleanup, chapters: [] };
+  const chapters = [...root.querySelectorAll(':scope > section.chapter')];
+  const panels = buildPanels(root, chapters);
+  current = { key: `${kind}:${slug}`, kind, slug, title: info.title, root, page, cleanup, panels };
 
   if (parsed.style) {
     const el = document.createElement('style');
@@ -188,16 +178,10 @@ function mount(container, info, parsed, route) {
     document.head.appendChild(el);
   }
 
-  const chapters = [...root.querySelectorAll(':scope > section.chapter')];
-  current.chapters = chapters;
-  const panels = buildPanels(root, chapters);
-  current.panels = panels;
-
   decorateChapters(chapters);
   buildToc(page, panels, kind, slug, cleanup);
   buildIntroContents(panels, kind, slug);
   buildFooter(page, info);
-  page.dataset.paged = '';
 
   wireLinks(root, kind, slug);
   wireQuizzes(root);
@@ -209,7 +193,6 @@ function mount(container, info, parsed, route) {
 
   runScript(parsed.script, root, cleanup);
 
-  setPageMeta({ title: info.title, focus: false });
   goToRoute(route);
 }
 
@@ -226,15 +209,9 @@ function buildPanels(root, chapters) {
     copy.querySelectorAll('[aria-labelledby], [aria-describedby]').forEach(el => { el.removeAttribute('aria-labelledby'); el.removeAttribute('aria-describedby'); });
     slot.replaceWith(copy);
   });
-  let intro = root.querySelector(':scope > .guide-intro');
-  if (!intro) {
-    // A guide with no intro block still gets an Introduction panel: the header.
-    intro = document.createElement('div');
-    intro.className = 'guide-intro';
-    root.prepend(intro);
-  }
-  intro.id = intro.id || INTRO_ID;
-  const panels = [{ id: intro.id, el: intro, label: 'Introduction', num: '' }];
+  const intro = root.querySelector(':scope > .guide-intro');
+  intro.id = INTRO_ID;
+  const panels = [{ id: INTRO_ID, el: intro, label: 'Introduction', num: '' }];
   chapters.forEach((ch, i) => panels.push({
     id: ch.id, el: ch, num: String(i + 1),
     label: ch.dataset.nav || ch.querySelector('h2')?.textContent || '',
@@ -246,7 +223,7 @@ function buildPanels(root, chapters) {
 function decorateChapters(chapters) {
   chapters.forEach((ch, i) => {
     const head = ch.querySelector(':scope > .chapter-head');
-    if (head && !head.querySelector('.chapter-num')) {
+    if (head) {
       const n = document.createElement('p');
       n.className = 'chapter-num';
       n.innerHTML = `<span class="visually-hidden">Section </span>${i + 1}<span aria-hidden="true"> · </span><span class="chapter-label"></span>`;
@@ -278,7 +255,7 @@ function buildToc(page, panels, kind, slug, cleanup) {
   const chapterCount = panels.length - 1;
 
   list.innerHTML = panels.map(p => `
-    <li><a class="toc-link${p.num ? '' : ' toc-link--intro'}" href="${hrefFor(kind, slug, p.id === INTRO_ID ? null : p.id)}" data-target="${p.id}">
+    <li><a class="toc-link" href="${hrefFor(kind, slug, p.id === INTRO_ID ? null : p.id)}" data-target="${p.id}">
       <span class="toc-num" aria-hidden="true">${p.num}</span><span class="toc-label"></span>
     </a></li>`).join('');
   [...list.querySelectorAll('.toc-label')].forEach((el, i) => { el.textContent = panels[i].label; });
@@ -315,11 +292,9 @@ function buildToc(page, panels, kind, slug, cleanup) {
     marker.style.height = `${a.offsetHeight}px`;
   };
   // Fonts and the sheet can change row heights; keep the marker on its row.
-  if ('ResizeObserver' in window) {
-    const ro = new ResizeObserver(() => place(links.find(a => a.classList.contains('is-active'))));
-    ro.observe(list);
-    cleanup.push(() => ro.disconnect());
-  }
+  const ro = new ResizeObserver(() => place(links.find(a => a.classList.contains('is-active'))));
+  ro.observe(list);
+  cleanup.push(() => ro.disconnect());
   current.setActive = (id) => {
     let activeLink = null;
     links.forEach(a => {
@@ -330,7 +305,7 @@ function buildToc(page, panels, kind, slug, cleanup) {
     place(activeLink);
     if (!marker.classList.contains('is-ready')) requestAnimationFrame(() => marker.classList.add('is-ready'));
     // Keep the current row in view inside the rail on short windows.
-    if (activeLink && rail && rail.scrollHeight > rail.clientHeight) {
+    if (activeLink && rail.scrollHeight > rail.clientHeight) {
       const top = activeLink.getBoundingClientRect().top - rail.getBoundingClientRect().top;
       if (top < 0 || top > rail.clientHeight - activeLink.offsetHeight) rail.scrollTo({ top: rail.scrollTop + top - rail.clientHeight / 3 });
     }
@@ -342,70 +317,45 @@ function buildToc(page, panels, kind, slug, cleanup) {
 }
 
 /* Show one panel. `anchor` is an element inside it to bring into view (a
-   link to part of a section); otherwise the panel opens at its top.
-   A change of section crossfades the reading column (old content fades out
-   in 120ms while the new rises 4px and fades in over 200ms) with the View
-   Transitions API; the rail stays live, so its highlight slides at the same
-   time. Without that API, or with reduced motion, the new section fades in. */
-function showPanel(id, { anchor = null, focus = true } = {}) {
+   link to part of a section); otherwise the panel opens at its top. The
+   swap is immediate, so a click is answered at once; the new section then
+   fades in and rises --rise while the rail highlight slides to its row. */
+function showPanel(id, anchor = null) {
   if (!current) return;
   const { panels, page } = current;
   const index = Math.max(0, panels.findIndex(p => p.id === id));
   const panel = panels[index];
   const changed = current.panelId && current.panelId !== panel.id;
-  // Only the latest request counts: a quick second click cancels the first
-  // transition, and a late callback from it changes nothing.
-  const seq = ++navSeq;
-  let applied = false;
 
-  const swap = () => {
-    if (seq !== navSeq || applied) return;
-    applied = true;
-    panels.forEach(p => p.el.classList.toggle('is-current', p === panel));
-    page.dataset.panel = panel.id === INTRO_ID ? 'intro' : 'chapter';
-    if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
-    current.panelId = panel.id;
-    current.setActive?.(panel.id);
-    setPageMeta({ title: panel.id === INTRO_ID ? current.title : `${panel.label} · ${current.title}`, focus: false });
-    if (anchor) anchor.scrollIntoView({ block: 'start' });
-    else window.scrollTo({ top: 0, behavior: 'auto' });
-  };
-  const after = () => {
+  panels.forEach(p => p.el.classList.toggle('is-current', p === panel));
+  page.dataset.panel = panel.id === INTRO_ID ? 'intro' : 'chapter';
+  if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
+  current.panelId = panel.id;
+  current.setActive(panel.id);
+  setPageMeta({ title: panel.id === INTRO_ID ? current.title : `${panel.label} · ${current.title}`, focus: false });
+  if (anchor) anchor.scrollIntoView({ block: 'start' });
+  else window.scrollTo({ top: 0, behavior: 'auto' });
+  if (changed) enterPanel(page.querySelector('.guide-main'));
+
+  requestAnimationFrame(() => {
     // Widgets that size themselves to their container re-measure now that
     // their panel has a width.
     window.dispatchEvent(new Event('resize'));
-    if (!focus) return;
+    // Focus the guide title on the introduction and the section heading
+    // otherwise, so screen readers announce where the reader landed.
     const h = panel.id === INTRO_ID ? page.querySelector('.guide-title') : panel.el.querySelector('h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
-  };
-
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  current.transition?.skipTransition();
-  if (changed && !still && document.startViewTransition && document.visibilityState === 'visible') {
-    current.transition = document.startViewTransition(swap);
-    current.transition.updateCallbackDone.then(after, after);
-    // A skipped transition rejects `ready`; that is expected, not an error.
-    current.transition.ready.catch(() => {});
-    // If the browser holds the transition back (a throttled frame), the
-    // section still changes promptly.
-    setTimeout(() => { if (!applied && seq === navSeq) { swap(); after(); } }, 300);
-    return;
-  }
-  swap();
-  if (changed) enterPanel(page.querySelector('.guide-main'));
-  requestAnimationFrame(after);
+  });
 }
 
-/* Fallback for browsers without view transitions: the new section fades in
-   (and rises 4px unless reduced motion is on). Web Animations, so a quick
-   second click cancels the first instead of restarting from zero. */
+/* The new section fades in, rising --rise (0 with reduced motion). Running
+   fades are cancelled first, so rapid clicks don't stack. */
 function enterPanel(el) {
-  if (!el?.animate) return;
+  if (!el.animate) return;
   el.getAnimations().forEach(a => a.cancel());
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   el.animate(
-    [{ opacity: 0, transform: `translateY(${still ? 0 : 4}px)` }, { opacity: 1, transform: 'none' }],
-    { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+    [{ opacity: 0, transform: `translateY(${cssVar('--rise')})` }, { opacity: 1, transform: 'none' }],
+    { duration: parseFloat(cssVar('--t-base')), easing: cssVar('--ease') },
   );
 }
 
@@ -421,12 +371,10 @@ function goToRoute(route) {
       id = panelEl.id;
       if (el !== panelEl) anchor = el;
     }
-  } else if (step != null && current.chapters[step]) {
-    id = current.chapters[step].id;
+  } else if (step != null && current.panels[step + 1]) {
+    id = current.panels[step + 1].id;
   }
-  // Focus the guide title on the introduction and the section heading
-  // otherwise, so screen readers announce where the reader landed.
-  showPanel(id, { anchor });
+  showPanel(id, anchor);
 }
 
 /* ---- Footer: where next ----------------------------------------------
@@ -444,21 +392,18 @@ function buildFooter(page, info) {
         ${rowCat ? `<span class="where-kind"><span class="thumb thumb--sm" aria-hidden="true"></span>${rowCat.name}</span>` : ''}
         <span class="where-title">${title}</span>
         ${desc ? `<span class="where-desc">${desc}</span>` : ''}
-      </span>${ARROW_ROW}
+      </span>${UI_ICONS.arrow}
     </a></li>`;
 
   if (info.kind === 'framework') {
-    const related = (info.meta.related || [])
-      .map(r => (typeof r === 'string' ? { slug: r } : r))
-      .map(r => ({ fw: getFramework(r.slug), why: r.why }))
-      .filter(r => r.fw);
+    const related = info.meta.related.map(r => ({ fw: getFramework(r.slug), why: r.why })).filter(r => r.fw);
     const whyFor = (fw) => related.find(r => r.fw.slug === fw.slug)?.why;
     // Same family first, in family order; no family label, the reader is in it.
     getFrameworksByCategory(cat.id).filter(fw => fw.slug !== info.slug).forEach(fw => {
       rows.push(row({ href: hrefFor('framework', fw.slug), title: fw.name, desc: whyFor(fw) || fw.question }));
     });
     related.filter(r => r.fw.category !== cat.id).forEach(({ fw, why }) => {
-      rows.push(row({ href: hrefFor('framework', fw.slug), title: fw.name, desc: why || fw.question, cat: getCategory(fw.category) }));
+      rows.push(row({ href: hrefFor('framework', fw.slug), title: fw.name, desc: why, cat: getCategory(fw.category) }));
     });
   } else {
     getFrameworksByCategory(cat.id).forEach(r => {
@@ -525,7 +470,7 @@ function wireQuizzes(root) {
       if (why) why.hidden = true;
       // data-section names the section that teaches this question.
       const teach = item.dataset.section && root.querySelector(`section.chapter#${CSS.escape(item.dataset.section)}`);
-      if (why && teach && !why.querySelector('.quiz-revisit')) {
+      if (why && teach) {
         const p = document.createElement('p');
         p.className = 'quiz-revisit';
         const link = document.createElement('a');
@@ -597,11 +542,11 @@ function seededShuffle(arr, seedText) {
 function wireTemplates(root) {
   root.querySelectorAll('.template').forEach(t => {
     const pre = t.querySelector('pre');
-    if (!pre || t.querySelector('.template-copy')) return;
+    if (!pre) return;
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'btn template-copy';
-    btn.innerHTML = `${COPY}<span>Copy</span>`;
+    btn.innerHTML = `${UI_ICONS.copy}<span>Copy</span>`;
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(pre.innerText.trim());
@@ -636,10 +581,9 @@ function wireResults(root, cleanup) {
       lastTick.set(el, now);
       if (now - prev < 400 || !el.animate) return;
       el.getAnimations().forEach(a => a.cancel());
-      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       el.animate(
-        [{ opacity: 0.55, transform: `translateY(${still ? 0 : 2}px)` }, { opacity: 1, transform: 'none' }],
-        { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+        [{ opacity: 0.55, transform: `translateY(${reducedMotion() ? 0 : 2}px)` }, { opacity: 1, transform: 'none' }],
+        { duration: parseFloat(cssVar('--t-base')), easing: cssVar('--ease') },
       );
     });
   });
@@ -658,15 +602,10 @@ function watchOverflow(scroller, content, onChange, cleanup) {
     if (state !== last) { last = state; onChange(state); }
   };
   scroller.addEventListener('scroll', check, { passive: true });
-  if ('ResizeObserver' in window) {
-    const ro = new ResizeObserver(check);
-    ro.observe(scroller);
-    if (content) ro.observe(content);
-    cleanup.push(() => ro.disconnect());
-  } else {
-    window.addEventListener('resize', check);
-    cleanup.push(() => window.removeEventListener('resize', check));
-  }
+  const ro = new ResizeObserver(check);
+  ro.observe(scroller);
+  if (content) ro.observe(content);
+  cleanup.push(() => ro.disconnect());
   check();
 }
 
@@ -677,7 +616,7 @@ function wireTables(root, cleanup) {
   // is a labelled, focusable region so keyboard users can scroll it.
   root.querySelectorAll('.table-wrap').forEach(wrap => {
     const table = wrap.querySelector(':scope > table');
-    if (!table || wrap.querySelector(':scope > .table-scroll')) return;
+    if (!table) return;
     const cap = table.querySelector(':scope > caption');
     const capText = cap ? cap.textContent.trim() : '';
 
@@ -726,11 +665,11 @@ function labelCells(table) {
   if (!heads.length) return;
   table.querySelectorAll(':scope > tbody > tr, :scope > tfoot > tr').forEach(tr => {
     const cells = [...tr.children];
-    if (cells.length === 1 && (Number(cells[0].getAttribute('colspan')) || 1) > 1) { tr.classList.add('is-group'); return; }
+    if (cells.length === 1 && (Number(cells[0].getAttribute('colspan')) || 1) > 1) return;
     let col = 0;
     cells.forEach(cell => {
       const span = Number(cell.getAttribute('colspan')) || 1;
-      if (cell.tagName === 'TD' && col > 0 && heads[col] && !cell.querySelector(':scope > .cell-label')) {
+      if (cell.tagName === 'TD' && col > 0 && heads[col]) {
         const label = document.createElement('span');
         label.className = 'cell-label';
         label.textContent = heads[col];
@@ -785,7 +724,6 @@ function runScript(code, root, cleanup) {
     },
   };
   try {
-    // eslint-disable-next-line no-new-func
     new Function('root', 'api', `"use strict";\n${code}`)(root, api);
   } catch (err) {
     console.error(`[guide] script error in ${current?.key}:`, err);
