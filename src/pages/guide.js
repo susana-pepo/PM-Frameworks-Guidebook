@@ -3,13 +3,15 @@
  *
  * Content is a canonical fragment in public/guides/<file> (docs/content-spec.md).
  * This module supplies every piece of chrome around it: breadcrumb, header,
- * contents rail, section numbers, previous/next links, the footer with
- * neighbouring guides, and the shared behaviours (quiz, copy, links, live
+ * contents rail, section numbers, the footer with neighbouring guides, and
+ * the shared behaviours (quiz, copy, links, live
  * results).
  *
  * A guide is read one section at a time. The introduction and each chapter
  * are panels; only the current one is shown, and the contents rail (a
- * "Contents" bar on narrow screens) moves between them. Each panel has its
+ * "Contents" bar on narrow screens) is the only way between them. On wide
+ * screens the rail runs the full height of the window and stays put while
+ * the reading column scrolls. Each panel has its
  * own address, #/<kind>/<slug>/<section>, so back and forward step through
  * the sections a reader visited. A guide's own <script data-guide-script> runs scoped to the
  * guide with `root` and `api`, and is torn down when the guide unmounts.
@@ -19,15 +21,15 @@ import {
   getFrameworksByCategory,
 } from '../data/frameworks.js';
 import { setPageMeta } from '../utils/page-meta.js';
+import { CREDIT } from '../components/credit.js';
 import { renderNotFound } from './not-found.js';
 
 const cache = new Map();
-let current = null;     // { key, kind, slug, root, page, cleanup[], panels[], show() }
+let current = null;     // { key, kind, slug, title, root, page, cleanup[], panels[], panelId, transition }
+let navSeq = 0;         // increments on every section change; stale callbacks compare against it
 const INTRO_ID = 'intro';
 let renderToken = 0;
 
-const ARROW_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const ARROW_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
 const CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>';
 const ARROW_ROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>';
@@ -160,6 +162,7 @@ function mount(container, info, parsed, route) {
           </header>
           <div class="guide-body"></div>
           <footer class="guide-foot"></footer>
+          <p class="guide-credit">${CREDIT}</p>
         </div>
       </div>
     </div>`;
@@ -193,7 +196,6 @@ function mount(container, info, parsed, route) {
   decorateChapters(chapters);
   buildToc(page, panels, kind, slug, cleanup);
   buildIntroContents(panels, kind, slug);
-  buildPagers(panels, kind, slug);
   buildFooter(page, info);
   page.dataset.paged = '';
 
@@ -254,32 +256,6 @@ function decorateChapters(chapters) {
   });
 }
 
-// Previous / next at the foot of every panel, so a reader who has finished a
-// section can carry on without going back to the contents.
-function buildPagers(panels, kind, slug) {
-  panels.forEach((p, i) => {
-    const prev = panels[i - 1];
-    const next = panels[i + 1];
-    if (!prev && !next) return;
-    const nav = document.createElement('nav');
-    nav.className = 'panel-pager';
-    nav.setAttribute('aria-label', 'Sections');
-    const link = (target, dir) => {
-      const a = document.createElement('a');
-      a.className = `panel-pager-link panel-pager-link--${dir}`;
-      a.href = hrefFor(kind, slug, target.id === INTRO_ID ? null : target.id);
-      a.innerHTML = dir === 'prev'
-        ? `${ARROW_L}<span class="panel-pager-text"><span class="panel-pager-dir">Previous</span><span class="panel-pager-title"></span></span>`
-        : `<span class="panel-pager-text"><span class="panel-pager-dir">${prev ? 'Next' : 'Start reading'}</span><span class="panel-pager-title"></span></span>${ARROW_R}`;
-      a.querySelector('.panel-pager-title').textContent = target.num ? `${target.num} · ${target.label}` : target.label;
-      return a;
-    };
-    if (prev) nav.appendChild(link(prev, 'prev'));
-    if (next) nav.appendChild(link(next, 'next'));
-    p.el.appendChild(nav);
-  });
-}
-
 /* On narrow screens the contents live in a collapsed bar, so the
    introduction lists the sections itself (hidden where the rail shows). */
 function buildIntroContents(panels, kind, slug) {
@@ -325,12 +301,39 @@ function buildToc(page, panels, kind, slug, cleanup) {
   cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('pointerdown', onDown); });
 
   const links = [...list.querySelectorAll('.toc-link')];
+  // One highlight that slides to the current section, so a change of
+  // section reads as movement along the contents, not a jump.
+  const marker = document.createElement('span');
+  marker.className = 'toc-marker';
+  marker.setAttribute('aria-hidden', 'true');
+  list.prepend(marker);
+  const rail = page.querySelector('.guide-rail');
+  const place = (a) => {
+    if (!a) return;
+    const top = a.getBoundingClientRect().top - list.getBoundingClientRect().top;
+    marker.style.transform = `translateY(${Math.round(top)}px)`;
+    marker.style.height = `${a.offsetHeight}px`;
+  };
+  // Fonts and the sheet can change row heights; keep the marker on its row.
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(() => place(links.find(a => a.classList.contains('is-active'))));
+    ro.observe(list);
+    cleanup.push(() => ro.disconnect());
+  }
   current.setActive = (id) => {
+    let activeLink = null;
     links.forEach(a => {
       const on = a.dataset.target === id;
       a.classList.toggle('is-active', on);
-      if (on) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+      if (on) { a.setAttribute('aria-current', 'step'); activeLink = a; } else a.removeAttribute('aria-current');
     });
+    place(activeLink);
+    if (!marker.classList.contains('is-ready')) requestAnimationFrame(() => marker.classList.add('is-ready'));
+    // Keep the current row in view inside the rail on short windows.
+    if (activeLink && rail && rail.scrollHeight > rail.clientHeight) {
+      const top = activeLink.getBoundingClientRect().top - rail.getBoundingClientRect().top;
+      if (top < 0 || top > rail.clientHeight - activeLink.offsetHeight) rail.scrollTo({ top: rail.scrollTop + top - rail.clientHeight / 3 });
+    }
     const p = panels.find(x => x.id === id);
     currentLabel.textContent = !p ? '' : p.num ? `${p.num} of ${chapterCount} · ${p.label}` : p.label;
     toggle.setAttribute('aria-label', `Contents. ${p && p.num ? `Section ${p.num} of ${chapterCount}, ${p.label}` : 'Introduction'}`);
@@ -339,44 +342,63 @@ function buildToc(page, panels, kind, slug, cleanup) {
 }
 
 /* Show one panel. `anchor` is an element inside it to bring into view (a
-   link to part of a section); otherwise the panel opens at its top. */
+   link to part of a section); otherwise the panel opens at its top.
+   A change of section crossfades the reading column (old content fades out
+   in 120ms while the new rises 4px and fades in over 200ms) with the View
+   Transitions API; the rail stays live, so its highlight slides at the same
+   time. Without that API, or with reduced motion, the new section fades in. */
 function showPanel(id, { anchor = null, focus = true } = {}) {
   if (!current) return;
   const { panels, page } = current;
   const index = Math.max(0, panels.findIndex(p => p.id === id));
   const panel = panels[index];
   const changed = current.panelId && current.panelId !== panel.id;
-  panels.forEach(p => p.el.classList.toggle('is-current', p === panel));
-  page.dataset.panel = panel.id === INTRO_ID ? 'intro' : 'chapter';
-  if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
-  current.panelId = panel.id;
-  current.setActive?.(panel.id);
-  setPageMeta({ title: panel.id === INTRO_ID ? current.title : `${panel.label} · ${current.title}`, focus: false });
-  // Widgets that size themselves to their container re-measure now that
-  // their panel has a width.
-  window.dispatchEvent(new Event('resize'));
-  if (changed) enterPanel(page.querySelector('.guide-main'));
+  // Only the latest request counts: a quick second click cancels the first
+  // transition, and a late callback from it changes nothing.
+  const seq = ++navSeq;
+  let applied = false;
 
-  requestAnimationFrame(() => {
-    if (anchor) {
-      anchor.scrollIntoView({ block: 'start' });
-    } else {
-      // Open the panel at its top: the page top on the introduction, the top
-      // of the guide column for a section if the reader is below it.
-      const layout = page.querySelector('.guide-layout');
-      const barH = document.querySelector('.bar')?.offsetHeight || 0;
-      const top = panel.id === INTRO_ID ? 0 : Math.max(0, layout.getBoundingClientRect().top + window.scrollY - barH - 16);
-      if (panel.id === INTRO_ID || window.scrollY > top) window.scrollTo({ top, behavior: 'auto' });
-    }
+  const swap = () => {
+    if (seq !== navSeq || applied) return;
+    applied = true;
+    panels.forEach(p => p.el.classList.toggle('is-current', p === panel));
+    page.dataset.panel = panel.id === INTRO_ID ? 'intro' : 'chapter';
+    if (index === panels.length - 1) page.dataset.last = ''; else delete page.dataset.last;
+    current.panelId = panel.id;
+    current.setActive?.(panel.id);
+    setPageMeta({ title: panel.id === INTRO_ID ? current.title : `${panel.label} · ${current.title}`, focus: false });
+    if (anchor) anchor.scrollIntoView({ block: 'start' });
+    else window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+  const after = () => {
+    // Widgets that size themselves to their container re-measure now that
+    // their panel has a width.
+    window.dispatchEvent(new Event('resize'));
     if (!focus) return;
     const h = panel.id === INTRO_ID ? page.querySelector('.guide-title') : panel.el.querySelector('h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
-  });
+  };
+
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  current.transition?.skipTransition();
+  if (changed && !still && document.startViewTransition && document.visibilityState === 'visible') {
+    current.transition = document.startViewTransition(swap);
+    current.transition.updateCallbackDone.then(after, after);
+    // A skipped transition rejects `ready`; that is expected, not an error.
+    current.transition.ready.catch(() => {});
+    // If the browser holds the transition back (a throttled frame), the
+    // section still changes promptly.
+    setTimeout(() => { if (!applied && seq === navSeq) { swap(); after(); } }, 300);
+    return;
+  }
+  swap();
+  if (changed) enterPanel(page.querySelector('.guide-main'));
+  requestAnimationFrame(after);
 }
 
-/* A new section settles in: a short fade and a 4px rise (no rise with
-   reduced motion). Web Animations, so a quick second click cancels the
-   first animation instead of restarting a keyframe from zero. */
+/* Fallback for browsers without view transitions: the new section fades in
+   (and rises 4px unless reduced motion is on). Web Animations, so a quick
+   second click cancels the first instead of restarting from zero. */
 function enterPanel(el) {
   if (!el?.animate) return;
   el.getAnimations().forEach(a => a.cancel());

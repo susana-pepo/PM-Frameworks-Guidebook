@@ -4,26 +4,38 @@
    ========================================================================== */
 
 /* ---- Layout ------------------------------------------------------------- */
-.guide-page { padding-top: var(--s-6); }
+/* Wide screens: the contents rail is a full-height column that stays put;
+   only the reading column moves when the page scrolls. Nothing follows the
+   layout (the site credit sits at the end of the reading column), so the
+   rail is never pushed up at the end of a section. */
+.guide-page { padding-top: 0; padding-bottom: 0; }
 
 .guide-layout {
   display: grid;
   grid-template-columns: var(--rail-w) minmax(0, 1fr);
   gap: var(--s-16);
-  margin-top: var(--s-8);
+  align-items: start;
 }
-.guide-main { min-width: 0; max-width: 880px; }
+.guide-main { min-width: 0; max-width: 880px; padding: var(--s-8) 0 var(--s-8); }
+.guide-credit {
+  margin-top: var(--s-16);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-14);
+  color: var(--ink-3);
+}
 
 /* ---- Contents rail ------------------------------------------------------ */
-.guide-rail { position: relative; }
-.toc {
+.guide-rail {
   position: sticky;
-  top: calc(var(--bar-h) + var(--s-8));
-  max-height: calc(100dvh - var(--bar-h) - var(--s-16));
+  top: var(--bar-h);
+  height: calc(100dvh - var(--bar-h));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   /* Room for the highlight and focus ring, which reach 8px past the text */
   margin-inline: calc(-1 * var(--s-2));
-  padding: 0 var(--s-2) var(--s-6);
+  padding: var(--s-8) var(--s-2) var(--s-8);
 }
 .toc-toggle { display: none; }
 .toc-title {
@@ -53,7 +65,21 @@
   color: var(--ink-2);
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
-.toc-list { display: grid; gap: 2px; }
+.toc-list { position: relative; display: grid; gap: 2px; }
+.toc-list > li { position: relative; z-index: 1; }
+/* One highlight slides to the current section */
+.toc-marker {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--s-2));
+  right: calc(-1 * var(--s-2));
+  height: 0;
+  border-radius: var(--r-sm);
+  background: var(--paper-hover);
+  pointer-events: none;
+}
+.toc-marker.is-ready { transition: transform var(--t-base) var(--ease), height var(--t-base) var(--ease); }
+@media (prefers-reduced-motion: reduce) { .toc-marker.is-ready { transition: none; } }
 .toc-link {
   display: grid;
   grid-template-columns: 22px 1fr;
@@ -68,7 +94,7 @@
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 .toc-num { font-variant-numeric: tabular-nums; color: var(--ink-3); }
-.toc-link.is-active { color: var(--ink); background: var(--paper-hover); font-weight: var(--w-medium); }
+.toc-link.is-active { color: var(--ink); font-weight: var(--w-medium); }
 /* Hover only darkens the text, so it never looks like the current section */
 @media (hover: hover) and (pointer: fine) {
   .toc-link:hover, .toc-foot-link:hover { color: var(--ink); }
@@ -81,12 +107,13 @@
 .toc-list > li:first-child, .toc-foot { margin-inline: calc(-1 * var(--s-2)); padding-inline: var(--s-2); }
 
 @media (max-width: 1000px) {
-  .guide-page { padding-top: 0; }
-  .guide-layout { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 0; }
+  .guide-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .guide-main { max-width: none; }
   .guide-rail {
     position: sticky;
     top: var(--bar-h);
+    height: auto;
+    overflow: visible;
     z-index: 30;
     margin: 0 calc(-1 * var(--gutter));
     padding: 0 var(--gutter);
@@ -136,7 +163,7 @@
   }
   .toc-foot-link { min-height: 44px; }
   .toc-link { padding: 10px var(--s-2); font-size: var(--fs-16); }
-  .guide-main { order: 1; padding-top: var(--s-6); }
+  .guide-main { order: 1; padding: var(--s-6) 0 var(--s-8); }
 }
 @media (max-width: 760px) {
   .guide-rail { margin: 0 calc(-1 * var(--s-4)); padding: 0 var(--s-4); }
@@ -1227,6 +1254,17 @@
 .quiz-score-text { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink); }
 @media (max-width: 760px) { .quiz-item { padding: var(--s-4); } }
 
+/* ---- Section change: crossfade the reading column ---------------------
+   Only the reading column is captured; the bar and the rail stay live, so
+   the rail highlight slides while the text crossfades. */
+:root { view-transition-name: none; }
+.guide-page[data-paged] .guide-main { view-transition-name: guide-main; }
+::view-transition-group(guide-main) { animation: none; }
+::view-transition-old(guide-main) { animation: section-out var(--t-fast) var(--ease) both; }
+::view-transition-new(guide-main) { animation: section-in var(--t-base) var(--ease) both; }
+@keyframes section-out { to { opacity: 0; } }
+@keyframes section-in { from { opacity: 0; transform: translateY(var(--rise)); } }
+
 /* ---- More: a collapsed block ------------------------------------------ */
 .more { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 .more > summary {
@@ -1286,50 +1324,9 @@
     color: var(--ink);
   }
   .intro-contents .toc-num { font-family: var(--font-sans); font-size: var(--fs-14); }
-  .guide-intro > .panel-pager { display: none; }
 }
 .guide-page[data-paged]:not([data-last]) .guide-foot { display: none; }
 .guide-page[data-paged] .chapter { margin-top: 0; padding-top: 0; border-top: 0; }
-
-/* Previous and next: two cards sitting exactly on the column's edges. On
-   the introduction the only link ("Start reading") is one full-width bar. */
-.panel-pager {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--s-4);
-  margin-top: var(--s-16);
-}
-.panel-pager-link {
-  display: flex;
-  align-items: center;
-  gap: var(--s-4);
-  padding: var(--s-4) var(--s-5);
-  border: 1px solid var(--rule);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-  color: var(--ink-2);
-  transition: border-color var(--t-fast) var(--ease), transform var(--t-press) var(--ease);
-}
-.panel-pager-link:active { transform: scale(var(--press)); }
-.panel-pager-link--prev { grid-column: 1; }
-.panel-pager-link--next { grid-column: 2; justify-content: space-between; }
-.panel-pager-link--next:only-child { grid-column: 1 / -1; }
-.panel-pager-text { display: grid; gap: 2px; min-width: 0; }
-.panel-pager-link--next .panel-pager-text { text-align: left; }
-.panel-pager-dir { font-size: var(--fs-14); color: var(--ink-3); }
-.panel-pager-title { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink); line-height: var(--lh-snug); text-wrap: balance; }
-.panel-pager-link svg { flex: none; width: 18px; height: 18px; color: var(--ink-2); transition: transform var(--t-base) var(--ease); }
-@media (hover: hover) and (pointer: fine) {
-  .panel-pager-link:hover { border-color: var(--rule-hover); }
-  .panel-pager-link--next:hover svg { transform: translateX(var(--nudge)); }
-  .panel-pager-link--prev:hover svg { transform: translateX(calc(-1 * var(--nudge))); }
-}
-@media (max-width: 640px) {
-  .panel-pager { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); margin-top: var(--s-10); }
-  .panel-pager-link--next { grid-column: 1; grid-row: 1; }
-  .panel-pager-link--prev { grid-row: 2; }
-  .panel-pager-title { font-size: var(--fs-16); }
-}
 
 /* ---- Guide footer: where next ------------------------------------------- */
 .guide-foot {
@@ -1374,7 +1371,7 @@
 
 /* ---- Print: the whole guide on paper ------------------------------------ */
 @media print {
-  .bar, .foot, .guide-rail, .panel-pager, .guide-foot, .tool-actions, .template-copy, .crumbs, .scroll-hint, .table-more { display: none !important; }
+  .bar, .foot, .guide-rail, .guide-credit, .guide-foot, .tool-actions, .template-copy, .scroll-hint, .table-more { display: none !important; }
   .guide-page[data-paged] .guide > .panel, .guide-page[data-paged] .guide-head { display: block !important; }
   .guide-page[data-paged] .chapter { margin-top: var(--s-12); padding-top: var(--s-8); border-top: 1px solid var(--rule); }
   .guide-layout { display: block; }

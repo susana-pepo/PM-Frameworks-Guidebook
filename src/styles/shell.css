@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   gap: var(--s-6);
-  height: var(--bar-h);
+  height: calc(var(--bar-h) - 1px); /* --bar-h includes the bar's 1px rule */
   max-width: var(--shell-max);
   margin: 0 auto;
   padding: 0 var(--gutter);
@@ -281,6 +281,7 @@ body.palette-open { overflow: hidden; }
 
 /* ---- Footer ------------------------------------------------------------- */
 .foot { border-top: 1px solid var(--rule); }
+body:is([data-page="framework"], [data-page="compare"]) .foot { display: none; }
 .foot-inner {
   display: flex;
   flex-wrap: wrap;

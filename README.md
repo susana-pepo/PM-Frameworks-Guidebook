@@ -31,9 +31,9 @@ A vanilla JavaScript single-page app on Vite with a hash router.
 `public/guides/<File>.html`: an `article.guide` made of chapters and a fixed
 set of content components, plus, where a guide has an interactive tool, one
 scoped `<style data-guide-style>` and one `<script data-guide-script>`. The
-app (`src/pages/guide.js`) adds everything else: breadcrumbs, the header and
-meta, the contents rail that shows one section at a time (each with its own
-URL), chapter numbers and previous/next links, the "Where next" footer, and the shared behaviour (quizzes,
+app (`src/pages/guide.js`) adds everything else: the header, the
+full-height contents rail that shows one section at a time (each with its
+own URL), chapter numbers, the "Where next" footer, and the shared behaviour (quizzes,
 copy buttons, links, result feedback, scrollable tables).
 
 **One design system.** `src/styles/tokens.css` holds every colour, size,

@@ -56,7 +56,6 @@
 .home-search:active { transform: scale(0.99); }
 .home-search > svg { width: 20px; height: 20px; flex: none; }
 .home-search > span:nth-of-type(1) { flex: 1; }
-.home-search-keys { display: inline-flex; gap: 2px; }
 
 /* "Start from your situation" — a ruled list, like a book's quick-reference */
 .home-start {
@@ -180,7 +179,6 @@
   .home-intro { padding: var(--s-2) 0 var(--s-10); }
   .home-title { font-size: var(--fs-38); }
   .home-lede { font-size: var(--fs-18); }
-  .home-search-keys { display: none; }
   .home-start { padding: var(--s-5) var(--s-4) var(--s-2); }
   .family { padding: var(--s-8) 0; }
   .family-name { font-size: var(--fs-24); }
@@ -231,8 +229,6 @@
   line-height: var(--lh-snug);
 }
 .feature-question { font-family: var(--font-serif); font-size: var(--fs-18); color: var(--ink-2); line-height: 1.5; }
-.feature-desc { font-size: var(--fs-16); color: var(--ink-2); }
-.feature-origin { margin-top: var(--s-2); font-size: var(--fs-14); color: var(--ink-3); }
 .feature .arrow { margin-top: 8px; }
 
 @media (max-width: 760px) {

@@ -155,7 +155,7 @@ a { color: inherit; text-decoration: none; }
 .btn svg { width: 18px; height: 18px; flex: none; }
 
 /* ---- Keycap ------------------------------------------------------------- */
-kbd, .kbd {
+kbd {
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -4,6 +4,7 @@ import { renderHub } from '../pages/hub.js';
 import { renderCategoryPage } from '../pages/category.js';
 import { renderGuide, updateGuideInPlace, unmountGuide } from '../pages/guide.js';
 import { openSearch, initSearch } from './search.js';
+import { CREDIT } from './credit.js';
 
 const ICON = {
   search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>',
@@ -65,7 +66,7 @@ export function renderApp() {
 
     <footer class="foot">
       <div class="foot-inner">
-        <p class="foot-line">Made by <a class="link" href="https://susanaperez.com" target="_blank" rel="noopener">Susana</a> with Claude</p>
+        <p class="foot-line">${CREDIT}</p>
       </div>
     </footer>
   `;
@@ -162,6 +163,8 @@ function bindTheme() {
 function handleRoute(route) {
   const content = document.getElementById('page-content');
   const slug = route.params?.slug || null;
+  // Guide pages carry the credit in their reading column instead of a footer.
+  document.body.dataset.page = route.page || 'home';
 
   document.querySelectorAll('.index-link').forEach(a => {
     if (a.dataset.slug === slug) a.setAttribute('aria-current', 'page');

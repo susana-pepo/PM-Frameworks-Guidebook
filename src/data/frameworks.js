@@ -370,11 +370,3 @@ export function getComparisonBySlug(slug) {
   return comparisonGuides.find(cg => cg.slug === slug);
 }
 
-/** Previous and next framework within the same category. */
-export function getSiblings(slug) {
-  const fw = getFramework(slug);
-  if (!fw) return { prev: null, next: null };
-  const list = getFrameworksByCategory(fw.category);
-  const i = list.findIndex(f => f.slug === slug);
-  return { prev: list[i - 1] || null, next: list[i + 1] || null };
-}

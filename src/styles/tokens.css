@@ -67,7 +67,6 @@
   --r-sm: 6px;         /* controls, chips, cells */
   --r-md: 10px;        /* cards */
   --r-lg: 14px;        /* panels, plates */
-  --r-pill: 999px;     /* only for the theme switch track + tiny status dots */
 
   /* ---- Neutral ramp: warm paper, ink ----------------------------------- */
   --paper: oklch(0.985 0.006 85);          /* page */
@@ -89,7 +88,6 @@
   --accent: oklch(0.455 0.120 255);
   --accent-ink: oklch(0.455 0.120 255);    /* accent as text on paper, ≥4.5:1 */
   --accent-wash: oklch(0.455 0.120 255 / 0.08);
-  --on-accent: oklch(0.990 0.004 85);
 
   --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.455 0.120 255 / 0.55);
 
@@ -201,7 +199,6 @@
   --accent: oklch(0.740 0.105 250);
   --accent-ink: oklch(0.780 0.095 250);
   --accent-wash: oklch(0.740 0.105 250 / 0.12);
-  --on-accent: oklch(0.195 0.008 70);
   --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px oklch(0.740 0.105 250 / 0.6);
 
   --good: oklch(0.740 0.120 155);

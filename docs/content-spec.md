@@ -2,9 +2,9 @@
 
 Every guide (25 frameworks and 6 comparison guides) is one HTML fragment in
 `public/guides/<File>.html`. The fragment contains **content only**. The app
-supplies all chrome: the page header, breadcrumb, origin line, contents rail,
-section numbers, previous/next links, the footer with previous and next
-frameworks, quiz behaviour, copy buttons and link routing.
+supplies all chrome: the page header, origin line, contents rail, section
+numbers, the "Where next" footer, quiz behaviour, copy buttons and link
+routing.
 
 Guides are read **one section at a time**: the `header.guide-intro` and each
 `section.chapter` become panels, and only the current panel is shown. Write
@@ -527,8 +527,8 @@ Readers see one section at a time and arrive at any section by link, so:
 - Never point at another section by position ("above", "the previous
   chapter", "at the top of this guide", "the next section covers").
   Name it and link it: `<a href="#score" data-section-link>Scoring</a>`.
-  Do not announce what the next section covers; the contents and the pager
-  do that.
+  Do not announce what the next section covers; the contents rail does
+  that.
 - Say each thing once in its natural home. The introduction defines; the
   sections teach. Chapter 1 does not re-open with the lede.
 - The hero caption tells the reader how to read the figure (axes,
