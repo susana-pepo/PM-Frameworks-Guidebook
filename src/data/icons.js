@@ -54,7 +54,7 @@ const CATEGORY_ICONS = {
   ),
 };
 
-/* ---- FRAMEWORK ICONS (24) ---- */
+/* ---- FRAMEWORK ICONS (25) ---- */
 const FRAMEWORK_ICONS = {
   /* Prioritization */
   // RICE — four ascending bars on a baseline: a score from weighted factors.
@@ -167,6 +167,12 @@ const FRAMEWORK_ICONS = {
   'agile-scrum': svg(
     '<path d="M20 11.5A8 8 0 1 0 18 16.2"/>' +
     '<path d="M20 6.3v5.2h-5.2"/>'
+  ),
+  // Kanban — a board: three columns, cards moving left to right.
+  kanban: svg(
+    '<rect x="3.5" y="4" width="17" height="16" rx="2"/>' +
+    '<path d="M9.2 4v16"/><path d="M14.8 4v16"/>' +
+    '<path d="M5.4 7.5h1.9"/><path d="M5.4 10.5h1.9"/><path d="M11.1 7.5h1.8"/><path d="M16.7 7.5h1.9"/>'
   ),
   // Shape Up — the hill chart, with a piece cresting the top.
   'shape-up': svg(

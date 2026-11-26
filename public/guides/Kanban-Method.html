@@ -1,0 +1,735 @@
+<article class="guide" data-guide="kanban">
+
+  <header class="guide-intro">
+    <p class="lede">Kanban is a way to manage work as a flow. A team shows each step of its workflow on a board, caps how many items may be in progress at once, and starts something new only when finished work frees a slot.</p>
+
+    <figure class="figure" data-hero>
+      <div class="figure-scroll">
+        <div class="kb-board" role="img" aria-label="A board with four columns. Ready holds three items that have not started. Then the start line. Build holds three items against a limit of 3, so it is full. Review holds one item against a limit of 2 and has one open slot. Then the finish line. Done holds two items. The four items between the two lines are the work in progress.">
+          <span class="kb-line-label kb-at-start">Start line</span>
+          <span class="kb-line-label kb-at-finish">Finish line</span>
+          <span class="kb-line kb-at-start" aria-hidden="true"></span>
+          <span class="kb-line kb-at-finish" aria-hidden="true"></span>
+
+          <div class="kb-col kb-c1">
+            <p class="kb-head"><span class="kb-name">Ready</span><span class="kb-count">No limit</span></p>
+            <ul class="kb-cards">
+              <li class="kb-card kb-card--waiting">G</li>
+              <li class="kb-card kb-card--waiting">H</li>
+              <li class="kb-card kb-card--waiting">I</li>
+            </ul>
+          </div>
+          <div class="kb-col kb-c2">
+            <p class="kb-head"><span class="kb-name">Build</span><span class="kb-count kb-count--full">3 of 3</span></p>
+            <ul class="kb-cards">
+              <li class="kb-card">D</li>
+              <li class="kb-card">E</li>
+              <li class="kb-card">F</li>
+            </ul>
+          </div>
+          <div class="kb-col kb-c3">
+            <p class="kb-head"><span class="kb-name">Review</span><span class="kb-count">1 of 2</span></p>
+            <ul class="kb-cards">
+              <li class="kb-card">C</li>
+              <li class="kb-card kb-card--open">Open slot</li>
+            </ul>
+          </div>
+          <div class="kb-col kb-c4">
+            <p class="kb-head"><span class="kb-name">Done</span><span class="kb-count">Finished</span></p>
+            <ul class="kb-cards">
+              <li class="kb-card kb-card--done">A</li>
+              <li class="kb-card kb-card--done">B</li>
+            </ul>
+          </div>
+
+          <p class="kb-wip" data-series="1"><span>Work in progress: 4 items</span></p>
+        </div>
+      </div>
+      <figcaption>Cards move left to right. Each column heading shows the items in it against its limit. Everything between the start and finish lines counts as work in progress. Build is full, so nothing new starts; the open slot in Review is the signal to pull a finished card out of Build.</figcaption>
+    </figure>
+
+    <div class="summary">
+      <p class="summary-title">In short</p>
+      <p>The more a team works on at once, the longer each item takes on average. Little’s Law puts a number on it: average cycle time equals average WIP divided by average throughput. Kanban needs no Sprints, and the Kanban Guide prescribes no roles or meetings: a team adds limits and measures to the process it already has.</p>
+    </div>
+  </header>
+
+  <section class="chapter" id="understand" data-nav="How it works">
+    <header class="chapter-head">
+      <h2>A board becomes a kanban system when it limits work in progress</h2>
+    </header>
+
+    <p>The idea comes from Toyota. In 1954 Toyota introduced what it called the supermarket method: each process withdrew only the parts it needed from the process before it. Adding a card, the kanban, that told the earlier process what to make next turned it into the kanban system, and Toyota’s own chronology dates kanban production control from 1963. Taiichi Ohno, who built the Toyota Production System, set it out in <cite>Toyota Production System: Beyond Large-Scale Production</cite> (Ohno, 1988 in English). Kanban is Japanese for a signboard.</p>
+
+    <p>In the mid-2000s David J. Anderson brought the same pull principle to a Microsoft IT team that maintained internal software. The team limited work in progress in development and testing, replaced monthly planning with weekly replenishment and wrote its rules down as explicit policies. Kanban University’s <a href="https://kanban.university/resources/casestudies/xit/">case study</a> reports that lead time fell from an average of 5.5 months to 12 days and on-time delivery reached 98%. Anderson, Daniel Vacanti and colleagues then built a full kanban system for software at Corbis in 2006 and 2007, and Anderson’s book <cite>Kanban: Successful Evolutionary Change for Your Technology Business</cite> (Anderson, 2010) set out the method.</p>
+
+    <h3>Three practices every version shares</h3>
+    <div class="cards" data-cols="3">
+      <div class="card">
+        <h4 class="card-title">Visualize the workflow</h4>
+        <p class="card-q">Where is every item right now?</p>
+        <p>The board shows each state an item passes through, from the moment the team starts it until it is delivered. Neither the Kanban Guide nor Kanban University prescribes how it looks.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Limit work in progress</h4>
+        <p class="card-q">How much may be under way at once?</p>
+        <p>The team caps the items in progress, per column or for the whole board. Below the cap is the signal to start something; at the cap, it finishes something first. That cap is what turns a push system into a pull system.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Manage and improve the flow</h4>
+        <p class="card-q">Is work moving, and how could it move better?</p>
+        <p>The team watches items as they move, unblocks them, keeps them from aging, and changes the workflow when its measures show a problem.</p>
+      </div>
+    </div>
+
+    <p>Kanban University splits these into six general practices: visualize, limit WIP, manage flow, make policies explicit, implement feedback loops, and improve collaboratively while evolving experimentally.</p>
+
+    <div class="contrast">
+      <div class="contrast-col" data-tone="weak">
+        <p class="contrast-label">Push</p>
+        <p>Work is assigned as soon as it arrives. Everyone is busy, many items are half done, and each one waits its turn behind the others.</p>
+      </div>
+      <div class="contrast-col" data-tone="strong">
+        <p class="contrast-label">Pull</p>
+        <p>New work waits until a slot opens. Fewer items are in progress, each moves faster, and a slot opening is a visible signal that the team has room.</p>
+      </div>
+    </div>
+
+    <h3>Two guides define Kanban today</h3>
+    <p><a href="https://kanbanguides.org/english/">The Kanban Guide</a>, written by John Coleman, Daniel Vacanti and others and revised in May 2025, defines Kanban as “a strategy for optimizing the flow of value through a process” (<cite>The Kanban Guide</cite>, 2025). <a href="https://kanban.university/kanban-guide/">Kanban University</a>, which carries on Anderson’s method, calls it a way to improve the services a team already runs, and says Kanban is neither a methodology nor a process framework. They agree on the board, the limits and the measures, and differ on the rest.</p>
+    <div class="table-wrap">
+      <table class="table table--compare">
+        <caption>Where the Kanban Guide and Kanban University differ</caption>
+        <thead>
+          <tr><th scope="col">Topic</th><th scope="col">The Kanban Guide</th><th scope="col">Kanban University</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Core list</th><td>Three practices and four required flow measures</td><td>Principles for change and service delivery, plus six general practices</td></tr>
+          <tr><th scope="row">Limits on work</th><td>WIP must be explicitly controlled; the term “WIP limit” is not used</td><td>WIP limits, written as explicit policies</td></tr>
+          <tr><th scope="row">Main time measure</th><td>Cycle time</td><td>Lead time</td></tr>
+          <tr><th scope="row">Classes of service</th><td>Not mentioned</td><td>Four: expedite, fixed date, standard and intangible</td></tr>
+          <tr><th scope="row">Meetings</th><td>None prescribed</td><td>Cadences, adapted from meetings the team already holds</td></tr>
+          <tr><th scope="row">Roles</th><td>None; it speaks of system members and stakeholders</td><td>Two optional roles, service request manager and service delivery manager, taken on by existing staff</td></tr>
+          <tr><th scope="row">Pace of change</th><td>Improvements need not be small or incremental</td><td>Evolutionary change, starting from what you do now</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="chapter" id="board" data-nav="The board">
+    <header class="chapter-head">
+      <h2>A board needs a start line, a finish line and limits between them</h2>
+    </header>
+
+    <div data-hero-ref></div>
+
+    <h3>Five decisions set up a board</h3>
+    <ol class="steps">
+      <li>
+        <h4 class="step-title">Name the work item</h4>
+        <p>Choose the unit of value that moves across the board: a feature, a bug fix, a lesson, a customer request. One card is one item.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Map the states</h4>
+        <p>Add a column for each state an item passes through, in the order the work really happens. Where items wait for the next person, give the wait its own column, so the queue shows instead of hiding inside “in progress”.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Draw the start and finish lines</h4>
+        <p>The start line is where the team commits to an item; the finish line is where it is delivered. Kanban University calls them the commitment point and the delivery point, and every board needs at least one of each. Items to the left of the start line are options the team may still drop.</p>
+        <p class="step-note">WIP and cycle time are counted between these two lines, so without them neither can be measured.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Set the WIP limits</h4>
+        <p>Cap the items allowed in each column, or across the whole board. Neither guide gives a formula: the number is the team’s choice. Once it is set, the Kanban Guide for Scrum Teams asks the team to stick to it.</p>
+      </li>
+      <li>
+        <h4 class="step-title">Write the policies down</h4>
+        <p>Make the rules explicit: when an item may be pulled into a column, what finished means for each column, what happens to a blocked item and who may jump the queue. Written rules let anyone move work without asking, and let the team change a rule on purpose.</p>
+      </li>
+    </ol>
+
+    <p>The Kanban Guide collects these decisions, plus a service level expectation, into the team’s <dfn>Definition of Workflow</dfn>. The team owns it and revises it as it learns.</p>
+
+    <h3>Classes of service decide which items jump the queue</h3>
+    <p>Kanban University sorts items by what a delay costs, so the policies can treat them differently. The Kanban Guide has no equivalent.</p>
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h4 class="card-title">Expedite</h4>
+        <p>The cost of delay is high and immediate, such as an outage. Teams usually let these skip the queue and allow very few at a time.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Fixed date</h4>
+        <p>The cost of delay arrives on a known date, such as a launch or a contract deadline. These start early enough to finish in time.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Standard</h4>
+        <p>The cost of delay grows steadily the longer the item waits. Most work is standard and is pulled in the order the team agreed.</p>
+      </div>
+      <div class="card">
+        <h4 class="card-title">Intangible</h4>
+        <p>The cost of delay is unknown or not felt yet, as with upgrades or paying down technical debt. These fill capacity the other classes leave free.</p>
+      </div>
+    </div>
+
+    <h3>Kanban University’s cadences fold into meetings a team already holds</h3>
+    <dl class="facts">
+      <div><dt>Kanban Meeting</dt><dd>At the board, usually somewhere between daily and weekly: what is blocked, what is aging, what to finish next</dd></div>
+      <div><dt>Replenishment</dt><dd>Choose which options cross the start line next</dd></div>
+      <div><dt>Delivery Planning</dt><dd>Plan how finished work reaches its customers</dd></div>
+      <div><dt>Reviews</dt><dd>Service Delivery Review, Operations Review, Risk Review and Strategy Review look further out, from one service to the whole organization</dd></div>
+    </dl>
+    <p>Kanban University gives no fixed frequency beyond the Kanban Meeting’s range, and advises starting from meetings that already serve a similar purpose. In one example, Anderson (2015) describes a weekly replenishment and a service delivery review every two weeks; a client whose two meetings had the same audience merged them by making the replenishment 30 minutes longer every other week.</p>
+  </section>
+
+  <section class="chapter" id="flow" data-nav="Flow metrics">
+    <header class="chapter-head">
+      <h2>Four measures describe flow, and Little’s Law ties three of them together</h2>
+    </header>
+
+    <p>The Kanban Guide makes four measures mandatory. Each counts from the start and finish points the team set for its board.</p>
+    <div class="cards" data-cols="2">
+      <div class="card">
+        <h3 class="card-title"><span class="key-dot" data-series="1"></span>WIP</h3>
+        <p>The number of items started but not finished.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title"><span class="key-dot" data-series="2"></span>Throughput</h3>
+        <p>The number of items finished per unit of time, such as per week.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title"><span class="key-dot" data-series="3"></span>Cycle time</h3>
+        <p>The time that passed between an item starting and finishing. It is known only once the item is done.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title"><span class="key-dot" data-series="4"></span>Work item age</h3>
+        <p>The time since an unfinished item started. It is the only one of the four that warns about an item while there is still time to act.</p>
+      </div>
+    </div>
+
+    <p>Names vary by source. Kanban University measures <dfn>lead time</dfn> between any two points on the board; taken from commitment to delivery, it is the span this guide calls cycle time. On a factory floor, cycle time means how long a single step takes (Lean Enterprise Institute). When you compare numbers with another team, check where its clock starts and stops.</p>
+
+    <h3>Little’s Law: more in progress means longer cycle times</h3>
+    <p class="formula" role="img" aria-label="Average WIP divided by average throughput equals average cycle time">
+      <var data-series="1">Average WIP</var>
+      <span class="formula-term"><span class="op">÷</span><var data-series="2">Average throughput</var></span>
+      <span class="formula-term"><span class="op">=</span><span class="formula-result">Average cycle time</span></span>
+    </p>
+    <p>John Little proved the law for queues (Little, 1961), and Vacanti (2015) writes it in these flow terms. A team that has 10 items in progress and finishes 5 a week takes 2 weeks per item on average. The practical lesson, in Vacanti’s (2018) reading: when cycle times are too long, the first thing to try is lowering WIP, not starting more work.</p>
+    <p>The relationship holds over a period in which the system is stable:</p>
+    <ul>
+      <li>Items arrive about as fast as they finish.</li>
+      <li>Everything that starts eventually finishes; nothing is abandoned halfway.</li>
+      <li>WIP is about the same at the start and the end of the period.</li>
+      <li>All three are measured in the same units: items counted, not story points.</li>
+    </ul>
+    <p>Vacanti suggests turning these conditions into board policies, since work that is abandoned, left blocked or started faster than it finishes is what makes delivery unpredictable. The law does not need items of the same size; he recommends right-sizing items rather than making them all alike.</p>
+
+    <div class="callout callout--caution">
+      <p class="callout-title">Little’s Law looks backward</p>
+      <p>It describes the averages of a period that has already ended, so Vacanti (2018) warns against using it to predict a date, or the result of changing WIP. For forecasts he uses the team’s own history: a service level expectation for a single item, and for a batch of items a Monte Carlo simulation that replays past throughput many times (Vacanti, 2020).</p>
+    </div>
+
+    <h3>A service level expectation pairs a time with a probability</h3>
+    <p>A <dfn>service level expectation</dfn> (SLE) says how long an item should take from start to finish, based on past cycle times. The Kanban Guide’s example: 85% of work items will be finished in eight days or less. Both parts matter: a time alone reads as a deadline, and an average hides the slow items.</p>
+    <p>The SLE gives work item age a reference. An item whose age approaches the SLE is at risk while it can still be helped, so many teams start the board meeting with the oldest items. Two charts make the history visible. A <dfn>cycle time scatterplot</dfn> plots each finished item by finish date and cycle time, with percentile lines such as the 85th. A <dfn>cumulative flow diagram</dfn> stacks the count of items in each state over time; on any date, the height of the bands between the start and finish lines is the WIP.</p>
+  </section>
+
+  <section class="chapter" id="example" data-nav="Example">
+    <header class="chapter-head">
+      <h2>Larkwell’s lessons spent more time waiting than being made</h2>
+    </header>
+
+    <div class="example">
+      <p class="example-label">Worked example</p>
+      <h3>The content team limits its lessons in progress</h3>
+      <p>Larkwell, a fictional piano-learning app for adults (figures are illustrative), has a content team of 8 music educators and 2 producers. Every lesson passes through three hands: an educator writes it, a producer records the audio and the note data, and a second educator reviews it before it goes live. A lesson takes about 5 days of hands-on work, yet lessons took three weeks from the first day of writing to publication, and nobody could say when a given one would be ready.</p>
+
+      <dl class="facts">
+        <div><dt>Work items</dt><dd>Lessons, new or rewritten</dd></div>
+        <div><dt>Start line</dt><dd>An educator begins writing</dd></div>
+        <div><dt>Finish line</dt><dd>The lesson is published</dd></div>
+        <div><dt>Before the change</dt><dd>12 lessons in progress on average, 4 published a week, an average cycle time of 15 working days</dd></div>
+      </dl>
+      <p>Little’s Law confirms the three weeks: 12 lessons ÷ 4 a week = 3 weeks, or 15 working days.</p>
+
+      <h4>Lessons piled up in front of the producers</h4>
+      <div class="table-wrap">
+        <table class="table">
+          <caption>Lessons in each column before the change, and the WIP limits the team then set</caption>
+          <thead>
+            <tr><th scope="col">Column</th><th scope="col" class="num">Before</th><th scope="col" class="num">WIP limit</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Write</th><td class="num">6</td><td class="num">3</td></tr>
+            <tr><th scope="row">Waiting to record</th><td class="num">3</td><td class="num">1</td></tr>
+            <tr><th scope="row">Record</th><td class="num">2</td><td class="num">2</td></tr>
+            <tr><th scope="row">Review</th><td class="num">1</td><td class="num">2</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th scope="row">Total in progress</th><td class="num">12</td><td class="num">8</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <p>Each educator who finished a draft started another, but the two producers could record only about 4 lessons a week. The extra drafts did not speed anything up; they waited. The team set limits totaling 8 and wrote three policies:</p>
+      <ul>
+        <li>When Write is full, an educator reviews a waiting lesson or works on the reusable lesson template, a key result the team already has, instead of starting a new lesson.</li>
+        <li>Every Monday, replenishment picks which lessons cross the start line that week.</li>
+        <li>A short check at the board each morning looks at the oldest lesson first.</li>
+      </ul>
+
+      <h4>Six weeks later</h4>
+      <div class="table-wrap">
+        <table class="table">
+          <caption>The content team’s flow measures before and six weeks after the WIP limits</caption>
+          <thead>
+            <tr><th scope="col">Measure</th><th scope="col" class="num">Before</th><th scope="col" class="num">After</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Average WIP, lessons</th><td class="num">12</td><td class="num">8</td></tr>
+            <tr><th scope="row">Throughput, lessons a week</th><td class="num">4</td><td class="num">4</td></tr>
+            <tr><th scope="row">Average cycle time, working days</th><td class="num">15</td><td class="num">10</td></tr>
+            <tr><th scope="row">85th percentile cycle time, working days</th><td class="num">21</td><td class="num">13</td></tr>
+            <tr><th scope="row">Hands-on work per lesson, days</th><td class="num">5</td><td class="num">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The team now tells the rest of Larkwell that 85% of lessons are published within 13 working days of starting. In the fourth week one lesson reached day 11 while still in Review. At the morning check two educators reviewed it together, and it went live on day 12.</p>
+
+      <div class="example-reading">
+        <h4>Starting fewer lessons made each one faster</h4>
+        <p><strong>Little’s Law checks out both times.</strong> 12 ÷ 4 = 3 weeks before, 8 ÷ 4 = 2 weeks after. The law did not predict the change; the team measured it.</p>
+        <p><strong>Throughput held at 4 a week</strong> because the producers set the pace. Drafts beyond what they could record only lengthened the queue in front of them.</p>
+        <p><strong>The work itself did not shrink.</strong> Each lesson still takes 5 days of hands-on work, so half of the 10 working days is still waiting. Cutting the work from 5 days to 3 is a separate aim in the content team’s <a data-guide-link="okrs">OKRs</a>, and it rests on the template.</p>
+        <p><strong>The SLE turned a guess into a promise the team can check</strong> every week, and the aging lesson was caught before it broke that promise.</p>
+        <p><strong>The board shows where to look next:</strong> the column waiting for the producers. More recording capacity, or less recording per lesson, would raise throughput; another educator would not.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="try" data-nav="Try it">
+    <header class="chapter-head">
+      <h2>Estimate a team’s cycle time from its WIP and throughput</h2>
+    </header>
+
+    <div class="tool" data-tool="littles-law">
+      <div class="tool-head">
+        <h3 class="tool-title">Little’s Law calculator</h3>
+        <p class="tool-hint">Enter averages from a recent period, then try a different WIP limit. The defaults are the content team’s board.</p>
+      </div>
+      <div class="fields" data-cols="3" data-compact>
+        <div class="field">
+          <label for="kb-wip">Average WIP</label>
+          <input id="kb-wip" type="number" min="0" step="1" value="12" inputmode="decimal" aria-describedby="kb-wip-help">
+          <p class="field-help" id="kb-wip-help">Items started, not finished</p>
+        </div>
+        <div class="field">
+          <label for="kb-tp">Throughput</label>
+          <input id="kb-tp" type="number" min="0" step="0.5" value="4" inputmode="decimal" aria-describedby="kb-tp-help">
+          <p class="field-help" id="kb-tp-help">Items finished per week</p>
+        </div>
+        <div class="field">
+          <label for="kb-limit">New WIP limit</label>
+          <input id="kb-limit" type="number" min="0" step="1" value="8" inputmode="decimal" aria-describedby="kb-limit-help">
+          <p class="field-help" id="kb-limit-help">Optional</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn" id="kb-reset">Reset to the example</button>
+      </div>
+      <div class="tool-output" aria-live="polite">
+        <p class="tool-output-label">Average cycle time</p>
+        <output class="tool-result" id="kb-result" for="kb-wip kb-tp">15 working days</output>
+        <p class="tool-output-note" id="kb-note">12 items ÷ 4 a week = 3 weeks, at 5 working days a week</p>
+        <ul class="checks" id="kb-checks"></ul>
+      </div>
+    </div>
+
+    <h3>Write your board’s rules down</h3>
+    <div class="template">
+      <p class="template-title">Definition of workflow</p>
+      <pre>Work item: what one card stands for
+Start line: the moment an item counts as started
+Finish line: the moment an item counts as finished
+Columns and WIP limits: each state, with its limit
+Pull rule: when someone may move an item into a column
+Blocked items: how a blocker is shown and who acts on it
+Urgent work: which items may skip the queue, and how many at once
+Service level expectation: 85% of items finish within N days (from past cycle times)
+Review: when the team looks at these rules again</pre>
+    </div>
+  </section>
+
+  <section class="chapter" id="when" data-nav="When to use">
+    <header class="chapter-head">
+      <h2>Kanban fits work that arrives continuously and varies in size</h2>
+    </header>
+
+    <div class="fit">
+      <div class="fit-col" data-fit="use">
+        <h3>Use it when</h3>
+        <ul>
+          <li>Work arrives unpredictably and cannot wait for the next planning cycle: support, maintenance, operations, content production</li>
+          <li>Items vary widely in size and a fixed batch of them makes little sense</li>
+          <li>Stakeholders ask “when will it be done?” and a time with a probability would answer them</li>
+          <li>You want to improve the process a team already has, without new roles or a reorganization</li>
+          <li>A Scrum team wants to see and manage the flow of work inside each Sprint</li>
+        </ul>
+      </div>
+      <div class="fit-col" data-fit="skip">
+        <h3>Skip it when</h3>
+        <ul>
+          <li>The work is a substantial project with a fixed time budget and a shaped solution; <a data-guide-link="shape-up">Shape Up</a> bets a six-week cycle on it and cuts scope to fit</li>
+          <li>The team relies on a shared goal every few weeks and a regular review with stakeholders to stay aligned; <a data-guide-link="agile-scrum">Scrum</a> gives it that rhythm, and Kanban can still run inside it</li>
+          <li>Nobody will hold a WIP limit; a board without one shows the work but does not change how it flows</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Kanban inside Scrum keeps the Sprint</h3>
+    <p><cite>The Kanban Guide for Scrum Teams</cite> (Scrum.org, with Daniel Vacanti and Yuval Yeret, 2021) adds no events and keeps the Sprint: the team still delivers value at least once per Sprint. What changes is how the events use flow. Sprint Planning gauges capacity from past throughput, the Daily Scrum happens at the board and looks at items near or past their SLE, and the Sprint Retrospective inspects the flow measures and adapts the Definition of Workflow. To choose between Scrum, Shape Up and the other execution frameworks, see <a data-guide-link="compare-execution">how to choose an execution framework</a>.</p>
+  </section>
+
+  <section class="chapter" id="pitfalls" data-nav="Pitfalls">
+    <header class="chapter-head">
+      <h2>Most Kanban trouble starts with a board that limits nothing</h2>
+    </header>
+
+    <ol class="pitfalls">
+      <li>
+        <h3 class="pitfall-title">A board with no WIP limits</h3>
+        <p>Columns and cards alone show the work but leave it unlimited, so the team keeps taking on more. Anderson (2016) calls such boards proto-kanban: the system is not protected from overburdening. A board with one row per person, tracking people instead of the workflow, falls in the same group.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> set a limit for each column or for the whole board, model the board on the workflow, and keep the limit once it is set.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Starting more when items are slow</h3>
+        <p>When cycle times grow, the instinct is to start more items so that more finish. Vacanti (2018) describes this as the opposite of the right move: more WIP at the same throughput makes every item slower.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> lower WIP first and help finish the items already started, oldest first.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">No agreed start and finish</h3>
+        <p>If nobody knows when an item counts as started or finished, the team cannot count WIP, measure cycle time or set an SLE, and every metric becomes an argument.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> mark both lines on the board and write them into the Definition of Workflow.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Letting items age unnoticed</h3>
+        <p>A team that watches only throughput can look healthy while a few items sit blocked for weeks. Cycle time reveals them only after they finish, when it is too late.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> compare each item’s work item age with the SLE at every board meeting and act on the oldest first.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Promising dates from averages</h3>
+        <p>Dividing a backlog by average throughput, or using Little’s Law as a predictor, gives a single date and hides how likely it is to slip.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> answer with the SLE for one item, or a Monte Carlo forecast from past throughput for many, and state the probability with the date.</p>
+      </li>
+      <li>
+        <h3 class="pitfall-title">Adding a full set of new meetings</h3>
+        <p>Teams that adopt every cadence at once add hours of meetings and blame Kanban for them. Anderson (2015) advises adapting existing meetings, and lets small organizations combine them.</p>
+        <p class="pitfall-fix"><strong>Fix:</strong> start with a regular look at the board and a replenishment, folded into meetings the team already holds, and add others only when a need shows.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="quiz" data-nav="Quiz">
+    <header class="chapter-head">
+      <h2>Test yourself on Kanban</h2>
+    </header>
+
+    <ol class="quiz">
+      <li class="quiz-item" data-answer="1" data-section="understand">
+        <p class="quiz-q">What turns a task board into a kanban system?</p>
+        <ul class="quiz-options">
+          <li><button type="button">A column for every step of the work</button></li>
+          <li><button type="button">An explicit cap on the work in progress</button></li>
+          <li><button type="button">A daily meeting held in front of the board</button></li>
+          <li><button type="button">Estimates written on every card</button></li>
+        </ul>
+        <div class="quiz-why"><p>The cap creates pull: work starts only when a slot frees up. Columns are needed too, but a board with columns and no cap just displays an unlimited pile of work.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2" data-section="flow">
+        <p class="quiz-q">A team averages 20 items in progress and finishes 5 a week. What is its average cycle time?</p>
+        <ul class="quiz-options">
+          <li><button type="button">1 week</button></li>
+          <li><button type="button">25 weeks</button></li>
+          <li><button type="button">4 weeks</button></li>
+          <li><button type="button">100 weeks</button></li>
+        </ul>
+        <div class="quiz-why"><p>Average WIP divided by average throughput gives 20 ÷ 5 = 4 weeks. Multiplying the two instead produces 100, a number with no meaning here.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0" data-section="flow">
+        <p class="quiz-q">Cycle times on a team’s board have doubled this quarter. The manager proposes starting more items at once so more get finished. What should the team try first?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Lower its WIP and finish what is already started</button></li>
+          <li><button type="button">Start more items, as the manager suggests</button></li>
+          <li><button type="button">Split every item into pieces of equal size</button></li>
+          <li><button type="button">Remove the WIP limits until things settle</button></li>
+        </ul>
+        <div class="quiz-why"><p>With throughput unchanged, adding WIP raises the average cycle time further, which is the problem the team already has. Equal sizing is not required for flow; right-sized items help, but too much WIP is the usual cause.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3" data-section="flow">
+        <p class="quiz-q">Which of these is a service level expectation?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Items take 6 days on average</button></li>
+          <li><button type="button">Every item finishes within 10 days</button></li>
+          <li><button type="button">The team finishes 8 items a week</button></li>
+          <li><button type="button">85% of items finish in 10 days or less</button></li>
+        </ul>
+        <div class="quiz-why"><p>An SLE combines a span of time with a probability drawn from past cycle times. An average says nothing about the slow items, and “every item” is a guarantee no real history supports.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="1" data-section="flow">
+        <p class="quiz-q">A stakeholder asks when a set of 30 items will be done. Why not divide 30 by average throughput, or use Little’s Law, to give a date?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Little’s Law only works for manufacturing</button></li>
+          <li><button type="button">Both rest on averages of a past period and give no probability</button></li>
+          <li><button type="button">Throughput cannot be measured in knowledge work</button></li>
+          <li><button type="button">Kanban teams never give dates</button></li>
+        </ul>
+        <div class="quiz-why"><p>An average-based date says nothing about the risk of being late, and the law describes a finished period rather than predicting one. A Monte Carlo run over past throughput gives dates with a likelihood attached, which is the honest answer.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="2" data-section="when">
+        <p class="quiz-q">A Scrum team wants to use Kanban to manage its flow. What happens to its Sprints?</p>
+        <ul class="quiz-options">
+          <li><button type="button">They end; Kanban replaces them with continuous flow</button></li>
+          <li><button type="button">They stay, but the Daily Scrum is dropped</button></li>
+          <li><button type="button">They stay, and the events start using flow measures</button></li>
+          <li><button type="button">They are lengthened to make room for the WIP limits</button></li>
+        </ul>
+        <div class="quiz-why"><p>Scrum.org’s guide for Scrum teams keeps every event and changes what each one looks at: past throughput in planning, aging items in the Daily Scrum. Replacing the Sprint is a common assumption that guide rejects.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="0" data-section="example">
+        <p class="quiz-q">At Larkwell, educators keep starting new lessons while three drafts wait for the two producers. With Write at its limit, what does the board ask an educator with free time to do?</p>
+        <ul class="quiz-options">
+          <li><button type="button">Help finish work already started, or work off the board</button></li>
+          <li><button type="button">Start a new lesson so that nobody sits idle</button></li>
+          <li><button type="button">Raise the limit on Write for the week</button></li>
+          <li><button type="button">Move a waiting draft back to the options</button></li>
+        </ul>
+        <div class="quiz-why"><p>The producers set the pace, so another draft would only join the queue in front of them. Reviewing or improving the template keeps the educator useful without adding WIP; raising the limit undoes the change that cut cycle time.</p></div>
+      </li>
+      <li class="quiz-item" data-answer="3" data-section="board">
+        <p class="quiz-q">What does the start line on a kanban board mark?</p>
+        <ul class="quiz-options">
+          <li><button type="button">The point where an idea is first written down</button></li>
+          <li><button type="button">The column where the most work happens</button></li>
+          <li><button type="button">The moment a customer receives the work</button></li>
+          <li><button type="button">The point where the team commits and the clock starts</button></li>
+        </ul>
+        <div class="quiz-why"><p>Crossing the start line is a commitment: the item now counts toward WIP and its cycle time begins. Items before it are options the team may still drop, and delivery to the customer is what the finish line marks.</p></div>
+      </li>
+    </ol>
+  </section>
+</article>
+
+<style data-guide-style>
+  /* Hero: a board with a start line, a finish line and WIP limits */
+  .guide[data-guide="kanban"] .kb-board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2px minmax(0, 1fr) minmax(0, 1fr) 2px minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    column-gap: var(--s-2);
+    min-width: 296px;
+    font-family: var(--font-sans);
+  }
+  .guide[data-guide="kanban"] .kb-c1 { grid-column: 1; grid-row: 2; }
+  .guide[data-guide="kanban"] .kb-c2 { grid-column: 3; grid-row: 2; }
+  .guide[data-guide="kanban"] .kb-c3 { grid-column: 4; grid-row: 2; }
+  .guide[data-guide="kanban"] .kb-c4 { grid-column: 6; grid-row: 2; }
+  .guide[data-guide="kanban"] .kb-at-start { grid-column: 2; }
+  .guide[data-guide="kanban"] .kb-at-finish { grid-column: 5; }
+
+  .guide[data-guide="kanban"] .kb-line-label {
+    grid-row: 1;
+    justify-self: center;
+    white-space: nowrap;
+    margin-bottom: var(--s-2);
+    font-size: var(--fs-12);
+    font-weight: var(--w-semibold);
+    line-height: var(--lh-ui);
+    color: var(--ink-2);
+  }
+  .guide[data-guide="kanban"] .kb-line {
+    grid-row: 2;
+    width: 0;
+    justify-self: center;
+    border-left: 2px dashed var(--rule-ink);
+  }
+
+  .guide[data-guide="kanban"] .kb-col {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    min-width: 0;
+    padding: var(--s-2);
+    border-radius: var(--r-md);
+    background: var(--paper-sunk);
+  }
+  .guide[data-guide="kanban"] .kb-head {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+  }
+  .guide[data-guide="kanban"] .kb-name {
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .guide[data-guide="kanban"] .kb-count {
+    font-size: var(--fs-12);
+    line-height: var(--lh-ui);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .guide[data-guide="kanban"] .kb-count--full {
+    font-weight: var(--w-semibold);
+    color: var(--cat-ink);
+  }
+  .guide[data-guide="kanban"] .kb-cards {
+    display: grid;
+    gap: var(--s-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .guide[data-guide="kanban"] .kb-cards > li { margin: 0; padding: 0; }
+  .guide[data-guide="kanban"] .kb-cards > li::before { content: none; }
+  .guide[data-guide="kanban"] .kb-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: var(--s-1) var(--s-2);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--r-sm);
+    background: var(--paper-raised);
+    font-family: var(--font-serif);
+    font-size: var(--fs-16);
+    font-weight: var(--w-medium);
+    line-height: 1.2;
+    text-align: center;
+    color: var(--ink);
+  }
+  .guide[data-guide="kanban"] .kb-card--waiting { color: var(--ink-2); }
+  .guide[data-guide="kanban"] .kb-card--done {
+    border-color: var(--rule);
+    color: var(--ink-3);
+  }
+  .guide[data-guide="kanban"] .kb-card--open {
+    border: 1px dashed var(--cat);
+    background: var(--cat-wash);
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    font-weight: var(--w-semibold);
+    color: var(--cat-ink);
+  }
+
+  .guide[data-guide="kanban"] .kb-wip {
+    grid-column: 2 / 6;
+    grid-row: 3;
+    margin: var(--s-2) 0 0;
+    padding-top: var(--s-2);
+    border: 1px solid var(--series-line);
+    border-bottom: 0;
+    border-radius: var(--r-sm) var(--r-sm) 0 0;
+    text-align: center;
+    font-size: var(--fs-14);
+    font-weight: var(--w-semibold);
+    line-height: var(--lh-snug);
+    color: var(--series-ink);
+  }
+  .guide[data-guide="kanban"] .kb-wip span { display: inline-block; padding: 0 var(--s-2); }
+
+  .guide[data-guide="kanban"] #kb-checks:empty { display: none; }
+</style>
+
+<script data-guide-script>
+  const wipEl = root.querySelector('#kb-wip');
+  const tpEl = root.querySelector('#kb-tp');
+  const limitEl = root.querySelector('#kb-limit');
+  const wipHelp = root.querySelector('#kb-wip-help');
+  const tpHelp = root.querySelector('#kb-tp-help');
+  const limitHelp = root.querySelector('#kb-limit-help');
+  const result = root.querySelector('#kb-result');
+  const note = root.querySelector('#kb-note');
+  const checks = root.querySelector('#kb-checks');
+
+  const DAYS_PER_WEEK = 5;
+  const EXAMPLE = { wip: '12', tp: '4', limit: '8' };
+  const HINTS = {
+    wip: 'Items started, not finished',
+    tp: 'Items finished per week',
+    limit: 'Optional',
+  };
+  const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
+  const days = (n) => `${fmt(n)} working ${n === 1 ? 'day' : 'days'}`;
+  const weeks = (n) => `${fmt(n)} ${n === 1 ? 'week' : 'weeks'}`;
+
+  // null when empty, NaN when the browser holds text it cannot parse.
+  function read(el) {
+    if (el.validity && el.validity.badInput) return NaN;
+    const raw = el.value.trim();
+    return raw === '' ? null : Number(raw);
+  }
+
+  function mark(el, help, ok, hint, error) {
+    el.setAttribute('aria-invalid', String(!ok));
+    help.textContent = ok ? hint : error;
+    help.classList.toggle('is-error', !ok);
+  }
+
+  function addCheck(state, label, text) {
+    const li = document.createElement('li');
+    li.dataset.state = state;
+    const tag = document.createElement('span');
+    tag.className = 'check-state';
+    tag.textContent = label;
+    const body = document.createElement('span');
+    body.textContent = text;
+    li.append(tag, body);
+    checks.append(li);
+  }
+
+  function update() {
+    checks.replaceChildren();
+    const wip = read(wipEl);
+    const tp = read(tpEl);
+    const limit = read(limitEl);
+
+    const wipOk = Number.isFinite(wip) && wip > 0;
+    const tpOk = Number.isFinite(tp) && tp > 0;
+    const limitOk = limit === null || (Number.isFinite(limit) && limit > 0);
+    mark(wipEl, wipHelp, wipOk, HINTS.wip, 'Enter a WIP greater than 0');
+    mark(tpEl, tpHelp, tpOk, HINTS.tp, 'Enter a throughput greater than 0');
+    mark(limitEl, limitHelp, limitOk, HINTS.limit, 'Enter a limit greater than 0, or leave it empty');
+
+    if (!wipOk || !tpOk) {
+      result.textContent = '–';
+      note.textContent = !tpOk && tp === 0
+        ? 'With nothing finishing, items never leave: the cycle time has no average yet.'
+        : 'Fill in WIP and throughput to see the average cycle time.';
+      return;
+    }
+
+    const cycleWeeks = wip / tp;
+    result.textContent = days(cycleWeeks * DAYS_PER_WEEK);
+    note.textContent = `${fmt(wip)} ${wip === 1 ? 'item' : 'items'} ÷ ${fmt(tp)} a week = ${weeks(cycleWeeks)}, at ${DAYS_PER_WEEK} working days a week`;
+
+    if (limit === null || !limitOk) return;
+    const newDays = (limit / tp) * DAYS_PER_WEEK;
+    const oldDays = cycleWeeks * DAYS_PER_WEEK;
+    if (limit < wip) {
+      addCheck('ok', 'Shorter', `With WIP held at ${fmt(limit)}, the average falls to about ${days(newDays)}, if throughput holds at ${fmt(tp)} a week. Measure again after a few weeks to see what really happened.`);
+    } else if (limit > wip) {
+      addCheck('revise', 'Longer', `With WIP held at ${fmt(limit)}, the average rises to about ${days(newDays)}, from ${days(oldDays)}, unless throughput rises with it.`);
+    } else {
+      addCheck('info', 'Same', 'The limit matches today’s WIP, so the average cycle time stays where it is. Lower it to see the effect.');
+    }
+  }
+
+  [wipEl, tpEl, limitEl].forEach((el) => el.addEventListener('input', update));
+  root.querySelector('#kb-reset').addEventListener('click', () => {
+    wipEl.value = EXAMPLE.wip;
+    tpEl.value = EXAMPLE.tp;
+    limitEl.value = EXAMPLE.limit;
+    update();
+  });
+  update();
+</script>

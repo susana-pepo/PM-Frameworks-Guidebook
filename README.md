@@ -1,6 +1,6 @@
 # PM Frameworks: a field guide
 
-A study reference for product managers: 24 frameworks across six families
+A study reference for product managers: 25 frameworks across six families
 (prioritization, design, strategy, growth, execution, communication), each
 taught well enough to use the same day, plus one guide per family on choosing
 between them.
@@ -23,7 +23,7 @@ A vanilla JavaScript single-page app on Vite with a hash router.
 | Route | Page |
 |---|---|
 | `#/` | Home: search, "start from your situation", the six families as an index |
-| `#/category/:id` | A family: its four frameworks and its comparison guide |
+| `#/category/:id` | A family: its frameworks and its comparison guide |
 | `#/framework/:slug[/:section]` | A framework guide |
 | `#/compare/:slug[/:section]` | A comparison guide |
 

@@ -1,10 +1,10 @@
 <article class="guide" data-guide="compare-execution">
 
   <header class="guide-intro">
-    <p class="lede">OKRs, dual-track agile, Scrum and Shape Up work at different levels. OKRs set the quarter’s goals, dual-track agile tests which ideas are worth building while the team keeps shipping, and Scrum or Shape Up organizes how the team delivers. Only those last two compete: Scrum runs short Sprints from one ordered backlog, while Shape Up bets six weeks at a time on shaped pitches.</p>
+    <p class="lede">OKRs, dual-track agile, Scrum, Kanban and Shape Up work at different levels. OKRs set the quarter’s goals, dual-track agile tests which ideas are worth building while the team keeps shipping, and Scrum, Kanban or Shape Up organizes how the team delivers. Only those last three compete: Scrum runs short Sprints from one ordered backlog, Kanban pulls work continuously under a limit on how much is in progress, and Shape Up bets six weeks at a time on shaped pitches.</p>
 
     <figure class="figure" data-hero>
-      <ol class="layers" aria-label="The four execution frameworks arranged in three layers, from direction to delivery">
+      <ol class="layers" aria-label="The five execution frameworks arranged in three layers, from direction to delivery">
         <li class="layer" data-series="2">
           <p class="layer-level">Why · Direction</p>
           <p class="layer-name"><span class="key-dot" aria-hidden="true"></span>OKRs</p>
@@ -26,6 +26,12 @@
               <p class="layer-time">Sprints, often two weeks</p>
             </div>
             <p class="layer-or">or</p>
+            <div class="layer-opt" data-series="5">
+              <p class="layer-name"><span class="key-dot" aria-hidden="true"></span>Kanban</p>
+              <p class="layer-q">How do we keep work flowing?</p>
+              <p class="layer-time">Continuous, no fixed iterations</p>
+            </div>
+            <p class="layer-or">or</p>
             <div class="layer-opt" data-series="1">
               <p class="layer-name"><span class="key-dot" aria-hidden="true"></span>Shape Up</p>
               <p class="layer-q">How do we bet on shaped work?</p>
@@ -34,18 +40,18 @@
           </div>
         </li>
       </ol>
-      <figcaption>Read top to bottom, from the quarter’s goals down to the team’s delivery rhythm. Each box gives the level, the framework, the question it answers and how often it runs; the bottom box holds two alternatives.</figcaption>
+      <figcaption>Read top to bottom, from the quarter’s goals down to the team’s delivery rhythm. Each box gives the level, the framework, the question it answers and how often it runs; the bottom box holds three alternatives.</figcaption>
     </figure>
 
     <div class="summary">
       <p class="summary-title">In short</p>
-      <p>Pick one framework per layer and one delivery method per team; two teams in the same company can still deliver differently. The numbers to remember: 3–5 objectives with 2–5 key results each, graded from 0.0 to 1.0: committed key results aim for 1.0, and an average of about 0.7 counts as success for aspirational ones. Scrum Sprints last one month or less, often two weeks, for teams of typically 10 or fewer. A Shape Up cycle is six weeks plus a two-week cooldown, with one designer and one or two programmers per bet.</p>
+      <p>Pick one framework per layer and one delivery method per team; two teams in the same company can still deliver differently. The numbers to remember: 3–5 objectives with 2–5 key results each, graded from 0.0 to 1.0: committed key results aim for 1.0, and an average of about 0.7 counts as success for aspirational ones. Scrum Sprints last one month or less, often two weeks, for teams of typically 10 or fewer. A Shape Up cycle is six weeks plus a two-week cooldown, with one designer and one or two programmers per bet. Kanban has no iterations; its numbers are the team’s own, tied by Little’s Law: average cycle time equals average WIP divided by average throughput.</p>
     </div>
   </header>
 
   <section class="chapter" id="overview" data-nav="At a glance">
     <header class="chapter-head">
-      <h2>One sets goals, one chooses the work and two organize delivery</h2>
+      <h2>One sets goals, one chooses the work and three organize delivery</h2>
     </header>
 
     <dl class="facts">
@@ -62,40 +68,45 @@
         <dd><strong>How.</strong> Agile is the set of values and principles in the 2001 Manifesto for Agile Software Development; Scrum is one framework that applies them, in Sprints of one month or less with a Sprint Goal each.</dd>
       </div>
       <div>
+        <dt><a data-guide-link="kanban">Kanban</a></dt>
+        <dd><strong>How.</strong> Kanban manages work as a continuous flow: the team shows each step of its workflow on a board, caps the items in progress and starts new work only when a finished item frees a slot.</dd>
+      </div>
+      <div>
         <dt><a data-guide-link="shape-up">Shape Up</a></dt>
         <dd><strong>How.</strong> Shape Up fixes the time and lets the scope vary: senior people shape a problem into a pitch with an appetite and choose at the betting table which pitches get the next six-week cycle, and a small team cuts scope to ship on time.</dd>
       </div>
     </dl>
 
-    <p>Scrum, Shape Up and dual-track agile all shape what a team does each week, so they compare on the same dimensions. Dual-track agile adds discovery to whichever delivery method the team runs. OKRs set goals rather than run the work, so their facts follow the table.</p>
+    <p>Scrum, Kanban, Shape Up and dual-track agile all shape what a team does each week, so they compare on the same dimensions. Dual-track agile adds discovery to whichever delivery method the team runs. OKRs set goals rather than run the work, so their facts follow the table.</p>
 
     <div class="table-wrap">
       <table class="table table--compare">
-        <caption>Scrum, Shape Up and dual-track agile compared on nine dimensions</caption>
+        <caption>Scrum, Kanban, Shape Up and dual-track agile compared on nine dimensions</caption>
         <thead>
           <tr>
             <th scope="col">Dimension</th>
             <th scope="col">Scrum</th>
+            <th scope="col">Kanban</th>
             <th scope="col">Shape Up</th>
             <th scope="col">Dual-Track Agile</th>
           </tr>
         </thead>
         <tbody>
-          <tr><th scope="row">What it decides</th><td>How we deliver</td><td>How we deliver</td><td>What we deliver</td></tr>
-          <tr><th scope="row">Core question</th><td>How do we deliver iteratively?</td><td>How do we bet on shaped work?</td><td>What should we build?</td></tr>
-          <tr><th scope="row">Cadence</th><td>Sprints of one month or less, often two weeks</td><td>Six-week cycles, each followed by a two-week cooldown</td><td>Continuous: discovery and delivery run every week in the same team, and an idea moves to delivery when the evidence is in, with no fixed lead time</td></tr>
-          <tr><th scope="row">Regular events</th><td>Sprint Planning, a Daily Scrum every working day, a Sprint Review and a Sprint Retrospective inside each Sprint, all serving one Sprint Goal</td><td>Shaping and the betting table before each cycle; progress shows on hill charts instead of daily status meetings</td><td>Weekly interviews, prototype tests and experiments, run alongside the delivery method’s own events</td></tr>
-          <tr><th scope="row">Team</th><td>Typically 10 or fewer people, including the Product Owner and Scrum Master; the rest are Developers</td><td>A small team per bet, usually one designer and one or two programmers, who build with full autonomy</td><td>A product trio (product manager, designer, tech lead) leads discovery, other engineers join as needed, and the whole team delivers</td></tr>
-          <tr><th scope="row">Backlog</th><td>Yes: one ordered Product Backlog, refined as work goes on</td><td>No central backlog: pitches are brought to the betting table each cycle</td><td>The team’s one backlog; an idea joins it once discovery has de-risked it, with no handoff between groups</td></tr>
-          <tr><th scope="row">Scope</th><td>No changes that endanger the Sprint Goal; the work to reach it may be clarified and renegotiated with the Product Owner</td><td>Variable: scope is hammered to fit the six weeks, and a project that does not ship gets no extension by default</td><td>Emerges from discovery: ideas change or are dropped as evidence comes in</td></tr>
-          <tr><th scope="row">Best strength</th><td>A regular delivery cadence</td><td>Focused, bounded work</td><td>Less engineering time spent on ideas that would not have worked</td></tr>
-          <tr><th scope="row">In interviews</th><td>Widely used, so interviewers often expect you to know it</td><td>Less common; knowing it shows range beyond Scrum</td><td>Shows you validate before you build, a PM-specific skill</td></tr>
+          <tr><th scope="row">What it decides</th><td>How we deliver</td><td>How we deliver</td><td>How we deliver</td><td>What we deliver</td></tr>
+          <tr><th scope="row">Core question</th><td>How do we deliver iteratively?</td><td>How do we keep work flowing when it never stops arriving?</td><td>How do we bet on shaped work?</td><td>What should we build?</td></tr>
+          <tr><th scope="row">Cadence</th><td>Sprints of one month or less, often two weeks</td><td>Continuous, with no fixed iterations</td><td>Six-week cycles, each followed by a two-week cooldown</td><td>Continuous: discovery and delivery run every week in the same team, and an idea moves to delivery when the evidence is in, with no fixed lead time</td></tr>
+          <tr><th scope="row">Regular events</th><td>Sprint Planning, a Daily Scrum every working day, a Sprint Review and a Sprint Retrospective inside each Sprint, all serving one Sprint Goal</td><td>None required by the Kanban Guide; Kanban University’s cadences fold into meetings the team already holds</td><td>Shaping and the betting table before each cycle; progress shows on hill charts instead of daily status meetings</td><td>Weekly interviews, prototype tests and experiments, run alongside the delivery method’s own events</td></tr>
+          <tr><th scope="row">Team</th><td>Typically 10 or fewer people, including the Product Owner and Scrum Master; the rest are Developers</td><td>No set size and no new roles; it starts from the team as it is</td><td>A small team per bet, usually one designer and one or two programmers, who build with full autonomy</td><td>A product trio (product manager, designer, tech lead) leads discovery, other engineers join as needed, and the whole team delivers</td></tr>
+          <tr><th scope="row">Backlog</th><td>Yes: one ordered Product Backlog, refined as work goes on</td><td>Options wait before the start line until replenishment picks them</td><td>No central backlog: pitches are brought to the betting table each cycle</td><td>The team’s one backlog; an idea joins it once discovery has de-risked it, with no handoff between groups</td></tr>
+          <tr><th scope="row">Scope</th><td>No changes that endanger the Sprint Goal; the work to reach it may be clarified and renegotiated with the Product Owner</td><td>Options can change freely until they cross the start line</td><td>Variable: scope is hammered to fit the six weeks, and a project that does not ship gets no extension by default</td><td>Emerges from discovery: ideas change or are dropped as evidence comes in</td></tr>
+          <tr><th scope="row">Best strength</th><td>A regular delivery cadence</td><td>Shorter, more predictable cycle times for work that arrives continuously</td><td>Focused, bounded work</td><td>Less engineering time spent on ideas that would not have worked</td></tr>
+          <tr><th scope="row">In interviews</th><td>Widely used, so interviewers often expect you to know it</td><td>Shows you can manage unplanned work and forecast with data</td><td>Less common; knowing it shows range beyond Scrum</td><td>Shows you validate before you build, a PM-specific skill</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>OKRs answer a different question</h3>
-    <p>OKRs sit above all three. They do not tell a team how to run a Sprint or a cycle; they set the outcomes the Sprints and cycles serve.</p>
+    <p>OKRs sit above all four. They do not tell a team how to run its delivery; they set the outcomes the delivery serves.</p>
     <dl class="facts">
       <div><dt>Core question</dt><dd>What are we trying to achieve?</dd></div>
       <div><dt>Size</dt><dd>No more than 3–5 objectives per team, each with 2–5 measurable key results</dd></div>
@@ -107,11 +118,6 @@
       <div><dt>Best strength</dt><dd>Alignment</dd></div>
       <div><dt>In interviews</dt><dd>Shows you tie work to outcomes rather than output</dd></div>
     </dl>
-
-    <div class="callout">
-      <p class="callout-title">Where flow-based work fits</p>
-      <p>For work that arrives unpredictably, such as support, operations or maintenance, the usual alternative to Scrum and Shape Up is a flow-based method such as Kanban (not covered in this guide). It has no fixed iterations: work flows through a board, and limits on work in progress keep the team from starting more than it can finish.</p>
-    </div>
   </section>
 
   <section class="chapter" id="picker" data-nav="Choose">
@@ -130,6 +136,7 @@
           <div class="choices" data-stack role="group" aria-labelledby="ep-goal-label" aria-describedby="ep-hint" data-question="goal">
             <button type="button" class="choice" aria-pressed="false" data-value="align">Teams are not aligned on goals</button>
             <button type="button" class="choice" aria-pressed="false" data-value="validate">We may be building the wrong things</button>
+            <button type="button" class="choice" aria-pressed="false" data-value="flow">Requests arrive all the time and cannot wait for a plan</button>
             <button type="button" class="choice" aria-pressed="false" data-value="deliver">We need a reliable delivery cadence</button>
             <button type="button" class="choice" aria-pressed="false" data-value="focus">We need deeper, focused work</button>
           </div>
@@ -156,7 +163,7 @@
 
     <details class="more">
       <summary>The rules behind the picker</summary>
-      <p>Answer the questions in order. A yes at question 1 or 2 names a missing layer, but every team still needs a way to deliver, so carry on until the path names Scrum or Shape Up.</p>
+      <p>Answer the questions in order. A yes at question 1 or 2 names a missing layer, but every team still needs a way to deliver, so carry on until the path names Scrum, Kanban or Shape Up.</p>
 
       <ol class="decision">
         <li>
@@ -169,22 +176,29 @@
         <li>
           <p class="decision-q">Does the team ship features that do not move the metrics?</p>
           <ul>
-            <li><span class="decision-if">Yes</span><span><a data-guide-link="dual-track">Use dual-track agile</a>. Add continuous discovery so ideas are tested before engineering builds them, then answer questions 3 and 4 to choose a delivery method.</span></li>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="dual-track">Use dual-track agile</a>. Add continuous discovery so ideas are tested before engineering builds them, then answer questions 3 to 5 to choose a delivery method.</span></li>
             <li><span class="decision-if">No</span><span>Go to question 3</span></li>
+          </ul>
+        </li>
+        <li>
+          <p class="decision-q">Does most of the work arrive unpredictably, such as support requests, incidents or maintenance, and need attention before the next planning cycle?</p>
+          <ul>
+            <li><span class="decision-if">Yes</span><span><a data-guide-link="kanban">Use Kanban</a>. Show the workflow on a board, limit the work in progress and pull the next item whenever a slot frees up. Planned feature work can still run in Scrum or Shape Up beside it.</span></li>
+            <li><span class="decision-if">No</span><span>Go to question 4</span></li>
           </ul>
         </li>
         <li>
           <p class="decision-q">Do stakeholders or other teams depend on a steady, predictable delivery rhythm?</p>
           <ul>
             <li><span class="decision-if">Yes</span><span><a data-guide-link="agile-scrum">Use Scrum</a>. Short Sprints with a clear goal make delivery predictable and give regular points to inspect and adapt. With more than 10 people, split into several teams.</span></li>
-            <li><span class="decision-if">No</span><span>Go to question 4</span></li>
+            <li><span class="decision-if">No</span><span>Go to question 5</span></li>
           </ul>
         </li>
         <li>
           <p class="decision-q">Is the work a meaningful chunk that senior people can shape in advance and a small team can finish alone in six weeks?</p>
           <ul>
             <li><span class="decision-if">Yes</span><span><a data-guide-link="shape-up">Use Shape Up</a>, with one designer and one or two programmers per bet. In a larger organization, make sure senior people have time to shape pitches, and pilot it with one team before switching everyone.</span></li>
-            <li><span class="decision-if">No</span><span><a data-guide-link="agile-scrum">Use Scrum</a> as the default. If most of the work is unplanned requests, a flow-based method suits it better.</span></li>
+            <li><span class="decision-if">No</span><span><a data-guide-link="agile-scrum">Use Scrum</a> as the default.</span></li>
           </ul>
         </li>
       </ol>
@@ -211,7 +225,7 @@
       </li>
       <li>
         <p class="scenario-q">“We’re setting up a new product team from scratch.”</p>
-        <p class="scenario-a">One framework per layer: <a data-guide-link="okrs">OKRs</a> for direction, <a data-guide-link="dual-track">dual-track agile</a> for discovery, and either <a data-guide-link="agile-scrum">Scrum</a> or <a data-guide-link="shape-up">Shape Up</a> for delivery. <a href="#combine" data-section-link>Using them together</a> follows one company that runs all four.</p>
+        <p class="scenario-a">One framework per layer: <a data-guide-link="okrs">OKRs</a> for direction, <a data-guide-link="dual-track">dual-track agile</a> for discovery, and <a data-guide-link="agile-scrum">Scrum</a>, <a data-guide-link="kanban">Kanban</a> or <a data-guide-link="shape-up">Shape Up</a> for delivery, chosen by the kind of work. <a href="#combine" data-section-link>Using them together</a> follows one company that runs all five.</p>
       </li>
       <li>
         <p class="scenario-q">“We have 14 engineers on one product, the Daily Scrum runs past half an hour, and nobody can follow what everyone else is doing.”</p>
@@ -219,7 +233,15 @@
       </li>
       <li>
         <p class="scenario-q">“Most of our week goes on incoming requests and incidents, so no plan survives.”</p>
-        <p class="scenario-a">A flow-based method: with no fixed iteration to protect, the team pulls the next request whenever it has capacity. Planned feature work can still run in Scrum or Shape Up alongside it.</p>
+        <p class="scenario-a"><a data-guide-link="kanban">Kanban</a>: with no fixed iteration to protect, the team pulls the next request whenever a slot frees up, and a WIP limit keeps it from starting more than it can finish. Planned feature work can still run in Scrum or Shape Up alongside it.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Everyone asks when their request will be done, and our estimates are always wrong.”</p>
+        <p class="scenario-a"><a data-guide-link="kanban">Kanban</a>, measured: record when each item starts and finishes, and answer with a service level expectation drawn from past cycle times, such as 85% of items within eight days. A time with a probability holds up better than a single estimated date.</p>
+      </li>
+      <li>
+        <p class="scenario-q">“Our Scrum team starts every item on the first day of the Sprint and finishes most of them on the last.”</p>
+        <p class="scenario-a">Keep <a data-guide-link="agile-scrum">Scrum</a> and add <a data-guide-link="kanban" data-guide-section="when">Kanban’s flow practices</a>: limit the items in progress inside the Sprint and look at the oldest ones in the Daily Scrum, so work finishes throughout the Sprint instead of piling up at the end.</p>
       </li>
     </ul>
   </section>
@@ -245,15 +267,16 @@
           <p class="step-note">An idea moves on only when the evidence supports it.</p>
         </li>
         <li>
-          <h4 class="step-title">Scrum and Shape Up deliver</h4>
+          <h4 class="step-title">Scrum, Shape Up and Kanban deliver</h4>
           <p>The Onboarding team, seven people in two-week Sprints, uses Scrum. Its Sprint 14 goal, the Sprint before that discovery work, was to cut the median time to first note from 4 minutes to under 90 seconds, with 28 story points planned against an average velocity of 27 (story points are a practice many Scrum teams use, not part of the Scrum Guide). At the Sprint Review the median had fallen to 1 minute 15 seconds. Five of the six items, 20 points, met the Definition of Done; the unfinished inline microphone and keyboard check earned no points and went back to the Product Backlog.</p>
           <p>The Practice team uses Shape Up. It bet a six-week cycle on the Practice Mode pitch, with one designer and two programmers, aimed at the company’s D30 key result and measured by an A/B test from day one.</p>
+          <p>The content team, 8 music educators and 2 producers, uses Kanban, because lessons arrive continuously and each one passes through writing, recording and review. Lessons piled up in front of the producers, so the team cut its WIP from 12 lessons to 8. Throughput held at 4 a week, the average cycle time fell from 15 working days to 10, and the team now says 85% of lessons are published within 13 working days.</p>
           <p class="step-note">Ship it, then check whether the key result moved.</p>
         </li>
       </ol>
       <div class="example-reading">
         <h4>Two Sprints of tests ruled out a build of six months or more</h4>
-        <p>The interviews, the spike and the prototype settled live sync against the backing track within two Sprints, and only Play Along reached the Product Backlog. The two teams then deliver differently because their work differs. The Onboarding team ships small changes on a steady rhythm, while Practice Mode needed one bounded six-week bet.</p>
+        <p>The interviews, the spike and the prototype settled live sync against the backing track within two Sprints, and only Play Along reached the Product Backlog. The three teams then deliver differently because their work differs. The Onboarding team ships small changes on a steady rhythm, Practice Mode needed one bounded six-week bet, and the content team’s lessons flow continuously through a board.</p>
       </div>
     </div>
 
@@ -266,8 +289,8 @@ Ideas join our one backlog when the evidence supports them, and we build them in
     </div>
 
     <div class="callout callout--caution">
-      <p class="callout-title">Scrum or Shape Up, not both</p>
-      <p>Layering works because each framework answers a different question. Running Scrum and Shape Up on the same team gives two answers to the same question, two calendars and two sets of meetings. Each team chooses one and switches only if its work changes, though different teams in one company can choose differently, as Larkwell’s do.</p>
+      <p class="callout-title">One delivery rhythm per team</p>
+      <p>Layering works because each framework answers a different question. Running Scrum and Shape Up on the same team gives two answers to the same question, two calendars and two sets of meetings. Each team chooses one and switches only if its work changes, though different teams in one company can choose differently, as Larkwell’s do. Kanban’s practices are the exception: <cite>The Kanban Guide for Scrum Teams</cite> keeps every Sprint and event and adds WIP limits and flow measures to them.</p>
     </div>
   </section>
 </article>
@@ -325,7 +348,7 @@ Ideas join our one backlog when the evidence supports them, and we build them in
   }
   .guide[data-guide="compare-execution"] .layer-opts {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: stretch;
     gap: var(--s-3);
   }
@@ -367,10 +390,10 @@ Ideas join our one backlog when the evidence supports them, and we build them in
   const links = tool.querySelector('#ep-links');
   const answers = {};
   const QUESTION_NAMES = { goal: 'main challenge', size: 'team size' };
-  const GUIDE_NAMES = { okrs: 'OKRs', 'dual-track': 'Dual-Track Agile', 'agile-scrum': 'Agile and Scrum', 'shape-up': 'Shape Up' };
+  const GUIDE_NAMES = { okrs: 'OKRs', 'dual-track': 'Dual-Track Agile', 'agile-scrum': 'Agile and Scrum', kanban: 'Kanban', 'shape-up': 'Shape Up' };
   // Goals and discovery are not a way of delivering, so those answers
   // still end with a delivery method, as the decision path does.
-  const DELIVERY_NEXT = ' Then choose a delivery method: Scrum for a steady rhythm of two-week Sprints, Shape Up for six-week bets.';
+  const DELIVERY_NEXT = ' Then choose a delivery method: Scrum for a steady rhythm of two-week Sprints, Kanban for work that arrives continuously, Shape Up for six-week bets.';
 
   // Same rules as the decision path: the challenge picks the framework,
   // and team size shapes how to run it (and, for focus at 10+, the answer).
@@ -381,7 +404,7 @@ Ideas join our one backlog when the evidence supports them, and we build them in
         medium: ' One set of team OKRs is enough at this size.',
         large: ' With more than 10 people you probably have several teams: set company OKRs, and let each team write OKRs that contribute to them.',
       }[size];
-      return { title: 'OKRs', slugs: ['okrs', 'agile-scrum', 'shape-up'],
+      return { title: 'OKRs', slugs: ['okrs', 'agile-scrum', 'kanban', 'shape-up'],
         text: 'Set no more than 3–5 objectives, each with 2–5 measurable key results, so everyone works toward the same outcomes without being told how. Review progress weekly and grade each key result from 0.0 to 1.0 at the end of the quarter.' + sizeNote + DELIVERY_NEXT };
     }
     if (goal === 'validate') {
@@ -390,8 +413,17 @@ Ideas join our one backlog when the evidence supports them, and we build them in
         medium: ' Form a product trio of product manager, designer and tech lead to run discovery continuously while the team delivers.',
         large: ' Give each team its own product trio, so discovery stays close to the people who build.',
       }[size];
-      return { title: 'Dual-Track Agile', slugs: ['dual-track', 'agile-scrum', 'shape-up'],
+      return { title: 'Dual-Track Agile', slugs: ['dual-track', 'agile-scrum', 'kanban', 'shape-up'],
         text: 'Run discovery alongside delivery, every week, in the same team. Test ideas with user research, prototypes and experiments before committing engineering time, and check all four product risks: value, usability, feasibility and business viability.' + sizeNote + DELIVERY_NEXT };
+    }
+    if (goal === 'flow') {
+      const sizeNote = {
+        small: ' With 1–3 people, one limit for the whole board is often enough: agree how many items the team may have in progress at once.',
+        medium: ' Set a limit for each column, so the board shows where work queues, and look at the oldest items first whenever the team meets at the board.',
+        large: ' With more than 10 people, give each team or service its own board and limits, so every team can see and manage its own flow.',
+      }[size];
+      return { title: 'Kanban', slugs: ['kanban'],
+        text: 'Show each step of the workflow on a board, cap the items in progress and start new work only when a finished item frees a slot. Track WIP, throughput, cycle time and work item age, and answer “when will it be done?” with a time and a probability drawn from past cycle times.' + sizeNote };
     }
     if (goal === 'deliver') {
       if (size === 'large') {

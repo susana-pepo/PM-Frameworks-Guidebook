@@ -410,7 +410,7 @@ function goToRoute(route) {
 /* ---- Footer: where next ----------------------------------------------
    Closes the last section. On a framework guide: the other frameworks in
    the family, then related frameworks from other families, each with a line
-   on how it connects. On a comparison guide: the four frameworks it compares.
+   on how it connects. On a comparison guide: the frameworks it compares.
    The comparison guide itself is in the contents rail, so it is not repeated. */
 function buildFooter(page, info) {
   const foot = page.querySelector('.guide-foot');

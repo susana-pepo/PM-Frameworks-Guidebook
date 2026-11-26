@@ -1,6 +1,6 @@
 # Guide content spec (v2)
 
-Every guide (24 frameworks and 6 comparison guides) is one HTML fragment in
+Every guide (25 frameworks and 6 comparison guides) is one HTML fragment in
 `public/guides/<File>.html`. The fragment contains **content only**. The app
 supplies all chrome: the page header, breadcrumb, origin line, contents rail,
 section numbers, previous/next links, the footer with previous and next
@@ -95,13 +95,13 @@ sentence case). The `<h2>` is the fuller section title.
 
 | id | data-nav | Holds |
 |---|---|---|
-| `overview` | At a glance | The four in one line each, then the side-by-side table |
+| `overview` | At a glance | Each framework in one line, then the side-by-side table |
 | `picker` | Choose | The picker tool; the static decision path sits under it in a `<details>` ("The rules behind the picker") so it is never on screen twice |
 | `scenarios` | Scenarios | Situations and the framework each one calls for |
-| `combine` | Using them together | How the four hand off to each other |
+| `combine` | Using them together | How the frameworks hand off to each other |
 
 The header question of a comparison guide is the family's "when" line, so
-the lede states how the four differ, never "this guide sets them side by
+the lede states how the frameworks differ, never "this guide sets them side by
 side".
 
 ## 3. Components

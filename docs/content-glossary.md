@@ -1,6 +1,6 @@
 # Content glossary and canonical reference
 
-This document is the contract for the consistency pass over the 30 guides in `public/guides/`. When a guide, a legacy page or an audit disagrees with this document, this document wins. When this document is silent, follow `docs/content-spec.md`.
+This document is the contract for the consistency pass over the 31 guides in `public/guides/`. When a guide, a legacy page or an audit disagrees with this document, this document wins. When this document is silent, follow `docs/content-spec.md`.
 
 It has six parts:
 
@@ -9,7 +9,7 @@ It has six parts:
 3. [Contradiction resolutions](#3-contradiction-resolutions): the canonical value for every cross-page and in-page disagreement, and the files that must change.
 4. [Claims to remove or soften](#4-claims-to-remove-or-soften): fabricated, unverifiable, dated or unsourced statements, with replacements.
 5. [The case file: Larkwell](#5-the-case-file-larkwell): one fictional company for every worked example that needs one, with a single fact sheet.
-6. [Section and naming standards](#6-section-and-naming-standards): rail labels, fixed labels, names, the 24-guide chapter map and candidate pitfalls.
+6. [Section and naming standards](#6-section-and-naming-standards): rail labels, fixed labels, names, the 25-guide chapter map and candidate pitfalls.
 
 **Conventions used here.**
 - Line numbers (`File.html:123`) refer to the legacy files in `public/*.html` at commit `9678cc4`. The new guides in `public/guides/` have the same file names; find the passage by its content, not its line number.
@@ -132,6 +132,7 @@ Grouped by category, in the order of `src/data/frameworks.js`. Each entry gives 
   - Complements are not a sixth force; Porter's 2008 article treats them as a factor that affects the forces.
   - "Strategy is about being different" comes from Porter's "What Is Strategy?" (1996), not from the Five Forces article. Attribute it or leave it out.
   - "Stuck in the middle" comes from Porter's *Competitive Strategy* (1980).
+  - **Timing (sourced 2026-11-26):** Porter gives no time for doing the analysis and no re-rating schedule. His note "Understanding Industry Structure" (HBS 9-707-493, 2007) calls industry structure "relatively stable", with occasional abrupt shifts. So pages re-rate on a trigger (something shifts a force, such as entry costs), never "every 6–12 months", and give the analysis no number of hours (C-50). Do not cite the HBR 2008 "three-to-five-year horizon" until someone checks it in the article itself.
 - **Sources:** Michael E. Porter, "How Competitive Forces Shape Strategy," *Harvard Business Review*, 1979; "The Five Competitive Forces That Shape Strategy," *HBR*, 2008; *Competitive Strategy*, 1980; "What Is Strategy?," *HBR*, 1996.
 
 #### Blue Ocean Strategy
@@ -153,6 +154,7 @@ Grouped by category, in the order of `src/data/frameworks.js`. Each entry gives 
   | Create | Easy drinking; ease of selection; fun and adventure |
 
   On the strategy canvas, [yellow tail] is priced above budget wines and below premium wines; it sits at the bottom on terminology, marketing and aging, low on complexity, range and vineyard prestige, and high on the three created factors, where both premium and budget wines are low. "Range of wines" and "ease of selection" are two separate factors that move in opposite directions; never merge them into one "Selection" factor (`:178`). Vineyard prestige and complexity were reduced, not eliminated; marketing was eliminated (`:202`). Before publishing the canvas, check the plotted levels against the figure in the book.
+- **Timing (sourced 2026-11-26):** a shift "does not happen in one day or after one off-site", but it doesn't take years either; the authors' own cases took "a year or so" (Kim and Mauborgne, "Moving Beyond Competing", ChangeThis 156.01, 2017, summarizing *Blue Ocean Shift*). Pages say a first canvas and ERRC grid take a few hours and the full shift takes months. Never "1–2 weeks" (C-50).
 - **Source:** W. Chan Kim and Renée Mauborgne, *Blue Ocean Strategy*, Harvard Business School Press, 2005 (expanded edition 2015).
 
 #### Playing to Win
@@ -166,6 +168,8 @@ Grouped by category, in the order of `src/data/frameworks.js`. Each entry gives 
   - The book prescribes no number of capabilities (`:151`).
   - Martin's method for testing choices is "What would have to be true?". A guide can name it.
   - "Stuck in the middle" is Porter's term; credit it if used (`:279–281`, quiz Q5).
+  - **Approved textbook cases (owner decision 2026-11-26):** the how-to-win table's examples stay as they are: IKEA, Ryanair and Walmart for cost leadership; Olay, Apple and Dyson for differentiation (`PTW:142`). They are standard textbook illustrations of the two ways to win, not claims about the companies' current strategy, and need no further sourcing.
+  - **Timing (sourced 2026-11-26):** "The first five steps can be done in a day if there is high pressure for action" (Roger Martin, "The Strategic Choice Structuring Process: Theory & Practice", Substack, October 14, 2024). Testing takes as long as the company's risk tolerance requires; a risk-tolerant start-up may skip it. Pages say a day to draft the five choices and give testing no number. Never "1–4 weeks" (C-50).
 - **Source:** A.G. Lafley and Roger L. Martin, *Playing to Win: How Strategy Really Works*, Harvard Business Review Press, 2013.
 
 #### Wardley Mapping
@@ -179,6 +183,7 @@ Grouped by category, in the order of `src/data/frameworks.js`. Each entry gives 
 - **Stage actions (as guidance, consistent with the example table):** Genesis, explore; Custom-built, build where it differentiates; Product, buy or adopt unless you have a reason to differentiate; Commodity, outsource or use a utility. The example table must not tell the reader to "differentiate heavily" on a Product-stage component (C-54).
 - **Higher-order systems:** commoditized components enable new higher-order systems. Correct example: utility compute (for example Amazon EC2, 2006) let a wave of new online services be built without owning servers. Do not say "cloud enabled SaaS" (SaaS came first) (`:276`).
 - **Core concepts a guide should at least name:** anchor (user need), inertia, climatic patterns, doctrine, gameplay, pioneers / settlers / town planners.
+- **Timing (sourced 2026-11-26):** an early draft map "took about two hours to develop"; once practiced, mapping a whole line of business "shouldn't take more than a day or two" (Simon Wardley, "An introduction to Wardley (Value Chain) Mapping", CIO.com, March 19, 2015). Pages say about two hours for a first draft and a day or two for a line of business. Never "2–8 hours" (C-50). Do not use wardleymaps.com's figures (third-party site, AI-assisted content).
 - **Source:** Simon Wardley, *Wardley Maps* (book published online, 2016 onward); mapping developed around 2005.
 
 ### 1.4 Growth
@@ -246,6 +251,26 @@ Grouped by category, in the order of `src/data/frameworks.js`. Each entry gives 
 - **Story points:** use the modified Fibonacci set 1, 2, 3, 5, 8, 13 (and 20 if needed). Only items that meet the Definition of Done count toward velocity; there is no partial credit. "An 8 is roughly twice a 5" if a ratio sentence is wanted; never "a 5 is roughly twice a 3".
 - **Agile vs Scrum:** Agile is the set of values and principles in the *Manifesto for Agile Software Development* (2001); Scrum is one framework that applies them.
 - **Sources:** Ken Schwaber and Jeff Sutherland, *The Scrum Guide*, November 2020. Beck et al., *Manifesto for Agile Software Development*, 2001.
+
+#### Kanban
+
+Added 2026-11-26 with the Kanban guide (`Kanban-Method.html`, slug `kanban`; owner decision, C-85).
+
+- **Say:** "Kanban is a way to manage work as a flow. A team shows each step of its workflow on a board, caps how many items may be in progress at once, and starts something new only when finished work frees a slot."
+- **Two definitions, both canonical; name which one a claim comes from:**
+  - *The Kanban Guide* (Coleman, Vacanti et al., kanbanguides.org, revised May 2025): "a strategy for optimizing the flow of value through a process". Three practices: defining and visualizing a workflow, actively managing items in a workflow, improving a workflow. WIP must be "explicitly controlled"; the guide does not use the term "WIP limit". No roles (it speaks of Kanban system members), no required meetings, no classes of service. Improvements need not be small or incremental.
+  - *Kanban University* (Anderson's method, kanban.university/kanban-guide): "a method for the definition, management and improvement of services that deliver knowledge work", applied to an existing process; it is "not a methodology nor a process framework". Change-management and service-delivery principles ("Start with what you do now"), six general practices (visualize, limit WIP, manage flow, make policies explicit, implement feedback loops, improve collaboratively and evolve experimentally), cadences, four classes of service (expedite, fixed date, standard, intangible). Every board shows at least one commitment point and one delivery point.
+- **Four flow measures** (mandatory in the Kanban Guide): WIP (items started, not finished), throughput (items finished per unit of time), cycle time (elapsed time from start to finish of an item), work item age (elapsed time since an unfinished item started). Only age warns while there is still time to act.
+- **Little's Law:** average cycle time = average WIP ÷ average throughput, valid over a stable period (arrivals about equal departures, everything started finishes, WIP about the same at both ends, items counted in the same units). Proved by John Little (1961); written in flow terms by Vacanti (2015). It describes a finished period; it is not a forecasting tool (Vacanti, 2018). Forecast with an SLE for one item and a Monte Carlo simulation over past throughput for many (Vacanti, 2020).
+- **Service level expectation (SLE):** a time paired with a probability, from past cycle times. The Kanban Guide's example: "85% of work items will be finished in eight days or less." Part of the Definition of Workflow.
+- **Definition of Workflow** (Kanban Guide): work items; start and finish points; the states between them; how WIP is controlled; explicit policies; an SLE.
+- **Names vary.** Kanban University measures lead time between any two points on the board (glossary: customer lead time, system lead time); from commitment to delivery it is the Kanban Guide's cycle time; on a factory floor, cycle time is the time one step takes (Lean Enterprise Institute). Guides use the Kanban Guide's cycle time and say where the clock starts and stops.
+- **Kanban inside Scrum:** *The Kanban Guide for Scrum Teams* (Scrum.org, Vacanti and Yeret, 2021) keeps the Sprint and every event and adds no events; Sprint Planning uses past throughput, the Daily Scrum looks at aging items, the Retrospective adapts the Definition of Workflow. Never say Kanban replaces the Sprint in that setting.
+- **Proto-kanban:** Anderson's name for a board that shows work but does not limit workflow WIP, such as one row per person; without limits there is no pull system (Anderson, "Patterns of Kanban Maturity", Lean Kanban, May 2016). The guide cites it as Anderson (2016).
+- **History (sourced 2026-11-26):** Toyota introduced its "supermarket method" in 1954; adding the kanban card turned it into the kanban system, and Toyota's chronology dates kanban production control from 1963 (Toyota, *75 Years of Toyota*, chronology and §2.7.4). Do not write "by 1963 all plants": Toyota's own pages do not say it. Taiichi Ohno, *Toyota Production System: Beyond Large-Scale Production* (English edition 1988). Anderson's Microsoft XIT team: WIP limits in development and testing, weekly replenishment instead of monthly planning; average lead time fell from 5.5 months to 12 days and on-time delivery reached 98% (Kanban University case study). Corbis, 2006–2007; Anderson, *Kanban*, 2010.
+- **Timing (sourced 2026-11-26):** the Kanban Guide prescribes no meetings. Kanban University's Kanban Meeting is held "usually somewhere between daily and weekly"; it gives no other frequencies. Anderson's one dated example: weekly replenishment and a service delivery review every two weeks, which one client combined by adding 30 minutes every other week (Anderson, "Kanban Cadences", Kanban University, April 23, 2015). No guide gives Kanban a fixed iteration length, a WIP-limit formula or a time to set up a board.
+- **Do not say:** "Kanban has no rules" (the WIP control and the policies are the rules); "a Kanban board" for a board without limits (that is a task board or proto-kanban); "story points" as a Little's Law unit; that the Kanban Guide has roles, WIP limits by that name or classes of service.
+- **Sources:** *The Kanban Guide*, kanbanguides.org, May 2025. Kanban University, "The Official Kanban Guide", kanban.university. David J. Anderson, *Kanban: Successful Evolutionary Change for Your Technology Business*, 2010; "Kanban Cadences", 2015. David J. Anderson, "Patterns of Kanban Maturity" (presentation), 2016; with Andy Carmichael, *Essential Kanban Condensed*, 2016 (roles: service request manager, service delivery manager). Daniel S. Vacanti, *Actionable Agile Metrics for Predictability*, 2015; "Little's Law for Professional Scrum with Kanban", Scrum.org, May 2018; *When Will It Be Done?*, 2020. Scrum.org, *The Kanban Guide for Scrum Teams*, 2021. John D. C. Little, "A Proof for the Queuing Formula: L = λW", *Operations Research*, 1961. Taiichi Ohno, *Toyota Production System*, 1988.
 
 #### Shape Up
 
@@ -408,7 +433,17 @@ One definition per term. A guide may reword for flow but must not contradict it.
 | MVP | The smallest product that lets you learn whether the core assumption holds. Not the same as Release 1 of a story map, which is the thinnest complete journey. |
 | Walking skeleton | The thinnest end-to-end version of a journey or system that works. |
 | Release slice | A horizontal cut across a story map; everything above it ships in that release. |
-| Kanban | A flow-based method that limits work in progress. Not covered by a guide in this set (§3, C-85). |
+| Kanban | A way to manage work as a flow: visualize the workflow, limit work in progress, manage and improve the flow (§1.5). Capitalized for the method; "a kanban system" and "a kanban" (the signal card) are lowercase. Has its own guide (C-85). |
+| WIP, WIP limit | Work in progress: items started but not finished. A WIP limit caps it per column or per board; the Kanban Guide says WIP is "explicitly controlled" and does not use the term. |
+| Start line, finish line | The Kanban guide's plain names for Kanban University's commitment point and delivery point. WIP and cycle time are counted between them. |
+| Throughput | Items finished per unit of time (Larkwell's content team: 4 lessons a week). |
+| Cycle time | Elapsed time from an item's start to its finish (Kanban Guide). Kanban University calls the same span lead time; say where the clock starts and stops. |
+| Work item age | Elapsed time since an unfinished item started; compare it with the SLE. |
+| Service level expectation (SLE) | A time with a probability from past cycle times, for example 85% within eight days. |
+| Definition of Workflow | Kanban Guide: the team's written board rules (items, start and finish, states, WIP control, policies, SLE). |
+| Little's Law | Average cycle time = average WIP ÷ average throughput over a stable period. Describes the past; not a forecast. |
+| Class of service | Kanban University: expedite, fixed date, standard or intangible, by cost of delay. Not in the Kanban Guide. |
+| Replenishment | Kanban University's cadence that picks which options cross the start line next. |
 
 ### 2.4 Design and research
 
@@ -497,7 +532,7 @@ Every disagreement found by the audits, between pages or inside one page, with t
 | C-03 | What an input metric is | Activities and projects (`IO:76–77,110`); customer-behavior metrics (`NS:247`) | Inputs are controllable, customer-facing metrics, never tasks. The IO hero lists metrics only: "Onboarding redesign" becomes "median time to first note"; "Push notification timing" becomes "day-3 reminder return rate" | IO, NS, OKRs |
 | C-04 | How the NSM and inputs map to OKRs | "North Star = Objective, inputs = KRs" (`NS:300,361`; `IO:326,372`; `OKRs:254–255,300`) | Objectives are qualitative. The NSM or an input metric appears as a KR. Projects are not KRs. Worked KR: "Weekly Active Learners from 40,000 to 50,000" under a qualitative objective (case). Rewrite each quiz so the correct option says this | NS, IO, OKRs, GrowthCmp, ExecCmp |
 | C-05 | Which funnel stage leaks most | Retention (`AARRR:230`); activation (`GrowthCmp:66,127`) | Case: retention. 45% of new accounts activate, but only 9% are active on day 30, so four in five activated learners are gone within a month, most of them in week one. Activation (55% never activate) is the second-largest loss. The claim lives only in worked examples | AARRR, GrowthCmp |
-| C-06 | Lesson volume | 5, 8, 10/week and 20 (`IO:110,258,372,373`; `GrowthCmp:66`; `NS:361`; `OKRs:177,198`) | Case: the content team publishes 8 new beginner song lessons this quarter (a committed KR), taking quality-reviewed beginner lessons from 120 to 128. No per-week figure | IO, NS, OKRs, GrowthCmp |
+| C-06 | Lesson volume | 5, 8, 10/week and 20 (`IO:110,258,372,373`; `GrowthCmp:66`; `NS:361`; `OKRs:177,198`) | Case: the content team publishes 8 new beginner song lessons this quarter (a committed KR), taking quality-reviewed beginner lessons from 120 to 128. No per-week figure for beginner song lessons. The one per-week figure is the Kanban example's throughput of 4 lessons a week, which counts every lesson the team publishes, new or rewritten (§5.6); no other guide uses it | IO, NS, OKRs, GrowthCmp, Kanban |
 | C-07 | CAC, CPA, CPI | "CAC (Cost per Acquisition)", "CAC (Customer Acquisition Cost)", "CPI" used for one idea (`AARRR:180,190,208`) | Three metrics, defined in §2.1. The AARRR metrics table uses CPI for the Acquisition stage and CAC in the unit-economics block | AARRR |
 | C-08 | Revenue formula | "Users × Conversion × ARPU" (`IO:227`); "Paying users × ARPU" (`IO:213,221`) | Revenue = paying users × ARPPU = MAU × paid share × ARPPU = MAU × ARPU. Case: 400,000 × 15% × $9.00 = $540,000 = 400,000 × $1.35 | IO |
 | C-09 | NSM unit drift | "Lessons completed", "Songs completed per week", "Weekly Active Learners (3+ lessons)" (`NS:120,196,227`) | One unit: Weekly Active Learners, users who complete at least 3 lessons in a calendar week. "Songs completed per week" may stay only as a deliberately weaker draft in the "make it measurable" step, marked as such | NS, GrowthCmp |
@@ -556,7 +591,7 @@ Every disagreement found by the audits, between pages or inside one page, with t
 | ID | Topic | Found | Canonical value | Change |
 |---|---|---|---|---|
 | C-49 | How many steps the strategy pipeline has | Three (`StratCmp:114`), four (`:128`; `BO:437`), five with OKRs (`PTW:428`; `Wardley:434`) | Four: Porter's Five Forces → Blue Ocean → Playing to Win → Wardley Mapping. OKRs are where the strategy's output goes next, shown as a relation link, not as a fifth step. The pipeline is written only in StratCmp `combine`; framework pages link to it | StratCmp, BO, PTW, Wardley, Porter |
-| C-50 | Time each framework takes | BO 1–2 weeks and PTW 1–4 weeks (`StratCmp:65–66`) vs an offsite that runs Porter, BO and PTW in two days (`:128`) | Overview times are for a full analysis. The offsite scenario says "a first pass of each, using research prepared beforehand" | StratCmp |
+| C-50 | Time each framework takes | BO 1–2 weeks and PTW 1–4 weeks (`StratCmp:65–66`) vs an offsite that runs Porter, BO and PTW in two days (`:128`); Porter 2–4 hours, Wardley 2–8 hours and Porter re-rating every 6–12 months, all unsourced | Sourced 2026-11-26 (§1 Timing lines): Porter has no duration (hours to rate, longer with market data) and re-rates on a trigger; BO takes months for a full shift (Kim and Mauborgne 2017); PTW drafts in a day, testing as long as the risk calls for (Martin 2024); Wardley about two hours for a first draft, a day or two for a line of business (Wardley 2015). The offsite scenario still says "a first pass of each, using research prepared beforehand" | StratCmp, Porter |
 | C-51 | Shape of the Playing to Win figure | Memory trick funnel, wide aspiration narrowing down (`PTW:161`) vs hero widening downward (`:74–110`) | A cascade of five equal boxes with arrows down and back up (§1.3). Delete the funnel trick | PTW |
 | C-52 | Cost leadership | "cheapest" (`PTW:147`) vs "lowest cost" (`:267`) | Lowest cost, which is not the same as lowest price | PTW |
 | C-53 | Aspiration example rules out professional musicians | "Help every adult learn an instrument → rules out professional musicians" (`PTW:186`) | Case: "Help every adult who has wanted to play the piano play the songs they love" rules out children, advanced players and schools, which fits the Where-to-play choice | PTW |
@@ -596,7 +631,7 @@ Every disagreement found by the audits, between pages or inside one page, with t
 | C-82 | "KR3 is an input metric (lessons published)" | `OKRs:211` vs IO's definition | "KR3 is an output the content team promises; the input metric it moves is quality-reviewed beginner lessons available" | OKRs |
 | C-83 | Do the execution frameworks compete? | "These aren't competing frameworks, they operate at different levels" (`ExecCmp:59`) vs the picker choosing between Scrum and Shape Up | OKRs set goals; Scrum and Shape Up are alternative delivery methods (a team usually picks one); dual-track agile adds continuous discovery to either | ExecCmp |
 | C-84 | Picker inputs and wording | Team size ignored in three of four branches; Shape Up suggested regardless of size; "no mid-sprint interruptions" for Shape Up (`ExecCmp:173–184`) | Every question affects the result or is removed. Shape Up results say "cycle". No result recommends Shape Up for a single team of 10 or more without shaping capacity | ExecCmp |
-| C-85 | Kanban recommended but missing | `Scrum:284`; `ShapeUp:241`; `DualTrack:68,124` | Owner decision. Until a Kanban guide exists, write "a flow-based method such as Kanban (not covered in this guide)" without a link, at most once per page | Scrum, ShapeUp, DualTrack, ExecCmp |
+| C-85 | Kanban recommended but missing | `Scrum:284`; `ShapeUp:241`; `DualTrack:68,124` | **Resolved (owner decision 2026-11-26): Kanban guide added** (`Kanban-Method.html`, slug `kanban`, §1.5). Each page names it once with a plain link, `<a data-guide-link="kanban">Kanban</a>`; "not covered in this guide" is gone. ExecCmp compares five frameworks: Scrum, Kanban and Shape Up are the three alternative delivery methods; Kanban's flow practices may also run inside Scrum | Scrum, ShapeUp, DualTrack, ExecCmp, `frameworks.js` |
 
 ### 3.6 Communication
 
@@ -619,9 +654,9 @@ Every disagreement found by the audits, between pages or inside one page, with t
 
 | ID | Topic | Found | Canonical value | Change |
 |---|---|---|---|---|
-| C-98 | Relationships between frameworks | "Connections" prose in 19 files, written differently on each side of a pair (for example Loops and AARRR, `:315`, `:277`; BO, PTW and Wardley flows) | Relations become data in `frameworks.js` (`relations: [{slug, sentence}]`), written once per pair from the canonical statements in this document; the guides no longer contain Connections blocks | All 24 framework guides, `frameworks.js` |
+| C-98 | Relationships between frameworks | "Connections" prose in 19 files, written differently on each side of a pair (for example Loops and AARRR, `:315`, `:277`; BO, PTW and Wardley flows) | Relations become data in `frameworks.js` (`relations: [{slug, sentence}]`), written once per pair from the canonical statements in this document; the guides no longer contain Connections blocks | All 24 framework guides at the time (Kanban, added later, follows it), `frameworks.js` |
 
-**Total: 98 contradictions resolved** (C-01 to C-98). C-85 still needs an owner decision about a Kanban guide.
+**Total: 98 contradictions resolved** (C-01 to C-98). C-85 was resolved on 2026-11-26 by adding the Kanban guide.
 
 ### 3.8 `frameworks.js` values to correct
 
@@ -875,7 +910,7 @@ Of activated learners, about 42% are active on day 7 and 20% on day 30, so four 
 | Learners who finish a lesson but never return to practice it | 70% |
 | Practice sessions per active learner per week | 0.4 |
 | New learners who play a song they recognize in their first session | 20% |
-| Lesson production time | 5 days per lesson |
+| Lesson production time | 5 days of hands-on work per lesson (not the cycle time, which includes waiting: §5.6) |
 | Internal lesson quality score | 4.0 out of 5 |
 
 **Team**
@@ -888,7 +923,7 @@ Of activated learners, about 42% are active on day 7 and 20% on day 30, so four 
 | Lessons team | Scrum |
 | Practice team | six-week cycles with two-week cooldowns (Shape Up); one designer and two programmers per bet |
 | Growth team, Platform team | Scrum |
-| Content team | 8 music educators and 2 producers |
+| Content team | 8 music educators and 2 producers; runs its lessons on a kanban board (§5.6) |
 | Sprint length | 2 weeks |
 | Onboarding team velocity | last three Sprints 26, 28, 27; average 27 points |
 
@@ -1016,6 +1051,18 @@ Each KR is labeled committed or aspirational. The NSM appears as a KR, never as 
 - Beta (50 learners, before the bet): practice sessions per learner tripled (0.4 to 1.2 a week).
 - Target: D30 retention from 9% to 11% (the company KR); an A/B test from day one measures it.
 
+**Lesson flow, content team (Kanban)**
+
+- Work item: a lesson, new or rewritten. Every lesson passes an educator (write), a producer (record the audio and note data) and a second educator (review) before it goes live.
+- Start line: an educator begins writing. Finish line: the lesson is published.
+- Before: 12 lessons in progress on average, 4 published a week, average cycle time 15 working days (Little's Law: 12 ÷ 4 = 3 weeks), 85th percentile 21 working days. Hands-on work is 5 days per lesson.
+- Board before → WIP limits: Write 6 → 3; Waiting to record 3 → 1; Record 2 → 2; Review 1 → 2. Total 12 → 8. The two producers can record about 4 lessons a week, so drafts queued in front of them.
+- Policies: when Write is full, an educator reviews a waiting lesson or works on the reusable lesson template (content Objective 2, KR3) instead of starting a lesson; replenishment every Monday; a short check at the board each morning, oldest lesson first.
+- Six weeks later: WIP 8, throughput still 4 a week, average cycle time 10 working days (8 ÷ 4 = 2 weeks), 85th percentile 13 working days, hands-on work still 5 days.
+- SLE: 85% of lessons are published within 13 working days of starting. In week 4 one lesson reached day 11 in Review; two educators reviewed it together at the morning check and it went live on day 12.
+- Next constraint: recording capacity, not educators. Cutting hands-on work from 5 days to 3 is content Objective 2, KR1 (§5.5), resting on the template.
+- Calculator defaults in the guide: WIP 12, throughput 4, new WIP limit 8, at 5 working days a week.
+
 **Play Along, Onboarding team (dual-track: discovery running alongside Sprints 15 and 16)**
 
 - Discovery question: should early lessons let learners play along with a backing track?
@@ -1037,6 +1084,7 @@ Each KR is labeled committed or aspirational. The NSM appears as a KR, never as 
 | This quarter | 8 beginner song lessons | Content | Committed KR | OKRs, IO |
 | This quarter | Practice Mode | Practice | Six-week bet (§5.6) | ShapeUp, ExecSum, Narrative, ExecCmp |
 | This quarter, discovery | Play Along | Onboarding | Dual-track discovery (§5.6) | DualTrack, ExecCmp |
+| This quarter | WIP limits on the lesson board | Content | WIP 12 → 8, cycle time 15 → 10 working days, throughput 4 a week, SLE 85% within 13 working days (§5.6) | Kanban, ExecCmp |
 | Proposed | Kids' version | — | No data; a market-entry question | DesignCmp, StratCmp, Porter |
 
 ### 5.8 Strategy views of Larkwell
@@ -1213,6 +1261,8 @@ Use these names in full on first mention in a guide; the short form may follow.
 | North Star Framework; North Star Metric | NSM after first use | North Star (alone, for the metric) |
 | Input and Output Metrics | inputs and outputs | Input/Output |
 | Agile and Scrum | Scrum | — |
+| Kanban (the method); a kanban system, a kanban board with WIP limits | — | KANBAN, Kanban Method in prose, "a Kanban" for a board without limits |
+| The Kanban Guide; Kanban University | — | "the official Kanban guide" for either without naming which |
 | Shape Up | — | ShapeUp |
 | Dual-track agile (prose); Dual-Track Agile (title) | dual-track | Dual Track |
 | OKRs | an OKR | OKR's |
@@ -1223,7 +1273,7 @@ Use these names in full on first mention in a guide; the short form may follow.
 
 Headings use sentence case; framework names keep their own capitals inside them.
 
-### 6.4 The 24 framework guides: chapter map
+### 6.4 The 25 framework guides: chapter map
 
 "[+]" means the chapter has to be authored or assembled from material already on the page. Everything else is a move or a rename.
 
@@ -1246,6 +1296,7 @@ Headings use sentence case; framework names keep their own capitals inside them.
 | North Star | `anatomy` Anatomy; `find` Finding yours | "Common NSM Traps" → `pitfalls` with fixes | [+] assemble (§6.5) | Optional |
 | Input and Output | `model` The model; `counter` Counter-metrics and trees | "Correlation Trap" and "Real-World Tension" → `pitfalls`; "Complete Growth Stack" → GrowthCmp `combine` | [+] assemble (§6.5) | Optional |
 | Agile and Scrum | `roles` Accountabilities and events; `artifacts` Artifacts and commitments | Events as a table | [+] author (§6.5) | Optional |
+| Kanban | `board` The board; `flow` Flow metrics | New guide (2026-11-26); classes of service and cadences sit in `board`, Kanban inside Scrum in `when` | Has 6 | — |
 | Shape Up | `phases` Shaping, betting, building; `concepts` Key ideas (with a hill chart figure) | "Circuit Breaker" stays in `concepts`; its misuse goes in `pitfalls` | [+] author (§6.5) | Optional |
 | Dual-Track Agile | `tracks` The two tracks; `discovery` Running discovery | "Feature factory" and "single track" contrast → `understand` | [+] author (§6.5) | Optional |
 | OKRs | `anatomy` Anatomy; `writing` Writing OKRs | "Common Mistakes" → `pitfalls` with fixes | [+] assemble (§6.5) | Optional |
@@ -1383,6 +1434,8 @@ Each item: title, one sentence on the problem, one sentence for the fix. "From t
 ## Appendix: sources named in this document
 
 - Adams, Paul. "Replacing the user story with the job story." Intercom blog, 2013.
+- Anderson, David J. *Kanban: Successful Evolutionary Change for Your Technology Business*, 2010; "Kanban Cadences," Kanban University, April 23, 2015; "Patterns of Kanban Maturity," Lean Kanban presentation, May 2016.
+- Anderson, David J., and Andy Carmichael. *Essential Kanban Condensed*, 2016.
 - Balfour, Brian, Casey Winters, Kevin Kwok and Andrew Chen. "Growth Loops are the New Funnels." Reforge, 2018.
 - Beck, Kent, et al. *Manifesto for Agile Software Development*, 2001.
 - Berger, Charles, et al. "Kano's methods for understanding customer-defined quality." *Center for Quality of Management Journal*, 1993.
@@ -1400,20 +1453,28 @@ Each item: title, one sentence on the problem, one sentence for the fix. "From t
 - Grove, Andrew. *High Output Management*, 1983.
 - Hasso Plattner Institute of Design at Stanford. *An Introduction to Design Thinking: Process Guide*.
 - Kano, Noriaki, et al. "Attractive quality and must-be quality." *Journal of the Japanese Society for Quality Control*, 1984.
-- Kim, W. Chan, and Renée Mauborgne. *Blue Ocean Strategy*, 2005 (expanded edition 2015).
+- Kim, W. Chan, and Renée Mauborgne. *Blue Ocean Strategy*, 2005 (expanded edition 2015); "Moving Beyond Competing," ChangeThis 156.01, 2017.
+- Kanban University. "The Official Kanban Guide," kanban.university; "Microsoft XIT" case study.
 - Klement, Alan. *When Coffee and Kale Compete*, 2016.
 - Kohavi, Ron, Diane Tang and Ya Xu. *Trustworthy Online Controlled Experiments*, 2020 (only if a figure is quoted exactly).
 - Lafley, A.G., and Roger L. Martin. *Playing to Win: How Strategy Really Works*, 2013.
+- Martin, Roger L. "The Strategic Choice Structuring Process: Theory & Practice," Substack, October 14, 2024.
 - Lin, Lewis C. *Decode and Conquer*, 2013.
+- Little, John D. C. "A Proof for the Queuing Formula: L = λW." *Operations Research*, 1961.
 - McBride, Sean. "RICE: Simple prioritization for product managers." Intercom blog.
 - McClure, Dave. "Startup Metrics for Pirates: AARRR!" 2007.
 - Minto, Barbara. *The Pyramid Principle: Logic in Writing and Thinking*.
 - Moesta, Bob. *Demand-Side Sales 101*, 2020.
 - Nielsen, Jakob. "Why You Only Need to Test with 5 Users," 2000; Nielsen and Landauer, 1993.
+- Ohno, Taiichi. *Toyota Production System: Beyond Large-Scale Production*, English edition 1988.
 - Patton, Jeff. *User Story Mapping*, 2014; "Dual Track Development is not Duel Track," 2017.
-- Porter, Michael E. "How Competitive Forces Shape Strategy," *HBR*, 1979; *Competitive Strategy*, 1980; "What Is Strategy?," *HBR*, 1996; "The Five Competitive Forces That Shape Strategy," *HBR*, 2008.
+- Porter, Michael E. "How Competitive Forces Shape Strategy," *HBR*, 1979; *Competitive Strategy*, 1980; "What Is Strategy?," *HBR*, 1996; "Understanding Industry Structure," HBS note 9-707-493, 2007; "The Five Competitive Forces That Shape Strategy," *HBR*, 2008.
 - Schwaber, Ken, and Jeff Sutherland. *The Scrum Guide*, November 2020.
+- Scrum.org (Daniel Vacanti and Yuval Yeret). *The Kanban Guide for Scrum Teams*, 2021.
 - Singer, Ryan. *Shape Up*, Basecamp, 2019.
 - Sy, Desirée. "Adapting Usability Investigations for Agile User-centered Design." *Journal of Usability Studies*, 2007.
-- Ulwick, Anthony. *What Customers Want*, 2005; *Jobs to Be Done: Theory to Practice*, 2016.
-- Wardley, Simon. *Wardley Maps*, 2016 onward.
+- *The Kanban Guide* (John Coleman, Daniel Vacanti et al.), kanbanguides.org, revised May 2025.
+- Toyota Motor Corporation. *75 Years of Toyota*, toyota-global.com (chronology, 1963; "Modernization of Facilities" on the supermarket method, 1954).
+- Ulwick, Anthony.
+- Vacanti, Daniel S. *Actionable Agile Metrics for Predictability*, 2015; "Little's Law for Professional Scrum with Kanban," Scrum.org, May 2018; *When Will It Be Done?*, 2020. *What Customers Want*, 2005; *Jobs to Be Done: Theory to Practice*, 2016.
+- Wardley, Simon. *Wardley Maps*, 2016 onward; "An introduction to Wardley (Value Chain) Mapping," CIO.com, 2015.
